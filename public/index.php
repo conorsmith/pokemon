@@ -88,6 +88,23 @@ if ($_SERVER['REQUEST_METHOD'] === "GET"
     (new \ConorSmith\Pokemon\Controllers\GetBox($db, $pokedex))();
 
 } elseif ($_SERVER['REQUEST_METHOD'] === "GET"
+    && substr($_SERVER['REQUEST_URI'], 0, strlen("/encounter/")) === "/encounter/"
+) {
+    (new \ConorSmith\Pokemon\Controllers\GetEncounter($db, $session, $pokedex))();
+
+} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
+    && substr($_SERVER['REQUEST_URI'], 0, strlen("/encounter/")) === "/encounter/"
+    && substr($_SERVER['REQUEST_URI'], -strlen("/catch")) === "/catch"
+) {
+    (new \ConorSmith\Pokemon\Controllers\PostEncounterCatch($db, $session, $pokedex, $map))();
+
+} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
+    && substr($_SERVER['REQUEST_URI'], 0, strlen("/encounter/")) === "/encounter/"
+    && substr($_SERVER['REQUEST_URI'], -strlen("/run")) === "/run"
+) {
+    (new \ConorSmith\Pokemon\Controllers\PostEncounterRun($db))();
+
+} elseif ($_SERVER['REQUEST_METHOD'] === "GET"
     && $_SERVER['REQUEST_URI'] === "/"
 ) {
     (new \ConorSmith\Pokemon\Controllers\GetIndex($session, $caughtPokemonRepository, $pokedex))();

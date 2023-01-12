@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\TemplateEngine;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -34,7 +35,12 @@ final class GetLogExercise
 
         $errors = $this->session->getFlashBag()->get("errors");
 
-        include __DIR__ . "/../Templates/Exercise.php";
-        exit;
+        echo TemplateEngine::render(__DIR__ . "/../Templates/Exercise.php", [
+            'today' => $today,
+            'yesterday' => $yesterday,
+            'loggedToday' => $loggedToday,
+            'loggedYesterday' => $loggedYesterday,
+            'errors' => $errors,
+        ]);
     }
 }

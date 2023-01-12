@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Controllers;
 
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
+use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
 
@@ -27,7 +28,9 @@ final class GetTeamLevelUp
 
         $team = TeamMember::fromRows($rows, $this->pokedex);
 
-        include __DIR__ . "/../Templates/LevelUp.php";
-        exit;
+        echo TemplateEngine::render(__DIR__ . "/../Templates/LevelUp.php", [
+            'team' => $team,
+            'unusedLevelUps' => $unusedLevelUps,
+        ]);
     }
 }

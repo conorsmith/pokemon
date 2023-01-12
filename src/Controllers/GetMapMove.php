@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\TemplateEngine;
 use Doctrine\DBAL\Connection;
 use stdClass;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -27,8 +28,11 @@ final class GetMapMove
 
         $errors = $this->session->getFlashBag()->get("errors");
 
-        include __DIR__ . "/../Templates/Move.php";
-        exit;
+        echo TemplateEngine::render(__DIR__ . "/../Templates/Move.php", [
+            'unusedMoves' => $unusedMoves,
+            'currentLocation' => $currentLocation,
+            'errors' => $errors,
+        ]);
     }
 
     private function findLocation(string $id): array

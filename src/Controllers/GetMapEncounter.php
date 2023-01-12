@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\TemplateEngine;
 use Doctrine\DBAL\Connection;
 use stdClass;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -21,14 +22,19 @@ final class GetMapEncounter
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $unusedEncounters = $row['unused_encounters'];
+        $pokeballs = $row['unused_encounters'];
 
         $currentLocation = $this->createLocationViewModel($this->findLocation($row['current_location']));
 
+        $successes = $this->session->getFlashBag()->get("successes");
         $errors = $this->session->getFlashBag()->get("errors");
 
-        include __DIR__ . "/../Templates/Encounter.php";
-        exit;
+        echo TemplateEngine::render(__DIR__ . "/../Templates/MapEncounter.php", [
+            'pokeballs' => $pokeballs,
+            'currentLocation' => $currentLocation,
+            'successes' => $successes,
+            'errors' => $errors,
+        ]);
     }
 
     private function findLocation(string $id): array

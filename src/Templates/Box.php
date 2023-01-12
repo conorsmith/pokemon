@@ -14,6 +14,4 @@
         <?php endforeach ?>
     </ul>
 
-    <a href="/" class="btn btn-outline-secondary btn-sm">Home</a>
-
 </div>

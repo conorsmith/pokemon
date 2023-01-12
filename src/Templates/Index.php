@@ -1,24 +1,3 @@
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/box">Box</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/map/move">Moves</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/team/level-up">Level Ups</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/map/encounter">Encounters</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<hr>
-
 <?php foreach ($successes as $success) : ?>
     <div class="alert alert-success"><?=$success?></div>
 <?php endforeach ?>
@@ -64,11 +43,3 @@
         </li>
     <?php endforeach ?>
 </ul>
-
-<div class="d-grid gap-2" style="margin-top: 2rem;">
-
-        <a href="/log/food-diary" class="btn btn-primary">Log Completed Food Diary</a>
-        <a href="/log/calorie-goal" class="btn btn-primary">Log Attained Calorie Goal</a>
-        <a href="/log/exercise" class="btn btn-primary">Log Exercise</a>
-
-</div>

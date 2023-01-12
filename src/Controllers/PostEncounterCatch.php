@@ -9,16 +9,24 @@ use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-final class PostMapEncounter
+final class PostEncounterCatch
 {
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
+        private readonly array $pokedex,
         private readonly array $map,
     ) {}
 
     public function __invoke(): void
     {
+        $id = substr(substr($_SERVER['REQUEST_URI'], strlen("/encounter/")), 0, -strlen("/catch"));
+
+        $encounterRow = $this->db->fetchAssociative("SELECT * FROM encounters WHERE instance_id = :instanceId AND id = :id", [
+            'instanceId' => INSTANCE_ID,
+            'id' => $id,
+        ]);
+
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
             'instanceId' => INSTANCE_ID,
         ]);
@@ -29,36 +37,11 @@ final class PostMapEncounter
             exit;
         }
 
-        $currentLocation = $this->findLocation($instanceRow['current_location']);
-
-        if (count($currentLocation['pokemon']) === 0) {
-            $this->session->getFlashBag()->add("errors", "No Pokémon encountered.");
-            header("Location: /map/encounter");
-            exit;
-        }
-
         $pokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position = 1", [
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $leadPokemonLevel = $pokemonRow['level'];
-
-        $encounteredPokemonId = self::generateEncounteredPokemon($currentLocation);
-        $encounteredPokemonLevel = self::generateEncounteredLevel($currentLocation, $encounteredPokemonId);
-
-        $encounterId = Uuid::uuid4();
-
-        $this->db->insert("encounters", [
-            'id' => $encounterId,
-            'instance_id' => INSTANCE_ID,
-            'pokemon_id' => $encounteredPokemonId,
-            'level' => $encounteredPokemonLevel,
-        ]);
-
-        header("Location: /encounter/{$encounterId}");
-        exit;
-
-        $levelDifference = $encounteredPokemonLevel - $leadPokemonLevel;
+        $levelDifference = $encounterRow['level'] - $pokemonRow['level'];
 
         if ($levelDifference > 5) {
             $chance = 0;
@@ -101,16 +84,11 @@ final class PostMapEncounter
 
         $caught = $chance >= mt_rand(1, 100);
 
-        $encounter = [
-            'pokemon' => [
-                'id' => $encounteredPokemonId,
-                'level' => $encounteredPokemonLevel,
-            ],
-            'caught' => $caught,
-            'sentToBox' => false,
-        ];
+        $pokemon = $this->pokedex[$encounterRow['pokemon_id']];
 
         if ($caught) {
+
+            $this->session->getFlashBag()->add("successes", "You caught the wild {$pokemon['name']}!");
 
             $positionRow = $this->db->fetchNumeric("SELECT MAX(team_position) FROM caught_pokemon WHERE instance_id = :instanceId", [
                 'instanceId' => INSTANCE_ID,
@@ -118,20 +96,24 @@ final class PostMapEncounter
 
             if ($positionRow[0] >= 6) {
                 $teamPosition = null;
-                $encounter['sentToBox'] = true;
+                $this->session->getFlashBag()->add("successes", "{$pokemon['name']} was sent to your box");
             } else {
                 $teamPosition = $positionRow[0] + 1;
             }
 
+            $currentLocation = $this->findLocation($instanceRow['current_location']);
+
             $this->db->insert("caught_pokemon", [
                 'id' => Uuid::uuid4(),
                 'instance_id' => INSTANCE_ID,
-                'pokemon_id' => $encounteredPokemonId,
-                'level' => $encounteredPokemonLevel,
+                'pokemon_id' => $encounterRow['pokemon_id'],
+                'level' => $encounterRow['level'],
                 'team_position' => $teamPosition,
                 'location_caught' => $currentLocation['id'],
                 'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
             ]);
+        } else {
+            $this->session->getFlashBag()->add("successes", "You failed to catch the wild {$pokemon['name']}");
         }
 
         $this->db->update("instances", [
@@ -140,35 +122,12 @@ final class PostMapEncounter
             'id' => INSTANCE_ID,
         ]);
 
-        $this->session->getFlashBag()->set('encounter', $encounter);
+        $this->db->delete("encounters", [
+            'instance_id' => INSTANCE_ID,
+            'id' => $id,
+        ]);
 
-        header("Location: /");
-        exit;
-    }
-
-    private static function generateEncounteredPokemon(array $currentLocation): string
-    {
-        $availablePokemon = $currentLocation['pokemon'];
-
-        $selectedValue = mt_rand(1, array_reduce($availablePokemon, function ($carry, array $encounterData) {
-            return $carry + $encounterData['weight'];
-        }, 0));
-
-        foreach ($availablePokemon as $pokemonId => $encounterData) {
-            $selectedValue -= $encounterData['weight'];
-            if ($selectedValue <= 0) {
-                return strval($pokemonId);
-            }
-        }
-
-        throw new \Exception;
-    }
-
-    private static function generateEncounteredLevel(array $currentLocation, string $pokemonId): int
-    {
-        $levels = $currentLocation['pokemon'][$pokemonId]['levels'];
-
-        return mt_rand($levels[0], $levels[1]);
+        header("Location: /map/encounter");
     }
 
     private function findLocation(string $id): array
