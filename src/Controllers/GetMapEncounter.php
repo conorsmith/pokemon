@@ -5,11 +5,13 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use Doctrine\DBAL\Connection;
 use stdClass;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetMapEncounter
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly Session $session,
         private readonly array $map,
     ) {}
 
@@ -22,6 +24,8 @@ final class GetMapEncounter
         $unusedEncounters = $row['unused_encounters'];
 
         $currentLocation = $this->createLocationViewModel($this->findLocation($row['current_location']));
+
+        $errors = $this->session->getFlashBag()->get("errors");
 
         include __DIR__ . "/../Templates/Encounter.php";
         exit;

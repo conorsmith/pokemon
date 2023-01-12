@@ -3,7 +3,8 @@
         "symfony/var-dumper": "^6.2",
         "doctrine/dbal": "^3.5",
         "nesbot/carbon": "^2.65",
-        "ramsey/uuid": "^4.7"
+        "ramsey/uuid": "^4.7",
+        "symfony/http-foundation": "^6.2"
     },
     "autoload": {
         "psr-4": {

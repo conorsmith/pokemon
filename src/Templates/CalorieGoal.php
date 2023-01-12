@@ -12,14 +12,18 @@
 
     <h1>Calorie Goal</h1>
 
+    <?php foreach ($errors as $error) : ?>
+        <div class="alert alert-danger"><?=$error?></div>
+    <?php endforeach ?>
+
     <form method="POST" class="d-grid">
         <input type="hidden" name="date" value="<?=$yesterday?>">
-        <button type="submit" class="btn btn-primary btn-lg">Attained Yesterday's Calorie Goal</button>
+        <button type="submit" class="btn btn-primary btn-lg" <?=$isYesterdayLogged ? "disabled" : ""?>>Attained Yesterday's Calorie Goal</button>
     </form>
 
     <form method="POST" class="d-grid">
         <input type="hidden" name="date" value="<?=$today?>">
-        <button type="submit" class="btn btn-primary btn-lg">Attained Today's Calorie Goal</button>
+        <button type="submit" class="btn btn-primary btn-lg" <?=$isTodayLogged ? "disabled" : ""?>>Attained Today's Calorie Goal</button>
     </form>
 
     <form method="POST" class="d-grid gap-2">

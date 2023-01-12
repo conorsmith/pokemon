@@ -6,16 +6,19 @@ namespace ConorSmith\Pokemon\Controllers;
 use Carbon\CarbonImmutable;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostLogExercise
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly Session $session,
     ) {}
 
     public function __invoke(): void
     {
         if ($_POST['date'] === "") {
+            $this->session->getFlashBag()->add("errors", "Given date is empty.");
             header("Location: /log/exercise");
             exit;
         }
@@ -23,6 +26,7 @@ final class PostLogExercise
         $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $_POST['date']);
 
         if ($submittedDate->isFuture()) {
+            $this->session->getFlashBag()->add("errors", "Given date is in the future.");
             header("Location: /log/exercise");
             exit;
         }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 return [
     [
@@ -46,6 +47,22 @@ return [
             "0e27acd0-1d6e-458a-9ba8-7344f90761e1",
         ],
         'pokemon' => [
+            "19" => [
+                'weight' => 5,
+                'levels' => [2, 5],
+            ],
+            "21" => [
+                'weight' => 3,
+                'levels' => [2, 5],
+            ],
+            "54" => [
+                'weight' => 1,
+                'levels' => [3, 5],
+            ],
+            "56" => [
+                'weight' => 1,
+                'levels' => [2, 5],
+            ],
         ],
     ],
     [

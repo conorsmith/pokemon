@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Controllers;
 
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostMapMove
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly Session $session,
         private readonly array $map,
     ) {}
 
@@ -19,6 +21,7 @@ final class PostMapMove
         ]);
 
         if ($instanceRow['unused_moves'] < 1) {
+            $this->session->getFlashBag()->add("errors", "No unused moves remaining.");
             header("Location: /map/move");
             exit;
         }
@@ -26,6 +29,7 @@ final class PostMapMove
         $currentLocation = $this->findLocation($instanceRow['current_location']);
 
         if (!in_array($_POST['location'], $currentLocation['directions'])) {
+            $this->session->getFlashBag()->add("errors", "Cannot move there from current location.");
             header("Location: /map/move");
             exit;
         }

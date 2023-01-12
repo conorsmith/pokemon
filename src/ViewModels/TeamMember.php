@@ -20,11 +20,17 @@ final class TeamMember
             $team[] = new self(
                 $row['id'],
                 $pokedex[$row['pokemon_id']]['name'],
-                $pokedex[$row['pokemon_id']]['imageUrl'],
+                self::createImageUrl($row['pokemon_id']),
                 strval($row['level']),
             );
         }
 
         return $team;
+    }
+
+    public static function createImageUrl(string $id): string
+    {
+        $paddedPokemonId = str_pad($id, 3, "0", STR_PAD_LEFT);
+        return "https://assets.pokemon.com/assets/cms2/img/pokedex/full/{$paddedPokemonId}.png";
     }
 }

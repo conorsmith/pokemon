@@ -5,11 +5,13 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use Doctrine\DBAL\Connection;
 use stdClass;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetMapMove
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly Session $session,
         private readonly array $map,
     ) {}
 
@@ -22,6 +24,8 @@ final class GetMapMove
         $unusedMoves = $row['unused_moves'];
 
         $currentLocation = $this->createLocationViewModel($this->findLocation($row['current_location']));
+
+        $errors = $this->session->getFlashBag()->get("errors");
 
         include __DIR__ . "/../Templates/Move.php";
         exit;

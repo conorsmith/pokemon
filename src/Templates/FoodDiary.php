@@ -12,14 +12,18 @@
 
     <h1>Food Diary</h1>
 
+    <?php foreach ($errors as $error) : ?>
+        <div class="alert alert-danger"><?=$error?></div>
+    <?php endforeach ?>
+
     <form method="POST" class="d-grid">
         <input type="hidden" name="date" value="<?=$yesterday?>">
-        <button type="submit" class="btn btn-primary btn-lg">Completed Yesterday's Food Diary</button>
+        <button type="submit" class="btn btn-primary btn-lg" <?=$isYesterdayLogged ? "disabled" : ""?>>Completed Yesterday's Food Diary</button>
     </form>
 
     <form method="POST" class="d-grid">
         <input type="hidden" name="date" value="<?=$today?>">
-        <button type="submit" class="btn btn-primary btn-lg">Completed Today's Food Diary</button>
+        <button type="submit" class="btn btn-primary btn-lg" <?=$isTodayLogged ? "disabled" : ""?>>Completed Today's Food Diary</button>
     </form>
 
     <form method="POST" class="d-grid gap-2">

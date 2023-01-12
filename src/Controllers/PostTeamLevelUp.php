@@ -4,11 +4,14 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Controllers;
 
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostTeamLevelUp
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly Session $session,
+        private readonly array $pokedex,
     ) {}
 
     public function __invoke(): void
@@ -18,6 +21,7 @@ final class PostTeamLevelUp
         ]);
 
         if ($pokemonRow === false) {
+            $this->session->getFlashBag()->add("errors", "Pokémon not found.");
             header("Location: /team/level-up");
             exit;
         }
@@ -27,9 +31,13 @@ final class PostTeamLevelUp
         ]);
 
         if ($instanceRow['unused_level_ups'] < 1) {
+            $this->session->getFlashBag()->add("errors", "No unused levels remaining.");
             header("Location: /team/level-up");
             exit;
         }
+
+        $newLevel = $pokemonRow['level'] + 1;
+        $pokemon = $this->pokedex[$pokemonRow['pokemon_id']];
 
         $this->db->beginTransaction();
 
@@ -40,12 +48,14 @@ final class PostTeamLevelUp
         ]);
 
         $this->db->update("caught_pokemon", [
-            'level' => $pokemonRow['level'] + 1,
+            'level' => $newLevel,
         ], [
             'id' => $pokemonRow['id'],
         ]);
 
         $this->db->commit();
+
+        $this->session->getFlashBag()->add("successes", "{$pokemon['name']} levelled up to level {$newLevel}");
 
         header("Location: /");
         exit;
