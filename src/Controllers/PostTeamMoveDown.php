@@ -23,7 +23,7 @@ final class PostTeamMoveDown
 
         foreach ($rows as $i => $pokemonRow) {
             if ($pokemonRow['id'] === $pokemonId) {
-                if ($pokemonRow['team_position'] === 6) {
+                if ($pokemonRow['team_position'] === count($rows)) {
                     $this->session->getFlashBag()->add("errors", "Target Pokémon cannot be moved down");
                     header("Location: /box");
                     return;

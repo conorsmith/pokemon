@@ -17,7 +17,7 @@
                             </form>
                             <form method="POST" action="/team/move-down">
                                 <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                <button type="submit" class="btn btn-outline-dark btn-sm" <?=$i === 5 ? "disabled" : ""?>><i class="fas fa-fw fa-chevron-down"></i></button>
+                                <button type="submit" class="btn btn-outline-dark btn-sm" <?=$i === count($team) - 1 ? "disabled" : ""?>><i class="fas fa-fw fa-chevron-down"></i></button>
                             </form>
                         </div>
                         <div>

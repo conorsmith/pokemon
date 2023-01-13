@@ -3,8 +3,8 @@
         <strong>You encountered a wild <?=$pokemon->name?></strong>
     </li>
     <li class="list-group-item d-flex flex-row-reverse">
-        <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
-        <div>
+        <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-left: 1rem;">
+        <div style="text-align: right;">
             <h5><?=$pokemon->name?></h5>
             <p class="mb-0">Level <?=$pokemon->level?></p>
         </div>
