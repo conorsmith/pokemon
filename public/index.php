@@ -18,98 +18,26 @@ $db = \Doctrine\DBAL\DriverManager::getConnection([
 
 $pokedex = require __DIR__ . "/../src/Config/Pokedex.php";
 
+/** @var array $map */
 $map = require __DIR__ . "/../src/Config/Map.php";
 
 $caughtPokemonRepository = new \ConorSmith\Pokemon\Repositories\CaughtPokemonRepository($db);
 
-if ($_SERVER['REQUEST_METHOD'] === "GET"
-    && $_SERVER['REQUEST_URI'] === "/log/food-diary"
-) {
-    (new \ConorSmith\Pokemon\Controllers\GetLogFoodDiary($db, $session))();
+$controllerFactory = new \ConorSmith\Pokemon\ControllerFactory($db, $session, $caughtPokemonRepository, $pokedex, $map);
 
-} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
-    && $_SERVER['REQUEST_URI'] === "/log/food-diary"
-) {
-    (new \ConorSmith\Pokemon\Controllers\PostLogFoodDiary($db, $session))();
+$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) use ($db, $session) {
+    \ConorSmith\Pokemon\ControllerFactory::routes($r);
+});
 
-} elseif ($_SERVER['REQUEST_METHOD'] === "GET"
-    && $_SERVER['REQUEST_URI'] === "/team/level-up"
-) {
-    (new \ConorSmith\Pokemon\Controllers\GetTeamLevelUp($db, $caughtPokemonRepository, $pokedex))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
-    && $_SERVER['REQUEST_URI'] === "/team/level-up"
-) {
-    (new \ConorSmith\Pokemon\Controllers\PostTeamLevelUp($db, $session, $pokedex))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "GET"
-    && $_SERVER['REQUEST_URI'] === "/log/calorie-goal"
-) {
-    (new \ConorSmith\Pokemon\Controllers\GetLogCalorieGoal($db, $session))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
-    && $_SERVER['REQUEST_URI'] === "/log/calorie-goal"
-) {
-    (new \ConorSmith\Pokemon\Controllers\PostLogCalorieGoal($db, $session))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "GET"
-    && $_SERVER['REQUEST_URI'] === "/map/move"
-) {
-    (new \ConorSmith\Pokemon\Controllers\GetMapMove($db, $session, $map))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
-    && $_SERVER['REQUEST_URI'] === "/map/move"
-) {
-    (new \ConorSmith\Pokemon\Controllers\PostMapMove($db, $session, $map))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "GET"
-    && $_SERVER['REQUEST_URI'] === "/log/exercise"
-) {
-    (new \ConorSmith\Pokemon\Controllers\GetLogExercise($db, $session))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
-    && $_SERVER['REQUEST_URI'] === "/log/exercise"
-) {
-    (new \ConorSmith\Pokemon\Controllers\PostLogExercise($db, $session))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "GET"
-    && $_SERVER['REQUEST_URI'] === "/map/encounter"
-) {
-    (new \ConorSmith\Pokemon\Controllers\GetMapEncounter($db, $session, $map))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
-    && $_SERVER['REQUEST_URI'] === "/map/encounter"
-) {
-    (new \ConorSmith\Pokemon\Controllers\PostMapEncounter($db, $session, $map))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "GET"
-    && $_SERVER['REQUEST_URI'] === "/box"
-) {
-    (new \ConorSmith\Pokemon\Controllers\GetBox($db, $pokedex))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "GET"
-    && substr($_SERVER['REQUEST_URI'], 0, strlen("/encounter/")) === "/encounter/"
-) {
-    (new \ConorSmith\Pokemon\Controllers\GetEncounter($db, $session, $pokedex))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
-    && substr($_SERVER['REQUEST_URI'], 0, strlen("/encounter/")) === "/encounter/"
-    && substr($_SERVER['REQUEST_URI'], -strlen("/catch")) === "/catch"
-) {
-    (new \ConorSmith\Pokemon\Controllers\PostEncounterCatch($db, $session, $pokedex, $map))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "POST"
-    && substr($_SERVER['REQUEST_URI'], 0, strlen("/encounter/")) === "/encounter/"
-    && substr($_SERVER['REQUEST_URI'], -strlen("/run")) === "/run"
-) {
-    (new \ConorSmith\Pokemon\Controllers\PostEncounterRun($db))();
-
-} elseif ($_SERVER['REQUEST_METHOD'] === "GET"
-    && $_SERVER['REQUEST_URI'] === "/"
-) {
-    (new \ConorSmith\Pokemon\Controllers\GetIndex($session, $caughtPokemonRepository, $pokedex))();
-
-} else {
-    echo "Page Not Found";
-    exit;
+$routeInfo = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+switch ($routeInfo[0]) {
+    case FastRoute\Dispatcher::NOT_FOUND:
+    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+        echo "Page Not Found";
+        break;
+    case FastRoute\Dispatcher::FOUND:
+        $handler = $routeInfo[1];
+        $vars = $routeInfo[2];
+        $controllerFactory->create($handler)();
+        break;
 }

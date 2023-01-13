@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use ConorSmith\Pokemon\PokedexNo;
+
 return [
     [
         'id' => "0998d25b-6afd-4bde-9ddc-57560660ffc3",
@@ -10,11 +12,11 @@ return [
             "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
         ],
         'pokemon' => [
-            "16" => [
+            PokedexNo::PIDGEY => [
                 'weight' => 1,
                 'levels' => [1, 3],
             ],
-            "19" => [
+            PokedexNo::RATTATA => [
                 'weight' => 3,
                 'levels' => [1, 3],
             ],
@@ -28,11 +30,11 @@ return [
             "0998d25b-6afd-4bde-9ddc-57560660ffc3",
         ],
         'pokemon' => [
-            "16" => [
+            PokedexNo::PIDGEY => [
                 'weight' => 1,
                 'levels' => [2, 5],
             ],
-            "19" => [
+            PokedexNo::RATTATA => [
                 'weight' => 1,
                 'levels' => [2, 4],
             ],
@@ -47,19 +49,19 @@ return [
             "0e27acd0-1d6e-458a-9ba8-7344f90761e1",
         ],
         'pokemon' => [
-            "19" => [
+            PokedexNo::RATTATA => [
                 'weight' => 5,
                 'levels' => [2, 5],
             ],
-            "21" => [
+            PokedexNo::SPEAROW => [
                 'weight' => 3,
                 'levels' => [2, 5],
             ],
-            "54" => [
+            PokedexNo::PSYDUCK => [
                 'weight' => 1,
                 'levels' => [3, 5],
             ],
-            "56" => [
+            PokedexNo::MANKEY => [
                 'weight' => 1,
                 'levels' => [2, 5],
             ],
@@ -75,6 +77,30 @@ return [
             "e130f4d7-38f3-4a0b-89b4-fa8480e888ac",
         ],
         'pokemon' => [
+            PokedexNo::CATERPIE => [
+                'weight' => 15,
+                'levels' => [3, 5],
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 15,
+                'levels' => [3, 5],
+            ],
+            PokedexNo::PIDGEY => [
+                'weight' => 45,
+                'levels' => [3, 5],
+            ],
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => [2, 5],
+            ],
+            PokedexNo::NIDORAN_F => [
+                'weight' => 15,
+                'levels' => [4, 6],
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 15,
+                'levels' => [4, 6],
+            ],
         ],
     ],
     [
@@ -85,6 +111,22 @@ return [
             "4f788128-22d4-4bbe-a954-029a7fd599bd",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 45,
+                'levels' => [5, 7],
+            ],
+            PokedexNo::RATTATA => [
+                'weight' => 15,
+                'levels' => [5, 7],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 45,
+                'levels' => [5, 8],
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 5,
+                'levels' => [5, 8],
+            ],
         ],
     ],
     [
@@ -94,6 +136,34 @@ return [
             "4f788128-22d4-4bbe-a954-029a7fd599bd",
         ],
         'pokemon' => [
+            PokedexNo::CATERPIE => [
+                'weight' => 45,
+                'levels' => [3, 5],
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 5,
+                'levels' => [4, 6],
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 45,
+                'levels' => [3, 5],
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 5,
+                'levels' => [4, 6],
+            ],
+            PokedexNo::PIDGEY => [
+                'weight' => 5,
+                'levels' => [4, 6],
+            ],
+            PokedexNo::PIDGEOTTO => [
+                'weight' => 1,
+                'levels' => [6, 7],
+            ],
+            PokedexNo::PIKACHU => [
+                'weight' => 5,
+                'levels' => [3, 5],
+            ],
         ],
     ],
     [
