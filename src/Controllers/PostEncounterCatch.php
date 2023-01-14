@@ -109,6 +109,7 @@ final class PostEncounterCatch
                 'pokemon_id' => $encounterRow['pokemon_id'],
                 'level' => $encounterRow['level'],
                 'team_position' => $teamPosition,
+                'has_fainted' => 0,
                 'location_caught' => $currentLocation['id'],
                 'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
             ]);
