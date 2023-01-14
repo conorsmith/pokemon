@@ -8,7 +8,7 @@ use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
 
-final class GetBox
+final class GetTeam
 {
     public function __construct(
         private readonly Connection $db,
@@ -27,7 +27,7 @@ final class GetBox
                 SELECT * FROM caught_pokemon
                     WHERE instance_id = :instanceId
                     AND team_position IS NULL
-                    ORDER BY pokemon_id ASC, level DESC",
+                    ORDER BY (pokemon_id * 1) ASC, level DESC",
             [
                 'instanceId' => INSTANCE_ID,
             ]

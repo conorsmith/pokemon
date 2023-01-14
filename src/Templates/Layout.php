@@ -20,13 +20,13 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/box">Box</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/map/move">Moves</a>
+                    <a class="nav-link" href="/team">Team</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/team/level-up">Level Ups</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/map/move">Moves</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/map/encounter">Encounters</a>

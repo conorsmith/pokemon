@@ -23,7 +23,7 @@
                         <div>
                             <form method="POST" action="/team/send-to-box">
                                 <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                <button type="submit" class="btn btn-outline-dark btn-sm" disabled>Send to Box</button>
+                                <button type="submit" class="btn btn-outline-dark btn-sm" <?=count($team) === 1 ? "disabled" : ""?>>Send to Box</button>
                             </form>
                         </div>
                     </div>
@@ -38,9 +38,15 @@
         <?php foreach ($box as $pokemon) : ?>
             <li class="list-group-item d-flex">
                 <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
-                <div>
+                <div class="w-100">
                     <h5><?=$pokemon->name?></h5>
                     <p class="mb-0">Level <?=$pokemon->level?></p>
+                    <div class="d-flex justify-content-end">
+                        <form method="POST" action="/team/send-to-team">
+                            <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                            <button type="submit" class="btn btn-outline-dark btn-sm" <?=count($team) === 6 ? "disabled" : ""?>>Send to Team</button>
+                        </form>
+                    </div>
                 </div>
             </li>
         <?php endforeach ?>

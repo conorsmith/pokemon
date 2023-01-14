@@ -22,14 +22,11 @@ final class GetMapMove
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $unusedMoves = $row['unused_moves'];
-
         $currentLocation = $this->createLocationViewModel($this->findLocation($row['current_location']));
 
         $errors = $this->session->getFlashBag()->get("errors");
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Move.php", [
-            'unusedMoves' => $unusedMoves,
             'currentLocation' => $currentLocation,
             'errors' => $errors,
         ]);

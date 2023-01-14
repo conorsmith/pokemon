@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
-use ConorSmith\Pokemon\Controllers\GetBox;
+use ConorSmith\Pokemon\Controllers\GetBattle;
+use ConorSmith\Pokemon\Controllers\GetTeam;
 use ConorSmith\Pokemon\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Controllers\GetIndex;
 use ConorSmith\Pokemon\Controllers\GetLogCalorieGoal;
@@ -12,6 +13,8 @@ use ConorSmith\Pokemon\Controllers\GetLogFoodDiary;
 use ConorSmith\Pokemon\Controllers\GetMapEncounter;
 use ConorSmith\Pokemon\Controllers\GetMapMove;
 use ConorSmith\Pokemon\Controllers\GetTeamLevelUp;
+use ConorSmith\Pokemon\Controllers\PostBattleFight;
+use ConorSmith\Pokemon\Controllers\PostBattleTrainer;
 use ConorSmith\Pokemon\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Controllers\PostEncounterRun;
 use ConorSmith\Pokemon\Controllers\PostLogCalorieGoal;
@@ -22,6 +25,8 @@ use ConorSmith\Pokemon\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Controllers\PostTeamLevelUp;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveDown;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveUp;
+use ConorSmith\Pokemon\Controllers\PostTeamSendToBox;
+use ConorSmith\Pokemon\Controllers\PostTeamSendToTeam;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
@@ -43,12 +48,17 @@ final class ControllerFactory
         $r->post("/log/exercise", PostLogExercise::class);
         $r->get("/map/encounter", GetMapEncounter::class);
         $r->post("/map/encounter", PostMapEncounter::class);
-        $r->get("/box", GetBox::class);
+        $r->get("/team", GetTeam::class);
         $r->get("/encounter/{id}", GetEncounter::class);
         $r->post("/encounter/{id}/catch", PostEncounterCatch::class);
         $r->post("/encounter/{id}/run", PostEncounterRun::class);
         $r->post("/team/move-up", PostTeamMoveUp::class);
         $r->post("/team/move-down", PostTeamMoveDown::class);
+        $r->post("/team/send-to-box", PostTeamSendToBox::class);
+        $r->post("/team/send-to-team", PostTeamSendToTeam::class);
+        $r->post("/battle/trainer/{id}", PostBattleTrainer::class);
+        $r->get("/battle/{id}", GetBattle::class);
+        $r->post("/battle/{id}/fight", PostBattleFight::class);
         $r->get("/", GetIndex::class);
     }
 
@@ -75,12 +85,17 @@ final class ControllerFactory
             PostLogExercise::class => new PostLogExercise($this->db, $this->session),
             GetMapEncounter::class => new GetMapEncounter($this->db, $this->session, $this->map),
             PostMapEncounter::class => new PostMapEncounter($this->db, $this->session, $this->map),
-            GetBox::class => new GetBox($this->db, $this->caughtPokemonRepository, $this->pokedex),
+            GetTeam::class => new GetTeam($this->db, $this->caughtPokemonRepository, $this->pokedex),
             GetEncounter::class => new GetEncounter($this->db, $this->session, $this->pokedex),
             PostEncounterCatch::class => new PostEncounterCatch($this->db, $this->session, $this->pokedex, $this->map),
             PostEncounterRun::class => new PostEncounterRun($this->db),
             PostTeamMoveUp::class => new PostTeamMoveUp($this->db, $this->session, $this->caughtPokemonRepository),
             PostTeamMoveDown::class => new PostTeamMoveDown($this->db, $this->session, $this->caughtPokemonRepository),
+            PostTeamSendToBox::class => new PostTeamSendToBox($this->db, $this->session, $this->caughtPokemonRepository),
+            PostTeamSendToTeam::class => new PostTeamSendToTeam($this->db, $this->session, $this->caughtPokemonRepository),
+            PostBattleTrainer::class => new PostBattleTrainer($this->db, $this->session, $this->map),
+            GetBattle::class => new GetBattle($this->db, $this->session, $this->pokedex, $this->map),
+            PostBattleFight::class => new PostBattleFight($this->db, $this->session, $this->pokedex, $this->map),
             GetIndex::class => new GetIndex($this->session, $this->caughtPokemonRepository, $this->pokedex),
         };
     }

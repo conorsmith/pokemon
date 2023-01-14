@@ -165,6 +165,42 @@ return [
                 'levels' => [3, 5],
             ],
         ],
+        'trainers' => [
+            [
+                'id' => "00416693-3615-4116-b964-f4960d9387e3",
+                'name' => "Bug Catcher Rick",
+                'prize' => 72,
+                'team' => [
+                    [
+                        'id' => PokedexNo::WEEDLE,
+                        'level' => 6,
+                    ],
+                    [
+                        'id' => PokedexNo::CATERPIE,
+                        'level' => 6,
+                    ],
+                ],
+            ],
+            [
+                'id' => "1baa9345-2f66-4f32-9be1-bab484b6cb67",
+                'name' => "Bug Catcher Doug",
+                'prize' => 84,
+                'team' => [
+                    [
+                        'id' => PokedexNo::WEEDLE,
+                        'level' => 7,
+                    ],
+                    [
+                        'id' => PokedexNo::KAKUNA,
+                        'level' => 7,
+                    ],
+                    [
+                        'id' => PokedexNo::WEEDLE,
+                        'level' => 7,
+                    ],
+                ],
+            ],
+        ],
     ],
     [
         'id' => "59149839-b573-4153-b75e-0664498370f6",

@@ -38,6 +38,6 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
-        $controllerFactory->create($handler)();
+        $controllerFactory->create($handler)($vars);
         break;
 }

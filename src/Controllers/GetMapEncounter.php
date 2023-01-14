@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use Carbon\CarbonImmutable;
+use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\TemplateEngine;
 use Doctrine\DBAL\Connection;
 use stdClass;
@@ -18,20 +20,44 @@ final class GetMapEncounter
 
     public function __invoke(): void
     {
-        $row = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
+        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $pokeballs = $row['unused_encounters'];
+        $pokeballs = $instanceRow['unused_encounters'];
+        $battleTokens = $instanceRow['unused_moves'];
 
-        $currentLocation = $this->createLocationViewModel($this->findLocation($row['current_location']));
+        $currentLocation = $this->createLocationViewModel($this->findLocation($instanceRow['current_location']));
 
         $successes = $this->session->getFlashBag()->get("successes");
         $errors = $this->session->getFlashBag()->get("errors");
 
+        $trainers = [];
+
+        foreach ($this->findLocation($instanceRow['current_location'])['trainers'] as $trainer) {
+            $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
+                'instanceId' => INSTANCE_ID,
+                'trainerId' => $trainer['id'],
+            ]);
+
+            if ($trainerBattleRow !== false) {
+                $lastBattled = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $trainerBattleRow['date_last_battled'], new CarbonTimeZone("Europe/Dublin"));
+                $isInCooldownWindow = $lastBattled->addMonth() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
+            }
+
+            $trainers[] = (object) [
+                'id' => $trainer['id'],
+                'name' => $trainer['name'],
+                'team' => count($trainer['team']),
+                'canBattle' => !$isInCooldownWindow && $battleTokens > 0,
+            ];
+        }
+
         echo TemplateEngine::render(__DIR__ . "/../Templates/MapEncounter.php", [
             'pokeballs' => $pokeballs,
+            'battleTokens' => $battleTokens,
             'currentLocation' => $currentLocation,
+            'trainers' => $trainers,
             'successes' => $successes,
             'errors' => $errors,
         ]);

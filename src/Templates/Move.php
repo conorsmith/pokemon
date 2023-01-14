@@ -10,9 +10,6 @@
         <div class="card-header">
             <h3 class="mb-0"><?=$currentLocation->name?></h3>
         </div>
-        <div class="card-body">
-            <strong><?=$unusedMoves?></strong> unused moves
-        </div>
     </div>
 
     <div class="d-grid gap-2">

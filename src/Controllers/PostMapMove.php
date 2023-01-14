@@ -20,12 +20,6 @@ final class PostMapMove
             'instanceId' => INSTANCE_ID,
         ]);
 
-        if ($instanceRow['unused_moves'] < 1) {
-            $this->session->getFlashBag()->add("errors", "No unused moves remaining.");
-            header("Location: /map/move");
-            exit;
-        }
-
         $currentLocation = $this->findLocation($instanceRow['current_location']);
 
         if (!in_array($_POST['location'], $currentLocation['directions'])) {
@@ -36,7 +30,6 @@ final class PostMapMove
 
         $this->db->update("instances", [
             'current_location' => $_POST['location'],
-            'unused_moves' => $instanceRow['unused_moves'] - 1,
         ], [
             'id' => INSTANCE_ID,
         ]);

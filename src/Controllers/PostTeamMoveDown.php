@@ -25,7 +25,7 @@ final class PostTeamMoveDown
             if ($pokemonRow['id'] === $pokemonId) {
                 if ($pokemonRow['team_position'] === count($rows)) {
                     $this->session->getFlashBag()->add("errors", "Target Pokémon cannot be moved down");
-                    header("Location: /box");
+                    header("Location: /team");
                     return;
                 }
                 $targetPokemon = $rows[$i];
@@ -35,7 +35,7 @@ final class PostTeamMoveDown
 
         if (!isset($targetPokemon)) {
             $this->session->getFlashBag()->add("errors", "Target Pokémon not found");
-            header("Location: /box");
+            header("Location: /team");
             return;
         }
 
@@ -55,6 +55,6 @@ final class PostTeamMoveDown
 
         $this->db->commit();
 
-        header("Location: /box");
+        header("Location: /team");
     }
 }
