@@ -22,7 +22,7 @@ final class GetTeamLevelUp
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $unusedLevelUps = $row['unused_level_ups'];
+        $rareCandies = $row['unused_level_ups'];
 
         $rows = $this->caughtPokemonRepository->getTeam();
 
@@ -30,7 +30,7 @@ final class GetTeamLevelUp
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/LevelUp.php", [
             'team' => $team,
-            'unusedLevelUps' => $unusedLevelUps,
+            'rareCandies' => $rareCandies,
         ]);
     }
 }

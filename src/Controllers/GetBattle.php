@@ -28,7 +28,7 @@ final class GetBattle
             'id' => $args['id'],
         ]);
 
-        $leadPokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position = 1", [
+        $leadPokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position IS NOT NULL AND has_fainted = 0 ORDER BY team_position", [
             'instanceId' => INSTANCE_ID,
         ]);
 

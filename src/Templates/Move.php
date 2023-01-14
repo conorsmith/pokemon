@@ -18,7 +18,7 @@
 
             <form method="POST" class="d-grid">
                 <input type="hidden" name="location" value="<?=$location->id?>">
-                <button type="submit" class="btn btn-primary btn-lg" <?=$unusedMoves === 0 ? "disabled" : ""?>>Move to <?=$location->name?></button>
+                <button type="submit" class="btn btn-primary btn-lg">Move to <?=$location->name?></button>
             </form>
 
         <?php endforeach ?>

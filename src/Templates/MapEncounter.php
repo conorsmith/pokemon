@@ -33,7 +33,7 @@
             <h3 class="mb-0">Trainers</h3>
         </div>
         <div class="card-body" style="text-align: center;">
-            <strong><?=$battleTokens?></strong> Battle Tokens
+            <strong><?=$challengeTokens?></strong> Challenge Tokens
         </div>
         <ul class="list-group list-group-flush">
             <?php foreach ($trainers as $trainer) : ?>
@@ -41,9 +41,14 @@
                     <div>
                         <div><strong><?=$trainer->name?></strong></div>
                         <div><small><?=$trainer->team?> Pokémon</small></div>
-                        <form method="POST" action="/battle/trainer/<?=$trainer->id?>" style="margin-top: 0.4rem;">
-                            <button type="submit" class="btn btn-outline-dark btn-sm" <?=$trainer->canBattle ? "" : "disabled"?>>Battle</button>
-                        </form>
+                        <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
+                            <form method="POST" action="/battle/trainer/<?=$trainer->id?>" style="margin-right: 0.6rem;">
+                                <button type="submit" class="btn btn-outline-dark btn-sm" <?=$trainer->canBattle ? "" : "disabled"?>>Battle</button>
+                            </form>
+                            <?php if ($trainer->lastBattled) : ?>
+                                <span style="font-size: 0.8rem;">Last battled <?=$trainer->lastBattled?></span>
+                            <?php endif ?>
+                        </div>
                     </div>
                 </li>
             <?php endforeach ?>

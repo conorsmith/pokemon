@@ -41,7 +41,7 @@
             </button>
         </form>
         <form method="POST" action="/battle/<?=$id?>/switch" class="d-grid">
-            <button type="submit" class="btn btn-outline-dark">
+            <button type="submit" class="btn btn-outline-dark" disabled>
                 Switch
             </button>
         </form>

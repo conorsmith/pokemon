@@ -96,7 +96,7 @@ final class ControllerFactory
             PostBattleTrainer::class => new PostBattleTrainer($this->db, $this->session, $this->map),
             GetBattle::class => new GetBattle($this->db, $this->session, $this->pokedex, $this->map),
             PostBattleFight::class => new PostBattleFight($this->db, $this->session, $this->pokedex, $this->map),
-            GetIndex::class => new GetIndex($this->session, $this->caughtPokemonRepository, $this->pokedex),
+            GetIndex::class => new GetIndex($this->db, $this->session, $this->caughtPokemonRepository, $this->pokedex),
         };
     }
 }

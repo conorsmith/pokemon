@@ -200,6 +200,21 @@ return [
                     ],
                 ],
             ],
+            [
+                'id' => "6104398b-3034-425b-8b47-63bb63e43966",
+                'name' => "Bug Catcher Anthony",
+                'prize' => 96,
+                'team' => [
+                    [
+                        'id' => PokedexNo::CATERPIE,
+                        'level' => 7,
+                    ],
+                    [
+                        'id' => PokedexNo::CATERPIE,
+                        'level' => 8,
+                    ],
+                ],
+            ],
         ],
     ],
     [

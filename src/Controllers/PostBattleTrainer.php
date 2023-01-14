@@ -24,7 +24,7 @@ final class PostBattleTrainer
         ]);
 
         if ($instanceRow['unused_moves'] < 1) {
-            $this->session->getFlashBag()->add("errors", "No unused battle tokens remaining.");
+            $this->session->getFlashBag()->add("errors", "No unused challenge tokens remaining.");
             header("Location: /map/encounter");
             exit;
         }

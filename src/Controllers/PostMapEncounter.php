@@ -24,7 +24,7 @@ final class PostMapEncounter
         ]);
 
         if ($instanceRow['unused_encounters'] < 1) {
-            $this->session->getFlashBag()->add("errors", "No unused encounters remaining.");
+            $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
             header("Location: /map/encounter");
             exit;
         }

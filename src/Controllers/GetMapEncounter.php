@@ -25,7 +25,7 @@ final class GetMapEncounter
         ]);
 
         $pokeballs = $instanceRow['unused_encounters'];
-        $battleTokens = $instanceRow['unused_moves'];
+        $challengeTokens = $instanceRow['unused_moves'];
 
         $currentLocation = $this->createLocationViewModel($this->findLocation($instanceRow['current_location']));
 
@@ -43,19 +43,23 @@ final class GetMapEncounter
             if ($trainerBattleRow !== false) {
                 $lastBattled = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $trainerBattleRow['date_last_battled'], new CarbonTimeZone("Europe/Dublin"));
                 $isInCooldownWindow = $lastBattled->addMonth() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
+            } else {
+                $lastBattled = null;
+                $isInCooldownWindow = false;
             }
 
             $trainers[] = (object) [
                 'id' => $trainer['id'],
                 'name' => $trainer['name'],
                 'team' => count($trainer['team']),
-                'canBattle' => !$isInCooldownWindow && $battleTokens > 0,
+                'canBattle' => !$isInCooldownWindow && $challengeTokens > 0,
+                'lastBattled' => $lastBattled ? $lastBattled->ago() : "",
             ];
         }
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/MapEncounter.php", [
             'pokeballs' => $pokeballs,
-            'battleTokens' => $battleTokens,
+            'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
             'trainers' => $trainers,
             'successes' => $successes,

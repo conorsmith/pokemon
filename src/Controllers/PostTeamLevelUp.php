@@ -31,7 +31,7 @@ final class PostTeamLevelUp
         ]);
 
         if ($instanceRow['unused_level_ups'] < 1) {
-            $this->session->getFlashBag()->add("errors", "No unused levels remaining.");
+            $this->session->getFlashBag()->add("errors", "No rare candies remaining.");
             header("Location: /team/level-up");
             exit;
         }

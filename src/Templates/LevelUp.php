@@ -4,7 +4,7 @@
 
     <div class="card" style="text-align: center;">
         <div class="card-body">
-            <strong><?=$unusedLevelUps?></strong> unused level ups
+            <strong><?=$rareCandies?></strong> rare candies
         </div>
     </div>
 
@@ -15,7 +15,7 @@
                 <div>
                     <h5><?=$pokemon->name?></h5>
                     <p class="mb-0">Level <?=$pokemon->level?></p>
-                    <?php if ($unusedLevelUps > 0) : ?>
+                    <?php if ($rareCandies > 0) : ?>
                         <form method="POST" style="margin-top: 1rem;">
                             <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
                             <button type="submit" class="btn btn-primary btn-sm">Level Up!</button>
