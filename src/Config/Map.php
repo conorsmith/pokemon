@@ -272,6 +272,7 @@ return [
         'name' => "Pewter City",
         'directions' => [
             LocationId::ROUTE_3,
+            LocationId::PEWTER_GYM,
             LocationId::ROUTE_2,
         ],
         'pokemon' => [
@@ -292,6 +293,14 @@ return [
                 'levels' => [5, 8],
             ],
         ],
+    ],
+    [
+        'id' => LocationId::PEWTER_GYM,
+        'name' => "Pewter Gym",
+        'directions' => [
+            LocationId::PEWTER_CITY,
+        ],
+        'pokemon' => [],
         'trainers' => [
             [
                 'id' => "50b4e614-c12d-4fd5-971b-c50fa9d7e7ef",
@@ -524,7 +533,7 @@ return [
         'id' => LocationId::ROUTE_4,
         'name' => "Route 4",
         'directions' => [
-            LocationId::MT_MOON_F1,
+            LocationId::MT_MOON_BF2,
             "cf6dff48-2972-4fe9-8853-9ccba685c38e",
         ],
         'pokemon' => [
