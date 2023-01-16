@@ -1,14 +1,15 @@
 <?php
 declare(strict_types=1);
 
+use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
 
 return [
     [
-        'id' => "0998d25b-6afd-4bde-9ddc-57560660ffc3",
+        'id' => LocationId::PALLET_TOWN,
         'name' => "Pallet Town",
         'directions' => [
-            "0e27acd0-1d6e-458a-9ba8-7344f90761e1",
+            LocationId::ROUTE_1,
             "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
         ],
         'pokemon' => [
@@ -23,11 +24,11 @@ return [
         ],
     ],
     [
-        'id' => "0e27acd0-1d6e-458a-9ba8-7344f90761e1",
+        'id' => LocationId::ROUTE_1,
         'name' => "Route 1",
         'directions' => [
-            "e130f4d7-38f3-4a0b-89b4-fa8480e888ac",
-            "0998d25b-6afd-4bde-9ddc-57560660ffc3",
+            LocationId::VIRIDIAN_CITY,
+            LocationId::PALLET_TOWN,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -41,12 +42,13 @@ return [
         ],
     ],
     [
-        'id' => "e130f4d7-38f3-4a0b-89b4-fa8480e888ac",
+        'id' => LocationId::VIRIDIAN_CITY,
         'name' => "Viridian City",
         'directions' => [
-            "4f788128-22d4-4bbe-a954-029a7fd599bd",
-            "ef4eb649-cf0c-40f1-a11b-601eb4d78a3c",
-            "0e27acd0-1d6e-458a-9ba8-7344f90761e1",
+            LocationId::ROUTE_2,
+            LocationId::ROUTE_22,
+            LocationId::VIRIDIAN_GYM,
+            LocationId::ROUTE_1,
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -68,13 +70,175 @@ return [
         ],
     ],
     [
-        'id' => "4f788128-22d4-4bbe-a954-029a7fd599bd",
+        'id' => LocationId::VIRIDIAN_GYM,
+        'name' => "Viridian Gym",
+        'directions' => [
+            LocationId::VIRIDIAN_CITY,
+        ],
+        'pokemon' => [],
+        'trainers' => [
+            [
+                'id' => "dd360fe7-c9bd-46d8-9c30-f8ce4e09566d",
+                'name' => "Tamer Cole",
+                'prize' => 1560,
+                'team' => [
+                    [
+                        'id' => PokedexNo::ARBOK,
+                        'level' => 39,
+                    ],
+                    [
+                        'id' => PokedexNo::TAUROS,
+                        'level' => 39,
+                    ],
+                ],
+            ],
+            [
+                'id' => "80255111-47e4-40fd-a49f-6ffbdfed2dc8",
+                'name' => "Black Belt Kiyo",
+                'prize' => 1032,
+                'team' => [
+                    [
+                        'id' => PokedexNo::MACHOKE,
+                        'level' => 43,
+                    ],
+                ],
+            ],
+            [
+                'id' => "d8b3ba34-ec2f-46b8-b298-baf721535799",
+                'name' => "Cooltrainer Samuel",
+                'prize' => 1404,
+                'team' => [
+                    [
+                        'id' => PokedexNo::SANDSLASH,
+                        'level' => 37,
+                    ],
+                    [
+                        'id' => PokedexNo::SANDSLASH,
+                        'level' => 37,
+                    ],
+                    [
+                        'id' => PokedexNo::RHYHORN,
+                        'level' => 38,
+                    ],
+                    [
+                        'id' => PokedexNo::NIDORINO,
+                        'level' => 39,
+                    ],
+                    [
+                        'id' => PokedexNo::NIDOKING,
+                        'level' => 39,
+                    ],
+                ],
+            ],
+            [
+                'id' => "e783c473-f6fb-4791-a461-66c69c5a435f",
+                'name' => "Cooltrainer Yuji",
+                'prize' => 1368,
+                'team' => [
+                    [
+                        'id' => PokedexNo::SANDSLASH,
+                        'level' => 38,
+                    ],
+                    [
+                        'id' => PokedexNo::GRAVELER,
+                        'level' => 38,
+                    ],
+                    [
+                        'id' => PokedexNo::ONIX,
+                        'level' => 38,
+                    ],
+                    [
+                        'id' => PokedexNo::GRAVELER,
+                        'level' => 38,
+                    ],
+                    [
+                        'id' => PokedexNo::MAROWAK,
+                        'level' => 38,
+                    ],
+                ],
+            ],
+            [
+                'id' => "f1569626-32b6-46a4-a16b-0e85b5c3685c",
+                'name' => "Black Belt Atsushi",
+                'prize' => 960,
+                'team' => [
+                    [
+                        'id' => PokedexNo::MACHOP,
+                        'level' => 40,
+                    ],
+                    [
+                        'id' => PokedexNo::MACHOKE,
+                        'level' => 40,
+                    ],
+                ],
+            ],
+            [
+                'id' => "526d178c-62f1-4d5d-b2a1-29563c262627",
+                'name' => "Tamer Jason",
+                'prize' => 1720,
+                'team' => [
+                    [
+                        'id' => PokedexNo::RHYHORN,
+                        'level' => 43,
+                    ],
+                ],
+            ],
+            [
+                'id' => "ec68491a-0468-4df0-bdfd-e687abd2c320",
+                'name' => "Cooltrainer Warren",
+                'prize' => 1404,
+                'team' => [
+                    [
+                        'id' => PokedexNo::MAROWAK,
+                        'level' => 37,
+                    ],
+                    [
+                        'id' => PokedexNo::MAROWAK,
+                        'level' => 37,
+                    ],
+                    [
+                        'id' => PokedexNo::RHYHORN,
+                        'level' => 38,
+                    ],
+                    [
+                        'id' => PokedexNo::NIDORINA,
+                        'level' => 39,
+                    ],
+                    [
+                        'id' => PokedexNo::NIDOQUEEN,
+                        'level' => 39,
+                    ],
+                ],
+            ],
+            [
+                'id' => "13fc84dd-8ebf-4f45-a76f-bd1836045458",
+                'name' => "Black Belt Takashi",
+                'prize' => 912,
+                'team' => [
+                    [
+                        'id' => PokedexNo::MACHOKE,
+                        'level' => 38,
+                    ],
+                    [
+                        'id' => PokedexNo::MACHOP,
+                        'level' => 38,
+                    ],
+                    [
+                        'id' => PokedexNo::MACHOKE,
+                        'level' => 38,
+                    ],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_2,
         'name' => "Route 2",
         'directions' => [
-            "d2aefee3-2743-4fea-9425-b30041eb70f2",
-            "689069a9-13a7-4068-a49e-5395c05a4312",
-            "59149839-b573-4153-b75e-0664498370f6",
-            "e130f4d7-38f3-4a0b-89b4-fa8480e888ac",
+            LocationId::PEWTER_CITY,
+            LocationId::VIRIDIAN_FOREST,
+            LocationId::DIGLETTS_CAVE,
+            LocationId::VIRIDIAN_CITY,
         ],
         'pokemon' => [
             PokedexNo::CATERPIE => [
@@ -104,11 +268,11 @@ return [
         ],
     ],
     [
-        'id' => "d2aefee3-2743-4fea-9425-b30041eb70f2",
+        'id' => LocationId::PEWTER_CITY,
         'name' => "Pewter City",
         'directions' => [
-            "a5cd2de7-300e-4739-a222-5a0a1fed4d31",
-            "4f788128-22d4-4bbe-a954-029a7fd599bd",
+            LocationId::ROUTE_3,
+            LocationId::ROUTE_2,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -128,12 +292,29 @@ return [
                 'levels' => [5, 8],
             ],
         ],
+        'trainers' => [
+            [
+                'id' => "50b4e614-c12d-4fd5-971b-c50fa9d7e7ef",
+                'name' => "Camper Liam",
+                'prize' => 220,
+                'team' => [
+                    [
+                        'id' => PokedexNo::GEODUDE,
+                        'level' => 10,
+                    ],
+                    [
+                        'id' => PokedexNo::SANDSHREW,
+                        'level' => 11,
+                    ],
+                ],
+            ],
+        ],
     ],
     [
-        'id' => "689069a9-13a7-4068-a49e-5395c05a4312",
+        'id' => LocationId::VIRIDIAN_FOREST,
         'name' => "Viridian Forest",
         'directions' => [
-            "4f788128-22d4-4bbe-a954-029a7fd599bd",
+            LocationId::ROUTE_2,
         ],
         'pokemon' => [
             PokedexNo::CATERPIE => [
@@ -218,55 +399,179 @@ return [
         ],
     ],
     [
-        'id' => "59149839-b573-4153-b75e-0664498370f6",
+        'id' => LocationId::DIGLETTS_CAVE,
         'name' => "Diglett's Cave",
         'directions' => [
-            "4f788128-22d4-4bbe-a954-029a7fd599bd",
+            LocationId::ROUTE_2,
             "8e24cb82-3708-4530-aa1a-09a8465a5d2e",
         ],
         'pokemon' => [
+            PokedexNo::DIGLETT => [
+                'weight' => 95,
+                'levels' => [15, 22],
+            ],
+            PokedexNo::DUGTRIO => [
+                'weight' => 5,
+                'levels' => [29, 31],
+            ],
         ],
     ],
     [
-        'id' => "a5cd2de7-300e-4739-a222-5a0a1fed4d31",
+        'id' => LocationId::ROUTE_3,
         'name' => "Route 3",
         'directions' => [
-            "d2aefee3-2743-4fea-9425-b30041eb70f2",
-            "7de04a8f-0100-458c-958e-542611282bcf",
+            LocationId::PEWTER_CITY,
+            LocationId::MT_MOON_F1,
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 30,
+                'levels' => [6, 7],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 35,
+                'levels' => [6, 8],
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 15,
+                'levels' => [6, 7],
+            ],
+            PokedexNo::NIDORAN_F => [
+                'weight' => 15,
+                'levels' => [6, 7],
+            ],
+            PokedexNo::JIGGLYPUFF => [
+                'weight' => 10,
+                'levels' => [3, 7],
+            ],
+            PokedexNo::MANKEY => [
+                'weight' => 10,
+                'levels' => 7,
+            ],
         ],
     ],
     [
-        'id' => "7de04a8f-0100-458c-958e-542611282bcf",
-        'name' => "Mt. Moon",
+        'id' => LocationId::MT_MOON_F1,
+        'name' => "Mt. Moon (1st Floor)",
         'directions' => [
-            "a5cd2de7-300e-4739-a222-5a0a1fed4d31",
-            "bf6db9ee-68a4-4c84-a43a-48a148307204",
+            LocationId::ROUTE_3,
+            LocationId::MT_MOON_BF1,
         ],
         'pokemon' => [
+            PokedexNo::ZUBAT => [
+                'weight' => 69,
+                'levels' => [7, 10],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 25,
+                'levels' => [7, 9],
+            ],
+            PokedexNo::PARAS => [
+                'weight' => 5,
+                'levels' => 8,
+            ],
+            PokedexNo::CLEFAIRY => [
+                'weight' => 1,
+                'levels' => 8,
+            ],
         ],
     ],
     [
-        'id' => "bf6db9ee-68a4-4c84-a43a-48a148307204",
+        'id' => LocationId::MT_MOON_BF1,
+        'name' => "Mt. Moon (1st Basement Floor)",
+        'directions' => [
+            LocationId::MT_MOON_F1,
+            LocationId::MT_MOON_BF2,
+        ],
+        'pokemon' => [
+            PokedexNo::PARAS => [
+                'weight' => 100,
+                'levels' => [5, 10],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_MOON_BF2,
+        'name' => "Mt. Moon (2nd Basement Floor)",
+        'directions' => [
+            LocationId::MT_MOON_BF1,
+            LocationId::ROUTE_4,
+        ],
+        'pokemon' => [
+            PokedexNo::ZUBAT => [
+                'weight' => 49,
+                'levels' => [8, 11],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 30,
+                'levels' => [9, 10],
+            ],
+            PokedexNo::PARAS => [
+                'weight' => 15,
+                'levels' => [10, 12],
+            ],
+            PokedexNo::CLEFAIRY => [
+                'weight' => 6,
+                'levels' => [10, 12],
+            ],
+            PokedexNo::CHARMANDER => [
+                'weight' => 5,
+                'levels' => [7, 10],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_4,
         'name' => "Route 4",
         'directions' => [
-            "7de04a8f-0100-458c-958e-542611282bcf",
+            LocationId::MT_MOON_F1,
             "cf6dff48-2972-4fe9-8853-9ccba685c38e",
         ],
         'pokemon' => [
+            PokedexNo::RATTATA => [
+                'weight' => 35,
+                'levels' => [8, 12],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 35,
+                'levels' => [8, 12],
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 25,
+                'levels' => [6, 12],
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 25,
+                'levels' => [6, 12],
+            ],
+            PokedexNo::MANKEY => [
+                'weight' => 5,
+                'levels' => [10, 12],
+            ],
         ],
     ],
     [
         'id' => "cf6dff48-2972-4fe9-8853-9ccba685c38e",
         'name' => "Cerulean City",
         'directions' => [
-            "04fe98e1-051d-4eb4-90bf-8e788b33fda6",
-            "bf6db9ee-68a4-4c84-a43a-48a148307204",
+            LocationId::ROUTE_24,
+            LocationId::ROUTE_4,
             "57968d07-cea1-4a9b-ac21-53609a25ea36",
             "2ae61913-311d-4b24-87dd-934586badb5c",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 55,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 5,
+                'levels' => [5, 15],
+            ],
         ],
     ],
     [
@@ -396,7 +701,7 @@ return [
         'id' => "8e24cb82-3708-4530-aa1a-09a8465a5d2e",
         'name' => "Route 11",
         'directions' => [
-            "59149839-b573-4153-b75e-0664498370f6",
+            LocationId::DIGLETTS_CAVE,
             "41b38040-2b0b-4a4e-9333-67fc7a5bb003",
             "3387518a-aece-49e0-9563-ca645f881a00",
         ],
@@ -573,7 +878,7 @@ return [
         'id' => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
         'name' => "Route 21",
         'directions' => [
-            "0998d25b-6afd-4bde-9ddc-57560660ffc3",
+            LocationId::PALLET_TOWN,
             "a5520b4e-314b-4893-b56d-63b102295956",
         ],
         'pokemon' => [
@@ -592,13 +897,33 @@ return [
         ],
     ],
     [
-        'id' => "ef4eb649-cf0c-40f1-a11b-601eb4d78a3c",
+        'id' => LocationId::ROUTE_22,
         'name' => "Route 22",
         'directions' => [
             "2335aa04-4bde-421c-b27e-a680cb3e36b0",
-            "e130f4d7-38f3-4a0b-89b4-fa8480e888ac",
+            LocationId::VIRIDIAN_CITY,
         ],
         'pokemon' => [
+            PokedexNo::RATTATA => [
+                'weight' => 45,
+                'levels' => [2, 4],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 10,
+                'levels' => [3, 5],
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 5,
+                'levels' => [3, 4],
+            ],
+            PokedexNo::NIDORAN_F => [
+                'weight' => 5,
+                'levels' => [3, 4],
+            ],
+            PokedexNo::MANKEY => [
+                'weight' => 20,
+                'levels' => [3, 5],
+            ],
         ],
     ],
     [
@@ -606,7 +931,7 @@ return [
         'name' => "Victory Road",
         'directions' => [
             "d0c0bf10-689c-4d49-bc6f-044fa5f343f6",
-            "ef4eb649-cf0c-40f1-a11b-601eb4d78a3c",
+            LocationId::ROUTE_22,
         ],
         'pokemon' => [
         ],
@@ -631,7 +956,7 @@ return [
         ],
     ],
     [
-        'id' => "04fe98e1-051d-4eb4-90bf-8e788b33fda6",
+        'id' => LocationId::ROUTE_24,
         'name' => "Route 24",
         'directions' => [
             "bb9a23b0-c473-46ae-b663-fdabc187a7f0",
@@ -639,22 +964,94 @@ return [
             "cf6dff48-2972-4fe9-8853-9ccba685c38e",
         ],
         'pokemon' => [
+            PokedexNo::CATERPIE => [
+                'weight' => 20,
+                'levels' => 7,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 5,
+                'levels' => 8,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 20,
+                'levels' => 7,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 5,
+                'levels' => 8,
+            ],
+            PokedexNo::PIDGEY => [
+                'weight' => 15,
+                'levels' => [11, 13],
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 25,
+                'levels' => [12, 14],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 25,
+                'levels' => [12, 14],
+            ],
+            PokedexNo::ABRA => [
+                'weight' => 15,
+                'levels' => [8, 12],
+            ],
+            PokedexNo::BULBASAUR => [
+                'weight' => 5,
+                'levels' => [7, 11],
+            ],
         ],
     ],
     [
         'id' => "bb9a23b0-c473-46ae-b663-fdabc187a7f0",
         'name' => "Route 25",
         'directions' => [
-            "04fe98e1-051d-4eb4-90bf-8e788b33fda6",
+            LocationId::ROUTE_24,
         ],
         'pokemon' => [
+            PokedexNo::CATERPIE => [
+                'weight' => 20,
+                'levels' => 8,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 5,
+                'levels' => 9,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 20,
+                'levels' => 8,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 5,
+                'levels' => 9,
+            ],
+            PokedexNo::PIDGEY => [
+                'weight' => 15,
+                'levels' => [11, 13],
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 25,
+                'levels' => [12, 14],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 25,
+                'levels' => [12, 14],
+            ],
+            PokedexNo::ABRA => [
+                'weight' => 15,
+                'levels' => [9, 13],
+            ],
+            PokedexNo::BULBASAUR => [
+                'weight' => 5,
+                'levels' => [7, 11],
+            ],
         ],
     ],
     [
         'id' => "feeeeeca-6304-4072-b2c5-3f7babcfa171",
         'name' => "Cerulean Cave",
         'directions' => [
-            "04fe98e1-051d-4eb4-90bf-8e788b33fda6",
+            LocationId::ROUTE_24,
         ],
         'pokemon' => [
         ],

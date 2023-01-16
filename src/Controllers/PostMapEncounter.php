@@ -168,6 +168,10 @@ final class PostMapEncounter
     {
         $levels = $currentLocation['pokemon'][$pokemonId]['levels'];
 
+        if (is_int($levels)) {
+            return $levels;
+        }
+
         return mt_rand($levels[0], $levels[1]);
     }
 
