@@ -35,7 +35,7 @@
                         </span>
                     <?php endif ?>
                 </span>
-                <span style="margin: 0 0.8rem;">
+                <span style="margin: 0 0.4rem;">
                     Level <?=$activePokemon->level?>
                 </span>
             </p>
@@ -56,7 +56,7 @@
                         </span>
                     <?php endif ?>
                 </span>
-                <span style="margin: 0 0.8rem;">
+                <span style="margin: 0 0.4rem;">
                     Level <?=$leadPokemon->level?>
                 </span>
             </p>
