@@ -49,6 +49,7 @@ final class PostBattleFight
 
             if ($trainer->hasEntireTeamFainted()) {
                 $gameInstance = $gameInstance->winPrizeMoney($trainer);
+                $trainer = $trainer->defeat();
                 $trainer = $trainer->endBattle();
                 $player = $player->reviveTeam();
             }

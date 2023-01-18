@@ -45,8 +45,8 @@
                             <form method="POST" action="/battle/trainer/<?=$trainer->id?>" style="margin-right: 0.6rem;">
                                 <button type="submit" class="btn btn-outline-dark btn-sm" <?=$trainer->canBattle ? "" : "disabled"?>>Battle</button>
                             </form>
-                            <?php if ($trainer->lastBattled) : ?>
-                                <span style="font-size: 0.8rem;">Last battled <?=$trainer->lastBattled?></span>
+                            <?php if ($trainer->lastBeaten) : ?>
+                                <span style="font-size: 0.8rem;">Last beaten <?=$trainer->lastBeaten?></span>
                             <?php endif ?>
                         </div>
                     </div>

@@ -42,7 +42,7 @@ final class TrainerRepository
                 'instance_id' => INSTANCE_ID,
                 'trainer_id' => $trainerId,
                 'is_battling' => 0,
-                'date_last_battled' => null,
+                'date_last_beaten' => null,
                 'battle_count' => 0,
                 'active_pokemon' => 0,
             ]);
@@ -79,11 +79,11 @@ final class TrainerRepository
             $trainerConfig['prize'],
             $team,
             $trainerBattleRow['is_battling'] === 1,
-            is_null($trainerBattleRow['date_last_battled'])
+            is_null($trainerBattleRow['date_last_beaten'])
                 ? null
                 : CarbonImmutable::createFromFormat(
                 "Y-m-d H:i:s",
-                $trainerBattleRow['date_last_battled'],
+                $trainerBattleRow['date_last_beaten'],
                 new CarbonTimeZone("Europe/Dublin")
             ),
             $trainerBattleRow['battle_count'],
@@ -118,7 +118,7 @@ final class TrainerRepository
     {
         $this->db->update("trainer_battles", [
             'is_battling' => $battleTrainer->isBattling ? "1" : "0",
-            'date_last_battled' => $battleTrainer->dateLastBattled,
+            'date_last_beaten' => $battleTrainer->dateLastBeaten,
             'battle_count' => $battleTrainer->battleCount,
             'active_pokemon' => $battleTrainer->countFaintedTeamMembers(),
         ], [

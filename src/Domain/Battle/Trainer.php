@@ -15,7 +15,7 @@ final class Trainer
         public readonly int $prizeMoney,
         private readonly array $team,
         public readonly bool $isBattling,
-        public readonly ?CarbonImmutable $dateLastBattled,
+        public readonly ?CarbonImmutable $dateLastBeaten,
         public readonly int $battleCount,
     ) {}
 
@@ -27,8 +27,21 @@ final class Trainer
             $this->prizeMoney,
             $this->team,
             true,
-            CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
+            $this->dateLastBeaten,
             $this->battleCount + 1,
+        );
+    }
+
+    public function defeat(): self
+    {
+        return new self(
+            $this->id,
+            $this->name,
+            $this->prizeMoney,
+            $this->team,
+            $this->isBattling,
+            CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
+            $this->battleCount,
         );
     }
 
@@ -48,7 +61,7 @@ final class Trainer
             $this->prizeMoney,
             $revivedTeam,
             false,
-            $this->dateLastBattled,
+            $this->dateLastBeaten,
             $this->battleCount,
         );
     }

@@ -41,20 +41,20 @@ final class GetMapEncounter
                     'trainerId'  => $trainer['id'],
                 ]);
 
-                if ($trainerBattleRow !== false) {
-                    $lastBattled = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $trainerBattleRow['date_last_battled'], new CarbonTimeZone("Europe/Dublin"));
-                    $isInCooldownWindow = $lastBattled->addWeek() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
+                if ($trainerBattleRow !== false && !is_null($trainerBattleRow['date_last_beaten'])) {
+                    $lastBeaten = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $trainerBattleRow['date_last_beaten'], new CarbonTimeZone("Europe/Dublin"));
+                    $isInCooldownWindow = $lastBeaten->addWeek() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
                 } else {
-                    $lastBattled = null;
+                    $lastBeaten = null;
                     $isInCooldownWindow = false;
                 }
 
                 $trainers[] = (object)[
-                    'id'          => $trainer['id'],
-                    'name'        => $trainer['name'],
-                    'team'        => count($trainer['team']),
-                    'canBattle'   => !$isInCooldownWindow && $challengeTokens > 0,
-                    'lastBattled' => $lastBattled ? $lastBattled->ago() : "",
+                    'id'         => $trainer['id'],
+                    'name'       => $trainer['name'],
+                    'team'       => count($trainer['team']),
+                    'canBattle'  => !$isInCooldownWindow && $challengeTokens > 0,
+                    'lastBeaten' => $lastBeaten ? $lastBeaten->ago() : "",
                 ];
             }
         }
