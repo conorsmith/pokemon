@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Domain\Battle;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\GymBadge;
 use Exception;
 
 final class Trainer
@@ -17,6 +18,7 @@ final class Trainer
         public readonly bool $isBattling,
         public readonly ?CarbonImmutable $dateLastBeaten,
         public readonly int $battleCount,
+        public readonly ?GymBadge $gymBadge,
     ) {}
 
     public function startBattle(): self
@@ -29,6 +31,7 @@ final class Trainer
             true,
             $this->dateLastBeaten,
             $this->battleCount + 1,
+            $this->gymBadge,
         );
     }
 
@@ -42,6 +45,7 @@ final class Trainer
             $this->isBattling,
             CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
             $this->battleCount,
+            $this->gymBadge,
         );
     }
 
@@ -63,6 +67,7 @@ final class Trainer
             false,
             $this->dateLastBeaten,
             $this->battleCount,
+            $this->gymBadge,
         );
     }
 
@@ -109,5 +114,10 @@ final class Trainer
     public function hasEntireTeamFainted(): bool
     {
         return $this->countActiveTeamMembers() === 0;
+    }
+
+    public function isGymLeader(): bool
+    {
+        return !is_null($this->gymBadge);
     }
 }

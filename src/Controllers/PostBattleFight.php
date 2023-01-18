@@ -43,6 +43,8 @@ final class PostBattleFight
             $playerPokemon
         );
 
+        $playerEarnedGymBadge = false;
+
         if ($playerPokemonWins) {
 
             $trainerPokemon->faint();
@@ -52,6 +54,11 @@ final class PostBattleFight
                 $trainer = $trainer->defeat();
                 $trainer = $trainer->endBattle();
                 $player = $player->reviveTeam();
+
+                if ($trainer->isGymLeader() && !$player->hasGymBadge($trainer->gymBadge)) {
+                    $player = $player->earn($trainer->gymBadge);
+                    $playerEarnedGymBadge = true;
+                }
             }
         } else {
 
@@ -88,6 +95,11 @@ final class PostBattleFight
                 header("Location: /battle/{$trainer->id}");
             } else {
                 $this->session->getFlashBag()->add("successes", "You defeated {$trainer->name}");
+
+                if ($playerEarnedGymBadge) {
+                    $this->session->getFlashBag()->add("successes", "You earned the {$this->viewModelFactory->createGymBadgeName($trainer->gymBadge)}");
+                }
+
                 $this->session->getFlashBag()->add("successes", "You won \${$trainer->prizeMoney}");
 
                 header("Location: /map/encounter");

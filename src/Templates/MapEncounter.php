@@ -39,8 +39,21 @@
             <?php foreach ($trainers as $trainer) : ?>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div>
-                        <div><strong><?=$trainer->name?></strong></div>
-                        <div><small><?=$trainer->team?> Pokémon</small></div>
+                        <div><strong>
+                            <?php if ($trainer->isGymLeader) : ?>
+                                Leader
+                            <?php endif ?>
+                            <?=$trainer->name?>
+                            <?php if ($trainer->isGymLeader) : ?>
+                                <i class="fas fa-fw fa-medal"></i>
+                            <?php endif ?>
+                        </strong></div>
+                        <div>
+                            <small><?=$trainer->team?> Pokémon</small>
+                            <?php if ($trainer->isGymLeader) : ?>
+                                <small>&middot; <?=$trainer->leaderBadge?></small>
+                            <?php endif ?>
+                        </div>
                         <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
                             <form method="POST" action="/battle/trainer/<?=$trainer->id?>" style="margin-right: 0.6rem;">
                                 <button type="submit" class="btn btn-outline-dark btn-sm" <?=$trainer->canBattle ? "" : "disabled"?>>Battle</button>

@@ -91,7 +91,7 @@
     </div>
 </nav>
 
-<div class="container" style="padding-top: 2rem; padding-bottom: 2rem; max-width: 30rem;">
+<div class="container" style="padding-top: 2rem; padding-bottom: 6rem; max-width: 30rem;">
 
     <?=$content?>
 

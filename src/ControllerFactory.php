@@ -88,7 +88,12 @@ final class ControllerFactory
             PostMapMove::class => new PostMapMove($this->db, $this->session, $this->map),
             GetLogExercise::class => new GetLogExercise($this->db, $this->session),
             PostLogExercise::class => new PostLogExercise($this->db, $this->session),
-            GetMapEncounter::class => new GetMapEncounter($this->db, $this->session, $this->map),
+            GetMapEncounter::class => new GetMapEncounter(
+                $this->db,
+                $this->session,
+                $this->viewModelFactory,
+                $this->map,
+            ),
             PostMapEncounter::class => new PostMapEncounter($this->db, $this->session, $this->map),
             GetTeam::class => new GetTeam(
                 $this->db,

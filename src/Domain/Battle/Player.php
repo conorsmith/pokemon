@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Domain\Battle;
 
+use ConorSmith\Pokemon\GymBadge;
 use Exception;
 
 final class Player
@@ -10,7 +11,26 @@ final class Player
     public function __construct(
         public readonly array $team,
         public readonly array $teamIds,
+        public readonly array $gymBadges,
     ) {}
+
+    public function hasGymBadge(GymBadge $gymBadge): bool
+    {
+        return in_array($gymBadge, $this->gymBadges);
+    }
+
+    public function earn(GymBadge $gymBadge): self
+    {
+        $gymBadges = $this->gymBadges;
+
+        $gymBadges[] = $gymBadge;
+
+        return new self(
+            $this->team,
+            $this->teamIds,
+            $gymBadges
+        );
+    }
 
     public function getLeadPokemon(): Pokemon
     {
@@ -37,6 +57,7 @@ final class Player
         return new self(
             $revivedTeam,
             $this->teamIds,
+            $this->gymBadges,
         );
     }
 

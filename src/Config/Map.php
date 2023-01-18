@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
 
@@ -229,6 +230,36 @@ return [
                     ],
                 ],
             ],
+            [
+                'id' => "b43cbd0a-8ee2-4434-a9fb-17658419b397",
+                'name' => "Giovanni",
+                'prize' => 5000,
+                'leader' => [
+                    'badge' => GymBadge::EARTH,
+                ],
+                'team' => [
+                    [
+                        'id' => PokedexNo::RHYHORN,
+                        'level' => 45,
+                    ],
+                    [
+                        'id' => PokedexNo::DUGTRIO,
+                        'level' => 42,
+                    ],
+                    [
+                        'id' => PokedexNo::NIDOQUEEN,
+                        'level' => 44,
+                    ],
+                    [
+                        'id' => PokedexNo::NIDOKING,
+                        'level' => 45,
+                    ],
+                    [
+                        'id' => PokedexNo::RHYHORN,
+                        'level' => 50,
+                    ],
+                ],
+            ],
         ],
     ],
     [
@@ -314,6 +345,24 @@ return [
                     [
                         'id' => PokedexNo::SANDSHREW,
                         'level' => 11,
+                    ],
+                ],
+            ],
+            [
+                'id' => "2479266d-ecf1-42b2-be4a-17df18812e39",
+                'name' => "Brock",
+                'prize' => 1400,
+                'leader' => [
+                    'badge' => GymBadge::BOULDER,
+                ],
+                'team' => [
+                    [
+                        'id' => PokedexNo::GEODUDE,
+                        'level' => 12,
+                    ],
+                    [
+                        'id' => PokedexNo::ONIX,
+                        'level' => 14,
                     ],
                 ],
             ],

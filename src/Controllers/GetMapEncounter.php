@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Controllers;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\TemplateEngine;
+use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use stdClass;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -15,6 +16,7 @@ final class GetMapEncounter
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
+        private readonly ViewModelFactory $viewModelFactory,
         private readonly array $map,
     ) {}
 
@@ -50,11 +52,15 @@ final class GetMapEncounter
                 }
 
                 $trainers[] = (object)[
-                    'id'         => $trainer['id'],
-                    'name'       => $trainer['name'],
-                    'team'       => count($trainer['team']),
-                    'canBattle'  => !$isInCooldownWindow && $challengeTokens > 0,
-                    'lastBeaten' => $lastBeaten ? $lastBeaten->ago() : "",
+                    'id'          => $trainer['id'],
+                    'name'        => $trainer['name'],
+                    'team'        => count($trainer['team']),
+                    'canBattle'   => !$isInCooldownWindow && $challengeTokens > 0,
+                    'lastBeaten'  => $lastBeaten ? $lastBeaten->ago() : "",
+                    'isGymLeader' => array_key_exists('leader', $trainer),
+                    'leaderBadge' => array_key_exists('leader', $trainer)
+                        ? $this->viewModelFactory->createGymBadgeName($trainer['leader']['badge'])
+                        : "",
                 ];
             }
         }

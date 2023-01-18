@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use ConorSmith\Pokemon\Domain\Battle\Player;
 use ConorSmith\Pokemon\Domain\Battle\Pokemon;
+use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -42,6 +43,10 @@ final class GetIndex
             'team' => array_map(
                 fn(Pokemon $pokemon) => $this->viewModelFactory->createPokemonOnTeam($pokemon),
                 $player->team
+            ),
+            'badges' => array_map(
+                fn(int $value) => $this->viewModelFactory->createGymBadge(GymBadge::from($value)),
+                json_decode($instanceRow['badges'])
             ),
             'successes' => $successes,
             'encounter' => $encounter ?? null,

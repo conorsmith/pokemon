@@ -87,6 +87,7 @@ final class TrainerRepository
                 new CarbonTimeZone("Europe/Dublin")
             ),
             $trainerBattleRow['battle_count'],
+            array_key_exists('leader', $trainerConfig) ? $trainerConfig['leader']['badge'] : null,
         );
     }
 
