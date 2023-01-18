@@ -6,6 +6,63 @@
     <title>Pokémon</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <style>
+        .bg-normal {
+            background: #A8A878;
+        }
+        .bg-fighting {
+            background: #C03028;
+        }
+        .bg-flying {
+            background: #A890F0;
+        }
+        .bg-poison {
+            background: #A040A0;
+        }
+        .bg-ground {
+            background: #E0C068;
+        }
+        .bg-rock {
+            background: #B8A038;
+        }
+        .bg-bug {
+            background: #A8B820;
+        }
+        .bg-ghost {
+            background: #705898;
+        }
+        .bg-steel {
+            background: #B8B8D0;
+        }
+        .bg-fire {
+            background: #F08030;
+        }
+        .bg-water {
+            background: #6890F0;
+        }
+        .bg-grass {
+            background: #78C850;
+        }
+        .bg-electric {
+            background: #F8D030;
+        }
+        .bg-psychic {
+            background: #F85888;
+        }
+        .bg-ice {
+            background: #98D8D8;
+        }
+        .bg-dragon {
+            background: #7038F8;
+        }
+        .bg-dark {
+            background: #705848;
+        }
+        .bg-fairy {
+            background: #EE99AC;
+        }
+
+    </style>
 </head>
 <body>
 

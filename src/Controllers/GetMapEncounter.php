@@ -34,27 +34,29 @@ final class GetMapEncounter
 
         $trainers = [];
 
-        foreach ($this->findLocation($instanceRow['current_location'])['trainers'] as $trainer) {
-            $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
-                'instanceId' => INSTANCE_ID,
-                'trainerId' => $trainer['id'],
-            ]);
+        if (array_key_exists('trainers', $this->findLocation($instanceRow['current_location']))) {
+            foreach ($this->findLocation($instanceRow['current_location'])['trainers'] as $trainer) {
+                $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
+                    'instanceId' => INSTANCE_ID,
+                    'trainerId'  => $trainer['id'],
+                ]);
 
-            if ($trainerBattleRow !== false) {
-                $lastBattled = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $trainerBattleRow['date_last_battled'], new CarbonTimeZone("Europe/Dublin"));
-                $isInCooldownWindow = $lastBattled->addMonth() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
-            } else {
-                $lastBattled = null;
-                $isInCooldownWindow = false;
+                if ($trainerBattleRow !== false) {
+                    $lastBattled = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $trainerBattleRow['date_last_battled'], new CarbonTimeZone("Europe/Dublin"));
+                    $isInCooldownWindow = $lastBattled->addWeek() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
+                } else {
+                    $lastBattled = null;
+                    $isInCooldownWindow = false;
+                }
+
+                $trainers[] = (object)[
+                    'id'          => $trainer['id'],
+                    'name'        => $trainer['name'],
+                    'team'        => count($trainer['team']),
+                    'canBattle'   => !$isInCooldownWindow && $challengeTokens > 0,
+                    'lastBattled' => $lastBattled ? $lastBattled->ago() : "",
+                ];
             }
-
-            $trainers[] = (object) [
-                'id' => $trainer['id'],
-                'name' => $trainer['name'],
-                'team' => count($trainer['team']),
-                'canBattle' => !$isInCooldownWindow && $challengeTokens > 0,
-                'lastBattled' => $lastBattled ? $lastBattled->ago() : "",
-            ];
         }
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/MapEncounter.php", [

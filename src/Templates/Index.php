@@ -27,7 +27,21 @@
             <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
             <div>
                 <h5><?=$pokemon->name?></h5>
-                <p class="mb-0">Level <?=$pokemon->level?></p>
+                <p class="mb-0">
+                    <span>
+                        <span class="badge bg-<?=$pokemon->primaryType?>" style="text-transform: uppercase;">
+                            <?=$pokemon->primaryType?>
+                        </span>
+                        <?php if ($pokemon->secondaryType) : ?>
+                            <span class="badge bg-<?=$pokemon->secondaryType?>" style="text-transform: uppercase;">
+                                <?=$pokemon->secondaryType?>
+                            </span>
+                        <?php endif ?>
+                    </span>
+                        <span style="margin: 0 0.8rem;">
+                        Level <?=$pokemon->level?>
+                    </span>
+                </p>
             </div>
         </li>
     <?php endforeach ?>

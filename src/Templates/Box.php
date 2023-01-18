@@ -8,7 +8,21 @@
                 <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
                 <div class="flex-grow-1">
                     <h5><?=$pokemon->name?></h5>
-                    <p class="mb-0">Level <?=$pokemon->level?></p>
+                    <p class="mb-0">
+                        <span>
+                            <span class="badge bg-<?=$pokemon->primaryType?>" style="text-transform: uppercase;">
+                                <?=$pokemon->primaryType?>
+                            </span>
+                            <?php if ($pokemon->secondaryType) : ?>
+                                <span class="badge bg-<?=$pokemon->secondaryType?>" style="text-transform: uppercase;">
+                                    <?=$pokemon->secondaryType?>
+                                </span>
+                            <?php endif ?>
+                        </span>
+                            <span style="margin: 0 0.8rem;">
+                            Level <?=$pokemon->level?>
+                        </span>
+                    </p>
                     <div class="d-flex justify-content-between w-100" style="margin-top: 1rem;">
                         <div class="d-flex">
                             <form method="POST" action="/team/move-up" style="margin-right: 0.4rem;">
@@ -40,7 +54,21 @@
                 <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
                 <div class="w-100">
                     <h5><?=$pokemon->name?></h5>
-                    <p class="mb-0">Level <?=$pokemon->level?></p>
+                    <p class="mb-0">
+                        <span>
+                            <span class="badge bg-<?=$pokemon->primaryType?>" style="text-transform: uppercase;">
+                                <?=$pokemon->primaryType?>
+                            </span>
+                            <?php if ($pokemon->secondaryType) : ?>
+                                <span class="badge bg-<?=$pokemon->secondaryType?>" style="text-transform: uppercase;">
+                                    <?=$pokemon->secondaryType?>
+                                </span>
+                            <?php endif ?>
+                        </span>
+                        <span style="margin: 0 0.8rem;">
+                            Level <?=$pokemon->level?>
+                        </span>
+                    </p>
                     <div class="d-flex justify-content-end">
                         <form method="POST" action="/team/send-to-team">
                             <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">

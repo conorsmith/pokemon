@@ -23,7 +23,7 @@
 
         <form method="POST" class="d-grid">
             <input type="hidden" name="location" value="<?=$currentLocation->id?>">
-            <button type="submit" class="btn btn-primary btn-lg" <?=$unusedEncounters === 0 ? "disabled" : ""?>>Search for Wild Pokémon</button>
+            <button type="submit" class="btn btn-primary btn-lg" <?=$pokeballs === 0 ? "disabled" : ""?>>Search for Wild Pokémon</button>
         </form>
 
     </div>

@@ -24,14 +24,42 @@
         <img src="<?=$activePokemon->imageUrl?>" style="width: 6rem; margin-left: 1rem;">
         <div style="text-align: right;">
             <h5><?=$activePokemon->name?></h5>
-            <p class="mb-0">Level <?=$activePokemon->level?></p>
+            <p class="mb-0 d-flex flex-row-reverse">
+                <span>
+                    <span class="badge bg-<?=$activePokemon->primaryType?>" style="text-transform: uppercase;">
+                        <?=$activePokemon->primaryType?>
+                    </span>
+                    <?php if ($activePokemon->secondaryType) : ?>
+                        <span class="badge bg-<?=$activePokemon->secondaryType?>" style="text-transform: uppercase;">
+                            <?=$activePokemon->secondaryType?>
+                        </span>
+                    <?php endif ?>
+                </span>
+                <span style="margin: 0 0.8rem;">
+                    Level <?=$activePokemon->level?>
+                </span>
+            </p>
         </div>
     </li>
     <li class="list-group-item d-flex">
         <img src="<?=$leadPokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
         <div>
             <h5><?=$leadPokemon->name?></h5>
-            <p class="mb-0">Level <?=$leadPokemon->level?></p>
+            <p class="mb-0">
+                <span>
+                    <span class="badge bg-<?=$leadPokemon->primaryType?>" style="text-transform: uppercase;">
+                        <?=$leadPokemon->primaryType?>
+                    </span>
+                    <?php if ($leadPokemon->secondaryType) : ?>
+                        <span class="badge bg-<?=$leadPokemon->secondaryType?>" style="text-transform: uppercase;">
+                            <?=$leadPokemon->secondaryType?>
+                        </span>
+                    <?php endif ?>
+                </span>
+                <span style="margin: 0 0.8rem;">
+                    Level <?=$leadPokemon->level?>
+                </span>
+            </p>
         </div>
     </li>
     <li class="list-group-item d-grid gap-2" style="text-align: center;">

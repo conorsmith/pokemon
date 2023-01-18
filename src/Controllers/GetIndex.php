@@ -3,8 +3,12 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\Domain\Battle\Player;
+use ConorSmith\Pokemon\Domain\Battle\Pokemon;
+use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\TemplateEngine;
+use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -14,8 +18,8 @@ final class GetIndex
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
-        private readonly CaughtPokemonRepository $caughtPokemonRepository,
-        private readonly array $pokedex,
+        private readonly PlayerRepository $playerRepository,
+        private readonly ViewModelFactory $viewModelFactory,
     ) {}
 
     public function __invoke(): void
@@ -24,9 +28,7 @@ final class GetIndex
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $teamRows = $this->caughtPokemonRepository->getTeam();
-
-        $team = TeamMember::fromRows($teamRows, $this->pokedex);
+        $player = $this->playerRepository->findPlayer();
 
         $successes = $this->session->getFlashBag()->get("successes");
 
@@ -37,7 +39,10 @@ final class GetIndex
                 'rareCandies' => $instanceRow['unused_level_ups'],
                 'challengeTokens' => $instanceRow['unused_moves'],
             ],
-            'team' => $team,
+            'team' => array_map(
+                fn(Pokemon $pokemon) => $this->viewModelFactory->createPokemonOnTeam($pokemon),
+                $player->team
+            ),
             'successes' => $successes,
             'encounter' => $encounter ?? null,
         ]);

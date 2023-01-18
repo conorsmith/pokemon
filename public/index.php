@@ -23,7 +23,16 @@ $map = require __DIR__ . "/../src/Config/Map.php";
 
 $caughtPokemonRepository = new \ConorSmith\Pokemon\Repositories\CaughtPokemonRepository($db);
 
-$controllerFactory = new \ConorSmith\Pokemon\ControllerFactory($db, $session, $caughtPokemonRepository, $pokedex, $map);
+$controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
+    $db,
+    $session,
+    $caughtPokemonRepository,
+    new \ConorSmith\Pokemon\Repositories\Battle\TrainerRepository($db, $pokedex, $map),
+    new \ConorSmith\Pokemon\Repositories\Battle\PlayerRepository($db, $pokedex),
+    new \ConorSmith\Pokemon\ViewModelFactory($pokedex),
+    $pokedex,
+    $map,
+);
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) use ($db, $session) {
     \ConorSmith\Pokemon\ControllerFactory::routes($r);

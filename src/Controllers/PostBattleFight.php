@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
-use ConorSmith\Pokemon\ViewModels\TeamMember;
+use ConorSmith\Pokemon\Domain\Battle\Pokemon;
+use ConorSmith\Pokemon\Domain\GameInstance;
+use ConorSmith\Pokemon\PokemonType;
+use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
+use ConorSmith\Pokemon\Repositories\Battle\TrainerRepository;
+use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -12,149 +17,132 @@ final class PostBattleFight
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
-        private readonly array $pokedex,
-        private readonly array $map,
+        private readonly TrainerRepository $trainerRepository,
+        private readonly PlayerRepository $playerRepository,
+        private readonly ViewModelFactory $viewModelFactory,
     ) {}
 
     public function __invoke(array $args): void
     {
-        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
-        ]);
+        $trainerBattleId = $args['id'];
 
-        $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND id = :id", [
-            'instanceId' => INSTANCE_ID,
-            'id' => $args['id'],
-        ]);
+        $gameInstance = $this->findGameInstance();
+        $player = $this->playerRepository->findPlayer();
+        $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
 
-        $leadPokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position IS NOT NULL AND has_fainted = 0 ORDER BY team_position", [
-            'instanceId' => INSTANCE_ID,
-        ]);
-
-        if ($leadPokemonRow === false) {
+        if ($player->hasEntireTeamFainted()) {
             $this->session->getFlashBag()->add("errors", "Your team has fainted.");
-            header("Location: /battle/{$trainerBattleRow['id']}");
+            header("Location: /battle/{$trainer->id}");
         }
 
-        $challengedTrainer = null;
+        $playerPokemon = $player->getLeadPokemon();
+        $trainerPokemon = $trainer->getLeadPokemon();
 
-        foreach ($this->findLocation($instanceRow['current_location'])['trainers'] as $trainer) {
-            if ($trainer['id'] === $trainerBattleRow['trainer_id']) {
-                $challengedTrainer = $trainer;
+        $playerPokemonWins = $this->calculateWinner(
+            $trainerPokemon,
+            $playerPokemon
+        );
+
+        if ($playerPokemonWins) {
+
+            $trainerPokemon->faint();
+
+            if ($trainer->hasEntireTeamFainted()) {
+                $gameInstance = $gameInstance->winPrizeMoney($trainer);
+                $trainer = $trainer->endBattle();
+                $player = $player->reviveTeam();
+            }
+        } else {
+
+            $playerPokemon->faint();
+
+            if ($player->hasEntireTeamFainted()) {
+                $trainer = $trainer->endBattle();
+                $player = $player->reviveTeam();
             }
         }
 
-        $activePokemonIndex = $trainerBattleRow['active_pokemon'];
+        $this->db->beginTransaction();
 
-        $activePokemonLevel = $challengedTrainer['team'][$activePokemonIndex]['level'];
-        $leadPokemonLevel = $leadPokemonRow['level'];
+        $this->trainerRepository->saveTrainer($trainer);
+        $this->saveGameInstance($gameInstance);
+        $this->playerRepository->savePlayer($player);
 
-        $hasWon = $this->calculateWinner($activePokemonLevel, $leadPokemonLevel);
+        $this->db->commit();
 
-        if ($hasWon) {
+        $typeMultiplier = $this->calculateTypeMultiplier($trainerPokemon, $playerPokemon);
 
-            $activePokemonName = $this->pokedex[$challengedTrainer['team'][$activePokemonIndex]['id']]['name'];
+        if ($typeMultiplier > 1.0) {
+            $this->session->getFlashBag()->add("successes", "It's super effective!");
+        } elseif ($typeMultiplier < 1.0) {
+            $this->session->getFlashBag()->add("successes", "It's not very effective");
+        }
 
-            $this->session->getFlashBag()->add("successes", "Enemy {$activePokemonName} fainted");
+        if ($playerPokemonWins) {
 
-            if ($activePokemonIndex + 1 < count($challengedTrainer['team'])) {
+            $trainerPokemonVm = $this->viewModelFactory->createPokemonInBattle($trainerPokemon);
+            $this->session->getFlashBag()->add("successes", "Enemy {$trainerPokemonVm->name} fainted");
 
-                $this->db->update("trainer_battles", [
-                    'active_pokemon' => $activePokemonIndex + 1,
-                ], [
-                    'id' => $trainerBattleRow['id'],
-                ]);
-
-                header("Location: /battle/{$trainerBattleRow['id']}");
-
+            if ($trainer->isBattling) {
+                header("Location: /battle/{$trainer->id}");
             } else {
-
-                $this->db->beginTransaction();
-
-                $this->db->update("trainer_battles", [
-                    'is_battling' => 0,
-                ], [
-                    'id' => $trainerBattleRow['id'],
-                ]);
-
-                $this->db->update("caught_pokemon", [
-                    'has_fainted' => 0,
-                ], [
-                    'instance_id' => INSTANCE_ID,
-                ]);
-
-                $this->db->update("instances", [
-                    'money' => $instanceRow['money'] + $challengedTrainer['prize'],
-                ], [
-                    'id' => INSTANCE_ID,
-                ]);
-
-                $this->db->commit();
-
-                $this->session->getFlashBag()->add("successes", "You defeated {$challengedTrainer['name']}");
-                $this->session->getFlashBag()->add("successes", "You won \${$challengedTrainer['prize']}");
+                $this->session->getFlashBag()->add("successes", "You defeated {$trainer->name}");
+                $this->session->getFlashBag()->add("successes", "You won \${$trainer->prizeMoney}");
 
                 header("Location: /map/encounter");
             }
         } else {
+            $playerPokemonVm = $this->viewModelFactory->createPokemonInBattle($playerPokemon);
+            $this->session->getFlashBag()->add("successes", "Your {$playerPokemonVm->name} fainted");
 
-            $this->db->update("caught_pokemon", [
-                'has_fainted' => 1,
-            ], [
-                'instance_id' => INSTANCE_ID,
-                'id' => $leadPokemonRow['id'],
-            ]);
-
-            $teamRows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position IS NOT NULL", [
-                'instanceId' => INSTANCE_ID,
-            ]);
-
-            $remainingPokemonCount = 0;
-
-            foreach ($teamRows as $row) {
-                if ($row['has_fainted'] === 0) {
-                    $remainingPokemonCount++;
-                }
-            }
-
-            $leadPokemonName = $this->pokedex[$leadPokemonRow['pokemon_id']]['name'];
-
-            $this->session->getFlashBag()->add("successes", "Your {$leadPokemonName} fainted");
-
-            if ($remainingPokemonCount > 0) {
-
-                header("Location: /battle/{$trainerBattleRow['id']}");
-
+            if ($trainer->isBattling) {
+                header("Location: /battle/{$trainer->id}");
             } else {
 
-                $this->db->beginTransaction();
-
-                $this->db->update("trainer_battles", [
-                    'is_battling' => 0,
-                ], [
-                    'id' => $trainerBattleRow['id'],
-                ]);
-
-                $this->db->update("caught_pokemon", [
-                    'has_fainted' => 0,
-                ], [
-                    'instance_id' => INSTANCE_ID,
-                ]);
-
-                $this->db->commit();
-
-                $this->session->getFlashBag()->add("successes", "You were defeated by {$challengedTrainer['name']}");
+                $this->session->getFlashBag()->add("successes", "You were defeated by {$trainer->name}");
 
                 header("Location: /map/encounter");
             }
-
         }
 
     }
 
-    private function calculateWinner(int $enemyLevel, int $playerLevel): bool
+    private function calculateTypeMultiplier(Pokemon $enemyPokemon, Pokemon $playerPokemon): float
     {
-        $levelDifference = $playerLevel - $enemyLevel;
+        $multiplier = 1.0;
+
+        $multiplier *= PokemonType::getMultiplier($playerPokemon->primaryType, $enemyPokemon->primaryType);
+
+        if (!is_null($playerPokemon->secondaryType)) {
+            $multiplier *= PokemonType::getMultiplier($playerPokemon->secondaryType, $enemyPokemon->primaryType);
+        }
+        if (!is_null($enemyPokemon->secondaryType)) {
+            $multiplier *= PokemonType::getMultiplier($playerPokemon->primaryType, $enemyPokemon->secondaryType);
+        }
+        if (!is_null($playerPokemon->secondaryType) && !is_null($enemyPokemon->secondaryType)) {
+            $multiplier *= PokemonType::getMultiplier($playerPokemon->secondaryType, $enemyPokemon->secondaryType);
+        }
+
+        return $multiplier;
+    }
+
+    private function calculateWinner(Pokemon $enemyPokemon, Pokemon $playerPokemon): bool
+    {
+        $multiplier = $this->calculateTypeMultiplier($enemyPokemon, $playerPokemon);
+
+        if ($multiplier === 0.0) {
+            return false;
+        }
+
+        $typeLevelModifier = match ($multiplier) {
+            0.25 => -4,
+            0.5 => -2,
+            1.0 => 0,
+            2.0 => 2,
+            4.0 => 4,
+        };
+
+        $levelDifference = $playerPokemon->level - $enemyPokemon->level + $typeLevelModifier;
 
         $percentageChance = match (true) {
             $levelDifference > 4 => 100,
@@ -175,15 +163,26 @@ final class PostBattleFight
         return mt_rand(1, 100) <= $percentageChance;
     }
 
-    private function findLocation(string $id): array
+    private function findGameInstance(): GameInstance
     {
-        /** @var array $location */
-        foreach ($this->map as $location) {
-            if ($location['id'] === $id) {
-                return $location;
-            }
-        }
+        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
+            'instanceId' => INSTANCE_ID,
+        ]);
 
-        throw new \Exception;
+        return new GameInstance(
+            INSTANCE_ID,
+            $instanceRow['money'],
+            $instanceRow['unused_moves'],
+        );
+    }
+
+    private function saveGameInstance(GameInstance $gameInstance): void
+    {
+        $this->db->update("instances", [
+            'money' => $gameInstance->money,
+            'unused_moves' => $gameInstance->unusedChallengeTokens,
+        ], [
+            'id' => $gameInstance->id,
+        ]);
     }
 }

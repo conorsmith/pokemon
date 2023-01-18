@@ -27,6 +27,8 @@ use ConorSmith\Pokemon\Controllers\PostTeamMoveDown;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveUp;
 use ConorSmith\Pokemon\Controllers\PostTeamSendToBox;
 use ConorSmith\Pokemon\Controllers\PostTeamSendToTeam;
+use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
+use ConorSmith\Pokemon\Repositories\Battle\TrainerRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
@@ -66,6 +68,9 @@ final class ControllerFactory
         private readonly Connection $db,
         private readonly Session $session,
         private readonly CaughtPokemonRepository $caughtPokemonRepository,
+        private readonly TrainerRepository $trainerRepository,
+        private readonly PlayerRepository $playerRepository,
+        private readonly ViewModelFactory $viewModelFactory,
         private readonly array $pokedex,
         private readonly array $map,
     ) {}
@@ -85,7 +90,12 @@ final class ControllerFactory
             PostLogExercise::class => new PostLogExercise($this->db, $this->session),
             GetMapEncounter::class => new GetMapEncounter($this->db, $this->session, $this->map),
             PostMapEncounter::class => new PostMapEncounter($this->db, $this->session, $this->map),
-            GetTeam::class => new GetTeam($this->db, $this->caughtPokemonRepository, $this->pokedex),
+            GetTeam::class => new GetTeam(
+                $this->db,
+                $this->playerRepository,
+                $this->pokedex,
+                $this->viewModelFactory,
+            ),
             GetEncounter::class => new GetEncounter($this->db, $this->session, $this->pokedex),
             PostEncounterCatch::class => new PostEncounterCatch($this->db, $this->session, $this->pokedex, $this->map),
             PostEncounterRun::class => new PostEncounterRun($this->db),
@@ -93,10 +103,30 @@ final class ControllerFactory
             PostTeamMoveDown::class => new PostTeamMoveDown($this->db, $this->session, $this->caughtPokemonRepository),
             PostTeamSendToBox::class => new PostTeamSendToBox($this->db, $this->session, $this->caughtPokemonRepository),
             PostTeamSendToTeam::class => new PostTeamSendToTeam($this->db, $this->session, $this->caughtPokemonRepository),
-            PostBattleTrainer::class => new PostBattleTrainer($this->db, $this->session, $this->map),
-            GetBattle::class => new GetBattle($this->db, $this->session, $this->pokedex, $this->map),
-            PostBattleFight::class => new PostBattleFight($this->db, $this->session, $this->pokedex, $this->map),
-            GetIndex::class => new GetIndex($this->db, $this->session, $this->caughtPokemonRepository, $this->pokedex),
+            PostBattleTrainer::class => new PostBattleTrainer(
+                $this->db,
+                $this->session,
+                $this->trainerRepository
+            ),
+            GetBattle::class => new GetBattle(
+                $this->session,
+                $this->trainerRepository,
+                $this->playerRepository,
+                $this->viewModelFactory,
+            ),
+            PostBattleFight::class => new PostBattleFight(
+                $this->db,
+                $this->session,
+                $this->trainerRepository,
+                $this->playerRepository,
+                $this->viewModelFactory,
+            ),
+            GetIndex::class => new GetIndex(
+                $this->db,
+                $this->session,
+                $this->playerRepository,
+                $this->viewModelFactory,
+            ),
         };
     }
 }
