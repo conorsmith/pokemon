@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\Battle\Controllers\PostBattleTrainer;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Controllers\GetLogWeeklyReview;
+use ConorSmith\Pokemon\Controllers\GetPokedex;
 use ConorSmith\Pokemon\Controllers\GetTeam;
 use ConorSmith\Pokemon\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Controllers\GetIndex;
@@ -46,6 +47,7 @@ final class ControllerFactory
         $r->post("/log/food-diary", PostLogFoodDiary::class);
         $r->get("/log/weekly-review", GetLogWeeklyReview::class);
         $r->post("/log/weekly-review", PostLogWeeklyReview::class);
+        $r->get("/pokedex", GetPokedex::class);
         $r->get("/team/level-up", GetTeamLevelUp::class);
         $r->post("/team/level-up", PostTeamLevelUp::class);
         $r->get("/log/calorie-goal", GetLogCalorieGoal::class);
@@ -90,6 +92,7 @@ final class ControllerFactory
             PostLogFoodDiary::class => new PostLogFoodDiary($this->db, $this->session),
             GetLogWeeklyReview::class => new GetLogWeeklyReview($this->db, $this->session),
             PostLogWeeklyReview::class => new PostLogWeeklyReview($this->db, $this->session),
+            GetPokedex::class => new GetPokedex($this->db, $this->pokedex),
             GetTeamLevelUp::class => new GetTeamLevelUp($this->db, $this->session, $this->caughtPokemonRepository, $this->pokedex),
             PostTeamLevelUp::class => new PostTeamLevelUp($this->db, $this->session, $this->pokedex),
             GetLogCalorieGoal::class => new GetLogCalorieGoal($this->db, $this->session),

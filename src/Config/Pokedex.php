@@ -8,10 +8,20 @@ return [
     PokedexNo::BULBASAUR => [
         'name' => "Bulbasaur",
         'type' => [PokemonType::GRASS, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::IVYSAUR => [
+                'level' => 16,
+            ],
+        ],
     ],
     PokedexNo::IVYSAUR => [
         'name' => "Ivysaur",
         'type' => [PokemonType::GRASS, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::VENUSAUR => [
+                'level' => 32,
+            ],
+        ],
     ],
     PokedexNo::VENUSAUR => [
         'name' => "Venusaur",
@@ -20,10 +30,20 @@ return [
     PokedexNo::CHARMANDER => [
         'name' => "Charmander",
         'type' => [PokemonType::FIRE],
+        'evolutions' => [
+            PokedexNo::CHARMELEON => [
+                'level' => 16,
+            ],
+        ],
     ],
     PokedexNo::CHARMELEON => [
         'name' => "Charmeleon",
         'type' => [PokemonType::FIRE],
+        'evolutions' => [
+            PokedexNo::CHARIZARD => [
+                'level' => 32,
+            ],
+        ],
     ],
     PokedexNo::CHARIZARD => [
         'name' => "Charizard",
@@ -32,10 +52,20 @@ return [
     PokedexNo::SQUIRTLE => [
         'name' => "Squirtle",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::WARTORTLE => [
+                'level' => 16,
+            ],
+        ],
     ],
     PokedexNo::WARTORTLE => [
         'name' => "Wartortle",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::BLASTOISE => [
+                'level' => 16,
+            ],
+        ],
     ],
     PokedexNo::BLASTOISE => [
         'name' => "Blastoise",
@@ -44,10 +74,20 @@ return [
     PokedexNo::CATERPIE => [
         'name' => "Caterpie",
         'type' => [PokemonType::BUG],
+        'evolutions' => [
+            PokedexNo::METAPOD => [
+                'level' => 7,
+            ],
+        ],
     ],
     PokedexNo::METAPOD => [
         'name' => "Metapod",
         'type' => [PokemonType::BUG],
+        'evolutions' => [
+            PokedexNo::BUTTERFREE => [
+                'level' => 10,
+            ],
+        ],
     ],
     PokedexNo::BUTTERFREE => [
         'name' => "Butterfree",
@@ -56,10 +96,20 @@ return [
     PokedexNo::WEEDLE => [
         'name' => "Weedle",
         'type' => [PokemonType::BUG, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::KAKUNA => [
+                'level' => 7,
+            ],
+        ],
     ],
     PokedexNo::KAKUNA => [
         'name' => "Kakuna",
         'type' => [PokemonType::BUG, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::BEEDRILL => [
+                'level' => 10,
+            ],
+        ],
     ],
     PokedexNo::BEEDRILL => [
         'name' => "Beedrill",
@@ -68,10 +118,20 @@ return [
     PokedexNo::PIDGEY => [
         'name' => "Pidgey",
         'type' => [PokemonType::NORMAL, PokemonType::FLYING],
+        'evolutions' => [
+            PokedexNo::PIDGEOTTO => [
+                'level' => 18,
+            ],
+        ],
     ],
     PokedexNo::PIDGEOTTO => [
         'name' => "Pidgeotto",
         'type' => [PokemonType::NORMAL, PokemonType::FLYING],
+        'evolutions' => [
+            PokedexNo::PIDGEOT => [
+                'level' => 36,
+            ],
+        ],
     ],
     PokedexNo::PIDGEOT => [
         'name' => "Pidgeot",
@@ -80,6 +140,11 @@ return [
     PokedexNo::RATTATA => [
         'name' => "Rattata",
         'type' => [PokemonType::NORMAL],
+        'evolutions' => [
+            PokedexNo::RATICATE => [
+                'level' => 20,
+            ],
+        ],
     ],
     PokedexNo::RATICATE => [
         'name' => "Raticate",
@@ -88,6 +153,11 @@ return [
     PokedexNo::SPEAROW => [
         'name' => "Spearow",
         'type' => [PokemonType::NORMAL, PokemonType::FLYING],
+        'evolutions' => [
+            PokedexNo::FEAROW => [
+                'level' => 20,
+            ],
+        ],
     ],
     PokedexNo::FEAROW => [
         'name' => "Fearow",
@@ -96,6 +166,11 @@ return [
     PokedexNo::EKANS => [
         'name' => "Ekans",
         'type' => [PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::ARBOK => [
+                'level' => 22,
+            ],
+        ],
     ],
     PokedexNo::ARBOK => [
         'name' => "Arbok",
@@ -112,6 +187,11 @@ return [
     PokedexNo::SANDSHREW => [
         'name' => "Sandshrew",
         'type' => [PokemonType::GROUND],
+        'evolutions' => [
+            PokedexNo::SANDSLASH => [
+                'level' => 22,
+            ],
+        ],
     ],
     PokedexNo::SANDSLASH => [
         'name' => "Sandslash",
@@ -120,6 +200,11 @@ return [
     PokedexNo::NIDORAN_F => [
         'name' => "Nidoran♀",
         'type' => [PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::NIDORINA => [
+                'level' => 16,
+            ],
+        ],
     ],
     PokedexNo::NIDORINA => [
         'name' => "Nidorina",
@@ -132,6 +217,11 @@ return [
     PokedexNo::NIDORAN_M => [
         'name' => "Nidoran♂",
         'type' => [PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::NIDORINO => [
+                'level' => 16,
+            ],
+        ],
     ],
     PokedexNo::NIDORINO => [
         'name' => "Nidorino",
@@ -168,6 +258,11 @@ return [
     PokedexNo::ZUBAT => [
         'name' => "Zubat",
         'type' => [PokemonType::POISON, PokemonType::FLYING],
+        'evolutions' => [
+            PokedexNo::GOLBAT => [
+                'level' => 22,
+            ],
+        ],
     ],
     PokedexNo::GOLBAT => [
         'name' => "Golbat",
@@ -176,6 +271,11 @@ return [
     PokedexNo::ODDISH => [
         'name' => "Oddish",
         'type' => [PokemonType::GROUND, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::GLOOM => [
+                'level' => 21,
+            ],
+        ],
     ],
     PokedexNo::GLOOM => [
         'name' => "Gloom",
@@ -188,6 +288,11 @@ return [
     PokedexNo::PARAS => [
         'name' => "Paras",
         'type' => [PokemonType::BUG, PokemonType::GRASS],
+        'evolutions' => [
+            PokedexNo::PARASECT => [
+                'level' => 24,
+            ],
+        ],
     ],
     PokedexNo::PARASECT => [
         'name' => "Parasect",
@@ -196,6 +301,11 @@ return [
     PokedexNo::VENONAT => [
         'name' => "Venonat",
         'type' => [PokemonType::BUG, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::VENOMOTH => [
+                'level' => 31,
+            ],
+        ],
     ],
     PokedexNo::VENOMOTH => [
         'name' => "Venomoth",
@@ -204,6 +314,11 @@ return [
     PokedexNo::DIGLETT => [
         'name' => "Diglett",
         'type' => [PokemonType::GROUND],
+        'evolutions' => [
+            PokedexNo::DUGTRIO => [
+                'level' => 26,
+            ],
+        ],
     ],
     PokedexNo::DUGTRIO => [
         'name' => "Dugtrio",
@@ -212,6 +327,11 @@ return [
     PokedexNo::MEOWTH => [
         'name' => "Meowth",
         'type' => [PokemonType::NORMAL],
+        'evolutions' => [
+            PokedexNo::PERSIAN => [
+                'level' => 28,
+            ],
+        ],
     ],
     PokedexNo::PERSIAN => [
         'name' => "Persian",
@@ -220,6 +340,11 @@ return [
     PokedexNo::PSYDUCK => [
         'name' => "Psyduck",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::GOLDUCK => [
+                'level' => 33,
+            ],
+        ],
     ],
     PokedexNo::GOLDUCK => [
         'name' => "Golduck",
@@ -228,6 +353,11 @@ return [
     PokedexNo::MANKEY => [
         'name' => "Mankey",
         'type' => [PokemonType::FIGHTING],
+        'evolutions' => [
+            PokedexNo::PRIMEAPE => [
+                'level' => 28,
+            ],
+        ],
     ],
     PokedexNo::PRIMEAPE => [
         'name' => "Primeape",
@@ -244,6 +374,11 @@ return [
     PokedexNo::POLIWAG => [
         'name' => "Poliwag",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::POLIWHIRL => [
+                'level' => 25,
+            ],
+        ],
     ],
     PokedexNo::POLIWHIRL => [
         'name' => "Poliwhirl",
@@ -256,6 +391,11 @@ return [
     PokedexNo::ABRA => [
         'name' => "Abra",
         'type' => [PokemonType::PSYCHIC],
+        'evolutions' => [
+            PokedexNo::KADABRA => [
+                'level' => 16,
+            ],
+        ],
     ],
     PokedexNo::KADABRA => [
         'name' => "Kadabra",
@@ -268,6 +408,11 @@ return [
     PokedexNo::MACHOP => [
         'name' => "Machop",
         'type' => [PokemonType::FIGHTING],
+        'evolutions' => [
+            PokedexNo::MACHOKE => [
+                'level' => 28,
+            ],
+        ],
     ],
     PokedexNo::MACHOKE => [
         'name' => "Machoke",
@@ -280,6 +425,11 @@ return [
     PokedexNo::BELLSPROUT => [
         'name' => "Bellsprout",
         'type' => [PokemonType::GRASS, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::WEEPINBELL => [
+                'level' => 21,
+            ],
+        ],
     ],
     PokedexNo::WEEPINBELL => [
         'name' => "Weepinbell",
@@ -292,6 +442,11 @@ return [
     PokedexNo::TENTACOOL => [
         'name' => "Tentacool",
         'type' => [PokemonType::WATER, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::TENTACRUEL => [
+                'level' => 30,
+            ],
+        ],
     ],
     PokedexNo::TENTACRUEL => [
         'name' => "Tentacruel",
@@ -300,6 +455,11 @@ return [
     PokedexNo::GEODUDE => [
         'name' => "Geodude",
         'type' => [PokemonType::ROCK, PokemonType::GROUND],
+        'evolutions' => [
+            PokedexNo::GRAVELER => [
+                'level' => 25,
+            ],
+        ],
     ],
     PokedexNo::GRAVELER => [
         'name' => "Graveler",
@@ -312,6 +472,11 @@ return [
     PokedexNo::PONYTA => [
         'name' => "Ponyta",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::RAPIDASH => [
+                'level' => 40,
+            ],
+        ],
     ],
     PokedexNo::RAPIDASH => [
         'name' => "Rapidash",
@@ -320,6 +485,12 @@ return [
     PokedexNo::SLOWPOKE => [
         'name' => "Slowpoke",
         'type' => [PokemonType::WATER, PokemonType::PSYCHIC],
+        'evolutions' => [
+            PokedexNo::SLOWBRO => [
+                'level' => 37,
+            ],
+            // SLOWKING
+        ],
     ],
     PokedexNo::SLOWBRO => [
         'name' => "Slowbro",
@@ -328,6 +499,11 @@ return [
     PokedexNo::MAGNEMITE => [
         'name' => "Magnemite",
         'type' => [PokemonType::ELECTRIC, PokemonType::STEEL],
+        'evolutions' => [
+            PokedexNo::MAGNETON => [
+                'level' => 30,
+            ],
+        ],
     ],
     PokedexNo::MAGNETON => [
         'name' => "Magneton",
@@ -340,6 +516,11 @@ return [
     PokedexNo::DODUO => [
         'name' => "Doduo",
         'type' => [PokemonType::NORMAL, PokemonType::FLYING],
+        'evolutions' => [
+            PokedexNo::DODRIO => [
+                'level' => 31,
+            ],
+        ],
     ],
     PokedexNo::DODRIO => [
         'name' => "Dodrio",
@@ -348,6 +529,11 @@ return [
     PokedexNo::SEEL => [
         'name' => "Seel",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::DEWGONG => [
+                'level' => 34,
+            ],
+        ],
     ],
     PokedexNo::DEWGONG => [
         'name' => "Dewgong",
@@ -356,6 +542,11 @@ return [
     PokedexNo::GRIMER => [
         'name' => "Grimer",
         'type' => [PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::MUK => [
+                'level' => 38,
+            ],
+        ],
     ],
     PokedexNo::MUK => [
         'name' => "Muk",
@@ -372,6 +563,11 @@ return [
     PokedexNo::GASTLY => [
         'name' => "Gastly",
         'type' => [PokemonType::GHOST, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::HAUNTER => [
+                'level' => 25,
+            ],
+        ],
     ],
     PokedexNo::HAUNTER => [
         'name' => "Haunter",
@@ -388,6 +584,11 @@ return [
     PokedexNo::DROWZEE => [
         'name' => "Drowzee",
         'type' => [PokemonType::PSYCHIC],
+        'evolutions' => [
+            PokedexNo::HYPNO => [
+                'level' => 26,
+            ],
+        ],
     ],
     PokedexNo::HYPNO => [
         'name' => "Hypno",
@@ -396,6 +597,11 @@ return [
     PokedexNo::KRABBY => [
         'name' => "Krabby",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::KINGLER => [
+                'level' => 28,
+            ],
+        ],
     ],
     PokedexNo::KINGLER => [
         'name' => "Kingler",
@@ -404,6 +610,11 @@ return [
     PokedexNo::VOLTORB => [
         'name' => "Voltorb",
         'type' => [PokemonType::ELECTRIC],
+        'evolutions' => [
+            PokedexNo::ELECTRODE => [
+                'level' => 30,
+            ],
+        ],
     ],
     PokedexNo::ELECTRODE => [
         'name' => "Electrode",
@@ -420,6 +631,11 @@ return [
     PokedexNo::CUBONE => [
         'name' => "Cubone",
         'type' => [PokemonType::GROUND],
+        'evolutions' => [
+            PokedexNo::MAROWAK => [
+                'level' => 28,
+            ],
+        ],
     ],
     PokedexNo::MAROWAK => [
         'name' => "Marowak",
@@ -440,6 +656,11 @@ return [
     PokedexNo::KOFFING => [
         'name' => "Koffing",
         'type' => [PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::WEEZING => [
+                'level' => 35,
+            ],
+        ],
     ],
     PokedexNo::WEEZING => [
         'name' => "Weezing",
@@ -448,6 +669,11 @@ return [
     PokedexNo::RHYHORN => [
         'name' => "Rhyhorn",
         'type' => [PokemonType::GROUND, PokemonType::ROCK],
+        'evolutions' => [
+            PokedexNo::RHYDON => [
+                'level' => 42,
+            ],
+        ],
     ],
     PokedexNo::RHYDON => [
         'name' => "Rhydon",
@@ -468,6 +694,11 @@ return [
     PokedexNo::HORSEA => [
         'name' => "Horsea",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::SEADRA => [
+                'level' => 32,
+            ],
+        ],
     ],
     PokedexNo::SEADRA => [
         'name' => "Seadra",
@@ -476,6 +707,11 @@ return [
     PokedexNo::GOLDEEN => [
         'name' => "Goldeen",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::SEAKING => [
+                'level' => 33,
+            ],
+        ],
     ],
     PokedexNo::SEAKING => [
         'name' => "Seaking",
@@ -520,6 +756,11 @@ return [
     PokedexNo::MAGIKARP => [
         'name' => "Magikarp",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::GYARADOS => [
+                'level' => 20,
+            ],
+        ],
     ],
     PokedexNo::GYARADOS => [
         'name' => "Gyarados",
@@ -556,6 +797,11 @@ return [
     PokedexNo::OMANYTE => [
         'name' => "Omanyte",
         'type' => [PokemonType::ROCK, PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::OMASTAR => [
+                'level' => 40,
+            ],
+        ],
     ],
     PokedexNo::OMASTAR => [
         'name' => "Omastar",
@@ -564,6 +810,11 @@ return [
     PokedexNo::KABUTO => [
         'name' => "Kabuto",
         'type' => [PokemonType::ROCK, PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::KABUTOPS => [
+                'level' => 40,
+            ],
+        ],
     ],
     PokedexNo::KABUTOPS => [
         'name' => "Kabutops",
@@ -592,10 +843,20 @@ return [
     PokedexNo::DRATINI => [
         'name' => "Dratini",
         'type' => [PokemonType::DRAGON],
+        'evolutions' => [
+            PokedexNo::DRAGONAIR => [
+                'level' => 30,
+            ],
+        ],
     ],
     PokedexNo::DRAGONAIR => [
         'name' => "Dragonair",
         'type' => [PokemonType::DRAGON],
+        'evolutions' => [
+            PokedexNo::DRAGONITE => [
+                'level' => 55,
+            ],
+        ],
     ],
     PokedexNo::DRAGONITE => [
         'name' => "Dragonite",

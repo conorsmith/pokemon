@@ -122,6 +122,21 @@ final class PostEncounterCatch
                 'location_caught' => $currentLocation['id'],
                 'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
             ]);
+
+            $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
+                'instanceId' => INSTANCE_ID,
+                'number' => $encounterRow['pokemon_id'],
+            ]);
+
+            if ($pokedexRow === false) {
+                $this->db->insert("pokedex_entries", [
+                    'id' => Uuid::uuid4(),
+                    'instance_id' => INSTANCE_ID,
+                    'number' => $encounterRow['pokemon_id'],
+                    'date_added' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
+                ]);
+            }
+
         } else {
             $this->session->getFlashBag()->add("successes", "You failed to catch the wild {$pokemon['name']}");
         }
