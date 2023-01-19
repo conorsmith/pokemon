@@ -97,6 +97,7 @@ final class ControllerFactory
             PostMapEncounter::class => new PostMapEncounter($this->db, $this->session, $this->map),
             GetTeam::class => new GetTeam(
                 $this->db,
+                $this->session,
                 $this->playerRepository,
                 $this->pokedex,
                 $this->viewModelFactory,

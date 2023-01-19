@@ -15,15 +15,16 @@ final class ViewModelFactory
         private readonly array $pokedex,
     ) {}
 
-    public function createPokemonOnTeam(Pokemon $pokemon): PokemonVm
+    public function createPokemonOnTeam(string $id, Pokemon $pokemon): stdClass
     {
-        return new PokemonVm(
-            $this->pokedex[$pokemon->number]['name'],
-            TeamMember::createImageUrl($pokemon->number),
-            self::createPokemonTypeName($pokemon->primaryType),
-            is_null($pokemon->secondaryType) ? null : self::createPokemonTypeName($pokemon->secondaryType),
-            strval($pokemon->level),
-        );
+        return (object) [
+            'id' => $id,
+            'name' => $this->pokedex[$pokemon->number]['name'],
+            'imageUrl' => TeamMember::createImageUrl($pokemon->number),
+            'primaryType' => self::createPokemonTypeName($pokemon->primaryType),
+            'secondaryType' => is_null($pokemon->secondaryType) ? null : self::createPokemonTypeName($pokemon->secondaryType),
+            'level' => strval($pokemon->level),
+        ];
     }
 
     public function createPokemonInBattle(Pokemon $pokemon): PokemonVm
@@ -37,7 +38,7 @@ final class ViewModelFactory
         );
     }
 
-    private static function createPokemonTypeName(int $type): string
+    public static function createPokemonTypeName(int $type): string
     {
         return match($type) {
             PokemonType::NORMAL => "normal",

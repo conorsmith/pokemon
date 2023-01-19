@@ -3,17 +3,21 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\Domain\Battle\Player;
 use ConorSmith\Pokemon\Domain\Battle\Pokemon;
 use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
+use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
 use Exception;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetTeam
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly Session $session,
         private readonly PlayerRepository $playerRepository,
         private readonly array $pokedex,
         private readonly ViewModelFactory $viewModelFactory,
@@ -34,27 +38,43 @@ final class GetTeam
             ]
         );
 
-        $boxedPokemon = array_map(
-            fn(array $row) => new Pokemon(
-                $row['pokemon_id'],
-                $this->findPokedexEntry($row['pokemon_id'])['type'][0],
-                $this->findPokedexEntry($row['pokemon_id'])['type'][1] ?? null,
-                $row['level'],
-                false,
-            ),
-            $rows
-        );
+        $successes = $this->session->getFlashBag()->get("successes");
+        $errors = $this->session->getFlashBag()->get("errors");
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Box.php", [
-            'team' => array_map(
-                fn(Pokemon $pokemon) => $this->viewModelFactory->createPokemonOnTeam($pokemon),
-                $player->team
-            ),
-            'box' => array_map(
-                fn(Pokemon $pokemon) => $this->viewModelFactory->createPokemonOnTeam($pokemon),
-                $boxedPokemon
-            ),
+            'team' => $this->createTeamViewModels($player),
+            'box' => $this->createBoxViewModels($rows),
+            'successes' => $successes,
+            'errors' => $errors,
         ]);
+    }
+
+    private function createTeamViewModels(Player $player): array
+    {
+        $viewModels = [];
+
+        foreach ($player->team as $i => $pokemon) {
+            $viewModels[] = $this->viewModelFactory->createPokemonOnTeam($player->teamIds[$i], $pokemon);
+        }
+
+        return $viewModels;
+    }
+
+    private function createBoxViewModels(array $rows): array
+    {
+        return array_map(
+            fn(array $row) => (object) [
+                'id' => $row['id'],
+                'name' => $this->findPokedexEntry($row['pokemon_id'])['name'],
+                'imageUrl' => TeamMember::createImageUrl($row['pokemon_id']),
+                'primaryType' => ViewModelFactory::createPokemonTypeName($this->findPokedexEntry($row['pokemon_id'])['type'][0]),
+                'secondaryType' => isset($this->findPokedexEntry($row['pokemon_id'])['type'][1])
+                    ? ViewModelFactory::createPokemonTypeName($this->findPokedexEntry($row['pokemon_id'])['type'][1])
+                    : null,
+                'level' => $row['level'],
+            ],
+            $rows
+        );
     }
 
     private function findPokedexEntry(string $number): array

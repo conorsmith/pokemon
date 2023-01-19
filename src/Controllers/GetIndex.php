@@ -40,16 +40,23 @@ final class GetIndex
                 'rareCandies' => $instanceRow['unused_level_ups'],
                 'challengeTokens' => $instanceRow['unused_moves'],
             ],
-            'team' => array_map(
-                fn(Pokemon $pokemon) => $this->viewModelFactory->createPokemonOnTeam($pokemon),
-                $player->team
-            ),
+            'team' => $this->createTeamViewModels($player),
             'badges' => array_map(
                 fn(int $value) => $this->viewModelFactory->createGymBadge(GymBadge::from($value)),
                 json_decode($instanceRow['badges'])
             ),
             'successes' => $successes,
-            'encounter' => $encounter ?? null,
         ]);
+    }
+
+    private function createTeamViewModels(Player $player): array
+    {
+        $viewModels = [];
+
+        foreach ($player->team as $i => $pokemon) {
+            $viewModels[] = $this->viewModelFactory->createPokemonOnTeam($player->teamIds[$i], $pokemon);
+        }
+
+        return $viewModels;
     }
 }

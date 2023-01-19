@@ -1,5 +1,13 @@
 <div class="d-grid gap-4">
 
+    <?php foreach ($errors as $error) : ?>
+        <div class="alert alert-danger"><?=$error?></div>
+    <?php endforeach ?>
+
+    <?php foreach ($successes as $success) : ?>
+        <div class="alert alert-success"><?=$success?></div>
+    <?php endforeach ?>
+
     <h1 style="text-align: center;">Manage Team</h1>
 
     <ul class="list-group">
