@@ -5,8 +5,17 @@
     <li class="list-group-item d-flex flex-row-reverse">
         <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-left: 1rem;">
         <div style="text-align: right;">
-            <h5><?=$pokemon->name?></h5>
-            <p class="mb-0">Level <?=$pokemon->level?></p>
+            <h5>
+                <?=$pokemon->name?>
+            </h5>
+            <p class="mb-0">
+                <?php if ($pokemon->isRegistered) : ?>
+                    <i class="fas fa-fw fa-circle" style="color: #888;"></i>
+                <?php else : ?>
+                    <i class="far fa-fw fa-circle" style="color: #888;"></i>
+                <?php endif ?>
+                Level <?=$pokemon->level?>
+            </p>
         </div>
     </li>
     <li class="list-group-item d-flex">

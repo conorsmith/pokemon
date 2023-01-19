@@ -35,6 +35,11 @@ final class GetEncounter
             exit;
         }
 
+        $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
+            'instanceId' => INSTANCE_ID,
+            'number' => $encounterRow['pokemon_id'],
+        ]);
+
         $leadPokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position = 1", [
             'instanceId' => INSTANCE_ID,
         ]);
@@ -42,9 +47,10 @@ final class GetEncounter
         $encounteredPokemon = $this->pokedex[$encounterRow['pokemon_id']];
 
         $pokemon = (object) [
-            'name'     => $encounteredPokemon['name'],
-            'imageUrl' => TeamMember::createImageUrl($encounterRow['pokemon_id']),
-            'level'    => $encounterRow['level'],
+            'name'         => $encounteredPokemon['name'],
+            'imageUrl'     => TeamMember::createImageUrl($encounterRow['pokemon_id']),
+            'level'        => $encounterRow['level'],
+            'isRegistered' => $pokedexRow !== false,
         ];
 
         $leadPokemon = (object) [
