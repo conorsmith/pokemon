@@ -7,11 +7,13 @@ use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetTeamLevelUp
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly Session $session,
         private readonly CaughtPokemonRepository $caughtPokemonRepository,
         private readonly array $pokedex,
     ) {}
@@ -31,6 +33,8 @@ final class GetTeamLevelUp
         echo TemplateEngine::render(__DIR__ . "/../Templates/LevelUp.php", [
             'team' => $team,
             'rareCandies' => $rareCandies,
+            'successes' => $this->session->getFlashBag()->get("successes"),
+            'errors' => $this->session->getFlashBag()->get("errors"),
         ]);
     }
 }

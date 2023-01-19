@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\ViewModels\Battle;
+namespace ConorSmith\Pokemon\Battle\ViewModels;
 
 final class Pokemon
 {
     public function __construct(
+        public readonly string $id,
         public readonly string $name,
         public readonly string $imageUrl,
         public readonly string $primaryType,

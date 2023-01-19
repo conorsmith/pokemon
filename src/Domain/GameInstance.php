@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Domain;
 
-use ConorSmith\Pokemon\Domain\Battle\Trainer;
+use ConorSmith\Pokemon\Battle\Domain\Trainer;
 
 final class GameInstance
 {

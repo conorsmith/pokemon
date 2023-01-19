@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Repositories\Battle;
+namespace ConorSmith\Pokemon\Battle\Repositories;
 
-use ConorSmith\Pokemon\Domain\Battle\Player;
-use ConorSmith\Pokemon\Domain\Battle\Pokemon;
+use ConorSmith\Pokemon\Battle\Domain\Player;
+use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\GymBadge;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -27,18 +27,17 @@ final class PlayerRepository
         ]);
 
         $team = [];
-        $teamIds = [];
 
         foreach ($caughtPokemonRows as $caughtPokemonRow) {
             $pokedexEntry = $this->findPokedexEntry($caughtPokemonRow['pokemon_id']);
             $team[] = new Pokemon(
+                $caughtPokemonRow['id'],
                 $caughtPokemonRow['pokemon_id'],
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,
                 $caughtPokemonRow['level'],
                 $caughtPokemonRow['has_fainted'] === 1,
             );
-            $teamIds[] = $caughtPokemonRow['id'];
         }
 
         $gymBadges = array_map(
@@ -46,7 +45,7 @@ final class PlayerRepository
             json_decode($instanceRow['badges'])
         );
 
-        return new Player($team, $teamIds, $gymBadges);
+        return new Player($team, $gymBadges);
     }
 
     private function findPokedexEntry(string $number): array
@@ -69,9 +68,10 @@ final class PlayerRepository
         /** @var Pokemon $pokemon */
         foreach ($player->team as $i => $pokemon) {
             $this->db->update("caught_pokemon", [
+                'team_position' => $i + 1,
                 'has_fainted' => $pokemon->hasFainted ? "1" : "0",
             ], [
-                'id' => $player->teamIds[$i],
+                'id' => $pokemon->id,
             ]);
         }
     }

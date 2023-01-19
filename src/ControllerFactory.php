@@ -3,7 +3,14 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
-use ConorSmith\Pokemon\Controllers\GetBattle;
+use ConorSmith\Pokemon\Battle\Controllers\GetBattle;
+use ConorSmith\Pokemon\Battle\Controllers\GetBattleSwitch;
+use ConorSmith\Pokemon\Battle\Controllers\PostBattleFight;
+use ConorSmith\Pokemon\Battle\Controllers\PostBattleSwitch;
+use ConorSmith\Pokemon\Battle\Controllers\PostBattleTrainer;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
+use ConorSmith\Pokemon\Controllers\GetLogWeeklyReview;
 use ConorSmith\Pokemon\Controllers\GetTeam;
 use ConorSmith\Pokemon\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Controllers\GetIndex;
@@ -13,13 +20,12 @@ use ConorSmith\Pokemon\Controllers\GetLogFoodDiary;
 use ConorSmith\Pokemon\Controllers\GetMapEncounter;
 use ConorSmith\Pokemon\Controllers\GetMapMove;
 use ConorSmith\Pokemon\Controllers\GetTeamLevelUp;
-use ConorSmith\Pokemon\Controllers\PostBattleFight;
-use ConorSmith\Pokemon\Controllers\PostBattleTrainer;
 use ConorSmith\Pokemon\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Controllers\PostEncounterRun;
 use ConorSmith\Pokemon\Controllers\PostLogCalorieGoal;
 use ConorSmith\Pokemon\Controllers\PostLogExercise;
 use ConorSmith\Pokemon\Controllers\PostLogFoodDiary;
+use ConorSmith\Pokemon\Controllers\PostLogWeeklyReview;
 use ConorSmith\Pokemon\Controllers\PostMapEncounter;
 use ConorSmith\Pokemon\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Controllers\PostTeamLevelUp;
@@ -27,8 +33,6 @@ use ConorSmith\Pokemon\Controllers\PostTeamMoveDown;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveUp;
 use ConorSmith\Pokemon\Controllers\PostTeamSendToBox;
 use ConorSmith\Pokemon\Controllers\PostTeamSendToTeam;
-use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
-use ConorSmith\Pokemon\Repositories\Battle\TrainerRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
@@ -40,6 +44,8 @@ final class ControllerFactory
     {
         $r->get("/log/food-diary", GetLogFoodDiary::class);
         $r->post("/log/food-diary", PostLogFoodDiary::class);
+        $r->get("/log/weekly-review", GetLogWeeklyReview::class);
+        $r->post("/log/weekly-review", PostLogWeeklyReview::class);
         $r->get("/team/level-up", GetTeamLevelUp::class);
         $r->post("/team/level-up", PostTeamLevelUp::class);
         $r->get("/log/calorie-goal", GetLogCalorieGoal::class);
@@ -61,6 +67,8 @@ final class ControllerFactory
         $r->post("/battle/trainer/{id}", PostBattleTrainer::class);
         $r->get("/battle/{id}", GetBattle::class);
         $r->post("/battle/{id}/fight", PostBattleFight::class);
+        $r->get("/battle/{id}/switch", GetBattleSwitch::class);
+        $r->post("/battle/{id}/switch", PostBattleSwitch::class);
         $r->get("/", GetIndex::class);
     }
 
@@ -80,7 +88,9 @@ final class ControllerFactory
         return match ($className) {
             GetLogFoodDiary::class => new GetLogFoodDiary($this->db, $this->session),
             PostLogFoodDiary::class => new PostLogFoodDiary($this->db, $this->session),
-            GetTeamLevelUp::class => new GetTeamLevelUp($this->db, $this->caughtPokemonRepository, $this->pokedex),
+            GetLogWeeklyReview::class => new GetLogWeeklyReview($this->db, $this->session),
+            PostLogWeeklyReview::class => new PostLogWeeklyReview($this->db, $this->session),
+            GetTeamLevelUp::class => new GetTeamLevelUp($this->db, $this->session, $this->caughtPokemonRepository, $this->pokedex),
             PostTeamLevelUp::class => new PostTeamLevelUp($this->db, $this->session, $this->pokedex),
             GetLogCalorieGoal::class => new GetLogCalorieGoal($this->db, $this->session),
             PostLogCalorieGoal::class => new PostLogCalorieGoal($this->db, $this->session),
@@ -126,6 +136,13 @@ final class ControllerFactory
                 $this->trainerRepository,
                 $this->playerRepository,
                 $this->viewModelFactory,
+            ),
+            GetBattleSwitch::class => new GetBattleSwitch(
+                $this->playerRepository,
+                $this->viewModelFactory,
+            ),
+            PostBattleSwitch::class => new PostBattleSwitch(
+                $this->playerRepository,
             ),
             GetIndex::class => new GetIndex(
                 $this->db,

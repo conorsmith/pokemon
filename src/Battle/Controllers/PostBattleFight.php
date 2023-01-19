@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Controllers;
+namespace ConorSmith\Pokemon\Battle\Controllers;
 
-use ConorSmith\Pokemon\Domain\Battle\Pokemon;
+use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Domain\GameInstance;
 use ConorSmith\Pokemon\PokemonType;
-use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
-use ConorSmith\Pokemon\Repositories\Battle\TrainerRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;

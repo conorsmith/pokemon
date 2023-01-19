@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Domain\Battle;
+namespace ConorSmith\Pokemon\Battle\Domain;
 
 use ConorSmith\Pokemon\GymBadge;
 use Exception;
@@ -10,7 +10,6 @@ final class Player
 {
     public function __construct(
         public readonly array $team,
-        public readonly array $teamIds,
         public readonly array $gymBadges,
     ) {}
 
@@ -27,7 +26,6 @@ final class Player
 
         return new self(
             $this->team,
-            $this->teamIds,
             $gymBadges
         );
     }
@@ -56,7 +54,6 @@ final class Player
 
         return new self(
             $revivedTeam,
-            $this->teamIds,
             $this->gymBadges,
         );
     }
@@ -78,5 +75,37 @@ final class Player
     public function hasEntireTeamFainted(): bool
     {
         return $this->countActiveTeamMembers() === 0;
+    }
+
+    public function findTeamMember(string $id): Pokemon
+    {
+        /** @var Pokemon $pokemon */
+        foreach ($this->team as $pokemon) {
+            if ($pokemon->id === $id) {
+                return $pokemon;
+            }
+        }
+
+        throw new Exception;
+    }
+
+    public function switchTeamMembers(Pokemon $pokemonA, Pokemon $pokemonB): self
+    {
+        $team = [];
+
+        foreach ($this->team as $pokemon) {
+            if ($pokemon->id === $pokemonA->id) {
+                $team[] = $pokemonB;
+            } elseif ($pokemon->id === $pokemonB->id) {
+                $team[] = $pokemonA;
+            } else {
+                $team[] = $pokemon;
+            }
+        }
+
+        return new self(
+            $team,
+            $this->gymBadges,
+        );
     }
 }

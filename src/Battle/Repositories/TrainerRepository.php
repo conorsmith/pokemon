@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Repositories\Battle;
+namespace ConorSmith\Pokemon\Battle\Repositories;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
-use ConorSmith\Pokemon\Domain\Battle\Pokemon;
-use ConorSmith\Pokemon\Domain\Battle\Trainer;
+use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -65,6 +65,7 @@ final class TrainerRepository
         foreach ($trainerConfig['team'] as $i => $pokemonConfig) {
             $pokedexEntry = $this->findPokedexEntry($pokemonConfig['id']);
             $team[] = new Pokemon(
+                "00000000-0000-0000-0000-0000000{$i}",
                 $pokemonConfig['id'],
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,

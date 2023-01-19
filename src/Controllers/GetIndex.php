@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
-use ConorSmith\Pokemon\Domain\Battle\Player;
-use ConorSmith\Pokemon\Domain\Battle\Pokemon;
+use ConorSmith\Pokemon\Battle\Domain\Player;
+use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\GymBadge;
-use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
@@ -53,8 +53,8 @@ final class GetIndex
     {
         $viewModels = [];
 
-        foreach ($player->team as $i => $pokemon) {
-            $viewModels[] = $this->viewModelFactory->createPokemonOnTeam($player->teamIds[$i], $pokemon);
+        foreach ($player->team as $pokemon) {
+            $viewModels[] = $this->viewModelFactory->createPokemonOnTeam($pokemon);
         }
 
         return $viewModels;

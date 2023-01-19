@@ -2,6 +2,14 @@
 
     <h1 style="text-align: center;">Team</h1>
 
+    <?php foreach ($errors as $error) : ?>
+        <div class="alert alert-danger"><?=$error?></div>
+    <?php endforeach ?>
+
+    <?php foreach ($successes as $success) : ?>
+        <div class="alert alert-success"><?=$success?></div>
+    <?php endforeach ?>
+
     <div class="card" style="text-align: center;">
         <div class="card-body">
             <strong><?=$rareCandies?></strong> rare candies

@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Domain\Battle;
+namespace ConorSmith\Pokemon\Battle\Domain;
 
 final class Pokemon
 {
     public function __construct(
+        public readonly string $id,
         public readonly string $number,
         public readonly int $primaryType,
         public readonly ?int $secondaryType,

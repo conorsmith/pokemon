@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\GymBadge;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -36,6 +37,14 @@ final class PostTeamLevelUp
             exit;
         }
 
+        $levelLimit = self::findLevelLimit($instanceRow);
+
+        if ($pokemonRow['level'] + 1 > $levelLimit) {
+            $this->session->getFlashBag()->add("errors", "You can't level up Pokémon beyond level {$levelLimit}");
+            header("Location: /team/level-up");
+            exit;
+        }
+
         $newLevel = $pokemonRow['level'] + 1;
         $pokemon = $this->pokedex[$pokemonRow['pokemon_id']];
 
@@ -57,7 +66,23 @@ final class PostTeamLevelUp
 
         $this->session->getFlashBag()->add("successes", "{$pokemon['name']} levelled up to level {$newLevel}");
 
-        header("Location: /");
+        header("Location: /team/level-up");
         exit;
+    }
+
+    private static function findLevelLimit(array $instanceRow): int
+    {
+        $gymBadges = array_map(
+            fn(int $value) => GymBadge::from($value),
+            json_decode($instanceRow['badges'])
+        );
+
+        if (count($gymBadges) === 0) {
+            return GymBadge::BOULDER->levelLimit();
+        }
+
+        $highestRankedBadge = GymBadge::findHighestRanked($gymBadges);
+
+        return $highestRankedBadge->levelLimit();
     }
 }

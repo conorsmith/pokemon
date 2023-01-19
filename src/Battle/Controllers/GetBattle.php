@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Controllers;
+namespace ConorSmith\Pokemon\Battle\Controllers;
 
-use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
-use ConorSmith\Pokemon\Repositories\Battle\TrainerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Symfony\Component\HttpFoundation\Session\Session;

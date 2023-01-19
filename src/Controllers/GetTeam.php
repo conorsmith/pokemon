@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
-use ConorSmith\Pokemon\Domain\Battle\Player;
-use ConorSmith\Pokemon\Domain\Battle\Pokemon;
-use ConorSmith\Pokemon\Repositories\Battle\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Domain\Player;
+use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
@@ -53,8 +53,8 @@ final class GetTeam
     {
         $viewModels = [];
 
-        foreach ($player->team as $i => $pokemon) {
-            $viewModels[] = $this->viewModelFactory->createPokemonOnTeam($player->teamIds[$i], $pokemon);
+        foreach ($player->team as $pokemon) {
+            $viewModels[] = $this->viewModelFactory->createPokemonOnTeam($pokemon);
         }
 
         return $viewModels;

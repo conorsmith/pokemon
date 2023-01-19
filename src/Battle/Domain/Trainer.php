@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Domain\Battle;
+namespace ConorSmith\Pokemon\Battle\Domain;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;

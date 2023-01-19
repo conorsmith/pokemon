@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\GymBadge;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -33,6 +34,14 @@ final class PostEncounterCatch
 
         if ($instanceRow['unused_encounters'] < 1) {
             $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
+            header("Location: /map/encounter");
+            exit;
+        }
+
+        $levelLimit = self::findLevelLimit($instanceRow);
+
+        if ($encounterRow['level'] > $levelLimit) {
+            $this->session->getFlashBag()->add("errors", "You can't catch Pokémon above level {$levelLimit}");
             header("Location: /map/encounter");
             exit;
         }
@@ -141,5 +150,21 @@ final class PostEncounterCatch
         }
 
         throw new \Exception;
+    }
+
+    private static function findLevelLimit(array $instanceRow): int
+    {
+        $gymBadges = array_map(
+            fn(int $value) => GymBadge::from($value),
+            json_decode($instanceRow['badges'])
+        );
+
+        if (count($gymBadges) === 0) {
+            return GymBadge::BOULDER->levelLimit();
+        }
+
+        $highestRankedBadge = GymBadge::findHighestRanked($gymBadges);
+
+        return $highestRankedBadge->levelLimit();
     }
 }

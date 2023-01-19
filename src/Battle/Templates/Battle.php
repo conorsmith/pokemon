@@ -68,10 +68,8 @@
                 Fight
             </button>
         </form>
-        <form method="POST" action="/battle/<?=$id?>/switch" class="d-grid">
-            <button type="submit" class="btn btn-outline-dark" disabled>
-                Switch
-            </button>
-        </form>
+        <a href="/battle/<?=$id?>/switch" class="btn btn-outline-dark">
+            Switch
+        </a>
     </li>
 </ul>

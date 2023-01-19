@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
-use ConorSmith\Pokemon\Domain\Battle\Trainer;
-use ConorSmith\Pokemon\Domain\Battle\Pokemon;
-use ConorSmith\Pokemon\ViewModels\Battle\Pokemon as PokemonVm;
+use ConorSmith\Pokemon\Battle\Domain\Trainer;
+use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use stdClass;
 
@@ -15,10 +15,10 @@ final class ViewModelFactory
         private readonly array $pokedex,
     ) {}
 
-    public function createPokemonOnTeam(string $id, Pokemon $pokemon): stdClass
+    public function createPokemonOnTeam(Pokemon $pokemon): stdClass
     {
         return (object) [
-            'id' => $id,
+            'id' => $pokemon->id,
             'name' => $this->pokedex[$pokemon->number]['name'],
             'imageUrl' => TeamMember::createImageUrl($pokemon->number),
             'primaryType' => self::createPokemonTypeName($pokemon->primaryType),
@@ -30,6 +30,7 @@ final class ViewModelFactory
     public function createPokemonInBattle(Pokemon $pokemon): PokemonVm
     {
         return new PokemonVm(
+            $pokemon->id,
             $this->pokedex[$pokemon->number]['name'],
             TeamMember::createImageUrl($pokemon->number),
             self::createPokemonTypeName($pokemon->primaryType),

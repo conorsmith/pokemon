@@ -102,6 +102,7 @@
         <a href="/log/food-diary" class="list-group-item list-group-item-action">Log Completed Food Diary</a>
         <a href="/log/calorie-goal" class="list-group-item list-group-item-action">Log Attained Calorie Goal</a>
         <a href="/log/exercise" class="list-group-item list-group-item-action">Log Exercise</a>
+        <a href="/log/weekly-review" class="list-group-item list-group-item-action">Log Weekly Review</a>
     </div>
     <button id="log-menu-button" type="button" class="btn btn-primary btn-lg" style="width: 4rem; height: 4rem; border-radius: 3rem; font-weight: bold; font-size: 2rem; line-height: 1rem; box-shadow: 0px 0px 0.6rem 0px rgba(0,0,0,0.3);"><i class="fas fa-plus"></i></button>
 </div>
