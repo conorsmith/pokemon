@@ -614,7 +614,7 @@ return [
         'directions' => [
             LocationId::ROUTE_24,
             LocationId::ROUTE_4,
-            "57968d07-cea1-4a9b-ac21-53609a25ea36",
+            LocationId::ROUTE_9,
             "2ae61913-311d-4b24-87dd-934586badb5c",
         ],
         'pokemon' => [
@@ -640,6 +640,22 @@ return [
             "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 40,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::MEOWTH => [
+                'weight' => 35,
+                'levels' => [10, 16],
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 25,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 25,
+                'levels' => [13, 16],
+            ],
         ],
     ],
     [
@@ -650,8 +666,26 @@ return [
             "85776d72-ece8-451f-a8b8-5b1f9c2b349b",
             "a006849d-3c22-4b57-b6d9-3ab23f6f42cf",
             "8ceee5a8-54dd-4c63-9629-40bff24f3b2d",
+            // SAFFRON GYM
+            // SILPH CO
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 40,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::MEOWTH => [
+                'weight' => 10,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::GROWLITHE => [
+                'weight' => 10,
+                'levels' => [13, 16],
+            ],
         ],
     ],
     [
@@ -662,6 +696,22 @@ return [
             "41b38040-2b0b-4a4e-9333-67fc7a5bb003",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 40,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::MEOWTH => [
+                'weight' => 35,
+                'levels' => [10, 16],
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 25,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 25,
+                'levels' => [13, 16],
+            ],
         ],
     ],
     [
@@ -670,8 +720,26 @@ return [
         'directions' => [
             "8ceee5a8-54dd-4c63-9629-40bff24f3b2d",
             "8e24cb82-3708-4530-aa1a-09a8465a5d2e",
+            // VERMILLION GYM
+            // SS ANNE
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 40,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::KRABBY => [
+                'weight' => 15,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::SQUIRTLE => [
+                'weight' => 5,
+                'levels' => [10, 14],
+            ],
         ],
     ],
     [
@@ -682,6 +750,30 @@ return [
             "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 30,
+                'levels' => [19, 22],
+            ],
+            PokedexNo::VULPIX => [
+                'weight' => 10,
+                'levels' => [18, 20],
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 20,
+                'levels' => [19, 22],
+            ],
+            PokedexNo::MEOWTH => [
+                'weight' => 40,
+                'levels' => [17, 20],
+            ],
+            PokedexNo::GROWLITHE => [
+                'weight' => 10,
+                'levels' => [18, 20],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 20,
+                'levels' => [19, 22],
+            ],
         ],
     ],
     [
@@ -690,8 +782,26 @@ return [
         'directions' => [
             "2f0bc600-51c8-4621-9c72-124b5349beb2",
             "85776d72-ece8-451f-a8b8-5b1f9c2b349b",
+            // CELADON GYM
+            // ROCKET HIDEOUT
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 40,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::MEOWTH => [
+                'weight' => 10,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::GROWLITHE => [
+                'weight' => 10,
+                'levels' => [13, 16],
+            ],
         ],
     ],
     [
@@ -702,57 +812,208 @@ return [
             "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 30,
+                'levels' => [18, 20],
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 20,
+                'levels' => [17, 19],
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 20,
+                'levels' => [17, 19],
+            ],
+            PokedexNo::VULPIX => [
+                'weight' => 20,
+                'levels' => [15, 18],
+            ],
+            PokedexNo::MEOWTH => [
+                'weight' => 30,
+                'levels' => [18, 20],
+            ],
+            PokedexNo::GROWLITHE => [
+                'weight' => 20,
+                'levels' => [15, 18],
+            ],
         ],
     ],
     [
         'id' => "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
         'name' => "Lavender Town",
         'directions' => [
-            "3d732b49-da46-4985-bd04-a59cce17ee44",
+            LocationId::ROUTE_10,
             "a006849d-3c22-4b57-b6d9-3ab23f6f42cf",
             "3387518a-aece-49e0-9563-ca645f881a00",
+            // POKEMON TOWER
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 80,
+                'levels' => [18, 20],
+            ],
+            PokedexNo::DIGLETT => [
+                'weight' => 15,
+                'levels' => [18, 20],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 5,
+                'levels' => [18, 20],
+            ],
         ],
     ],
     [
-        'id' => "57968d07-cea1-4a9b-ac21-53609a25ea36",
+        'id' => LocationId::ROUTE_9,
         'name' => "Route 9",
         'directions' => [
             "cf6dff48-2972-4fe9-8853-9ccba685c38e",
-            "dca3ae52-de54-413b-a838-b4ddf6da97d5",
+            LocationId::ROCK_TUNNEL_1F,
             "01f3a7cb-ca9e-47bc-9976-7e8dbc5c79ad",
         ],
         'pokemon' => [
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => [14, 17],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 35,
+                'levels' => [13, 17],
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 25,
+                'levels' => [11, 17],
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 25,
+                'levels' => [11, 17],
+            ],
         ],
     ],
     [
         'id' => "01f3a7cb-ca9e-47bc-9976-7e8dbc5c79ad",
         'name' => "Power Plant",
         'directions' => [
-            "57968d07-cea1-4a9b-ac21-53609a25ea36",
+            LocationId::ROUTE_9,
         ],
         'pokemon' => [
+            PokedexNo::PIKACHU => [
+                'weight' => 25,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::MAGNEMITE => [
+                'weight' => 30,
+                'levels' => [22, 25],
+            ],
+            PokedexNo::MAGNETON => [
+                'weight' => 15,
+                'levels' => [31, 34],
+            ],
+            PokedexNo::VOLTORB => [
+                'weight' => 30,
+                'levels' => [22, 25],
+            ],
+            PokedexNo::ELECTABUZZ => [
+                'weight' => 5,
+                'levels' => [32, 35],
+            ],
+            PokedexNo::PORYGON => [
+                'weight' => 5,
+                'levels' => [30, 32],
+            ],
         ],
     ],
     [
-        'id' => "dca3ae52-de54-413b-a838-b4ddf6da97d5",
-        'name' => "Rock Tunnel",
+        'id' => LocationId::ROCK_TUNNEL_1F,
+        'name' => "Rock Tunnel (1st Floor)",
         'directions' => [
-            "57968d07-cea1-4a9b-ac21-53609a25ea36",
-            "3d732b49-da46-4985-bd04-a59cce17ee44",
+            LocationId::ROUTE_9,
+            LocationId::ROCK_TUNNEL_B1F,
         ],
         'pokemon' => [
+            PokedexNo::GEODUDE => [
+                'weight' => 35,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::MANKEY => [
+                'weight' => 15,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 15,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 5,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::HITMONCHAN => [
+                'weight' => 1,
+                'levels' => 20,
+            ],
         ],
     ],
     [
-        'id' => "3d732b49-da46-4985-bd04-a59cce17ee44",
+        'id' => LocationId::ROCK_TUNNEL_B1F,
+        'name' => "Rock Tunnel (1st Basement Floor)",
+        'directions' => [
+            LocationId::ROCK_TUNNEL_1F,
+            LocationId::ROUTE_10,
+        ],
+        'pokemon' => [
+            PokedexNo::GEODUDE => [
+                'weight' => 35,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::MANKEY => [
+                'weight' => 15,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 10,
+                'levels' => [13, 17],
+            ],
+            PokedexNo::HITMONLEE => [
+                'weight' => 1,
+                'levels' => 20,
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_10,
         'name' => "Route 10",
         'directions' => [
-            "dca3ae52-de54-413b-a838-b4ddf6da97d5",
+            LocationId::ROCK_TUNNEL_B1F,
             "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
         ],
         'pokemon' => [
+            PokedexNo::SPEAROW => [
+                'weight' => 35,
+                'levels' => [13, 17],
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 25,
+                'levels' => [11, 17],
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 25,
+                'levels' => [11, 17],
+            ],
+            PokedexNo::VOLTORB => [
+                'weight' => 40,
+                'levels' => [14, 17],
+            ],
         ],
     ],
     [
@@ -764,6 +1025,22 @@ return [
             "3387518a-aece-49e0-9563-ca645f881a00",
         ],
         'pokemon' => [
+            PokedexNo::SPEAROW => [
+                'weight' => 35,
+                'levels' => [13, 17],
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 40,
+                'levels' => [12, 15],
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 40,
+                'levels' => [12, 15],
+            ],
+            PokedexNo::DROWZEE => [
+                'weight' => 25,
+                'levels' => [11, 15],
+            ],
         ],
     ],
     [
@@ -775,6 +1052,30 @@ return [
             "22f4d2be-a20a-4c13-9d8e-1085b59e49f4",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 30,
+                'levels' => [23, 27],
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 35,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::GLOOM => [
+                'weight' => 5,
+                'levels' => [28, 30],
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 30,
+                'levels' => [24, 26],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 35,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::WEEPINBELL => [
+                'weight' => 5,
+                'levels' => [28, 30],
+            ],
         ],
     ],
     [
@@ -785,6 +1086,38 @@ return [
             "3387518a-aece-49e0-9563-ca645f881a00",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 20,
+                'levels' => [25, 27],
+            ],
+            PokedexNo::PIDGEOTTO => [
+                'weight' => 5,
+                'levels' => 29,
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 35,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::GLOOM => [
+                'weight' => 5,
+                'levels' => [28, 30],
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 30,
+                'levels' => [24, 26],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 35,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::WEEPINBELL => [
+                'weight' => 5,
+                'levels' => [28, 30],
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 5,
+                'levels' => 25,
+            ],
         ],
     ],
     [
@@ -795,6 +1128,38 @@ return [
             "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 10,
+                'levels' => 27,
+            ],
+            PokedexNo::PIDGEOTTO => [
+                'weight' => 5,
+                'levels' => 29,
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 35,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::GLOOM => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 30,
+                'levels' => [24, 26],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 35,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::WEEPINBELL => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 15,
+                'levels' => 23,
+            ],
         ],
     ],
     [
@@ -805,6 +1170,38 @@ return [
             "cf81b643-7eb8-407d-8975-44c26b09533a",
         ],
         'pokemon' => [
+            PokedexNo::PIDGEY => [
+                'weight' => 20,
+                'levels' => [25, 27],
+            ],
+            PokedexNo::PIDGEOTTO => [
+                'weight' => 5,
+                'levels' => 29,
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 35,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::GLOOM => [
+                'weight' => 5,
+                'levels' => [28, 30],
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 30,
+                'levels' => [24, 26],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 35,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::WEEPINBELL => [
+                'weight' => 5,
+                'levels' => [28, 30],
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 5,
+                'levels' => 25,
+            ],
         ],
     ],
     [
@@ -815,8 +1212,25 @@ return [
             "ed95c624-3b6e-410e-b527-62f56d17f5f6",
             "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
             "27940ef2-9539-4cdf-b16b-1551cf5259e3",
+            // FUCHSIA GYM
         ],
         'pokemon' => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 25,
+                'levels' => [20, 40],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 25,
+                'levels' => [20, 40],
+            ],
+            PokedexNo::FARFETCHD => [
+                'weight' => 25,
+                'levels' => [20, 30],
+            ],
+            PokedexNo::CUBONE => [
+                'weight' => 5,
+                'levels' => [20, 25],
+            ],
         ],
     ],
     [
@@ -829,6 +1243,58 @@ return [
             "e4f336d0-78a0-49bb-87a8-beceb810c097",
         ],
         'pokemon' => [
+            PokedexNo::NIDORAN_F => [
+                'weight' => 20,
+                'levels' => 22,
+            ],
+            PokedexNo::NIDORINA => [
+                'weight' => 20,
+                'levels' => 31,
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 20,
+                'levels' => 22,
+            ],
+            PokedexNo::NIDORINO => [
+                'weight' => 20,
+                'levels' => 31,
+            ],
+            PokedexNo::PARASECT => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 15,
+                'levels' => 22,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => [24, 25],
+            ],
+            PokedexNo::RHYHORN => [
+                'weight' => 20,
+                'levels' => 25,
+            ],
+            PokedexNo::CHANSEY => [
+                'weight' => 1,
+                'levels' => 23,
+            ],
+            PokedexNo::SCYTHER => [
+                'weight' => 4,
+                'levels' => 23,
+            ],
+            PokedexNo::PINSIR => [
+                'weight' => 4,
+                'levels' => 23,
+            ],
+            PokedexNo::KABUTO => [
+                'weight' => 1,
+                'levels' => 30,
+            ],
+            PokedexNo::OMANYTE => [
+                'weight' => 1,
+                'levels' => 30,
+            ],
         ],
     ],
     [
@@ -840,6 +1306,50 @@ return [
             "0383556c-0b2e-4a33-a178-1b078fc60352",
         ],
         'pokemon' => [
+            PokedexNo::NIDORAN_F => [
+                'weight' => 20,
+                'levels' => 30,
+            ],
+            PokedexNo::NIDORINA => [
+                'weight' => 10,
+                'levels' => 30,
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 20,
+                'levels' => 30,
+            ],
+            PokedexNo::NIDORINO => [
+                'weight' => 10,
+                'levels' => 30,
+            ],
+            PokedexNo::PARAS => [
+                'weight' => 15,
+                'levels' => 23,
+            ],
+            PokedexNo::VENOMOTH => [
+                'weight' => 5,
+                'levels' => 32,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => [25, 27],
+            ],
+            PokedexNo::RHYHORN => [
+                'weight' => 20,
+                'levels' => 26,
+            ],
+            PokedexNo::CHANSEY => [
+                'weight' => 4,
+                'levels' => 26,
+            ],
+            PokedexNo::TAUROS => [
+                'weight' => 1,
+                'levels' => 28,
+            ],
+            PokedexNo::OMANYTE => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
         ],
     ],
     [
@@ -850,6 +1360,54 @@ return [
             "0383556c-0b2e-4a33-a178-1b078fc60352",
         ],
         'pokemon' => [
+            PokedexNo::NIDORAN_F => [
+                'weight' => 20,
+                'levels' => 24,
+            ],
+            PokedexNo::NIDORINA => [
+                'weight' => 10,
+                'levels' => 33,
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 20,
+                'levels' => 24,
+            ],
+            PokedexNo::NIDORINO => [
+                'weight' => 10,
+                'levels' => 33,
+            ],
+            PokedexNo::PARAS => [
+                'weight' => 15,
+                'levels' => 22,
+            ],
+            PokedexNo::PARASECT => [
+                'weight' => 5,
+                'levels' => 25,
+            ],
+            PokedexNo::DODUO => [
+                'weight' => 20,
+                'levels' => 26,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => [23, 25],
+            ],
+            PokedexNo::KANGASKHAN => [
+                'weight' => 4,
+                'levels' => 25,
+            ],
+            PokedexNo::SCYTHER => [
+                'weight' => 1,
+                'levels' => 28,
+            ],
+            PokedexNo::PINSIR => [
+                'weight' => 1,
+                'levels' => 28,
+            ],
+            PokedexNo::KABUTO => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
         ],
     ],
     [
@@ -860,6 +1418,50 @@ return [
             "0383556c-0b2e-4a33-a178-1b078fc60352",
         ],
         'pokemon' => [
+            PokedexNo::NIDORAN_F => [
+                'weight' => 20,
+                'levels' => 22,
+            ],
+            PokedexNo::NIDORINA => [
+                'weight' => 10,
+                'levels' => 30,
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 20,
+                'levels' => 22,
+            ],
+            PokedexNo::NIDORINO => [
+                'weight' => 10,
+                'levels' => 30,
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 15,
+                'levels' => 23,
+            ],
+            PokedexNo::VENOMOTH => [
+                'weight' => 5,
+                'levels' => 32,
+            ],
+            PokedexNo::DODUO => [
+                'weight' => 20,
+                'levels' => 26,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => [25, 27],
+            ],
+            PokedexNo::KANGASKHAN => [
+                'weight' => 1,
+                'levels' => 28,
+            ],
+            PokedexNo::TAUROS => [
+                'weight' => 4,
+                'levels' => 25,
+            ],
+            PokedexNo::AERODACTYL => [
+                'weight' => 1,
+                'levels' => 30,
+            ],
         ],
     ],
     [
@@ -870,6 +1472,22 @@ return [
             "14ff0830-f6b9-413c-8b62-cca8d9943755",
         ],
         'pokemon' => [
+            PokedexNo::RATTATA => [
+                'weight' => 30,
+                'levels' => [18, 22],
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 5,
+                'levels' => [23, 25],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 30,
+                'levels' => [20, 22],
+            ],
+            PokedexNo::DODUO => [
+                'weight' => 35,
+                'levels' => [18, 22],
+            ],
         ],
     ],
     [
@@ -880,6 +1498,30 @@ return [
             "ed95c624-3b6e-410e-b527-62f56d17f5f6",
         ],
         'pokemon' => [
+            PokedexNo::RATTATA => [
+                'weight' => 5,
+                'levels' => 22,
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 25,
+                'levels' => [25, 29],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 30,
+                'levels' => [20, 22],
+            ],
+            PokedexNo::FEAROW => [
+                'weight' => 5,
+                'levels' => [25, 27],
+            ],
+            PokedexNo::DODUO => [
+                'weight' => 35,
+                'levels' => [24, 28],
+            ],
+            PokedexNo::EEVEE => [
+                'weight' => 5,
+                'levels' => [22, 25],
+            ],
         ],
     ],
     [
@@ -890,6 +1532,26 @@ return [
             "e4f336d0-78a0-49bb-87a8-beceb810c097",
         ],
         'pokemon' => [
+            PokedexNo::RATTATA => [
+                'weight' => 5,
+                'levels' => 22,
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 15,
+                'levels' => [25, 29],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 30,
+                'levels' => [20, 22],
+            ],
+            PokedexNo::FEAROW => [
+                'weight' => 15,
+                'levels' => [25, 29],
+            ],
+            PokedexNo::DODUO => [
+                'weight' => 35,
+                'levels' => [24, 28],
+            ],
         ],
     ],
     [
