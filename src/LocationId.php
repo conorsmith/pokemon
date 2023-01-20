@@ -19,6 +19,10 @@ final class LocationId
     public const MT_MOON_BF1 = "fa9371ac-d8e9-4f57-867f-cb81ff0a3254";
     public const MT_MOON_BF2 = "2d1cbf17-d7e8-4932-b80a-84541668a3d9";
     public const ROUTE_4 = "bf6db9ee-68a4-4c84-a43a-48a148307204";
+    public const ROUTE_5 = "2ae61913-311d-4b24-87dd-934586badb5c";
+    public const ROUTE_6 = "8ceee5a8-54dd-4c63-9629-40bff24f3b2d";
+    public const ROUTE_7 = "85776d72-ece8-451f-a8b8-5b1f9c2b349b";
+    public const ROUTE_8 = "a006849d-3c22-4b57-b6d9-3ab23f6f42cf";
     public const ROUTE_9 = "57968d07-cea1-4a9b-ac21-53609a25ea36";
     public const ROCK_TUNNEL_1F = "dca3ae52-de54-413b-a838-b4ddf6da97d5";
     public const ROCK_TUNNEL_B1F = "0d6f7674-b690-47dd-833b-602b9bf4f319";

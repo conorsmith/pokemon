@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\Direction;
 use ConorSmith\Pokemon\TemplateEngine;
 use Doctrine\DBAL\Connection;
 use stdClass;
@@ -46,21 +47,30 @@ final class GetMapMove
 
     private function createLocationViewModel(array $location): stdClass
     {
-        $directions = [];
-
-        /** @var string $locationId */
-        foreach ($location['directions'] as $locationId) {
-            $directionLocation = $this->findLocation($locationId);
-            $directions[] = (object) [
-                'id' => $directionLocation['id'],
-                'name' => $directionLocation['name'],
-            ];
-        }
-
-        return (object) [
+        $viewModel = (object) [
             'id' => $location['id'],
             'name' => $location['name'],
-            'directions' => $directions,
+            'hasCardinalDirections' => false,
+            'directions' => [],
         ];
+
+        /** @var string $locationId */
+        foreach ($location['directions'] as $key => $locationId) {
+            $directionLocation = $this->findLocation($locationId);
+            if (Direction::isCardinal($key)) {
+                $viewModel->hasCardinalDirections = true;
+                $viewModel->{Direction::toSlug($key)} = (object) [
+                    'id'   => $directionLocation['id'],
+                    'name' => $directionLocation['name'],
+                ];
+            } else {
+                $viewModel->directions[] = (object) [
+                    'id'   => $directionLocation['id'],
+                    'name' => $directionLocation['name'],
+                ];
+            }
+        }
+
+        return $viewModel;
     }
 }

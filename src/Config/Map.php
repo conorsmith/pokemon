@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use ConorSmith\Pokemon\Direction;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
@@ -10,8 +11,8 @@ return [
         'id' => LocationId::PALLET_TOWN,
         'name' => "Pallet Town",
         'directions' => [
-            LocationId::ROUTE_1,
-            "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
+            Direction::N => LocationId::ROUTE_1,
+            Direction::S => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -28,8 +29,8 @@ return [
         'id' => LocationId::ROUTE_1,
         'name' => "Route 1",
         'directions' => [
-            LocationId::VIRIDIAN_CITY,
-            LocationId::PALLET_TOWN,
+            Direction::N => LocationId::VIRIDIAN_CITY,
+            Direction::S => LocationId::PALLET_TOWN,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -46,10 +47,10 @@ return [
         'id' => LocationId::VIRIDIAN_CITY,
         'name' => "Viridian City",
         'directions' => [
-            LocationId::ROUTE_2,
-            LocationId::ROUTE_22,
+            Direction::N => LocationId::ROUTE_2,
+            Direction::W => LocationId::ROUTE_22,
             LocationId::VIRIDIAN_GYM,
-            LocationId::ROUTE_1,
+            Direction::S => LocationId::ROUTE_1,
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -266,10 +267,10 @@ return [
         'id' => LocationId::ROUTE_2,
         'name' => "Route 2",
         'directions' => [
-            LocationId::PEWTER_CITY,
+            Direction::N => LocationId::PEWTER_CITY,
             LocationId::VIRIDIAN_FOREST,
             LocationId::DIGLETTS_CAVE,
-            LocationId::VIRIDIAN_CITY,
+            Direction::S => LocationId::VIRIDIAN_CITY,
         ],
         'pokemon' => [
             PokedexNo::CATERPIE => [
@@ -302,9 +303,9 @@ return [
         'id' => LocationId::PEWTER_CITY,
         'name' => "Pewter City",
         'directions' => [
-            LocationId::ROUTE_3,
+            Direction::E => LocationId::ROUTE_3,
             LocationId::PEWTER_GYM,
-            LocationId::ROUTE_2,
+            Direction::S => LocationId::ROUTE_2,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -478,8 +479,8 @@ return [
         'id' => LocationId::ROUTE_3,
         'name' => "Route 3",
         'directions' => [
-            LocationId::PEWTER_CITY,
-            LocationId::MT_MOON_F1,
+            Direction::W => LocationId::PEWTER_CITY,
+            Direction::E => LocationId::MT_MOON_F1,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -582,8 +583,8 @@ return [
         'id' => LocationId::ROUTE_4,
         'name' => "Route 4",
         'directions' => [
-            LocationId::MT_MOON_BF2,
-            "cf6dff48-2972-4fe9-8853-9ccba685c38e",
+            Direction::W => LocationId::MT_MOON_BF2,
+            Direction::E => "cf6dff48-2972-4fe9-8853-9ccba685c38e",
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -612,10 +613,10 @@ return [
         'id' => "cf6dff48-2972-4fe9-8853-9ccba685c38e",
         'name' => "Cerulean City",
         'directions' => [
-            LocationId::ROUTE_24,
-            LocationId::ROUTE_4,
-            LocationId::ROUTE_9,
-            "2ae61913-311d-4b24-87dd-934586badb5c",
+            Direction::N => LocationId::ROUTE_24,
+            Direction::W => LocationId::ROUTE_4,
+            Direction::E => LocationId::ROUTE_9,
+            Direction::S => LocationId::ROUTE_5,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -633,11 +634,11 @@ return [
         ],
     ],
     [
-        'id' => "2ae61913-311d-4b24-87dd-934586badb5c",
+        'id' => LocationId::ROUTE_5,
         'name' => "Route 5",
         'directions' => [
-            "cf6dff48-2972-4fe9-8853-9ccba685c38e",
-            "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
+            Direction::N => "cf6dff48-2972-4fe9-8853-9ccba685c38e",
+            Direction::S => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -662,10 +663,10 @@ return [
         'id' => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
         'name' => "Saffron City",
         'directions' => [
-            "2ae61913-311d-4b24-87dd-934586badb5c",
-            "85776d72-ece8-451f-a8b8-5b1f9c2b349b",
-            "a006849d-3c22-4b57-b6d9-3ab23f6f42cf",
-            "8ceee5a8-54dd-4c63-9629-40bff24f3b2d",
+            Direction::N => LocationId::ROUTE_5,
+            Direction::W => LocationId::ROUTE_7,
+            Direction::E => LocationId::ROUTE_8,
+            Direction::S => LocationId::ROUTE_6,
             // SAFFRON GYM
             // SILPH CO
         ],
@@ -689,11 +690,11 @@ return [
         ],
     ],
     [
-        'id' => "8ceee5a8-54dd-4c63-9629-40bff24f3b2d",
+        'id' => LocationId::ROUTE_6,
         'name' => "Route 6",
         'directions' => [
-            "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
-            "41b38040-2b0b-4a4e-9333-67fc7a5bb003",
+            Direction::N => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
+            Direction::S => "41b38040-2b0b-4a4e-9333-67fc7a5bb003",
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -718,8 +719,8 @@ return [
         'id' => "41b38040-2b0b-4a4e-9333-67fc7a5bb003",
         'name' => "Vermillion City",
         'directions' => [
-            "8ceee5a8-54dd-4c63-9629-40bff24f3b2d",
-            "8e24cb82-3708-4530-aa1a-09a8465a5d2e",
+            Direction::N => LocationId::ROUTE_6,
+            Direction::E => "8e24cb82-3708-4530-aa1a-09a8465a5d2e",
             // VERMILLION GYM
             // SS ANNE
         ],
@@ -743,11 +744,11 @@ return [
         ],
     ],
     [
-        'id' => "85776d72-ece8-451f-a8b8-5b1f9c2b349b",
+        'id' => LocationId::ROUTE_7,
         'name' => "Route 7",
         'directions' => [
-            "57564cf4-9ac8-4b24-af13-eb158d969bb4",
-            "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
+            Direction::W => "57564cf4-9ac8-4b24-af13-eb158d969bb4",
+            Direction::E => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -780,8 +781,8 @@ return [
         'id' => "57564cf4-9ac8-4b24-af13-eb158d969bb4",
         'name' => "Celadon City",
         'directions' => [
-            "2f0bc600-51c8-4621-9c72-124b5349beb2",
-            "85776d72-ece8-451f-a8b8-5b1f9c2b349b",
+            Direction::W => "2f0bc600-51c8-4621-9c72-124b5349beb2",
+            Direction::E => LocationId::ROUTE_7,
             // CELADON GYM
             // ROCKET HIDEOUT
         ],
@@ -805,11 +806,11 @@ return [
         ],
     ],
     [
-        'id' => "a006849d-3c22-4b57-b6d9-3ab23f6f42cf",
+        'id' => LocationId::ROUTE_8,
         'name' => "Route 8",
         'directions' => [
-            "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
-            "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
+            Direction::W => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
+            Direction::E => "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -842,9 +843,9 @@ return [
         'id' => "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
         'name' => "Lavender Town",
         'directions' => [
-            LocationId::ROUTE_10,
-            "a006849d-3c22-4b57-b6d9-3ab23f6f42cf",
-            "3387518a-aece-49e0-9563-ca645f881a00",
+            Direction::N => LocationId::ROUTE_10,
+            Direction::W => LocationId::ROUTE_8,
+            Direction::S => "3387518a-aece-49e0-9563-ca645f881a00",
             // POKEMON TOWER
         ],
         'pokemon' => [
@@ -866,8 +867,8 @@ return [
         'id' => LocationId::ROUTE_9,
         'name' => "Route 9",
         'directions' => [
-            "cf6dff48-2972-4fe9-8853-9ccba685c38e",
-            LocationId::ROCK_TUNNEL_1F,
+            Direction::W => "cf6dff48-2972-4fe9-8853-9ccba685c38e",
+            Direction::S => LocationId::ROCK_TUNNEL_1F,
             "01f3a7cb-ca9e-47bc-9976-7e8dbc5c79ad",
         ],
         'pokemon' => [
@@ -994,8 +995,8 @@ return [
         'id' => LocationId::ROUTE_10,
         'name' => "Route 10",
         'directions' => [
-            LocationId::ROCK_TUNNEL_B1F,
-            "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
+            Direction::N => LocationId::ROCK_TUNNEL_B1F,
+            Direction::S => "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
         ],
         'pokemon' => [
             PokedexNo::SPEAROW => [
@@ -1021,8 +1022,8 @@ return [
         'name' => "Route 11",
         'directions' => [
             LocationId::DIGLETTS_CAVE,
-            "41b38040-2b0b-4a4e-9333-67fc7a5bb003",
-            "3387518a-aece-49e0-9563-ca645f881a00",
+            Direction::W => "41b38040-2b0b-4a4e-9333-67fc7a5bb003",
+            Direction::E => "3387518a-aece-49e0-9563-ca645f881a00",
         ],
         'pokemon' => [
             PokedexNo::SPEAROW => [
@@ -1047,9 +1048,9 @@ return [
         'id' => "3387518a-aece-49e0-9563-ca645f881a00",
         'name' => "Route 12",
         'directions' => [
-            "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
-            "8e24cb82-3708-4530-aa1a-09a8465a5d2e",
-            "22f4d2be-a20a-4c13-9d8e-1085b59e49f4",
+            Direction::N => "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed",
+            Direction::W => "8e24cb82-3708-4530-aa1a-09a8465a5d2e",
+            Direction::S => "22f4d2be-a20a-4c13-9d8e-1085b59e49f4",
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -1082,8 +1083,8 @@ return [
         'id' => "22f4d2be-a20a-4c13-9d8e-1085b59e49f4",
         'name' => "Route 13",
         'directions' => [
-            "cf81b643-7eb8-407d-8975-44c26b09533a",
-            "3387518a-aece-49e0-9563-ca645f881a00",
+            Direction::W => "cf81b643-7eb8-407d-8975-44c26b09533a",
+            Direction::N => "3387518a-aece-49e0-9563-ca645f881a00",
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -1124,8 +1125,8 @@ return [
         'id' => "cf81b643-7eb8-407d-8975-44c26b09533a",
         'name' => "Route 14",
         'directions' => [
-            "22f4d2be-a20a-4c13-9d8e-1085b59e49f4",
-            "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
+            Direction::E => "22f4d2be-a20a-4c13-9d8e-1085b59e49f4",
+            Direction::S => "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -1166,8 +1167,8 @@ return [
         'id' => "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
         'name' => "Route 15",
         'directions' => [
-            "e4f336d0-78a0-49bb-87a8-beceb810c097",
-            "cf81b643-7eb8-407d-8975-44c26b09533a",
+            Direction::W => "e4f336d0-78a0-49bb-87a8-beceb810c097",
+            Direction::N => "cf81b643-7eb8-407d-8975-44c26b09533a",
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -1208,10 +1209,10 @@ return [
         'id' => "e4f336d0-78a0-49bb-87a8-beceb810c097",
         'name' => "Fuchsia City",
         'directions' => [
-            "0383556c-0b2e-4a33-a178-1b078fc60352",
-            "ed95c624-3b6e-410e-b527-62f56d17f5f6",
-            "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
-            "27940ef2-9539-4cdf-b16b-1551cf5259e3",
+            Direction::N => "0383556c-0b2e-4a33-a178-1b078fc60352",
+            Direction::W => "ed95c624-3b6e-410e-b527-62f56d17f5f6",
+            Direction::E => "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
+            Direction::S => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
             // FUCHSIA GYM
         ],
         'pokemon' => [
@@ -1237,10 +1238,10 @@ return [
         'id' => "0383556c-0b2e-4a33-a178-1b078fc60352",
         'name' => "Safari Zone (South)",
         'directions' => [
-            "a44f53b0-5bb8-4fab-944b-07a1d027981e",
-            "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
-            "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
-            "e4f336d0-78a0-49bb-87a8-beceb810c097",
+            Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
+            Direction::W => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
+            Direction::E => "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
+            Direction::S => "e4f336d0-78a0-49bb-87a8-beceb810c097",
         ],
         'pokemon' => [
             PokedexNo::NIDORAN_F => [
@@ -1301,9 +1302,9 @@ return [
         'id' => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
         'name' => "Safari Zone (North)",
         'directions' => [
-            "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
-            "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
-            "0383556c-0b2e-4a33-a178-1b078fc60352",
+            Direction::W => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
+            Direction::E => "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
+            Direction::S => "0383556c-0b2e-4a33-a178-1b078fc60352",
         ],
         'pokemon' => [
             PokedexNo::NIDORAN_F => [
@@ -1356,8 +1357,8 @@ return [
         'id' => "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
         'name' => "Safari Zone (East)",
         'directions' => [
-            "a44f53b0-5bb8-4fab-944b-07a1d027981e",
-            "0383556c-0b2e-4a33-a178-1b078fc60352",
+            Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
+            Direction::S => "0383556c-0b2e-4a33-a178-1b078fc60352",
         ],
         'pokemon' => [
             PokedexNo::NIDORAN_F => [
@@ -1414,8 +1415,8 @@ return [
         'id' => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
         'name' => "Safari Zone (West)",
         'directions' => [
-            "a44f53b0-5bb8-4fab-944b-07a1d027981e",
-            "0383556c-0b2e-4a33-a178-1b078fc60352",
+            Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
+            Direction::S => "0383556c-0b2e-4a33-a178-1b078fc60352",
         ],
         'pokemon' => [
             PokedexNo::NIDORAN_F => [
@@ -1468,8 +1469,8 @@ return [
         'id' => "2f0bc600-51c8-4621-9c72-124b5349beb2",
         'name' => "Route 16",
         'directions' => [
-            "57564cf4-9ac8-4b24-af13-eb158d969bb4",
-            "14ff0830-f6b9-413c-8b62-cca8d9943755",
+            Direction::E => "57564cf4-9ac8-4b24-af13-eb158d969bb4",
+            Direction::S => "14ff0830-f6b9-413c-8b62-cca8d9943755",
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -1494,8 +1495,8 @@ return [
         'id' => "14ff0830-f6b9-413c-8b62-cca8d9943755",
         'name' => "Route 17",
         'directions' => [
-            "2f0bc600-51c8-4621-9c72-124b5349beb2",
-            "ed95c624-3b6e-410e-b527-62f56d17f5f6",
+            Direction::N => "2f0bc600-51c8-4621-9c72-124b5349beb2",
+            Direction::S => "ed95c624-3b6e-410e-b527-62f56d17f5f6",
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -1528,8 +1529,8 @@ return [
         'id' => "ed95c624-3b6e-410e-b527-62f56d17f5f6",
         'name' => "Route 18",
         'directions' => [
-            "14ff0830-f6b9-413c-8b62-cca8d9943755",
-            "e4f336d0-78a0-49bb-87a8-beceb810c097",
+            Direction::N => "14ff0830-f6b9-413c-8b62-cca8d9943755",
+            Direction::E => "e4f336d0-78a0-49bb-87a8-beceb810c097",
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -1558,8 +1559,8 @@ return [
         'id' => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
         'name' => "Route 19",
         'directions' => [
-            "ed95c624-3b6e-410e-b527-62f56d17f5f6",
-            LocationId::ROUTE_20,
+            Direction::N => "ed95c624-3b6e-410e-b527-62f56d17f5f6",
+            Direction::W => LocationId::ROUTE_20,
         ],
         'pokemon' => [
             PokedexNo::KRABBY => [
@@ -1580,9 +1581,9 @@ return [
         'id' => LocationId::ROUTE_20,
         'name' => "Route 20",
         'directions' => [
-            LocationId::CINNABAR_ISLAND,
+            Direction::W => LocationId::CINNABAR_ISLAND,
             LocationId::SEAFOAM_ISLANDS_1F,
-            "27940ef2-9539-4cdf-b16b-1551cf5259e3",
+            Direction::E => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
         ],
         'pokemon' => [
             'pokemon' => [
@@ -1798,10 +1799,10 @@ return [
         'id' => LocationId::CINNABAR_ISLAND,
         'name' => "Cinnabar Island",
         'directions' => [
-            "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
+            Direction::N => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
             LocationId::POKEMON_MANSION,
             // CINNABAR GYM
-            LocationId::ROUTE_20,
+            Direction::E => LocationId::ROUTE_20,
         ],
         'pokemon' => [
             PokedexNo::KRABBY => [
@@ -1863,8 +1864,8 @@ return [
         'id' => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
         'name' => "Route 21",
         'directions' => [
-            LocationId::PALLET_TOWN,
-            LocationId::CINNABAR_ISLAND,
+            Direction::N => LocationId::PALLET_TOWN,
+            Direction::S => LocationId::CINNABAR_ISLAND,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -1889,8 +1890,8 @@ return [
         'id' => LocationId::ROUTE_22,
         'name' => "Route 22",
         'directions' => [
-            LocationId::VICTORY_ROAD_1F,
-            LocationId::VIRIDIAN_CITY,
+            Direction::N => LocationId::VICTORY_ROAD_1F,
+            Direction::E => LocationId::VIRIDIAN_CITY,
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -2061,8 +2062,8 @@ return [
         'id' => LocationId::ROUTE_23,
         'name' => "Route 23",
         'directions' => [
-            "36c7585c-c0df-4bd5-8e50-5c92487d44d8",
-            LocationId::VICTORY_ROAD_1F,
+            Direction::N => "36c7585c-c0df-4bd5-8e50-5c92487d44d8",
+            Direction::S => LocationId::VICTORY_ROAD_1F,
         ],
         'pokemon' => [
             PokedexNo::SPEAROW => [
