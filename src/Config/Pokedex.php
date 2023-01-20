@@ -270,7 +270,7 @@ return [
     ],
     PokedexNo::ODDISH => [
         'name' => "Oddish",
-        'type' => [PokemonType::GROUND, PokemonType::POISON],
+        'type' => [PokemonType::GRASS, PokemonType::POISON],
         'evolutions' => [
             PokedexNo::GLOOM => [
                 'level' => 21,
@@ -279,11 +279,11 @@ return [
     ],
     PokedexNo::GLOOM => [
         'name' => "Gloom",
-        'type' => [PokemonType::GROUND, PokemonType::POISON],
+        'type' => [PokemonType::GRASS, PokemonType::POISON],
     ],
     PokedexNo::VILEPLUME => [
         'name' => "Vileplume",
-        'type' => [PokemonType::GROUND, PokemonType::POISON],
+        'type' => [PokemonType::GRASS, PokemonType::POISON],
     ],
     PokedexNo::PARAS => [
         'name' => "Paras",

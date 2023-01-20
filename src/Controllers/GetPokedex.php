@@ -47,6 +47,7 @@ final class GetPokedex
         }
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Pokedex.php", [
+            'count' => count($rows),
             'pokedex' => $viewModels,
         ]);
     }

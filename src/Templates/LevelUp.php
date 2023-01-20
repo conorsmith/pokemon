@@ -22,7 +22,7 @@
                 <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
                 <div>
                     <h5><?=$pokemon->name?></h5>
-                    <p class="mb-0">Level <?=$pokemon->level?></p>
+                    <p class="mb-0">Lv <?=$pokemon->level?></p>
                     <?php if ($rareCandies > 0) : ?>
                         <form method="POST" style="margin-top: 1rem;">
                             <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">

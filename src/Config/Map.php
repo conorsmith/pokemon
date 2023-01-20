@@ -1559,39 +1559,304 @@ return [
         'name' => "Route 19",
         'directions' => [
             "ed95c624-3b6e-410e-b527-62f56d17f5f6",
-            "4311bda4-3e6a-46be-944d-4df4301c696d",
+            LocationId::ROUTE_20,
         ],
         'pokemon' => [
+            PokedexNo::KRABBY => [
+                'weight' => 60,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 20,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 20,
+                'levels' => [25, 35],
+            ],
         ],
     ],
     [
-        'id' => "4311bda4-3e6a-46be-944d-4df4301c696d",
+        'id' => LocationId::ROUTE_20,
         'name' => "Route 20",
         'directions' => [
-            "a5520b4e-314b-4893-b56d-63b102295956",
-            "3d36df91-cc9b-474a-9ae9-c53b5d15470b",
+            LocationId::CINNABAR_ISLAND,
+            LocationId::SEAFOAM_ISLANDS_1F,
             "27940ef2-9539-4cdf-b16b-1551cf5259e3",
         ],
         'pokemon' => [
+            'pokemon' => [
+                PokedexNo::KRABBY => [
+                    'weight' => 60,
+                    'levels' => [5, 15],
+                ],
+                PokedexNo::PSYDUCK => [
+                    'weight' => 20,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::SLOWPOKE => [
+                    'weight' => 20,
+                    'levels' => [25, 35],
+                ],
+            ],
         ],
     ],
     [
-        'id' => "3d36df91-cc9b-474a-9ae9-c53b5d15470b",
-        'name' => "Seafoam Islands",
+        'id' => LocationId::SEAFOAM_ISLANDS_1F,
+        'name' => "Seafoam Islands (1st Floor)",
         'directions' => [
-            "4311bda4-3e6a-46be-944d-4df4301c696d",
+            LocationId::ROUTE_20,
+            LocationId::SEAFOAM_ISLANDS_B1F,
         ],
         'pokemon' => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 55,
+                'levels' => [26, 33],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 55,
+                'levels' => [26, 33],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 34,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 11,
+                'levels' => [26, 30],
+            ],
         ],
     ],
     [
-        'id' => "a5520b4e-314b-4893-b56d-63b102295956",
+        'id' => LocationId::SEAFOAM_ISLANDS_B1F,
+        'name' => "Seafoam Islands (1st Basement Floor)",
+        'directions' => [
+            LocationId::SEAFOAM_ISLANDS_1F,
+            LocationId::SEAFOAM_ISLANDS_B2F,
+        ],
+        'pokemon' => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 40,
+                'levels' => [29, 31],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 40,
+                'levels' => [29, 31],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 34,
+                'levels' => [22, 26],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 11,
+                'levels' => [26, 30],
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 10,
+                'levels' => 28,
+            ],
+            PokedexNo::GOLDUCK => [
+                'weight' => 5,
+                'levels' => [33, 35],
+            ],
+            PokedexNo::SLOWBRO => [
+                'weight' => 5,
+                'levels' => [33, 35],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::SEAFOAM_ISLANDS_B2F,
+        'name' => "Seafoam Islands (2nd Basement Floor)",
+        'directions' => [
+            LocationId::SEAFOAM_ISLANDS_B1F,
+            LocationId::SEAFOAM_ISLANDS_B3F,
+        ],
+        'pokemon' => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 40,
+                'levels' => [30, 32],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 40,
+                'levels' => [30, 32],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 20,
+                'levels' => [22, 24],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 10,
+                'levels' => [26, 30],
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 20,
+                'levels' => [30, 32],
+            ],
+            PokedexNo::GOLDUCK => [
+                'weight' => 10,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::SLOWBRO => [
+                'weight' => 10,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::JYNX => [
+                'weight' => 1,
+                'levels' => [32, 34],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::SEAFOAM_ISLANDS_B3F,
+        'name' => "Seafoam Islands (3rd Basement Floor)",
+        'directions' => [
+            LocationId::SEAFOAM_ISLANDS_B2F,
+            LocationId::SEAFOAM_ISLANDS_B4F,
+        ],
+        'pokemon' => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 20,
+                'levels' => [30, 32],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 20,
+                'levels' => [30, 32],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 10,
+                'levels' => 24,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 10,
+                'levels' => [26, 30],
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 40,
+                'levels' => [30, 32],
+            ],
+            PokedexNo::GOLDUCK => [
+                'weight' => 15,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::SLOWBRO => [
+                'weight' => 15,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::DEWGONG => [
+                'weight' => 5,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::JYNX => [
+                'weight' => 5,
+                'levels' => [32, 34],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::SEAFOAM_ISLANDS_B4F,
+        'name' => "Seafoam Islands (4th Basement Floor)",
+        'directions' => [
+            LocationId::SEAFOAM_ISLANDS_B3F,
+        ],
+        'pokemon' => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 10,
+                'levels' => 32,
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 10,
+                'levels' => 32,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 15,
+                'levels' => [26, 30],
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 50,
+                'levels' => [30, 34],
+            ],
+            PokedexNo::GOLDUCK => [
+                'weight' => 15,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::SLOWBRO => [
+                'weight' => 15,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::DEWGONG => [
+                'weight' => 10,
+                'levels' => [34, 36],
+            ],
+            PokedexNo::JYNX => [
+                'weight' => 5,
+                'levels' => [32, 34],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::CINNABAR_ISLAND,
         'name' => "Cinnabar Island",
         'directions' => [
             "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
-            "4311bda4-3e6a-46be-944d-4df4301c696d",
+            LocationId::POKEMON_MANSION,
+            // CINNABAR GYM
+            LocationId::ROUTE_20,
         ],
         'pokemon' => [
+            PokedexNo::KRABBY => [
+                'weight' => 80,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 10,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 10,
+                'levels' => [25, 35],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::POKEMON_MANSION,
+        'name' => "Pokémon Mansion",
+        'directions' => [
+            LocationId::CINNABAR_ISLAND,
+        ],
+        'pokemon' => [
+            PokedexNo::RATTATA => [
+                'weight' => 15,
+                'levels' => [26, 28],
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 30,
+                'levels' => [32, 36],
+            ],
+            PokedexNo::VULPIX => [
+                'weight' => 15,
+                'levels' => [30, 32],
+            ],
+            PokedexNo::GROWLITHE => [
+                'weight' => 15,
+                'levels' => [30, 32],
+            ],
+            PokedexNo::GRIMER => [
+                'weight' => 30,
+                'levels' => [28, 30],
+            ],
+            PokedexNo::MUK => [
+                'weight' => 5,
+                'levels' => 32,
+            ],
+            PokedexNo::KOFFING => [
+                'weight' => 30,
+                'levels' => [28, 30],
+            ],
+            PokedexNo::WEEZING => [
+                'weight' => 5,
+                'levels' => 32,
+            ],
         ],
     ],
     [
@@ -1599,18 +1864,22 @@ return [
         'name' => "Route 21",
         'directions' => [
             LocationId::PALLET_TOWN,
-            "a5520b4e-314b-4893-b56d-63b102295956",
+            LocationId::CINNABAR_ISLAND,
         ],
         'pokemon' => [
-            "16" => [
+            PokedexNo::PIDGEY => [
                 'weight' => 4,
                 'levels' => [21, 23],
             ],
-            "19" => [
+            PokedexNo::RATTATA => [
                 'weight' => 5,
                 'levels' => [21, 23],
             ],
-            "114" => [
+            PokedexNo::TANGELA => [
+                'weight' => 1,
+                'levels' => [28, 32],
+            ],
+            PokedexNo::MRMIME => [
                 'weight' => 1,
                 'levels' => [28, 32],
             ],
@@ -1620,7 +1889,7 @@ return [
         'id' => LocationId::ROUTE_22,
         'name' => "Route 22",
         'directions' => [
-            "2335aa04-4bde-421c-b27e-a680cb3e36b0",
+            LocationId::VICTORY_ROAD_1F,
             LocationId::VIRIDIAN_CITY,
         ],
         'pokemon' => [
@@ -1647,30 +1916,194 @@ return [
         ],
     ],
     [
-        'id' => "2335aa04-4bde-421c-b27e-a680cb3e36b0",
-        'name' => "Victory Road",
+        'id' => LocationId::VICTORY_ROAD_1F,
+        'name' => "Victory Road (1st Floor)",
         'directions' => [
-            "d0c0bf10-689c-4d49-bc6f-044fa5f343f6",
+            LocationId::VICTORY_ROAD_2F,
             LocationId::ROUTE_22,
         ],
         'pokemon' => [
+            PokedexNo::ARBOK => [
+                'weight' => 5,
+                'levels' => 44,
+            ],
+            PokedexNo::SANDSLASH => [
+                'weight' => 5,
+                'levels' => 44,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 10,
+                'levels' => 32,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 44,
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 20,
+                'levels' => 32,
+            ],
+            PokedexNo::MACHOKE => [
+                'weight' => 5,
+                'levels' => [44, 46],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 20,
+                'levels' => 32,
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 30,
+                'levels' => [40, 46],
+            ],
+            PokedexNo::MAROWAK => [
+                'weight' => 5,
+                'levels' => [44, 46],
+            ],
         ],
     ],
     [
-        'id' => "d0c0bf10-689c-4d49-bc6f-044fa5f343f6",
+        'id' => LocationId::VICTORY_ROAD_2F,
+        'name' => "Victory Road (2nd Floor)",
+        'directions' => [
+            LocationId::VICTORY_ROAD_1F,
+            LocationId::VICTORY_ROAD_3F,
+        ],
+        'pokemon' => [
+            PokedexNo::ARBOK => [
+                'weight' => 5,
+                'levels' => 46,
+            ],
+            PokedexNo::SANDSLASH => [
+                'weight' => 5,
+                'levels' => 46,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 10,
+                'levels' => 34,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 46,
+            ],
+            PokedexNo::PRIMEAPE => [
+                'weight' => 10,
+                'levels' => 42,
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 20,
+                'levels' => 34,
+            ],
+            PokedexNo::MACHOKE => [
+                'weight' => 5,
+                'levels' => [46, 48],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 20,
+                'levels' => 34,
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 20,
+                'levels' => [45, 48],
+            ],
+            PokedexNo::MAROWAK => [
+                'weight' => 5,
+                'levels' => [46, 48],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::VICTORY_ROAD_3F,
+        'name' => "Victory Road (3th Floor)",
+        'directions' => [
+            LocationId::ROUTE_23,
+            LocationId::VICTORY_ROAD_2F,
+        ],
+        'pokemon' => [
+            PokedexNo::ARBOK => [
+                'weight' => 5,
+                'levels' => 44,
+            ],
+            PokedexNo::SANDSLASH => [
+                'weight' => 5,
+                'levels' => 44,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 10,
+                'levels' => 32,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 44,
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 20,
+                'levels' => 32,
+            ],
+            PokedexNo::MACHOKE => [
+                'weight' => 5,
+                'levels' => [44, 46],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 20,
+                'levels' => 32,
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 30,
+                'levels' => [40, 46],
+            ],
+            PokedexNo::MAROWAK => [
+                'weight' => 5,
+                'levels' => [44, 46],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_23,
         'name' => "Route 23",
         'directions' => [
             "36c7585c-c0df-4bd5-8e50-5c92487d44d8",
-            "2335aa04-4bde-421c-b27e-a680cb3e36b0",
+            LocationId::VICTORY_ROAD_1F,
         ],
         'pokemon' => [
+            PokedexNo::SPEAROW => [
+                'weight' => 15,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::FEAROW => [
+                'weight' => 25,
+                'levels' => [40, 44],
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 20,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::ARBOK => [
+                'weight' => 5,
+                'levels' => 44,
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 20,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::SANDSLASH => [
+                'weight' => 5,
+                'levels' => 44,
+            ],
+            PokedexNo::MANKEY => [
+                'weight' => 30,
+                'levels' => [32, 34],
+            ],
+            PokedexNo::PRIMEAPE => [
+                'weight' => 5,
+                'levels' => 42,
+            ],
         ],
     ],
     [
         'id' => "36c7585c-c0df-4bd5-8e50-5c92487d44d8",
         'name' => "Indigo Plateau",
         'directions' => [
-            "d0c0bf10-689c-4d49-bc6f-044fa5f343f6",
+            LocationId::ROUTE_23,
         ],
         'pokemon' => [
         ],
@@ -1680,7 +2113,7 @@ return [
         'name' => "Route 24",
         'directions' => [
             "bb9a23b0-c473-46ae-b663-fdabc187a7f0",
-            "feeeeeca-6304-4072-b2c5-3f7babcfa171",
+            LocationId::CERULEAN_CAVE_1F,
             "cf6dff48-2972-4fe9-8853-9ccba685c38e",
         ],
         'pokemon' => [
@@ -1768,12 +2201,128 @@ return [
         ],
     ],
     [
-        'id' => "feeeeeca-6304-4072-b2c5-3f7babcfa171",
-        'name' => "Cerulean Cave",
+        'id' => LocationId::CERULEAN_CAVE_1F,
+        'name' => "Cerulean Cave (1st Floor)",
         'directions' => [
             LocationId::ROUTE_24,
+            LocationId::CERULEAN_CAVE_2F,
+            LocationId::CERULEAN_CAVE_B1F,
         ],
         'pokemon' => [
+            PokedexNo::PARASECT => [
+                'weight' => 25,
+                'levels' => [49, 58],
+            ],
+            PokedexNo::MAGNETON => [
+                'weight' => 20,
+                'levels' => 49,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 14,
+                'levels' => [46, 55],
+            ],
+            PokedexNo::PRIMEAPE => [
+                'weight' => 11,
+                'levels' => [52, 61],
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 11,
+                'levels' => [52, 61],
+            ],
+            PokedexNo::MACHOKE => [
+                'weight' => 10,
+                'levels' => 46,
+            ],
+            PokedexNo::ELECTRODE => [
+                'weight' => 5,
+                'levels' => 58,
+            ],
+            PokedexNo::SNORLAX => [
+                'weight' => 4,
+                'levels' => 55,
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::CERULEAN_CAVE_2F,
+        'name' => "Cerulean Cave (2nd Floor)",
+        'directions' => [
+            LocationId::CERULEAN_CAVE_1F,
+        ],
+        'pokemon' => [
+            PokedexNo::PARASECT => [
+                'weight' => 14,
+                'levels' => [52, 61],
+            ],
+            PokedexNo::MAGNETON => [
+                'weight' => 10,
+                'levels' => 52,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 25,
+                'levels' => [49, 58],
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 11,
+                'levels' => [55, 64],
+            ],
+            PokedexNo::MACHOKE => [
+                'weight' => 20,
+                'levels' => 49,
+            ],
+            PokedexNo::ELECTRODE => [
+                'weight' => 4,
+                'levels' => 61,
+            ],
+            PokedexNo::SNORLAX => [
+                'weight' => 5,
+                'levels' => 58,
+            ],
+            PokedexNo::KADABRA => [
+                'weight' => 11,
+                'levels' => [55, 64],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::CERULEAN_CAVE_B1F,
+        'name' => "Cerulean Cave (1st Basement Floor)",
+        'directions' => [
+            LocationId::CERULEAN_CAVE_1F,
+        ],
+        'pokemon' => [
+            PokedexNo::PARASECT => [
+                'weight' => 14,
+                'levels' => [55, 64],
+            ],
+            PokedexNo::MAGNETON => [
+                'weight' => 10,
+                'levels' => 55,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 11,
+                'levels' => [52, 61],
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 25,
+                'levels' => [58, 67],
+            ],
+            PokedexNo::MACHOKE => [
+                'weight' => 10,
+                'levels' => 52,
+            ],
+            PokedexNo::ELECTRODE => [
+                'weight' => 4,
+                'levels' => 64,
+            ],
+            PokedexNo::SNORLAX => [
+                'weight' => 1,
+                'levels' => 61,
+            ],
+            PokedexNo::KADABRA => [
+                'weight' => 25,
+                'levels' => [58, 67],
+            ],
         ],
     ],
 ];

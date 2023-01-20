@@ -3,6 +3,11 @@
     <h1 style="text-align: center;">Pokédex</h1>
 
     <ul class="list-group">
+
+        <li class="list-group-item p-3" style="text-align: center;">
+            <strong><?=$count?></strong> entries
+        </li>
+
         <?php foreach ($pokedex as $number => $pokemon) : ?>
             <li class="list-group-item d-flex">
                 <?php if ($pokemon) : ?>

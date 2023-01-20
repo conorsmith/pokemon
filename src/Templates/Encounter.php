@@ -14,7 +14,7 @@
                 <?php else : ?>
                     <i class="far fa-fw fa-circle" style="color: #888;"></i>
                 <?php endif ?>
-                Level <?=$pokemon->level?>
+                Lv <?=$pokemon->level?>
             </p>
         </div>
     </li>
@@ -22,7 +22,7 @@
         <img src="<?=$leadPokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
         <div>
             <h5><?=$leadPokemon->name?></h5>
-            <p class="mb-0">Level <?=$leadPokemon->level?></p>
+            <p class="mb-0">Lv <?=$leadPokemon->level?></p>
         </div>
     </li>
     <li class="list-group-item d-grid gap-2" style="text-align: center;">

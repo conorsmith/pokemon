@@ -28,7 +28,7 @@
                             <?php endif ?>
                         </span>
                             <span style="margin: 0 0.4rem;">
-                            Level <?=$pokemon->level?>
+                            Lv <?=$pokemon->level?>
                         </span>
                     </p>
                     <div class="d-flex justify-content-between w-100" style="margin-top: 1rem;">
@@ -74,7 +74,7 @@
                             <?php endif ?>
                         </span>
                         <span style="margin: 0 0.4rem;">
-                            Level <?=$pokemon->level?>
+                            Lv <?=$pokemon->level?>
                         </span>
                     </p>
                     <div class="d-flex justify-content-end">
