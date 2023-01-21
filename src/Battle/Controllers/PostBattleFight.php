@@ -231,7 +231,9 @@ final class PostBattleFight
     private function saveGameInstance(GameInstance $gameInstance): void
     {
         $this->db->update("instances", [
+            'unused_level_ups' => $gameInstance->unusedRareCandy,
             'unused_moves' => $gameInstance->unusedChallengeTokens,
+            'unused_encounters' => $gameInstance->unusedPokeBalls,
         ], [
             'id' => $gameInstance->id,
         ]);
