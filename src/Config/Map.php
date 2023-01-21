@@ -314,7 +314,7 @@ return [
         'name' => "Route 4",
         'directions' => [
             Direction::W => LocationId::MT_MOON_BF2,
-            Direction::E => "cf6dff48-2972-4fe9-8853-9ccba685c38e",
+            Direction::E => LocationId::CERULEAN_CITY,
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -340,13 +340,14 @@ return [
         ],
     ],
     [
-        'id' => "cf6dff48-2972-4fe9-8853-9ccba685c38e",
+        'id' => LocationId::CERULEAN_CITY,
         'name' => "Cerulean City",
         'directions' => [
             Direction::N => LocationId::ROUTE_24,
             Direction::W => LocationId::ROUTE_4,
             Direction::E => LocationId::ROUTE_9,
             Direction::S => LocationId::ROUTE_5,
+            LocationId::CERULEAN_GYM,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -364,10 +365,18 @@ return [
         ],
     ],
     [
+        'id' => LocationId::CERULEAN_GYM,
+        'name' => "Cerulean Gym",
+        'directions' => [
+            LocationId::CERULEAN_CITY,
+        ],
+        'pokemon' => [],
+    ],
+    [
         'id' => LocationId::ROUTE_5,
         'name' => "Route 5",
         'directions' => [
-            Direction::N => "cf6dff48-2972-4fe9-8853-9ccba685c38e",
+            Direction::N => LocationId::CERULEAN_CITY,
             Direction::S => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
         ],
         'pokemon' => [
@@ -597,7 +606,7 @@ return [
         'id' => LocationId::ROUTE_9,
         'name' => "Route 9",
         'directions' => [
-            Direction::W => "cf6dff48-2972-4fe9-8853-9ccba685c38e",
+            Direction::W => LocationId::CERULEAN_CITY,
             Direction::S => LocationId::ROCK_TUNNEL_1F,
             "01f3a7cb-ca9e-47bc-9976-7e8dbc5c79ad",
         ],
@@ -1845,7 +1854,7 @@ return [
         'directions' => [
             "bb9a23b0-c473-46ae-b663-fdabc187a7f0",
             LocationId::CERULEAN_CAVE_1F,
-            "cf6dff48-2972-4fe9-8853-9ccba685c38e",
+            LocationId::CERULEAN_CITY,
         ],
         'pokemon' => [
             PokedexNo::CATERPIE => [

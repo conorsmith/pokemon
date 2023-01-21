@@ -19,6 +19,8 @@ final class LocationId
     public const MT_MOON_BF1 = "fa9371ac-d8e9-4f57-867f-cb81ff0a3254";
     public const MT_MOON_BF2 = "2d1cbf17-d7e8-4932-b80a-84541668a3d9";
     public const ROUTE_4 = "bf6db9ee-68a4-4c84-a43a-48a148307204";
+    public const CERULEAN_CITY = "cf6dff48-2972-4fe9-8853-9ccba685c38e";
+    public const CERULEAN_GYM = "9dea9089-871c-47b6-99c4-5b0f60d4be72";
     public const ROUTE_5 = "2ae61913-311d-4b24-87dd-934586badb5c";
     public const ROUTE_6 = "8ceee5a8-54dd-4c63-9629-40bff24f3b2d";
     public const ROUTE_7 = "85776d72-ece8-451f-a8b8-5b1f9c2b349b";

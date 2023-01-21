@@ -16,6 +16,8 @@ final class TrainerClass
     public const SUPER_NERD = "0b112d19-09bb-4e88-a224-d869dbbd4590";
     public const HIKER = "5bcdbc80-7550-42ab-90dc-037c8f374b97";
     public const TEAM_ROCKET_GRUNT = "ff58d913-28c6-4d64-b4bb-8fd986f1a2b4";
+    public const SWIMMER = "73874300-c843-4be9-99b6-3d80cc92ba09";
+    public const PICNICKER = "ce0ae171-cf0d-4d3d-973a-aca7ee1e3172";
 
     public static function getLabel(string $id): string
     {
@@ -31,6 +33,8 @@ final class TrainerClass
             self::SUPER_NERD => "Super Nerd",
             self::HIKER => "Hiker",
             self::TEAM_ROCKET_GRUNT => "Team Rocket Grunt",
+            self::SWIMMER => "Swimmer",
+            self::PICNICKER => "Picnicker",
         };
     }
 }

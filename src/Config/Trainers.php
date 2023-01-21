@@ -633,4 +633,71 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_4 => [
+        [
+            'id' => "ec541867-70af-4689-94a5-ad4d630a365d",
+            'class' => TrainerClass::LASS,
+            'name' => "Crissy",
+            'team' => [
+                [
+                    'id' => PokedexNo::PARAS,
+                    'level' => 31,
+                ],
+                [
+                    'id' => PokedexNo::PARAS,
+                    'level' => 31,
+                ],
+                [
+                    'id' => PokedexNo::PARASECT,
+                    'level' => 31,
+                ],
+            ],
+        ],
+    ],
+    LocationId::CERULEAN_GYM => [
+        [
+            'id' => "5c6abc10-9905-4b24-b79e-7081fde8e2f1",
+            'class' => TrainerClass::SWIMMER,
+            'name' => "Luis",
+            'team' => [
+                [
+                    'id' => PokedexNo::HORSEA,
+                    'level' => 16,
+                ],
+                [
+                    'id' => PokedexNo::SHELLDER,
+                    'level' => 16,
+                ],
+            ],
+        ],
+        [
+            'id' => "4d6193af-acf7-4ae4-81ca-35c2f6b52d73",
+            'class' => TrainerClass::PICNICKER,
+            'name' => "Diana",
+            'team' => [
+                [
+                    'id' => PokedexNo::GOLDEEN,
+                    'level' => 19,
+                ],
+            ],
+        ],
+        [
+            'id' => "a7d055c0-8a2a-436e-ac27-302be6bf358d",
+            'class' => TrainerClass::GYM_LEADER,
+            'name' => "Misty",
+            'leader' => [
+                'badge' => GymBadge::CASCADE,
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::STARYU,
+                    'level' => 18,
+                ],
+                [
+                    'id' => PokedexNo::STARMIE,
+                    'level' => 21,
+                ],
+            ],
+        ],
+    ],
 ];
