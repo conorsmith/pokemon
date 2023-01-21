@@ -52,7 +52,9 @@ final class PostBattleTrainer
         return new GameInstance(
             INSTANCE_ID,
             $instanceRow['money'],
+            $instanceRow['unused_level_ups'],
             $instanceRow['unused_moves'],
+            $instanceRow['unused_encounters'],
         );
     }
 

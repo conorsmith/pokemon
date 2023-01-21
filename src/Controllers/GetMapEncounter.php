@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Controllers;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\TemplateEngine;
+use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use stdClass;
@@ -36,8 +37,10 @@ final class GetMapEncounter
 
         $trainers = [];
 
-        if (array_key_exists('trainers', $this->findLocation($instanceRow['current_location']))) {
-            foreach ($this->findLocation($instanceRow['current_location'])['trainers'] as $trainer) {
+        $trainerConfigFile = require __DIR__ . "/../Config/Trainers.php";
+
+        if (array_key_exists($instanceRow['current_location'], $trainerConfigFile)) {
+            foreach ($trainerConfigFile[$instanceRow['current_location']] as $trainer) {
                 $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
                     'instanceId' => INSTANCE_ID,
                     'trainerId'  => $trainer['id'],
@@ -53,7 +56,7 @@ final class GetMapEncounter
 
                 $trainers[] = (object)[
                     'id'          => $trainer['id'],
-                    'name'        => $trainer['name'],
+                    'name'        => TrainerClass::getLabel($trainer['class']) . " " . $trainer['name'],
                     'team'        => count($trainer['team']),
                     'canBattle'   => !$isInCooldownWindow && $challengeTokens > 0,
                     'lastBeaten'  => $lastBeaten ? $lastBeaten->ago() : "",

@@ -7,7 +7,9 @@ use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Domain\GameInstance;
+use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\PokemonType;
+use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -44,13 +46,20 @@ final class PostBattleFight
         );
 
         $playerEarnedGymBadge = false;
+        $prize = null;
 
         if ($playerPokemonWins) {
 
             $trainerPokemon->faint();
 
             if ($trainer->hasEntireTeamFainted()) {
-                $gameInstance = $gameInstance->winPrizeMoney($trainer);
+                $prizeItemId = self::generatePrize([
+                    ItemId::POKE_BALL => 2,
+                    ItemId::RARE_CANDY => 1,
+                    ItemId::CHALLENGE_TOKEN => 1,
+                ]);
+                $prize = self::findItem($prizeItemId);
+                $gameInstance = $gameInstance->winPrize($prizeItemId);
                 $trainer = $trainer->defeat();
                 $trainer = $trainer->endBattle();
                 $player = $player->reviveTeam();
@@ -94,13 +103,14 @@ final class PostBattleFight
             if ($trainer->isBattling) {
                 header("Location: /battle/{$trainer->id}");
             } else {
-                $this->session->getFlashBag()->add("successes", "You defeated {$trainer->name}");
+                $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
+                $this->session->getFlashBag()->add("successes", "You defeated {$name}");
 
                 if ($playerEarnedGymBadge) {
                     $this->session->getFlashBag()->add("successes", "You earned the {$this->viewModelFactory->createGymBadgeName($trainer->gymBadge)}");
                 }
 
-                $this->session->getFlashBag()->add("successes", "You won \${$trainer->prizeMoney}");
+                $this->session->getFlashBag()->add("successes", "You won a {$prize['name']}");
 
                 header("Location: /map/encounter");
             }
@@ -112,7 +122,8 @@ final class PostBattleFight
                 header("Location: /battle/{$trainer->id}");
             } else {
 
-                $this->session->getFlashBag()->add("successes", "You were defeated by {$trainer->name}");
+                $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
+                $this->session->getFlashBag()->add("successes", "You were defeated by {$name}");
 
                 header("Location: /map/encounter");
             }
@@ -148,11 +159,15 @@ final class PostBattleFight
         }
 
         $typeLevelModifier = match ($multiplier) {
+            0.0625 => -16,
+            0.125 => -8,
             0.25 => -4,
             0.5 => -2,
             1.0 => 0,
             2.0 => 2,
             4.0 => 4,
+            8.0 => 8,
+            16.0 => 16,
         };
 
         $levelDifference = $playerPokemon->level - $enemyPokemon->level + $typeLevelModifier;
@@ -176,6 +191,29 @@ final class PostBattleFight
         return mt_rand(1, 100) <= $percentageChance;
     }
 
+    private static function generatePrize(array $pool): string
+    {
+        $selectedValue = mt_rand(1, array_reduce($pool, function ($carry, int $weight) {
+            return $carry + $weight;
+        }, 0));
+
+        foreach ($pool as $itemId => $weight) {
+            $selectedValue -= $weight;
+            if ($selectedValue <= 0) {
+                return strval($itemId);
+            }
+        }
+
+        throw new \Exception;
+    }
+
+    private static function findItem(string $id): array
+    {
+        $itemConfig = require __DIR__ . "/../../Config/Items.php";
+
+        return $itemConfig[$id];
+    }
+
     private function findGameInstance(): GameInstance
     {
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
@@ -185,7 +223,9 @@ final class PostBattleFight
         return new GameInstance(
             INSTANCE_ID,
             $instanceRow['money'],
+            $instanceRow['unused_level_ups'],
             $instanceRow['unused_moves'],
+            $instanceRow['unused_encounters'],
         );
     }
 

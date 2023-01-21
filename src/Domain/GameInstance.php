@@ -3,14 +3,16 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Domain;
 
-use ConorSmith\Pokemon\Battle\Domain\Trainer;
+use ConorSmith\Pokemon\ItemId;
 
 final class GameInstance
 {
     public function __construct(
         public readonly string $id,
         public readonly int $money,
+        public readonly int $unusedRareCandy,
         public readonly int $unusedChallengeTokens,
+        public readonly int $unusedPokeBalls,
     ) {}
 
     public function hasUnusedChallengeTokens(): bool
@@ -18,12 +20,30 @@ final class GameInstance
         return $this->unusedChallengeTokens > 0;
     }
 
-    public function winPrizeMoney(Trainer $trainer): self
+    public function winPrize(string $prize): self
     {
+        $unusedRareCandy = $this->unusedRareCandy;
+        $unusedChallengeTokens = $this->unusedChallengeTokens;
+        $unusedPokeBalls = $this->unusedPokeBalls;
+
+        switch ($prize) {
+            case ItemId::POKE_BALL:
+                $unusedPokeBalls++;
+                break;
+            case ItemId::RARE_CANDY:
+                $unusedRareCandy++;
+                break;
+            case ItemId::CHALLENGE_TOKEN:
+                $unusedChallengeTokens++;
+                break;
+        }
+
         return new self(
             $this->id,
-            $this->money + $trainer->prizeMoney,
-            $this->unusedChallengeTokens
+            $this->money,
+            $unusedRareCandy,
+            $unusedChallengeTokens,
+            $unusedPokeBalls,
         );
     }
 
@@ -32,7 +52,9 @@ final class GameInstance
         return new self(
             $this->id,
             $this->money,
-            $this->unusedChallengeTokens - 1
+            $this->unusedRareCandy,
+            $this->unusedChallengeTokens - 1,
+            $this->unusedPokeBalls,
         );
     }
 }

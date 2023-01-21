@@ -77,7 +77,7 @@ final class TrainerRepository
         return new Trainer(
             $trainerBattleRow['id'],
             $trainerConfig['name'],
-            $trainerConfig['prize'],
+            $trainerConfig['class'],
             $team,
             $trainerBattleRow['is_battling'] === 1,
             is_null($trainerBattleRow['date_last_beaten'])
@@ -103,12 +103,12 @@ final class TrainerRepository
 
     private function findTrainerConfig(string $id): array
     {
-        foreach ($this->map as $location) {
-            if (array_key_exists('trainers', $location)) {
-                foreach ($location['trainers'] as $trainer) {
-                    if ($trainer['id'] === $id) {
-                        return $trainer;
-                    }
+        $trainerConfig = require __DIR__ . "/../../Config/Trainers.php";
+
+        foreach ($trainerConfig as $trainers) {
+            foreach ($trainers as $trainer) {
+                if ($trainer['id'] === $id) {
+                    return $trainer;
                 }
             }
         }

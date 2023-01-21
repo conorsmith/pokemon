@@ -6,14 +6,15 @@ namespace ConorSmith\Pokemon\Battle\Domain;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\TrainerClass;
 use Exception;
 
 final class Trainer
 {
     public function __construct(
         public readonly string $id,
-        public readonly string $name,
-        public readonly int $prizeMoney,
+        public readonly ?string $name,
+        public readonly string $class,
         private readonly array $team,
         public readonly bool $isBattling,
         public readonly ?CarbonImmutable $dateLastBeaten,
@@ -26,7 +27,7 @@ final class Trainer
         return new self(
             $this->id,
             $this->name,
-            $this->prizeMoney,
+            $this->class,
             $this->team,
             true,
             $this->dateLastBeaten,
@@ -40,7 +41,7 @@ final class Trainer
         return new self(
             $this->id,
             $this->name,
-            $this->prizeMoney,
+            $this->class,
             $this->team,
             $this->isBattling,
             CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
@@ -62,7 +63,7 @@ final class Trainer
         return new self(
             $this->id,
             $this->name,
-            $this->prizeMoney,
+            $this->class,
             $revivedTeam,
             false,
             $this->dateLastBeaten,
