@@ -4,10 +4,6 @@
 
 <table class="table-borderless w-100">
     <tr>
-        <td>Money</td>
-        <td style="text-align: right;">$<?=$summary->money?></td>
-    </tr>
-    <tr>
         <td>Poké Balls</td>
         <td style="text-align: right;"><?=$summary->pokeballs?></td>
     </tr>

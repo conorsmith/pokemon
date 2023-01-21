@@ -35,7 +35,6 @@ final class GetIndex
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Index.php", [
             'summary' => (object) [
-                'money' => $instanceRow['money'],
                 'pokeballs' => $instanceRow['unused_encounters'],
                 'rareCandies' => $instanceRow['unused_level_ups'],
                 'challengeTokens' => $instanceRow['unused_moves'],

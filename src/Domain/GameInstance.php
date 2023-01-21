@@ -9,7 +9,6 @@ final class GameInstance
 {
     public function __construct(
         public readonly string $id,
-        public readonly int $money,
         public readonly int $unusedRareCandy,
         public readonly int $unusedChallengeTokens,
         public readonly int $unusedPokeBalls,
@@ -40,7 +39,6 @@ final class GameInstance
 
         return new self(
             $this->id,
-            $this->money,
             $unusedRareCandy,
             $unusedChallengeTokens,
             $unusedPokeBalls,
@@ -51,7 +49,6 @@ final class GameInstance
     {
         return new self(
             $this->id,
-            $this->money,
             $this->unusedRareCandy,
             $this->unusedChallengeTokens - 1,
             $this->unusedPokeBalls,
