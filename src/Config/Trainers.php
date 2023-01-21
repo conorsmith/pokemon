@@ -166,6 +166,7 @@ return [
             'name' => "Giovanni",
             'leader' => [
                 'badge' => GymBadge::EARTH,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/41/Spr_FRLG_Giovanni.png",
             ],
             'team' => [
                 [
@@ -294,6 +295,7 @@ return [
             'name' => "Brock",
             'leader' => [
                 'badge' => GymBadge::BOULDER,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/7/7c/Spr_FRLG_Brock.png",
             ],
             'team' => [
                 [
@@ -687,6 +689,7 @@ return [
             'name' => "Misty",
             'leader' => [
                 'badge' => GymBadge::CASCADE,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/2c/Spr_FRLG_Misty.png",
             ],
             'team' => [
                 [

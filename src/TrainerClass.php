@@ -37,4 +37,24 @@ final class TrainerClass
             self::PICNICKER => "Picnicker",
         };
     }
+
+    public static function getImageUrl(string $id): ?string
+    {
+        return match($id) {
+            self::BUG_CATCHER => "https://archives.bulbagarden.net/media/upload/b/b9/Spr_FRLG_Bug_Catcher.png",
+            self::CAMPER => "https://archives.bulbagarden.net/media/upload/2/23/Spr_FRLG_Camper.png",
+            self::GYM_LEADER => null,
+            self::BLACK_BELT => "https://archives.bulbagarden.net/media/upload/8/8e/Spr_FRLG_Black_Belt.png",
+            self::COOLTRAINER => "https://archives.bulbagarden.net/media/upload/7/7f/Spr_FRLG_Cooltrainer_F.png",
+            self::TAMER => "https://archives.bulbagarden.net/media/upload/8/89/Spr_FRLG_Tamer.png",
+            self::LASS => "https://archives.bulbagarden.net/media/upload/4/46/Spr_FRLG_Lass.png",
+            self::YOUNGSTER => "https://archives.bulbagarden.net/media/upload/d/d5/Spr_FRLG_Youngster.png",
+            self::SUPER_NERD => "https://archives.bulbagarden.net/media/upload/1/1f/Spr_FRLG_Super_Nerd.png",
+            self::HIKER => "https://archives.bulbagarden.net/media/upload/8/8c/Spr_FRLG_Hiker.png",
+            self::TEAM_ROCKET_GRUNT => "https://archives.bulbagarden.net/media/upload/8/85/Spr_FRLG_Team_Rocket_Grunt_M.png",
+            self::SWIMMER => "https://archives.bulbagarden.net/media/upload/9/95/Spr_FRLG_Swimmer_M.png",
+            self::PICNICKER => "https://archives.bulbagarden.net/media/upload/a/a0/Spr_FRLG_Picnicker.png",
+            default => null,
+        };
+    }
 }

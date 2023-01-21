@@ -54,9 +54,16 @@ final class GetMapEncounter
                     $isInCooldownWindow = false;
                 }
 
+                $imageUrl = TrainerClass::getImageUrl($trainer['class']);
+
+                if (array_key_exists('leader', $trainer)) {
+                    $imageUrl = $trainer['leader']['imageUrl'];
+                }
+
                 $trainers[] = (object)[
                     'id'          => $trainer['id'],
                     'name'        => TrainerClass::getLabel($trainer['class']) . " " . $trainer['name'],
+                    'imageUrl'    => $imageUrl,
                     'team'        => count($trainer['team']),
                     'canBattle'   => !$isInCooldownWindow && $challengeTokens > 0,
                     'lastBeaten'  => $lastBeaten ? $lastBeaten->ago() : "",

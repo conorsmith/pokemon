@@ -37,7 +37,12 @@
         </div>
         <ul class="list-group list-group-flush">
             <?php foreach ($trainers as $trainer) : ?>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="me-2" style="width: 64px;">
+                        <?php if (!is_null($trainer->imageUrl)) : ?>
+                            <img src="<?=$trainer->imageUrl?>">
+                        <?php endif ?>
+                    </div>
                     <div>
                         <div><strong>
                             <?=$trainer->name?>
