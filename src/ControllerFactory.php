@@ -10,6 +10,7 @@ use ConorSmith\Pokemon\Battle\Controllers\PostBattleSwitch;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleTrainer;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
+use ConorSmith\Pokemon\Controllers\GetBag;
 use ConorSmith\Pokemon\Controllers\GetLogWeeklyReview;
 use ConorSmith\Pokemon\Controllers\GetPokedex;
 use ConorSmith\Pokemon\Controllers\GetTeam;
@@ -71,6 +72,7 @@ final class ControllerFactory
         $r->post("/battle/{id}/fight", PostBattleFight::class);
         $r->get("/battle/{id}/switch", GetBattleSwitch::class);
         $r->post("/battle/{id}/switch", PostBattleSwitch::class);
+        $r->get("/bag", GetBag::class);
         $r->get("/", GetIndex::class);
     }
 
@@ -146,6 +148,9 @@ final class ControllerFactory
             ),
             PostBattleSwitch::class => new PostBattleSwitch(
                 $this->playerRepository,
+            ),
+            GetBag::class => new GetBag(
+                $this->db,
             ),
             GetIndex::class => new GetIndex(
                 $this->db,

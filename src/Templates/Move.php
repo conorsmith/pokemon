@@ -12,7 +12,7 @@
         </div>
 
         <?php if ($currentLocation->hasCardinalDirections) : ?>
-        
+
             <div class="card-body d-grid gap-2" style="grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; align-items: stretch;">
 
                 <div></div>
