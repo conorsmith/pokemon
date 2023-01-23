@@ -23,7 +23,9 @@ final class LocationId
     public const CERULEAN_GYM = "9dea9089-871c-47b6-99c4-5b0f60d4be72";
     public const ROUTE_5 = "2ae61913-311d-4b24-87dd-934586badb5c";
     public const ROUTE_6 = "8ceee5a8-54dd-4c63-9629-40bff24f3b2d";
+    public const VERMILLION_GYM = "7551e662-cd6b-4010-934b-6abfa82c4b4f";
     public const ROUTE_7 = "85776d72-ece8-451f-a8b8-5b1f9c2b349b";
+    public const CELADON_GYM = "acbaddd5-3ccf-4e97-a4df-b0d512c1884b";
     public const ROUTE_8 = "a006849d-3c22-4b57-b6d9-3ab23f6f42cf";
     public const ROUTE_9 = "57968d07-cea1-4a9b-ac21-53609a25ea36";
     public const ROCK_TUNNEL_1F = "dca3ae52-de54-413b-a838-b4ddf6da97d5";

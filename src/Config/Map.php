@@ -460,7 +460,7 @@ return [
         'directions' => [
             Direction::N => LocationId::ROUTE_6,
             Direction::E => "8e24cb82-3708-4530-aa1a-09a8465a5d2e",
-            // VERMILLION GYM
+            LocationId::VERMILLION_GYM,
             // SS ANNE
         ],
         'pokemon' => [
@@ -481,6 +481,14 @@ return [
                 'levels' => [10, 14],
             ],
         ],
+    ],
+    [
+        'id' => LocationId::VERMILLION_GYM,
+        'name' => "Vermillion Gym",
+        'directions' => [
+            "41b38040-2b0b-4a4e-9333-67fc7a5bb003",
+        ],
+        'pokemon' => [],
     ],
     [
         'id' => LocationId::ROUTE_7,
@@ -522,7 +530,7 @@ return [
         'directions' => [
             Direction::W => "2f0bc600-51c8-4621-9c72-124b5349beb2",
             Direction::E => LocationId::ROUTE_7,
-            // CELADON GYM
+            LocationId::CELADON_GYM,
             // ROCKET HIDEOUT
         ],
         'pokemon' => [
@@ -543,6 +551,14 @@ return [
                 'levels' => [13, 16],
             ],
         ],
+    ],
+    [
+        'id' => LocationId::CELADON_GYM,
+        'name' => "Celadon Gym",
+        'directions' => [
+            "57564cf4-9ac8-4b24-af13-eb158d969bb4",
+        ],
+        'pokemon' => [],
     ],
     [
         'id' => LocationId::ROUTE_8,

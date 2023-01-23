@@ -703,4 +703,54 @@ return [
             ],
         ],
     ],
+    LocationId::VERMILLION_GYM => [
+        [
+            'id' => "03f428a4-a0ca-441a-88a5-ccb391803201",
+            'class' => TrainerClass::GYM_LEADER,
+            'name' => "Lt. Surge",
+            'leader' => [
+                'badge' => GymBadge::THUNDER,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/5c/Spr_FRLG_Lt_Surge.png",
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::VOLTORB,
+                    'level' => 21,
+                ],
+                [
+                    'id' => PokedexNo::PIKACHU,
+                    'level' => 18,
+                ],
+                [
+                    'id' => PokedexNo::RAICHU,
+                    'level' => 24,
+                ],
+            ],
+        ],
+    ],
+    LocationId::CELADON_GYM => [
+        [
+            'id' => "5e537726-5069-4aa0-87b8-13de46c9a1c7",
+            'class' => TrainerClass::GYM_LEADER,
+            'name' => "Erika",
+            'leader' => [
+                'badge' => GymBadge::RAINBOW,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/c9/Spr_FRLG_Erika.png",
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::VICTREEBEL,
+                    'level' => 29,
+                ],
+                [
+                    'id' => PokedexNo::TANGELA,
+                    'level' => 24,
+                ],
+                [
+                    'id' => PokedexNo::VILEPLUME,
+                    'level' => 29,
+                ],
+            ],
+        ],
+    ],
 ];
