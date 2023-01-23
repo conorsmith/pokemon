@@ -29,6 +29,14 @@ final class BagRepository
                 ItemId::POKE_BALL,
                 0,
             ),
+            ItemId::GREAT_BALL => new Item(
+                ItemId::GREAT_BALL,
+                0,
+            ),
+            ItemId::ULTRA_BALL => new Item(
+                ItemId::ULTRA_BALL,
+                0,
+            ),
             ItemId::RARE_CANDY => new Item(
                 ItemId::RARE_CANDY,
                 $instanceRow['unused_level_ups'],
@@ -44,6 +52,14 @@ final class BagRepository
                 $itemRow['item_id'],
                 $itemRow['quantity'],
             );
+        }
+
+        if ($items[ItemId::GREAT_BALL]->quantity === 0) {
+            unset($items[ItemId::GREAT_BALL]);
+        }
+
+        if ($items[ItemId::ULTRA_BALL]->quantity === 0) {
+            unset($items[ItemId::ULTRA_BALL]);
         }
 
         return new Bag($items);

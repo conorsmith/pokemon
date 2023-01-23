@@ -40,6 +40,10 @@ final class Bag
     {
         $items = $this->items;
 
+        if (!array_key_exists($id, $items)) {
+            $items[$id] = new Item($id, 0);
+        }
+
         $items[$id] = $items[$id]->add($quantity);
 
         return new self($items);

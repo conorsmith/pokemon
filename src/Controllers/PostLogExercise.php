@@ -20,13 +20,17 @@ final class PostLogExercise
 
     public function __invoke(): void
     {
-        if ($_POST['date'] === "") {
+        if (!isset($_POST['date']) && $_POST['earlier_date'] === "") {
             $this->session->getFlashBag()->add("errors", "Given date is empty.");
             header("Location: /log/exercise");
             exit;
         }
 
-        $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $_POST['date']);
+        if (!isset($_POST['date'])) {
+            $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $_POST['earlier_date']);
+        } else {
+            $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $_POST['date']);
+        }
 
         if ($submittedDate->isFuture()) {
             $this->session->getFlashBag()->add("errors", "Given date is in the future.");
@@ -34,15 +38,22 @@ final class PostLogExercise
             exit;
         }
 
+        $earnedItemId = match($_POST['type']) {
+            "short-walk" => ItemId::POKE_BALL,
+            "long-walk" => ItemId::GREAT_BALL,
+            "run" => ItemId::ULTRA_BALL,
+        };
+
         $bag = $this->bagRepository->find();
 
-        $bag = $bag->add(ItemId::POKE_BALL);
+        $bag = $bag->add($earnedItemId);
 
         $this->db->beginTransaction();
 
         $this->db->insert("log_exercise", [
             'id' => Uuid::uuid4(),
             'instance_id' => INSTANCE_ID,
+            'type' => $_POST['type'],
             'date_logged' => $submittedDate->format("Y-m-d") . " 12:00:00",
         ]);
 
@@ -50,7 +61,8 @@ final class PostLogExercise
 
         $this->db->commit();
 
-        $this->session->getFlashBag()->add("successes", "You earned 1 Poké Ball!");
+        $itemConfig = require __DIR__ . "/../Config/Items.php";
+        $this->session->getFlashBag()->add("successes", "You earned 1 {$itemConfig[$earnedItemId]['name']}!");
 
         header("Location: /map/encounter");
         exit;

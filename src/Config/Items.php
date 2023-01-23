@@ -8,6 +8,14 @@ return [
         'name' => "Poké Ball",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png",
     ],
+    ItemId::GREAT_BALL => [
+        'name' => "Great Ball",
+        'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/ca/Bag_Great_Ball_Sprite.png",
+    ],
+    ItemId::ULTRA_BALL => [
+        'name' => "Ultra Ball",
+        'imageUrl' => "https://archives.bulbagarden.net/media/upload/0/03/Bag_Ultra_Ball_Sprite.png",
+    ],
     ItemId::RARE_CANDY => [
         'name' => "Rare Candy",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/8d/Bag_Rare_Candy_Sprite.png",
