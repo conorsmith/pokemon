@@ -36,6 +36,7 @@ use ConorSmith\Pokemon\Controllers\PostTeamMoveUp;
 use ConorSmith\Pokemon\Controllers\PostTeamSendToBox;
 use ConorSmith\Pokemon\Controllers\PostTeamSendToTeam;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -77,14 +78,15 @@ final class ControllerFactory
     }
 
     public function __construct(
-        private readonly Connection $db,
-        private readonly Session $session,
+        private readonly Connection              $db,
+        private readonly Session                 $session,
         private readonly CaughtPokemonRepository $caughtPokemonRepository,
-        private readonly TrainerRepository $trainerRepository,
-        private readonly PlayerRepository $playerRepository,
-        private readonly ViewModelFactory $viewModelFactory,
-        private readonly array $pokedex,
-        private readonly array $map,
+        private readonly TrainerRepository       $trainerRepository,
+        private readonly PlayerRepository        $playerRepository,
+        private readonly BagRepository           $bagRepository,
+        private readonly ViewModelFactory        $viewModelFactory,
+        private readonly array                   $pokedex,
+        private readonly array                   $map,
     ) {}
 
     public function create(string $className): mixed
@@ -102,14 +104,24 @@ final class ControllerFactory
             GetMapMove::class => new GetMapMove($this->db, $this->session, $this->map),
             PostMapMove::class => new PostMapMove($this->db, $this->session, $this->map),
             GetLogExercise::class => new GetLogExercise($this->db, $this->session),
-            PostLogExercise::class => new PostLogExercise($this->db, $this->session),
+            PostLogExercise::class => new PostLogExercise(
+                $this->db,
+                $this->session,
+                $this->bagRepository,
+            ),
             GetMapEncounter::class => new GetMapEncounter(
                 $this->db,
                 $this->session,
+                $this->bagRepository,
                 $this->viewModelFactory,
                 $this->map,
             ),
-            PostMapEncounter::class => new PostMapEncounter($this->db, $this->session, $this->map),
+            PostMapEncounter::class => new PostMapEncounter(
+                $this->db,
+                $this->session,
+                $this->bagRepository,
+                $this->map,
+            ),
             GetTeam::class => new GetTeam(
                 $this->db,
                 $this->session,
@@ -117,8 +129,19 @@ final class ControllerFactory
                 $this->pokedex,
                 $this->viewModelFactory,
             ),
-            GetEncounter::class => new GetEncounter($this->db, $this->session, $this->pokedex),
-            PostEncounterCatch::class => new PostEncounterCatch($this->db, $this->session, $this->pokedex, $this->map),
+            GetEncounter::class => new GetEncounter(
+                $this->db,
+                $this->session,
+                $this->bagRepository,
+                $this->pokedex,
+            ),
+            PostEncounterCatch::class => new PostEncounterCatch(
+                $this->db,
+                $this->session,
+                $this->bagRepository,
+                $this->pokedex,
+                $this->map,
+            ),
             PostEncounterRun::class => new PostEncounterRun($this->db),
             PostTeamMoveUp::class => new PostTeamMoveUp($this->db, $this->session, $this->caughtPokemonRepository),
             PostTeamMoveDown::class => new PostTeamMoveDown($this->db, $this->session, $this->caughtPokemonRepository),
@@ -127,7 +150,8 @@ final class ControllerFactory
             PostBattleTrainer::class => new PostBattleTrainer(
                 $this->db,
                 $this->session,
-                $this->trainerRepository
+                $this->trainerRepository,
+                $this->bagRepository,
             ),
             GetBattle::class => new GetBattle(
                 $this->session,
@@ -140,6 +164,7 @@ final class ControllerFactory
                 $this->session,
                 $this->trainerRepository,
                 $this->playerRepository,
+                $this->bagRepository,
                 $this->viewModelFactory,
             ),
             GetBattleSwitch::class => new GetBattleSwitch(
@@ -150,12 +175,13 @@ final class ControllerFactory
                 $this->playerRepository,
             ),
             GetBag::class => new GetBag(
-                $this->db,
+                $this->bagRepository,
             ),
             GetIndex::class => new GetIndex(
                 $this->db,
                 $this->session,
                 $this->playerRepository,
+                $this->bagRepository,
                 $this->viewModelFactory,
             ),
         };

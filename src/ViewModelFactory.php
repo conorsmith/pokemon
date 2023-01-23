@@ -101,14 +101,14 @@ final class ViewModelFactory
     private function createGymBadgeImageUrl(GymBadge $gymBadge): string
     {
         return match ($gymBadge) {
-            GymBadge::BOULDER => "https://archives.bulbagarden.net/media/upload/thumb/d/dd/Boulder_Badge.png/75px-Boulder_Badge.png",
-            GymBadge::CASCADE => "https://archives.bulbagarden.net/media/upload/thumb/9/9c/Cascade_Badge.png/75px-Cascade_Badge.png",
-            GymBadge::THUNDER => "https://archives.bulbagarden.net/media/upload/thumb/a/a6/Thunder_Badge.png/75px-Thunder_Badge.png",
-            GymBadge::RAINBOW => "https://archives.bulbagarden.net/media/upload/thumb/b/b5/Rainbow_Badge.png/75px-Rainbow_Badge.png",
-            GymBadge::SOUL => "https://archives.bulbagarden.net/media/upload/thumb/7/7d/Soul_Badge.png/75px-Soul_Badge.png",
-            GymBadge::MARSH => "https://archives.bulbagarden.net/media/upload/thumb/6/6b/Marsh_Badge.png/75px-Marsh_Badge.png",
-            GymBadge::VOLCANO => "https://archives.bulbagarden.net/media/upload/thumb/1/12/Volcano_Badge.png/75px-Volcano_Badge.png",
-            GymBadge::EARTH => "https://archives.bulbagarden.net/media/upload/thumb/7/78/Earth_Badge.png/75px-Earth_Badge.png",
+            GymBadge::BOULDER => "/assets/badges/75px-Boulder_Badge.png",
+            GymBadge::CASCADE => "/assets/badges/75px-Cascade_Badge.png",
+            GymBadge::THUNDER => "/assets/badges/75px-Thunder_Badge.png",
+            GymBadge::RAINBOW => "/assets/badges/75px-Rainbow_Badge.png",
+            GymBadge::SOUL => "/assets/badges/75px-Soul_Badge.png",
+            GymBadge::MARSH => "/assets/badges/75px-Marsh_Badge.png",
+            GymBadge::VOLCANO => "/assets/badges/75px-Volcano_Badge.png",
+            GymBadge::EARTH => "/assets/badges/75px-Earth_Badge.png",
         };
     }
 }

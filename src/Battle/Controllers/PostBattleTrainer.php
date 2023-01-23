@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\Domain\GameInstance;
+use ConorSmith\Pokemon\ItemId;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -14,15 +15,16 @@ final class PostBattleTrainer
         private readonly Connection $db,
         private readonly Session $session,
         private readonly TrainerRepository $trainerRepository,
+        private readonly BagRepository $bagRepository,
     ) {}
 
     public function __invoke(array $args): void
     {
         $trainerId = $args['id'];
 
-        $gameInstance = $this->findGameInstance();
+        $bag = $this->bagRepository->find();
 
-        if (!$gameInstance->hasUnusedChallengeTokens()) {
+        if (!$bag->has(ItemId::CHALLENGE_TOKEN)) {
             $this->session->getFlashBag()->add("errors", "No unused challenge tokens remaining.");
             header("Location: /map/encounter");
             exit;
@@ -31,38 +33,15 @@ final class PostBattleTrainer
         $trainer = $this->trainerRepository->findTrainerByTrainerId($trainerId);
 
         $trainer = $trainer->startBattle();
-        $gameInstance = $gameInstance->useAChallengeToken();
+        $bag = $bag->use(ItemId::CHALLENGE_TOKEN);
 
         $this->db->beginTransaction();
 
         $this->trainerRepository->saveTrainer($trainer);
-        $this->saveGameInstance($gameInstance);
+        $this->bagRepository->save($bag);
 
         $this->db->commit();
 
         header("Location: /battle/{$trainer->id}");
-    }
-
-    private function findGameInstance(): GameInstance
-    {
-        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
-        ]);
-
-        return new GameInstance(
-            INSTANCE_ID,
-            $instanceRow['unused_level_ups'],
-            $instanceRow['unused_moves'],
-            $instanceRow['unused_encounters'],
-        );
-    }
-
-    private function saveGameInstance(GameInstance $gameInstance): void
-    {
-        $this->db->update("instances", [
-            'unused_moves' => $gameInstance->unusedChallengeTokens,
-        ], [
-            'id' => $gameInstance->id,
-        ]);
     }
 }

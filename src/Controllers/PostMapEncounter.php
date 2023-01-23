@@ -5,6 +5,8 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -14,6 +16,7 @@ final class PostMapEncounter
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
+        private readonly BagRepository $bagRepository,
         private readonly array $map,
     ) {}
 
@@ -23,7 +26,9 @@ final class PostMapEncounter
             'instanceId' => INSTANCE_ID,
         ]);
 
-        if ($instanceRow['unused_encounters'] < 1) {
+        $bag = $this->bagRepository->find();
+
+        if (!$bag->has(ItemId::POKE_BALL)) {
             $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
             header("Location: /map/encounter");
             exit;
@@ -36,12 +41,6 @@ final class PostMapEncounter
             header("Location: /map/encounter");
             exit;
         }
-
-        $pokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position = 1", [
-            'instanceId' => INSTANCE_ID,
-        ]);
-
-        $leadPokemonLevel = $pokemonRow['level'];
 
         $encounteredPokemonId = self::generateEncounteredPokemon($currentLocation);
         $encounteredPokemonLevel = self::generateEncounteredLevel($currentLocation, $encounteredPokemonId);
@@ -56,94 +55,6 @@ final class PostMapEncounter
         ]);
 
         header("Location: /encounter/{$encounterId}");
-        exit;
-
-        $levelDifference = $encounteredPokemonLevel - $leadPokemonLevel;
-
-        if ($levelDifference > 5) {
-            $chance = 0;
-        } elseif ($levelDifference < -4) {
-            $chance = 100;
-        } else {
-            switch ($levelDifference) {
-                case 5:
-                    $chance = 1;
-                    break;
-                case 4:
-                    $chance = 8;
-                    break;
-                case 3:
-                    $chance = 20;
-                    break;
-                case 2:
-                    $chance = 50;
-                    break;
-                case 1:
-                    $chance = 75;
-                    break;
-                case 0:
-                    $chance = 90;
-                    break;
-                case -1:
-                    $chance = 94;
-                    break;
-                case -2:
-                    $chance = 96;
-                    break;
-                case -3:
-                    $chance = 98;
-                    break;
-                case -4:
-                    $chance = 99;
-                    break;
-            }
-        }
-
-        $caught = $chance >= mt_rand(1, 100);
-
-        $encounter = [
-            'pokemon' => [
-                'id' => $encounteredPokemonId,
-                'level' => $encounteredPokemonLevel,
-            ],
-            'caught' => $caught,
-            'sentToBox' => false,
-        ];
-
-        if ($caught) {
-
-            $positionRow = $this->db->fetchNumeric("SELECT MAX(team_position) FROM caught_pokemon WHERE instance_id = :instanceId", [
-                'instanceId' => INSTANCE_ID,
-            ]);
-
-            if ($positionRow[0] >= 6) {
-                $teamPosition = null;
-                $encounter['sentToBox'] = true;
-            } else {
-                $teamPosition = $positionRow[0] + 1;
-            }
-
-            $this->db->insert("caught_pokemon", [
-                'id' => Uuid::uuid4(),
-                'instance_id' => INSTANCE_ID,
-                'pokemon_id' => $encounteredPokemonId,
-                'level' => $encounteredPokemonLevel,
-                'team_position' => $teamPosition,
-                'location_caught' => $currentLocation['id'],
-                'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
-            ]);
-        }
-
-        $this->db->update("instances", [
-            'unused_encounters' => $instanceRow['unused_encounters'] - 1,
-        ], [
-            'id' => INSTANCE_ID,
-        ]);
-
-        $this->session->getFlashBag()->set('encounter', $encounter);
-
-        header("Location: /");
-        exit;
     }
 
     private static function generateEncounteredPokemon(array $currentLocation): string

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
@@ -13,6 +15,7 @@ final class GetEncounter
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
+        private readonly BagRepository $bagRepository,
         private readonly array $pokedex,
     ) {}
 
@@ -29,7 +32,9 @@ final class GetEncounter
             'instanceId' => INSTANCE_ID,
         ]);
 
-        if ($instanceRow['unused_encounters'] < 1) {
+        $bag = $this->bagRepository->find();
+
+        if (!$bag->has(ItemId::POKE_BALL)) {
             $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
             header("Location: /map/encounter");
             exit;
@@ -63,7 +68,7 @@ final class GetEncounter
             'id' => $id,
             'pokemon' => $pokemon,
             'leadPokemon' => $leadPokemon,
-            'pokeballs' => $instanceRow['unused_encounters'],
+            'pokeballs' => $bag->count(ItemId::POKE_BALL),
         ]);
     }
 }

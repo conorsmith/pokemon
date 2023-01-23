@@ -5,6 +5,8 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
@@ -17,6 +19,7 @@ final class GetMapEncounter
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
+        private readonly BagRepository $bagRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly array $map,
     ) {}
@@ -27,8 +30,9 @@ final class GetMapEncounter
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $pokeballs = $instanceRow['unused_encounters'];
-        $challengeTokens = $instanceRow['unused_moves'];
+        $bag = $this->bagRepository->find();
+
+        $challengeTokens = $bag->count(ItemId::CHALLENGE_TOKEN);
 
         $currentLocation = $this->createLocationViewModel($this->findLocation($instanceRow['current_location']));
 
@@ -76,7 +80,7 @@ final class GetMapEncounter
         }
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/MapEncounter.php", [
-            'pokeballs' => $pokeballs,
+            'pokeballs' => $bag->count(ItemId::POKE_BALL),
             'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
             'trainers' => $trainers,

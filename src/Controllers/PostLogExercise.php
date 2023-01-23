@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Controllers;
 
 use Carbon\CarbonImmutable;
+use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -13,6 +15,7 @@ final class PostLogExercise
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
+        private readonly BagRepository $bagRepository,
     ) {}
 
     public function __invoke(): void
@@ -31,6 +34,10 @@ final class PostLogExercise
             exit;
         }
 
+        $bag = $this->bagRepository->find();
+
+        $bag = $bag->add(ItemId::POKE_BALL);
+
         $this->db->beginTransaction();
 
         $this->db->insert("log_exercise", [
@@ -39,17 +46,11 @@ final class PostLogExercise
             'date_logged' => $submittedDate->format("Y-m-d") . " 12:00:00",
         ]);
 
-        $row = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
-        ]);
-
-        $this->db->update("instances", [
-            'unused_encounters' => $row['unused_encounters'] + 1,
-        ], [
-            'id' => INSTANCE_ID,
-        ]);
+        $this->bagRepository->save($bag);
 
         $this->db->commit();
+
+        $this->session->getFlashBag()->add("successes", "You earned 1 Poké Ball!");
 
         header("Location: /map/encounter");
         exit;

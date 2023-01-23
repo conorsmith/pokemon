@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\Domain\GameInstance;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\PokemonType;
 use ConorSmith\Pokemon\TrainerClass;
@@ -21,6 +21,7 @@ final class PostBattleFight
         private readonly Session $session,
         private readonly TrainerRepository $trainerRepository,
         private readonly PlayerRepository $playerRepository,
+        private readonly BagRepository $bagRepository,
         private readonly ViewModelFactory $viewModelFactory,
     ) {}
 
@@ -28,9 +29,9 @@ final class PostBattleFight
     {
         $trainerBattleId = $args['id'];
 
-        $gameInstance = $this->findGameInstance();
         $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
+        $bag = $this->bagRepository->find();
 
         if ($player->hasEntireTeamFainted()) {
             $this->session->getFlashBag()->add("errors", "Your team has fainted.");
@@ -59,7 +60,7 @@ final class PostBattleFight
                     ItemId::CHALLENGE_TOKEN => 1,
                 ]);
                 $prize = self::findItem($prizeItemId);
-                $gameInstance = $gameInstance->winPrize($prizeItemId);
+                $bag = $bag->add($prizeItemId);
                 $trainer = $trainer->defeat();
                 $trainer = $trainer->endBattle();
                 $player = $player->reviveTeam();
@@ -82,8 +83,8 @@ final class PostBattleFight
         $this->db->beginTransaction();
 
         $this->trainerRepository->saveTrainer($trainer);
-        $this->saveGameInstance($gameInstance);
         $this->playerRepository->savePlayer($player);
+        $this->bagRepository->save($bag);
 
         $this->db->commit();
 
@@ -212,30 +213,5 @@ final class PostBattleFight
         $itemConfig = require __DIR__ . "/../../Config/Items.php";
 
         return $itemConfig[$id];
-    }
-
-    private function findGameInstance(): GameInstance
-    {
-        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
-        ]);
-
-        return new GameInstance(
-            INSTANCE_ID,
-            $instanceRow['unused_level_ups'],
-            $instanceRow['unused_moves'],
-            $instanceRow['unused_encounters'],
-        );
-    }
-
-    private function saveGameInstance(GameInstance $gameInstance): void
-    {
-        $this->db->update("instances", [
-            'unused_level_ups' => $gameInstance->unusedRareCandy,
-            'unused_moves' => $gameInstance->unusedChallengeTokens,
-            'unused_encounters' => $gameInstance->unusedPokeBalls,
-        ], [
-            'id' => $gameInstance->id,
-        ]);
     }
 }

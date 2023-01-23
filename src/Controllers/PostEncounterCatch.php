@@ -5,6 +5,8 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\GymBadge;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
@@ -15,6 +17,7 @@ final class PostEncounterCatch
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
+        private readonly BagRepository $bagRepository,
         private readonly array $pokedex,
         private readonly array $map,
     ) {}
@@ -32,7 +35,9 @@ final class PostEncounterCatch
             'instanceId' => INSTANCE_ID,
         ]);
 
-        if ($instanceRow['unused_encounters'] < 1) {
+        $bag = $this->bagRepository->find();
+
+        if (!$bag->has(ItemId::POKE_BALL)) {
             $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
             header("Location: /map/encounter");
             exit;
@@ -141,11 +146,9 @@ final class PostEncounterCatch
             $this->session->getFlashBag()->add("successes", "You failed to catch the wild {$pokemon['name']}");
         }
 
-        $this->db->update("instances", [
-            'unused_encounters' => $instanceRow['unused_encounters'] - 1,
-        ], [
-            'id' => INSTANCE_ID,
-        ]);
+        $bag = $bag->use(ItemId::POKE_BALL);
+
+        $this->bagRepository->save($bag);
 
         $this->db->delete("encounters", [
             'instance_id' => INSTANCE_ID,

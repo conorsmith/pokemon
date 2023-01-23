@@ -53,19 +53,19 @@ final class PostLogWeeklyReview
 
         $foodDiaryRows = $this->db->fetchAllAssociative("SELECT * FROM log_food_diary WHERE instance_id = :instanceId AND date_logged >= :firstDay AND date_logged <= :lastDay", [
             'instanceId' => INSTANCE_ID,
-            'firstDay' => $firstDay->format("Y-m-d 00:00:00"),
-            'lastDay' => $lastDay->format("Y-m-d 00:00:00"),
+            'firstDay' => $firstDay->format("Y-m-d 12:00:00"),
+            'lastDay' => $lastDay->format("Y-m-d 12:00:00"),
         ]);
 
         $calorieGoalRows = $this->db->fetchAllAssociative("SELECT * FROM log_calorie_goal WHERE instance_id = :instanceId AND date_logged >= :firstDay AND date_logged <= :lastDay", [
             'instanceId' => INSTANCE_ID,
-            'firstDay' => $firstDay->format("Y-m-d 00:00:00"),
-            'lastDay' => $lastDay->format("Y-m-d 00:00:00"),
+            'firstDay' => $firstDay->format("Y-m-d 12:00:00"),
+            'lastDay' => $lastDay->format("Y-m-d 12:00:00"),
         ]);
 
         $grossBonus = count($foodDiaryRows) + count($calorieGoalRows);
 
-        $penalty = floor($total / 500);
+        $penalty = ceil($total / 500);
 
         $netBonus = max(0, $grossBonus - $penalty);
 

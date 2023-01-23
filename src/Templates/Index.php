@@ -2,20 +2,21 @@
     <div class="alert alert-success"><?=$success?></div>
 <?php endforeach ?>
 
-<table class="table-borderless w-100">
-    <tr>
-        <td>Poké Balls</td>
-        <td style="text-align: right;"><?=$summary->pokeballs?></td>
-    </tr>
-    <tr>
-        <td>Rare Candies</td>
-        <td style="text-align: right;"><?=$summary->rareCandies?></td>
-    </tr>
-    <tr>
-        <td>Challenge Tokens</td>
-        <td style="text-align: right;"><?=$summary->challengeTokens?></td>
-    </tr>
-</table>
+<ul class="list-group">
+
+    <?php foreach ($items as $item) : ?>
+        <li class="list-group-item d-flex justify-content-between">
+            <div class="d-flex">
+                <div class="me-2" style="width: 24px; text-align: center;">
+                    <img src="<?=$item->imageUrl?>">
+                </div>
+                <div><?=$item->name?></div>
+            </div>
+            <div><?=$item->amount?></div>
+        </li>
+    <?php endforeach ?>
+
+</ul>
 
 <ul class="list-group" style="margin-top: 2rem;">
     <?php foreach ($team as $pokemon) : ?>
