@@ -20,10 +20,14 @@ final class BagRepository
             'instanceId' => INSTANCE_ID,
         ]);
 
-        return new Bag([
+        $itemRows = $this->db->fetchAllAssociative("SELECT * FROM items WHERE instance_id = :instanceId", [
+            'instanceId' => INSTANCE_ID,
+        ]);
+
+        $items = [
             ItemId::POKE_BALL => new Item(
                 ItemId::POKE_BALL,
-                $instanceRow['unused_encounters'],
+                0,
             ),
             ItemId::RARE_CANDY => new Item(
                 ItemId::RARE_CANDY,
@@ -33,27 +37,60 @@ final class BagRepository
                 ItemId::CHALLENGE_TOKEN,
                 $instanceRow['unused_moves'],
             ),
-        ]);
+        ];
+
+        foreach ($itemRows as $itemRow) {
+            $items[$itemRow['item_id']] = new Item(
+                $itemRow['item_id'],
+                $itemRow['quantity'],
+            );
+        }
+
+        return new Bag($items);
     }
 
     public function save(Bag $bag): void
     {
-        $update = [];
+        $existingItemRows = $this->db->fetchAllAssociative("SELECT * FROM items WHERE instance_id = :instanceId", [
+            'instanceId' => INSTANCE_ID,
+        ]);
+
+        $idsOfExistingItems = array_map(
+            function (array $row) {
+                return $row['item_id'];
+            },
+            $existingItemRows
+        );
+
+        $instanceTableUpdate = [];
 
         /** @var Item $item */
         foreach ($bag->items as $item) {
-            if ($item->id === ItemId::POKE_BALL) {
-                $update['unused_encounters'] = $item->quantity;
-
-            } elseif ($item->id === ItemId::RARE_CANDY) {
-                $update['unused_level_ups'] = $item->quantity;
+            if ($item->id === ItemId::RARE_CANDY) {
+                $instanceTableUpdate['unused_level_ups'] = $item->quantity;
 
             } else if ($item->id === ItemId::CHALLENGE_TOKEN) {
-                $update['unused_moves'] = $item->quantity;
+                $instanceTableUpdate['unused_moves'] = $item->quantity;
+
+            } else {
+                if (in_array($item->id, $idsOfExistingItems)) {
+                    $this->db->update("items", [
+                        'quantity' => $item->quantity,
+                    ], [
+                        'item_id'     => $item->id,
+                        'instance_id' => INSTANCE_ID,
+                    ]);
+                } else {
+                    $this->db->insert("items", [
+                        'instance_id' => INSTANCE_ID,
+                        'item_id'     => $item->id,
+                        'quantity'    => $item->quantity,
+                    ]);
+                }
             }
         }
 
-        $this->db->update("instances", $update, [
+        $this->db->update("instances", $instanceTableUpdate, [
             'id' => INSTANCE_ID,
         ]);
     }
