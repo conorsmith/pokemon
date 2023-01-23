@@ -8,7 +8,7 @@
 
     <form method="POST">
 
-        <div class="btn-group btn-group-lg d-flex mb-4">
+        <div class="btn-group-vertical btn-group-lg d-flex mb-4">
             <input type="radio" class="btn-check" name="type" value="short-walk" id="option1" autocomplete="off" checked>
             <label class="btn btn-outline-primary" for="option1"><i class="fas fa-fw fa-walking"></i> Short Walk</label>
 
