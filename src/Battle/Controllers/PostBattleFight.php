@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
@@ -54,11 +55,7 @@ final class PostBattleFight
             $trainerPokemon->faint();
 
             if ($trainer->hasEntireTeamFainted()) {
-                $prizeItemId = self::generatePrize([
-                    ItemId::POKE_BALL => 2,
-                    ItemId::RARE_CANDY => 1,
-                    ItemId::CHALLENGE_TOKEN => 1,
-                ]);
+                $prizeItemId = self::generatePrize(self::getPrizePool($trainer));
                 $prize = self::findItem($prizeItemId);
                 $bag = $bag->add($prizeItemId);
                 $trainer = $trainer->defeat();
@@ -190,6 +187,38 @@ final class PostBattleFight
         };
 
         return mt_rand(1, 100) <= $percentageChance;
+    }
+
+    private static function getPrizePool(Trainer $trainer): array
+    {
+        if (TrainerClass::hasUltraBallInPrizePool($trainer->class)) {
+            $pool = [
+                ItemId::POKE_BALL => 1,
+                ItemId::GREAT_BALL => 2,
+                ItemId::ULTRA_BALL => 1,
+                ItemId::RARE_CANDY => 2,
+                ItemId::CHALLENGE_TOKEN => 2,
+            ];
+        } else {
+            $pool = [
+                ItemId::POKE_BALL => 3,
+                ItemId::GREAT_BALL => 1,
+                ItemId::RARE_CANDY => 2,
+                ItemId::CHALLENGE_TOKEN => 2,
+            ];
+        }
+
+        $additionalPrizes = TrainerClass::getAdditionalPrizePoolItems($trainer->class);
+
+        if (count($additionalPrizes) === 1) {
+            $pool[$additionalPrizes[0]] = 2;
+        } else {
+            foreach ($additionalPrizes as $prize) {
+                $pool[$prize] = 1;
+            }
+        }
+
+        return $pool;
     }
 
     private static function generatePrize(array $pool): string
