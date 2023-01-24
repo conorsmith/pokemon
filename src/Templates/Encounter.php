@@ -1,3 +1,11 @@
+<?php foreach ($errors as $error) : ?>
+    <div class="alert alert-danger"><?=$error?></div>
+<?php endforeach ?>
+
+<?php foreach ($successes as $success) : ?>
+    <div class="alert alert-success"><?=$success?></div>
+<?php endforeach ?>
+
 <ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
     <li class="list-group-item" style="text-align: center;">
         <strong>You encountered a wild <?=$pokemon->name?></strong>
@@ -26,12 +34,19 @@
         </div>
     </li>
     <li class="list-group-item d-grid gap-2" style="text-align: center;">
-        <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid">
-            <button type="submit" class="btn btn-primary">
-                Throw Poké Ball
-                <span class="badge text-bg-light"><?=$pokeballs?></span>
-            </button>
-        </form>
+        <?php foreach ($pokeballs as $pokeball) : ?>
+            <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid">
+                <button type="submit" name="pokeball" value="<?=$pokeball->id?>" class="btn btn-outline-primary d-flex justify-content-between">
+                    <div class="me-2" style="width: 40px; text-align: center;">
+                        <img src="<?=$pokeball->imageUrl?>">
+                    </div>
+                    Throw <?=$pokeball->name?>
+                    <div style="width: 40px; text-align: center;">
+                        <span class="badge text-bg-primary"><?=$pokeball->amount?></span>
+                    </div>
+                </button>
+            </form>
+        <?php endforeach ?>
         <form method="POST" action="/encounter/<?=$id?>/run" class="d-grid">
             <button type="submit" class="btn btn-outline-secondary">Run</button>
         </form>

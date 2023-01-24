@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Controllers;
 
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\Item;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
+use stdClass;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetEncounter
@@ -28,13 +30,9 @@ final class GetEncounter
             'id' => $id,
         ]);
 
-        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
-        ]);
-
         $bag = $this->bagRepository->find();
 
-        if (!$bag->has(ItemId::POKE_BALL)) {
+        if (!$bag->hasAnyPokeBall()) {
             $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
             header("Location: /map/encounter");
             exit;
@@ -64,11 +62,31 @@ final class GetEncounter
             'level'    => $leadPokemonRow['level'],
         ];
 
+        $pokeballs = [];
+
+        foreach ($bag->getEachPokeBall() as $pokeBall) {
+            $pokeballs[] = self::createPokeBallViewModel($pokeBall);
+        }
+
         echo TemplateEngine::render(__DIR__ . "/../Templates/Encounter.php", [
             'id' => $id,
             'pokemon' => $pokemon,
             'leadPokemon' => $leadPokemon,
-            'pokeballs' => $bag->count(ItemId::POKE_BALL),
+            'pokeballs' => $pokeballs,
+            'successes' => $this->session->getFlashBag()->get("successes"),
+            'errors' => $this->session->getFlashBag()->get("errors"),
         ]);
+    }
+
+    private static function createPokeBallViewModel(Item $pokeBall): stdClass
+    {
+        $itemConfig = require __DIR__ . "/../Config/Items.php";
+
+        return (object) [
+            'id' => $pokeBall->id,
+            'name' => $itemConfig[$pokeBall->id]['name'],
+            'imageUrl' => $itemConfig[$pokeBall->id]['imageUrl'],
+            'amount' => $pokeBall->quantity,
+        ];
     }
 }

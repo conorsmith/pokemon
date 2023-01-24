@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
-use Carbon\CarbonImmutable;
-use Carbon\CarbonTimeZone;
-use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
@@ -28,7 +25,7 @@ final class PostMapEncounter
 
         $bag = $this->bagRepository->find();
 
-        if (!$bag->has(ItemId::POKE_BALL)) {
+        if (!$bag->hasAnyPokeBall()) {
             $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
             header("Location: /map/encounter");
             exit;

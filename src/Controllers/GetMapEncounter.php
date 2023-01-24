@@ -80,7 +80,7 @@ final class GetMapEncounter
         }
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/MapEncounter.php", [
-            'pokeballs' => $bag->count(ItemId::POKE_BALL),
+            'canEncounter' => $bag->hasAnyPokeBall(),
             'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
             'trainers' => $trainers,

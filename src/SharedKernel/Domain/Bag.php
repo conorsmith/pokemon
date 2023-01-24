@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\SharedKernel\Domain;
 
+use ConorSmith\Pokemon\ItemId;
+
 final class Bag
 {
     public function __construct(
@@ -47,5 +49,33 @@ final class Bag
         $items[$id] = $items[$id]->add($quantity);
 
         return new self($items);
+    }
+
+    public function getEachPokeBall(): array
+    {
+        $filteredItems = [];
+
+        if ($this->has(ItemId::POKE_BALL)) {
+            $filteredItems[ItemId::POKE_BALL] = $this->items[ItemId::POKE_BALL];
+        }
+
+        if ($this->has(ItemId::GREAT_BALL)) {
+            $filteredItems[ItemId::GREAT_BALL] = $this->items[ItemId::GREAT_BALL];
+        }
+
+        if ($this->has(ItemId::ULTRA_BALL)) {
+            $filteredItems[ItemId::ULTRA_BALL] = $this->items[ItemId::ULTRA_BALL];
+        }
+
+        return $filteredItems;
+    }
+
+    public function hasAnyPokeBall(): bool
+    {
+        $allPokeBalls = $this->count(ItemId::POKE_BALL)
+            + $this->count(ItemId::GREAT_BALL)
+            + $this->count(ItemId::ULTRA_BALL);
+
+        return $allPokeBalls > 0;
     }
 }

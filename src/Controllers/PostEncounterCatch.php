@@ -9,6 +9,7 @@ use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\GymBadge;
 use Doctrine\DBAL\Connection;
+use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -22,9 +23,10 @@ final class PostEncounterCatch
         private readonly array $map,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(array $args): void
     {
-        $id = substr(substr($_SERVER['REQUEST_URI'], strlen("/encounter/")), 0, -strlen("/catch"));
+        $id = $args['id'];
+        $pokeballItemId = $_POST['pokeball'];
 
         $encounterRow = $this->db->fetchAssociative("SELECT * FROM encounters WHERE instance_id = :instanceId AND id = :id", [
             'instanceId' => INSTANCE_ID,
@@ -37,8 +39,9 @@ final class PostEncounterCatch
 
         $bag = $this->bagRepository->find();
 
-        if (!$bag->has(ItemId::POKE_BALL)) {
-            $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
+        if (!$bag->has($pokeballItemId)) {
+            $itemConfig = require __DIR__ . "/../Config/Items.php";
+            $this->session->getFlashBag()->add("errors", "No {$itemConfig[$pokeballItemId]['name']} remaining.");
             header("Location: /map/encounter");
             exit;
         }
@@ -55,46 +58,13 @@ final class PostEncounterCatch
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $levelDifference = $encounterRow['level'] - $pokemonRow['level'];
+        $levelDifference = $pokemonRow['level'] - $encounterRow['level'];
 
-        if ($levelDifference > 5) {
-            $chance = 0;
-        } elseif ($levelDifference < -4) {
-            $chance = 100;
-        } else {
-            switch ($levelDifference) {
-                case 5:
-                    $chance = 1;
-                    break;
-                case 4:
-                    $chance = 8;
-                    break;
-                case 3:
-                    $chance = 20;
-                    break;
-                case 2:
-                    $chance = 50;
-                    break;
-                case 1:
-                    $chance = 75;
-                    break;
-                case 0:
-                    $chance = 90;
-                    break;
-                case -1:
-                    $chance = 94;
-                    break;
-                case -2:
-                    $chance = 96;
-                    break;
-                case -3:
-                    $chance = 98;
-                    break;
-                case -4:
-                    $chance = 99;
-                    break;
-            }
-        }
+        $chance = match ($pokeballItemId) {
+            ItemId::POKE_BALL => self::getChanceForPokeBall($levelDifference),
+            ItemId::GREAT_BALL => self::getChanceForGreatBall($levelDifference),
+            ItemId::ULTRA_BALL => self::getChanceForUltraBall($levelDifference),
+        };
 
         $caught = $chance >= mt_rand(1, 100);
 
@@ -142,20 +112,84 @@ final class PostEncounterCatch
                 ]);
             }
 
+            $bag = $bag->use($pokeballItemId);
+
+            $this->bagRepository->save($bag);
+
+            $this->db->delete("encounters", [
+                'instance_id' => INSTANCE_ID,
+                'id' => $id,
+            ]);
+
+            header("Location: /map/encounter");
+
         } else {
+            $bag = $bag->use($pokeballItemId);
+
+            $this->bagRepository->save($bag);
+
             $this->session->getFlashBag()->add("successes", "You failed to catch the wild {$pokemon['name']}");
+
+            header("Location: /encounter/{$id}");
         }
+    }
 
-        $bag = $bag->use(ItemId::POKE_BALL);
+    private static function getChanceForPokeBall(int $levelDifference): int
+    {
+        return match (true) {
+            $levelDifference > 4 => 100,
+            $levelDifference < -4 => 0,
+            default => match ($levelDifference) {
+                4 => 95,
+                3 => 90,
+                2 => 75,
+                1 => 60,
+                0 => 50,
+                -1 => 40,
+                -2 => 25,
+                -3 => 10,
+                -4 => 5,
+            }
+        };
+    }
 
-        $this->bagRepository->save($bag);
+    private static function getChanceForGreatBall(int $levelDifference): int
+    {
+        return match (true) {
+            $levelDifference > 4 => 100,
+            $levelDifference < -4 => 0,
+            default => match ($levelDifference) {
+                4 => 97,
+                3 => 94,
+                2 => 85,
+                1 => 77,
+                0 => 70,
+                -1 => 58,
+                -2 => 37,
+                -3 => 15,
+                -4 => 7,
+            }
+        };
+    }
 
-        $this->db->delete("encounters", [
-            'instance_id' => INSTANCE_ID,
-            'id' => $id,
-        ]);
-
-        header("Location: /map/encounter");
+    private static function getChanceForUltraBall(int $levelDifference): int
+    {
+        return match (true) {
+            $levelDifference > 4 => 100,
+            $levelDifference < -5 => 0,
+            default => match ($levelDifference) {
+                4 => 99,
+                3 => 98,
+                2 => 96,
+                1 => 94,
+                0 => 90,
+                -1 => 75,
+                -2 => 50,
+                -3 => 20,
+                -4 => 8,
+                -5 => 1,
+            }
+        };
     }
 
     private function findLocation(string $id): array
