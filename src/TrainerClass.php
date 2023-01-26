@@ -27,6 +27,7 @@ final class TrainerClass
     public const CUE_BALL = "1b95e805-c115-4cfb-85d9-3518b5ed94e1";
     public const ENGINEER = "04ac07df-4a78-4596-836a-f2a434e05970";
     public const FISHERMAN = "fd7754a8-d4a1-4d0a-a4a6-78f7eb33e118";
+    public const GAMER = "4f4c492b-4547-4a49-a846-37a573830374";
     public const GENTLEMAN = "5232d715-df29-43e9-a27c-f9f4dfc38e16";
     public const JUGGLER = "6d3e71a5-d9b8-434c-acc2-70cdf01ff386";
     public const POKEMANIAC = "01b1cf69-0e82-4f94-83e7-7b8648429328";
@@ -110,6 +111,7 @@ final class TrainerClass
             self::CUE_BALL => "Cue Ball",
             self::ENGINEER => "Engineer",
             self::FISHERMAN => "Fisherman",
+            self::GAMER => "Gamer",
             self::GENTLEMAN => "Gentleman",
             self::JUGGLER => "Juggler",
             self::POKEMANIAC => "PokéManiac",
@@ -170,7 +172,7 @@ final class TrainerClass
         };
     }
 
-    public static function getImageUrl(string $id): ?string
+    public static function getImageUrl(string $id, Gender $gender = Gender::IMMATERIAL): ?string
     {
         return match($id) {
             self::BUG_CATCHER => "https://archives.bulbagarden.net/media/upload/b/b9/Spr_FRLG_Bug_Catcher.png",
@@ -186,6 +188,14 @@ final class TrainerClass
             self::TEAM_ROCKET_GRUNT => "https://archives.bulbagarden.net/media/upload/8/85/Spr_FRLG_Team_Rocket_Grunt_M.png",
             self::SWIMMER => "https://archives.bulbagarden.net/media/upload/9/95/Spr_FRLG_Swimmer_M.png",
             self::PICNICKER => "https://archives.bulbagarden.net/media/upload/a/a0/Spr_FRLG_Picnicker.png",
+            self::SAILOR => "https://archives.bulbagarden.net/media/upload/a/a1/Spr_FRLG_Sailor.png",
+            self::ENGINEER => "https://archives.bulbagarden.net/media/upload/7/71/Spr_FRLG_Engineer.png",
+            self::GENTLEMAN => "https://archives.bulbagarden.net/media/upload/9/94/Spr_FRLG_Gentleman.png",
+            self::FISHERMAN => match($gender) {
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/c/c7/Spr_FRLG_Fisherman.png",
+            },
+            self::GAMER => "https://archives.bulbagarden.net/media/upload/1/1e/Spr_FRLG_Gamer.png",
+            self::POKEMANIAC => "https://archives.bulbagarden.net/media/upload/0/0e/Spr_FRLG_Pok%C3%A9Maniac.png",
             default => null,
         };
     }
@@ -232,19 +242,17 @@ final class TrainerClass
             self::BEAUTY => [ItemId::ICE_STONE],
             self::BIKER => [ItemId::THUNDER_STONE],
             self::BLACK_BELT => [ItemId::PROTECTOR],
-            self::BURGLAR => [ItemId::OVAL_STONE],
             self::CAMPER => [ItemId::LEAF_STONE],
-            self::CHANNELER => [ItemId::MOON_SHARD],
+            self::CHANNELER => [ItemId::MOON_STONE],
             self::COOLTRAINER => [ItemId::DRAGON_SCALE, ItemId::KINGS_ROCK, ItemId::METAL_COAT],
             self::CUE_BALL => [ItemId::FIRE_STONE],
             self::ENGINEER => [ItemId::UPGRADE],
             self::FISHERMAN => [ItemId::WATER_STONE],
-            self::GENTLEMAN => [ItemId::OVAL_STONE],
             self::HIKER => [ItemId::MOON_STONE],
             self::LASS => [ItemId::SUN_STONE],
             self::PICNICKER => [ItemId::LEAF_STONE],
             self::POKEMANIAC => [ItemId::ELECTIRIZER, ItemId::MAGMARIZER],
-            self::PSYCHIC => [ItemId::SUN_SHARD],
+            self::PSYCHIC => [ItemId::SUN_STONE],
             self::SAILOR => [ItemId::WATER_STONE],
             self::SCIENTIST => [ItemId::UPGRADE, ItemId::DUBIOUS_DISC],
             self::SUPER_NERD => [ItemId::LINKING_CORD],

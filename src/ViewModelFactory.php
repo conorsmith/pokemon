@@ -66,7 +66,7 @@ final class ViewModelFactory
     public function createTrainerInBattle(Trainer $trainer): stdClass
     {
         return (object) [
-            'name' => $trainer->name,
+            'name' => TrainerClass::getLabel($trainer->class) . ($trainer->name ? " {$trainer->name}" : ""),
             'team' => (object) [
                 'fainted' => $trainer->countFaintedTeamMembers(),
                 'active' => $trainer->countActiveTeamMembers(),

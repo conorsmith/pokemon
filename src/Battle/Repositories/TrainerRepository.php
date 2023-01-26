@@ -76,7 +76,7 @@ final class TrainerRepository
 
         return new Trainer(
             $trainerBattleRow['id'],
-            $trainerConfig['name'],
+            $trainerConfig['name'] ?? null,
             $trainerConfig['class'],
             $team,
             $trainerBattleRow['is_battling'] === 1,

@@ -24,10 +24,7 @@ final class ItemId
     public const DUBIOUS_DISC = "200f580a-981a-4866-aea9-a6d9c6fe4dd3";
     public const ELECTIRIZER = "c0ef178f-66d1-4638-a001-a955875c88fc";
     public const MAGMARIZER = "80a9e677-916c-4ef0-9e52-c1c2625974c7";
-    public const OVAL_STONE = "c537a04e-1443-4dd2-9bb0-49c10f32b2c9";
     public const PROTECTOR = "03cb7560-c357-4770-84ed-4346fd499260";
     public const BLACK_AUGURITE = "f2fc57f7-d2d3-4d2b-9c51-465599d28b54";
-    public const SUN_SHARD = "0cf73f23-955c-4669-8a0b-834253c11051";
-    public const MOON_SHARD = "af7c781a-f5f3-4ed0-9eba-39ffc8f10aed";
     public const LINKING_CORD = "1ccb5164-9c45-4adc-b937-a9772f0649b2";
 }

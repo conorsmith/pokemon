@@ -54,12 +54,12 @@ final class BagRepository
             );
         }
 
-        if ($items[ItemId::GREAT_BALL]->quantity === 0) {
-            unset($items[ItemId::GREAT_BALL]);
-        }
-
-        if ($items[ItemId::ULTRA_BALL]->quantity === 0) {
-            unset($items[ItemId::ULTRA_BALL]);
+        foreach ($items as $id => $item) {
+            if ($item->quantity === 0
+                && !in_array($item->id, [ItemId::POKE_BALL, ItemId::RARE_CANDY, ItemId::CHALLENGE_TOKEN])
+            ) {
+                unset($items[$id]);
+            }
         }
 
         return new Bag($items);

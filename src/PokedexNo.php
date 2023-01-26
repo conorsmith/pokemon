@@ -156,4 +156,20 @@ final class PokedexNo
     public const DRAGONITE = "149";
     public const MEWTWO = "150";
     public const MEW = "151";
+
+    public const BELLOSSOM = "182";
+    public const POLITOED = "186";
+    public const SLOWKING = "199";
+    public const STEELIX = "208";
+    public const SCIZOR = "212";
+    public const KINGDRA = "230";
+    public const PORYGON2 = "233";
+    public const MAGNEZONE = "462";
+    public const RHYPERIOR = "464";
+    public const ELECTIVIRE = "466";
+    public const MAGMORTAR = "467";
+    public const LEAFEON = "470";
+    public const GLACEON = "471";
+    public const PORYGON_Z = "474";
+    public const KLEAVOR = "900";
 }

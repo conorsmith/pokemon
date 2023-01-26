@@ -12,7 +12,18 @@
                     </div>
                     <div><?=$item->name?></div>
                 </div>
-                <div><?=$item->amount?></div>
+                <div class="d-flex justify-content-between" style="width: 5rem;">
+                    <?php if ($item->hasUse) : ?>
+                        <form method="POST" action="/item/<?=$item->id?>/use">
+                            <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
+                                Use
+                            </button>
+                        </form>
+                    <?php else : ?>
+                        <span></span>
+                    <?php endif ?>
+                    <?=$item->amount?>
+                </div>
             </li>
         <?php endforeach ?>
 

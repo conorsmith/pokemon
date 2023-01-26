@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\PokemonType;
+use ConorSmith\Pokemon\ItemId;
 
 return [
     PokedexNo::BULBASAUR => [
@@ -179,6 +180,11 @@ return [
     PokedexNo::PIKACHU => [
         'name' => "Pikachu",
         'type' => [PokemonType::ELECTRIC],
+        'evolutions' => [
+            PokedexNo::RAICHU => [
+                'item' => ItemId::THUNDER_STONE,
+            ],
+        ],
     ],
     PokedexNo::RAICHU => [
         'name' => "Raichu",
@@ -209,6 +215,11 @@ return [
     PokedexNo::NIDORINA => [
         'name' => "Nidorina",
         'type' => [PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::NIDOQUEEN => [
+                'item' => ItemId::MOON_STONE,
+            ],
+        ],
     ],
     PokedexNo::NIDOQUEEN => [
         'name' => "Nidoqueen",
@@ -226,6 +237,11 @@ return [
     PokedexNo::NIDORINO => [
         'name' => "Nidorino",
         'type' => [PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::NIDOKING => [
+                'item' => ItemId::MOON_STONE,
+            ],
+        ],
     ],
     PokedexNo::NIDOKING => [
         'name' => "Nidoking",
@@ -234,6 +250,11 @@ return [
     PokedexNo::CLEFAIRY => [
         'name' => "Clefairy",
         'type' => [PokemonType::FAIRY],
+        'evolutions' => [
+            PokedexNo::CLEFABLE => [
+                'item' => ItemId::MOON_STONE,
+            ],
+        ],
     ],
     PokedexNo::CLEFABLE => [
         'name' => "Clefable",
@@ -242,6 +263,11 @@ return [
     PokedexNo::VULPIX => [
         'name' => "Vulpix",
         'type' => [PokemonType::FIRE],
+        'evolutions' => [
+            PokedexNo::NINETALES => [
+                'item' => ItemId::FIRE_STONE,
+            ],
+        ],
     ],
     PokedexNo::NINETALES => [
         'name' => "Ninetales",
@@ -250,6 +276,11 @@ return [
     PokedexNo::JIGGLYPUFF => [
         'name' => "Jigglypuff",
         'type' => [PokemonType::NORMAL, PokemonType::FAIRY],
+        'evolutions' => [
+            PokedexNo::WIGGLYTUFF => [
+                'item' => ItemId::MOON_STONE,
+            ],
+        ],
     ],
     PokedexNo::WIGGLYTUFF => [
         'name' => "Wigglytuff",
@@ -280,6 +311,14 @@ return [
     PokedexNo::GLOOM => [
         'name' => "Gloom",
         'type' => [PokemonType::GRASS, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::VILEPLUME => [
+                'item' => ItemId::LEAF_STONE,
+            ],
+            PokedexNo::BELLOSSOM => [
+                'item' => ItemId::SUN_STONE,
+            ],
+        ],
     ],
     PokedexNo::VILEPLUME => [
         'name' => "Vileplume",
@@ -366,6 +405,11 @@ return [
     PokedexNo::GROWLITHE => [
         'name' => "Growlithe",
         'type' => [PokemonType::FIRE],
+        'evolutions' => [
+            PokedexNo::ARCANINE => [
+                'item' => ItemId::FIRE_STONE,
+            ],
+        ],
     ],
     PokedexNo::ARCANINE => [
         'name' => "Arcanine",
@@ -383,6 +427,14 @@ return [
     PokedexNo::POLIWHIRL => [
         'name' => "Poliwhirl",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::POLIWRATH => [
+                'item' => ItemId::WATER_STONE,
+            ],
+            PokedexNo::POLITOED => [
+                'item' => ItemId::KINGS_ROCK,
+            ],
+        ],
     ],
     PokedexNo::POLIWRATH => [
         'name' => "Poliwrath",
@@ -400,6 +452,11 @@ return [
     PokedexNo::KADABRA => [
         'name' => "Kadabra",
         'type' => [PokemonType::PSYCHIC],
+        'evolutions' => [
+            PokedexNo::ALAKAZAM => [
+                'item' => ItemId::LINKING_CORD,
+            ],
+        ],
     ],
     PokedexNo::ALAKAZAM => [
         'name' => "Alakazam",
@@ -417,6 +474,11 @@ return [
     PokedexNo::MACHOKE => [
         'name' => "Machoke",
         'type' => [PokemonType::FIGHTING],
+        'evolutions' => [
+            PokedexNo::MACHAMP => [
+                'item' => ItemId::LINKING_CORD,
+            ],
+        ],
     ],
     PokedexNo::MACHAMP => [
         'name' => "Machamp",
@@ -434,6 +496,11 @@ return [
     PokedexNo::WEEPINBELL => [
         'name' => "Weepinbell",
         'type' => [PokemonType::GRASS, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::VICTREEBEL => [
+                'item' => ItemId::LEAF_STONE,
+            ],
+        ],
     ],
     PokedexNo::VICTREEBEL => [
         'name' => "Victreebel",
@@ -464,6 +531,11 @@ return [
     PokedexNo::GRAVELER => [
         'name' => "Graveler",
         'type' => [PokemonType::ROCK, PokemonType::GROUND],
+        'evolutions' => [
+            PokedexNo::GOLEM => [
+                'item' => ItemId::LINKING_CORD,
+            ],
+        ],
     ],
     PokedexNo::GOLEM => [
         'name' => "Golem",
@@ -489,7 +561,9 @@ return [
             PokedexNo::SLOWBRO => [
                 'level' => 37,
             ],
-            // SLOWKING
+            PokedexNo::SLOWKING => [
+                'item' => ItemId::KINGS_ROCK,
+            ],
         ],
     ],
     PokedexNo::SLOWBRO => [
@@ -508,6 +582,11 @@ return [
     PokedexNo::MAGNETON => [
         'name' => "Magneton",
         'type' => [PokemonType::ELECTRIC, PokemonType::STEEL],
+        'evolutions' => [
+            PokedexNo::MAGNEZONE => [
+                'item' => ItemId::THUNDER_STONE,
+            ],
+        ],
     ],
     PokedexNo::FARFETCHD => [
         'name' => "Farfetch’d",
@@ -555,6 +634,11 @@ return [
     PokedexNo::SHELLDER => [
         'name' => "Shellder",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::CLOYSTER => [
+                'item' => ItemId::WATER_STONE,
+            ],
+        ],
     ],
     PokedexNo::CLOYSTER => [
         'name' => "Cloyster",
@@ -572,6 +656,11 @@ return [
     PokedexNo::HAUNTER => [
         'name' => "Haunter",
         'type' => [PokemonType::GHOST, PokemonType::POISON],
+        'evolutions' => [
+            PokedexNo::GENGAR => [
+                'item' => ItemId::LINKING_CORD,
+            ],
+        ],
     ],
     PokedexNo::GENGAR => [
         'name' => "Gengar",
@@ -580,6 +669,11 @@ return [
     PokedexNo::ONIX => [
         'name' => "Onix",
         'type' => [PokemonType::ROCK, PokemonType::GROUND],
+        'evolutions' => [
+            PokedexNo::STEELIX => [
+                'item' => ItemId::METAL_COAT,
+            ],
+        ],
     ],
     PokedexNo::DROWZEE => [
         'name' => "Drowzee",
@@ -623,6 +717,11 @@ return [
     PokedexNo::EXEGGCUTE => [
         'name' => "Exeggcute",
         'type' => [PokemonType::GRASS, PokemonType::PSYCHIC],
+        'evolutions' => [
+            PokedexNo::EXEGGUTOR => [
+                'item' => ItemId::LEAF_STONE,
+            ],
+        ],
     ],
     PokedexNo::EXEGGUTOR => [
         'name' => "Exeggutor",
@@ -678,6 +777,11 @@ return [
     PokedexNo::RHYDON => [
         'name' => "Rhydon",
         'type' => [PokemonType::GROUND, PokemonType::ROCK],
+        'evolutions' => [
+            PokedexNo::RHYPERIOR => [
+                'item' => ItemId::PROTECTOR,
+            ],
+        ],
     ],
     PokedexNo::CHANSEY => [
         'name' => "Chansey",
@@ -703,6 +807,11 @@ return [
     PokedexNo::SEADRA => [
         'name' => "Seadra",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::KINGDRA => [
+                'item' => ItemId::DRAGON_SCALE,
+            ],
+        ],
     ],
     PokedexNo::GOLDEEN => [
         'name' => "Goldeen",
@@ -720,6 +829,11 @@ return [
     PokedexNo::STARYU => [
         'name' => "Staryu",
         'type' => [PokemonType::WATER],
+        'evolutions' => [
+            PokedexNo::STARMIE => [
+                'item' => ItemId::WATER_STONE,
+            ],
+        ],
     ],
     PokedexNo::STARMIE => [
         'name' => "Starmie",
@@ -732,6 +846,14 @@ return [
     PokedexNo::SCYTHER => [
         'name' => "Scyther",
         'type' => [PokemonType::BUG, PokemonType::FLYING],
+        'evolutions' => [
+            PokedexNo::SCIZOR => [
+                'item' => ItemId::METAL_COAT,
+            ],
+            PokedexNo::KLEAVOR => [
+                'item' => ItemId::BLACK_AUGURITE,
+            ],
+        ],
     ],
     PokedexNo::JYNX => [
         'name' => "Jynx",
@@ -740,10 +862,20 @@ return [
     PokedexNo::ELECTABUZZ => [
         'name' => "Electabuzz",
         'type' => [PokemonType::ELECTRIC],
+        'evolutions' => [
+            PokedexNo::ELECTIVIRE => [
+                'item' => ItemId::ELECTIRIZER,
+            ],
+        ],
     ],
     PokedexNo::MAGMAR => [
         'name' => "Magmar",
         'type' => [PokemonType::FIRE],
+        'evolutions' => [
+            PokedexNo::MAGMORTAR => [
+                'item' => ItemId::MAGMARIZER,
+            ],
+        ],
     ],
     PokedexNo::PINSIR => [
         'name' => "Pinsir",
@@ -777,6 +909,23 @@ return [
     PokedexNo::EEVEE => [
         'name' => "Eevee",
         'type' => [PokemonType::NORMAL],
+        'evolutions' => [
+            PokedexNo::VAPOREON => [
+                'item' => ItemId::WATER_STONE,
+            ],
+            PokedexNo::JOLTEON => [
+                'item' => ItemId::THUNDER_STONE,
+            ],
+            PokedexNo::FLAREON => [
+                'item' => ItemId::FIRE_STONE,
+            ],
+            PokedexNo::LEAFEON => [
+                'item' => ItemId::LEAF_STONE,
+            ],
+            PokedexNo::GLACEON => [
+                'item' => ItemId::ICE_STONE,
+            ],
+        ],
     ],
     PokedexNo::VAPOREON => [
         'name' => "Vaporeon",
@@ -793,6 +942,11 @@ return [
     PokedexNo::PORYGON => [
         'name' => "Porygon",
         'type' => [PokemonType::NORMAL],
+        'evolutions' => [
+            PokedexNo::PORYGON2 => [
+                'item' => ItemId::UPGRADE,
+            ],
+        ],
     ],
     PokedexNo::OMANYTE => [
         'name' => "Omanyte",
@@ -869,5 +1023,70 @@ return [
     PokedexNo::MEW => [
         'name' => "Mew",
         'type' => [PokemonType::PSYCHIC],
+    ],
+    PokedexNo::BELLOSSOM => [
+        'name' => "Bellossom",
+        'type' => [PokemonType::GRASS],
+    ],
+    PokedexNo::POLITOED => [
+        'name' => "Politoed",
+        'type' => [PokemonType::WATER],
+    ],
+    PokedexNo::SLOWKING => [
+        'name' => "Slowking",
+        'type' => [PokemonType::WATER, PokemonType::PSYCHIC],
+    ],
+    PokedexNo::STEELIX => [
+        'name' => "Steelix",
+        'type' => [PokemonType::STEEL, PokemonType::GROUND],
+    ],
+    PokedexNo::SCIZOR => [
+        'name' => "Scizor",
+        'type' => [PokemonType::BUG, PokemonType::STEEL],
+    ],
+    PokedexNo::KINGDRA => [
+        'name' => "Kingdra",
+        'type' => [PokemonType::WATER, PokemonType::DRAGON],
+    ],
+    PokedexNo::PORYGON2 => [
+        'name' => "Porygon2",
+        'type' => [PokemonType::NORMAL],
+        'evolutions' => [
+            PokedexNo::PORYGON_Z => [
+                'item' => ItemId::DUBIOUS_DISC,
+            ],
+        ],
+    ],
+    PokedexNo::MAGNEZONE => [
+        'name' => "Magnezone",
+        'type' => [PokemonType::ELECTRIC, PokemonType::STEEL],
+    ],
+    PokedexNo::RHYPERIOR => [
+        'name' => "Rhyperior",
+        'type' => [PokemonType::GROUND, PokemonType::ROCK],
+    ],
+    PokedexNo::ELECTIVIRE => [
+        'name' => "Electivire",
+        'type' => [PokemonType::ELECTRIC],
+    ],
+    PokedexNo::MAGMORTAR => [
+        'name' => "Magmortar",
+        'type' => [PokemonType::FIRE],
+    ],
+    PokedexNo::LEAFEON => [
+        'name' => "Leafeon",
+        'type' => [PokemonType::GRASS],
+    ],
+    PokedexNo::GLACEON => [
+        'name' => "Glaceon",
+        'type' => [PokemonType::ICE],
+    ],
+    PokedexNo::PORYGON_Z => [
+        'name' => "Porygon-Z",
+        'type' => [PokemonType::NORMAL],
+    ],
+    PokedexNo::KLEAVOR => [
+        'name' => "Kleavor",
+        'type' => [PokemonType::BUG, PokemonType::ROCK],
     ],
 ];

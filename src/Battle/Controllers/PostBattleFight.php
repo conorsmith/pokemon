@@ -131,17 +131,36 @@ final class PostBattleFight
 
     private function calculateTypeMultiplier(Pokemon $enemyPokemon, Pokemon $playerPokemon): float
     {
+        $primaryTypeMultiplier = $this->calculatePrimaryTypeMultiplier($enemyPokemon, $playerPokemon);
+        $secondaryTypeMultiplier = 0.0;
+
+        if (!is_null($playerPokemon->secondaryType)) {
+            $secondaryTypeMultiplier = $this->calculateSecondaryTypeMultiplier($enemyPokemon, $playerPokemon);
+        }
+
+        return max($primaryTypeMultiplier, $secondaryTypeMultiplier);
+    }
+
+    private function calculatePrimaryTypeMultiplier(Pokemon $enemyPokemon, Pokemon $playerPokemon): float
+    {
         $multiplier = 1.0;
 
         $multiplier *= PokemonType::getMultiplier($playerPokemon->primaryType, $enemyPokemon->primaryType);
 
-        if (!is_null($playerPokemon->secondaryType)) {
-            $multiplier *= PokemonType::getMultiplier($playerPokemon->secondaryType, $enemyPokemon->primaryType);
-        }
         if (!is_null($enemyPokemon->secondaryType)) {
             $multiplier *= PokemonType::getMultiplier($playerPokemon->primaryType, $enemyPokemon->secondaryType);
         }
-        if (!is_null($playerPokemon->secondaryType) && !is_null($enemyPokemon->secondaryType)) {
+
+        return $multiplier;
+    }
+
+    private function calculateSecondaryTypeMultiplier(Pokemon $enemyPokemon, Pokemon $playerPokemon): float
+    {
+        $multiplier = 1.0;
+
+        $multiplier *= PokemonType::getMultiplier($playerPokemon->secondaryType, $enemyPokemon->primaryType);
+
+        if (!is_null($enemyPokemon->secondaryType)) {
             $multiplier *= PokemonType::getMultiplier($playerPokemon->secondaryType, $enemyPokemon->secondaryType);
         }
 
@@ -157,15 +176,11 @@ final class PostBattleFight
         }
 
         $typeLevelModifier = match ($multiplier) {
-            0.0625 => -16,
-            0.125 => -8,
             0.25 => -4,
             0.5 => -2,
             1.0 => 0,
             2.0 => 2,
             4.0 => 4,
-            8.0 => 8,
-            16.0 => 16,
         };
 
         $levelDifference = $playerPokemon->level - $enemyPokemon->level + $typeLevelModifier;

@@ -34,7 +34,7 @@ final class PostMapMove
             'id' => INSTANCE_ID,
         ]);
 
-        header("Location: /map/move");
+        header("Location: /map/encounter");
         exit;
     }
 

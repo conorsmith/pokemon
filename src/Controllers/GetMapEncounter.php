@@ -5,6 +5,8 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\Direction;
+use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -58,7 +60,7 @@ final class GetMapEncounter
                     $isInCooldownWindow = false;
                 }
 
-                $imageUrl = TrainerClass::getImageUrl($trainer['class']);
+                $imageUrl = TrainerClass::getImageUrl($trainer['class'], $trainer['gender'] ?? Gender::IMMATERIAL);
 
                 if (array_key_exists('leader', $trainer)) {
                     $imageUrl = $trainer['leader']['imageUrl'];
@@ -66,7 +68,7 @@ final class GetMapEncounter
 
                 $trainers[] = (object)[
                     'id'          => $trainer['id'],
-                    'name'        => TrainerClass::getLabel($trainer['class']) . " " . $trainer['name'],
+                    'name'        => TrainerClass::getLabel($trainer['class']) . (isset($trainer['name']) ? " {$trainer['name']}" : ""),
                     'imageUrl'    => $imageUrl,
                     'team'        => count($trainer['team']),
                     'canBattle'   => !$isInCooldownWindow && $challengeTokens > 0,
@@ -100,24 +102,32 @@ final class GetMapEncounter
 
         throw new \Exception;
     }
-
     private function createLocationViewModel(array $location): stdClass
     {
-        $directions = [];
-
-        /** @var string $locationId */
-        foreach ($location['directions'] as $locationId) {
-            $directionLocation = $this->findLocation($locationId);
-            $directions[] = (object) [
-                'id' => $directionLocation['id'],
-                'name' => $directionLocation['name'],
-            ];
-        }
-
-        return (object) [
+        $viewModel = (object) [
             'id' => $location['id'],
             'name' => $location['name'],
-            'directions' => $directions,
+            'hasCardinalDirections' => false,
+            'directions' => [],
         ];
+
+        /** @var string $locationId */
+        foreach ($location['directions'] as $key => $locationId) {
+            $directionLocation = $this->findLocation($locationId);
+            if (Direction::isCardinal($key)) {
+                $viewModel->hasCardinalDirections = true;
+                $viewModel->{Direction::toSlug($key)} = (object) [
+                    'id'   => $directionLocation['id'],
+                    'name' => $directionLocation['name'],
+                ];
+            } else {
+                $viewModel->directions[] = (object) [
+                    'id'   => $directionLocation['id'],
+                    'name' => $directionLocation['name'],
+                ];
+            }
+        }
+
+        return $viewModel;
     }
 }

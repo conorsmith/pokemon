@@ -33,7 +33,7 @@ final class PostMapEncounter
 
         $currentLocation = $this->findLocation($instanceRow['current_location']);
 
-        if (count($currentLocation['pokemon']) === 0) {
+        if (!array_key_exists('pokemon', $currentLocation) || count($currentLocation['pokemon']) === 0) {
             $this->session->getFlashBag()->add("errors", "No Pokémon encountered.");
             header("Location: /map/encounter");
             exit;
