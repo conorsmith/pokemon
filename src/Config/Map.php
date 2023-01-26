@@ -533,7 +533,7 @@ return [
         'id' => LocationId::ROUTE_7,
         'name' => "Route 7",
         'directions' => [
-            Direction::W => "57564cf4-9ac8-4b24-af13-eb158d969bb4",
+            Direction::W => LocationId::CELADON_CITY,
             Direction::E => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
         ],
         'pokemon' => [
@@ -564,13 +564,13 @@ return [
         ],
     ],
     [
-        'id' => "57564cf4-9ac8-4b24-af13-eb158d969bb4",
+        'id' => LocationId::CELADON_CITY,
         'name' => "Celadon City",
         'directions' => [
-            Direction::W => "2f0bc600-51c8-4621-9c72-124b5349beb2",
+            Direction::W => LocationId::ROUTE_16,
             Direction::E => LocationId::ROUTE_7,
             LocationId::CELADON_GYM,
-            // ROCKET HIDEOUT
+            LocationId::ROCKET_GAME_CORNER,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -595,7 +595,51 @@ return [
         'id' => LocationId::CELADON_GYM,
         'name' => "Celadon Gym",
         'directions' => [
-            "57564cf4-9ac8-4b24-af13-eb158d969bb4",
+            LocationId::CELADON_CITY,
+        ],
+        'pokemon' => [],
+    ],
+    [
+        'id' => LocationId::ROCKET_GAME_CORNER,
+        'name' => "Rocket Game Corner",
+        'directions' => [
+            LocationId::CELADON_CITY,
+            LocationId::TEAM_ROCKET_HIDEOUT_B1F,
+        ],
+        'pokemon' => [],
+    ],
+    [
+        'id' => LocationId::TEAM_ROCKET_HIDEOUT_B1F,
+        'name' => "Team Rocket Hideout (1st Basement Floor)",
+        'directions' => [
+            LocationId::ROCKET_GAME_CORNER,
+            LocationId::TEAM_ROCKET_HIDEOUT_B2F,
+        ],
+        'pokemon' => [],
+    ],
+    [
+        'id' => LocationId::TEAM_ROCKET_HIDEOUT_B2F,
+        'name' => "Team Rocket Hideout (2nd Basement Floor)",
+        'directions' => [
+            LocationId::TEAM_ROCKET_HIDEOUT_B1F,
+            LocationId::TEAM_ROCKET_HIDEOUT_B3F,
+        ],
+        'pokemon' => [],
+    ],
+    [
+        'id' => LocationId::TEAM_ROCKET_HIDEOUT_B3F,
+        'name' => "Team Rocket Hideout (3rd Basement Floor)",
+        'directions' => [
+            LocationId::TEAM_ROCKET_HIDEOUT_B2F,
+            LocationId::TEAM_ROCKET_HIDEOUT_B4F,
+        ],
+        'pokemon' => [],
+    ],
+    [
+        'id' => LocationId::TEAM_ROCKET_HIDEOUT_B4F,
+        'name' => "Team Rocket Hideout (4th Basement Floor)",
+        'directions' => [
+            LocationId::TEAM_ROCKET_HIDEOUT_B3F,
         ],
         'pokemon' => [],
     ],
@@ -639,7 +683,7 @@ return [
         'directions' => [
             Direction::N => LocationId::ROUTE_10,
             Direction::W => LocationId::ROUTE_8,
-            Direction::S => "3387518a-aece-49e0-9563-ca645f881a00",
+            Direction::S => LocationId::ROUTE_12,
             LocationId::POKEMON_TOWER_1F,
         ],
     ],
@@ -666,6 +710,20 @@ return [
             LocationId::POKEMON_TOWER_4F,
             LocationId::POKEMON_TOWER_2F,
         ],
+        'pokemon' => [
+            PokedexNo::GASTLY => [
+                'weight' => 90,
+                'levels' => [13, 19],
+            ],
+            PokedexNo::HAUNTER => [
+                'weight' => 1,
+                'levels' => 20,
+            ],
+            PokedexNo::CUBONE => [
+                'weight' => 9,
+                'levels' => [15, 17],
+            ],
+        ],
     ],
     [
         'id' => LocationId::POKEMON_TOWER_4F,
@@ -673,6 +731,20 @@ return [
         'directions' => [
             LocationId::POKEMON_TOWER_5F,
             LocationId::POKEMON_TOWER_3F,
+        ],
+        'pokemon' => [
+            PokedexNo::GASTLY => [
+                'weight' => 86,
+                'levels' => [13, 19],
+            ],
+            PokedexNo::HAUNTER => [
+                'weight' => 5,
+                'levels' => 20,
+            ],
+            PokedexNo::CUBONE => [
+                'weight' => 9,
+                'levels' => [15, 17],
+            ],
         ],
     ],
     [
@@ -682,6 +754,20 @@ return [
             LocationId::POKEMON_TOWER_6F,
             LocationId::POKEMON_TOWER_4F,
         ],
+        'pokemon' => [
+            PokedexNo::GASTLY => [
+                'weight' => 86,
+                'levels' => [13, 19],
+            ],
+            PokedexNo::HAUNTER => [
+                'weight' => 5,
+                'levels' => 20,
+            ],
+            PokedexNo::CUBONE => [
+                'weight' => 9,
+                'levels' => [15, 17],
+            ],
+        ],
     ],
     [
         'id' => LocationId::POKEMON_TOWER_6F,
@@ -690,12 +776,40 @@ return [
             LocationId::POKEMON_TOWER_7F,
             LocationId::POKEMON_TOWER_5F,
         ],
+        'pokemon' => [
+            PokedexNo::GASTLY => [
+                'weight' => 85,
+                'levels' => [14, 19],
+            ],
+            PokedexNo::HAUNTER => [
+                'weight' => 6,
+                'levels' => [21, 23],
+            ],
+            PokedexNo::CUBONE => [
+                'weight' => 9,
+                'levels' => [17, 19],
+            ],
+        ],
     ],
     [
         'id' => LocationId::POKEMON_TOWER_7F,
         'name' => "Pokémon Tower (7th Floor)",
         'directions' => [
             LocationId::POKEMON_TOWER_6F,
+        ],
+        'pokemon' => [
+            PokedexNo::GASTLY => [
+                'weight' => 75,
+                'levels' => [15, 19],
+            ],
+            PokedexNo::HAUNTER => [
+                'weight' => 15,
+                'levels' => [23, 25],
+            ],
+            PokedexNo::CUBONE => [
+                'weight' => 10,
+                'levels' => [17, 19],
+            ],
         ],
     ],
     [
@@ -858,7 +972,7 @@ return [
         'directions' => [
             LocationId::DIGLETTS_CAVE,
             Direction::W => LocationId::VERMILLION_CITY,
-            Direction::E => "3387518a-aece-49e0-9563-ca645f881a00",
+            Direction::E => LocationId::ROUTE_12,
         ],
         'pokemon' => [
             PokedexNo::SPEAROW => [
@@ -880,12 +994,12 @@ return [
         ],
     ],
     [
-        'id' => "3387518a-aece-49e0-9563-ca645f881a00",
+        'id' => LocationId::ROUTE_12,
         'name' => "Route 12",
         'directions' => [
             Direction::N => LocationId::LAVENDER_TOWN,
             Direction::W => LocationId::ROUTE_11,
-            Direction::S => "22f4d2be-a20a-4c13-9d8e-1085b59e49f4",
+            Direction::S => LocationId::ROUTE_13,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -915,11 +1029,11 @@ return [
         ],
     ],
     [
-        'id' => "22f4d2be-a20a-4c13-9d8e-1085b59e49f4",
+        'id' => LocationId::ROUTE_13,
         'name' => "Route 13",
         'directions' => [
-            Direction::W => "cf81b643-7eb8-407d-8975-44c26b09533a",
-            Direction::N => "3387518a-aece-49e0-9563-ca645f881a00",
+            Direction::W => LocationId::ROUTE_14,
+            Direction::N => LocationId::ROUTE_12,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -957,11 +1071,11 @@ return [
         ],
     ],
     [
-        'id' => "cf81b643-7eb8-407d-8975-44c26b09533a",
+        'id' => LocationId::ROUTE_14,
         'name' => "Route 14",
         'directions' => [
-            Direction::E => "22f4d2be-a20a-4c13-9d8e-1085b59e49f4",
-            Direction::S => "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
+            Direction::E => LocationId::ROUTE_13,
+            Direction::S => LocationId::ROUTE_15,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -999,11 +1113,11 @@ return [
         ],
     ],
     [
-        'id' => "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
+        'id' => LocationId::ROUTE_15,
         'name' => "Route 15",
         'directions' => [
             Direction::W => "e4f336d0-78a0-49bb-87a8-beceb810c097",
-            Direction::N => "cf81b643-7eb8-407d-8975-44c26b09533a",
+            Direction::N => LocationId::ROUTE_14,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -1045,8 +1159,8 @@ return [
         'name' => "Fuchsia City",
         'directions' => [
             Direction::N => "0383556c-0b2e-4a33-a178-1b078fc60352",
-            Direction::W => "ed95c624-3b6e-410e-b527-62f56d17f5f6",
-            Direction::E => "4bc982c5-1303-42cd-b55b-6cdfc3402d15",
+            Direction::W => LocationId::ROUTE_18,
+            Direction::E => LocationId::ROUTE_15,
             Direction::S => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
             // FUCHSIA GYM
         ],
@@ -1301,11 +1415,11 @@ return [
         ],
     ],
     [
-        'id' => "2f0bc600-51c8-4621-9c72-124b5349beb2",
+        'id' => LocationId::ROUTE_16,
         'name' => "Route 16",
         'directions' => [
-            Direction::E => "57564cf4-9ac8-4b24-af13-eb158d969bb4",
-            Direction::S => "14ff0830-f6b9-413c-8b62-cca8d9943755",
+            Direction::E => LocationId::CELADON_CITY,
+            Direction::S => LocationId::ROUTE_17,
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -1327,11 +1441,11 @@ return [
         ],
     ],
     [
-        'id' => "14ff0830-f6b9-413c-8b62-cca8d9943755",
+        'id' => LocationId::ROUTE_17,
         'name' => "Route 17",
         'directions' => [
-            Direction::N => "2f0bc600-51c8-4621-9c72-124b5349beb2",
-            Direction::S => "ed95c624-3b6e-410e-b527-62f56d17f5f6",
+            Direction::N => LocationId::ROUTE_16,
+            Direction::S => LocationId::ROUTE_18,
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -1361,10 +1475,10 @@ return [
         ],
     ],
     [
-        'id' => "ed95c624-3b6e-410e-b527-62f56d17f5f6",
+        'id' => LocationId::ROUTE_18,
         'name' => "Route 18",
         'directions' => [
-            Direction::N => "14ff0830-f6b9-413c-8b62-cca8d9943755",
+            Direction::N => LocationId::ROUTE_17,
             Direction::E => "e4f336d0-78a0-49bb-87a8-beceb810c097",
         ],
         'pokemon' => [
@@ -1394,7 +1508,7 @@ return [
         'id' => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
         'name' => "Route 19",
         'directions' => [
-            Direction::N => "ed95c624-3b6e-410e-b527-62f56d17f5f6",
+            Direction::N => LocationId::ROUTE_18,
             Direction::W => LocationId::ROUTE_20,
         ],
         'pokemon' => [

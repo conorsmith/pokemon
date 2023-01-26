@@ -31,7 +31,13 @@ final class LocationId
     public const SS_ANNE_2F = "ae23181e-2200-4fb9-aa35-c0d969276436";
     public const SS_ANNE_DECK = "b6464105-de20-4f20-be78-d28f29ef536c";
     public const ROUTE_7 = "85776d72-ece8-451f-a8b8-5b1f9c2b349b";
+    public const CELADON_CITY = "57564cf4-9ac8-4b24-af13-eb158d969bb4";
     public const CELADON_GYM = "acbaddd5-3ccf-4e97-a4df-b0d512c1884b";
+    public const ROCKET_GAME_CORNER = "14315b53-fd18-4d83-81c8-591f77ba2a17";
+    public const TEAM_ROCKET_HIDEOUT_B1F = "962d8e48-81a2-4ae2-9385-a2ac4fcbfaa1";
+    public const TEAM_ROCKET_HIDEOUT_B2F = "011c4a3d-9c13-4a33-82f4-4b970aacf793";
+    public const TEAM_ROCKET_HIDEOUT_B3F = "315b3968-fbf6-4c80-b885-1654b57c3131";
+    public const TEAM_ROCKET_HIDEOUT_B4F = "fffe0b32-bf2d-4b65-85f0-744d3e6fb06e";
     public const ROUTE_8 = "a006849d-3c22-4b57-b6d9-3ab23f6f42cf";
     public const ROUTE_9 = "57968d07-cea1-4a9b-ac21-53609a25ea36";
     public const ROCK_TUNNEL_1F = "dca3ae52-de54-413b-a838-b4ddf6da97d5";
@@ -46,6 +52,13 @@ final class LocationId
     public const POKEMON_TOWER_6F = "0b61745c-8531-4bb5-9c72-2f5877fa277d";
     public const POKEMON_TOWER_7F = "4d3ed975-91cc-4900-8f78-09f554be30e6";
     public const ROUTE_11 = "8e24cb82-3708-4530-aa1a-09a8465a5d2e";
+    public const ROUTE_12 = "3387518a-aece-49e0-9563-ca645f881a00";
+    public const ROUTE_13 = "22f4d2be-a20a-4c13-9d8e-1085b59e49f4";
+    public const ROUTE_14 = "cf81b643-7eb8-407d-8975-44c26b09533a";
+    public const ROUTE_15 = "4bc982c5-1303-42cd-b55b-6cdfc3402d15";
+    public const ROUTE_16 = "2f0bc600-51c8-4621-9c72-124b5349beb2";
+    public const ROUTE_17 = "14ff0830-f6b9-413c-8b62-cca8d9943755";
+    public const ROUTE_18 = "ed95c624-3b6e-410e-b527-62f56d17f5f6";
     public const ROUTE_20 = "4311bda4-3e6a-46be-944d-4df4301c696d";
     public const SEAFOAM_ISLANDS_1F = "3d36df91-cc9b-474a-9ae9-c53b5d15470b";
     public const SEAFOAM_ISLANDS_B1F = "9959716c-6262-4372-be5e-8814449120ee";

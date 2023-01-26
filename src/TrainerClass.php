@@ -196,6 +196,16 @@ final class TrainerClass
             },
             self::GAMER => "https://archives.bulbagarden.net/media/upload/1/1e/Spr_FRLG_Gamer.png",
             self::POKEMANIAC => "https://archives.bulbagarden.net/media/upload/0/0e/Spr_FRLG_Pok%C3%A9Maniac.png",
+            self::CHANNELER => "https://archives.bulbagarden.net/media/upload/1/1e/Spr_FRLG_Channeler.png",
+            self::TWINS => "https://archives.bulbagarden.net/media/upload/a/ab/Spr_FRLG_Twins.png",
+            self::BIKER => "https://archives.bulbagarden.net/media/upload/6/6e/Spr_FRLG_Biker.png",
+            self::TEAM_ROCKET_ADMIN => "https://archives.bulbagarden.net/media/upload/4/41/Spr_FRLG_Giovanni.png",
+            self::YOUNG_COUPLE => "https://archives.bulbagarden.net/media/upload/2/2b/Spr_FRLG_Young_Couple.png",
+            self::CUE_BALL => "https://archives.bulbagarden.net/media/upload/1/19/Spr_FRLG_Cue_Ball.png",
+            self::BIRD_KEEPER => "https://archives.bulbagarden.net/media/upload/b/b2/Spr_FRLG_Bird_Keeper.png",
+            self::ROCKER => "https://archives.bulbagarden.net/media/upload/f/f3/Spr_FRLG_Rocker.png",
+            self::BEAUTY => "https://archives.bulbagarden.net/media/upload/3/39/Spr_FRLG_Beauty.png",
+            self::CRUSH_KIN => "https://archives.bulbagarden.net/media/upload/c/cc/Spr_FRLG_Crush_Kin.png",
             default => null,
         };
     }
