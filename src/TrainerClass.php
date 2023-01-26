@@ -206,6 +206,8 @@ final class TrainerClass
             self::ROCKER => "https://archives.bulbagarden.net/media/upload/f/f3/Spr_FRLG_Rocker.png",
             self::BEAUTY => "https://archives.bulbagarden.net/media/upload/3/39/Spr_FRLG_Beauty.png",
             self::CRUSH_KIN => "https://archives.bulbagarden.net/media/upload/c/cc/Spr_FRLG_Crush_Kin.png",
+            self::JUGGLER => "https://archives.bulbagarden.net/media/upload/5/50/Spr_FRLG_Juggler.png",
+            self::PSYCHIC => "https://archives.bulbagarden.net/media/upload/e/ea/Spr_FRLG_Psychic_M.png",
             default => null,
         };
     }

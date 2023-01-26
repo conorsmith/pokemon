@@ -377,7 +377,7 @@ return [
         'name' => "Route 5",
         'directions' => [
             Direction::N => LocationId::CERULEAN_CITY,
-            Direction::S => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
+            Direction::S => LocationId::SAFFRON_CITY,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -399,40 +399,29 @@ return [
         ],
     ],
     [
-        'id' => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
+        'id' => LocationId::SAFFRON_CITY,
         'name' => "Saffron City",
         'directions' => [
             Direction::N => LocationId::ROUTE_5,
             Direction::W => LocationId::ROUTE_7,
             Direction::E => LocationId::ROUTE_8,
             Direction::S => LocationId::ROUTE_6,
-            // SAFFRON GYM
+            LocationId::SAFFRON_GYM,
             // SILPH CO
         ],
-        'pokemon' => [
-            PokedexNo::PIDGEY => [
-                'weight' => 40,
-                'levels' => [13, 16],
-            ],
-            PokedexNo::RATTATA => [
-                'weight' => 40,
-                'levels' => [13, 16],
-            ],
-            PokedexNo::MEOWTH => [
-                'weight' => 10,
-                'levels' => [13, 16],
-            ],
-            PokedexNo::GROWLITHE => [
-                'weight' => 10,
-                'levels' => [13, 16],
-            ],
+    ],
+    [
+        'id' => LocationId::SAFFRON_GYM,
+        'name' => "Saffron Gym",
+        'directions' => [
+            LocationId::SAFFRON_CITY,
         ],
     ],
     [
         'id' => LocationId::ROUTE_6,
         'name' => "Route 6",
         'directions' => [
-            Direction::N => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
+            Direction::N => LocationId::SAFFRON_CITY,
             Direction::S => LocationId::VERMILLION_CITY,
         ],
         'pokemon' => [
@@ -534,7 +523,7 @@ return [
         'name' => "Route 7",
         'directions' => [
             Direction::W => LocationId::CELADON_CITY,
-            Direction::E => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
+            Direction::E => LocationId::SAFFRON_CITY,
         ],
         'pokemon' => [
             PokedexNo::PIDGEY => [
@@ -647,7 +636,7 @@ return [
         'id' => LocationId::ROUTE_8,
         'name' => "Route 8",
         'directions' => [
-            Direction::W => "96ab9b1c-dcd5-47f8-97b0-13dd864ae369",
+            Direction::W => LocationId::SAFFRON_CITY,
             Direction::E => LocationId::LAVENDER_TOWN,
         ],
         'pokemon' => [
@@ -1116,7 +1105,7 @@ return [
         'id' => LocationId::ROUTE_15,
         'name' => "Route 15",
         'directions' => [
-            Direction::W => "e4f336d0-78a0-49bb-87a8-beceb810c097",
+            Direction::W => LocationId::FUCHSIA_CITY,
             Direction::N => LocationId::ROUTE_14,
         ],
         'pokemon' => [
@@ -1155,14 +1144,14 @@ return [
         ],
     ],
     [
-        'id' => "e4f336d0-78a0-49bb-87a8-beceb810c097",
+        'id' => LocationId::FUCHSIA_CITY,
         'name' => "Fuchsia City",
         'directions' => [
             Direction::N => "0383556c-0b2e-4a33-a178-1b078fc60352",
             Direction::W => LocationId::ROUTE_18,
             Direction::E => LocationId::ROUTE_15,
             Direction::S => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
-            // FUCHSIA GYM
+            LocationId::FUCHSIA_GYM,
         ],
         'pokemon' => [
             PokedexNo::PSYDUCK => [
@@ -1184,13 +1173,20 @@ return [
         ],
     ],
     [
+        'id' => LocationId::FUCHSIA_GYM,
+        'name' => "Fuchsia Gym",
+        'directions' => [
+            LocationId::FUCHSIA_CITY,
+        ],
+    ],
+    [
         'id' => "0383556c-0b2e-4a33-a178-1b078fc60352",
         'name' => "Safari Zone (South)",
         'directions' => [
             Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
             Direction::W => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
             Direction::E => "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
-            Direction::S => "e4f336d0-78a0-49bb-87a8-beceb810c097",
+            Direction::S => LocationId::FUCHSIA_CITY,
         ],
         'pokemon' => [
             PokedexNo::NIDORAN_F => [
@@ -1479,7 +1475,7 @@ return [
         'name' => "Route 18",
         'directions' => [
             Direction::N => LocationId::ROUTE_17,
-            Direction::E => "e4f336d0-78a0-49bb-87a8-beceb810c097",
+            Direction::E => LocationId::FUCHSIA_CITY,
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [

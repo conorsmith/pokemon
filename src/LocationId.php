@@ -22,6 +22,8 @@ final class LocationId
     public const CERULEAN_CITY = "cf6dff48-2972-4fe9-8853-9ccba685c38e";
     public const CERULEAN_GYM = "9dea9089-871c-47b6-99c4-5b0f60d4be72";
     public const ROUTE_5 = "2ae61913-311d-4b24-87dd-934586badb5c";
+    public const SAFFRON_CITY = "96ab9b1c-dcd5-47f8-97b0-13dd864ae369";
+    public const SAFFRON_GYM = "9a42886a-1440-4df3-a8b8-0b51706831b6";
     public const ROUTE_6 = "8ceee5a8-54dd-4c63-9629-40bff24f3b2d";
     public const VERMILLION_CITY = "41b38040-2b0b-4a4e-9333-67fc7a5bb003";
     public const VERMILLION_GYM = "7551e662-cd6b-4010-934b-6abfa82c4b4f";
@@ -59,6 +61,8 @@ final class LocationId
     public const ROUTE_16 = "2f0bc600-51c8-4621-9c72-124b5349beb2";
     public const ROUTE_17 = "14ff0830-f6b9-413c-8b62-cca8d9943755";
     public const ROUTE_18 = "ed95c624-3b6e-410e-b527-62f56d17f5f6";
+    public const FUCHSIA_CITY = "e4f336d0-78a0-49bb-87a8-beceb810c097";
+    public const FUCHSIA_GYM = "7406717d-0a53-4539-ba87-08c84adb5152";
     public const ROUTE_20 = "4311bda4-3e6a-46be-944d-4df4301c696d";
     public const SEAFOAM_ISLANDS_1F = "3d36df91-cc9b-474a-9ae9-c53b5d15470b";
     public const SEAFOAM_ISLANDS_B1F = "9959716c-6262-4372-be5e-8814449120ee";

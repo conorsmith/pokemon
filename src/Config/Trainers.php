@@ -3788,4 +3788,277 @@ return [
             ],
         ],
     ],
+    LocationId::FUCHSIA_GYM => [
+        [
+            'id' => "c8c9493a-29bb-402a-a406-d90613d4ac8a",
+            'class' => TrainerClass::JUGGLER,
+            'name' => "Nate",
+            'team' => [
+                [
+                    'id' => PokedexNo::DROWZEE,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::KADABRA,
+                    'level' => 34,
+                ],
+            ],
+        ],
+        [
+            'id' => "239f607f-673a-4c65-8617-75ffe5e0774c",
+            'class' => TrainerClass::JUGGLER,
+            'name' => "Kayden",
+            'team' => [
+                [
+                    'id' => PokedexNo::HYPNO,
+                    'level' => 38,
+                ],
+            ],
+        ],
+        [
+            'id' => "512b1193-3733-4c6d-a0e9-bf7afbc69f5b",
+            'class' => TrainerClass::JUGGLER,
+            'name' => "Kirk",
+            'team' => [
+                [
+                    'id' => PokedexNo::DROWZEE,
+                    'level' => 31,
+                ],
+                [
+                    'id' => PokedexNo::DROWZEE,
+                    'level' => 31,
+                ],
+                [
+                    'id' => PokedexNo::KADABRA,
+                    'level' => 31,
+                ],
+                [
+                    'id' => PokedexNo::DROWZEE,
+                    'level' => 31,
+                ],
+            ],
+        ],
+        [
+            'id' => "68d67bf0-51f5-4ec6-b5e8-99f3abafc9cd",
+            'class' => TrainerClass::TAMER,
+            'name' => "Edgar",
+            'team' => [
+                [
+                    'id' => PokedexNo::ARBOK,
+                    'level' => 33,
+                ],
+                [
+                    'id' => PokedexNo::ARBOK,
+                    'level' => 33,
+                ],
+                [
+                    'id' => PokedexNo::SANDSLASH,
+                    'level' => 33,
+                ],
+            ],
+        ],
+        [
+            'id' => "03654bde-9946-4a58-b358-03301c08ad7d",
+            'class' => TrainerClass::TAMER,
+            'name' => "Phil",
+            'team' => [
+                [
+                    'id' => PokedexNo::SANDSLASH,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::ARBOK,
+                    'level' => 34,
+                ],
+            ],
+        ],
+        [
+            'id' => "cfd8c3c1-bb6e-4762-b21c-a1676a6241aa",
+            'class' => TrainerClass::JUGGLER,
+            'name' => "Shawn",
+            'team' => [
+                [
+                    'id' => PokedexNo::DROWZEE,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::HYPNO,
+                    'level' => 34,
+                ],
+            ],
+        ],
+        [
+            'id' => "b1a493a2-661c-48fc-a5af-6e05ca81b03b",
+            'class' => TrainerClass::GYM_LEADER,
+            'name' => "Koga",
+            'leader' => [
+                'badge' => GymBadge::SOUL,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/0/02/Spr_FRLG_Koga.png",
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'level' => 37,
+                ],
+                [
+                    'id' => PokedexNo::MUK,
+                    'level' => 39,
+                ],
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'level' => 37,
+                ],
+                [
+                    'id' => PokedexNo::WEEZING,
+                    'level' => 43,
+                ],
+            ],
+        ],
+    ],
+    LocationId::SAFFRON_GYM => [
+        [
+            'id' => "3bc0b9ee-97d9-4679-bfd7-e1ad18b403d5",
+            'class' => TrainerClass::PSYCHIC,
+            'gender' => Gender::MALE,
+            'name' => "Cameron",
+            'team' => [
+                [
+                    'id' => PokedexNo::SLOWPOKE,
+                    'level' => 33,
+                ],
+                [
+                    'id' => PokedexNo::SLOWPOKE,
+                    'level' => 33,
+                ],
+                [
+                    'id' => PokedexNo::SLOWBRO,
+                    'level' => 33,
+                ],
+            ],
+        ],
+        [
+            'id' => "0fa86c89-8218-481e-9cfe-c6a6731eb33c",
+            'class' => TrainerClass::PSYCHIC,
+            'gender' => Gender::MALE,
+            'name' => "Tyron",
+            'team' => [
+                [
+                    'id' => PokedexNo::MRMIME,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::KADABRA,
+                    'level' => 34,
+                ],
+            ],
+        ],
+        [
+            'id' => "0e4256a5-adf3-40a7-aff4-51b85346fa31",
+            'class' => TrainerClass::CHANNELER,
+            'name' => "Stacy",
+            'team' => [
+                [
+                    'id' => PokedexNo::HAUNTER,
+                    'level' => 38,
+                ],
+            ],
+        ],
+        [
+            'id' => "aa8de66b-ec2d-401c-9095-2a3cdb792787",
+            'class' => TrainerClass::PSYCHIC,
+            'gender' => Gender::MALE,
+            'name' => "Preston",
+            'team' => [
+                [
+                    'id' => PokedexNo::SLOWBRO,
+                    'level' => 38,
+                ],
+            ],
+        ],
+        [
+            'id' => "aa8de66b-ec2d-401c-9095-2a3cdb792787",
+            'class' => TrainerClass::CHANNELER,
+            'name' => "Amanda",
+            'team' => [
+                [
+                    'id' => PokedexNo::GASTLY,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::HAUNTER,
+                    'level' => 34,
+                ],
+            ],
+        ],
+        [
+            'id' => "2c06f85d-141e-4c61-a203-f6444d8acd3e",
+            'class' => TrainerClass::CHANNELER,
+            'name' => "Tasha",
+            'team' => [
+                [
+                    'id' => PokedexNo::GASTLY,
+                    'level' => 33,
+                ],
+                [
+                    'id' => PokedexNo::GASTLY,
+                    'level' => 33,
+                ],
+                [
+                    'id' => PokedexNo::HAUNTER,
+                    'level' => 33,
+                ],
+            ],
+        ],
+        [
+            'id' => "c60d399b-5d79-4018-8338-cab9a9a6d33a",
+            'class' => TrainerClass::PSYCHIC,
+            'gender' => Gender::MALE,
+            'name' => "Johan",
+            'team' => [
+                [
+                    'id' => PokedexNo::KADABRA,
+                    'level' => 31,
+                ],
+                [
+                    'id' => PokedexNo::MRMIME,
+                    'level' => 31,
+                ],
+                [
+                    'id' => PokedexNo::SLOWPOKE,
+                    'level' => 31,
+                ],
+                [
+                    'id' => PokedexNo::KADABRA,
+                    'level' => 31,
+                ],
+            ],
+        ],
+        [
+            'id' => "e8590afb-d891-4e99-8349-bd2d275fb460",
+            'class' => TrainerClass::GYM_LEADER,
+            'name' => "Sabrina",
+            'leader' => [
+                'badge' => GymBadge::MARSH,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/dd/Spr_FRLG_Sabrina.png",
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::KADABRA,
+                    'level' => 38,
+                ],
+                [
+                    'id' => PokedexNo::MRMIME,
+                    'level' => 37,
+                ],
+                [
+                    'id' => PokedexNo::VENOMOTH,
+                    'level' => 38,
+                ],
+                [
+                    'id' => PokedexNo::ALAKAZAM,
+                    'level' => 43,
+                ],
+            ],
+        ],
+    ],
 ];
