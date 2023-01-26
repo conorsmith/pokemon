@@ -14,16 +14,6 @@ return [
             Direction::N => LocationId::ROUTE_1,
             Direction::S => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
         ],
-        'pokemon' => [
-            PokedexNo::PIDGEY => [
-                'weight' => 1,
-                'levels' => [1, 3],
-            ],
-            PokedexNo::RATTATA => [
-                'weight' => 3,
-                'levels' => [1, 3],
-            ],
-        ],
     ],
     [
         'id' => LocationId::ROUTE_1,
@@ -52,24 +42,6 @@ return [
             LocationId::VIRIDIAN_GYM,
             Direction::S => LocationId::ROUTE_1,
         ],
-        'pokemon' => [
-            PokedexNo::RATTATA => [
-                'weight' => 5,
-                'levels' => [2, 5],
-            ],
-            PokedexNo::SPEAROW => [
-                'weight' => 3,
-                'levels' => [2, 5],
-            ],
-            PokedexNo::PSYDUCK => [
-                'weight' => 1,
-                'levels' => [3, 5],
-            ],
-            PokedexNo::MANKEY => [
-                'weight' => 1,
-                'levels' => [2, 5],
-            ],
-        ],
     ],
     [
         'id' => LocationId::VIRIDIAN_GYM,
@@ -77,7 +49,6 @@ return [
         'directions' => [
             LocationId::VIRIDIAN_CITY,
         ],
-        'pokemon' => [],
     ],
     [
         'id' => LocationId::ROUTE_2,
@@ -122,24 +93,6 @@ return [
             Direction::E => LocationId::ROUTE_3,
             LocationId::PEWTER_GYM,
             Direction::S => LocationId::ROUTE_2,
-        ],
-        'pokemon' => [
-            PokedexNo::PIDGEY => [
-                'weight' => 45,
-                'levels' => [5, 7],
-            ],
-            PokedexNo::RATTATA => [
-                'weight' => 15,
-                'levels' => [5, 7],
-            ],
-            PokedexNo::SPEAROW => [
-                'weight' => 45,
-                'levels' => [5, 8],
-            ],
-            PokedexNo::SANDSHREW => [
-                'weight' => 5,
-                'levels' => [5, 8],
-            ],
         ],
     ],
     [
@@ -349,20 +302,6 @@ return [
             Direction::S => LocationId::ROUTE_5,
             LocationId::CERULEAN_GYM,
         ],
-        'pokemon' => [
-            PokedexNo::PIDGEY => [
-                'weight' => 55,
-                'levels' => [5, 15],
-            ],
-            PokedexNo::RATTATA => [
-                'weight' => 40,
-                'levels' => [5, 15],
-            ],
-            PokedexNo::PSYDUCK => [
-                'weight' => 5,
-                'levels' => [5, 15],
-            ],
-        ],
     ],
     [
         'id' => LocationId::CERULEAN_GYM,
@@ -452,24 +391,6 @@ return [
             LocationId::VERMILLION_GYM,
             LocationId::VERMILLION_HARBOUR,
         ],
-        'pokemon' => [
-            PokedexNo::PIDGEY => [
-                'weight' => 40,
-                'levels' => [13, 16],
-            ],
-            PokedexNo::RATTATA => [
-                'weight' => 40,
-                'levels' => [13, 16],
-            ],
-            PokedexNo::KRABBY => [
-                'weight' => 15,
-                'levels' => [13, 16],
-            ],
-            PokedexNo::SQUIRTLE => [
-                'weight' => 5,
-                'levels' => [10, 14],
-            ],
-        ],
     ],
     [
         'id' => LocationId::VERMILLION_GYM,
@@ -477,7 +398,6 @@ return [
         'directions' => [
             LocationId::VERMILLION_CITY,
         ],
-        'pokemon' => [],
     ],
     [
         'id' => LocationId::VERMILLION_HARBOUR,
@@ -485,6 +405,12 @@ return [
         'directions' => [
             LocationId::VERMILLION_CITY,
             LocationId::SS_ANNE_1F,
+        ],
+        'pokemon' => [
+            PokedexNo::SQUIRTLE => [
+                'weight' => 1,
+                'levels' => [10, 14],
+            ],
         ],
     ],
     [
@@ -560,24 +486,6 @@ return [
             Direction::E => LocationId::ROUTE_7,
             LocationId::CELADON_GYM,
             LocationId::ROCKET_GAME_CORNER,
-        ],
-        'pokemon' => [
-            PokedexNo::PIDGEY => [
-                'weight' => 40,
-                'levels' => [13, 16],
-            ],
-            PokedexNo::RATTATA => [
-                'weight' => 40,
-                'levels' => [13, 16],
-            ],
-            PokedexNo::MEOWTH => [
-                'weight' => 10,
-                'levels' => [13, 16],
-            ],
-            PokedexNo::GROWLITHE => [
-                'weight' => 10,
-                'levels' => [13, 16],
-            ],
         ],
     ],
     [
@@ -1141,6 +1049,10 @@ return [
                 'weight' => 5,
                 'levels' => 25,
             ],
+            PokedexNo::FARFETCHD => [
+                'weight' => 25,
+                'levels' => [20, 30],
+            ],
         ],
     ],
     [
@@ -1152,24 +1064,6 @@ return [
             Direction::E => LocationId::ROUTE_15,
             Direction::S => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
             LocationId::FUCHSIA_GYM,
-        ],
-        'pokemon' => [
-            PokedexNo::PSYDUCK => [
-                'weight' => 25,
-                'levels' => [20, 40],
-            ],
-            PokedexNo::SLOWPOKE => [
-                'weight' => 25,
-                'levels' => [20, 40],
-            ],
-            PokedexNo::FARFETCHD => [
-                'weight' => 25,
-                'levels' => [20, 30],
-            ],
-            PokedexNo::CUBONE => [
-                'weight' => 5,
-                'levels' => [20, 25],
-            ],
         ],
     ],
     [
@@ -1749,20 +1643,6 @@ return [
             // CINNABAR GYM
             Direction::E => LocationId::ROUTE_20,
         ],
-        'pokemon' => [
-            PokedexNo::KRABBY => [
-                'weight' => 80,
-                'levels' => [5, 15],
-            ],
-            PokedexNo::PSYDUCK => [
-                'weight' => 10,
-                'levels' => [25, 35],
-            ],
-            PokedexNo::SLOWPOKE => [
-                'weight' => 10,
-                'levels' => [25, 35],
-            ],
-        ],
     ],
     [
         'id' => LocationId::POKEMON_MANSION,
@@ -2050,8 +1930,6 @@ return [
         'name' => "Indigo Plateau",
         'directions' => [
             LocationId::ROUTE_23,
-        ],
-        'pokemon' => [
         ],
     ],
     [
