@@ -82,7 +82,7 @@ final class GetMapEncounter
         }
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/MapEncounter.php", [
-            'canEncounter' => $bag->hasAnyPokeBall(),
+            'canEncounter' => $bag->hasAnyPokeBall() && $currentLocation->hasPokemon,
             'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
             'trainers' => $trainers,
@@ -107,6 +107,7 @@ final class GetMapEncounter
         $viewModel = (object) [
             'id' => $location['id'],
             'name' => $location['name'],
+            'hasPokemon' => isset($location['pokemon']) && count($location['pokemon']) > 0,
             'hasCardinalDirections' => false,
             'directions' => [],
         ];

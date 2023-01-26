@@ -1398,7 +1398,7 @@ return [
         'id' => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
         'name' => "Route 19",
         'directions' => [
-            Direction::N => LocationId::ROUTE_18,
+            Direction::N => LocationId::FUCHSIA_CITY,
             Direction::W => LocationId::ROUTE_20,
         ],
         'pokemon' => [
