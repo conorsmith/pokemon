@@ -39,4 +39,7 @@
             </button>
         <?php endforeach ?>
     </form>
+    <div class="d-grid mt-5">
+        <a href="/bag" class="btn btn-outline-secondary">Cancel</a>
+    </div>
 </ul>
