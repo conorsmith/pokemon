@@ -21,7 +21,6 @@ use ConorSmith\Pokemon\Controllers\GetLogExercise;
 use ConorSmith\Pokemon\Controllers\GetLogFoodDiary;
 use ConorSmith\Pokemon\Controllers\GetMapEncounter;
 use ConorSmith\Pokemon\Controllers\GetTeamItemUse;
-use ConorSmith\Pokemon\Controllers\GetTeamLevelUp;
 use ConorSmith\Pokemon\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Controllers\PostEncounterRun;
 use ConorSmith\Pokemon\Controllers\PostItemUse;
@@ -32,7 +31,6 @@ use ConorSmith\Pokemon\Controllers\PostLogWeeklyReview;
 use ConorSmith\Pokemon\Controllers\PostMapEncounter;
 use ConorSmith\Pokemon\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Controllers\PostTeamItemUse;
-use ConorSmith\Pokemon\Controllers\PostTeamLevelUp;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveDown;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveUp;
 use ConorSmith\Pokemon\Controllers\PostTeamSendToBox;
@@ -52,8 +50,6 @@ final class ControllerFactory
         $r->get("/log/weekly-review", GetLogWeeklyReview::class);
         $r->post("/log/weekly-review", PostLogWeeklyReview::class);
         $r->get("/pokedex", GetPokedex::class);
-        $r->get("/team/level-up", GetTeamLevelUp::class);
-        $r->post("/team/level-up", PostTeamLevelUp::class);
         $r->get("/log/calorie-goal", GetLogCalorieGoal::class);
         $r->post("/log/calorie-goal", PostLogCalorieGoal::class);
         $r->post("/map/move", PostMapMove::class);
@@ -101,8 +97,6 @@ final class ControllerFactory
             GetLogWeeklyReview::class => new GetLogWeeklyReview($this->db, $this->session),
             PostLogWeeklyReview::class => new PostLogWeeklyReview($this->db, $this->session),
             GetPokedex::class => new GetPokedex($this->db, $this->pokedex),
-            GetTeamLevelUp::class => new GetTeamLevelUp($this->db, $this->session, $this->caughtPokemonRepository, $this->pokedex),
-            PostTeamLevelUp::class => new PostTeamLevelUp($this->db, $this->session, $this->pokedex),
             GetLogCalorieGoal::class => new GetLogCalorieGoal($this->db, $this->session),
             PostLogCalorieGoal::class => new PostLogCalorieGoal($this->db, $this->session),
             PostMapMove::class => new PostMapMove($this->db, $this->session, $this->map),
@@ -178,6 +172,7 @@ final class ControllerFactory
                 $this->playerRepository,
             ),
             GetBag::class => new GetBag(
+                $this->session,
                 $this->bagRepository,
             ),
             PostItemUse::class => new PostItemUse(
@@ -185,6 +180,7 @@ final class ControllerFactory
             ),
             GetTeamItemUse::class => new GetTeamItemUse(
                 $this->session,
+                $this->bagRepository,
                 $this->playerRepository,
                 $this->viewModelFactory,
             ),

@@ -64,7 +64,7 @@ final class PostLogExercise
         $itemConfig = require __DIR__ . "/../Config/Items.php";
         $this->session->getFlashBag()->add("successes", "You earned 1 {$itemConfig[$earnedItemId]['name']}!");
 
-        header("Location: /map/encounter");
+        header("Location: /");
         exit;
     }
 }

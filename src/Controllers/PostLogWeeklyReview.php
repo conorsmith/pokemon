@@ -88,6 +88,8 @@ final class PostLogWeeklyReview
 
         $this->db->commit();
 
-        header("Location: /team/level-up");
+        $this->session->getFlashBag()->add("successes", "You earned {$netBonus} Rare Candy!");
+
+        header("Location: /");
     }
 }

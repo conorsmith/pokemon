@@ -2,6 +2,14 @@
 
     <h1 style="text-align: center;">Bag</h1>
 
+    <?php foreach ($successes as $success) : ?>
+        <div class="alert alert-success"><?=$success?></div>
+    <?php endforeach ?>
+
+    <?php foreach ($errors as $error) : ?>
+        <div class="alert alert-danger"><?=$error?></div>
+    <?php endforeach ?>
+
     <ul class="list-group">
 
         <?php foreach ($items as $item) : ?>

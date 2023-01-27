@@ -63,7 +63,9 @@ final class PostLogFoodDiary
 
         $this->db->commit();
 
-        header("Location: /team/level-up");
+        $this->session->getFlashBag()->add("successes", "You earned 1 Rare Candy!");
+
+        header("Location: /");
         exit;
     }
 }

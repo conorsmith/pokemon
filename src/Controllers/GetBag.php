@@ -7,10 +7,12 @@ use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetBag
 {
     public function __construct(
+        private readonly Session $session,
         private readonly BagRepository $bagRepository,
     ) {}
 
@@ -35,6 +37,8 @@ final class GetBag
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Bag.php", [
             'items' => $itemViewModels,
+            'successes' => $this->session->getFlashBag()->get("successes"),
+            'errors' => $this->session->getFlashBag()->get("errors"),
         ]);
     }
 }

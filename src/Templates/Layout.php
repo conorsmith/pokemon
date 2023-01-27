@@ -84,9 +84,6 @@
                     <a class="nav-link" href="/pokedex">Pokédex</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/team/level-up">Level Ups</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/map/encounter">Map</a>
                 </li>
             </ul>

@@ -63,7 +63,9 @@ final class PostLogCalorieGoal
 
         $this->db->commit();
 
-        header("Location: /map/move");
+        $this->session->getFlashBag()->add("successes", "You earned 1 Challenge Token!");
+
+        header("Location: /");
         exit;
     }
 }
