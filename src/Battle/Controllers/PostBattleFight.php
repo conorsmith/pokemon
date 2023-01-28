@@ -110,7 +110,7 @@ final class PostBattleFight
 
                 $this->session->getFlashBag()->add("successes", "You won a {$prize['name']}");
 
-                header("Location: /map/encounter");
+                header("Location: /map");
             }
         } else {
             $playerPokemonVm = $this->viewModelFactory->createPokemonInBattle($playerPokemon);
@@ -123,7 +123,7 @@ final class PostBattleFight
                 $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
                 $this->session->getFlashBag()->add("successes", "You were defeated by {$name}");
 
-                header("Location: /map/encounter");
+                header("Location: /map");
             }
         }
 

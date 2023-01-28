@@ -84,7 +84,7 @@
                     <a class="nav-link" href="/pokedex">Pokédex</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/map/encounter">Map</a>
+                    <a class="nav-link" href="/map">Map</a>
                 </li>
             </ul>
         </div>

@@ -2,14 +2,15 @@
 declare(strict_types=1);
 
 use ConorSmith\Pokemon\Direction;
-use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\LocationId;
+use ConorSmith\Pokemon\LocationType;
 use ConorSmith\Pokemon\PokedexNo;
 
 return [
     [
         'id' => LocationId::PALLET_TOWN,
         'name' => "Pallet Town",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::N => LocationId::ROUTE_1,
             Direction::S => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
@@ -18,6 +19,7 @@ return [
     [
         'id' => LocationId::ROUTE_1,
         'name' => "Route 1",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::VIRIDIAN_CITY,
             Direction::S => LocationId::PALLET_TOWN,
@@ -36,6 +38,7 @@ return [
     [
         'id' => LocationId::VIRIDIAN_CITY,
         'name' => "Viridian City",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::N => LocationId::ROUTE_2,
             Direction::W => LocationId::ROUTE_22,
@@ -46,6 +49,7 @@ return [
     [
         'id' => LocationId::VIRIDIAN_GYM,
         'name' => "Viridian Gym",
+        'type' => LocationType::GYM,
         'directions' => [
             LocationId::VIRIDIAN_CITY,
         ],
@@ -53,6 +57,7 @@ return [
     [
         'id' => LocationId::ROUTE_2,
         'name' => "Route 2",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::PEWTER_CITY,
             LocationId::VIRIDIAN_FOREST,
@@ -89,6 +94,7 @@ return [
     [
         'id' => LocationId::PEWTER_CITY,
         'name' => "Pewter City",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::E => LocationId::ROUTE_3,
             LocationId::PEWTER_GYM,
@@ -98,6 +104,7 @@ return [
     [
         'id' => LocationId::PEWTER_GYM,
         'name' => "Pewter Gym",
+        'type' => LocationType::GYM,
         'directions' => [
             LocationId::PEWTER_CITY,
         ],
@@ -106,6 +113,7 @@ return [
     [
         'id' => LocationId::VIRIDIAN_FOREST,
         'name' => "Viridian Forest",
+        'type' => LocationType::CAVE,
         'directions' => [
             LocationId::ROUTE_2,
         ],
@@ -143,6 +151,7 @@ return [
     [
         'id' => LocationId::DIGLETTS_CAVE,
         'name' => "Diglett's Cave",
+        'type' => LocationType::CAVE,
         'directions' => [
             LocationId::ROUTE_2,
             LocationId::ROUTE_11,
@@ -161,6 +170,7 @@ return [
     [
         'id' => LocationId::ROUTE_3,
         'name' => "Route 3",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::PEWTER_CITY,
             Direction::E => LocationId::MT_MOON_F1,
@@ -194,10 +204,12 @@ return [
     ],
     [
         'id' => LocationId::MT_MOON_F1,
-        'name' => "Mt. Moon (1st Floor)",
+        'name' => "Mt. Moon",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
             LocationId::ROUTE_3,
-            LocationId::MT_MOON_BF1,
+            Direction::D => LocationId::MT_MOON_BF1,
         ],
         'pokemon' => [
             PokedexNo::ZUBAT => [
@@ -220,10 +232,12 @@ return [
     ],
     [
         'id' => LocationId::MT_MOON_BF1,
-        'name' => "Mt. Moon (1st Basement Floor)",
+        'name' => "Mt. Moon",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::MT_MOON_F1,
-            LocationId::MT_MOON_BF2,
+            Direction::U => LocationId::MT_MOON_F1,
+            Direction::D => LocationId::MT_MOON_BF2,
         ],
         'pokemon' => [
             PokedexNo::PARAS => [
@@ -234,9 +248,11 @@ return [
     ],
     [
         'id' => LocationId::MT_MOON_BF2,
-        'name' => "Mt. Moon (2nd Basement Floor)",
+        'name' => "Mt. Moon",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::MT_MOON_BF1,
+            Direction::U => LocationId::MT_MOON_BF1,
             LocationId::ROUTE_4,
         ],
         'pokemon' => [
@@ -265,6 +281,7 @@ return [
     [
         'id' => LocationId::ROUTE_4,
         'name' => "Route 4",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::MT_MOON_BF2,
             Direction::E => LocationId::CERULEAN_CITY,
@@ -295,6 +312,7 @@ return [
     [
         'id' => LocationId::CERULEAN_CITY,
         'name' => "Cerulean City",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::N => LocationId::ROUTE_24,
             Direction::W => LocationId::ROUTE_4,
@@ -306,6 +324,7 @@ return [
     [
         'id' => LocationId::CERULEAN_GYM,
         'name' => "Cerulean Gym",
+        'type' => LocationType::GYM,
         'directions' => [
             LocationId::CERULEAN_CITY,
         ],
@@ -314,6 +333,7 @@ return [
     [
         'id' => LocationId::ROUTE_5,
         'name' => "Route 5",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::CERULEAN_CITY,
             Direction::S => LocationId::SAFFRON_CITY,
@@ -340,6 +360,7 @@ return [
     [
         'id' => LocationId::SAFFRON_CITY,
         'name' => "Saffron City",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::N => LocationId::ROUTE_5,
             Direction::W => LocationId::ROUTE_7,
@@ -352,6 +373,7 @@ return [
     [
         'id' => LocationId::SAFFRON_GYM,
         'name' => "Saffron Gym",
+        'type' => LocationType::GYM,
         'directions' => [
             LocationId::SAFFRON_CITY,
         ],
@@ -359,6 +381,7 @@ return [
     [
         'id' => LocationId::ROUTE_6,
         'name' => "Route 6",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::SAFFRON_CITY,
             Direction::S => LocationId::VERMILLION_CITY,
@@ -385,6 +408,7 @@ return [
     [
         'id' => LocationId::VERMILLION_CITY,
         'name' => "Vermillion City",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::N => LocationId::ROUTE_6,
             Direction::E => LocationId::ROUTE_11,
@@ -395,6 +419,7 @@ return [
     [
         'id' => LocationId::VERMILLION_GYM,
         'name' => "Vermillion Gym",
+        'type' => LocationType::GYM,
         'directions' => [
             LocationId::VERMILLION_CITY,
         ],
@@ -415,38 +440,43 @@ return [
     ],
     [
         'id' => LocationId::SS_ANNE_1F,
-        'name' => "S.S. Anne (1st Floor)",
+        'name' => "S.S. Anne",
+        'section' => "1st Floor",
         'directions' => [
             LocationId::VERMILLION_HARBOUR,
-            LocationId::SS_ANNE_B1F,
-            LocationId::SS_ANNE_2F,
+            Direction::D => LocationId::SS_ANNE_B1F,
+            Direction::U => LocationId::SS_ANNE_2F,
         ],
     ],
     [
         'id' => LocationId::SS_ANNE_B1F,
-        'name' => "S.S. Anne (Basement 1st Floor)",
+        'name' => "S.S. Anne",
+        'section' => "Basement 1st Floor",
         'directions' => [
-            LocationId::SS_ANNE_1F,
+            Direction::U => LocationId::SS_ANNE_1F,
         ],
     ],
     [
         'id' => LocationId::SS_ANNE_2F,
-        'name' => "S.S. Anne (2nd Floor)",
+        'name' => "S.S. Anne",
+        'section' => "2nd Floor",
         'directions' => [
-            LocationId::SS_ANNE_1F,
-            LocationId::SS_ANNE_DECK,
+            Direction::D => LocationId::SS_ANNE_1F,
+            Direction::U => LocationId::SS_ANNE_DECK,
         ],
     ],
     [
         'id' => LocationId::SS_ANNE_DECK,
-        'name' => "S.S. Anne (Deck)",
+        'name' => "S.S. Anne",
+        'section' => "Deck",
         'directions' => [
-            LocationId::SS_ANNE_2F,
+            Direction::D => LocationId::SS_ANNE_2F,
         ],
     ],
     [
         'id' => LocationId::ROUTE_7,
         'name' => "Route 7",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::CELADON_CITY,
             Direction::E => LocationId::SAFFRON_CITY,
@@ -481,6 +511,7 @@ return [
     [
         'id' => LocationId::CELADON_CITY,
         'name' => "Celadon City",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::W => LocationId::ROUTE_16,
             Direction::E => LocationId::ROUTE_7,
@@ -491,6 +522,7 @@ return [
     [
         'id' => LocationId::CELADON_GYM,
         'name' => "Celadon Gym",
+        'type' => LocationType::GYM,
         'directions' => [
             LocationId::CELADON_CITY,
         ],
@@ -499,50 +531,60 @@ return [
     [
         'id' => LocationId::ROCKET_GAME_CORNER,
         'name' => "Rocket Game Corner",
+        'type' => LocationType::TOWER,
         'directions' => [
             LocationId::CELADON_CITY,
-            LocationId::TEAM_ROCKET_HIDEOUT_B1F,
+            Direction::D => LocationId::TEAM_ROCKET_HIDEOUT_B1F,
         ],
         'pokemon' => [],
     ],
     [
         'id' => LocationId::TEAM_ROCKET_HIDEOUT_B1F,
-        'name' => "Team Rocket Hideout (1st Basement Floor)",
+        'name' => "Team Rocket Hideout",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::ROCKET_GAME_CORNER,
-            LocationId::TEAM_ROCKET_HIDEOUT_B2F,
+            Direction::U => LocationId::ROCKET_GAME_CORNER,
+            Direction::D => LocationId::TEAM_ROCKET_HIDEOUT_B2F,
         ],
         'pokemon' => [],
     ],
     [
         'id' => LocationId::TEAM_ROCKET_HIDEOUT_B2F,
-        'name' => "Team Rocket Hideout (2nd Basement Floor)",
+        'name' => "Team Rocket Hideout",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::TEAM_ROCKET_HIDEOUT_B1F,
-            LocationId::TEAM_ROCKET_HIDEOUT_B3F,
+            Direction::U => LocationId::TEAM_ROCKET_HIDEOUT_B1F,
+            Direction::D => LocationId::TEAM_ROCKET_HIDEOUT_B3F,
         ],
         'pokemon' => [],
     ],
     [
         'id' => LocationId::TEAM_ROCKET_HIDEOUT_B3F,
-        'name' => "Team Rocket Hideout (3rd Basement Floor)",
+        'name' => "Team Rocket Hideout",
+        'section' => "3rd Basement Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::TEAM_ROCKET_HIDEOUT_B2F,
-            LocationId::TEAM_ROCKET_HIDEOUT_B4F,
+            Direction::U => LocationId::TEAM_ROCKET_HIDEOUT_B2F,
+            Direction::D => LocationId::TEAM_ROCKET_HIDEOUT_B4F,
         ],
         'pokemon' => [],
     ],
     [
         'id' => LocationId::TEAM_ROCKET_HIDEOUT_B4F,
-        'name' => "Team Rocket Hideout (4th Basement Floor)",
+        'name' => "Team Rocket Hideout",
+        'section' => "4th Basement Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::TEAM_ROCKET_HIDEOUT_B3F,
+            Direction::U => LocationId::TEAM_ROCKET_HIDEOUT_B3F,
         ],
         'pokemon' => [],
     ],
     [
         'id' => LocationId::ROUTE_8,
         'name' => "Route 8",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::SAFFRON_CITY,
             Direction::E => LocationId::LAVENDER_TOWN,
@@ -577,6 +619,7 @@ return [
     [
         'id' => LocationId::LAVENDER_TOWN,
         'name' => "Lavender Town",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::N => LocationId::ROUTE_10,
             Direction::W => LocationId::ROUTE_8,
@@ -586,26 +629,32 @@ return [
     ],
     [
         'id' => LocationId::POKEMON_TOWER_1F,
-        'name' => "Pokémon Tower (1st Floor)",
+        'name' => "Pokémon Tower",
+        'section' => "1st Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::POKEMON_TOWER_2F,
+            Direction::U => LocationId::POKEMON_TOWER_2F,
             LocationId::LAVENDER_TOWN,
         ],
     ],
     [
         'id' => LocationId::POKEMON_TOWER_2F,
-        'name' => "Pokémon Tower (2nd Floor)",
+        'name' => "Pokémon Tower",
+        'section' => "2nd Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::POKEMON_TOWER_3F,
-            LocationId::POKEMON_TOWER_1F,
+            Direction::U => LocationId::POKEMON_TOWER_3F,
+            Direction::D => LocationId::POKEMON_TOWER_1F,
         ],
     ],
     [
         'id' => LocationId::POKEMON_TOWER_3F,
-        'name' => "Pokémon Tower (3rd Floor)",
+        'name' => "Pokémon Tower",
+        'section' => "3rd Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::POKEMON_TOWER_4F,
-            LocationId::POKEMON_TOWER_2F,
+            Direction::U => LocationId::POKEMON_TOWER_4F,
+            Direction::D => LocationId::POKEMON_TOWER_2F,
         ],
         'pokemon' => [
             PokedexNo::GASTLY => [
@@ -624,10 +673,12 @@ return [
     ],
     [
         'id' => LocationId::POKEMON_TOWER_4F,
-        'name' => "Pokémon Tower (4th Floor)",
+        'name' => "Pokémon Tower",
+        'section' => "4th Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::POKEMON_TOWER_5F,
-            LocationId::POKEMON_TOWER_3F,
+            Direction::U => LocationId::POKEMON_TOWER_5F,
+            Direction::D => LocationId::POKEMON_TOWER_3F,
         ],
         'pokemon' => [
             PokedexNo::GASTLY => [
@@ -646,10 +697,12 @@ return [
     ],
     [
         'id' => LocationId::POKEMON_TOWER_5F,
-        'name' => "Pokémon Tower (5th Floor)",
+        'name' => "Pokémon Tower",
+        'section' => "5th Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::POKEMON_TOWER_6F,
-            LocationId::POKEMON_TOWER_4F,
+            Direction::U => LocationId::POKEMON_TOWER_6F,
+            Direction::D => LocationId::POKEMON_TOWER_4F,
         ],
         'pokemon' => [
             PokedexNo::GASTLY => [
@@ -668,10 +721,12 @@ return [
     ],
     [
         'id' => LocationId::POKEMON_TOWER_6F,
-        'name' => "Pokémon Tower (6th Floor)",
+        'name' => "Pokémon Tower",
+        'section' => "6th Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::POKEMON_TOWER_7F,
-            LocationId::POKEMON_TOWER_5F,
+            Direction::U => LocationId::POKEMON_TOWER_7F,
+            Direction::D => LocationId::POKEMON_TOWER_5F,
         ],
         'pokemon' => [
             PokedexNo::GASTLY => [
@@ -690,9 +745,11 @@ return [
     ],
     [
         'id' => LocationId::POKEMON_TOWER_7F,
-        'name' => "Pokémon Tower (7th Floor)",
+        'name' => "Pokémon Tower",
+        'section' => "7th Floor",
+        'type' => LocationType::TOWER,
         'directions' => [
-            LocationId::POKEMON_TOWER_6F,
+            Direction::D => LocationId::POKEMON_TOWER_6F,
         ],
         'pokemon' => [
             PokedexNo::GASTLY => [
@@ -712,6 +769,7 @@ return [
     [
         'id' => LocationId::ROUTE_9,
         'name' => "Route 9",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::CERULEAN_CITY,
             Direction::S => LocationId::ROCK_TUNNEL_1F,
@@ -739,6 +797,7 @@ return [
     [
         'id' => "01f3a7cb-ca9e-47bc-9976-7e8dbc5c79ad",
         'name' => "Power Plant",
+        'type' => LocationType::TOWER,
         'directions' => [
             LocationId::ROUTE_9,
         ],
@@ -771,10 +830,12 @@ return [
     ],
     [
         'id' => LocationId::ROCK_TUNNEL_1F,
-        'name' => "Rock Tunnel (1st Floor)",
+        'name' => "Rock Tunnel",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
             LocationId::ROUTE_9,
-            LocationId::ROCK_TUNNEL_B1F,
+            Direction::D => LocationId::ROCK_TUNNEL_B1F,
             LocationId::ROUTE_10,
         ],
         'pokemon' => [
@@ -806,9 +867,11 @@ return [
     ],
     [
         'id' => LocationId::ROCK_TUNNEL_B1F,
-        'name' => "Rock Tunnel (1st Basement Floor)",
+        'name' => "Rock Tunnel",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::ROCK_TUNNEL_1F,
+            Direction::U => LocationId::ROCK_TUNNEL_1F,
         ],
         'pokemon' => [
             PokedexNo::GEODUDE => [
@@ -840,6 +903,7 @@ return [
     [
         'id' => LocationId::ROUTE_10,
         'name' => "Route 10",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::ROCK_TUNNEL_1F,
             Direction::S => LocationId::LAVENDER_TOWN,
@@ -866,6 +930,7 @@ return [
     [
         'id' => LocationId::ROUTE_11,
         'name' => "Route 11",
+        'type' => LocationType::ROUTE,
         'directions' => [
             LocationId::DIGLETTS_CAVE,
             Direction::W => LocationId::VERMILLION_CITY,
@@ -893,6 +958,7 @@ return [
     [
         'id' => LocationId::ROUTE_12,
         'name' => "Route 12",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::LAVENDER_TOWN,
             Direction::W => LocationId::ROUTE_11,
@@ -928,6 +994,7 @@ return [
     [
         'id' => LocationId::ROUTE_13,
         'name' => "Route 13",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::ROUTE_14,
             Direction::N => LocationId::ROUTE_12,
@@ -970,6 +1037,7 @@ return [
     [
         'id' => LocationId::ROUTE_14,
         'name' => "Route 14",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::E => LocationId::ROUTE_13,
             Direction::S => LocationId::ROUTE_15,
@@ -1012,6 +1080,7 @@ return [
     [
         'id' => LocationId::ROUTE_15,
         'name' => "Route 15",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::FUCHSIA_CITY,
             Direction::N => LocationId::ROUTE_14,
@@ -1058,6 +1127,7 @@ return [
     [
         'id' => LocationId::FUCHSIA_CITY,
         'name' => "Fuchsia City",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::N => "0383556c-0b2e-4a33-a178-1b078fc60352",
             Direction::W => LocationId::ROUTE_18,
@@ -1069,13 +1139,15 @@ return [
     [
         'id' => LocationId::FUCHSIA_GYM,
         'name' => "Fuchsia Gym",
+        'type' => LocationType::GYM,
         'directions' => [
             LocationId::FUCHSIA_CITY,
         ],
     ],
     [
         'id' => "0383556c-0b2e-4a33-a178-1b078fc60352",
-        'name' => "Safari Zone (South)",
+        'name' => "Safari Zone",
+        'section' => "South",
         'directions' => [
             Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
             Direction::W => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
@@ -1139,7 +1211,8 @@ return [
     ],
     [
         'id' => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
-        'name' => "Safari Zone (North)",
+        'name' => "Safari Zone",
+        'section' => "North",
         'directions' => [
             Direction::W => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
             Direction::E => "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
@@ -1194,7 +1267,8 @@ return [
     ],
     [
         'id' => "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
-        'name' => "Safari Zone (East)",
+        'name' => "Safari Zone",
+        'section' => "East",
         'directions' => [
             Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
             Direction::S => "0383556c-0b2e-4a33-a178-1b078fc60352",
@@ -1252,7 +1326,8 @@ return [
     ],
     [
         'id' => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
-        'name' => "Safari Zone (West)",
+        'name' => "Safari Zone",
+        'section' => "West",
         'directions' => [
             Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
             Direction::S => "0383556c-0b2e-4a33-a178-1b078fc60352",
@@ -1307,6 +1382,7 @@ return [
     [
         'id' => LocationId::ROUTE_16,
         'name' => "Route 16",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::E => LocationId::CELADON_CITY,
             Direction::S => LocationId::ROUTE_17,
@@ -1333,6 +1409,7 @@ return [
     [
         'id' => LocationId::ROUTE_17,
         'name' => "Route 17",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::ROUTE_16,
             Direction::S => LocationId::ROUTE_18,
@@ -1367,6 +1444,7 @@ return [
     [
         'id' => LocationId::ROUTE_18,
         'name' => "Route 18",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::ROUTE_17,
             Direction::E => LocationId::FUCHSIA_CITY,
@@ -1397,6 +1475,7 @@ return [
     [
         'id' => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
         'name' => "Route 19",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::FUCHSIA_CITY,
             Direction::W => LocationId::ROUTE_20,
@@ -1419,6 +1498,7 @@ return [
     [
         'id' => LocationId::ROUTE_20,
         'name' => "Route 20",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::CINNABAR_ISLAND,
             LocationId::SEAFOAM_ISLANDS_1F,
@@ -1443,10 +1523,12 @@ return [
     ],
     [
         'id' => LocationId::SEAFOAM_ISLANDS_1F,
-        'name' => "Seafoam Islands (1st Floor)",
+        'name' => "Seafoam Islands",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
             LocationId::ROUTE_20,
-            LocationId::SEAFOAM_ISLANDS_B1F,
+            Direction::D => LocationId::SEAFOAM_ISLANDS_B1F,
         ],
         'pokemon' => [
             PokedexNo::PSYDUCK => [
@@ -1469,10 +1551,12 @@ return [
     ],
     [
         'id' => LocationId::SEAFOAM_ISLANDS_B1F,
-        'name' => "Seafoam Islands (1st Basement Floor)",
+        'name' => "Seafoam Islands",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::SEAFOAM_ISLANDS_1F,
-            LocationId::SEAFOAM_ISLANDS_B2F,
+            Direction::U => LocationId::SEAFOAM_ISLANDS_1F,
+            Direction::D => LocationId::SEAFOAM_ISLANDS_B2F,
         ],
         'pokemon' => [
             PokedexNo::PSYDUCK => [
@@ -1507,10 +1591,12 @@ return [
     ],
     [
         'id' => LocationId::SEAFOAM_ISLANDS_B2F,
-        'name' => "Seafoam Islands (2nd Basement Floor)",
+        'name' => "Seafoam Islands",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::SEAFOAM_ISLANDS_B1F,
-            LocationId::SEAFOAM_ISLANDS_B3F,
+            Direction::U => LocationId::SEAFOAM_ISLANDS_B1F,
+            Direction::D => LocationId::SEAFOAM_ISLANDS_B3F,
         ],
         'pokemon' => [
             PokedexNo::PSYDUCK => [
@@ -1549,10 +1635,12 @@ return [
     ],
     [
         'id' => LocationId::SEAFOAM_ISLANDS_B3F,
-        'name' => "Seafoam Islands (3rd Basement Floor)",
+        'name' => "Seafoam Islands",
+        'section' => "3rd Basement Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::SEAFOAM_ISLANDS_B2F,
-            LocationId::SEAFOAM_ISLANDS_B4F,
+            Direction::U => LocationId::SEAFOAM_ISLANDS_B2F,
+            Direction::D => LocationId::SEAFOAM_ISLANDS_B4F,
         ],
         'pokemon' => [
             PokedexNo::PSYDUCK => [
@@ -1595,9 +1683,11 @@ return [
     ],
     [
         'id' => LocationId::SEAFOAM_ISLANDS_B4F,
-        'name' => "Seafoam Islands (4th Basement Floor)",
+        'name' => "Seafoam Islands",
+        'section' => "4th Basement Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::SEAFOAM_ISLANDS_B3F,
+            Direction::U => LocationId::SEAFOAM_ISLANDS_B3F,
         ],
         'pokemon' => [
             PokedexNo::PSYDUCK => [
@@ -1637,6 +1727,7 @@ return [
     [
         'id' => LocationId::CINNABAR_ISLAND,
         'name' => "Cinnabar Island",
+        'type' => LocationType::CITY,
         'directions' => [
             Direction::N => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
             LocationId::POKEMON_MANSION,
@@ -1647,6 +1738,7 @@ return [
     [
         'id' => LocationId::POKEMON_MANSION,
         'name' => "Pokémon Mansion",
+        'type' => LocationType::TOWER,
         'directions' => [
             LocationId::CINNABAR_ISLAND,
         ],
@@ -1688,6 +1780,7 @@ return [
     [
         'id' => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
         'name' => "Route 21",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::PALLET_TOWN,
             Direction::S => LocationId::CINNABAR_ISLAND,
@@ -1714,6 +1807,7 @@ return [
     [
         'id' => LocationId::ROUTE_22,
         'name' => "Route 22",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::VICTORY_ROAD_1F,
             Direction::E => LocationId::VIRIDIAN_CITY,
@@ -1743,9 +1837,11 @@ return [
     ],
     [
         'id' => LocationId::VICTORY_ROAD_1F,
-        'name' => "Victory Road (1st Floor)",
+        'name' => "Victory Road",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::VICTORY_ROAD_2F,
+            Direction::U => LocationId::VICTORY_ROAD_2F,
             LocationId::ROUTE_22,
         ],
         'pokemon' => [
@@ -1789,10 +1885,12 @@ return [
     ],
     [
         'id' => LocationId::VICTORY_ROAD_2F,
-        'name' => "Victory Road (2nd Floor)",
+        'name' => "Victory Road",
+        'section' => "2nd Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::VICTORY_ROAD_1F,
-            LocationId::VICTORY_ROAD_3F,
+            Direction::D => LocationId::VICTORY_ROAD_1F,
+            Direction::U => LocationId::VICTORY_ROAD_3F,
         ],
         'pokemon' => [
             PokedexNo::ARBOK => [
@@ -1839,10 +1937,12 @@ return [
     ],
     [
         'id' => LocationId::VICTORY_ROAD_3F,
-        'name' => "Victory Road (3th Floor)",
+        'name' => "Victory Road",
+        'section' => "3rd Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
             LocationId::ROUTE_23,
-            LocationId::VICTORY_ROAD_2F,
+            Direction::D => LocationId::VICTORY_ROAD_2F,
         ],
         'pokemon' => [
             PokedexNo::ARBOK => [
@@ -1886,9 +1986,10 @@ return [
     [
         'id' => LocationId::ROUTE_23,
         'name' => "Route 23",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => "36c7585c-c0df-4bd5-8e50-5c92487d44d8",
-            Direction::S => LocationId::VICTORY_ROAD_1F,
+            Direction::S => LocationId::VICTORY_ROAD_3F,
         ],
         'pokemon' => [
             PokedexNo::SPEAROW => [
@@ -1928,6 +2029,7 @@ return [
     [
         'id' => "36c7585c-c0df-4bd5-8e50-5c92487d44d8",
         'name' => "Indigo Plateau",
+        'type' => LocationType::GYM,
         'directions' => [
             LocationId::ROUTE_23,
         ],
@@ -1935,6 +2037,7 @@ return [
     [
         'id' => LocationId::ROUTE_24,
         'name' => "Route 24",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::E => LocationId::ROUTE_25,
             Direction::S => LocationId::CERULEAN_CITY,
@@ -1982,6 +2085,7 @@ return [
     [
         'id' => LocationId::ROUTE_25,
         'name' => "Route 25",
+        'type' => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::ROUTE_24,
         ],
@@ -2026,11 +2130,13 @@ return [
     ],
     [
         'id' => LocationId::CERULEAN_CAVE_1F,
-        'name' => "Cerulean Cave (1st Floor)",
+        'name' => "Cerulean Cave",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
             LocationId::ROUTE_24,
-            LocationId::CERULEAN_CAVE_2F,
-            LocationId::CERULEAN_CAVE_B1F,
+            Direction::U => LocationId::CERULEAN_CAVE_2F,
+            Direction::D => LocationId::CERULEAN_CAVE_B1F,
         ],
         'pokemon' => [
             PokedexNo::PARASECT => [
@@ -2069,9 +2175,11 @@ return [
     ],
     [
         'id' => LocationId::CERULEAN_CAVE_2F,
-        'name' => "Cerulean Cave (2nd Floor)",
+        'name' => "Cerulean Cave",
+        'section' => "2nd Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::CERULEAN_CAVE_1F,
+            Direction::D => LocationId::CERULEAN_CAVE_1F,
         ],
         'pokemon' => [
             PokedexNo::PARASECT => [
@@ -2110,9 +2218,11 @@ return [
     ],
     [
         'id' => LocationId::CERULEAN_CAVE_B1F,
-        'name' => "Cerulean Cave (1st Basement Floor)",
+        'name' => "Cerulean Cave",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
         'directions' => [
-            LocationId::CERULEAN_CAVE_1F,
+            Direction::U => LocationId::CERULEAN_CAVE_1F,
         ],
         'pokemon' => [
             PokedexNo::PARASECT => [

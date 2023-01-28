@@ -20,6 +20,6 @@ final class PostEncounterRun
             'id' => $id,
         ]);
 
-        header("Location: /map/encounter");
+        header("Location: /map");
     }
 }

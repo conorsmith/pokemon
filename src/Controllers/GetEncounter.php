@@ -34,7 +34,7 @@ final class GetEncounter
 
         if (!$bag->hasAnyPokeBall()) {
             $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
-            header("Location: /map/encounter");
+            header("Location: /map");
             exit;
         }
 

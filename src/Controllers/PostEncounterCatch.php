@@ -42,7 +42,7 @@ final class PostEncounterCatch
         if (!$bag->has($pokeballItemId)) {
             $itemConfig = require __DIR__ . "/../Config/Items.php";
             $this->session->getFlashBag()->add("errors", "No {$itemConfig[$pokeballItemId]['name']} remaining.");
-            header("Location: /map/encounter");
+            header("Location: /map");
             exit;
         }
 
@@ -50,7 +50,7 @@ final class PostEncounterCatch
 
         if ($encounterRow['level'] > $levelLimit) {
             $this->session->getFlashBag()->add("errors", "You can't catch Pokémon above level {$levelLimit}");
-            header("Location: /map/encounter");
+            header("Location: /map");
             exit;
         }
 
@@ -121,7 +121,7 @@ final class PostEncounterCatch
                 'id' => $id,
             ]);
 
-            header("Location: /map/encounter");
+            header("Location: /map");
 
         } else {
             $bag = $bag->use($pokeballItemId);

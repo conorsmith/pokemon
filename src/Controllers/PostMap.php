@@ -8,7 +8,7 @@ use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-final class PostMapEncounter
+final class PostMap
 {
     public function __construct(
         private readonly Connection $db,
@@ -27,7 +27,7 @@ final class PostMapEncounter
 
         if (!$bag->hasAnyPokeBall()) {
             $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
-            header("Location: /map/encounter");
+            header("Location: /map");
             exit;
         }
 
@@ -35,7 +35,7 @@ final class PostMapEncounter
 
         if (!array_key_exists('pokemon', $currentLocation) || count($currentLocation['pokemon']) === 0) {
             $this->session->getFlashBag()->add("errors", "No Pokémon encountered.");
-            header("Location: /map/encounter");
+            header("Location: /map");
             exit;
         }
 

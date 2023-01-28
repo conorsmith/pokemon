@@ -2475,6 +2475,128 @@ return [
     ],
     LocationId::CELADON_GYM => [
         [
+            'id' => "98327e6e-dac8-454d-b2a4-10198b642f33",
+            'class' => TrainerClass::LASS,
+            'name' => "Kay",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'level' => 23,
+                ],
+                [
+                    'id' => PokedexNo::WEEPINBELL,
+                    'level' => 23,
+                ],
+            ],
+        ],
+        [
+            'id' => "0f90d440-5a8b-4881-977a-e7ddb2842b38",
+            'class' => TrainerClass::BEAUTY,
+            'name' => "Bridget",
+            'team' => [
+                [
+                    'id' => PokedexNo::ODDISH,
+                    'level' => 21,
+                ],
+                [
+                    'id' => PokedexNo::ODDISH,
+                    'level' => 21,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'level' => 21,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'level' => 21,
+                ],
+            ],
+        ],
+        [
+            'id' => "38c0776f-c2ec-49b4-b373-258786435f9a",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::FEMALE,
+            'name' => "Mary",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'level' => 22,
+                ],
+                [
+                    'id' => PokedexNo::ODDISH,
+                    'level' => 22,
+                ],
+                [
+                    'id' => PokedexNo::WEEPINBELL,
+                    'level' => 22,
+                ],
+                [
+                    'id' => PokedexNo::GLOOM,
+                    'level' => 22,
+                ],
+                [
+                    'id' => PokedexNo::IVYSAUR,
+                    'level' => 22,
+                ],
+            ],
+        ],
+        [
+            'id' => "ea6bbdf6-4e3f-49f7-8452-1411324603e5",
+            'class' => TrainerClass::LASS,
+            'name' => "Lisa",
+            'team' => [
+                [
+                    'id' => PokedexNo::ODDISH,
+                    'level' => 23,
+                ],
+                [
+                    'id' => PokedexNo::GLOOM,
+                    'level' => 23,
+                ],
+            ],
+        ],
+        [
+            'id' => "3cc0eedb-8dbd-4d13-bb5a-86103807af1c",
+            'class' => TrainerClass::PICNICKER,
+            'name' => "Tina",
+            'team' => [
+                [
+                    'id' => PokedexNo::BULBASAUR,
+                    'level' => 24,
+                ],
+                [
+                    'id' => PokedexNo::IVYSAUR,
+                    'level' => 24,
+                ],
+            ],
+        ],
+        [
+            'id' => "1803b06d-f3d5-484e-918c-8013ec1ee188",
+            'class' => TrainerClass::BEAUTY,
+            'name' => "Lori",
+            'team' => [
+                [
+                    'id' => PokedexNo::EXEGGCUTE,
+                    'level' => 24,
+                ],
+            ],
+        ],
+        [
+            'id' => "a837541a-ee51-494a-9ea7-982ef3c18f10",
+            'class' => TrainerClass::BEAUTY,
+            'name' => "Tamia",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'level' => 24,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'level' => 24,
+                ],
+            ],
+        ],
+        [
             'id' => "5e537726-5069-4aa0-87b8-13de46c9a1c7",
             'class' => TrainerClass::GYM_LEADER,
             'name' => "Erika",

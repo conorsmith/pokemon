@@ -26,7 +26,7 @@ final class PostBattleTrainer
 
         if (!$bag->has(ItemId::CHALLENGE_TOKEN)) {
             $this->session->getFlashBag()->add("errors", "No unused challenge tokens remaining.");
-            header("Location: /map/encounter");
+            header("Location: /map");
             exit;
         }
 

@@ -8,6 +8,7 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Direction;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\LocationType;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
@@ -16,7 +17,7 @@ use Doctrine\DBAL\Connection;
 use stdClass;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-final class GetMapEncounter
+final class GetMap
 {
     public function __construct(
         private readonly Connection $db,
@@ -81,7 +82,7 @@ final class GetMapEncounter
             }
         }
 
-        echo TemplateEngine::render(__DIR__ . "/../Templates/MapEncounter.php", [
+        echo TemplateEngine::render(__DIR__ . "/../Templates/Map.php", [
             'canEncounter' => $bag->hasAnyPokeBall() && $currentLocation->hasPokemon,
             'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
@@ -107,25 +108,47 @@ final class GetMapEncounter
         $viewModel = (object) [
             'id' => $location['id'],
             'name' => $location['name'],
+            'section' => $location['section'] ?? null,
             'hasPokemon' => isset($location['pokemon']) && count($location['pokemon']) > 0,
             'hasCardinalDirections' => false,
+            'hasVerticalDirections' => false,
             'directions' => [],
         ];
 
         /** @var string $locationId */
         foreach ($location['directions'] as $key => $locationId) {
             $directionLocation = $this->findLocation($locationId);
+
+            $section = $directionLocation['section'] ?? null;
+
+            if (!isset($location['type']) && isset($directionLocation['type'])
+                || !isset($directionLocation['type']) && isset($location['type'])
+                || isset($location['type']) && isset($directionLocation['type']) && $location['type'] !== $directionLocation['type']
+            ) {
+                $section = null;
+            }
+
+            $directionViewModel = (object) [
+                'id'   => $directionLocation['id'],
+                'name' => $directionLocation['name'],
+                'section' => $section,
+                'icon' => match ($directionLocation['type'] ?? null) {
+                    LocationType::CITY => "fas fa-city",
+                    LocationType::CAVE => "fas fa-mountain",
+                    LocationType::TOWER => "far fa-building",
+                    LocationType::GYM => "fas fa-dumbbell",
+                    default => null,
+                }
+            ];
             if (Direction::isCardinal($key)) {
                 $viewModel->hasCardinalDirections = true;
-                $viewModel->{Direction::toSlug($key)} = (object) [
-                    'id'   => $directionLocation['id'],
-                    'name' => $directionLocation['name'],
-                ];
+                $viewModel->{Direction::toSlug($key)} = $directionViewModel;
+            } elseif (Direction::isVertical($key)) {
+                $viewModel->hasVerticalDirections = true;
+                $directionViewModel->icon = null;
+                $viewModel->{Direction::toSlug($key)} = $directionViewModel;
             } else {
-                $viewModel->directions[] = (object) [
-                    'id'   => $directionLocation['id'],
-                    'name' => $directionLocation['name'],
-                ];
+                $viewModel->directions[] = $directionViewModel;
             }
         }
 

@@ -19,7 +19,7 @@ use ConorSmith\Pokemon\Controllers\GetIndex;
 use ConorSmith\Pokemon\Controllers\GetLogCalorieGoal;
 use ConorSmith\Pokemon\Controllers\GetLogExercise;
 use ConorSmith\Pokemon\Controllers\GetLogFoodDiary;
-use ConorSmith\Pokemon\Controllers\GetMapEncounter;
+use ConorSmith\Pokemon\Controllers\GetMap;
 use ConorSmith\Pokemon\Controllers\GetTeamItemUse;
 use ConorSmith\Pokemon\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Controllers\PostEncounterRun;
@@ -28,7 +28,7 @@ use ConorSmith\Pokemon\Controllers\PostLogCalorieGoal;
 use ConorSmith\Pokemon\Controllers\PostLogExercise;
 use ConorSmith\Pokemon\Controllers\PostLogFoodDiary;
 use ConorSmith\Pokemon\Controllers\PostLogWeeklyReview;
-use ConorSmith\Pokemon\Controllers\PostMapEncounter;
+use ConorSmith\Pokemon\Controllers\PostMap;
 use ConorSmith\Pokemon\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Controllers\PostTeamItemUse;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveDown;
@@ -55,8 +55,8 @@ final class ControllerFactory
         $r->post("/map/move", PostMapMove::class);
         $r->get("/log/exercise", GetLogExercise::class);
         $r->post("/log/exercise", PostLogExercise::class);
-        $r->get("/map/encounter", GetMapEncounter::class);
-        $r->post("/map/encounter", PostMapEncounter::class);
+        $r->get("/map", GetMap::class);
+        $r->post("/map", PostMap::class);
         $r->get("/team", GetTeam::class);
         $r->get("/encounter/{id}", GetEncounter::class);
         $r->post("/encounter/{id}/catch", PostEncounterCatch::class);
@@ -106,14 +106,14 @@ final class ControllerFactory
                 $this->session,
                 $this->bagRepository,
             ),
-            GetMapEncounter::class => new GetMapEncounter(
+            GetMap::class => new GetMap(
                 $this->db,
                 $this->session,
                 $this->bagRepository,
                 $this->viewModelFactory,
                 $this->map,
             ),
-            PostMapEncounter::class => new PostMapEncounter(
+            PostMap::class => new PostMap(
                 $this->db,
                 $this->session,
                 $this->bagRepository,
