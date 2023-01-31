@@ -11,7 +11,9 @@
         <strong>You encountered a wild <?=$pokemon->name?></strong>
     </li>
     <li class="list-group-item d-flex flex-row-reverse">
-        <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-left: 1rem;">
+        <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?> pokemon-image--encounter">
+            <img src="<?=$pokemon->imageUrl?>">
+        </div>
         <div style="text-align: right;">
             <h5>
                 <?=$pokemon->name?>
@@ -27,7 +29,9 @@
         </div>
     </li>
     <li class="list-group-item d-flex">
-        <img src="<?=$leadPokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
+        <div class="pokemon-image <?=$leadPokemon->isShiny ? "pokemon-image--shiny" : ""?>">
+            <img src="<?=$leadPokemon->imageUrl?>">
+        </div>
         <div>
             <h5><?=$leadPokemon->name?></h5>
             <p class="mb-0">Lv <?=$leadPokemon->level?></p>

@@ -24,6 +24,7 @@ final class ViewModelFactory
             'primaryType' => self::createPokemonTypeName($pokemon->primaryType),
             'secondaryType' => is_null($pokemon->secondaryType) ? null : self::createPokemonTypeName($pokemon->secondaryType),
             'level' => strval($pokemon->level),
+            'isShiny' => $pokemon->isShiny,
         ];
     }
 
@@ -36,6 +37,7 @@ final class ViewModelFactory
             self::createPokemonTypeName($pokemon->primaryType),
             is_null($pokemon->secondaryType) ? null : self::createPokemonTypeName($pokemon->secondaryType),
             strval($pokemon->level),
+            $pokemon->isShiny,
         );
     }
 

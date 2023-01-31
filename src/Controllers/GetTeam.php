@@ -72,6 +72,7 @@ final class GetTeam
                     ? ViewModelFactory::createPokemonTypeName($this->findPokedexEntry($row['pokemon_id'])['type'][1])
                     : null,
                 'level' => $row['level'],
+                'isShiny' => $row['is_shiny'],
             ],
             $rows
         );

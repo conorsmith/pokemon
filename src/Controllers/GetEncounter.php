@@ -54,12 +54,14 @@ final class GetEncounter
             'imageUrl'     => TeamMember::createImageUrl($encounterRow['pokemon_id']),
             'level'        => $encounterRow['level'],
             'isRegistered' => $pokedexRow !== false,
+            'isShiny'      => $encounterRow['is_shiny'],
         ];
 
         $leadPokemon = (object) [
             'name'     => $this->pokedex[$leadPokemonRow['pokemon_id']]['name'],
             'imageUrl' => TeamMember::createImageUrl($leadPokemonRow['pokemon_id']),
             'level'    => $leadPokemonRow['level'],
+            'isShiny'  => $leadPokemonRow['is_shiny'],
         ];
 
         $pokeballs = [];

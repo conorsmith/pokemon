@@ -13,7 +13,9 @@
     <ul class="list-group">
         <?php foreach ($team as $i => $pokemon) : ?>
             <li class="list-group-item d-flex">
-                <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
+                <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>">
+                    <img src="<?=$pokemon->imageUrl?>">
+                </div>
                 <div class="flex-grow-1">
                     <h5><?=$pokemon->name?></h5>
                     <p class="mb-0">
@@ -59,7 +61,9 @@
     <ul class="list-group">
         <?php foreach ($box as $pokemon) : ?>
             <li class="list-group-item d-flex">
-                <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
+                <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>">
+                    <img src="<?=$pokemon->imageUrl?>">
+                </div>
                 <div class="w-100">
                     <h5><?=$pokemon->name?></h5>
                     <p class="mb-0">

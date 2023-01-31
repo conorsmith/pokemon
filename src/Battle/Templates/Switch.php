@@ -5,7 +5,9 @@
 <ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
     <?php foreach ($team as $pokemon) : ?>
         <li class="list-group-item d-flex">
-            <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
+            <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>">
+                <img src="<?=$pokemon->imageUrl?>">
+            </div>
             <div class="w-100">
                 <h5><?=$pokemon->name?></h5>
                 <p class="mb-0">

@@ -17,7 +17,9 @@
     <form method="POST" action="/team/use/<?=$item->id?>">
         <?php foreach ($team as $pokemon) : ?>
             <button type="submit" name="pokemon" value="<?=$pokemon->id?>" class="list-group-item list-group-item-action d-flex">
-                <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
+                <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>">
+                    <img src="<?=$pokemon->imageUrl?>">
+                </div>
                 <div>
                     <h5><?=$pokemon->name?></h5>
                     <p class="mb-0">

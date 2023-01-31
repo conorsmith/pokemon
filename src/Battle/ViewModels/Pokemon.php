@@ -12,5 +12,6 @@ final class Pokemon
         public readonly string $primaryType,
         public readonly ?string $secondaryType,
         public readonly string $level,
+        public readonly bool $isShiny,
     ) {}
 }

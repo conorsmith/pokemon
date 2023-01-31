@@ -36,6 +36,7 @@ final class PlayerRepository
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,
                 $caughtPokemonRow['level'],
+                $caughtPokemonRow['is_shiny'] === 1,
                 $caughtPokemonRow['has_fainted'] === 1,
             );
         }

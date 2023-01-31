@@ -21,7 +21,9 @@
         </div>
     </li>
     <li class="list-group-item d-flex flex-row-reverse">
-        <img src="<?=$activePokemon->imageUrl?>" style="width: 6rem; margin-left: 1rem;">
+        <div class="pokemon-image <?=$activePokemon->isShiny ? "pokemon-image--shiny" : ""?>">
+            <img src="<?=$activePokemon->imageUrl?>">
+        </div>
         <div style="text-align: right;">
             <h5><?=$activePokemon->name?></h5>
             <p class="mb-0 d-flex flex-row-reverse">
@@ -42,7 +44,9 @@
         </div>
     </li>
     <li class="list-group-item d-flex">
-        <img src="<?=$leadPokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
+        <div class="pokemon-image <?=$leadPokemon->isShiny ? "pokemon-image--shiny" : ""?>">
+            <img src="<?=$leadPokemon->imageUrl?>">
+        </div>
         <div>
             <h5><?=$leadPokemon->name?></h5>
             <p class="mb-0">

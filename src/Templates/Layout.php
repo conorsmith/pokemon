@@ -62,6 +62,36 @@
             background: #EE99AC;
         }
 
+        .pokemon-image {
+            width: 6rem;
+            margin-right: 1rem;
+        }
+        .flex-row-reverse .pokemon-image {
+            margin-right: 0;
+            margin-left: 1rem;
+        }
+        .pokemon-image img {
+            width: 100%;
+        }
+        .pokemon-image.pokemon-image--shiny img {
+            filter: hue-rotate(180deg);
+        }
+        .pokemon-image.pokemon-image--shiny.pokemon-image--encounter img {
+            animation-name: flash;
+            animation-duration: 0.5s;
+            animation-fill-mode: both;
+            animation-iteration-count: 3;
+        }
+
+        @keyframes flash {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.4;
+            }
+        }
+
     </style>
 </head>
 <body>

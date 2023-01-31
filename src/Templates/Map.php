@@ -19,11 +19,23 @@
 
     </div>
 
+    <style>
+        .directions-cardinal button {
+            flex-direction: column;
+        }
+        
+        @media (min-width: 450px) {
+            .directions-cardinal button {
+                flex-direction: row;
+            }
+        }
+    </style>
+
     <div class="card" style="text-align: center;">
 
         <?php if ($currentLocation->hasCardinalDirections) : ?>
 
-            <div class="card-body d-grid gap-2" style="grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; align-items: stretch;">
+            <div class="card-body d-grid gap-2 directions-cardinal" style="grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; align-items: stretch;">
 
                 <div></div>
                 <div>

@@ -41,6 +41,7 @@ final class PostMap
 
         $encounteredPokemonId = self::generateEncounteredPokemon($currentLocation);
         $encounteredPokemonLevel = self::generateEncounteredLevel($currentLocation, $encounteredPokemonId);
+        $encounteredPokemonIsShiny = self::generateEncounteredShininess();
 
         $encounterId = Uuid::uuid4();
 
@@ -49,9 +50,15 @@ final class PostMap
             'instance_id' => INSTANCE_ID,
             'pokemon_id' => $encounteredPokemonId,
             'level' => $encounteredPokemonLevel,
+            'is_shiny' => $encounteredPokemonIsShiny ? 1 : 0,
         ]);
 
         header("Location: /encounter/{$encounterId}");
+    }
+
+    private static function generateEncounteredShininess(): bool
+    {
+        return mt_rand(1, 4096) === 1;
     }
 
     private static function generateEncounteredPokemon(array $currentLocation): string

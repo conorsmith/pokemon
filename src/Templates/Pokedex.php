@@ -11,7 +11,9 @@
         <?php foreach ($pokedex as $number => $pokemon) : ?>
             <li class="list-group-item d-flex">
                 <?php if ($pokemon) : ?>
-                    <img src="<?=$pokemon->imageUrl?>" style="width: 6rem; margin-right: 1rem;">
+                    <div class="pokemon-image">
+                        <img src="<?=$pokemon->imageUrl?>">
+                    </div>
                     <div class="flex-grow-1">
                         <h5>
                             <span style="color: #888;">#<?=$number?></span>

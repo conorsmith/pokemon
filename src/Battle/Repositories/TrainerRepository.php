@@ -70,6 +70,7 @@ final class TrainerRepository
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,
                 $pokemonConfig['level'],
+                isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
                 $i < $trainerBattleRow['active_pokemon'],
             );
         }
