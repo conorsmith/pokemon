@@ -35,6 +35,7 @@ use ConorSmith\Pokemon\Controllers\PostTeamMoveDown;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveUp;
 use ConorSmith\Pokemon\Controllers\PostTeamSendToBox;
 use ConorSmith\Pokemon\Controllers\PostTeamSendToTeam;
+use ConorSmith\Pokemon\Habit\Repositories\FoodDiaryRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
@@ -84,6 +85,7 @@ final class ControllerFactory
         private readonly TrainerRepository       $trainerRepository,
         private readonly PlayerRepository        $playerRepository,
         private readonly BagRepository           $bagRepository,
+        private readonly FoodDiaryRepository     $foodDiaryRepository,
         private readonly ViewModelFactory        $viewModelFactory,
         private readonly array                   $pokedex,
         private readonly array                   $map,
@@ -92,7 +94,10 @@ final class ControllerFactory
     public function create(string $className): mixed
     {
         return match ($className) {
-            GetLogFoodDiary::class => new GetLogFoodDiary($this->db, $this->session),
+            GetLogFoodDiary::class => new GetLogFoodDiary(
+                $this->session,
+                $this->foodDiaryRepository,
+            ),
             PostLogFoodDiary::class => new PostLogFoodDiary($this->db, $this->session),
             GetLogWeeklyReview::class => new GetLogWeeklyReview($this->db, $this->session),
             PostLogWeeklyReview::class => new PostLogWeeklyReview($this->db, $this->session),
@@ -117,6 +122,7 @@ final class ControllerFactory
                 $this->db,
                 $this->session,
                 $this->bagRepository,
+                $this->foodDiaryRepository,
                 $this->map,
             ),
             GetTeam::class => new GetTeam(

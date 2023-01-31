@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\Habit\Repositories\FoodDiaryRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
@@ -14,6 +15,7 @@ final class PostMap
         private readonly Connection $db,
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
+        private readonly FoodDiaryRepository $foodDiaryRepository,
         private readonly array $map,
     ) {}
 
@@ -56,9 +58,27 @@ final class PostMap
         header("Location: /encounter/{$encounterId}");
     }
 
-    private static function generateEncounteredShininess(): bool
+    private function generateEncounteredShininess(): bool
     {
-        return mt_rand(1, 4096) === 1;
+        $foodDiary = $this->foodDiaryRepository->find();
+
+        $streak = $foodDiary->getStreak();
+
+        $divisor = $streak < 7 ? self::curveBeforeOneWeek($streak) : self::curveAfterOneWeek($streak);
+
+        $odds = intval(round(4096 / $divisor));
+
+        return mt_rand(1, $odds) === 1;
+    }
+
+    private static function curveBeforeOneWeek(int $i): float
+    {
+        return 0.480898 * log(8 * ($i + 1));
+    }
+
+    private static function curveAfterOneWeek(int $i): float
+    {
+        return 3.54073 * log(0.251313 * $i);
     }
 
     private static function generateEncounteredPokemon(array $currentLocation): string

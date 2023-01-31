@@ -30,6 +30,7 @@ $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
     new \ConorSmith\Pokemon\Battle\Repositories\TrainerRepository($db, $pokedex, $map),
     new \ConorSmith\Pokemon\Battle\Repositories\PlayerRepository($db, $pokedex),
     new \ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository($db),
+    new \ConorSmith\Pokemon\Habit\Repositories\FoodDiaryRepository($db),
     new \ConorSmith\Pokemon\ViewModelFactory($pokedex),
     $pokedex,
     $map,
