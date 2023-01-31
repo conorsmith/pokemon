@@ -91,6 +91,7 @@ final class PostEncounterCatch
                 'id' => Uuid::uuid4(),
                 'instance_id' => INSTANCE_ID,
                 'pokemon_id' => $encounterRow['pokemon_id'],
+                'is_shiny' => $encounterRow['is_shiny'],
                 'level' => $encounterRow['level'],
                 'team_position' => $teamPosition,
                 'has_fainted' => 0,

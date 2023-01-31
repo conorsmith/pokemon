@@ -2,6 +2,10 @@
 
     <h1>Food Diary</h1>
 
+    <div>
+        <strong><?=$streak?></strong> day streak
+    </div>
+
     <?php foreach ($errors as $error) : ?>
         <div class="alert alert-danger"><?=$error?></div>
     <?php endforeach ?>

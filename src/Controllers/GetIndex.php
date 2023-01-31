@@ -38,11 +38,6 @@ final class GetIndex
         $successes = $this->session->getFlashBag()->get("successes");
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Index.php", [
-            'summary' => (object) [
-                'pokeballs' => $instanceRow['unused_encounters'],
-                'rareCandies' => $instanceRow['unused_level_ups'],
-                'challengeTokens' => $instanceRow['unused_moves'],
-            ],
             'items' => self::createBagViewModels($bag),
             'team' => $this->createTeamViewModels($player),
             'badges' => array_map(

@@ -30,6 +30,15 @@ final class GetLogFoodDiary
             'dateLogged' => "{$yesterday} 12:00:00",
         ]);
 
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM log_food_diary WHERE instance_id = :instanceId ORDER BY date_logged DESC", [
+            'instanceId' => INSTANCE_ID,
+        ]);
+
+        $loggedDates = array_map(
+            fn(array $row) => CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged']),
+            $rows
+        );
+
         $isTodayLogged = $todayRow !== false;
         $isYesterdayLogged = $yesterdayRow !== false;
 
@@ -40,7 +49,32 @@ final class GetLogFoodDiary
             'yesterday' => $yesterday,
             'isTodayLogged' => $isTodayLogged,
             'isYesterdayLogged' => $isYesterdayLogged,
+            'streak' => self::calculateStreak($loggedDates),
             'errors' => $errors,
         ]);
+    }
+
+    private function calculateStreak(array $dates): int
+    {
+        /** @var CarbonImmutable $latestDate */
+        $latestDate = array_shift($dates);
+
+        if (!$latestDate->isToday() && !$latestDate->isYesterday()) {
+            return 0;
+        }
+
+        $streak = 1;
+
+        /** @var CarbonImmutable $date */
+        foreach ($dates as $date) {
+            if ($date->diffInDays($latestDate) !== 1) {
+                return $streak;
+            }
+
+            $streak++;
+            $latestDate = $date;
+        }
+
+        return $streak;
     }
 }
