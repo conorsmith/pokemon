@@ -42,6 +42,7 @@ final class LocationId
     public const TEAM_ROCKET_HIDEOUT_B4F = "fffe0b32-bf2d-4b65-85f0-744d3e6fb06e";
     public const ROUTE_8 = "a006849d-3c22-4b57-b6d9-3ab23f6f42cf";
     public const ROUTE_9 = "57968d07-cea1-4a9b-ac21-53609a25ea36";
+    public const POWER_PLANT = "01f3a7cb-ca9e-47bc-9976-7e8dbc5c79ad";
     public const ROCK_TUNNEL_1F = "dca3ae52-de54-413b-a838-b4ddf6da97d5";
     public const ROCK_TUNNEL_B1F = "0d6f7674-b690-47dd-833b-602b9bf4f319";
     public const ROUTE_10 = "3d732b49-da46-4985-bd04-a59cce17ee44";

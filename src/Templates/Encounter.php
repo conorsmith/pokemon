@@ -8,7 +8,11 @@
 
 <ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
     <li class="list-group-item" style="text-align: center;">
-        <strong>You encountered a wild <?=$pokemon->name?></strong>
+        <?php if ($isLegendary) : ?>
+            <strong>You encounter the legendary Pokémon <?=$pokemon->name?></strong>
+        <?php else : ?>
+            <strong>You encounter a wild <?=$pokemon->name?></strong>
+        <?php endif ?>
     </li>
     <li class="list-group-item d-flex flex-row-reverse">
         <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?> pokemon-image--encounter">

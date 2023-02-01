@@ -181,4 +181,42 @@
 
     <?php endif ?>
 
+    <?php if ($legendary) : ?>
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div><strong>Legendary Encounter</strong></div>
+                <div class="d-flex" style="text-align: center; gap: 4px;">
+                    <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                    <span><?=$challengeTokens?></span>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="pokemon-image">
+                        <img src="<?=$legendary->imageUrl?>">
+                    </div>
+                    <div>
+                        <div><strong>
+                                <?=$legendary->name?>
+                            </strong></div>
+                        <div>
+                            <small><i class="fas fa-star"></i> Lv <?=$legendary->level?></small>
+                        </div>
+                        <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
+                            <form method="POST" action="/map" style="margin-right: 0.6rem;">
+                                <input type="hidden" name="legendary" value="<?=$legendary->number?>">
+                                <button type="submit" class="btn btn-outline-dark btn-sm" <?=$legendary->canBattle ? "" : "disabled"?>>Battle</button>
+                            </form>
+                            <?php if ($legendary->lastEncountered) : ?>
+                                <span style="font-size: 0.8rem;">Last encountered <?=$legendary->lastEncountered?></span>
+                            <?php endif ?>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    <?php endif ?>
+
 </div>

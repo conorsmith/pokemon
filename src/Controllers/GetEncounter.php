@@ -75,6 +75,7 @@ final class GetEncounter
             'pokemon' => $pokemon,
             'leadPokemon' => $leadPokemon,
             'pokeballs' => $pokeballs,
+            'isLegendary' => $encounterRow['is_legendary'],
             'successes' => $this->session->getFlashBag()->get("successes"),
             'errors' => $this->session->getFlashBag()->get("errors"),
         ]);

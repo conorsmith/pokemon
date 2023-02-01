@@ -72,7 +72,11 @@ final class PostEncounterCatch
 
         if ($caught) {
 
-            $this->session->getFlashBag()->add("successes", "You caught the wild {$pokemon['name']}!");
+            if ($encounterRow['is_legendary']) {
+                $this->session->getFlashBag()->add("successes", "You caught the legendary Pokémon {$pokemon['name']}!");
+            } else {
+                $this->session->getFlashBag()->add("successes", "You caught the wild {$pokemon['name']}!");
+            }
 
             $positionRow = $this->db->fetchNumeric("SELECT MAX(team_position) FROM caught_pokemon WHERE instance_id = :instanceId", [
                 'instanceId' => INSTANCE_ID,
@@ -113,6 +117,15 @@ final class PostEncounterCatch
                 ]);
             }
 
+            if ($encounterRow['is_legendary']) {
+                $this->db->insert("legendary_captures", [
+                    'id' => Uuid::uuid4(),
+                    'instance_id' => INSTANCE_ID,
+                    'pokemon_id' => $encounterRow['pokemon_id'],
+                    'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
+                ]);
+            }
+
             $bag = $bag->use($pokeballItemId);
 
             $this->bagRepository->save($bag);
@@ -129,7 +142,11 @@ final class PostEncounterCatch
 
             $this->bagRepository->save($bag);
 
-            $this->session->getFlashBag()->add("successes", "You failed to catch the wild {$pokemon['name']}");
+            if ($encounterRow['is_legendary']) {
+                $this->session->getFlashBag()->add("successes", "You failed to catch the legendary Pokémon {$pokemon['name']}");
+            } else {
+                $this->session->getFlashBag()->add("successes", "You failed to catch the wild {$pokemon['name']}");
+            }
 
             header("Location: /encounter/{$id}");
         }

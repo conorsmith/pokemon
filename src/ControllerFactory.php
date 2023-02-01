@@ -57,7 +57,7 @@ final class ControllerFactory
         $r->post("/log/food-diary", PostLogFoodDiary::class);
         $r->get("/log/weekly-review", GetLogWeeklyReview::class);
         $r->post("/log/weekly-review", PostLogWeeklyReview::class);
-        
+
         $r->get("/pokedex", GetPokedex::class);
         $r->post("/map/move", PostMapMove::class);
         $r->get("/map", GetMap::class);
@@ -149,6 +149,7 @@ final class ControllerFactory
                 $this->bagRepository,
                 $this->viewModelFactory,
                 $this->map,
+                $this->pokedex,
             ),
             PostMap::class => new PostMap(
                 $this->db,

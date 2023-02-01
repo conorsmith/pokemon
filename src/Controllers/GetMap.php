@@ -7,12 +7,14 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Direction;
 use ConorSmith\Pokemon\Gender;
+use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\LocationType;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
+use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
 use stdClass;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -25,6 +27,7 @@ final class GetMap
         private readonly BagRepository $bagRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly array $map,
+        private readonly array $pokedex,
     ) {}
 
     public function __invoke(): void
@@ -82,14 +85,105 @@ final class GetMap
             }
         }
 
+        $legendaryConfig = self::findLegendaryConfig($instanceRow['current_location']);
+
         echo TemplateEngine::render(__DIR__ . "/../Templates/Map.php", [
             'canEncounter' => $bag->hasAnyPokeBall() && $currentLocation->hasPokemon,
             'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
             'trainers' => $trainers,
+            'legendary' => $this->createLegendaryViewModel($legendaryConfig),
             'successes' => $successes,
             'errors' => $errors,
         ]);
+    }
+
+    private function createLegendaryViewModel(?array $legendaryConfig): ?stdClass
+    {
+        if (is_null($legendaryConfig)) {
+            return null;
+        }
+
+        $pokedexRows = $this->db->fetchAllAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId", [
+            'instanceId' => INSTANCE_ID,
+        ]);
+
+        if (count($pokedexRows) < $legendaryConfig['unlock']) {
+            return null;
+        }
+
+        $latestCaptureRow = $this->db->fetchAssociative("SELECT * FROM legendary_captures WHERE instance_id = :instanceId AND pokemon_id = :pokemonId ORDER BY date_caught DESC", [
+            'instanceId' => INSTANCE_ID,
+            'pokemonId' => $legendaryConfig['pokemon'],
+        ]);
+
+        $canBattle = true;
+
+        $lastCaught = $latestCaptureRow
+            ? CarbonImmutable::createFromFormat("Y-m-d H:i:s", $latestCaptureRow['date_caught'], "Europe/Dublin")
+            : null;
+
+        if ($lastCaught && $lastCaught->addMonth() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"))) {
+            $canBattle = false;
+        }
+
+        $bag = $this->bagRepository->find();
+
+        if (!$bag->hasAnyPokeBall()) {
+            $canBattle = false;
+        }
+
+        if (!$bag->has(ItemId::CHALLENGE_TOKEN)) {
+            $canBattle = false;
+        }
+
+        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
+            'instanceId' => INSTANCE_ID,
+        ]);
+
+        $levelLimit = self::findLevelLimit($instanceRow);
+
+        if ($legendaryConfig['level'] > $levelLimit) {
+            $canBattle = false;
+        }
+
+        return (object) [
+            'number'          => $legendaryConfig['pokemon'],
+            'name'            => $this->pokedex[$legendaryConfig['pokemon']]['name'],
+            'imageUrl'        => TeamMember::createImageUrl($legendaryConfig['pokemon']),
+            'level'           => $legendaryConfig['level'],
+            'canBattle'       => $canBattle,
+            'lastEncountered' => $lastCaught ? $lastCaught->ago() : "",
+        ];
+    }
+
+    private static function findLevelLimit(array $instanceRow): int
+    {
+        $gymBadges = array_map(
+            fn(int $value) => GymBadge::from($value),
+            json_decode($instanceRow['badges'])
+        );
+
+        if (count($gymBadges) === 0) {
+            return GymBadge::BOULDER->levelLimit();
+        }
+
+        $highestRankedBadge = GymBadge::findHighestRanked($gymBadges);
+
+        return $highestRankedBadge->levelLimit();
+    }
+
+    private static function findLegendaryConfig(string $locationId): ?array
+    {
+        $legendariesConfig = require __DIR__ . "/../Config/Legendaries.php";
+
+        foreach ($legendariesConfig as $config) {
+            if ($config['location'] === $locationId) {
+                return $config;
+            }
+        }
+
+        return null;
     }
 
     private function findLocation(string $id): array

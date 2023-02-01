@@ -773,7 +773,7 @@ return [
         'directions' => [
             Direction::W => LocationId::CERULEAN_CITY,
             Direction::S => LocationId::ROCK_TUNNEL_1F,
-            "01f3a7cb-ca9e-47bc-9976-7e8dbc5c79ad",
+            LocationId::POWER_PLANT,
         ],
         'pokemon' => [
             PokedexNo::RATTATA => [
@@ -795,7 +795,7 @@ return [
         ],
     ],
     [
-        'id' => "01f3a7cb-ca9e-47bc-9976-7e8dbc5c79ad",
+        'id' => LocationId::POWER_PLANT,
         'name' => "Power Plant",
         'type' => LocationType::TOWER,
         'directions' => [

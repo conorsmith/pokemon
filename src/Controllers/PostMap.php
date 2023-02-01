@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
@@ -21,6 +22,8 @@ final class PostMap
 
     public function __invoke(): void
     {
+        $legendaryPokemonNumber = $_POST['legendary'] ?? null;
+
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
             'instanceId' => INSTANCE_ID,
         ]);
@@ -41,8 +44,10 @@ final class PostMap
             exit;
         }
 
-        $encounteredPokemonId = self::generateEncounteredPokemon($currentLocation);
-        $encounteredPokemonLevel = self::generateEncounteredLevel($currentLocation, $encounteredPokemonId);
+        $encounteredPokemonId = $legendaryPokemonNumber ?? self::generateEncounteredPokemon($currentLocation);
+        $encounteredPokemonLevel = $legendaryPokemonNumber
+            ? self::findLegendaryPokemonLevel($legendaryPokemonNumber)
+            : self::generateEncounteredLevel($currentLocation, $encounteredPokemonId);
         $encounteredPokemonIsShiny = self::generateEncounteredShininess();
 
         $encounterId = Uuid::uuid4();
@@ -53,9 +58,35 @@ final class PostMap
             'pokemon_id' => $encounteredPokemonId,
             'level' => $encounteredPokemonLevel,
             'is_shiny' => $encounteredPokemonIsShiny ? 1 : 0,
+            'is_legendary' => !is_null($legendaryPokemonNumber),
         ]);
 
+        if ($legendaryPokemonNumber) {
+            $bag = $bag->use(ItemId::CHALLENGE_TOKEN);
+            $this->bagRepository->save($bag);
+        }
+
         header("Location: /encounter/{$encounterId}");
+    }
+
+    private function findLegendaryPokemonLevel(string $legendaryPokemonNumber): int
+    {
+        $legendaryConfig = self::findLegendaryConfig($legendaryPokemonNumber);
+
+        return $legendaryConfig['level'];
+    }
+
+    private static function findLegendaryConfig(string $legendaryPokemonNumber): ?array
+    {
+        $legendariesConfig = require __DIR__ . "/../Config/Legendaries.php";
+
+        foreach ($legendariesConfig as $config) {
+            if ($config['pokemon'] === $legendaryPokemonNumber) {
+                return $config;
+            }
+        }
+
+        return null;
     }
 
     private function generateEncounteredShininess(): bool
