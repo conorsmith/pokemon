@@ -22,6 +22,7 @@ $pokedex = require __DIR__ . "/../src/Config/Pokedex.php";
 $map = require __DIR__ . "/../src/Config/Map.php";
 
 $caughtPokemonRepository = new \ConorSmith\Pokemon\Repositories\CaughtPokemonRepository($db);
+$dailyHabitLogRepository = new \ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository($db);
 
 $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
     $db,
@@ -30,8 +31,11 @@ $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
     new \ConorSmith\Pokemon\Battle\Repositories\TrainerRepository($db, $pokedex, $map),
     new \ConorSmith\Pokemon\Battle\Repositories\PlayerRepository($db, $pokedex),
     new \ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository($db),
-    new \ConorSmith\Pokemon\Habit\Repositories\FoodDiaryRepository($db),
+    $dailyHabitLogRepository,
+    new \ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository($db),
+    new \ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository($db),
     new \ConorSmith\Pokemon\ViewModelFactory($pokedex),
+    new \ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery($dailyHabitLogRepository),
     $pokedex,
     $map,
 );

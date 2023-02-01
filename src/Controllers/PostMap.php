@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
-use ConorSmith\Pokemon\Habit\Repositories\FoodDiaryRepository;
+use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
@@ -15,7 +15,7 @@ final class PostMap
         private readonly Connection $db,
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
-        private readonly FoodDiaryRepository $foodDiaryRepository,
+        private readonly HabitStreakQuery $habitStreakQuery,
         private readonly array $map,
     ) {}
 
@@ -60,9 +60,7 @@ final class PostMap
 
     private function generateEncounteredShininess(): bool
     {
-        $foodDiary = $this->foodDiaryRepository->find();
-
-        $streak = $foodDiary->getStreak();
+        $streak = $this->habitStreakQuery->run();
 
         $divisor = $streak < 7 ? self::curveBeforeOneWeek($streak) : self::curveAfterOneWeek($streak);
 
