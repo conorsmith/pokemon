@@ -27,6 +27,6 @@ return [
         'pokemon' => PokedexNo::MEWTWO,
         'location' => LocationId::CERULEAN_CAVE_B1F,
         'level' => 70,
-        'unlock' => 1,
+        'unlock' => 125,
     ],
 ];
