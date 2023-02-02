@@ -179,7 +179,10 @@ final class TrainerClass
             self::CAMPER => "https://archives.bulbagarden.net/media/upload/2/23/Spr_FRLG_Camper.png",
             self::GYM_LEADER => null,
             self::BLACK_BELT => "https://archives.bulbagarden.net/media/upload/8/8e/Spr_FRLG_Black_Belt.png",
-            self::COOLTRAINER => "https://archives.bulbagarden.net/media/upload/7/7f/Spr_FRLG_Cooltrainer_F.png",
+            self::COOLTRAINER => match ($gender) {
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/b/b8/Spr_FRLG_Cooltrainer_M.png",
+                Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/7/7f/Spr_FRLG_Cooltrainer_F.png",
+            },
             self::TAMER => "https://archives.bulbagarden.net/media/upload/8/89/Spr_FRLG_Tamer.png",
             self::LASS => "https://archives.bulbagarden.net/media/upload/4/46/Spr_FRLG_Lass.png",
             self::YOUNGSTER => "https://archives.bulbagarden.net/media/upload/d/d5/Spr_FRLG_Youngster.png",
@@ -214,6 +217,7 @@ final class TrainerClass
             self::SCIENTIST => "https://archives.bulbagarden.net/media/upload/f/f9/Spr_FRLG_Scientist.png",
             self::SIS_AND_BRO => "https://archives.bulbagarden.net/media/upload/9/94/Spr_FRLG_Sis_and_Bro.png",
             self::BURGLAR => "https://archives.bulbagarden.net/media/upload/7/78/Spr_FRLG_Burglar.png",
+            self::COOL_COUPLE => "https://archives.bulbagarden.net/media/upload/c/cf/Spr_FRLG_Cool_Couple.png",
             default => null,
         };
     }

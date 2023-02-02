@@ -5592,4 +5592,280 @@ return [
             ],
         ],
     ],
+    LocationId::VICTORY_ROAD_1F => [
+        [
+            'id' => "c8b4d889-ccff-4089-8bdc-b808bb3ad450",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::FEMALE,
+            'name' => "Naomi",
+            'team' => [
+                [
+                    'id' => PokedexNo::PERSIAN,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::PONYTA,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::RAPIDASH,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::VULPIX,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::NINETALES,
+                    'level' => 42,
+                ],
+            ],
+        ],
+        [
+            'id' => "b831968a-457f-4f4d-9ca1-7c83f9882787",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::MALE,
+            'name' => "Rolando",
+            'team' => [
+                [
+                    'id' => PokedexNo::RATICATE,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::IVYSAUR,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::WARTORTLE,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::CHARMELEON,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::CHARIZARD,
+                    'level' => 42,
+                ],
+            ],
+        ],
+    ],
+    LocationId::VICTORY_ROAD_2F => [
+        [
+            'id' => "849d6dd5-b288-4566-a5a4-530dc4a574d1",
+            'class' => TrainerClass::BLACK_BELT,
+            'name' => "Daisuke",
+            'team' => [
+                [
+                    'id' => PokedexNo::MACHOKE,
+                    'level' => 43,
+                ],
+                [
+                    'id' => PokedexNo::MACHOP,
+                    'level' => 43,
+                ],
+                [
+                    'id' => PokedexNo::MACHOKE,
+                    'level' => 43,
+                ],
+            ],
+        ],
+        [
+            'id' => "6635986d-ba2b-4775-b51c-ececbdfe677e",
+            'class' => TrainerClass::JUGGLER,
+            'name' => "Nelson",
+            'team' => [
+                [
+                    'id' => PokedexNo::DROWZEE,
+                    'level' => 41,
+                ],
+                [
+                    'id' => PokedexNo::HYPNO,
+                    'level' => 41,
+                ],
+                [
+                    'id' => PokedexNo::KADABRA,
+                    'level' => 41,
+                ],
+                [
+                    'id' => PokedexNo::KADABRA,
+                    'level' => 41,
+                ],
+            ],
+        ],
+        [
+            'id' => "39339ecd-6336-492b-ac1e-0fbd9d14eec8",
+            'class' => TrainerClass::TAMER,
+            'name' => "Vincent",
+            'team' => [
+                [
+                    'id' => PokedexNo::PERSIAN,
+                    'level' => 44,
+                ],
+                [
+                    'id' => PokedexNo::GOLDUCK,
+                    'level' => 44,
+                ],
+            ],
+        ],
+        [
+            'id' => "aca38bc4-254f-45bf-b189-064267ef6161",
+            'class' => TrainerClass::JUGGLER,
+            'name' => "Gregory",
+            'team' => [
+                [
+                    'id' => PokedexNo::MRMIME,
+                    'level' => 48,
+                ],
+            ],
+        ],
+        [
+            'id' => "e9539c63-d26c-496a-9286-e1e5f9f966cd",
+            'class' => TrainerClass::POKEMANIAC,
+            'name' => "Dawson",
+            'team' => [
+                [
+                    'id' => PokedexNo::CHARMELEON,
+                    'level' => 40,
+                ],
+                [
+                    'id' => PokedexNo::LAPRAS,
+                    'level' => 40,
+                ],
+                [
+                    'id' => PokedexNo::LICKITUNG,
+                    'level' => 40,
+                ],
+            ],
+        ],
+    ],
+    LocationId::VICTORY_ROAD_3F => [
+        [
+            'id' => "bc42d013-8344-4521-90a8-4c64968428d0",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::MALE,
+            'name' => "George",
+            'team' => [
+                [
+                    'id' => PokedexNo::EXEGGUTOR,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::SANDSLASH,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::CLOYSTER,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::ELECTRODE,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::ARCANINE,
+                    'level' => 42,
+                ],
+            ],
+        ],
+        [
+            'id' => "738c6012-ba89-4243-a47c-f7246c6beac5",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::FEMALE,
+            'name' => "Alexa",
+            'team' => [
+                [
+                    'id' => PokedexNo::CLEFAIRY,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::JIGGLYPUFF,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::PERSIAN,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::DEWGONG,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::CHANSEY,
+                    'level' => 42,
+                ],
+            ],
+        ],
+        [
+            'id' => "6ad11037-cf81-4945-863b-9cadefd6c2bf",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::MALE,
+            'name' => "Colby",
+            'team' => [
+                [
+                    'id' => PokedexNo::KINGLER,
+                    'level' => 41,
+                ],
+                [
+                    'id' => PokedexNo::POLIWHIRL,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::TENTACRUEL,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::SEADRA,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::BLASTOISE,
+                    'level' => 43,
+                ],
+            ],
+        ],
+        [
+            'id' => "64706041-1546-4e36-83ec-36a839199124",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::FEMALE,
+            'name' => "Caroline",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::WEEPINBELL,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::VICTREEBEL,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::PARAS,
+                    'level' => 42,
+                ],
+                [
+                    'id' => PokedexNo::PARASECT,
+                    'level' => 42,
+                ],
+            ],
+        ],
+        [
+            'id' => "87723889-c878-4aec-8ae4-5e360cf483a5",
+            'class' => TrainerClass::COOL_COUPLE,
+            'name' => "Ray & Tyra",
+            'team' => [
+                [
+                    'id' => PokedexNo::NIDOKING,
+                    'level' => 45,
+                ],
+                [
+                    'id' => PokedexNo::NIDOQUEEN,
+                    'level' => 45,
+                ],
+            ],
+        ],
+    ],
 ];

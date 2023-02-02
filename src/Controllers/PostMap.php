@@ -58,7 +58,7 @@ final class PostMap
             'pokemon_id' => $encounteredPokemonId,
             'level' => $encounteredPokemonLevel,
             'is_shiny' => $encounteredPokemonIsShiny ? 1 : 0,
-            'is_legendary' => !is_null($legendaryPokemonNumber),
+            'is_legendary' => !is_null($legendaryPokemonNumber) ? 1 : 0,
         ]);
 
         if ($legendaryPokemonNumber) {
