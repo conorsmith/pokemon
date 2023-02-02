@@ -186,7 +186,10 @@ final class TrainerClass
             self::SUPER_NERD => "https://archives.bulbagarden.net/media/upload/1/1f/Spr_FRLG_Super_Nerd.png",
             self::HIKER => "https://archives.bulbagarden.net/media/upload/8/8c/Spr_FRLG_Hiker.png",
             self::TEAM_ROCKET_GRUNT => "https://archives.bulbagarden.net/media/upload/8/85/Spr_FRLG_Team_Rocket_Grunt_M.png",
-            self::SWIMMER => "https://archives.bulbagarden.net/media/upload/9/95/Spr_FRLG_Swimmer_M.png",
+            self::SWIMMER => match ($gender) {
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/9/95/Spr_FRLG_Swimmer_M.png",
+                Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/4/4d/Spr_FRLG_Swimmer_F.png",
+            },
             self::PICNICKER => "https://archives.bulbagarden.net/media/upload/a/a0/Spr_FRLG_Picnicker.png",
             self::SAILOR => "https://archives.bulbagarden.net/media/upload/a/a1/Spr_FRLG_Sailor.png",
             self::ENGINEER => "https://archives.bulbagarden.net/media/upload/7/71/Spr_FRLG_Engineer.png",
@@ -208,6 +211,9 @@ final class TrainerClass
             self::CRUSH_KIN => "https://archives.bulbagarden.net/media/upload/c/cc/Spr_FRLG_Crush_Kin.png",
             self::JUGGLER => "https://archives.bulbagarden.net/media/upload/5/50/Spr_FRLG_Juggler.png",
             self::PSYCHIC => "https://archives.bulbagarden.net/media/upload/e/ea/Spr_FRLG_Psychic_M.png",
+            self::SCIENTIST => "https://archives.bulbagarden.net/media/upload/f/f9/Spr_FRLG_Scientist.png",
+            self::SIS_AND_BRO => "https://archives.bulbagarden.net/media/upload/9/94/Spr_FRLG_Sis_and_Bro.png",
+            self::BURGLAR => "https://archives.bulbagarden.net/media/upload/7/78/Spr_FRLG_Burglar.png",
             default => null,
         };
     }

@@ -59,13 +59,16 @@ final class PostLogWeeklyReview
         $grossBonus = $foodDiaryHabitLog->count($submittedWeek) + $calorieGoalHabitLog->count($submittedWeek);
         $penalty = intval(ceil($totalExcess / 500));
         $netBonus = max(0, $grossBonus - $penalty);
+        $rareCandy = intval(floor($netBonus / 2));
+        $challengeTokens = intval(ceil($netBonus / 2));
 
         $weeklyHabitLog = $weeklyHabitLog->record(new WeeklyHabitLogEntry(
             Uuid::uuid4(),
             $submittedWeek,
             $totalExcess
         ));
-        $bag = $bag->add(ItemId::RARE_CANDY, $netBonus);
+        $bag = $bag->add(ItemId::RARE_CANDY, $rareCandy);
+        $bag = $bag->add(ItemId::CHALLENGE_TOKEN, $challengeTokens);
 
         $this->db->beginTransaction();
 
@@ -74,7 +77,8 @@ final class PostLogWeeklyReview
 
         $this->db->commit();
 
-        $this->session->getFlashBag()->add("successes", "You earned {$netBonus} Rare Candy!");
+        $this->session->getFlashBag()->add("successes", "You earned {$rareCandy} Rare Candy!");
+        $this->session->getFlashBag()->add("successes", "You earned {$challengeTokens} Challenge Tokens!");
 
         header("Location: /");
     }

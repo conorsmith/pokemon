@@ -66,8 +66,11 @@ final class GetMap
 
                 $imageUrl = TrainerClass::getImageUrl($trainer['class'], $trainer['gender'] ?? Gender::IMMATERIAL);
 
+                $hasCompletedPrerequisite = true;
+
                 if (array_key_exists('leader', $trainer)) {
                     $imageUrl = $trainer['leader']['imageUrl'];
+                    $hasCompletedPrerequisite = $this->hasBeatenAllGymTrainers($trainer, $trainerConfigFile[$instanceRow['current_location']]);
                 }
 
                 $trainers[] = (object)[
@@ -75,7 +78,7 @@ final class GetMap
                     'name'        => TrainerClass::getLabel($trainer['class']) . (isset($trainer['name']) ? " {$trainer['name']}" : ""),
                     'imageUrl'    => $imageUrl,
                     'team'        => count($trainer['team']),
-                    'canBattle'   => !$isInCooldownWindow && $challengeTokens > 0,
+                    'canBattle'   => !$isInCooldownWindow && $challengeTokens > 0 && $hasCompletedPrerequisite,
                     'lastBeaten'  => $lastBeaten ? $lastBeaten->ago() : "",
                     'isGymLeader' => array_key_exists('leader', $trainer),
                     'leaderBadge' => array_key_exists('leader', $trainer)
@@ -96,6 +99,33 @@ final class GetMap
             'successes' => $successes,
             'errors' => $errors,
         ]);
+    }
+
+    private function hasBeatenAllGymTrainers(array $trainer, array $otherTrainersInLocation): bool
+    {
+        $gymTrainerIds = array_filter(
+            array_map(
+                fn(array $trainer) => $trainer['id'],
+                $otherTrainersInLocation,
+            ),
+            fn(string $trainerId) => $trainerId !== $trainer['id'],
+        );
+
+        $beatenGymTrainerIds = [];
+
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId", [
+            'instanceId' => INSTANCE_ID,
+        ]);
+
+        foreach ($rows as $row) {
+            if (in_array($row['trainer_id'], $gymTrainerIds)
+                && $row['date_last_beaten'] !== null
+            ) {
+                $beatenGymTrainerIds[] = $row['trainer_id'];
+            }
+        }
+
+        return $gymTrainerIds === $beatenGymTrainerIds;
     }
 
     private function createLegendaryViewModel(?array $legendaryConfig): ?stdClass

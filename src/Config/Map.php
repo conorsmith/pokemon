@@ -13,7 +13,7 @@ return [
         'type' => LocationType::CITY,
         'directions' => [
             Direction::N => LocationId::ROUTE_1,
-            Direction::S => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
+            Direction::S => LocationId::ROUTE_21,
         ],
     ],
     [
@@ -367,7 +367,7 @@ return [
             Direction::E => LocationId::ROUTE_8,
             Direction::S => LocationId::ROUTE_6,
             LocationId::SAFFRON_GYM,
-            // SILPH CO
+            LocationId::SILPH_CO_1F,
         ],
     ],
     [
@@ -376,6 +376,115 @@ return [
         'type' => LocationType::GYM,
         'directions' => [
             LocationId::SAFFRON_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_1F,
+        'name' => "Silph Co",
+        'section' => "1st Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_2F,
+            LocationId::SAFFRON_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_2F,
+        'name' => "Silph Co",
+        'section' => "2nd Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_3F,
+            Direction::D => LocationId::SILPH_CO_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_3F,
+        'name' => "Silph Co",
+        'section' => "3rd Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_4F,
+            Direction::D => LocationId::SILPH_CO_2F,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_4F,
+        'name' => "Silph Co",
+        'section' => "4th Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_5F,
+            Direction::D => LocationId::SILPH_CO_3F,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_5F,
+        'name' => "Silph Co",
+        'section' => "5th Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_6F,
+            Direction::D => LocationId::SILPH_CO_4F,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_6F,
+        'name' => "Silph Co",
+        'section' => "6th Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_7F,
+            Direction::D => LocationId::SILPH_CO_5F,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_7F,
+        'name' => "Silph Co",
+        'section' => "7th Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_8F,
+            Direction::D => LocationId::SILPH_CO_6F,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_8F,
+        'name' => "Silph Co",
+        'section' => "8th Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_9F,
+            Direction::D => LocationId::SILPH_CO_7F,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_9F,
+        'name' => "Silph Co",
+        'section' => "9th Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_10F,
+            Direction::D => LocationId::SILPH_CO_8F,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_10F,
+        'name' => "Silph Co",
+        'section' => "10th Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::U => LocationId::SILPH_CO_11F,
+            Direction::D => LocationId::SILPH_CO_9F,
+        ],
+    ],
+    [
+        'id' => LocationId::SILPH_CO_11F,
+        'name' => "Silph Co",
+        'section' => "11th Floor",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::D => LocationId::SILPH_CO_10F,
         ],
     ],
     [
@@ -1129,10 +1238,10 @@ return [
         'name' => "Fuchsia City",
         'type' => LocationType::CITY,
         'directions' => [
-            Direction::N => "0383556c-0b2e-4a33-a178-1b078fc60352",
+            Direction::N => LocationId::SAFARI_ZONE_S,
             Direction::W => LocationId::ROUTE_18,
             Direction::E => LocationId::ROUTE_15,
-            Direction::S => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
+            Direction::S => LocationId::ROUTE_19,
             LocationId::FUCHSIA_GYM,
         ],
     ],
@@ -1145,13 +1254,13 @@ return [
         ],
     ],
     [
-        'id' => "0383556c-0b2e-4a33-a178-1b078fc60352",
+        'id' => LocationId::SAFARI_ZONE_S,
         'name' => "Safari Zone",
         'section' => "South",
         'directions' => [
-            Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
-            Direction::W => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
-            Direction::E => "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
+            Direction::N => LocationId::SAFARI_ZONE_N,
+            Direction::W => LocationId::SAFARI_ZONE_W,
+            Direction::E => LocationId::SAFARI_ZONE_E,
             Direction::S => LocationId::FUCHSIA_CITY,
         ],
         'pokemon' => [
@@ -1210,13 +1319,13 @@ return [
         ],
     ],
     [
-        'id' => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
+        'id' => LocationId::SAFARI_ZONE_N,
         'name' => "Safari Zone",
         'section' => "North",
         'directions' => [
-            Direction::W => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
-            Direction::E => "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
-            Direction::S => "0383556c-0b2e-4a33-a178-1b078fc60352",
+            Direction::W => LocationId::SAFARI_ZONE_W,
+            Direction::E => LocationId::SAFARI_ZONE_E,
+            Direction::S => LocationId::SAFARI_ZONE_S,
         ],
         'pokemon' => [
             PokedexNo::NIDORAN_F => [
@@ -1266,12 +1375,12 @@ return [
         ],
     ],
     [
-        'id' => "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8",
+        'id' => LocationId::SAFARI_ZONE_E,
         'name' => "Safari Zone",
         'section' => "East",
         'directions' => [
-            Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
-            Direction::S => "0383556c-0b2e-4a33-a178-1b078fc60352",
+            Direction::N => LocationId::SAFARI_ZONE_N,
+            Direction::S => LocationId::SAFARI_ZONE_S,
         ],
         'pokemon' => [
             PokedexNo::NIDORAN_F => [
@@ -1325,12 +1434,12 @@ return [
         ],
     ],
     [
-        'id' => "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f",
+        'id' => LocationId::SAFARI_ZONE_W,
         'name' => "Safari Zone",
         'section' => "West",
         'directions' => [
-            Direction::N => "a44f53b0-5bb8-4fab-944b-07a1d027981e",
-            Direction::S => "0383556c-0b2e-4a33-a178-1b078fc60352",
+            Direction::N => LocationId::SAFARI_ZONE_N,
+            Direction::S => LocationId::SAFARI_ZONE_S,
         ],
         'pokemon' => [
             PokedexNo::NIDORAN_F => [
@@ -1473,7 +1582,7 @@ return [
         ],
     ],
     [
-        'id' => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
+        'id' => LocationId::ROUTE_19,
         'name' => "Route 19",
         'type' => LocationType::ROUTE,
         'directions' => [
@@ -1502,7 +1611,7 @@ return [
         'directions' => [
             Direction::W => LocationId::CINNABAR_ISLAND,
             LocationId::SEAFOAM_ISLANDS_1F,
-            Direction::E => "27940ef2-9539-4cdf-b16b-1551cf5259e3",
+            Direction::E => LocationId::ROUTE_19,
         ],
         'pokemon' => [
             'pokemon' => [
@@ -1729,10 +1838,18 @@ return [
         'name' => "Cinnabar Island",
         'type' => LocationType::CITY,
         'directions' => [
-            Direction::N => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
+            Direction::N => LocationId::ROUTE_21,
             LocationId::POKEMON_MANSION,
-            // CINNABAR GYM
+            LocationId::CINNABAR_GYM,
             Direction::E => LocationId::ROUTE_20,
+        ],
+    ],
+    [
+        'id' => LocationId::CINNABAR_GYM,
+        'name' => "Cinnabar Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::CINNABAR_ISLAND,
         ],
     ],
     [
@@ -1778,7 +1895,7 @@ return [
         ],
     ],
     [
-        'id' => "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a",
+        'id' => LocationId::ROUTE_21,
         'name' => "Route 21",
         'type' => LocationType::ROUTE,
         'directions' => [
@@ -1988,7 +2105,7 @@ return [
         'name' => "Route 23",
         'type' => LocationType::ROUTE,
         'directions' => [
-            Direction::N => "36c7585c-c0df-4bd5-8e50-5c92487d44d8",
+            Direction::N => LocationId::INDIGO_PLATEAU,
             Direction::S => LocationId::VICTORY_ROAD_3F,
         ],
         'pokemon' => [
@@ -2027,7 +2144,7 @@ return [
         ],
     ],
     [
-        'id' => "36c7585c-c0df-4bd5-8e50-5c92487d44d8",
+        'id' => LocationId::INDIGO_PLATEAU,
         'name' => "Indigo Plateau",
         'type' => LocationType::GYM,
         'directions' => [
