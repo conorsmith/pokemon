@@ -1614,19 +1614,17 @@ return [
             Direction::E => LocationId::ROUTE_19,
         ],
         'pokemon' => [
-            'pokemon' => [
-                PokedexNo::KRABBY => [
-                    'weight' => 60,
-                    'levels' => [5, 15],
-                ],
-                PokedexNo::PSYDUCK => [
-                    'weight' => 20,
-                    'levels' => [25, 35],
-                ],
-                PokedexNo::SLOWPOKE => [
-                    'weight' => 20,
-                    'levels' => [25, 35],
-                ],
+            PokedexNo::KRABBY => [
+                'weight' => 60,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 20,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 20,
+                'levels' => [25, 35],
             ],
         ],
     ],
