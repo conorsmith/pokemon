@@ -18,13 +18,15 @@ use Symfony\Component\HttpFoundation\Session\Session;
 final class PostBattleFight
 {
     public function __construct(
-        private readonly Connection $db,
-        private readonly Session $session,
+        private readonly Connection        $db,
+        private readonly Session           $session,
         private readonly TrainerRepository $trainerRepository,
-        private readonly PlayerRepository $playerRepository,
-        private readonly BagRepository $bagRepository,
-        private readonly ViewModelFactory $viewModelFactory,
-    ) {}
+        private readonly PlayerRepository  $playerRepository,
+        private readonly BagRepository     $bagRepository,
+        private readonly ViewModelFactory  $viewModelFactory,
+    )
+    {
+    }
 
     public function __invoke(array $args): void
     {
@@ -40,41 +42,45 @@ final class PostBattleFight
         }
 
         $playerPokemon = $player->getLeadPokemon();
-        $trainerPokemon = $trainer->getLeadPokemon();
+        $opponentPokemon = $trainer->getLeadPokemon();
 
-        $playerPokemonWins = $this->calculateWinner(
-            $trainerPokemon,
-            $playerPokemon
+        $playerAttackSucceeded = $this->calculateAttackOutcome(
+            $playerPokemon,
+            $opponentPokemon,
         );
 
         $playerEarnedGymBadge = false;
         $prize = null;
 
-        if ($playerPokemonWins) {
-
-            $trainerPokemon->faint();
-
-            if ($trainer->hasEntireTeamFainted()) {
-                $prizeItemId = self::generatePrize(self::getPrizePool($trainer));
-                $prize = self::findItem($prizeItemId);
-                $bag = $bag->add($prizeItemId);
-                $trainer = $trainer->defeat();
-                $trainer = $trainer->endBattle();
-                $player = $player->reviveTeam();
-
-                if ($trainer->isGymLeader() && !$player->hasGymBadge($trainer->gymBadge)) {
-                    $player = $player->earn($trainer->gymBadge);
-                    $playerEarnedGymBadge = true;
-                }
-            }
+        if ($playerAttackSucceeded) {
+            $opponentPokemon->faint();
         } else {
 
-            $playerPokemon->faint();
+            $opponentAttackSucceeded = $this->calculateAttackOutcome(
+                $opponentPokemon,
+                $playerPokemon,
+            );
 
-            if ($player->hasEntireTeamFainted()) {
-                $trainer = $trainer->endBattle();
-                $player = $player->reviveTeam();
+            if ($opponentAttackSucceeded) {
+                $playerPokemon->faint();
             }
+        }
+
+        if ($trainer->hasEntireTeamFainted()) {
+            $prizeItemId = self::generatePrize(self::getPrizePool($trainer));
+            $prize = self::findItem($prizeItemId);
+            $bag = $bag->add($prizeItemId);
+            $trainer = $trainer->defeat();
+            $trainer = $trainer->endBattle();
+            $player = $player->reviveTeam();
+
+            if ($trainer->isGymLeader() && !$player->hasGymBadge($trainer->gymBadge)) {
+                $player = $player->earn($trainer->gymBadge);
+                $playerEarnedGymBadge = true;
+            }
+        } elseif ($player->hasEntireTeamFainted()) {
+            $trainer = $trainer->endBattle();
+            $player = $player->reviveTeam();
         }
 
         $this->db->beginTransaction();
@@ -85,18 +91,13 @@ final class PostBattleFight
 
         $this->db->commit();
 
-        $typeMultiplier = $this->calculateTypeMultiplier($trainerPokemon, $playerPokemon);
+        $playerPokemonVm = $this->viewModelFactory->createPokemonInBattle($playerPokemon);
+        $trainerPokemonVm = $this->viewModelFactory->createPokemonInBattle($opponentPokemon);
 
-        if ($typeMultiplier > 1.0) {
-            $this->session->getFlashBag()->add("successes", "It's super effective!");
-        } elseif ($typeMultiplier < 1.0) {
-            $this->session->getFlashBag()->add("successes", "It's not very effective");
-        }
-
-        if ($playerPokemonWins) {
-
-            $trainerPokemonVm = $this->viewModelFactory->createPokemonInBattle($trainerPokemon);
-            $this->session->getFlashBag()->add("successes", "Enemy {$trainerPokemonVm->name} fainted");
+        if ($playerAttackSucceeded) {
+            $this->session->getFlashBag()->add("successes", "Your {$playerPokemonVm->name}'s attack hit!");
+            $this->addEffectivenessMessage($playerPokemon, $opponentPokemon);
+            $this->session->getFlashBag()->add("successes", "Foe {$trainerPokemonVm->name} fainted");
 
             if ($trainer->isBattling) {
                 header("Location: /battle/{$trainer->id}");
@@ -112,8 +113,10 @@ final class PostBattleFight
 
                 header("Location: /map");
             }
-        } else {
-            $playerPokemonVm = $this->viewModelFactory->createPokemonInBattle($playerPokemon);
+        } elseif ($opponentAttackSucceeded) {
+            $this->session->getFlashBag()->add("successes", "Your {$playerPokemonVm->name}'s attack missed!");
+            $this->session->getFlashBag()->add("successes", "Foe {$trainerPokemonVm->name}'s attack hit!");
+            $this->addEffectivenessMessage($opponentPokemon, $playerPokemon);
             $this->session->getFlashBag()->add("successes", "Your {$playerPokemonVm->name} fainted");
 
             if ($trainer->isBattling) {
@@ -125,51 +128,67 @@ final class PostBattleFight
 
                 header("Location: /map");
             }
+        } else {
+            $this->session->getFlashBag()->add("successes", "Your {$playerPokemonVm->name}'s attack missed!");
+            $this->session->getFlashBag()->add("successes", "Foe {$trainerPokemonVm->name}'s attack missed!");
+
+            header("Location: /battle/{$trainer->id}");
         }
 
     }
 
-    private function calculateTypeMultiplier(Pokemon $enemyPokemon, Pokemon $playerPokemon): float
+    private function addEffectivenessMessage(Pokemon $attacker, Pokemon $defender): void
     {
-        $primaryTypeMultiplier = $this->calculatePrimaryTypeMultiplier($enemyPokemon, $playerPokemon);
+        $typeMultiplier = $this->calculateTypeMultiplier($attacker, $defender);
+
+        if ($typeMultiplier > 1.0) {
+            $this->session->getFlashBag()->add("successes", "It's super effective!");
+        } elseif ($typeMultiplier < 1.0) {
+            $this->session->getFlashBag()->add("successes", "It's not very effective");
+        }
+    }
+
+    private function calculateTypeMultiplier(Pokemon $attacker, Pokemon $defender): float
+    {
+        $primaryTypeMultiplier = $this->calculatePrimaryTypeMultiplier($attacker, $defender);
         $secondaryTypeMultiplier = 0.0;
 
-        if (!is_null($playerPokemon->secondaryType)) {
-            $secondaryTypeMultiplier = $this->calculateSecondaryTypeMultiplier($enemyPokemon, $playerPokemon);
+        if (!is_null($attacker->secondaryType)) {
+            $secondaryTypeMultiplier = $this->calculateSecondaryTypeMultiplier($attacker, $defender);
         }
 
         return max($primaryTypeMultiplier, $secondaryTypeMultiplier);
     }
 
-    private function calculatePrimaryTypeMultiplier(Pokemon $enemyPokemon, Pokemon $playerPokemon): float
+    private function calculatePrimaryTypeMultiplier(Pokemon $attacker, Pokemon $defender): float
     {
         $multiplier = 1.0;
 
-        $multiplier *= PokemonType::getMultiplier($playerPokemon->primaryType, $enemyPokemon->primaryType);
+        $multiplier *= PokemonType::getMultiplier($attacker->primaryType, $defender->primaryType);
 
-        if (!is_null($enemyPokemon->secondaryType)) {
-            $multiplier *= PokemonType::getMultiplier($playerPokemon->primaryType, $enemyPokemon->secondaryType);
+        if (!is_null($defender->secondaryType)) {
+            $multiplier *= PokemonType::getMultiplier($attacker->primaryType, $defender->secondaryType);
         }
 
         return $multiplier;
     }
 
-    private function calculateSecondaryTypeMultiplier(Pokemon $enemyPokemon, Pokemon $playerPokemon): float
+    private function calculateSecondaryTypeMultiplier(Pokemon $attacker, Pokemon $defender): float
     {
         $multiplier = 1.0;
 
-        $multiplier *= PokemonType::getMultiplier($playerPokemon->secondaryType, $enemyPokemon->primaryType);
+        $multiplier *= PokemonType::getMultiplier($attacker->secondaryType, $defender->primaryType);
 
-        if (!is_null($enemyPokemon->secondaryType)) {
-            $multiplier *= PokemonType::getMultiplier($playerPokemon->secondaryType, $enemyPokemon->secondaryType);
+        if (!is_null($defender->secondaryType)) {
+            $multiplier *= PokemonType::getMultiplier($attacker->secondaryType, $defender->secondaryType);
         }
 
         return $multiplier;
     }
 
-    private function calculateWinner(Pokemon $enemyPokemon, Pokemon $playerPokemon): bool
+    private function calculateAttackOutcome(Pokemon $attacker, Pokemon $defender): bool
     {
-        $multiplier = $this->calculateTypeMultiplier($enemyPokemon, $playerPokemon);
+        $multiplier = $this->calculateTypeMultiplier($attacker, $defender);
 
         if ($multiplier === 0.0) {
             return false;
@@ -183,7 +202,7 @@ final class PostBattleFight
             4.0 => 4,
         };
 
-        $levelDifference = $playerPokemon->level - $enemyPokemon->level + $typeLevelModifier;
+        $levelDifference = $attacker->level - $defender->level + $typeLevelModifier;
 
         $percentageChance = match (true) {
             $levelDifference > 4 => 100,
