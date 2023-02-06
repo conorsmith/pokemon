@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Controllers;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Direction;
+use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
@@ -91,7 +92,8 @@ final class GetMap
         $legendaryConfig = self::findLegendaryConfig($instanceRow['current_location']);
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Map.php", [
-            'canEncounter' => $bag->hasAnyPokeBall() && $currentLocation->hasPokemon,
+            'canEncounter' => $bag->hasAnyPokeBall(),
+            'pokeballs' => $bag->countAllPokeBalls(),
             'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
             'trainers' => $trainers,
@@ -233,7 +235,14 @@ final class GetMap
             'id' => $location['id'],
             'name' => $location['name'],
             'section' => $location['section'] ?? null,
-            'hasPokemon' => isset($location['pokemon']) && count($location['pokemon']) > 0,
+            'hasEncounters' => isset($location['pokemon']) && count($location['pokemon']) > 0,
+            'encounters' => (object) [
+                'walking' => isset($location['pokemon'][EncounterType::WALKING])
+                    || (isset($location['pokemon']) && !in_array(array_key_first($location['pokemon']), EncounterType::ALL)),
+                'surfing' => isset($location['pokemon'][EncounterType::SURFING]),
+                'fishing' => isset($location['pokemon'][EncounterType::FISHING]),
+                'rockSmash' => isset($location['pokemon'][EncounterType::ROCK_SMASH]),
+            ],
             'hasCardinalDirections' => false,
             'hasVerticalDirections' => false,
             'directions' => [],

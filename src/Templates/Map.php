@@ -10,15 +10,6 @@
         <div class="alert alert-success"><?=$success?></div>
     <?php endforeach ?>
 
-    <div class="d-grid gap-2">
-
-        <form method="POST" class="d-grid">
-            <input type="hidden" name="location" value="<?=$currentLocation->id?>">
-            <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>>Search for Wild Pokémon</button>
-        </form>
-
-    </div>
-
     <style>
         .directions-cardinal button {
             flex-direction: column;
@@ -133,6 +124,48 @@
         <?php endif ?>
 
     </div>
+
+    <?php if ($currentLocation->hasEncounters) : ?>
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div><strong>Wild Pokémon</strong></div>
+                <div class="d-flex" style="text-align: center; gap: 4px;">
+                    <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
+                    <span><?=$pokeballs?></span>
+                </div>
+            </div>
+            <div class="card-body d-flex gap-2">
+                <?php if ($currentLocation->encounters->walking) : ?>
+                    <form method="POST" class="d-grid flex-fill">
+                        <input type="hidden" name="location" value="<?=$currentLocation->id?>">
+                        <input type="hidden" name="encounterType" value="walking">
+                        <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fas fa-fw fa-seedling"></i></button>
+                    </form>
+                <?php endif ?>
+                <?php if ($currentLocation->encounters->surfing) : ?>
+                    <form method="POST" class="d-grid flex-fill">
+                        <input type="hidden" name="location" value="<?=$currentLocation->id?>">
+                        <input type="hidden" name="encounterType" value="surfing">
+                        <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fas fa-fw fa-water"></i></button>
+                    </form>
+                <?php endif ?>
+                <?php if ($currentLocation->encounters->fishing) : ?>
+                    <form method="POST" class="d-grid flex-fill">
+                        <input type="hidden" name="location" value="<?=$currentLocation->id?>">
+                        <input type="hidden" name="encounterType" value="fishing">
+                        <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fas fa-fw fa-fish"></i></button>
+                    </form>
+                <?php endif ?>
+                <?php if ($currentLocation->encounters->rockSmash) : ?>
+                    <form method="POST" class="d-grid flex-fill">
+                        <input type="hidden" name="location" value="<?=$currentLocation->id?>">
+                        <input type="hidden" name="encounterType" value="rockSmash">
+                        <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fab fa-fw fa-sith"></i></button>
+                    </form>
+                <?php endif ?>
+            </div>
+        </div>
+    <?php endif ?>
 
     <?php if (count($trainers) > 0) : ?>
 

@@ -36,18 +36,21 @@ final class PostMap
             exit;
         }
 
-        $currentLocation = $this->findLocation($instanceRow['current_location']);
+        $encounterTable = $this->findEncounterTable(
+            $instanceRow['current_location'],
+            $_POST['encounterType'],
+        );
 
-        if (!array_key_exists('pokemon', $currentLocation) || count($currentLocation['pokemon']) === 0) {
+        if (is_null($encounterTable)) {
             $this->session->getFlashBag()->add("errors", "No Pokémon encountered.");
             header("Location: /map");
             exit;
         }
 
-        $encounteredPokemonId = $legendaryPokemonNumber ?? self::generateEncounteredPokemon($currentLocation);
+        $encounteredPokemonId = $legendaryPokemonNumber ?? self::generateEncounteredPokemon($encounterTable);
         $encounteredPokemonLevel = $legendaryPokemonNumber
             ? self::findLegendaryPokemonLevel($legendaryPokemonNumber)
-            : self::generateEncounteredLevel($currentLocation, $encounteredPokemonId);
+            : self::generateEncounteredLevel($encounterTable, $encounteredPokemonId);
         $encounteredPokemonIsShiny = self::generateEncounteredShininess();
 
         $encounterId = Uuid::uuid4();
@@ -110,15 +113,13 @@ final class PostMap
         return 3.54073 * log(0.251313 * $i);
     }
 
-    private static function generateEncounteredPokemon(array $currentLocation): string
+    private static function generateEncounteredPokemon(array $encounterTable): string
     {
-        $availablePokemon = $currentLocation['pokemon'];
-
-        $selectedValue = mt_rand(1, array_reduce($availablePokemon, function ($carry, array $encounterData) {
+        $selectedValue = mt_rand(1, array_reduce($encounterTable, function ($carry, array $encounterData) {
             return $carry + $encounterData['weight'];
         }, 0));
 
-        foreach ($availablePokemon as $pokemonId => $encounterData) {
+        foreach ($encounterTable as $pokemonId => $encounterData) {
             $selectedValue -= $encounterData['weight'];
             if ($selectedValue <= 0) {
                 return strval($pokemonId);
@@ -128,15 +129,32 @@ final class PostMap
         throw new \Exception;
     }
 
-    private static function generateEncounteredLevel(array $currentLocation, string $pokemonId): int
+    private static function generateEncounteredLevel(array $encounterTable, string $pokemonId): int
     {
-        $levels = $currentLocation['pokemon'][$pokemonId]['levels'];
+        $levels = $encounterTable[$pokemonId]['levels'];
 
         if (is_int($levels)) {
             return $levels;
         }
 
         return mt_rand($levels[0], $levels[1]);
+    }
+
+    private function findEncounterTable(string $locationId, string $encounterType): ?array
+    {
+        $locationConfig = $this->findLocation($locationId);
+
+        if (!isset($locationConfig['pokemon'])) {
+            return null;
+        }
+
+        foreach ($locationConfig['pokemon'] as $key => $value) {
+            if ($key === $encounterType) {
+                return $value;
+            }
+        }
+
+        return $locationConfig['pokemon'];
     }
 
     private function findLocation(string $id): array

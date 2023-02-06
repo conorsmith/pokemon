@@ -72,10 +72,13 @@ final class Bag
 
     public function hasAnyPokeBall(): bool
     {
-        $allPokeBalls = $this->count(ItemId::POKE_BALL)
+        return $this->countAllPokeBalls() > 0;
+    }
+
+    public function countAllPokeBalls(): int
+    {
+        return $this->count(ItemId::POKE_BALL)
             + $this->count(ItemId::GREAT_BALL)
             + $this->count(ItemId::ULTRA_BALL);
-
-        return $allPokeBalls > 0;
     }
 }
