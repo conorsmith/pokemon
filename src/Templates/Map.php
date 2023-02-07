@@ -139,7 +139,7 @@
                     <form method="POST" class="d-grid flex-fill">
                         <input type="hidden" name="location" value="<?=$currentLocation->id?>">
                         <input type="hidden" name="encounterType" value="walking">
-                        <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fas fa-fw fa-seedling"></i></button>
+                        <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fas fa-fw fa-shoe-prints"></i></button>
                     </form>
                 <?php endif ?>
                 <?php if ($currentLocation->encounters->surfing) : ?>
