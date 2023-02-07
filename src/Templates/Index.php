@@ -20,29 +20,7 @@
 
 <ul class="list-group" style="margin-top: 2rem;">
     <?php foreach ($team as $pokemon) : ?>
-        <li class="list-group-item d-flex">
-            <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>">
-                <img src="<?=$pokemon->imageUrl?>">
-            </div>
-            <div>
-                <h5><?=$pokemon->name?></h5>
-                <p class="mb-0">
-                    <span>
-                        <span class="badge bg-<?=$pokemon->primaryType?>" style="text-transform: uppercase;">
-                            <?=$pokemon->primaryType?>
-                        </span>
-                        <?php if ($pokemon->secondaryType) : ?>
-                            <span class="badge bg-<?=$pokemon->secondaryType?>" style="text-transform: uppercase;">
-                                <?=$pokemon->secondaryType?>
-                            </span>
-                        <?php endif ?>
-                    </span>
-                        <span style="margin: 0 0.4rem;">
-                        Lv <?=$pokemon->level?>
-                    </span>
-                </p>
-            </div>
-        </li>
+        <?php require __DIR__ . "/../Team/Templates/Pokemon.php" ?>
     <?php endforeach ?>
 </ul>
 

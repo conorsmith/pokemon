@@ -3,16 +3,14 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
-use ConorSmith\Pokemon\Battle\Domain\Player;
-use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\GymBadge;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
-use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\Bag;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\Team\Domain\Pokemon;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
-use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -21,7 +19,7 @@ final class GetIndex
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
-        private readonly PlayerRepository $playerRepository,
+        private readonly PokemonRepository $pokemonRepository,
         private readonly BagRepository $bagRepository,
         private readonly ViewModelFactory $viewModelFactory,
     ) {}
@@ -32,14 +30,17 @@ final class GetIndex
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $player = $this->playerRepository->findPlayer();
         $bag = $this->bagRepository->find();
+        $team = $this->pokemonRepository->getTeam();
 
         $successes = $this->session->getFlashBag()->get("successes");
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Index.php", [
             'items' => self::createBagViewModels($bag),
-            'team' => $this->createTeamViewModels($player),
+            'team' => array_map(
+                fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
+                $team->members
+            ),
             'badges' => array_map(
                 fn(int $value) => $this->viewModelFactory->createGymBadge(GymBadge::from($value)),
                 json_decode($instanceRow['badges'])
@@ -63,16 +64,5 @@ final class GetIndex
         }
 
         return $itemViewModels;
-    }
-
-    private function createTeamViewModels(Player $player): array
-    {
-        $viewModels = [];
-
-        foreach ($player->team as $pokemon) {
-            $viewModels[] = $this->viewModelFactory->createPokemonOnTeam($pokemon);
-        }
-
-        return $viewModels;
     }
 }

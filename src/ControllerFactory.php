@@ -12,7 +12,7 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Controllers\GetBag;
 use ConorSmith\Pokemon\Controllers\GetPokedex;
-use ConorSmith\Pokemon\Controllers\GetTeam;
+use ConorSmith\Pokemon\Team\Controllers\GetTeam;
 use ConorSmith\Pokemon\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Controllers\GetIndex;
 use ConorSmith\Pokemon\Controllers\GetMap;
@@ -25,8 +25,8 @@ use ConorSmith\Pokemon\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Controllers\PostTeamItemUse;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveDown;
 use ConorSmith\Pokemon\Controllers\PostTeamMoveUp;
-use ConorSmith\Pokemon\Controllers\PostTeamSendToBox;
-use ConorSmith\Pokemon\Controllers\PostTeamSendToTeam;
+use ConorSmith\Pokemon\Team\Controllers\PostTeamSendToBox;
+use ConorSmith\Pokemon\Team\Controllers\PostTeamSendToTeam;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogCalorieGoal;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogExercise;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogFoodDiary;
@@ -41,6 +41,8 @@ use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\Team\FriendshipLog;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -92,6 +94,8 @@ final class ControllerFactory
         private readonly DailyHabitLogRepository     $dailyHabitLogRepository,
         private readonly UnlimitedHabitLogRepository $unlimitedHabitLogRepository,
         private readonly WeeklyHabitLogRepository    $weeklyHabitLogRepository,
+        private readonly PokemonRepository           $pokemonRepository,
+        private readonly FriendshipLog               $friendshipLog,
         private readonly ViewModelFactory            $viewModelFactory,
         private readonly HabitStreakQuery            $habitStreakQuery,
         private readonly array                       $pokedex,
@@ -159,11 +163,8 @@ final class ControllerFactory
                 $this->map,
             ),
             GetTeam::class => new GetTeam(
-                $this->db,
                 $this->session,
-                $this->playerRepository,
-                $this->pokedex,
-                $this->viewModelFactory,
+                $this->pokemonRepository,
             ),
             GetEncounter::class => new GetEncounter(
                 $this->db,
@@ -181,8 +182,16 @@ final class ControllerFactory
             PostEncounterRun::class => new PostEncounterRun($this->db),
             PostTeamMoveUp::class => new PostTeamMoveUp($this->db, $this->session, $this->caughtPokemonRepository),
             PostTeamMoveDown::class => new PostTeamMoveDown($this->db, $this->session, $this->caughtPokemonRepository),
-            PostTeamSendToBox::class => new PostTeamSendToBox($this->db, $this->session, $this->caughtPokemonRepository),
-            PostTeamSendToTeam::class => new PostTeamSendToTeam($this->db, $this->session, $this->caughtPokemonRepository),
+            PostTeamSendToBox::class => new PostTeamSendToBox(
+                $this->session,
+                $this->pokemonRepository,
+                $this->friendshipLog,
+            ),
+            PostTeamSendToTeam::class => new PostTeamSendToTeam(
+                $this->session,
+                $this->pokemonRepository,
+                $this->friendshipLog,
+            ),
             PostBattleTrainer::class => new PostBattleTrainer(
                 $this->db,
                 $this->session,
@@ -232,7 +241,7 @@ final class ControllerFactory
             GetIndex::class => new GetIndex(
                 $this->db,
                 $this->session,
-                $this->playerRepository,
+                $this->pokemonRepository,
                 $this->bagRepository,
                 $this->viewModelFactory,
             ),
