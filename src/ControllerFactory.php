@@ -237,6 +237,7 @@ final class ControllerFactory
                 $this->session,
                 $this->bagRepository,
                 $this->pokemonRepository,
+                $this->friendshipLog,
                 $this->pokedex,
             ),
             GetIndex::class => new GetIndex(

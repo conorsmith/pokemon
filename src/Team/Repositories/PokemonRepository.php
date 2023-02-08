@@ -89,7 +89,7 @@ final class PokemonRepository
 
     private function calculateFriendship(array $pokemonRow): int
     {
-        $boxEventRows = $this->db->fetchAllAssociative("SELECT * FROM friendship_event_log WHERE pokemon_id = :pokemonId AND event IN ('sentToBox', 'sentToTeam') ORDER BY date_logged", [
+        $eventRows = $this->db->fetchAllAssociative("SELECT * FROM friendship_event_log WHERE pokemon_id = :pokemonId ORDER BY date_logged", [
             'pokemonId' => $pokemonRow['id'],
         ]);
 
@@ -102,15 +102,34 @@ final class PokemonRepository
 
         $previousEventTime = $dateCaught;
 
-        foreach ($boxEventRows as $boxEventRow) {
-            $eventTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $boxEventRow['date_logged'], "Europe/Dublin");
-            if ($boxEventRow['event'] === "sentToTeam") {
+        foreach ($eventRows as $row) {
+            $eventTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], "Europe/Dublin");
+
+            if ($row['event'] === "sentToTeam") {
                 $timeInBox = $previousEventTime->diffInHours($eventTime);
                 $value = max(0, $value - intval(ceil($timeInBox / 6)));
-            } elseif ($boxEventRow['event'] === "sentToBox") {
+
+            } elseif ($row['event'] === "sentToBox") {
                 $timeOnTeam = $previousEventTime->diffInHours($eventTime);
                 $value = min(255, $value + intval(floor($timeOnTeam / 3)));
+
+            } elseif ($row['event'] === "levelUp") {
+
+                if (is_null($pokemonRow['team_position'])) {
+                    $timeInBox = $previousEventTime->diffInHours($now);
+                    $value = max(0, $value - intval(ceil($timeInBox / 6)));
+                } else {
+                    $timeOnTeam = $previousEventTime->diffInHours($now);
+                    $value = min(255, $value + intval(floor($timeOnTeam / 3)));
+                }
+
+                $value += match (true) {
+                    $value < 100 => 5,
+                    $value < 200 => 3,
+                    default      => 2,
+                };
             }
+
             $previousEventTime = $eventTime;
         }
 

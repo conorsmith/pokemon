@@ -9,6 +9,7 @@ use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
+use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use Doctrine\DBAL\Connection;
 use GuzzleHttp\Client;
@@ -22,6 +23,7 @@ final class PostTeamItemUse
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
         private readonly PokemonRepository $pokemonRepository,
+        private readonly FriendshipLog $friendshipLog,
         private readonly array $pokedex,
     ) {}
 
@@ -80,6 +82,8 @@ final class PostTeamItemUse
                 }
             }
         }
+
+        $this->friendshipLog->levelUp($pokemon);
 
         $this->db->beginTransaction();
 
