@@ -81,4 +81,16 @@ final class Bag
             + $this->count(ItemId::GREAT_BALL)
             + $this->count(ItemId::ULTRA_BALL);
     }
+
+    public function countAllItems(): int
+    {
+        $total = 0;
+
+        /** @var Item $item */
+        foreach ($this->items as $item) {
+            $total += $item->quantity;
+        }
+
+        return $total;
+    }
 }

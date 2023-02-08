@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Controllers;
 
 use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\Bag;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
@@ -12,6 +13,7 @@ use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
+use stdClass;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetIndex
@@ -36,7 +38,7 @@ final class GetIndex
         $successes = $this->session->getFlashBag()->get("successes");
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Index.php", [
-            'items' => self::createBagViewModels($bag),
+            'bagSummary' => self::createBagSummary($bag),
             'team' => array_map(
                 fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
                 $team->members
@@ -49,20 +51,16 @@ final class GetIndex
         ]);
     }
 
-    private static function createBagViewModels(Bag $bag): array
+    private static function createBagSummary(Bag $bag): stdClass
     {
-        $itemConfig = require __DIR__ . "/../Config/Items.php";
-
-        $itemViewModels = [];
-
-        foreach ($bag->items as $item) {
-            $itemViewModels[] = (object) [
-                'name' => $itemConfig[$item->id]['name'],
-                'imageUrl' => $itemConfig[$item->id]['imageUrl'],
-                'amount' => $item->quantity,
-            ];
-        }
-
-        return $itemViewModels;
+        return (object) [
+            'pokeBalls' => $bag->countAllPokeBalls(),
+            'rareCandy' => $bag->count(ItemId::RARE_CANDY),
+            'challengeTokens' => $bag->count(ItemId::CHALLENGE_TOKEN),
+            'other' => $bag->countAllItems()
+                - $bag->countAllPokeBalls()
+                - $bag->count(ItemId::RARE_CANDY)
+                - $bag->count(ItemId::CHALLENGE_TOKEN),
+        ];
     }
 }

@@ -2,21 +2,33 @@
     <div class="alert alert-success"><?=$success?></div>
 <?php endforeach ?>
 
-<ul class="list-group">
+<style>
+    .bagSummary img {
+        width: 24px;
+        filter: grayscale(1);
+    }
+</style>
 
-    <?php foreach ($items as $item) : ?>
-        <li class="list-group-item d-flex justify-content-between">
-            <div class="d-flex">
-                <div class="me-2" style="width: 24px; text-align: center;">
-                    <img src="<?=$item->imageUrl?>">
-                </div>
-                <div><?=$item->name?></div>
-            </div>
-            <div><?=$item->amount?></div>
-        </li>
-    <?php endforeach ?>
-
-</ul>
+<div class="card bagSummary">
+    <div class="card-body d-flex justify-content-evenly">
+        <div class="d-flex flex-column align-items-center">
+            <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png">
+            <?=$bagSummary->pokeBalls?>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            <img src="https://archives.bulbagarden.net/media/upload/8/8d/Bag_Rare_Candy_Sprite.png">
+            <?=$bagSummary->rareCandy?>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+            <?=$bagSummary->challengeTokens?>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            <img src="https://archives.bulbagarden.net/media/upload/8/86/Bag_Fire_Stone_Sprite.png">
+            <?=$bagSummary->other?>
+        </div>
+    </div>
+</div>
 
 <ul class="list-group" style="margin-top: 2rem;">
     <?php foreach ($team as $pokemon) : ?>
