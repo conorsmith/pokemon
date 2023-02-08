@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Battle\Repositories;
 use ConorSmith\Pokemon\Battle\Domain\Player;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\TeamPokemonQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
 
@@ -13,6 +14,7 @@ final class PlayerRepository
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly TeamPokemonQuery $teamPokemonQuery,
         private readonly array $pokedex,
     ) {}
 
@@ -29,6 +31,7 @@ final class PlayerRepository
         $team = [];
 
         foreach ($caughtPokemonRows as $caughtPokemonRow) {
+            $teamPokemon = $this->teamPokemonQuery->run($caughtPokemonRow['id']);
             $pokedexEntry = $this->findPokedexEntry($caughtPokemonRow['pokemon_id']);
             $team[] = new Pokemon(
                 $caughtPokemonRow['id'],
@@ -36,6 +39,7 @@ final class PlayerRepository
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,
                 $caughtPokemonRow['level'],
+                $teamPokemon->friendship,
                 $caughtPokemonRow['is_shiny'] === 1,
                 $caughtPokemonRow['has_fainted'] === 1,
             );

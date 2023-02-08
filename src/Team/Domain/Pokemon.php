@@ -11,6 +11,5 @@ final class Pokemon
         public readonly int $level,
         public readonly int $friendship,
         public readonly bool $isShiny,
-        public readonly ?int $teamPosition,
     ) {}
 }

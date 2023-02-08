@@ -60,7 +60,6 @@ final class PokemonRepository
             intval($row['level']),
             $this->calculateFriendship($row),
             $row['is_shiny'] === 1,
-            is_null($row['team_position']) ? null : intval($row['team_position']),
         );
     }
 

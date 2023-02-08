@@ -24,9 +24,7 @@ final class PostBattleFight
         private readonly PlayerRepository  $playerRepository,
         private readonly BagRepository     $bagRepository,
         private readonly ViewModelFactory  $viewModelFactory,
-    )
-    {
-    }
+    ) {}
 
     public function __invoke(array $args): void
     {
@@ -51,6 +49,7 @@ final class PostBattleFight
 
         $playerEarnedGymBadge = false;
         $prize = null;
+        $playerPokemonSurvivedHit = false;
 
         if ($playerAttackSucceeded) {
             $opponentPokemon->faint();
@@ -62,7 +61,10 @@ final class PostBattleFight
             );
 
             if ($opponentAttackSucceeded) {
-                $playerPokemon->faint();
+                $playerPokemonSurvivedHit = self::calculateHitSurvival($playerPokemon);
+                if (!$playerPokemonSurvivedHit) {
+                    $playerPokemon->faint();
+                }
             }
         }
 
@@ -117,7 +119,11 @@ final class PostBattleFight
             $this->session->getFlashBag()->add("successes", "Your {$playerPokemonVm->name}'s attack missed!");
             $this->session->getFlashBag()->add("successes", "Foe {$trainerPokemonVm->name}'s attack hit!");
             $this->addEffectivenessMessage($opponentPokemon, $playerPokemon);
-            $this->session->getFlashBag()->add("successes", "Your {$playerPokemonVm->name} fainted");
+            if ($playerPokemonSurvivedHit) {
+                $this->session->getFlashBag()->add("successes", "Your {$playerPokemonVm->name} endured through the power of friendship!");
+            } else {
+                $this->session->getFlashBag()->add("successes", "Your {$playerPokemonVm->name} fainted");
+            }
 
             if ($trainer->isBattling) {
                 header("Location: /battle/{$trainer->id}");
@@ -221,6 +227,16 @@ final class PostBattleFight
         };
 
         return mt_rand(1, 100) <= $percentageChance;
+    }
+
+    private static function calculateHitSurvival(Pokemon $defender): bool
+    {
+        return match (true) {
+            $defender->friendship < 180   => false,
+            $defender->friendship < 220   => mt_rand(1, 100) <= 10,
+            $defender->friendship < 255   => mt_rand(1, 100) <= 15,
+            $defender->friendship === 255 => mt_rand(1, 100) <= 20,
+        };
     }
 
     private static function getPrizePool(Trainer $trainer): array

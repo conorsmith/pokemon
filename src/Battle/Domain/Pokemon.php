@@ -11,6 +11,7 @@ final class Pokemon
         public readonly int $primaryType,
         public readonly ?int $secondaryType,
         public readonly int $level,
+        public readonly int $friendship,
         public readonly bool $isShiny,
         public bool $hasFainted,
     ) {}
