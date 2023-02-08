@@ -255,10 +255,12 @@ return [
                 'item' => ItemId::MOON_STONE,
             ],
         ],
+        'friendship' => 140,
     ],
     PokedexNo::CLEFABLE => [
         'name' => "Clefable",
         'type' => [PokemonType::FAIRY],
+        'friendship' => 140,
     ],
     PokedexNo::VULPIX => [
         'name' => "Vulpix",
@@ -298,6 +300,11 @@ return [
     PokedexNo::GOLBAT => [
         'name' => "Golbat",
         'type' => [PokemonType::POISON, PokemonType::FLYING],
+        'evolutions' => [
+            PokedexNo::CROBAT => [
+                'friendship',
+            ],
+        ],
     ],
     PokedexNo::ODDISH => [
         'name' => "Oddish",
@@ -786,6 +793,12 @@ return [
     PokedexNo::CHANSEY => [
         'name' => "Chansey",
         'type' => [PokemonType::NORMAL],
+        'evolutions' => [
+            PokedexNo::BLISSEY => [
+                'friendship',
+            ],
+        ],
+        'friendship' => 140,
     ],
     PokedexNo::TANGELA => [
         'name' => "Tangela",
@@ -919,6 +932,14 @@ return [
             PokedexNo::FLAREON => [
                 'item' => ItemId::FIRE_STONE,
             ],
+            PokedexNo::ESPEON => [
+                'friendship',
+                'time' => 'day',
+            ],
+            PokedexNo::UMBREON => [
+                'friendship',
+                'time' => 'night',
+            ],
             PokedexNo::LEAFEON => [
                 'item' => ItemId::LEAF_STONE,
             ],
@@ -985,14 +1006,17 @@ return [
     PokedexNo::ARTICUNO => [
         'name' => "Articuno",
         'type' => [PokemonType::ICE, PokemonType::FLYING],
+        'friendship' => 35,
     ],
     PokedexNo::ZAPDOS => [
         'name' => "Zapdos",
         'type' => [PokemonType::ELECTRIC, PokemonType::FLYING],
+        'friendship' => 35,
     ],
     PokedexNo::MOLTRES => [
         'name' => "Moltres",
         'type' => [PokemonType::FIRE, PokemonType::FLYING],
+        'friendship' => 35,
     ],
     PokedexNo::DRATINI => [
         'name' => "Dratini",
@@ -1002,6 +1026,7 @@ return [
                 'level' => 30,
             ],
         ],
+        'friendship' => 35,
     ],
     PokedexNo::DRAGONAIR => [
         'name' => "Dragonair",
@@ -1011,18 +1036,26 @@ return [
                 'level' => 55,
             ],
         ],
+        'friendship' => 35,
     ],
     PokedexNo::DRAGONITE => [
         'name' => "Dragonite",
         'type' => [PokemonType::DRAGON, PokemonType::FLYING],
+        'friendship' => 35,
     ],
     PokedexNo::MEWTWO => [
         'name' => "Mewtwo",
         'type' => [PokemonType::PSYCHIC],
+        'friendship' => 0,
     ],
     PokedexNo::MEW => [
         'name' => "Mew",
         'type' => [PokemonType::PSYCHIC],
+        'friendship' => 100,
+    ],
+    PokedexNo::CROBAT => [
+        'name' => "Crobat",
+        'type' => [PokemonType::POISON, PokemonType::FLYING],
     ],
     PokedexNo::BELLOSSOM => [
         'name' => "Bellossom",
@@ -1031,6 +1064,15 @@ return [
     PokedexNo::POLITOED => [
         'name' => "Politoed",
         'type' => [PokemonType::WATER],
+    ],
+    PokedexNo::ESPEON => [
+        'name' => "Espeon",
+        'type' => [PokemonType::PSYCHIC],
+    ],
+    PokedexNo::UMBREON => [
+        'name' => "Umbreon",
+        'type' => [PokemonType::DARK],
+        'friendship' => 35,
     ],
     PokedexNo::SLOWKING => [
         'name' => "Slowking",
@@ -1057,6 +1099,11 @@ return [
             ],
         ],
     ],
+    PokedexNo::BLISSEY => [
+        'name' => "Blissey",
+        'type' => [PokemonType::NORMAL],
+        'friendship' => 140,
+    ],
     PokedexNo::MAGNEZONE => [
         'name' => "Magnezone",
         'type' => [PokemonType::ELECTRIC, PokemonType::STEEL],
@@ -1076,10 +1123,12 @@ return [
     PokedexNo::LEAFEON => [
         'name' => "Leafeon",
         'type' => [PokemonType::GRASS],
+        'friendship' => 35,
     ],
     PokedexNo::GLACEON => [
         'name' => "Glaceon",
         'type' => [PokemonType::ICE],
+        'friendship' => 35,
     ],
     PokedexNo::PORYGON_Z => [
         'name' => "Porygon-Z",

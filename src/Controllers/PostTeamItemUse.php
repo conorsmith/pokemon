@@ -8,7 +8,10 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\Team\Domain\Pokemon;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use Doctrine\DBAL\Connection;
+use GuzzleHttp\Client;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -18,6 +21,7 @@ final class PostTeamItemUse
         private readonly Connection $db,
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
+        private readonly PokemonRepository $pokemonRepository,
         private readonly array $pokedex,
     ) {}
 
@@ -36,12 +40,9 @@ final class PostTeamItemUse
 
     private function attemptToLevelUpPokemon(string $pokemonId): void
     {
-        $pokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND id = :pokemonId", [
-            'instanceId' => INSTANCE_ID,
-            'pokemonId' => $pokemonId,
-        ]);
+        $pokemon = $this->pokemonRepository->find($pokemonId);
 
-        if ($pokemonRow === false) {
+        if (is_null($pokemon)) {
             $this->session->getFlashBag()->add("errors", "Pokémon not found.");
             header("Location: /team/use/" . ItemId::RARE_CANDY);
             return;
@@ -59,21 +60,21 @@ final class PostTeamItemUse
 
         $levelLimit = self::findLevelLimit($instanceRow);
 
-        if ($pokemonRow['level'] + 1 > $levelLimit) {
+        if ($pokemon->level + 1 > $levelLimit) {
             $this->session->getFlashBag()->add("errors", "You can't level up Pokémon beyond level {$levelLimit}");
             header("Location: /team/use/" . ItemId::RARE_CANDY);
             return;
         }
 
-        $newLevel = $pokemonRow['level'] + 1;
-        $pokemon = $this->pokedex[$pokemonRow['pokemon_id']];
+        $newLevel = $pokemon->level + 1;
+        $pokemonConfig = $this->pokedex[$pokemon->number];
 
         $pokemonEvolves = false;
         $newPokemonNumber = null;
 
-        if (array_key_exists('evolutions', $pokemon)) {
-            foreach ($pokemon['evolutions'] as $number => $evolution) {
-                if (array_key_exists('level', $evolution) && $evolution['level'] <= $newLevel) {
+        if (array_key_exists('evolutions', $pokemonConfig)) {
+            foreach ($pokemonConfig['evolutions'] as $number => $evolution) {
+                if (self::canEvolve($pokemon, $evolution)) {
                     $pokemonEvolves = true;
                     $newPokemonNumber = $number;
                 }
@@ -91,14 +92,14 @@ final class PostTeamItemUse
         $this->db->update("caught_pokemon", [
             'level' => $newLevel,
         ], [
-            'id' => $pokemonRow['id'],
+            'id' => $pokemon->id,
         ]);
 
         if ($pokemonEvolves) {
             $this->db->update("caught_pokemon", [
                 'pokemon_id' => $newPokemonNumber,
             ], [
-                'id' => $pokemonRow['id'],
+                'id' => $pokemon->id,
             ]);
 
             $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
@@ -118,14 +119,62 @@ final class PostTeamItemUse
 
         $this->db->commit();
 
-        $this->session->getFlashBag()->add("successes", "{$pokemon['name']} levelled up to level {$newLevel}");
+        $this->session->getFlashBag()->add("successes", "{$pokemonConfig['name']} levelled up to level {$newLevel}");
 
         if ($pokemonEvolves) {
             $newPokemon = $this->pokedex[$newPokemonNumber];
-            $this->session->getFlashBag()->add("successes", "Your {$pokemon['name']} evolved into {$newPokemon['name']}!");
+            $this->session->getFlashBag()->add("successes", "Your {$pokemonConfig['name']} evolved into {$newPokemon['name']}!");
         }
 
         header("Location: /team/use/" . ItemId::RARE_CANDY);
+    }
+
+    private static function canEvolve(Pokemon $pokemon, array $evolutionConfig): bool
+    {
+        $requirements = [];
+
+        if (array_key_exists('level', $evolutionConfig)) {
+            $requirements[] = $evolutionConfig['level'] <= $pokemon->level + 1;
+        }
+
+        if (in_array('friendship', $evolutionConfig)) {
+            $requirements[] = $pokemon->friendship >= 220;
+        }
+
+        if (array_key_exists('time', $evolutionConfig)) {
+
+            $now = CarbonImmutable::now("Europe/Dublin");
+
+            $response = (new Client())->get("https://api.sunrisesunset.io/json?lat=53.34981&lng=-6.26031&timezone=Europe%2FDublin&date=today");
+
+            $data = json_decode($response->getBody()->getContents(), true);
+
+            $sunrise = CarbonImmutable::createFromFormat(
+                "Y-m-d g:i:s A",
+                $now->format("Y-m-d ") . $data['results']['sunrise'],
+                "Europe/Dublin"
+            );
+            $sunset = CarbonImmutable::createFromFormat(
+                "Y-m-d g:i:s A",
+                $now->format("Y-m-d ") . $data['results']['sunset'],
+                "Europe/Dublin"
+            );
+
+            $requirements[] = match ($evolutionConfig['time']) {
+                "day" => $now->isAfter($sunrise) && $now->isBefore($sunset),
+                "night" => $now->isBefore($sunrise) && $now->isAfter($sunset),
+            };
+        }
+
+        if (count($requirements) === 0) {
+            return false;
+        }
+
+        return array_reduce(
+            $requirements,
+            fn(bool $requirement, bool $carry) => $requirement && $carry,
+            true
+        );
     }
 
     private static function findLevelLimit(array $instanceRow): int

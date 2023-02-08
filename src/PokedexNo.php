@@ -157,13 +157,17 @@ final class PokedexNo
     public const MEWTWO = "150";
     public const MEW = "151";
 
+    public const CROBAT = "169";
     public const BELLOSSOM = "182";
     public const POLITOED = "186";
+    public const ESPEON = "196";
+    public const UMBREON = "197";
     public const SLOWKING = "199";
     public const STEELIX = "208";
     public const SCIZOR = "212";
     public const KINGDRA = "230";
     public const PORYGON2 = "233";
+    public const BLISSEY = "242";
     public const MAGNEZONE = "462";
     public const RHYPERIOR = "464";
     public const ELECTIVIRE = "466";

@@ -45,3 +45,7 @@
         <a href="/bag" class="btn btn-outline-secondary">Cancel</a>
     </div>
 </ul>
+
+<div style="text-align: center; font-size: 0.8rem; padding: 0.6rem; margin-top: 2rem;">
+    Powered by <a href="https://sunrisesunset.io/" target="_blank">SunriseSunset.io</a>
+</div>

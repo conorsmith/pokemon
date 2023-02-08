@@ -94,7 +94,9 @@ final class PokemonRepository
             'pokemonId' => $pokemonRow['id'],
         ]);
 
-        $value = 70;
+        $pokemonConfig = self::findPokemonConfig($pokemonRow['pokemon_id']);
+
+        $value = $pokemonConfig['friendship'] ?? 70;
 
         $dateCaught = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $pokemonRow['date_caught'], "Europe/Dublin");
         $now = CarbonImmutable::now("Europe/Dublin");
@@ -105,22 +107,29 @@ final class PokemonRepository
             $eventTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $boxEventRow['date_logged'], "Europe/Dublin");
             if ($boxEventRow['event'] === "sentToTeam") {
                 $timeInBox = $previousEventTime->diffInHours($eventTime);
-                $value = max(0, $value - intval(ceil($timeInBox / 4)));
+                $value = max(0, $value - intval(ceil($timeInBox / 6)));
             } elseif ($boxEventRow['event'] === "sentToBox") {
                 $timeOnTeam = $previousEventTime->diffInHours($eventTime);
-                $value = min(255, $value + intval(floor($timeOnTeam / 4)));
+                $value = min(255, $value + intval(floor($timeOnTeam / 3)));
             }
             $previousEventTime = $eventTime;
         }
 
         if (is_null($pokemonRow['team_position'])) {
             $timeInBox = $previousEventTime->diffInHours($now);
-            $value = max(0, $value - intval(ceil($timeInBox / 4)));
+            $value = max(0, $value - intval(ceil($timeInBox / 6)));
         } else {
             $timeOnTeam = $previousEventTime->diffInHours($now);
-            $value = min(255, $value + intval(floor($timeOnTeam / 4)));
+            $value = min(255, $value + intval(floor($timeOnTeam / 3)));
         }
 
         return $value;
+    }
+
+    private static function findPokemonConfig(string $number): array
+    {
+        $config = require __DIR__ . "/../../Config/Pokedex.php";
+
+        return $config[$number];
     }
 }
