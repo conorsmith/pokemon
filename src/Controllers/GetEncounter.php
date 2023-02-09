@@ -43,7 +43,7 @@ final class GetEncounter
             'number' => $encounterRow['pokemon_id'],
         ]);
 
-        $leadPokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position = 1", [
+        $leadPokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position = 0", [
             'instanceId' => INSTANCE_ID,
         ]);
 

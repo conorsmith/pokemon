@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Controllers;
+namespace ConorSmith\Pokemon\Team\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;

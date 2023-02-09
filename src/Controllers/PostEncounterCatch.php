@@ -54,7 +54,7 @@ final class PostEncounterCatch
             exit;
         }
 
-        $pokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position = 1", [
+        $pokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position = 0", [
             'instanceId' => INSTANCE_ID,
         ]);
 
@@ -82,7 +82,7 @@ final class PostEncounterCatch
                 'instanceId' => INSTANCE_ID,
             ]);
 
-            if ($positionRow[0] >= 6) {
+            if ($positionRow[0] >= 5) {
                 $teamPosition = null;
                 $this->session->getFlashBag()->add("successes", "{$pokemon['name']} was sent to your box");
             } else {

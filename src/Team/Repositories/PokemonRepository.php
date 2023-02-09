@@ -95,53 +95,7 @@ final class PokemonRepository
 
         $pokemonConfig = self::findPokemonConfig($pokemonRow['pokemon_id']);
 
-        $value = $pokemonConfig['friendship'] ?? 70;
-
-        $dateCaught = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $pokemonRow['date_caught'], "Europe/Dublin");
-        $now = CarbonImmutable::now("Europe/Dublin");
-
-        $previousEventTime = $dateCaught;
-
-        foreach ($eventRows as $row) {
-            $eventTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], "Europe/Dublin");
-
-            if ($row['event'] === "sentToTeam") {
-                $timeInBox = $previousEventTime->diffInHours($eventTime);
-                $value = max(0, $value - intval(ceil($timeInBox / 6)));
-
-            } elseif ($row['event'] === "sentToBox") {
-                $timeOnTeam = $previousEventTime->diffInHours($eventTime);
-                $value = min(255, $value + intval(floor($timeOnTeam / 3)));
-
-            } elseif ($row['event'] === "levelUp") {
-
-                if (is_null($pokemonRow['team_position'])) {
-                    $timeInBox = $previousEventTime->diffInHours($now);
-                    $value = max(0, $value - intval(ceil($timeInBox / 6)));
-                } else {
-                    $timeOnTeam = $previousEventTime->diffInHours($now);
-                    $value = min(255, $value + intval(floor($timeOnTeam / 3)));
-                }
-
-                $value += match (true) {
-                    $value < 100 => 5,
-                    $value < 200 => 3,
-                    default      => 2,
-                };
-            }
-
-            $previousEventTime = $eventTime;
-        }
-
-        if (is_null($pokemonRow['team_position'])) {
-            $timeInBox = $previousEventTime->diffInHours($now);
-            $value = max(0, $value - intval(ceil($timeInBox / 6)));
-        } else {
-            $timeOnTeam = $previousEventTime->diffInHours($now);
-            $value = min(255, $value + intval(floor($timeOnTeam / 3)));
-        }
-
-        return $value;
+        return FriendshipCalculator::calculate($pokemonConfig, $pokemonRow, $eventRows);
     }
 
     private static function findPokemonConfig(string $number): array

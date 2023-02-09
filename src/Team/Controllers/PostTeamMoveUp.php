@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Controllers;
+namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-final class PostTeamMoveDown
+final class PostTeamMoveUp
 {
     public function __construct(
         private readonly Connection $db,
@@ -23,13 +23,13 @@ final class PostTeamMoveDown
 
         foreach ($rows as $i => $pokemonRow) {
             if ($pokemonRow['id'] === $pokemonId) {
-                if ($pokemonRow['team_position'] === count($rows)) {
-                    $this->session->getFlashBag()->add("errors", "Target Pokémon cannot be moved down");
+                if ($pokemonRow['team_position'] === 0) {
+                    $this->session->getFlashBag()->add("errors", "Target Pokémon cannot be moved up");
                     header("Location: /team");
                     return;
                 }
                 $targetPokemon = $rows[$i];
-                $affectedPokemon = $rows[$i + 1];
+                $affectedPokemon = $rows[$i - 1];
             }
         }
 
@@ -42,13 +42,13 @@ final class PostTeamMoveDown
         $this->db->beginTransaction();
 
         $this->db->update("caught_pokemon", [
-            'team_position' => $targetPokemon['team_position'] + 1,
+            'team_position' => $targetPokemon['team_position'] - 1,
         ], [
             'id' => $targetPokemon['id'],
         ]);
 
         $this->db->update("caught_pokemon", [
-            'team_position' => $affectedPokemon['team_position'] - 1,
+            'team_position' => $affectedPokemon['team_position'] + 1,
         ], [
             'id' => $affectedPokemon['id'],
         ]);
