@@ -12,6 +12,7 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Controllers\GetBag;
 use ConorSmith\Pokemon\Controllers\GetPokedex;
+use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\Team\Controllers\GetTeam;
 use ConorSmith\Pokemon\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Controllers\GetIndex;
@@ -98,6 +99,7 @@ final class ControllerFactory
         private readonly FriendshipLog               $friendshipLog,
         private readonly ViewModelFactory            $viewModelFactory,
         private readonly HabitStreakQuery            $habitStreakQuery,
+        private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
         private readonly array                       $pokedex,
         private readonly array                       $map,
     ) {}
@@ -210,6 +212,7 @@ final class ControllerFactory
                 $this->trainerRepository,
                 $this->playerRepository,
                 $this->bagRepository,
+                $this->reportTeamPokemonFaintedCommand,
                 $this->viewModelFactory,
             ),
             GetBattleSwitch::class => new GetBattleSwitch(

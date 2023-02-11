@@ -41,32 +41,45 @@ final class FriendshipCalculator
             'date' => $now,
         ];
 
-        $previousMovementEvent = $events[0]['type'];
+        $previousMovementEvent = $events[0];
 
-        foreach ($events as $i => $event) {
+        foreach ($events as $event) {
             if ($event['type'] === "calculation") {
-                break;
-            }
-            if ($event['type'] === "sentToTeam") {
-                $value = self::calculateTimeOnTeam($value, $event['date'], $events[$i + 1]['date']);
-                $previousMovementEvent = $event['type'];
+                if ($previousMovementEvent['type'] === "sentToTeam") {
+                    $value = self::calculateTimeOnTeam($value, $event['date'], $previousMovementEvent['date']);
+                } elseif ($previousMovementEvent['type'] === "sentToBox") {
+                    $value = self::calculateTimeInBox($value, $event['date'], $previousMovementEvent['date']);
+                }
+            } elseif ($event['type'] === "sentToTeam"
+                || $event['type'] === "sentToBox"
+            ) {
+                if ($previousMovementEvent['type'] === "sentToTeam") {
+                    $value = self::calculateTimeOnTeam($value, $event['date'], $previousMovementEvent['date']);
+                } elseif ($previousMovementEvent['type'] === "sentToBox") {
+                    $value = self::calculateTimeInBox($value, $event['date'], $previousMovementEvent['date']);
+                }
+                $previousMovementEvent = $event;
 
-            } elseif ($event['type'] === "sentToBox") {
-                $value = self::calculateTimeInBox($value, $event['date'], $events[$i + 1]['date']);
-                $previousMovementEvent = $event['type'];
+            } else {
+                if ($previousMovementEvent['type'] === "sentToTeam") {
+                    $preliminaryValue = self::calculateTimeOnTeam($value, $event['date'], $previousMovementEvent['date']);
+                } elseif ($previousMovementEvent['type'] === "sentToBox") {
+                    $preliminaryValue = self::calculateTimeInBox($value, $event['date'], $previousMovementEvent['date']);
+                }
 
-            } elseif ($row['event'] === "levelUp") {
-
-                $value += match (true) {
-                    $value < 100 => 5,
-                    $value < 200 => 3,
-                    default      => 2,
-                };
-
-                if ($previousMovementEvent === "sentToTeam") {
-                    $value = self::calculateTimeOnTeam($value, $event['date'], $events[$i + 1]['date']);
-                } elseif ($previousMovementEvent === "sentToBox") {
-                    $value = self::calculateTimeInBox($value, $event['date'], $events[$i + 1]['date']);
+                if ($row['event'] === "levelUp") {
+                    $value += match (true) {
+                        $preliminaryValue < 100 => 5,
+                        $preliminaryValue < 200 => 3,
+                        default      => 2,
+                    };
+                } elseif ($row['event'] === "fainted") {
+                    $value += -1;
+                } elseif ($row['event'] === "faintedToPowerfulOpponent") {
+                    $value += match (true) {
+                        $preliminaryValue < 200 => -5,
+                        default      => -10,
+                    };
                 }
             }
         }

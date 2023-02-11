@@ -24,6 +24,7 @@ $map = require __DIR__ . "/../src/Config/Map.php";
 $caughtPokemonRepository = new \ConorSmith\Pokemon\Repositories\CaughtPokemonRepository($db);
 $dailyHabitLogRepository = new \ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository($db);
 $pokemonRepository = new \ConorSmith\Pokemon\Team\Repositories\PokemonRepository($db);
+$friendshipLog = new \ConorSmith\Pokemon\Team\FriendshipLog($db);
 
 $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
     $db,
@@ -40,9 +41,10 @@ $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
     new \ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository($db),
     new \ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository($db),
     $pokemonRepository,
-    new \ConorSmith\Pokemon\Team\FriendshipLog($db),
+    $friendshipLog,
     new \ConorSmith\Pokemon\ViewModelFactory($pokedex),
     new \ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery($dailyHabitLogRepository),
+    new \ConorSmith\Pokemon\Team\FriendshipLogReportTeamPokemonFaintedCommand($friendshipLog),
     $pokedex,
     $map,
 );

@@ -43,4 +43,24 @@ final class FriendshipLog
             'date_logged' => CarbonImmutable::now("Europe/Dublin"),
         ]);
     }
+
+    public function fainted(string $pokemonId): void
+    {
+        $this->db->insert("friendship_event_log", [
+            'id' => Uuid::uuid4(),
+            'pokemon_id' => $pokemonId,
+            'event' => "fainted",
+            'date_logged' => CarbonImmutable::now("Europe/Dublin"),
+        ]);
+    }
+
+    public function faintedToPowerfulOpponent(string $pokemonId): void
+    {
+        $this->db->insert("friendship_event_log", [
+            'id' => Uuid::uuid4(),
+            'pokemon_id' => $pokemonId,
+            'event' => "faintedToPowerfulOpponent",
+            'date_logged' => CarbonImmutable::now("Europe/Dublin"),
+        ]);
+    }
 }

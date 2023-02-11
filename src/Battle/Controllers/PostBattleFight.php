@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
+use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
@@ -23,6 +24,7 @@ final class PostBattleFight
         private readonly TrainerRepository $trainerRepository,
         private readonly PlayerRepository  $playerRepository,
         private readonly BagRepository     $bagRepository,
+        private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
         private readonly ViewModelFactory  $viewModelFactory,
     ) {}
 
@@ -64,6 +66,11 @@ final class PostBattleFight
                 $playerPokemonSurvivedHit = self::calculateHitSurvival($playerPokemon);
                 if (!$playerPokemonSurvivedHit) {
                     $playerPokemon->faint();
+                    $this->reportTeamPokemonFaintedCommand->run(
+                        $playerPokemon->id,
+                        $playerPokemon->level,
+                        $opponentPokemon->level,
+                    );
                 }
             }
         }
