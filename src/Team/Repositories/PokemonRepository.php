@@ -71,6 +71,7 @@ final class PokemonRepository
          */
         foreach ($team->members as $position => $pokemon) {
             $this->db->update("caught_pokemon", [
+                'level' => $pokemon->level,
                 'team_position' => $position,
             ], [
                 'id' => $pokemon->id,

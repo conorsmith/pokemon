@@ -11,6 +11,43 @@ final class Team
         public readonly array $members,
     ) {}
 
+    public function levelUpAllMembersWithMaxFriendship(): self
+    {
+        $processedTeamMembers = [];
+
+        /** @var Pokemon $member */
+        foreach ($this->members as $member) {
+            if ($member->hasMaxFriendship()) {
+                $processedTeamMembers[] = $member->levelUp();
+            } else {
+                $processedTeamMembers[] = $member;
+            }
+        }
+
+        return new Team($processedTeamMembers);
+    }
+
+    public function diff(self $other): array
+    {
+        $diff = [];
+
+        foreach ($this->members as $i => $member) {
+            if (!array_key_exists($i, $other->members)) {
+                $diff[] = [$member, null];
+            } elseif (!$member->identicalTo($other->members[$i])) {
+                $diff[] = [$member, $other->members[$i]];
+            }
+        }
+
+        if ($other->members > $this->members) {
+            foreach (array_slice($other->members, count($this->members)) as $otherMember) {
+                $diff[] = [null, $otherMember];
+            }
+        }
+
+        return $diff;
+    }
+
     public function isFull(): bool
     {
         return count($this->members) === 6;
