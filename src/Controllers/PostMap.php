@@ -36,21 +36,25 @@ final class PostMap
             exit;
         }
 
-        $encounterTable = $this->findEncounterTable(
-            $instanceRow['current_location'],
-            $_POST['encounterType'],
-        );
+        if ($legendaryPokemonNumber) {
+            $encounteredPokemonId = $legendaryPokemonNumber;
+            $encounteredPokemonLevel = self::findLegendaryPokemonLevel($legendaryPokemonNumber);
+        } else {
+            $encounterTable = $this->findEncounterTable(
+                $instanceRow['current_location'],
+                $_POST['encounterType'],
+            );
 
-        if (is_null($encounterTable)) {
-            $this->session->getFlashBag()->add("errors", "No Pokémon encountered.");
-            header("Location: /map");
-            exit;
+            if (is_null($encounterTable)) {
+                $this->session->getFlashBag()->add("errors", "No Pokémon encountered.");
+                header("Location: /map");
+                exit;
+            }
+
+            $encounteredPokemonId = self::generateEncounteredPokemon($encounterTable);
+            $encounteredPokemonLevel = self::generateEncounteredLevel($encounterTable, $encounteredPokemonId);
         }
 
-        $encounteredPokemonId = $legendaryPokemonNumber ?? self::generateEncounteredPokemon($encounterTable);
-        $encounteredPokemonLevel = $legendaryPokemonNumber
-            ? self::findLegendaryPokemonLevel($legendaryPokemonNumber)
-            : self::generateEncounteredLevel($encounterTable, $encounteredPokemonId);
         $encounteredPokemonIsShiny = self::generateEncounteredShininess();
 
         $encounterId = Uuid::uuid4();
