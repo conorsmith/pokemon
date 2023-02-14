@@ -45,6 +45,7 @@ $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
     new \ConorSmith\Pokemon\ViewModelFactory($pokedex),
     new \ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery($dailyHabitLogRepository),
     new \ConorSmith\Pokemon\Team\FriendshipLogReportTeamPokemonFaintedCommand($friendshipLog),
+    new \ConorSmith\Pokemon\Team\FriendshipLogReportBattleWithGymLeaderCommand($friendshipLog),
     new \ConorSmith\Pokemon\Team\WeeklyUpdateForTeamCommand($session, $pokemonRepository),
     $pokedex,
     $map,

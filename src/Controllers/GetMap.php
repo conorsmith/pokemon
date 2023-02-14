@@ -127,6 +127,9 @@ final class GetMap
             }
         }
 
+        sort($gymTrainerIds);
+        sort($beatenGymTrainerIds);
+
         return $gymTrainerIds === $beatenGymTrainerIds;
     }
 

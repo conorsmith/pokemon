@@ -42,6 +42,7 @@ final class FriendshipCalculator
         ];
 
         $previousMovementEvent = $events[0];
+        $values = [];
 
         foreach ($events as $event) {
             if ($event['type'] === "calculation") {
@@ -67,21 +68,31 @@ final class FriendshipCalculator
                     $preliminaryValue = self::calculateTimeInBox($value, $event['date'], $previousMovementEvent['date']);
                 }
 
-                if ($row['event'] === "levelUp") {
+                if ($event['type'] === "levelUp") {
                     $value += match (true) {
                         $preliminaryValue < 100 => 5,
                         $preliminaryValue < 200 => 3,
                         default      => 2,
                     };
-                } elseif ($row['event'] === "fainted") {
+                } elseif ($event['type'] === "fainted") {
                     $value += -1;
-                } elseif ($row['event'] === "faintedToPowerfulOpponent") {
+                } elseif ($event['type'] === "faintedToPowerfulOpponent") {
                     $value += match (true) {
                         $preliminaryValue < 200 => -5,
                         default      => -10,
                     };
+                } elseif ($event['type'] === "battleWithGymLeader") {
+                    $value += match (true) {
+                        $preliminaryValue < 100 => 3,
+                        $preliminaryValue < 200 => 2,
+                        default      => 1,
+                    };
                 }
             }
+            $values[] = [
+                'event' => $event['type'],
+                'value' => $value,
+            ];
         }
 
         return $value;

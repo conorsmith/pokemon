@@ -358,6 +358,26 @@ final class FriendshipCalculatorTest extends TestCase
                 ],
                 251,
             ],
+            // Variety of events
+            [
+                [
+                    "2014-01-02 00:00:00" => "sentToTeam",                // 66 (-4)
+                    "2014-01-02 01:00:00" => "levelUp",                   // 71 (+5)
+                    "2014-01-02 02:00:00" => "fainted",                   // 70 (-1)
+                    "2014-01-02 03:00:00" => "faintedToPowerfulOpponent", // 65 (-5)
+                    "2014-01-02 04:00:00" => "battleWithGymLeader",       // 68 (+3)
+                    // 2014-01-06 00:00:00    inTeam                      // 100 (+32)
+                    "2014-01-06 01:00:00" => "levelUp",                   // 103 (+3)
+                    "2014-01-06 02:00:00" => "battleWithGymLeader",       // 105 (+2)
+                    // 2014-01-18 00:00:00    inTeam                      // 201 (+96)
+                    "2014-01-18 01:00:00" => "levelUp",                   // 203 (+2)
+                    "2014-01-18 02:00:00" => "faintedToPowerfulOpponent", // 193 (-10)
+                    // 2014-01-19 00:00:00    inTeam                      // 201 (+8)
+                    "2014-01-19 01:00:00" => "battleWithGymLeader",       // 202 (+1)
+                    "2014-01-20 00:00:00" => "inTeam",                    // 210 (+8)
+                ],
+                210,
+            ],
         ];
     }
 }

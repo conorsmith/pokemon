@@ -63,4 +63,14 @@ final class FriendshipLog
             'date_logged' => CarbonImmutable::now("Europe/Dublin"),
         ]);
     }
+
+    public function battleWithGymLeader(string $pokemonId): void
+    {
+        $this->db->insert("friendship_event_log", [
+            'id' => Uuid::uuid4(),
+            'pokemon_id' => $pokemonId,
+            'event' => "battleWithGymLeader",
+            'date_logged' => CarbonImmutable::now("Europe/Dublin"),
+        ]);
+    }
 }

@@ -12,14 +12,14 @@ final class FriendshipLogReportTeamPokemonFaintedCommand implements ReportTeamPo
     ) {}
 
     public function run(
-        string $teamPokemondId,
-        int $teamPokemonLevel,
-        int $opponentPokemonLevel,
+        string $teamPokemonId,
+        int    $teamPokemonLevel,
+        int    $opponentPokemonLevel,
     ): void {
         if ($opponentPokemonLevel - $teamPokemonLevel >= 30) {
-            $this->friendshipLog->faintedToPowerfulOpponent($teamPokemondId);
+            $this->friendshipLog->faintedToPowerfulOpponent($teamPokemonId);
         } else {
-            $this->friendshipLog->fainted($teamPokemondId);
+            $this->friendshipLog->fainted($teamPokemonId);
         }
     }
 }
