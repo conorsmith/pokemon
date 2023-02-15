@@ -24,7 +24,7 @@ final class PlayerRepository
             'instanceId' => INSTANCE_ID,
         ]);
 
-        $caughtPokemonRows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position IS NOT NULL ORDER BY team_position", [
+        $caughtPokemonRows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'team' ORDER BY team_position", [
             'instanceId' => INSTANCE_ID,
         ]);
 

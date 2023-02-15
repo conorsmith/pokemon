@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Repositories;
 
-use Carbon\CarbonImmutable;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Domain\Team;
 use Doctrine\DBAL\Connection;
@@ -30,7 +29,7 @@ final class PokemonRepository
 
     public function getTeam(): Team
     {
-        $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position IS NOT NULL ORDER BY team_position", [
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'team' ORDER BY team_position", [
             'instanceId' => INSTANCE_ID,
         ]);
 
@@ -42,7 +41,7 @@ final class PokemonRepository
 
     public function getBox(): array
     {
-        $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND team_position IS NULL ORDER BY (pokemon_id * 1) ASC, level DESC", [
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'box' ORDER BY (pokemon_id * 1) ASC, level DESC", [
             'instanceId' => INSTANCE_ID,
         ]);
 
@@ -73,6 +72,7 @@ final class PokemonRepository
             $this->db->update("caught_pokemon", [
                 'level' => $pokemon->level,
                 'team_position' => $position,
+                'location' => "team",
             ], [
                 'id' => $pokemon->id,
             ]);
@@ -83,6 +83,7 @@ final class PokemonRepository
     {
         $this->db->update("caught_pokemon", [
             'team_position' => null,
+            'location' => "box",
         ], [
             'id' => $pokemon->id,
         ]);

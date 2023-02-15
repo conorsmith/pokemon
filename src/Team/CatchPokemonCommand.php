@@ -53,6 +53,7 @@ final class CatchPokemonCommand implements CommandInterface
             'is_shiny' => $pokemon->isShiny ? 1 : 0,
             'level' => $pokemon->level,
             'team_position' => $teamPosition,
+            'location' => $isTeamFull ? "box" : "team",
             'has_fainted' => 0,
             'location_caught' => $caughtLocationId,
             'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
