@@ -96,7 +96,7 @@ final class PokemonRepository
 
         $pokemonConfig = self::findPokemonConfig($pokemonRow['pokemon_id']);
 
-        return FriendshipCalculator::calculate($pokemonConfig, $pokemonRow, $eventRows);
+        return FriendshipCalculator::calculate($pokemonConfig, $eventRows);
     }
 
     private static function findPokemonConfig(string $number): array

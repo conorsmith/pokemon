@@ -3,14 +3,11 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
-use Carbon\CarbonImmutable;
-use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\GymBadge;
 use Doctrine\DBAL\Connection;
-use Exception;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostEncounterCatch
@@ -19,6 +16,7 @@ final class PostEncounterCatch
         private readonly Connection $db,
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
+        private readonly CatchPokemonCommand $catchPokemonCommand,
         private readonly array $pokedex,
         private readonly array $map,
     ) {}
@@ -78,52 +76,18 @@ final class PostEncounterCatch
                 $this->session->getFlashBag()->add("successes", "You caught the wild {$pokemon['name']}!");
             }
 
-            $positionRow = $this->db->fetchNumeric("SELECT MAX(team_position) FROM caught_pokemon WHERE instance_id = :instanceId", [
-                'instanceId' => INSTANCE_ID,
-            ]);
-
-            if ($positionRow[0] >= 5) {
-                $teamPosition = null;
-                $this->session->getFlashBag()->add("successes", "{$pokemon['name']} was sent to your box");
-            } else {
-                $teamPosition = $positionRow[0] + 1;
-            }
-
             $currentLocation = $this->findLocation($instanceRow['current_location']);
 
-            $this->db->insert("caught_pokemon", [
-                'id' => Uuid::uuid4(),
-                'instance_id' => INSTANCE_ID,
-                'pokemon_id' => $encounterRow['pokemon_id'],
-                'is_shiny' => $encounterRow['is_shiny'],
-                'level' => $encounterRow['level'],
-                'team_position' => $teamPosition,
-                'has_fainted' => 0,
-                'location_caught' => $currentLocation['id'],
-                'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
-            ]);
+            $result = $this->catchPokemonCommand->run(
+                $encounterRow['pokemon_id'],
+                $encounterRow['is_shiny'] === 1,
+                $encounterRow['level'],
+                $encounterRow['is_legendary'] === 1,
+                $currentLocation['id'],
+            );
 
-            $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
-                'instanceId' => INSTANCE_ID,
-                'number' => $encounterRow['pokemon_id'],
-            ]);
-
-            if ($pokedexRow === false) {
-                $this->db->insert("pokedex_entries", [
-                    'id' => Uuid::uuid4(),
-                    'instance_id' => INSTANCE_ID,
-                    'number' => $encounterRow['pokemon_id'],
-                    'date_added' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
-                ]);
-            }
-
-            if ($encounterRow['is_legendary']) {
-                $this->db->insert("legendary_captures", [
-                    'id' => Uuid::uuid4(),
-                    'instance_id' => INSTANCE_ID,
-                    'pokemon_id' => $encounterRow['pokemon_id'],
-                    'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
-                ]);
+            if ($result->wasSentToBox()) {
+                $this->session->getFlashBag()->add("successes", "{$pokemon['name']} was sent to your box");
             }
 
             $bag = $bag->use($pokeballItemId);

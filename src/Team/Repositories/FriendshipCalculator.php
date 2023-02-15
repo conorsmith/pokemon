@@ -7,19 +7,13 @@ use Carbon\CarbonImmutable;
 
 final class FriendshipCalculator
 {
-    public static function calculate(array $pokemonConfig, array $pokemonRow, array $eventRows): int
+    public static function calculate(array $pokemonConfig, array $eventRows): int
     {
         $value = $pokemonConfig['friendship'] ?? 70;
 
-        $dateCaught = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $pokemonRow['date_caught'], "Europe/Dublin");
         $now = CarbonImmutable::now("Europe/Dublin");
 
-        $events = [
-            [
-                'type' => "UNKNOWN",
-                'date' => $dateCaught,
-            ],
-        ];
+        $events = [];
 
         foreach ($eventRows as $row) {
             $events[] = [
@@ -28,21 +22,13 @@ final class FriendshipCalculator
             ];
         }
 
-        $firstEvent = self::determineFirstEvent($events);
-
-        if (is_null($firstEvent)) {
-            $events[0]['type'] = is_null($pokemonRow['team_position']) ? "sentToBox" : "sentToTeam";
-        } else {
-            $events[0]['type'] = $firstEvent;
-        }
-
         $events[] = [
             'type' => "calculation",
             'date' => $now,
         ];
 
+        // First event is always a movement event
         $previousMovementEvent = $events[0];
-        $values = [];
 
         foreach ($events as $event) {
             if ($event['type'] === "calculation") {
@@ -89,26 +75,9 @@ final class FriendshipCalculator
                     };
                 }
             }
-            $values[] = [
-                'event' => $event['type'],
-                'value' => $value,
-            ];
         }
 
         return $value;
-    }
-
-    private static function determineFirstEvent(array $events): ?string
-    {
-        foreach ($events as $event) {
-            if ($event['type'] === "sentToBox") {
-                return "sentToTeam";
-            } elseif ($event['type'] === "sentToTeam") {
-                return "sentToBox";
-            }
-        }
-
-        return null;
     }
 
     private static function calculateTimeOnTeam(int $value, CarbonImmutable $from, CarbonImmutable $to): int

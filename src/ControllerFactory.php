@@ -12,6 +12,7 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Controllers\GetBag;
 use ConorSmith\Pokemon\Controllers\GetPokedex;
+use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\WeeklyUpdateForTeamCommand;
@@ -100,6 +101,7 @@ final class ControllerFactory
         private readonly PokemonRepository           $pokemonRepository,
         private readonly FriendshipLog               $friendshipLog,
         private readonly ViewModelFactory            $viewModelFactory,
+        private readonly CatchPokemonCommand         $catchPokemonCommand,
         private readonly HabitStreakQuery            $habitStreakQuery,
         private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
         private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
@@ -183,6 +185,7 @@ final class ControllerFactory
                 $this->db,
                 $this->session,
                 $this->bagRepository,
+                $this->catchPokemonCommand,
                 $this->pokedex,
                 $this->map,
             ),

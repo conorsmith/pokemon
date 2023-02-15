@@ -20,11 +20,12 @@ final class FriendshipCalculatorTest extends TestCase
 
         $value = FriendshipCalculator::calculate(
             $pokemonConfig = [],
-            $pokemonRow = [
-                'date_caught' => "2014-04-04 12:00:00",
-                'team_position' => null,
+            $eventRows = [
+                [
+                    'event' => "sentToBox",
+                    'date_logged' => "2014-04-04 12:00:00",
+                ]
             ],
-            $eventRows = [],
         );
 
         assertThat(
@@ -42,11 +43,12 @@ final class FriendshipCalculatorTest extends TestCase
             $pokemonConfig = [
                 'friendship' => 101,
             ],
-            $pokemonRow = [
-                'date_caught' => "2014-04-04 12:00:00",
-                'team_position' => null,
+            $eventRows = [
+                [
+                    'event' => "sentToBox",
+                    'date_logged' => "2014-04-04 12:00:00",
+                ]
             ],
-            $eventRows = [],
         );
 
         assertThat(
@@ -62,11 +64,12 @@ final class FriendshipCalculatorTest extends TestCase
 
         $value = FriendshipCalculator::calculate(
             $pokemonConfig = [],
-            $pokemonRow = [
-                'date_caught' => "2014-04-04 12:00:00",
-                'team_position' => 0,
+            $eventRows = [
+                [
+                    'event' => "sentToTeam",
+                    'date_logged' => "2014-04-04 12:00:00",
+                ]
             ],
-            $eventRows = [],
         );
 
         assertThat(
@@ -82,11 +85,12 @@ final class FriendshipCalculatorTest extends TestCase
 
         $value = FriendshipCalculator::calculate(
             $pokemonConfig = [],
-            $pokemonRow = [
-                'date_caught' => "2014-04-04 12:00:00",
-                'team_position' => null,
+            $eventRows = [
+                [
+                    'event' => "sentToBox",
+                    'date_logged' => "2014-04-04 12:00:00",
+                ]
             ],
-            $eventRows = [],
         );
 
         assertThat(
@@ -102,11 +106,11 @@ final class FriendshipCalculatorTest extends TestCase
 
         $value = FriendshipCalculator::calculate(
             $pokemonConfig = [],
-            $pokemonRow = [
-                'date_caught' => "2014-04-04 12:00:00",
-                'team_position' => 0,
-            ],
             $eventRows = [
+                [
+                    'event' => "sentToTeam",
+                    'date_logged' => "2014-04-04 12:00:00",
+                ],
                 [
                     'event' => "levelUp",
                     'date_logged' => "2014-04-04 12:00:00",
@@ -127,11 +131,11 @@ final class FriendshipCalculatorTest extends TestCase
 
         $value = FriendshipCalculator::calculate(
             $pokemonConfig = [],
-            $pokemonRow = [
-                'date_caught' => "2014-03-25 12:00:00",
-                'team_position' => 0,
-            ],
             $eventRows = [
+                [
+                    'event' => "sentToTeam",
+                    'date_logged' => "2014-03-25 12:00:00",
+                ],
                 [
                     'event' => "levelUp",
                     'date_logged' => "2014-04-04 12:00:00",
@@ -152,11 +156,11 @@ final class FriendshipCalculatorTest extends TestCase
 
         $value = FriendshipCalculator::calculate(
             $pokemonConfig = [],
-            $pokemonRow = [
-                'date_caught' => "2014-03-15 12:00:00",
-                'team_position' => 0,
-            ],
             $eventRows = [
+                [
+                    'event' => "sentToTeam",
+                    'date_logged' => "2014-03-15 12:00:00",
+                ],
                 [
                     'event' => "levelUp",
                     'date_logged' => "2014-04-04 12:00:00",
@@ -180,10 +184,6 @@ final class FriendshipCalculatorTest extends TestCase
 
         $value = FriendshipCalculator::calculate(
             $pokemonConfig = [],
-            $pokemonRow = [
-                'date_caught' => "2014-01-01 00:00:00",
-                'team_position' => array_shift($now) === "inTeam" ? 0 : null,
-            ],
             $eventRows = array_map(
                 fn($key, $value) => [
                     'event' => $value,
@@ -206,36 +206,42 @@ final class FriendshipCalculatorTest extends TestCase
             // Points gained being in the team
             [
                 [
-                    "2014-01-01 00:00:00" => "inTeam",
+                    "2014-01-01 00:00:00" => "sentToTeam",
+                    "2014-01-01 01:00:00" => "inTeam",
                 ],
                 70,
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-04 18:00:00" => "inTeam",
                 ],
                 100,
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-17 06:00:00" => "inTeam",
                 ],
                 200,
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-24 00:00:00" => "inTeam",
                 ],
                 254,
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-24 03:00:00" => "inTeam",
                 ],
                 255,
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-12-31 00:00:00" => "inTeam",
                 ],
                 255,
@@ -243,30 +249,35 @@ final class FriendshipCalculatorTest extends TestCase
             // Points lost being in the box
             [
                 [
-                    "2014-01-01 00:00:00" => "inBox",
+                    "2014-01-01 00:00:00" => "sentToBox",
+                    "2014-01-01 01:00:00" => "inBox",
                 ],
                 70,
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToBox",
                     "2014-01-06 00:00:00" => "inBox",
                 ],
                 50,
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToBox",
                     "2014-01-18 06:00:00" => "inBox",
                 ],
                 1,
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToBox",
                     "2014-01-18 12:00:00" => "inBox",
                 ],
                 0,
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToBox",
                     "2014-12-31 00:00:00" => "inBox",
                 ],
                 0,
@@ -274,6 +285,7 @@ final class FriendshipCalculatorTest extends TestCase
             // Moved immediately after capture
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToBox",
                     "2014-01-01 00:01:00" => "sentToTeam",
                     "2014-01-01 03:01:00" => "inTeam",
                 ],
@@ -281,6 +293,7 @@ final class FriendshipCalculatorTest extends TestCase
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-01 00:01:00" => "sentToBox",
                     "2014-01-01 06:01:00" => "inBox",
                 ],
@@ -289,6 +302,7 @@ final class FriendshipCalculatorTest extends TestCase
             // Sent to box and back quickly stops 1 point being gained
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-02 01:01:00" => "sentToBox",
                     "2014-01-02 01:01:01" => "sentToTeam",
                     "2014-01-04 18:00:00" => "inTeam",
@@ -298,6 +312,7 @@ final class FriendshipCalculatorTest extends TestCase
             // Levelling up
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-02 00:00:00" => "levelUp",
                     "2014-01-04 18:00:00" => "inTeam",
                 ],
@@ -305,6 +320,7 @@ final class FriendshipCalculatorTest extends TestCase
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-02 00:00:00" => "levelUp",
                     "2014-01-17 06:00:00" => "inTeam",
                 ],
@@ -312,6 +328,7 @@ final class FriendshipCalculatorTest extends TestCase
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-05 00:00:00" => "levelUp",
                     "2014-01-17 06:00:00" => "inTeam",
                 ],
@@ -319,6 +336,7 @@ final class FriendshipCalculatorTest extends TestCase
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-18 06:00:00" => "levelUp",
                     "2014-01-21 00:00:00" => "inTeam",
                 ],
@@ -326,6 +344,7 @@ final class FriendshipCalculatorTest extends TestCase
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-02 00:00:00" => "levelUp",
                     "2014-01-05 00:00:00" => "levelUp",
                     "2014-01-18 06:00:00" => "levelUp",
@@ -336,6 +355,7 @@ final class FriendshipCalculatorTest extends TestCase
             // Sent to box and back again multiple times
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-02 00:00:00" => "sentToBox",
                     "2014-01-02 01:00:00" => "sentToTeam",
                     "2014-01-10 00:00:00" => "sentToBox",
@@ -346,6 +366,7 @@ final class FriendshipCalculatorTest extends TestCase
             ],
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToTeam",
                     "2014-01-02 00:00:00" => "sentToBox",
                     "2014-01-02 01:00:00" => "sentToTeam",
                     "2014-01-04 00:00:00" => "levelUp",
@@ -361,6 +382,7 @@ final class FriendshipCalculatorTest extends TestCase
             // Variety of events
             [
                 [
+                    "2014-01-01 00:00:00" => "sentToBox",                 // 70
                     "2014-01-02 00:00:00" => "sentToTeam",                // 66 (-4)
                     "2014-01-02 01:00:00" => "levelUp",                   // 71 (+5)
                     "2014-01-02 02:00:00" => "fainted",                   // 70 (-1)
