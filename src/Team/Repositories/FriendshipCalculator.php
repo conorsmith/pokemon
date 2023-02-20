@@ -34,14 +34,19 @@ final class FriendshipCalculator
             if ($event['type'] === "calculation") {
                 if ($previousMovementEvent['type'] === "sentToTeam") {
                     $value = self::calculateTimeOnTeam($value, $event['date'], $previousMovementEvent['date']);
+                } elseif ($previousMovementEvent['type'] === "sentToDayCare") {
+                    $value = self::calculateTimeInDayCare($value, $event['date'], $previousMovementEvent['date']);
                 } elseif ($previousMovementEvent['type'] === "sentToBox") {
                     $value = self::calculateTimeInBox($value, $event['date'], $previousMovementEvent['date']);
                 }
             } elseif ($event['type'] === "sentToTeam"
+                || $event['type'] === "sentToDayCare"
                 || $event['type'] === "sentToBox"
             ) {
                 if ($previousMovementEvent['type'] === "sentToTeam") {
                     $value = self::calculateTimeOnTeam($value, $event['date'], $previousMovementEvent['date']);
+                } elseif ($previousMovementEvent['type'] === "sentToDayCare") {
+                    $value = self::calculateTimeInDayCare($value, $event['date'], $previousMovementEvent['date']);
                 } elseif ($previousMovementEvent['type'] === "sentToBox") {
                     $value = self::calculateTimeInBox($value, $event['date'], $previousMovementEvent['date']);
                 }
@@ -50,6 +55,8 @@ final class FriendshipCalculator
             } else {
                 if ($previousMovementEvent['type'] === "sentToTeam") {
                     $preliminaryValue = self::calculateTimeOnTeam($value, $event['date'], $previousMovementEvent['date']);
+                } elseif ($previousMovementEvent['type'] === "sentToDayCare") {
+                    $preliminaryValue = self::calculateTimeInDayCare($value, $event['date'], $previousMovementEvent['date']);
                 } elseif ($previousMovementEvent['type'] === "sentToBox") {
                     $preliminaryValue = self::calculateTimeInBox($value, $event['date'], $previousMovementEvent['date']);
                 }
@@ -83,6 +90,11 @@ final class FriendshipCalculator
     private static function calculateTimeOnTeam(int $value, CarbonImmutable $from, CarbonImmutable $to): int
     {
         return min(255, $value + intval(floor($from->diffInHours($to) / 3)));
+    }
+
+    private static function calculateTimeInDayCare(int $value, CarbonImmutable $from, CarbonImmutable $to): int
+    {
+        return min(255, $value + intval(floor($from->diffInHours($to) / 24)));
     }
 
     private static function calculateTimeInBox(int $value, CarbonImmutable $from, CarbonImmutable $to): int

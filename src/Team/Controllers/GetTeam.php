@@ -19,6 +19,7 @@ final class GetTeam
     public function __invoke(): void
     {
         $team = $this->pokemonRepository->getTeam();
+        $dayCare = $this->pokemonRepository->getDayCare();
         $box = $this->pokemonRepository->getBox();
 
         $successes = $this->session->getFlashBag()->get("successes");
@@ -29,10 +30,18 @@ final class GetTeam
                 fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
                 $team->members
             ),
+            'dayCare' => array_map(
+                fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
+                $dayCare->attendees
+            ),
             'box' => array_map(
                 fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
                 $box
             ),
+            'dayCareLimit' => $dayCare->availablePlaces,
+            'teamIsFull' => $team->isFull(),
+            'dayCareIsFull' => $dayCare->isFull(),
+            'teamHasSingleRemainingMember' => count($team->members) === 1,
             'successes' => $successes,
             'errors' => $errors,
         ]);

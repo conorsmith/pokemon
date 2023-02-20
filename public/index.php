@@ -23,7 +23,10 @@ $map = require __DIR__ . "/../src/Config/Map.php";
 
 $caughtPokemonRepository = new \ConorSmith\Pokemon\Repositories\CaughtPokemonRepository($db);
 $dailyHabitLogRepository = new \ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository($db);
-$pokemonRepository = new \ConorSmith\Pokemon\Team\Repositories\PokemonRepository($db);
+$pokemonRepository = new \ConorSmith\Pokemon\Team\Repositories\PokemonRepository(
+    $db,
+    new \ConorSmith\Pokemon\Player\EarnedGymBadgesQueryDb($db),
+);
 $friendshipLog = new \ConorSmith\Pokemon\Team\FriendshipLog($db);
 
 $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(

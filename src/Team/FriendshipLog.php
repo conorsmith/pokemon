@@ -34,6 +34,16 @@ final class FriendshipLog
         ]);
     }
 
+    public function sentToDayCare(Pokemon $pokemon): void
+    {
+        $this->db->insert("friendship_event_log", [
+            'id' => Uuid::uuid4(),
+            'pokemon_id' => $pokemon->id,
+            'event' => "sentToDayCare",
+            'date_logged' => CarbonImmutable::now("Europe/Dublin"),
+        ]);
+    }
+
     public function levelUp(Pokemon $pokemon): void
     {
         $this->db->insert("friendship_event_log", [

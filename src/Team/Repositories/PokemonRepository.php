@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Repositories;
 
+use ConorSmith\Pokemon\SharedKernel\EarnedGymBadgesQuery;
+use ConorSmith\Pokemon\Team\Domain\DayCare;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Domain\Team;
 use Doctrine\DBAL\Connection;
@@ -11,6 +13,7 @@ final class PokemonRepository
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly EarnedGymBadgesQuery $earnedGymBadgesQuery,
     ) {}
 
     public function find(string $id): ?Pokemon
@@ -37,6 +40,21 @@ final class PokemonRepository
             fn(array $row) => $this->createPokemonFromRow($row),
             $rows
         ));
+    }
+
+    public function getDayCare(): DayCare
+    {
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'dayCare' ORDER BY (pokemon_id * 1) ASC, level DESC", [
+            'instanceId' => INSTANCE_ID,
+        ]);
+
+        return new DayCare(
+            array_map(
+                fn(array $row) => $this->createPokemonFromRow($row),
+                $rows
+            ),
+            $this->earnedGymBadgesQuery->run()
+        );
     }
 
     public function getBox(): array
@@ -73,6 +91,20 @@ final class PokemonRepository
                 'level' => $pokemon->level,
                 'team_position' => $position,
                 'location' => "team",
+            ], [
+                'id' => $pokemon->id,
+            ]);
+        }
+    }
+
+    public function saveDayCare(DayCare $dayCare): void
+    {
+        /** @var Pokemon $pokemon */
+        foreach ($dayCare->attendees as $pokemon) {
+            $this->db->update("caught_pokemon", [
+                'level' => $pokemon->level,
+                'team_position' => null,
+                'location' => "dayCare",
             ], [
                 'id' => $pokemon->id,
             ]);

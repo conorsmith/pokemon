@@ -30,6 +30,7 @@ use ConorSmith\Pokemon\Team\Controllers\PostTeamItemUse;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamMoveDown;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamMoveUp;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamSendToBox;
+use ConorSmith\Pokemon\Team\Controllers\PostTeamSendToDayCare;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamSendToTeam;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogCalorieGoal;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogExercise;
@@ -76,6 +77,7 @@ final class ControllerFactory
         $r->post("/team/move-down", PostTeamMoveDown::class);
         $r->post("/team/send-to-box", PostTeamSendToBox::class);
         $r->post("/team/send-to-team", PostTeamSendToTeam::class);
+        $r->post("/team/send-to-day-care", PostTeamSendToDayCare::class);
         $r->post("/battle/trainer/{id}", PostBattleTrainer::class);
         $r->get("/battle/{id}", GetBattle::class);
         $r->post("/battle/{id}/fight", PostBattleFight::class);
@@ -198,6 +200,11 @@ final class ControllerFactory
                 $this->friendshipLog,
             ),
             PostTeamSendToTeam::class => new PostTeamSendToTeam(
+                $this->session,
+                $this->pokemonRepository,
+                $this->friendshipLog,
+            ),
+            PostTeamSendToDayCare::class => new PostTeamSendToDayCare(
                 $this->session,
                 $this->pokemonRepository,
                 $this->friendshipLog,
