@@ -15,5 +15,6 @@ final class Pokemon
         public readonly bool $isShiny,
         public readonly string $remainingHp,
         public readonly string $totalHp,
+        public readonly bool $hasFainted,
     ) {}
 }

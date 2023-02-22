@@ -178,15 +178,12 @@ final class PostBattleFight
         }
 
         echo json_encode($this->events);
-
-        //header("Location: /battle/{$trainer->id}");
     }
 
     private array $events;
 
     private function setMessage(string $message): void
     {
-        //$this->session->getFlashBag()->add("successes", $message);
         $this->events[] = [
             'type' => "message",
             'value' => $message,

@@ -40,6 +40,7 @@ final class ViewModelFactory
             $pokemon->isShiny,
             strval($pokemon->remainingHp),
             strval($pokemon->calculateHp()),
+            $pokemon->remainingHp === 0,
         );
     }
 

@@ -24,7 +24,13 @@
             } else if (event.type === "fainting") {
                 const target = document.querySelector("[data-target-id='" + event.target + "'");
                 target.querySelector(".pokemon-image").addEventListener("animationend", function () {
-                    location.reload();
+                    if (responseData.length === 0) {
+                        location.reload();
+                    } else {
+                        processNextEvent(responseData, function () {
+                            location.reload();
+                        });
+                    }
                 });
                 target.querySelector(".pokemon-image").classList.add("slide-down");
             } else {
@@ -87,6 +93,9 @@
         animation: slideDown 2s forwards;
         position: relative;
     }
+    .slid-down {
+        visibility: hidden;
+    }
 
     @keyframes slideDown {
         from {
@@ -115,7 +124,7 @@
         </div>
     </li>
     <li class="list-group-item d-flex flex-row-reverse" data-target-id="<?=$activePokemon->id?>">
-        <div class="pokemon-image <?=$activePokemon->isShiny ? "pokemon-image--shiny" : ""?>">
+        <div class="pokemon-image <?=$activePokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$activePokemon->hasFainted ? "slid-down" : ""?>">
             <img src="<?=$activePokemon->imageUrl?>">
         </div>
         <div style="text-align: right; flex-grow: 1;">
@@ -144,7 +153,7 @@
         </div>
     </li>
     <li class="list-group-item d-flex" data-target-id="<?=$leadPokemon->id?>">
-        <div class="pokemon-image <?=$leadPokemon->isShiny ? "pokemon-image--shiny" : ""?>">
+        <div class="pokemon-image <?=$leadPokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$leadPokemon->hasFainted ? "slid-down" : ""?>">
             <img src="<?=$leadPokemon->imageUrl?>">
         </div>
         <div style="flex-grow: 1">
