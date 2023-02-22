@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Battle\Repositories;
 
 use ConorSmith\Pokemon\Battle\Domain\Player;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\TeamPokemonQuery;
 use Doctrine\DBAL\Connection;
@@ -41,6 +42,8 @@ final class PlayerRepository
                 $caughtPokemonRow['level'],
                 $teamPokemon->friendship,
                 $caughtPokemonRow['is_shiny'] === 1,
+                self::createStats($caughtPokemonRow['pokemon_id']),
+                $caughtPokemonRow['remaining_hp'] ?? 0,
                 $caughtPokemonRow['has_fainted'] === 1,
             );
         }
@@ -74,10 +77,32 @@ final class PlayerRepository
         foreach ($player->team as $i => $pokemon) {
             $this->db->update("caught_pokemon", [
                 'team_position' => $i + 1,
+                'remaining_hp' => $pokemon->remainingHp,
                 'has_fainted' => $pokemon->hasFainted ? "1" : "0",
             ], [
                 'id' => $pokemon->id,
             ]);
         }
+    }
+
+    private static function createStats(string $number): Stats
+    {
+        $config = require __DIR__ . "/../../Config/Stats.php";
+
+        /** @var array $entry */
+        foreach ($config as $entry) {
+            if ($entry['number'] === $number) {
+                return new Stats(
+                    $entry['hp'],
+                    $entry['attack'],
+                    $entry['defence'],
+                    $entry['spAttack'],
+                    $entry['spDefence'],
+                    $entry['speed'],
+                );
+            }
+        }
+
+        throw new Exception;
     }
 }

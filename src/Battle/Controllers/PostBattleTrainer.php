@@ -35,10 +35,10 @@ final class PostBattleTrainer
             exit;
         }
 
+        $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainerByTrainerId($trainerId);
 
         if ($trainer->isGymLeader()) {
-            $player = $this->playerRepository->findPlayer();
             $this->reportBattleWithGymLeaderCommand->run(array_map(
                 fn(Pokemon $pokemon) => $pokemon->id,
                 $player->team,
@@ -46,10 +46,12 @@ final class PostBattleTrainer
         }
 
         $trainer = $trainer->startBattle();
+        $player = $player->reviveTeam();
         $bag = $bag->use(ItemId::CHALLENGE_TOKEN);
 
         $this->db->beginTransaction();
 
+        $this->playerRepository->savePlayer($player);
         $this->trainerRepository->saveTrainer($trainer);
         $this->bagRepository->save($bag);
 

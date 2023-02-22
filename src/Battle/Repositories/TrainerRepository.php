@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Battle\Repositories;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -62,18 +63,49 @@ final class TrainerRepository
 
         $team = [];
 
+        $trainerBattlePokemonRows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battle_pokemon WHERE trainer_battle_id = :trainerBattleId ORDER BY team_order", [
+            'trainerBattleId' => $trainerBattleRow['id'],
+        ]);
+
         foreach ($trainerConfig['team'] as $i => $pokemonConfig) {
+
+            if ($trainerBattlePokemonRows === []) {
+                $trainerBattlePokemonId = Uuid::uuid4()->toString();
+            } else {
+                $trainerBattlePokemonId = $trainerBattlePokemonRows[$i]['id'];
+            }
+
             $pokedexEntry = $this->findPokedexEntry($pokemonConfig['id']);
-            $team[] = new Pokemon(
-                "00000000-0000-0000-0000-0000000{$i}",
+            $pokemon = new Pokemon(
+                $trainerBattlePokemonId,
                 $pokemonConfig['id'],
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,
                 $pokemonConfig['level'],
                 0,
                 isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
+                self::createStats($pokemonConfig['id']),
+                0,
                 $i < $trainerBattleRow['active_pokemon'],
             );
+
+            if ($trainerBattlePokemonRows === []) {
+                $pokemon->remainingHp = $pokemon->calculateHp();
+            } else {
+                $pokemon->remainingHp = $trainerBattlePokemonRows[$i]['remaining_hp'];
+            }
+
+            if ($trainerBattlePokemonRows === []) {
+                $this->db->insert("trainer_battle_pokemon", [
+                    'id' => Uuid::uuid4(),
+                    'trainer_battle_id' => $trainerBattleRow['id'],
+                    'team_order' => $i,
+                    'pokemon_number' => $pokemon->number,
+                    'remaining_hp' => $pokemon->remainingHp,
+                ]);
+            }
+
+            $team[] = $pokemon;
         }
 
         return new Trainer(
@@ -128,5 +160,41 @@ final class TrainerRepository
         ], [
             'id' => $battleTrainer->id,
         ]);
+
+        if ($battleTrainer->isBattling) {
+            /** @var Pokemon $pokemon */
+            foreach ($battleTrainer->team as $pokemon) {
+                $this->db->update("trainer_battle_pokemon", [
+                    'remaining_hp' => $pokemon->remainingHp,
+                ], [
+                    'id' => $pokemon->id,
+                ]);
+            }
+        } else {
+            $this->db->delete("trainer_battle_pokemon", [
+                'trainer_battle_id' => $battleTrainer->id,
+            ]);
+        }
+    }
+
+    private static function createStats(string $number): Stats
+    {
+        $config = require __DIR__ . "/../../Config/Stats.php";
+
+        /** @var array $entry */
+        foreach ($config as $entry) {
+            if ($entry['number'] === $number) {
+                return new Stats(
+                    $entry['hp'],
+                    $entry['attack'],
+                    $entry['defence'],
+                    $entry['spAttack'],
+                    $entry['spDefence'],
+                    $entry['speed'],
+                );
+            }
+        }
+
+        throw new Exception;
     }
 }

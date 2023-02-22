@@ -42,6 +42,18 @@ final class Player
         throw new Exception;
     }
 
+    public function getLastFaintedPokemon(): Pokemon
+    {
+        /** @var Pokemon $pokemon */
+        foreach (array_reverse($this->team) as $pokemon) {
+            if ($pokemon->hasFainted) {
+                return $pokemon;
+            }
+        }
+
+        throw new Exception;
+    }
+
     public function reviveTeam(): self
     {
         $revivedTeam = [];

@@ -38,6 +38,8 @@ final class ViewModelFactory
             is_null($pokemon->secondaryType) ? null : self::createPokemonTypeName($pokemon->secondaryType),
             strval($pokemon->level),
             $pokemon->isShiny,
+            strval($pokemon->remainingHp),
+            strval($pokemon->calculateHp()),
         );
     }
 

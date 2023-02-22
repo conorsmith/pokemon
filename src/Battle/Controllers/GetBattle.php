@@ -23,18 +23,24 @@ final class GetBattle
         $trainerBattleId = $args['id'];
 
         $battleTrainer = $this->trainerRepository->findTrainer($trainerBattleId);
+        $trainerLeadPokemon = $battleTrainer->hasEntireTeamFainted()
+            ? $battleTrainer->getLastFaintedPokemon()
+            : $battleTrainer->getLeadPokemon();
 
         $player = $this->playerRepository->findPlayer();
-        $playerLeadPokemon = $player->getLeadPokemon();
+        $playerLeadPokemon = $player->hasEntireTeamFainted()
+            ? $player->getLastFaintedPokemon()
+            : $player->getLeadPokemon();
 
         $successes = $this->session->getFlashBag()->get("successes");
         $errors = $this->session->getFlashBag()->get("errors");
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Battle.php", [
             'id' => $battleTrainer->id,
-            'activePokemon' => $this->viewModelFactory->createPokemonInBattle($battleTrainer->getLeadPokemon()),
+            'activePokemon' => $this->viewModelFactory->createPokemonInBattle($trainerLeadPokemon),
             'leadPokemon' => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
             'trainer' => $this->viewModelFactory->createTrainerInBattle($battleTrainer),
+            'isBattleOver' => $battleTrainer->hasEntireTeamFainted() || $player->hasEntireTeamFainted(),
             'successes' => $successes,
             'errors' => $errors,
         ]);

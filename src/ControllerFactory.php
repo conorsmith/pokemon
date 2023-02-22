@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon;
 use ConorSmith\Pokemon\Battle\Controllers\GetBattle;
 use ConorSmith\Pokemon\Battle\Controllers\GetBattleSwitch;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFight;
+use ConorSmith\Pokemon\Battle\Controllers\PostBattleFinish;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleSwitch;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleTrainer;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
@@ -83,6 +84,7 @@ final class ControllerFactory
         $r->post("/battle/{id}/fight", PostBattleFight::class);
         $r->get("/battle/{id}/switch", GetBattleSwitch::class);
         $r->post("/battle/{id}/switch", PostBattleSwitch::class);
+        $r->post("/battle/{id}/finish", PostBattleFinish::class);
         $r->get("/bag", GetBag::class);
         $r->post("/item/{id}/use", PostItemUse::class);
         $r->get("/team/use/{id}", GetTeamItemUse::class);
@@ -238,6 +240,9 @@ final class ControllerFactory
             ),
             PostBattleSwitch::class => new PostBattleSwitch(
                 $this->playerRepository,
+            ),
+            PostBattleFinish::class => new PostBattleFinish(
+                $this->trainerRepository,
             ),
             GetBag::class => new GetBag(
                 $this->session,

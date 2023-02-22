@@ -15,7 +15,7 @@ final class Trainer
         public readonly string $id,
         public readonly ?string $name,
         public readonly string $class,
-        private readonly array $team,
+        public readonly array $team,
         public readonly bool $isBattling,
         public readonly ?CarbonImmutable $dateLastBeaten,
         public readonly int $battleCount,
@@ -52,19 +52,11 @@ final class Trainer
 
     public function endBattle(): self
     {
-        $revivedTeam = [];
-
-        /** @var Pokemon $pokemon */
-        foreach ($this->team as $pokemon) {
-            $pokemon->revive();
-            $revivedTeam[] = $pokemon;
-        }
-
         return new self(
             $this->id,
             $this->name,
             $this->class,
-            $revivedTeam,
+            $this->team,
             false,
             $this->dateLastBeaten,
             $this->battleCount,
@@ -77,6 +69,19 @@ final class Trainer
         /** @var Pokemon $pokemon */
         foreach ($this->team as $pokemon) {
             if (!$pokemon->hasFainted) {
+                return $pokemon;
+            }
+        }
+
+        throw new Exception;
+    }
+
+    public function getLastFaintedPokemon(): Pokemon
+    {
+        /** @var Pokemon $pokemon */
+        foreach (array_reverse($this->team) as $pokemon) {
+            if ($pokemon->hasFainted) {
+                $pokemon->remainingHp = 0;
                 return $pokemon;
             }
         }
