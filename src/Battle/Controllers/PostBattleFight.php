@@ -134,46 +134,84 @@ final class PostBattleFight
         $secondPokemonDescriptor = $playerGoesFirst ? "Foe" : "Your";
 
         if ($firstAttackSucceeded) {
-            $this->session->getFlashBag()->add("successes", "{$firstPokemonDescriptor} {$firstPokemonVm->name}'s attack hit!");
+            $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name}'s attack hit!");
             $this->addEffectivenessMessage($firstPokemon, $secondPokemon);
-            $this->session->getFlashBag()->add("successes", "{$secondPokemonDescriptor} {$secondPokemonVm->name} took {$secondPokemonDamageTaken} damage");
+            $this->publishDamageEvent($secondPokemon->id, $secondPokemonDamageTaken, $secondPokemon->remainingHp, $secondPokemon->calculateHp());
+            $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name} took {$secondPokemonDamageTaken} damage");
             if ($secondPokemonSurvivedHit) {
-                $this->session->getFlashBag()->add("successes", "{$secondPokemonDescriptor} {$secondPokemonVm->name} endured through the power of friendship!");
+                $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name} endured through the power of friendship!");
             } elseif ($secondPokemon->hasFainted) {
-                $this->session->getFlashBag()->add("successes", "{$secondPokemonDescriptor} {$secondPokemonVm->name} fainted");
+                $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name} fainted");
+                $this->publishFaintingEvent($secondPokemon->id);
             }
         } elseif (!$firstPokemon->hasFainted) {
-            $this->session->getFlashBag()->add("successes", "{$firstPokemonDescriptor} {$firstPokemonVm->name}'s attack missed!");
+            $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name}'s attack missed!");
         }
 
         if ($secondAttackSucceeded) {
-            $this->session->getFlashBag()->add("successes", "{$secondPokemonDescriptor} {$secondPokemonVm->name}'s attack hit!");
+            $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name}'s attack hit!");
             $this->addEffectivenessMessage($secondPokemon, $firstPokemon);
-            $this->session->getFlashBag()->add("successes", "{$firstPokemonDescriptor} {$firstPokemonVm->name} took {$firstPokemonDamageTaken} damage");
+            $this->publishDamageEvent($firstPokemon->id, $firstPokemonDamageTaken, $firstPokemon->remainingHp, $firstPokemon->calculateHp());
+            $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name} took {$firstPokemonDamageTaken} damage");
             if ($firstPokemonSurvivedHit) {
-                $this->session->getFlashBag()->add("successes", "{$firstPokemonDescriptor} {$firstPokemonVm->name} endured through the power of friendship!");
+                $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name} endured through the power of friendship!");
             } elseif ($firstPokemon->hasFainted) {
-                $this->session->getFlashBag()->add("successes", "{$firstPokemonDescriptor} {$firstPokemonVm->name} fainted");
+                $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name} fainted");
+                $this->publishFaintingEvent($firstPokemon->id);
             }
         } elseif (!$secondPokemon->hasFainted) {
-            $this->session->getFlashBag()->add("successes", "{$secondPokemonDescriptor} {$secondPokemonVm->name}'s attack missed!");
+            $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name}'s attack missed!");
         }
 
         if ($trainer->hasEntireTeamFainted()) {
             $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
-            $this->session->getFlashBag()->add("successes", "You defeated {$name}");
+            $this->setMessage("You defeated {$name}");
 
             if ($playerEarnedGymBadge) {
-                $this->session->getFlashBag()->add("successes", "You earned the {$this->viewModelFactory->createGymBadgeName($trainer->gymBadge)}");
+                $this->setMessage("You earned the {$this->viewModelFactory->createGymBadgeName($trainer->gymBadge)}");
             }
-            $this->session->getFlashBag()->add("successes", "You won a {$prize['name']}");
+            $this->setMessage("You won a {$prize['name']}");
 
         } elseif ($player->hasEntireTeamFainted()) {
             $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
-            $this->session->getFlashBag()->add("successes", "You were defeated by {$name}");
+            $this->setMessage("You were defeated by {$name}");
         }
 
-        header("Location: /battle/{$trainer->id}");
+        echo json_encode($this->events);
+
+        //header("Location: /battle/{$trainer->id}");
+    }
+
+    private array $events;
+
+    private function setMessage(string $message): void
+    {
+        //$this->session->getFlashBag()->add("successes", $message);
+        $this->events[] = [
+            'type' => "message",
+            'value' => $message,
+        ];
+    }
+
+    private function publishDamageEvent(string $id, int $damage, int $remaining, int $total): void
+    {
+        $this->events[] = [
+            'type' => "damage",
+            'target' => $id,
+            'value' => [
+                'damage' => $damage,
+                'remaining' => $remaining,
+                'total' => $total,
+            ],
+        ];
+    }
+
+    private function publishFaintingEvent(string $id): void
+    {
+        $this->events[] = [
+            'type' => "fainting",
+            'target' => $id,
+        ];
     }
 
     private function addEffectivenessMessage(Pokemon $attacker, Pokemon $defender): void
@@ -181,9 +219,9 @@ final class PostBattleFight
         $typeMultiplier = $this->calculateTypeMultiplier($attacker, $defender);
 
         if ($typeMultiplier > 1.0) {
-            $this->session->getFlashBag()->add("successes", "It's super effective!");
+            $this->setMessage("It's super effective!");
         } elseif ($typeMultiplier < 1.0) {
-            $this->session->getFlashBag()->add("successes", "It's not very effective");
+            $this->setMessage("It's not very effective");
         }
     }
 

@@ -86,13 +86,14 @@ final class TrainerRepository
                 isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
                 self::createStats($pokemonConfig['id']),
                 0,
-                $i < $trainerBattleRow['active_pokemon'],
+                false,
             );
 
             if ($trainerBattlePokemonRows === []) {
                 $pokemon->remainingHp = $pokemon->calculateHp();
             } else {
                 $pokemon->remainingHp = $trainerBattlePokemonRows[$i]['remaining_hp'];
+                $pokemon->hasFainted = $pokemon->remainingHp === 0;
             }
 
             if ($trainerBattlePokemonRows === []) {
@@ -156,7 +157,7 @@ final class TrainerRepository
             'is_battling' => $battleTrainer->isBattling ? "1" : "0",
             'date_last_beaten' => $battleTrainer->dateLastBeaten,
             'battle_count' => $battleTrainer->battleCount,
-            'active_pokemon' => $battleTrainer->countFaintedTeamMembers(),
+            'active_pokemon' => 0,
         ], [
             'id' => $battleTrainer->id,
         ]);
