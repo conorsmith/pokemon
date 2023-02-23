@@ -16,23 +16,87 @@
                 typeWriter(messagesEl.querySelector("ul").lastChild, event.value, 0, function () {
                     processNextEvent(responseData, fnCallback);
                 });
+
             } else if (event.type === "damage") {
                 const target = document.querySelector("[data-target-id='" + event.target + "'");
+                target.querySelector(".progress-bar").classList.remove("transition-disabled");
                 target.querySelector(".progress-bar").style.width = (event.value.remaining / event.value.total * 100) + "%";
                 target.querySelector(".js-remaining-hp").innerText = event.value.remaining;
                 processNextEvent(responseData, fnCallback);
+
             } else if (event.type === "fainting") {
                 const target = document.querySelector("[data-target-id='" + event.target + "'");
+
                 target.querySelector(".pokemon-image").addEventListener("animationend", function () {
-                    if (responseData.length === 0) {
-                        location.reload();
-                    } else {
-                        processNextEvent(responseData, function () {
-                            location.reload();
-                        });
+                    console.log(event.next);
+
+                    if (!event.isPlayerPokemon) {
+                        const firstFilledIcon = document.querySelector(".js-trainer-team .fas");
+                        firstFilledIcon.classList.add("far");
+                        firstFilledIcon.classList.remove("fas");
                     }
+
+                    if (event.next === null) {
+                        document.querySelectorAll(".js-interaction-container > *").forEach(function (el) {
+                            if (el.classList.contains("d-none")) {
+                                el.classList.remove("d-none");
+                            } else {
+                                el.classList.add("d-none");
+                            }
+                        });
+
+                        processNextEvent(responseData, fnCallback);
+                        return;
+                    }
+
+                    target.dataset.targetId = event.next.id;
+                    target.querySelector("h5").innerText = event.next.name;
+
+                    target.querySelector(".pokemon-image img").src = event.next.imageUrl;
+                    target.querySelector(".pokemon-image img").addEventListener("load", function (e) {
+                        target.querySelector(".pokemon-image").classList.remove("slide-down");
+                    });
+                    if (event.next.isShiny) {
+                        target.querySelector(".pokemon-image").classList.add("pokemon-image--shiny");
+                    } else {
+                        target.querySelector(".pokemon-image").classList.remove("pokemon-image--shiny");
+                    }
+
+                    target.querySelector(".js-types").innerHTML = "";
+
+                    const primaryTypeEl = document.createElement("span");
+                    primaryTypeEl.classList.add("badge");
+                    primaryTypeEl.classList.add("bg-" + event.next.primaryType);
+                    primaryTypeEl.style.textTransform = "uppercase";
+                    primaryTypeEl.innerText = event.next.primaryType;
+                    target.querySelector(".js-types").appendChild(primaryTypeEl);
+
+                    if (event.next.secondaryType) {
+                        target.querySelector(".js-types").appendChild(document.createTextNode(" "));
+
+                        const secondaryTypeEl = document.createElement("span");
+                        secondaryTypeEl.classList.add("badge");
+                        secondaryTypeEl.classList.add("bg-" + event.next.secondaryType);
+                        secondaryTypeEl.style.textTransform = "uppercase";
+                        secondaryTypeEl.innerText = event.next.secondaryType;
+                        target.querySelector(".js-types").appendChild(secondaryTypeEl);
+                    }
+
+                    target.querySelector(".js-level").innerHTML = "Lv " + event.next.level;
+
+                    target.querySelector(".progress-bar").classList.add("transition-disabled");
+                    target.querySelector(".progress-bar").style.width = "100%";
+
+                    target.querySelector(".js-remaining-hp").innerText = event.next.remainingHp;
+                    target.querySelector(".js-total-hp").innerText = event.next.totalHp;
+
+                    processNextEvent(responseData, fnCallback);
+                }, {
+                    once: true
                 });
+
                 target.querySelector(".pokemon-image").classList.add("slide-down");
+
             } else {
                 processNextEvent(responseData, fnCallback);
             }
@@ -108,6 +172,10 @@
     });
 </script>
 <style>
+    .transition-disabled {
+        transition: none !important;
+    }
+
     .progress-bar {
         transition-property: width;
         transition-duration: 2s;
@@ -138,7 +206,7 @@
 <ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
     <li class="list-group-item" style="text-align: center;">
         <div><strong><?=$trainer->name?></strong></div>
-        <div>
+        <div class="js-trainer-team">
             <?php for ($i = 0; $i < $trainer->team->fainted; $i++) : ?>
                 <i class="far fa-circle"></i>
             <?php endfor ?>
@@ -154,7 +222,7 @@
         <div style="text-align: right; flex-grow: 1;">
             <h5><?=$activePokemon->name?></h5>
             <div class="mb-3 d-flex flex-row-reverse">
-                <span>
+                <span class="js-types">
                     <span class="badge bg-<?=$activePokemon->primaryType?>" style="text-transform: uppercase;">
                         <?=$activePokemon->primaryType?>
                     </span>
@@ -164,7 +232,7 @@
                         </span>
                     <?php endif ?>
                 </span>
-                <span style="margin: 0 0.4rem;">
+                <span class="js-level" style="margin: 0 0.4rem;">
                     Lv <?=$activePokemon->level?>
                 </span>
             </div>
@@ -172,7 +240,7 @@
                 <div class="progress justify-content-end" style="height: 2px;">
                     <div class="progress-bar" style="width: <?=$activePokemon->remainingHp / $activePokemon->totalHp * 100?>%;"></div>
                 </div>
-                <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$activePokemon->remainingHp?></span> / <?=$activePokemon->totalHp?> HP</div>
+                <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$activePokemon->remainingHp?></span> / <span class="js-total-hp"><?=$activePokemon->totalHp?></span> HP</div>
             </div>
         </div>
     </li>
@@ -183,7 +251,7 @@
         <div style="flex-grow: 1">
             <h5><?=$leadPokemon->name?></h5>
             <div class="mb-3">
-                <span>
+                <span class="js-types">
                     <span class="badge bg-<?=$leadPokemon->primaryType?>" style="text-transform: uppercase;">
                         <?=$leadPokemon->primaryType?>
                     </span>
@@ -193,7 +261,7 @@
                         </span>
                     <?php endif ?>
                 </span>
-                <span style="margin: 0 0.4rem;">
+                <span class="js-level" style="margin: 0 0.4rem;">
                     Lv <?=$leadPokemon->level?>
                 </span>
             </div>
@@ -201,7 +269,7 @@
                 <div class="progress" style="height: 2px;">
                     <div class="progress-bar" style="width: <?=$leadPokemon->remainingHp / $leadPokemon->totalHp * 100?>%;"></div>
                 </div>
-                <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$leadPokemon->remainingHp?></span> / <?=$leadPokemon->totalHp?> HP</div>
+                <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$leadPokemon->remainingHp?></span> / <span class="js-total-hp"><?=$leadPokemon->totalHp?></span> HP</div>
             </div>
         </div>
     </li>
@@ -218,25 +286,22 @@
             </ul>
         </li>
     <?php endif ?>
-    <li class="list-group-item d-grid gap-2" style="text-align: center;">
-        <?php if ($isBattleOver) : ?>
-            <form method="POST" action="/battle/<?=$id?>/finish" class="d-grid">
-                <button type="submit" class="btn btn-outline-dark js-interaction">
-                    Finish
-                </button>
-            </form>
-        <?php else : ?>
-            <form method="POST" action="/battle/<?=$id?>/fight" class="d-grid flex-row js-attack" style="grid-template-columns: 1fr 1fr; column-gap: 0.5rem;">
-                <button type="submit" class="btn btn-primary js-interaction" name="attack" value="physical">
-                    <i class="fas fa-fw fa-paw"></i> Physical
-                </button>
-                <button type="submit" class="btn btn-primary js-interaction" name="attack" value="special">
-                    <i class="fas fa-fw fa-wifi"></i> Special
-                </button>
-            </form>
-            <a href="/battle/<?=$id?>/switch" class="btn btn-outline-dark js-interaction">
-                Switch
-            </a>
-        <?php endif ?>
+    <li class="list-group-item d-grid gap-2 js-interaction-container" style="text-align: center;">
+        <form method="POST" action="/battle/<?=$id?>/finish" class="d-grid <?=$isBattleOver ? "" : "d-none"?>">
+            <button type="submit" class="btn btn-outline-dark js-interaction">
+                Finish
+            </button>
+        </form>
+        <form method="POST" action="/battle/<?=$id?>/fight" class="d-grid flex-row js-attack <?=$isBattleOver ? "d-none" : ""?>" style="grid-template-columns: 1fr 1fr; column-gap: 0.5rem;">
+            <button type="submit" class="btn btn-primary js-interaction" name="attack" value="physical">
+                <i class="fas fa-fw fa-paw"></i> Physical
+            </button>
+            <button type="submit" class="btn btn-primary js-interaction" name="attack" value="special">
+                <i class="fas fa-fw fa-wifi"></i> Special
+            </button>
+        </form>
+        <a href="/battle/<?=$id?>/switch" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
+            Switch
+        </a>
     </li>
 </ul>
