@@ -49,7 +49,7 @@
                 // wait for a while and call this function again for next character
                 setTimeout(function() {
                     typeWriter(target, text, i + 1, fnCallback)
-                }, 50);
+                }, 20);
             }
             // text finished, call callback if there is a callback function
             else if (typeof fnCallback == 'function') {
@@ -58,16 +58,40 @@
             }
         }
 
+        const interactionButtons = {
+            disable: function () {
+                document.querySelectorAll(".js-interaction").forEach(function (el) {
+                    if (el.tagName === "A") {
+                        el.classList.add("disabled");
+                    } else {
+                        el.disabled = true;
+                    }
+                });
+            },
+            enable: function () {
+                document.querySelectorAll(".js-interaction").forEach(function (el) {
+                    if (el.tagName === "A") {
+                        el.classList.remove("disabled");
+                    } else {
+                        el.disabled = false;
+                    }
+                });
+            }
+        }
+
         const messagesEl = document.getElementById("messages");
 
         document.querySelectorAll(".js-attack").forEach(function (el) {
             el.addEventListener("submit", function (e) {
-                e.submitter.disabled = true;
+                interactionButtons.disable();
+                const formData = new FormData(el);
+                formData.append(e.submitter.name, e.submitter.value);
                 e.preventDefault();
                 fetch(new Request(
                     el.action,
                     {
                         method: el.method,
+                        body: formData
                     }
                 ))
                     .then(response => response.json())
@@ -76,7 +100,7 @@
                         messagesEl.querySelector("ul").innerHTML = "";
 
                         processNextEvent(responseData, function () {
-                            e.submitter.disabled = false;
+                            interactionButtons.enable();
                         });
                     });
             });
@@ -141,7 +165,7 @@
                     <?php endif ?>
                 </span>
                 <span style="margin: 0 0.4rem;">
-                    Level <?=$activePokemon->level?>
+                    Lv <?=$activePokemon->level?>
                 </span>
             </div>
             <div>
@@ -170,7 +194,7 @@
                     <?php endif ?>
                 </span>
                 <span style="margin: 0 0.4rem;">
-                    Level <?=$leadPokemon->level?>
+                    Lv <?=$leadPokemon->level?>
                 </span>
             </div>
             <div>
@@ -197,17 +221,20 @@
     <li class="list-group-item d-grid gap-2" style="text-align: center;">
         <?php if ($isBattleOver) : ?>
             <form method="POST" action="/battle/<?=$id?>/finish" class="d-grid">
-                <button type="submit" class="btn btn-outline-dark">
+                <button type="submit" class="btn btn-outline-dark js-interaction">
                     Finish
                 </button>
             </form>
         <?php else : ?>
-            <form method="POST" action="/battle/<?=$id?>/fight" class="d-grid js-attack">
-                <button type="submit" class="btn btn-primary">
-                    Fight
+            <form method="POST" action="/battle/<?=$id?>/fight" class="d-grid flex-row js-attack" style="grid-template-columns: 1fr 1fr; column-gap: 0.5rem;">
+                <button type="submit" class="btn btn-primary js-interaction" name="attack" value="physical">
+                    <i class="fas fa-fw fa-paw"></i> Physical
+                </button>
+                <button type="submit" class="btn btn-primary js-interaction" name="attack" value="special">
+                    <i class="fas fa-fw fa-wifi"></i> Special
                 </button>
             </form>
-            <a href="/battle/<?=$id?>/switch" class="btn btn-outline-dark">
+            <a href="/battle/<?=$id?>/switch" class="btn btn-outline-dark js-interaction">
                 Switch
             </a>
         <?php endif ?>

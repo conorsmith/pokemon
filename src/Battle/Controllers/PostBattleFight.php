@@ -31,6 +31,7 @@ final class PostBattleFight
     public function __invoke(array $args): void
     {
         $trainerBattleId = $args['id'];
+        $playerAttackType = $_POST['attack'];
 
         $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
@@ -44,6 +45,14 @@ final class PostBattleFight
         $playerPokemon = $player->getLeadPokemon();
         $opponentPokemon = $trainer->getLeadPokemon();
 
+        if ($opponentPokemon->calculateAttack() > $opponentPokemon->calculateSpecialAttack()) {
+            $opponentAttackType = "physical";
+        } elseif ($opponentPokemon->calculateAttack() < $opponentPokemon->calculateSpecialAttack()) {
+            $opponentAttackType = "special";
+        } else {
+            $opponentAttackType = mt_rand(0, 1) === 0 ? "physical" : "special";
+        }
+
         if ($playerPokemon->calculateSpeed() > $opponentPokemon->calculateSpeed()) {
             $playerGoesFirst = true;
         } elseif ($playerPokemon->calculateSpeed() < $opponentPokemon->calculateSpeed()) {
@@ -55,9 +64,13 @@ final class PostBattleFight
         if ($playerGoesFirst) {
             $firstPokemon = $playerPokemon;
             $secondPokemon = $opponentPokemon;
+            $firstAttackType = $playerAttackType;
+            $secondAttackType = $opponentAttackType;
         } else {
             $firstPokemon = $opponentPokemon;
             $secondPokemon = $playerPokemon;
+            $firstAttackType = $opponentAttackType;
+            $secondAttackType = $playerAttackType;
         }
 
         $playerEarnedGymBadge = false;
@@ -72,7 +85,7 @@ final class PostBattleFight
         if ($firstAttackSucceeded) {
             $secondPokemonDamageTaken = min(
                 $secondPokemon->remainingHp,
-                self::calculateDamage($firstPokemon, $secondPokemon),
+                self::calculateDamage($firstPokemon, $secondPokemon, $firstAttackType),
             );
             if ($secondPokemonDamageTaken === $secondPokemon->remainingHp) {
                 $secondPokemonSurvivedHit = self::calculateHitSurvival($secondPokemon);
@@ -89,7 +102,7 @@ final class PostBattleFight
         if ($secondAttackSucceeded) {
             $firstPokemonDamageTaken = min(
                 $firstPokemon->remainingHp,
-                self::calculateDamage($secondPokemon, $firstPokemon),
+                self::calculateDamage($secondPokemon, $firstPokemon, $secondAttackType),
             );
             if ($firstPokemonDamageTaken === $firstPokemon->remainingHp) {
                 $firstPokemonSurvivedHit = self::calculateHitSurvival($firstPokemon);
@@ -334,12 +347,16 @@ final class PostBattleFight
         return $baseAccuracy + $friendshipFactor;
     }
 
-    private function calculateDamage(Pokemon $attacker, Pokemon $defender): int
+    private function calculateDamage(Pokemon $attacker, Pokemon $defender, string $attackType): int
     {
         $power = 40;
 
         $levelFactor = (2 * $attacker->level / 5) + 2;
-        $statFactor = $attacker->calculateAttack() / $defender->calculateDefence();
+        if ($attackType === "physical") {
+            $statFactor = $attacker->calculateAttack() / $defender->calculateDefence();
+        } else {
+            $statFactor = $attacker->calculateSpecialAttack() / $defender->calculateSpecialDefence();
+        }
 
         $baseDamage = ($levelFactor * $power * $statFactor / 50) + 2;
 

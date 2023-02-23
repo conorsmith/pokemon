@@ -82,6 +82,36 @@ final class Pokemon
         return intval($effectiveDefence);
     }
 
+    public function calculateSpecialAttack(): int
+    {
+        $iv = 0;
+        $ev = 0;
+        $nature = 1;
+
+        $principalSpecialAttack = (2 * $this->stats->baseSpecialAttack) + $iv + floor($ev / 4);
+
+        $physicalSpecialAttack = floor($principalSpecialAttack * $this->level / 100) + 5;
+
+        $effectiveSpecialAttack = floor($physicalSpecialAttack * $nature);
+
+        return intval($effectiveSpecialAttack);
+    }
+
+    public function calculateSpecialDefence(): int
+    {
+        $iv = 0;
+        $ev = 0;
+        $nature = 1;
+
+        $principalSpecialDefence = (2 * $this->stats->baseSpecialDefence) + $iv + floor($ev / 4);
+
+        $physicalSpecialDefence = floor($principalSpecialDefence * $this->level / 100) + 5;
+
+        $effectiveSpecialDefence = floor($physicalSpecialDefence * $nature);
+
+        return intval($effectiveSpecialDefence);
+    }
+
     public function calculateSpeed(): int
     {
         $iv = 0;
