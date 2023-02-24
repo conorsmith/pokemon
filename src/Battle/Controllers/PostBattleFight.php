@@ -3,14 +3,15 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
+use ConorSmith\Pokemon\Battle\Domain\AttackOutcome;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\PokemonType;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
@@ -45,77 +46,7 @@ final class PostBattleFight
         $playerPokemon = $player->getLeadPokemon();
         $opponentPokemon = $trainer->getLeadPokemon();
 
-        if ($opponentPokemon->calculateAttack() > $opponentPokemon->calculateSpecialAttack()) {
-            $opponentAttackType = "physical";
-        } elseif ($opponentPokemon->calculateAttack() < $opponentPokemon->calculateSpecialAttack()) {
-            $opponentAttackType = "special";
-        } else {
-            $opponentAttackType = mt_rand(0, 1) === 0 ? "physical" : "special";
-        }
-
-        if ($playerPokemon->calculateSpeed() > $opponentPokemon->calculateSpeed()) {
-            $playerGoesFirst = true;
-        } elseif ($playerPokemon->calculateSpeed() < $opponentPokemon->calculateSpeed()) {
-            $playerGoesFirst = false;
-        } else {
-            $playerGoesFirst = mt_rand(0, 1) === 0;
-        }
-
-        if ($playerGoesFirst) {
-            $firstPokemon = $playerPokemon;
-            $secondPokemon = $opponentPokemon;
-            $firstAttackType = $playerAttackType;
-            $secondAttackType = $opponentAttackType;
-        } else {
-            $firstPokemon = $opponentPokemon;
-            $secondPokemon = $playerPokemon;
-            $firstAttackType = $opponentAttackType;
-            $secondAttackType = $playerAttackType;
-        }
-
-        $playerEarnedGymBadge = false;
-        $prize = null;
-        $firstPokemonCritted = false;
-        $secondPokemonCritted = false;
-        $firstPokemonSurvivedHit = false;
-        $secondPokemonSurvivedHit = false;
-        $firstPokemonDamageTaken = 0;
-        $secondPokemonDamageTaken = 0;
-
-        $firstAttackSucceeded = mt_rand(1, 100) <= self::calculateAccuracy($firstPokemon, $secondPokemon);
-
-        if ($firstAttackSucceeded) {
-            $firstPokemonCritted = self::calculateCriticalHit($firstPokemon, $secondPokemon);
-            $secondPokemonDamageTaken = min(
-                $secondPokemon->remainingHp,
-                self::calculateDamage($firstPokemon, $secondPokemon, $firstAttackType, $firstPokemonCritted),
-            );
-            if ($secondPokemonDamageTaken === $secondPokemon->remainingHp) {
-                $secondPokemonSurvivedHit = self::calculateHitSurvival($secondPokemon);
-                if ($secondPokemonSurvivedHit) {
-                    $secondPokemonDamageTaken = $secondPokemon->remainingHp - 1;
-                }
-            }
-            $secondPokemon->hitFor($secondPokemonDamageTaken);
-        }
-
-        $secondAttackSucceeded = !$secondPokemon->hasFainted
-            && mt_rand(1, 100) <= self::calculateAccuracy($secondPokemon, $firstPokemon);
-
-        if ($secondAttackSucceeded) {
-            $secondPokemonCritted = self::calculateCriticalHit($secondPokemon, $firstPokemon);
-            $firstPokemonDamageTaken = min(
-                $firstPokemon->remainingHp,
-                self::calculateDamage($secondPokemon, $firstPokemon, $secondAttackType, $secondPokemonCritted),
-            );
-            if ($firstPokemonDamageTaken === $firstPokemon->remainingHp) {
-                $firstPokemonSurvivedHit = self::calculateHitSurvival($firstPokemon);
-                if ($firstPokemonSurvivedHit) {
-                    $firstPokemonDamageTaken = $firstPokemon->remainingHp - 1;
-                }
-            }
-            $firstPokemon->hitFor($firstPokemonDamageTaken);
-        }
+        $round = Round::execute($playerPokemon, $opponentPokemon, $playerAttackType);
 
         if ($playerPokemon->hasFainted) {
             $this->reportTeamPokemonFaintedCommand->run(
@@ -124,6 +55,9 @@ final class PostBattleFight
                 $opponentPokemon->level,
             );
         }
+
+        $playerEarnedGymBadge = false;
+        $prize = null;
 
         if ($trainer->hasEntireTeamFainted()) {
             $prizeItemId = self::generatePrize(self::getPrizePool($trainer));
@@ -145,71 +79,30 @@ final class PostBattleFight
 
         $this->db->commit();
 
-        $nextFirstPokemon = $playerGoesFirst
+        $nextFirstPokemon = $round->playerFirst
             ? ($player->hasEntireTeamFainted() ? null : $player->getLeadPokemon())
             : ($trainer->hasEntireTeamFainted() ? null : $trainer->getLeadPokemon());
-        $nextSecondPokemon = $playerGoesFirst
+        $nextSecondPokemon = $round->playerFirst
             ? ($trainer->hasEntireTeamFainted() ? null : $trainer->getLeadPokemon())
             : ($player->hasEntireTeamFainted() ? null : $player->getLeadPokemon());
 
-        $firstPokemonVm = $this->viewModelFactory->createPokemonInBattle($firstPokemon);
-        $secondPokemonVm = $this->viewModelFactory->createPokemonInBattle($secondPokemon);
-        $firstPokemonDescriptor = $playerGoesFirst ? "Your" : "Foe";
-        $secondPokemonDescriptor = $playerGoesFirst ? "Foe" : "Your";
+        $this->sendEvents(
+            $round->firstAttack,
+            $round->firstPokemon,
+            $round->secondPokemon,
+            !$round->playerFirst,
+            $nextSecondPokemon,
+            TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
+        );
 
-        if ($firstAttackSucceeded) {
-            $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name}'s attack hit!");
-            $this->addEffectivenessMessage($firstPokemon, $secondPokemon);
-            if ($firstPokemonCritted) {
-                $this->setMessage("It's a critical hit!");
-            }
-            $this->publishDamageEvent($secondPokemon->id, $secondPokemonDamageTaken, $secondPokemon->remainingHp, $secondPokemon->calculateHp());
-            $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name} took {$secondPokemonDamageTaken} damage");
-            if ($secondPokemonSurvivedHit) {
-                $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name} endured through the power of friendship!");
-            } elseif ($secondPokemon->hasFainted) {
-                $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name} fainted");
-                $this->publishFaintingEvent($secondPokemon->id, !$playerGoesFirst, $nextSecondPokemon);
-                if ($nextSecondPokemon) {
-                    $nextSecondPokemonVm = $this->viewModelFactory->createPokemonInBattle($nextSecondPokemon);
-                    if ($playerGoesFirst) {
-                        $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
-                        $this->setMessage("{$name} sent out {$nextSecondPokemonVm->name}");
-                    } else {
-                        $this->setMessage("Go {$nextSecondPokemonVm->name}!");
-                    }
-                }
-            }
-        } elseif (!$firstPokemon->hasFainted) {
-            $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name}'s attack missed!");
-        }
-
-        if ($secondAttackSucceeded) {
-            $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name}'s attack hit!");
-            $this->addEffectivenessMessage($secondPokemon, $firstPokemon);
-            if ($secondPokemonCritted) {
-                $this->setMessage("It's a critical hit!");
-            }
-            $this->publishDamageEvent($firstPokemon->id, $firstPokemonDamageTaken, $firstPokemon->remainingHp, $firstPokemon->calculateHp());
-            $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name} took {$firstPokemonDamageTaken} damage");
-            if ($firstPokemonSurvivedHit) {
-                $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name} endured through the power of friendship!");
-            } elseif ($firstPokemon->hasFainted) {
-                $this->setMessage("{$firstPokemonDescriptor} {$firstPokemonVm->name} fainted");
-                $this->publishFaintingEvent($firstPokemon->id, $playerGoesFirst, $nextFirstPokemon);
-                if ($nextFirstPokemon) {
-                    $nextFirstPokemonVm = $this->viewModelFactory->createPokemonInBattle($nextFirstPokemon);
-                    if ($playerGoesFirst) {
-                        $this->setMessage("Go {$nextFirstPokemonVm->name}!");
-                    } else {
-                        $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
-                        $this->setMessage("{$name} sent out {$nextFirstPokemonVm->name}");
-                    }
-                }
-            }
-        } elseif (!$secondPokemon->hasFainted) {
-            $this->setMessage("{$secondPokemonDescriptor} {$secondPokemonVm->name}'s attack missed!");
-        }
+        $this->sendEvents(
+            $round->secondAttack,
+            $round->secondPokemon,
+            $round->firstPokemon,
+            $round->playerFirst,
+            $nextFirstPokemon,
+            TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
+        );
 
         if ($trainer->hasEntireTeamFainted()) {
             $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
@@ -226,6 +119,64 @@ final class PostBattleFight
         }
 
         echo json_encode($this->events);
+    }
+
+    private function sendEvents(
+        AttackOutcome $attack,
+        Pokemon $attacker,
+        Pokemon $defender,
+        bool $isPlayerDefending,
+        ?Pokemon $nextDefender,
+        string $opponentName
+    ) {
+        $attackerVm = $this->viewModelFactory->createPokemonInBattle($attacker);
+        $attackerDescriptor = $isPlayerDefending ? "Foe" : "Your";
+
+        $defenderVm = $this->viewModelFactory->createPokemonInBattle($defender);
+        $defenderDescriptor = $isPlayerDefending ? "Your" : "Foe";
+
+        if ($attack->hit) {
+
+            $this->setMessage("{$attackerDescriptor} {$attackerVm->name}'s attack hit!");
+
+            if ($attack->superEffective) {
+                $this->setMessage("It's super effective!");
+            } elseif ($attack->notVeryEffective) {
+                $this->setMessage("It's not very effective");
+            }
+            if ($attack->criticalHit) {
+                $this->setMessage("It's a critical hit!");
+            }
+
+            $this->publishDamageEvent(
+                $defender->id,
+                $attack->damageDealt,
+                $defender->remainingHp,
+                $defender->calculateHp()
+            );
+
+            $this->setMessage("{$defenderDescriptor} {$defenderVm->name} took {$attack->damageDealt} damage");
+
+            if ($attack->enduredHit) {
+                $this->setMessage("{$defenderDescriptor} {$defenderVm->name} endured through the power of friendship!");
+
+            } elseif ($defender->hasFainted) {
+                $this->setMessage("{$defenderDescriptor} {$defenderVm->name} fainted");
+
+                $this->publishFaintingEvent($defender->id, $isPlayerDefending, $nextDefender);
+
+                if ($nextDefender) {
+                    $nextDefenderVm = $this->viewModelFactory->createPokemonInBattle($nextDefender);
+                    if ($isPlayerDefending) {
+                        $this->setMessage("Go {$nextDefenderVm->name}!");
+                    } else {
+                        $this->setMessage("{$opponentName} sent out {$nextDefenderVm->name}");
+                    }
+                }
+            }
+        } elseif (!$attacker->hasFainted) {
+            $this->setMessage("{$attackerDescriptor} {$attackerVm->name}'s attack missed!");
+        }
     }
 
     private array $events;
@@ -259,65 +210,6 @@ final class PostBattleFight
             'isPlayerPokemon' => $isPlayerPokemon,
             'next' => $nextPokemon ? $this->viewModelFactory->createPokemonInBattle($nextPokemon) : null,
         ];
-    }
-
-    private function addEffectivenessMessage(Pokemon $attacker, Pokemon $defender): void
-    {
-        $typeMultiplier = $this->calculateTypeMultiplier($attacker, $defender);
-
-        if ($typeMultiplier > 1.0) {
-            $this->setMessage("It's super effective!");
-        } elseif ($typeMultiplier < 1.0) {
-            $this->setMessage("It's not very effective");
-        }
-    }
-
-    private function calculateTypeMultiplier(Pokemon $attacker, Pokemon $defender): float
-    {
-        $primaryTypeMultiplier = $this->calculatePrimaryTypeMultiplier($attacker, $defender);
-        $secondaryTypeMultiplier = 0.0;
-
-        if (!is_null($attacker->secondaryType)) {
-            $secondaryTypeMultiplier = $this->calculateSecondaryTypeMultiplier($attacker, $defender);
-        }
-
-        return max($primaryTypeMultiplier, $secondaryTypeMultiplier);
-    }
-
-    private function calculatePrimaryTypeMultiplier(Pokemon $attacker, Pokemon $defender): float
-    {
-        $multiplier = 1.0;
-
-        $multiplier *= PokemonType::getMultiplier($attacker->primaryType, $defender->primaryType);
-
-        if (!is_null($defender->secondaryType)) {
-            $multiplier *= PokemonType::getMultiplier($attacker->primaryType, $defender->secondaryType);
-        }
-
-        return $multiplier;
-    }
-
-    private function calculateSecondaryTypeMultiplier(Pokemon $attacker, Pokemon $defender): float
-    {
-        $multiplier = 1.0;
-
-        $multiplier *= PokemonType::getMultiplier($attacker->secondaryType, $defender->primaryType);
-
-        if (!is_null($defender->secondaryType)) {
-            $multiplier *= PokemonType::getMultiplier($attacker->secondaryType, $defender->secondaryType);
-        }
-
-        return $multiplier;
-    }
-
-    private static function calculateHitSurvival(Pokemon $defender): bool
-    {
-        return match (true) {
-            $defender->friendship < 180   => false,
-            $defender->friendship < 220   => mt_rand(1, 100) <= 10,
-            $defender->friendship < 255   => mt_rand(1, 100) <= 15,
-            $defender->friendship === 255 => mt_rand(1, 100) <= 20,
-        };
     }
 
     private static function getPrizePool(Trainer $trainer): array
@@ -373,41 +265,5 @@ final class PostBattleFight
         $itemConfig = require __DIR__ . "/../../Config/Items.php";
 
         return $itemConfig[$id];
-    }
-
-    private static function calculateAccuracy(Pokemon $attacker, Pokemon $defender): int
-    {
-        $baseAccuracy = 95;
-
-        $friendshipFactor = $defender->friendship === 255 ? 4 : 0;
-
-        return $baseAccuracy + $friendshipFactor;
-    }
-
-    private function calculateDamage(Pokemon $attacker, Pokemon $defender, string $attackType, bool $isCriticalHit): int
-    {
-        $power = 40;
-
-        $levelFactor = (2 * $attacker->level / 5) + 2;
-        if ($attackType === "physical") {
-            $statFactor = $attacker->calculateAttack() / $defender->calculateDefence();
-        } else {
-            $statFactor = $attacker->calculateSpecialAttack() / $defender->calculateSpecialDefence();
-        }
-
-        $baseDamage = ($levelFactor * $power * $statFactor / 50) + 2;
-
-        $randomFactor = mt_rand(85, 100) / 100;
-
-        $typeFactor = $this->calculateTypeMultiplier($attacker, $defender);
-
-        $criticalFactor = $isCriticalHit ? 1.5 : 1;
-
-        return intval(round($baseDamage * $randomFactor * $typeFactor * $criticalFactor));
-    }
-
-    private function calculateCriticalHit(Pokemon $attacker, Pokemon $defender): bool
-    {
-        return mt_rand(1, 24) === 1;
     }
 }

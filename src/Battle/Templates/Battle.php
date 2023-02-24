@@ -215,61 +215,61 @@
             <?php endfor ?>
         </div>
     </li>
-    <li class="list-group-item d-flex flex-row-reverse" data-target-id="<?=$activePokemon->id?>">
-        <div class="pokemon-image <?=$activePokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$activePokemon->hasFainted ? "slid-down" : ""?>">
-            <img src="<?=$activePokemon->imageUrl?>">
+    <li class="list-group-item d-flex flex-row-reverse" data-target-id="<?=$opponentPokemon->id?>">
+        <div class="pokemon-image <?=$opponentPokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$opponentPokemon->hasFainted ? "slid-down" : ""?>">
+            <img src="<?=$opponentPokemon->imageUrl?>">
         </div>
         <div style="text-align: right; flex-grow: 1;">
-            <h5><?=$activePokemon->name?></h5>
+            <h5><?=$opponentPokemon->name?></h5>
             <div class="mb-3 d-flex flex-row-reverse">
                 <span class="js-types">
-                    <span class="badge bg-<?=$activePokemon->primaryType?>" style="text-transform: uppercase;">
-                        <?=$activePokemon->primaryType?>
+                    <span class="badge bg-<?=$opponentPokemon->primaryType?>" style="text-transform: uppercase;">
+                        <?=$opponentPokemon->primaryType?>
                     </span>
-                    <?php if ($activePokemon->secondaryType) : ?>
-                        <span class="badge bg-<?=$activePokemon->secondaryType?>" style="text-transform: uppercase;">
-                            <?=$activePokemon->secondaryType?>
+                    <?php if ($opponentPokemon->secondaryType) : ?>
+                        <span class="badge bg-<?=$opponentPokemon->secondaryType?>" style="text-transform: uppercase;">
+                            <?=$opponentPokemon->secondaryType?>
                         </span>
                     <?php endif ?>
                 </span>
                 <span class="js-level" style="margin: 0 0.4rem;">
-                    Lv <?=$activePokemon->level?>
+                    Lv <?=$opponentPokemon->level?>
                 </span>
             </div>
             <div>
                 <div class="progress justify-content-end" style="height: 2px;">
-                    <div class="progress-bar" style="width: <?=$activePokemon->remainingHp / $activePokemon->totalHp * 100?>%;"></div>
+                    <div class="progress-bar" style="width: <?=$opponentPokemon->remainingHp / $opponentPokemon->totalHp * 100?>%;"></div>
                 </div>
-                <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$activePokemon->remainingHp?></span> / <span class="js-total-hp"><?=$activePokemon->totalHp?></span> HP</div>
+                <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$opponentPokemon->remainingHp?></span> / <span class="js-total-hp"><?=$opponentPokemon->totalHp?></span> HP</div>
             </div>
         </div>
     </li>
-    <li class="list-group-item d-flex" data-target-id="<?=$leadPokemon->id?>">
-        <div class="pokemon-image <?=$leadPokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$leadPokemon->hasFainted ? "slid-down" : ""?>">
-            <img src="<?=$leadPokemon->imageUrl?>">
+    <li class="list-group-item d-flex" data-target-id="<?=$playerPokemon->id?>">
+        <div class="pokemon-image <?=$playerPokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$playerPokemon->hasFainted ? "slid-down" : ""?>">
+            <img src="<?=$playerPokemon->imageUrl?>">
         </div>
         <div style="flex-grow: 1">
-            <h5><?=$leadPokemon->name?></h5>
+            <h5><?=$playerPokemon->name?></h5>
             <div class="mb-3">
                 <span class="js-types">
-                    <span class="badge bg-<?=$leadPokemon->primaryType?>" style="text-transform: uppercase;">
-                        <?=$leadPokemon->primaryType?>
+                    <span class="badge bg-<?=$playerPokemon->primaryType?>" style="text-transform: uppercase;">
+                        <?=$playerPokemon->primaryType?>
                     </span>
-                    <?php if ($leadPokemon->secondaryType) : ?>
-                        <span class="badge bg-<?=$leadPokemon->secondaryType?>" style="text-transform: uppercase;">
-                            <?=$leadPokemon->secondaryType?>
+                    <?php if ($playerPokemon->secondaryType) : ?>
+                        <span class="badge bg-<?=$playerPokemon->secondaryType?>" style="text-transform: uppercase;">
+                            <?=$playerPokemon->secondaryType?>
                         </span>
                     <?php endif ?>
                 </span>
                 <span class="js-level" style="margin: 0 0.4rem;">
-                    Lv <?=$leadPokemon->level?>
+                    Lv <?=$playerPokemon->level?>
                 </span>
             </div>
             <div>
                 <div class="progress" style="height: 2px;">
-                    <div class="progress-bar" style="width: <?=$leadPokemon->remainingHp / $leadPokemon->totalHp * 100?>%;"></div>
+                    <div class="progress-bar" style="width: <?=$playerPokemon->remainingHp / $playerPokemon->totalHp * 100?>%;"></div>
                 </div>
-                <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$leadPokemon->remainingHp?></span> / <span class="js-total-hp"><?=$leadPokemon->totalHp?></span> HP</div>
+                <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$playerPokemon->remainingHp?></span> / <span class="js-total-hp"><?=$playerPokemon->totalHp?></span> HP</div>
             </div>
         </div>
     </li>

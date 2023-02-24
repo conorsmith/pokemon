@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon;
 
 use ConorSmith\Pokemon\Battle\Controllers\GetBattle;
 use ConorSmith\Pokemon\Battle\Controllers\GetBattleSwitch;
+use ConorSmith\Pokemon\Battle\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFinish;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleSwitch;
@@ -18,7 +19,6 @@ use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\WeeklyUpdateForTeamCommand;
 use ConorSmith\Pokemon\Team\Controllers\GetTeam;
-use ConorSmith\Pokemon\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Controllers\GetIndex;
 use ConorSmith\Pokemon\Controllers\GetMap;
 use ConorSmith\Pokemon\Controllers\GetTeamItemUse;
@@ -182,8 +182,10 @@ final class ControllerFactory
             GetEncounter::class => new GetEncounter(
                 $this->db,
                 $this->session,
+                $this->playerRepository,
                 $this->bagRepository,
                 $this->pokedex,
+                $this->viewModelFactory,
             ),
             PostEncounterCatch::class => new PostEncounterCatch(
                 $this->db,
