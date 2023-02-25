@@ -12,7 +12,7 @@ use ConorSmith\Pokemon\ItemId;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-final class PostBattleTrainer
+final class PostBattleStart
 {
     public function __construct(
         private readonly Connection $db,

@@ -8,8 +8,9 @@ use ConorSmith\Pokemon\Battle\Controllers\GetBattleSwitch;
 use ConorSmith\Pokemon\Battle\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFinish;
+use ConorSmith\Pokemon\Battle\Controllers\PostBattleStart;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleSwitch;
-use ConorSmith\Pokemon\Battle\Controllers\PostBattleTrainer;
+use ConorSmith\Pokemon\Battle\Controllers\PostEncounter;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Controllers\GetBag;
@@ -25,7 +26,6 @@ use ConorSmith\Pokemon\Controllers\GetTeamItemUse;
 use ConorSmith\Pokemon\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Controllers\PostEncounterRun;
 use ConorSmith\Pokemon\Controllers\PostItemUse;
-use ConorSmith\Pokemon\Controllers\PostMap;
 use ConorSmith\Pokemon\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamItemUse;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamMoveDown;
@@ -69,7 +69,7 @@ final class ControllerFactory
         $r->get("/pokedex", GetPokedex::class);
         $r->post("/map/move", PostMapMove::class);
         $r->get("/map", GetMap::class);
-        $r->post("/map", PostMap::class);
+        $r->post("/encounter", PostEncounter::class);
         $r->get("/team", GetTeam::class);
         $r->get("/encounter/{id}", GetEncounter::class);
         $r->post("/encounter/{id}/catch", PostEncounterCatch::class);
@@ -79,7 +79,7 @@ final class ControllerFactory
         $r->post("/team/send-to-box", PostTeamSendToBox::class);
         $r->post("/team/send-to-team", PostTeamSendToTeam::class);
         $r->post("/team/send-to-day-care", PostTeamSendToDayCare::class);
-        $r->post("/battle/trainer/{id}", PostBattleTrainer::class);
+        $r->post("/battle/trainer/{id}", PostBattleStart::class);
         $r->get("/battle/{id}", GetBattle::class);
         $r->post("/battle/{id}/fight", PostBattleFight::class);
         $r->get("/battle/{id}/switch", GetBattleSwitch::class);
@@ -168,9 +168,10 @@ final class ControllerFactory
                 $this->map,
                 $this->pokedex,
             ),
-            PostMap::class => new PostMap(
+            PostEncounter::class => new PostEncounter(
                 $this->db,
                 $this->session,
+                $this->playerRepository,
                 $this->bagRepository,
                 $this->habitStreakQuery,
                 $this->map,
@@ -213,7 +214,7 @@ final class ControllerFactory
                 $this->pokemonRepository,
                 $this->friendshipLog,
             ),
-            PostBattleTrainer::class => new PostBattleTrainer(
+            PostBattleStart::class => new PostBattleStart(
                 $this->db,
                 $this->session,
                 $this->playerRepository,

@@ -15,7 +15,7 @@
         <?php endif ?>
     </li>
     <li class="list-group-item d-flex flex-row-reverse" data-target-id="<?=$opponentPokemon->id?>">
-        <div class="pokemon-image <?=$opponentPokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$opponentPokemon->hasFainted ? "slid-down" : ""?>">
+        <div class="pokemon-image pokemon-image--encounter <?=$opponentPokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$opponentPokemon->hasFainted ? "slid-down" : ""?>">
             <img src="<?=$opponentPokemon->imageUrl?>">
         </div>
         <div style="text-align: right; flex-grow: 1;">

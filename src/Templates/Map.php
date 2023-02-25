@@ -136,28 +136,28 @@
             </div>
             <div class="card-body d-flex gap-2">
                 <?php if ($currentLocation->encounters->walking) : ?>
-                    <form method="POST" class="d-grid flex-fill">
+                    <form method="POST" action="/encounter" class="d-grid flex-fill">
                         <input type="hidden" name="location" value="<?=$currentLocation->id?>">
                         <input type="hidden" name="encounterType" value="walking">
                         <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fas fa-fw fa-shoe-prints"></i></button>
                     </form>
                 <?php endif ?>
                 <?php if ($currentLocation->encounters->surfing) : ?>
-                    <form method="POST" class="d-grid flex-fill">
+                    <form method="POST" action="/encounter" class="d-grid flex-fill">
                         <input type="hidden" name="location" value="<?=$currentLocation->id?>">
                         <input type="hidden" name="encounterType" value="surfing">
                         <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fas fa-fw fa-water"></i></button>
                     </form>
                 <?php endif ?>
                 <?php if ($currentLocation->encounters->fishing) : ?>
-                    <form method="POST" class="d-grid flex-fill">
+                    <form method="POST" action="/encounter" class="d-grid flex-fill">
                         <input type="hidden" name="location" value="<?=$currentLocation->id?>">
                         <input type="hidden" name="encounterType" value="fishing">
                         <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fas fa-fw fa-fish"></i></button>
                     </form>
                 <?php endif ?>
                 <?php if ($currentLocation->encounters->rockSmash) : ?>
-                    <form method="POST" class="d-grid flex-fill">
+                    <form method="POST" action="/encounter" class="d-grid flex-fill">
                         <input type="hidden" name="location" value="<?=$currentLocation->id?>">
                         <input type="hidden" name="encounterType" value="rockSmash">
                         <button type="submit" class="btn btn-primary btn-lg" <?=$canEncounter ? "" : "disabled"?>><i class="fab fa-fw fa-sith"></i></button>

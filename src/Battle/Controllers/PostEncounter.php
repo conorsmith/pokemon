@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Controllers;
+namespace ConorSmith\Pokemon\Battle\Controllers;
 
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
@@ -10,11 +11,12 @@ use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-final class PostMap
+final class PostEncounter
 {
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
+        private readonly PlayerRepository $playerRepository,
         private readonly BagRepository $bagRepository,
         private readonly HabitStreakQuery $habitStreakQuery,
         private readonly array $map,
@@ -28,6 +30,7 @@ final class PostMap
             'instanceId' => INSTANCE_ID,
         ]);
 
+        $player = $this->playerRepository->findPlayer();
         $bag = $this->bagRepository->find();
 
         if (!$bag->hasAnyPokeBall()) {
@@ -35,6 +38,8 @@ final class PostMap
             header("Location: /map");
             exit;
         }
+
+        $player = $player->reviveTeam();
 
         if ($legendaryPokemonNumber) {
             $encounteredPokemonId = $legendaryPokemonNumber;
@@ -58,6 +63,8 @@ final class PostMap
         $encounteredPokemonIsShiny = self::generateEncounteredShininess();
 
         $encounterId = Uuid::uuid4();
+
+        $this->playerRepository->savePlayer($player);
 
         $this->db->insert("encounters", [
             'id' => $encounterId,
@@ -85,7 +92,7 @@ final class PostMap
 
     private static function findLegendaryConfig(string $legendaryPokemonNumber): ?array
     {
-        $legendariesConfig = require __DIR__ . "/../Config/Legendaries.php";
+        $legendariesConfig = require __DIR__ . "/../../Config/Legendaries.php";
 
         foreach ($legendariesConfig as $config) {
             if ($config['pokemon'] === $legendaryPokemonNumber) {
