@@ -81,6 +81,9 @@ final class FriendshipCalculator
                         default      => 1,
                     };
                 }
+
+                $value = min($value, 255);
+                $value = max($value, 0);
             }
         }
 
