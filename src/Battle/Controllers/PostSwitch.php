@@ -5,7 +5,7 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 
-final class PostBattleSwitch
+final class PostSwitch
 {
     public function __construct(
         private readonly PlayerRepository $playerRepository,
@@ -13,8 +13,8 @@ final class PostBattleSwitch
 
     public function __invoke(array $args): void
     {
-        $trainerId = $args['id'];
         $pokemonId = $_POST['pokemon'];
+        $redirectUrl = $_POST['redirectUrl'];
 
         $player = $this->playerRepository->findPlayer();
 
@@ -25,6 +25,6 @@ final class PostBattleSwitch
 
         $this->playerRepository->savePlayer($player);
 
-        header("Location: /battle/{$trainerId}");
+        header("Location: {$redirectUrl}");
     }
 }

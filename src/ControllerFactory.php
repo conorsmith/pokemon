@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon;
 
 use ConorSmith\Pokemon\Battle\Controllers\GetBattle;
-use ConorSmith\Pokemon\Battle\Controllers\GetBattleSwitch;
+use ConorSmith\Pokemon\Battle\Controllers\GetSwitch;
 use ConorSmith\Pokemon\Battle\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFinish;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleStart;
-use ConorSmith\Pokemon\Battle\Controllers\PostBattleSwitch;
+use ConorSmith\Pokemon\Battle\Controllers\PostSwitch;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterStart;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterFight;
@@ -86,8 +86,8 @@ final class ControllerFactory
         $r->post("/battle/trainer/{id}", PostBattleStart::class);
         $r->get("/battle/{id}", GetBattle::class);
         $r->post("/battle/{id}/fight", PostBattleFight::class);
-        $r->get("/battle/{id}/switch", GetBattleSwitch::class);
-        $r->post("/battle/{id}/switch", PostBattleSwitch::class);
+        $r->get("/team/switch", GetSwitch::class);
+        $r->post("/team/switch", PostSwitch::class);
         $r->post("/battle/{id}/finish", PostBattleFinish::class);
         $r->get("/bag", GetBag::class);
         $r->post("/item/{id}/use", PostItemUse::class);
@@ -248,11 +248,11 @@ final class ControllerFactory
                 new EventFactory($this->viewModelFactory),
                 $this->viewModelFactory,
             ),
-            GetBattleSwitch::class => new GetBattleSwitch(
+            GetSwitch::class => new GetSwitch(
                 $this->playerRepository,
                 $this->viewModelFactory,
             ),
-            PostBattleSwitch::class => new PostBattleSwitch(
+            PostSwitch::class => new PostSwitch(
                 $this->playerRepository,
             ),
             PostBattleFinish::class => new PostBattleFinish(

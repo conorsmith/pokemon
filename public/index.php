@@ -65,7 +65,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     \ConorSmith\Pokemon\ControllerFactory::routes($r);
 });
 
-$routeInfo = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+parse_str(parse_url($_SERVER['REQUEST_URI'])['query'] ?? "", $_GET);
+
+$routeInfo = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'])['path']);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:

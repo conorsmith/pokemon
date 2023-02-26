@@ -1,6 +1,4 @@
-<h1 style="text-align: center;">Trainer Battle</h1>
-
-<h2 style="text-align: center;">Switch</h2>
+<h1 style="text-align: center;">Switch</h1>
 
 <ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
     <?php foreach ($team as $pokemon) : ?>
@@ -28,6 +26,7 @@
                 <div class="d-flex justify-content-end">
                     <form method="POST">
                         <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                        <input type="hidden" name="redirectUrl" value="<?=$redirectUrl?>">
                         <button type="submit" class="btn btn-outline-dark btn-sm">Switch</button>
                     </form>
                 </div>
@@ -35,7 +34,7 @@
         </li>
     <?php endforeach ?>
     <li class="list-group-item d-grid gap-2" style="text-align: center;">
-        <a href="/battle/<?=$id?>" class="btn btn-outline-dark">
+        <a href="<?=$redirectUrl?>" class="btn btn-outline-dark">
             Cancel
         </a>
     </li>

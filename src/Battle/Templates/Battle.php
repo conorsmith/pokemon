@@ -92,7 +92,7 @@
                 <i class="fas fa-fw fa-wifi"></i> Special
             </button>
         </form>
-        <a href="/battle/<?=$id?>/switch" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
+        <a href="/team/switch?redirect=<?=urlencode("/battle/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
             Switch
         </a>
     </li>

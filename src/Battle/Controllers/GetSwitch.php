@@ -7,7 +7,7 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 
-final class GetBattleSwitch
+final class GetSwitch
 {
     public function __construct(
         private readonly PlayerRepository $playerRepository,
@@ -16,7 +16,7 @@ final class GetBattleSwitch
 
     public function __invoke(array $args): void
     {
-        $trainerBattleId = $args['id'];
+        $redirectUrl = $_GET['redirect'];
 
         $player = $this->playerRepository->findPlayer();
 
@@ -27,8 +27,8 @@ final class GetBattleSwitch
         }
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Switch.php", [
-            'id' => $trainerBattleId,
             'team' => $teamViewModels,
+            'redirectUrl' => $redirectUrl,
         ]);
     }
 }

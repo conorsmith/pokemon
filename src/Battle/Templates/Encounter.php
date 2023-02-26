@@ -96,6 +96,9 @@
                 <i class="fas fa-fw fa-wifi"></i> Special
             </button>
         </form>
+        <a href="/team/switch?redirect=<?=urlencode("/encounter/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
+            Switch
+        </a>
         <?php foreach ($pokeballs as $pokeball) : ?>
             <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid <?=$isBattleOver ? "d-none" : ""?>">
                 <button type="submit" name="pokeball" value="<?=$pokeball->id?>" class="btn btn-outline-primary d-flex justify-content-between js-interaction">
