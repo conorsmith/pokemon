@@ -10,7 +10,12 @@ use ConorSmith\Pokemon\Battle\Controllers\PostBattleFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFinish;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleStart;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleSwitch;
-use ConorSmith\Pokemon\Battle\Controllers\PostEncounter;
+use ConorSmith\Pokemon\Battle\Controllers\PostEncounterStart;
+use ConorSmith\Pokemon\Battle\Controllers\PostEncounterCatch;
+use ConorSmith\Pokemon\Battle\Controllers\PostEncounterFight;
+use ConorSmith\Pokemon\Battle\Controllers\PostEncounterRun;
+use ConorSmith\Pokemon\Battle\EventFactory;
+use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Controllers\GetBag;
@@ -23,8 +28,6 @@ use ConorSmith\Pokemon\Team\Controllers\GetTeam;
 use ConorSmith\Pokemon\Controllers\GetIndex;
 use ConorSmith\Pokemon\Controllers\GetMap;
 use ConorSmith\Pokemon\Controllers\GetTeamItemUse;
-use ConorSmith\Pokemon\Controllers\PostEncounterCatch;
-use ConorSmith\Pokemon\Controllers\PostEncounterRun;
 use ConorSmith\Pokemon\Controllers\PostItemUse;
 use ConorSmith\Pokemon\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamItemUse;
@@ -69,10 +72,11 @@ final class ControllerFactory
         $r->get("/pokedex", GetPokedex::class);
         $r->post("/map/move", PostMapMove::class);
         $r->get("/map", GetMap::class);
-        $r->post("/encounter", PostEncounter::class);
+        $r->post("/encounter", PostEncounterStart::class);
         $r->get("/team", GetTeam::class);
         $r->get("/encounter/{id}", GetEncounter::class);
         $r->post("/encounter/{id}/catch", PostEncounterCatch::class);
+        $r->post("/encounter/{id}/fight", PostEncounterFight::class);
         $r->post("/encounter/{id}/run", PostEncounterRun::class);
         $r->post("/team/move-up", PostTeamMoveUp::class);
         $r->post("/team/move-down", PostTeamMoveDown::class);
@@ -96,6 +100,7 @@ final class ControllerFactory
         private readonly Connection                  $db,
         private readonly Session                     $session,
         private readonly CaughtPokemonRepository     $caughtPokemonRepository,
+        private readonly EncounterRepository         $encounterRepository,
         private readonly TrainerRepository           $trainerRepository,
         private readonly PlayerRepository            $playerRepository,
         private readonly BagRepository               $bagRepository,
@@ -168,24 +173,22 @@ final class ControllerFactory
                 $this->map,
                 $this->pokedex,
             ),
-            PostEncounter::class => new PostEncounter(
+            PostEncounterStart::class => new PostEncounterStart(
                 $this->db,
                 $this->session,
+                $this->encounterRepository,
                 $this->playerRepository,
                 $this->bagRepository,
-                $this->habitStreakQuery,
-                $this->map,
             ),
             GetTeam::class => new GetTeam(
                 $this->session,
                 $this->pokemonRepository,
             ),
             GetEncounter::class => new GetEncounter(
-                $this->db,
                 $this->session,
                 $this->playerRepository,
+                $this->encounterRepository,
                 $this->bagRepository,
-                $this->pokedex,
                 $this->viewModelFactory,
             ),
             PostEncounterCatch::class => new PostEncounterCatch(
@@ -197,6 +200,13 @@ final class ControllerFactory
                 $this->map,
             ),
             PostEncounterRun::class => new PostEncounterRun($this->db),
+            PostEncounterFight::class => new PostEncounterFight(
+                $this->session,
+                $this->encounterRepository,
+                $this->playerRepository,
+                new EventFactory($this->viewModelFactory),
+                $this->reportTeamPokemonFaintedCommand,
+            ),
             PostTeamMoveUp::class => new PostTeamMoveUp($this->db, $this->session, $this->caughtPokemonRepository),
             PostTeamMoveDown::class => new PostTeamMoveDown($this->db, $this->session, $this->caughtPokemonRepository),
             PostTeamSendToBox::class => new PostTeamSendToBox(
@@ -235,6 +245,7 @@ final class ControllerFactory
                 $this->playerRepository,
                 $this->bagRepository,
                 $this->reportTeamPokemonFaintedCommand,
+                new EventFactory($this->viewModelFactory),
                 $this->viewModelFactory,
             ),
             GetBattleSwitch::class => new GetBattleSwitch(

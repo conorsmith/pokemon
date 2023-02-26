@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Controllers;
+namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
@@ -38,7 +38,7 @@ final class PostEncounterCatch
         $bag = $this->bagRepository->find();
 
         if (!$bag->has($pokeballItemId)) {
-            $itemConfig = require __DIR__ . "/../Config/Items.php";
+            $itemConfig = require __DIR__ . "/../../Config/Items.php";
             $this->session->getFlashBag()->add("errors", "No {$itemConfig[$pokeballItemId]['name']} remaining.");
             header("Location: /map");
             exit;

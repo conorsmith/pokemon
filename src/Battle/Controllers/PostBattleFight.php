@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
-use ConorSmith\Pokemon\Battle\Domain\AttackOutcome;
-use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
+use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
@@ -26,6 +25,7 @@ final class PostBattleFight
         private readonly PlayerRepository  $playerRepository,
         private readonly BagRepository     $bagRepository,
         private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
+        private readonly EventFactory      $eventFactory,
         private readonly ViewModelFactory  $viewModelFactory,
     ) {}
 
@@ -86,130 +86,40 @@ final class PostBattleFight
             ? ($trainer->hasEntireTeamFainted() ? null : $trainer->getLeadPokemon())
             : ($player->hasEntireTeamFainted() ? null : $player->getLeadPokemon());
 
-        $this->sendEvents(
-            $round->firstAttack,
-            $round->firstPokemon,
-            $round->secondPokemon,
-            !$round->playerFirst,
-            $nextSecondPokemon,
-            TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
-        );
-
-        $this->sendEvents(
-            $round->secondAttack,
-            $round->secondPokemon,
-            $round->firstPokemon,
-            $round->playerFirst,
-            $nextFirstPokemon,
-            TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
+        $events = array_merge(
+            $this->eventFactory->createBattleRoundEvents(
+                $round->firstAttack,
+                $round->firstPokemon,
+                $round->secondPokemon,
+                !$round->playerFirst,
+                $nextSecondPokemon,
+                TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
+            ),
+            $this->eventFactory->createBattleRoundEvents(
+                $round->secondAttack,
+                $round->secondPokemon,
+                $round->firstPokemon,
+                $round->playerFirst,
+                $nextFirstPokemon,
+                TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
+            ),
         );
 
         if ($trainer->hasEntireTeamFainted()) {
             $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
-            $this->setMessage("You defeated {$name}");
+            $events[] = $this->eventFactory->createMessageEvent("You defeated {$name}");
 
             if ($playerEarnedGymBadge) {
-                $this->setMessage("You earned the {$this->viewModelFactory->createGymBadgeName($trainer->gymBadge)}");
+                $events[] = $this->eventFactory->createMessageEvent("You earned the {$this->viewModelFactory->createGymBadgeName($trainer->gymBadge)}");
             }
-            $this->setMessage("You won a {$prize['name']}");
+            $events[] = $this->eventFactory->createMessageEvent("You won a {$prize['name']}");
 
         } elseif ($player->hasEntireTeamFainted()) {
             $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
-            $this->setMessage("You were defeated by {$name}");
+            $events[] = $this->eventFactory->createMessageEvent("You were defeated by {$name}");
         }
 
-        echo json_encode($this->events);
-    }
-
-    private function sendEvents(
-        AttackOutcome $attack,
-        Pokemon $attacker,
-        Pokemon $defender,
-        bool $isPlayerDefending,
-        ?Pokemon $nextDefender,
-        string $opponentName
-    ) {
-        $attackerVm = $this->viewModelFactory->createPokemonInBattle($attacker);
-        $attackerDescriptor = $isPlayerDefending ? "Foe" : "Your";
-
-        $defenderVm = $this->viewModelFactory->createPokemonInBattle($defender);
-        $defenderDescriptor = $isPlayerDefending ? "Your" : "Foe";
-
-        if ($attack->hit) {
-
-            $this->setMessage("{$attackerDescriptor} {$attackerVm->name}'s attack hit!");
-
-            if ($attack->superEffective) {
-                $this->setMessage("It's super effective!");
-            } elseif ($attack->notVeryEffective) {
-                $this->setMessage("It's not very effective");
-            }
-            if ($attack->criticalHit) {
-                $this->setMessage("It's a critical hit!");
-            }
-
-            $this->publishDamageEvent(
-                $defender->id,
-                $attack->damageDealt,
-                $defender->remainingHp,
-                $defender->calculateHp()
-            );
-
-            $this->setMessage("{$defenderDescriptor} {$defenderVm->name} took {$attack->damageDealt} damage");
-
-            if ($attack->enduredHit) {
-                $this->setMessage("{$defenderDescriptor} {$defenderVm->name} endured through the power of friendship!");
-
-            } elseif ($defender->hasFainted) {
-                $this->setMessage("{$defenderDescriptor} {$defenderVm->name} fainted");
-
-                $this->publishFaintingEvent($defender->id, $isPlayerDefending, $nextDefender);
-
-                if ($nextDefender) {
-                    $nextDefenderVm = $this->viewModelFactory->createPokemonInBattle($nextDefender);
-                    if ($isPlayerDefending) {
-                        $this->setMessage("Go {$nextDefenderVm->name}!");
-                    } else {
-                        $this->setMessage("{$opponentName} sent out {$nextDefenderVm->name}");
-                    }
-                }
-            }
-        } elseif (!$attacker->hasFainted) {
-            $this->setMessage("{$attackerDescriptor} {$attackerVm->name}'s attack missed!");
-        }
-    }
-
-    private array $events;
-
-    private function setMessage(string $message): void
-    {
-        $this->events[] = [
-            'type' => "message",
-            'value' => $message,
-        ];
-    }
-
-    private function publishDamageEvent(string $id, int $damage, int $remaining, int $total): void
-    {
-        $this->events[] = [
-            'type' => "damage",
-            'target' => $id,
-            'value' => [
-                'damage' => $damage,
-                'remaining' => $remaining,
-                'total' => $total,
-            ],
-        ];
-    }
-
-    private function publishFaintingEvent(string $id, bool $isPlayerPokemon, ?Pokemon $nextPokemon): void
-    {
-        $this->events[] = [
-            'type' => "fainting",
-            'target' => $id,
-            'isPlayerPokemon' => $isPlayerPokemon,
-            'next' => $nextPokemon ? $this->viewModelFactory->createPokemonInBattle($nextPokemon) : null,
-        ];
+        echo json_encode($events);
     }
 
     private static function getPrizePool(Trainer $trainer): array

@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Controllers;
+namespace ConorSmith\Pokemon\Battle\Controllers;
 use Doctrine\DBAL\Connection;
 
 final class PostEncounterRun
 {
-
     public function __construct(
         private readonly Connection $db,
     ) {}

@@ -1,10 +1,4 @@
-<?php foreach ($errors as $error) : ?>
-    <div class="alert alert-danger"><?=$error?></div>
-<?php endforeach ?>
-
-<?php foreach ($successes as $success) : ?>
-    <div class="alert alert-success"><?=$success?></div>
-<?php endforeach ?>
+<?php require __DIR__ . "/BattleScript.php" ?>
 
 <ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
     <li class="list-group-item" style="text-align: center;">
@@ -79,10 +73,32 @@
             </div>
         </div>
     </li>
-    <li class="list-group-item d-grid gap-2" style="text-align: center;">
+    <li id="messages" class="list-group-item" style="<?=isset($successes) ? "" : "display: none;"?>">
+        <ul>
+            <?php if (isset($successes)) : ?>
+                <?php foreach ($successes as $success) : ?>
+                    <li><?=$success?></li>
+                <?php endforeach; ?>
+            <?php endif ?>
+        </ul>
+    </li>
+    <li class="list-group-item d-grid gap-2 js-interaction-container" style="text-align: center;">
+        <form method="POST" action="/encounter/<?=$id?>/run" class="d-grid <?=$isBattleOver ? "" : "d-none"?>">
+            <button type="submit" class="btn btn-outline-dark js-interaction">
+                Finish
+            </button>
+        </form>
+        <form method="POST" action="/encounter/<?=$id?>/fight" class="d-grid flex-row js-attack <?=$isBattleOver ? "d-none" : ""?>" style="grid-template-columns: 1fr 1fr; column-gap: 0.5rem;">
+            <button type="submit" class="btn btn-primary js-interaction" name="attack" value="physical">
+                <i class="fas fa-fw fa-paw"></i> Physical
+            </button>
+            <button type="submit" class="btn btn-primary js-interaction" name="attack" value="special">
+                <i class="fas fa-fw fa-wifi"></i> Special
+            </button>
+        </form>
         <?php foreach ($pokeballs as $pokeball) : ?>
-            <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid">
-                <button type="submit" name="pokeball" value="<?=$pokeball->id?>" class="btn btn-outline-primary d-flex justify-content-between">
+            <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid <?=$isBattleOver ? "d-none" : ""?>">
+                <button type="submit" name="pokeball" value="<?=$pokeball->id?>" class="btn btn-outline-primary d-flex justify-content-between js-interaction">
                     <div class="me-2" style="width: 40px; text-align: center;">
                         <img src="<?=$pokeball->imageUrl?>">
                     </div>
@@ -93,8 +109,8 @@
                 </button>
             </form>
         <?php endforeach ?>
-        <form method="POST" action="/encounter/<?=$id?>/run" class="d-grid">
-            <button type="submit" class="btn btn-outline-secondary">Run</button>
+        <form method="POST" action="/encounter/<?=$id?>/run" class="d-grid <?=$isBattleOver ? "d-none" : ""?>">
+            <button type="submit" class="btn btn-outline-secondary js-interaction">Run</button>
         </form>
     </li>
 </ul>

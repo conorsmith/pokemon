@@ -33,6 +33,12 @@ $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
     $db,
     $session,
     $caughtPokemonRepository,
+    new \ConorSmith\Pokemon\Battle\Repositories\EncounterRepository(
+        $db,
+        $pokedex,
+        $map,
+        new \ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery($dailyHabitLogRepository),
+    ),
     new \ConorSmith\Pokemon\Battle\Repositories\TrainerRepository($db, $pokedex, $map),
     new \ConorSmith\Pokemon\Battle\Repositories\PlayerRepository(
         $db,
