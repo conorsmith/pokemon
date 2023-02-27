@@ -73,13 +73,8 @@
             </div>
         </div>
     </li>
-    <li id="messages" class="list-group-item" style="<?=isset($successes) ? "" : "display: none;"?>">
+    <li id="messages" class="list-group-item" style="display: none;">
         <ul>
-            <?php if (isset($successes)) : ?>
-                <?php foreach ($successes as $success) : ?>
-                    <li><?=$success?></li>
-                <?php endforeach; ?>
-            <?php endif ?>
         </ul>
     </li>
     <li class="list-group-item d-grid gap-2 js-interaction-container" style="text-align: center;">
@@ -100,7 +95,7 @@
             Switch
         </a>
         <?php foreach ($pokeballs as $pokeball) : ?>
-            <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid <?=$isBattleOver ? "d-none" : ""?>">
+            <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid js-catch <?=$isBattleOver ? "d-none" : ""?>">
                 <button type="submit" name="pokeball" value="<?=$pokeball->id?>" class="btn btn-outline-primary d-flex justify-content-between js-interaction">
                     <div class="me-2" style="width: 40px; text-align: center;">
                         <img src="<?=$pokeball->imageUrl?>">

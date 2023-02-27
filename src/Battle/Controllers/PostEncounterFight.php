@@ -52,11 +52,6 @@ final class PostEncounterFight
             );
         }
 
-        if ($opponentPokemon->hasFainted) {
-            // ...
-        }
-
-
         $this->playerRepository->savePlayer($player);
         $this->encounterRepository->save($encounter);
 

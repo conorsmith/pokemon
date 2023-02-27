@@ -6,7 +6,7 @@ require_once __DIR__ . "/vendor/autoload.php";
 use ConorSmith\Pokemon\PokedexNo;
 
 $dom = new DOMDocument();
-$dom->loadHTMLFile(__DIR__ . "/src/stats.html");
+$dom->loadHTMLFile(__DIR__ . "/rates.html");
 
 $i = 0;
 
@@ -24,18 +24,13 @@ foreach ($dom->getElementsByTagName("tr") as $rowNode) {
         $row[] = trim($cellNode->textContent);
     }
 
-    if (count($row) !== 11) {
+    if (count($row) !== 4) {
         continue;
     }
 
     $configEntry = [
-        'number' => ltrim($row[0], "0"),
-        'hp' => intval($row[3]),
-        'attack' => intval($row[4]),
-        'defence' => intval($row[5]),
-        'spAttack' => intval($row[6]),
-        'spDefence' => intval($row[7]),
-        'speed' => intval($row[8]),
+        'number' => ltrim(substr($row[0], 1), "0"),
+        'rate' => intval(preg_replace("/[^0-9]/", "", $row[3])),
     ];
 
     $config[] = $configEntry;

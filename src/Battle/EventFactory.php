@@ -175,4 +175,42 @@ final class EventFactory
             : "a wild {$pokemonVm->name}";
         return $this->createMessageEvent("You were defeated by {$name}");
     }
+
+    public function createCatchSuccessEvent(Encounter $encounter, float $catchRate): array
+    {
+        $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
+        $name = $encounter->isLegendary
+            ? "the legendary Pokémon {$pokemonVm->name}"
+            : "the wild {$pokemonVm->name}";
+        return [
+            'type' => "caught",
+            'value' => "You caught {$name}!",
+            'rate' => $catchRate,
+        ];
+    }
+
+    public function createCatchFailureEvent(Encounter $encounter): array
+    {
+        $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
+        $name = $encounter->isLegendary
+            ? "the legendary Pokémon {$pokemonVm->name}"
+            : "the wild {$pokemonVm->name}";
+        return $this->createMessageEvent("You failed to catch {$name}");
+    }
+
+    public function createCaughtPokemonSentToBoxEvent(Encounter $encounter): array
+    {
+        $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
+        return $this->createMessageEvent("{$pokemonVm->name} was sent to your box");
+    }
+
+    public function createShakeEvent(float $catchRate, float $shakeProbability, int $shakeRoll): array
+    {
+        return [
+            'type' => "shake",
+            'rate' => $catchRate,
+            'shake' => $shakeProbability,
+            'roll' => $shakeRoll,
+        ];
+    }
 }

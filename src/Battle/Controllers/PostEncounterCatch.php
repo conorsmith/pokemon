@@ -3,33 +3,32 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
+use ConorSmith\Pokemon\Battle\Domain\Encounter;
+use ConorSmith\Pokemon\Battle\EventFactory;
+use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\GymBadge;
 use Doctrine\DBAL\Connection;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostEncounterCatch
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly Session $session,
+        private readonly EncounterRepository $encounterRepository,
         private readonly BagRepository $bagRepository,
         private readonly CatchPokemonCommand $catchPokemonCommand,
-        private readonly array $pokedex,
+        private readonly EventFactory $eventFactory,
         private readonly array $map,
     ) {}
 
     public function __invoke(array $args): void
     {
-        $id = $args['id'];
+        $encounterId = $args['id'];
         $pokeballItemId = $_POST['pokeball'];
 
-        $encounterRow = $this->db->fetchAssociative("SELECT * FROM encounters WHERE instance_id = :instanceId AND id = :id", [
-            'instanceId' => INSTANCE_ID,
-            'id' => $id,
-        ]);
+        $encounter = $this->encounterRepository->find($encounterId);
 
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
             'instanceId' => INSTANCE_ID,
@@ -39,139 +38,116 @@ final class PostEncounterCatch
 
         if (!$bag->has($pokeballItemId)) {
             $itemConfig = require __DIR__ . "/../../Config/Items.php";
-            $this->session->getFlashBag()->add("errors", "No {$itemConfig[$pokeballItemId]['name']} remaining.");
-            header("Location: /map");
-            exit;
+            echo json_encode([
+                $this->eventFactory->createMessageEvent("No {$itemConfig[$pokeballItemId]['name']} remaining."),
+            ]);
+            return;
         }
 
         $levelLimit = self::findLevelLimit($instanceRow);
 
-        if ($encounterRow['level'] > $levelLimit) {
-            $this->session->getFlashBag()->add("errors", "You can't catch Pokémon above level {$levelLimit}");
-            header("Location: /map");
-            exit;
+        if ($encounter->pokemon->level > $levelLimit) {
+            echo json_encode([
+                $this->eventFactory->createMessageEvent("You can't catch Pokémon above level {$levelLimit}"),
+            ]);
+            return;
         }
 
-        $pokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'team' ORDER BY team_position", [
-            'instanceId' => INSTANCE_ID,
-        ]);
+        $events = [];
 
-        $levelDifference = $pokemonRow['level'] - $encounterRow['level'];
+        $catchRate = self::calculateCatchRate($encounter, $pokeballItemId);
 
-        $chance = match ($pokeballItemId) {
-            ItemId::POKE_BALL => self::getChanceForPokeBall($levelDifference),
-            ItemId::GREAT_BALL => self::getChanceForGreatBall($levelDifference),
-            ItemId::ULTRA_BALL => self::getChanceForUltraBall($levelDifference),
-        };
+        if ($catchRate >= 255 * 4096) {
+            $caught = true;
+        } else {
+            $caught = false;
 
-        $caught = $chance >= mt_rand(1, 100);
-
-        $pokemon = $this->pokedex[$encounterRow['pokemon_id']];
+            for ($i = 0; $i < 3 && !$caught; $i++) {
+                $shakeRoll = mt_rand(0, 65535);
+                $shakeProbability = self::calculateShakeProbability($catchRate);
+                $events[] = $this->eventFactory->createShakeEvent($catchRate, $shakeProbability, $shakeRoll);
+                if ($shakeRoll < $shakeProbability) {
+                    $caught = true;
+                }
+            }
+        }
 
         if ($caught) {
 
-            if ($encounterRow['is_legendary']) {
-                $this->session->getFlashBag()->add("successes", "You caught the legendary Pokémon {$pokemon['name']}!");
-            } else {
-                $this->session->getFlashBag()->add("successes", "You caught the wild {$pokemon['name']}!");
-            }
+            $events[] = $this->eventFactory->createCatchSuccessEvent($encounter, $catchRate);
 
             $currentLocation = $this->findLocation($instanceRow['current_location']);
 
             $result = $this->catchPokemonCommand->run(
-                $encounterRow['pokemon_id'],
-                $encounterRow['is_shiny'] === 1,
-                $encounterRow['level'],
-                $encounterRow['is_legendary'] === 1,
+                $encounter->pokemon->number,
+                $encounter->pokemon->isShiny,
+                $encounter->pokemon->level,
+                $encounter->isLegendary,
                 $currentLocation['id'],
             );
 
             if ($result->wasSentToBox()) {
-                $this->session->getFlashBag()->add("successes", "{$pokemon['name']} was sent to your box");
+                $events[] = $this->eventFactory->createCaughtPokemonSentToBoxEvent($encounter);
             }
 
             $bag = $bag->use($pokeballItemId);
 
             $this->bagRepository->save($bag);
-
-            $this->db->delete("encounters", [
-                'instance_id' => INSTANCE_ID,
-                'id' => $id,
-            ]);
-
-            header("Location: /map");
 
         } else {
             $bag = $bag->use($pokeballItemId);
 
             $this->bagRepository->save($bag);
 
-            if ($encounterRow['is_legendary']) {
-                $this->session->getFlashBag()->add("successes", "You failed to catch the legendary Pokémon {$pokemon['name']}");
-            } else {
-                $this->session->getFlashBag()->add("successes", "You failed to catch the wild {$pokemon['name']}");
-            }
-
-            header("Location: /encounter/{$id}");
+            $events[] = $this->eventFactory->createCatchFailureEvent($encounter);
         }
+
+        echo json_encode($events);
     }
 
-    private static function getChanceForPokeBall(int $levelDifference): int
+    private static function calculateCatchRate(Encounter $encounter, string $pokeBallItemId): float
     {
-        return match (true) {
-            $levelDifference > 4 => 100,
-            $levelDifference < -4 => 0,
-            default => match ($levelDifference) {
-                4 => 95,
-                3 => 90,
-                2 => 75,
-                1 => 60,
-                0 => 50,
-                -1 => 40,
-                -2 => 25,
-                -3 => 10,
-                -4 => 5,
-            }
+        $pokemon = $encounter->pokemon;
+
+        $hpFactor = floor((((3 * $pokemon->calculateHp()) - (2 * $pokemon->remainingHp)) * 4096) + 0.5);
+
+        if ($pokemon->level < 13) {
+            $levelBonus = max((36 - (2 * $pokemon->level)) / 10, 1);
+        } else {
+            $levelBonus = 1;
+        }
+
+        $ballBonus = match ($pokeBallItemId) {
+            ItemId::POKE_BALL  => 1,
+            ItemId::GREAT_BALL => 1.5,
+            ItemId::ULTRA_BALL => 2,
         };
+
+        $catchRatesConfig = require __DIR__ . "/../../Config/CatchRates.php";
+
+        $speciesRate = 1;
+
+        /** @var array $configEntry */
+        foreach ($catchRatesConfig as $configEntry) {
+            if ($configEntry['number'] === $pokemon->number) {
+                $speciesRate = $configEntry['rate'];
+                break;
+            }
+        }
+
+        $darkGrass = 1;
+        $badgePenalty = 1;
+        $statusBonus = 1;
+        $miscBonus = 1;
+
+        $initialFactor = $hpFactor * $darkGrass * $speciesRate * $ballBonus * $badgePenalty;
+
+        return floor($initialFactor / (3 * $encounter->pokemon->calculateHp())) * $levelBonus * $statusBonus * $miscBonus;
     }
 
-    private static function getChanceForGreatBall(int $levelDifference): int
+    private static function calculateShakeProbability(float $catchRate): float
     {
-        return match (true) {
-            $levelDifference > 4 => 100,
-            $levelDifference < -4 => 0,
-            default => match ($levelDifference) {
-                4 => 97,
-                3 => 94,
-                2 => 85,
-                1 => 77,
-                0 => 70,
-                -1 => 58,
-                -2 => 37,
-                -3 => 15,
-                -4 => 7,
-            }
-        };
-    }
-
-    private static function getChanceForUltraBall(int $levelDifference): int
-    {
-        return match (true) {
-            $levelDifference > 4 => 100,
-            $levelDifference < -5 => 0,
-            default => match ($levelDifference) {
-                4 => 99,
-                3 => 98,
-                2 => 96,
-                1 => 94,
-                0 => 90,
-                -1 => 75,
-                -2 => 50,
-                -3 => 20,
-                -4 => 8,
-                -5 => 1,
-            }
-        };
+        return floor(65536 * ($catchRate / (255 * 4096)));
     }
 
     private function findLocation(string $id): array

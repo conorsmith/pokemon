@@ -193,10 +193,10 @@ final class ControllerFactory
             ),
             PostEncounterCatch::class => new PostEncounterCatch(
                 $this->db,
-                $this->session,
+                $this->encounterRepository,
                 $this->bagRepository,
                 $this->catchPokemonCommand,
-                $this->pokedex,
+                new EventFactory($this->viewModelFactory),
                 $this->map,
             ),
             PostEncounterRun::class => new PostEncounterRun($this->db),

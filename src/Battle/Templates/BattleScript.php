@@ -17,6 +17,32 @@
                     processNextEvent(responseData, fnCallback);
                 });
 
+            } else if (event.type === "shake") {
+                const messageEl = document.createElement("li");
+                messagesEl.querySelector("ul").appendChild(messageEl);
+                typeWriter(messagesEl.querySelector("ul").lastChild, "...", 0, function () {
+                    processNextEvent(responseData, fnCallback);
+                });
+
+            } else if (event.type === "caught") {
+                const messageEl = document.createElement("li");
+                messagesEl.querySelector("ul").appendChild(messageEl);
+                typeWriter(messagesEl.querySelector("ul").lastChild, event.value, 0, function () {
+
+                    processNextEvent(responseData, function () {
+
+                        document.querySelectorAll(".js-interaction-container > *").forEach(function (el) {
+                            if (el.classList.contains("d-none")) {
+                                el.classList.remove("d-none");
+                            } else {
+                                el.classList.add("d-none");
+                            }
+                        });
+
+                        fnCallback();
+                    });
+                });
+
             } else if (event.type === "damage") {
                 const target = document.querySelector("[data-target-id='" + event.target + "'");
                 target.querySelector(".progress-bar").classList.remove("transition-disabled");
@@ -147,7 +173,7 @@
 
         const messagesEl = document.getElementById("messages");
 
-        document.querySelectorAll(".js-attack").forEach(function (el) {
+        document.querySelectorAll(".js-attack, .js-catch").forEach(function (el) {
             el.addEventListener("submit", function (e) {
                 interactionButtons.disable();
                 const formData = new FormData(el);
