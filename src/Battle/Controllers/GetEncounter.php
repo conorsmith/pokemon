@@ -50,7 +50,7 @@ final class GetEncounter
             'isLegendary' => $encounter->isLegendary,
             'successes' => $this->session->getFlashBag()->get("successes"),
             'errors' => $this->session->getFlashBag()->get("errors"),
-            'isBattleOver' => $encounter->pokemon->hasFainted,
+            'isBattleOver' => $encounter->pokemon->hasFainted || $encounter->wasCaught,
         ]);
     }
 

@@ -91,8 +91,10 @@ final class PostEncounterCatch
             }
 
             $bag = $bag->use($pokeballItemId);
+            $encounter = $encounter->captured();
 
             $this->bagRepository->save($bag);
+            $this->encounterRepository->save($encounter);
 
         } else {
             $bag = $bag->use($pokeballItemId);

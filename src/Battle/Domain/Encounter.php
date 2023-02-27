@@ -10,5 +10,17 @@ final class Encounter
         public readonly Pokemon $pokemon,
         public readonly bool $isLegendary,
         public readonly bool $isRegistered,
+        public readonly bool $wasCaught,
     ) {}
+
+    public function captured(): self
+    {
+        return new self(
+            $this->id,
+            $this->pokemon,
+            $this->isLegendary,
+            $this->isRegistered,
+            true,
+        );
+    }
 }

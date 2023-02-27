@@ -69,7 +69,8 @@ final class EncounterRepository
             $encounterId,
             $pokemon,
             false,
-            false
+            false,
+            false,
         );
     }
 
@@ -109,6 +110,7 @@ final class EncounterRepository
             $pokemon,
             $encounterRow['is_legendary'] === 0 ? false : true,
             $pokedexRow !== false,
+            $encounterRow['was_caught'] === 1 ? true : false,
         );
     }
 
@@ -128,10 +130,12 @@ final class EncounterRepository
                 'is_shiny' => $encounter->pokemon->isShiny ? 1 : 0,
                 'is_legendary' => $encounter->isLegendary ? 1 : 0,
                 'remaining_hp' => $encounter->pokemon->remainingHp,
+                'was_caught' => 0,
             ]);
         } else {
             $this->db->update("encounters", [
                 'remaining_hp' => $encounter->pokemon->remainingHp,
+                'was_caught' => $encounter->wasCaught ? 1 : 0,
             ], [
                 'id' => $encounter->id,
             ]);
