@@ -14,7 +14,6 @@ final class PostEncounterStart
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly Session $session,
         private readonly EncounterRepository $encounterRepository,
         private readonly PlayerRepository $playerRepository,
         private readonly BagRepository $bagRepository,

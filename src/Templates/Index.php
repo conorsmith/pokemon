@@ -32,7 +32,7 @@
 
 <ul class="list-group" style="margin-top: 2rem;">
     <?php foreach ($team as $pokemon) : ?>
-        <?php require __DIR__ . "/../Team/Templates/Pokemon.php" ?>
+        <?php require __DIR__ . "/../Team/Templates/ListPokemon.php" ?>
     <?php endforeach ?>
 </ul>
 

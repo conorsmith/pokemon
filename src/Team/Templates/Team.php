@@ -15,7 +15,7 @@
         </div>
         <ul class="list-group list-group-flush">
             <?php foreach ($team as $i => $pokemon) : ?>
-                <?php require __DIR__ . "/Pokemon.php" ?>
+                <?php require __DIR__ . "/ListPokemon.php" ?>
                 <li class="list-group-item d-flex justify-content-between w-100" style="background: #fafafa;">
                     <div class="d-flex">
                         <form method="POST" action="/team/move-up" style="margin-right: 0.4rem;">
@@ -31,28 +31,33 @@
                             </button>
                         </form>
                     </div>
-                    <div class="dropdown">
-                        <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            Send
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-dark btn-sm" href="/team/member/<?=$pokemon->id?>">
+                            Stats
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <form method="POST" action="/team/send-to-box">
-                                    <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                    <button type="submit" class="dropdown-item" <?=$teamHasSingleRemainingMember ? "disabled" : ""?>>
-                                        Send to Box
-                                    </button>
-                                </form>
-                            </li>
-                            <li>
-                                <form method="POST" action="/team/send-to-day-care">
-                                    <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                    <button type="submit" class="dropdown-item" <?=$teamHasSingleRemainingMember || $dayCareIsFull ? "disabled" : ""?>>
-                                        Send to Day Care
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
+                        <div class="dropdown">
+                            <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                Send
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <form method="POST" action="/team/send-to-box">
+                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$teamHasSingleRemainingMember ? "disabled" : ""?>>
+                                            Send to Box
+                                        </button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form method="POST" action="/team/send-to-day-care">
+                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$teamHasSingleRemainingMember || $dayCareIsFull ? "disabled" : ""?>>
+                                            Send to Day Care
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </li>
             <?php endforeach ?>
@@ -66,30 +71,35 @@
         </div>
         <ul class="list-group list-group-flush">
             <?php foreach ($dayCare as $pokemon) : ?>
-                <?php require __DIR__ . "/Pokemon.php" ?>
+                <?php require __DIR__ . "/ListPokemon.php" ?>
                 <li class="list-group-item d-flex justify-content-end" style="background: #fafafa;">
-                    <div class="dropdown">
-                        <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            Send
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-dark btn-sm" href="/team/member/<?=$pokemon->id?>">
+                            Stats
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <form method="POST" action="/team/send-to-team">
-                                    <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                    <button type="submit" class="dropdown-item" <?=$teamIsFull ? "disabled" : ""?>>
-                                        Send to Team
-                                    </button>
-                                </form>
-                            </li>
-                            <li>
-                                <form method="POST" action="/team/send-to-box">
-                                    <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                    <button type="submit" class="dropdown-item">
-                                        Send to Box
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
+                        <div class="dropdown">
+                            <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                Send
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <form method="POST" action="/team/send-to-team">
+                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$teamIsFull ? "disabled" : ""?>>
+                                            Send to Team
+                                        </button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form method="POST" action="/team/send-to-box">
+                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                                        <button type="submit" class="dropdown-item">
+                                            Send to Box
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </li>
             <?php endforeach ?>
@@ -113,30 +123,35 @@
         </div>
         <ul class="list-group list-group-flush">
             <?php foreach ($box as $pokemon) : ?>
-                <?php require __DIR__ . "/Pokemon.php" ?>
+                <?php require __DIR__ . "/ListPokemon.php" ?>
                 <li class="list-group-item d-flex justify-content-end" style="background: #fafafa;">
-                    <div class="dropdown">
-                        <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            Send
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-dark btn-sm" href="/team/member/<?=$pokemon->id?>">
+                            Stats
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <form method="POST" action="/team/send-to-team">
-                                    <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                    <button type="submit" class="dropdown-item" <?=$teamIsFull ? "disabled" : ""?>>
-                                        Send to Team
-                                    </button>
-                                </form>
-                            </li>
-                            <li>
-                                <form method="POST" action="/team/send-to-day-care">
-                                    <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                    <button type="submit" class="dropdown-item" <?=$dayCareIsFull ? "disabled" : ""?>>
-                                        Send to Day Care
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
+                        <div class="dropdown">
+                            <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                Send
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <form method="POST" action="/team/send-to-team">
+                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$teamIsFull ? "disabled" : ""?>>
+                                            Send to Team
+                                        </button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form method="POST" action="/team/send-to-day-care">
+                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$dayCareIsFull ? "disabled" : ""?>>
+                                            Send to Day Care
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </li>
             <?php endforeach ?>

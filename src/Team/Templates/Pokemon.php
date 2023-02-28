@@ -1,27 +1,58 @@
-<li class="list-group-item d-flex">
-    <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>">
-        <img src="<?=$pokemon->imageUrl?>">
+<div class="card">
+    <div class="card-body" style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);">
+        <?php require __DIR__ . "/ListPokemon.php" ?>
     </div>
-    <div class="flex-grow-1">
-        <h5><?=$pokemon->name?></h5>
-        <p class="mb-0">
-            <span>
-                <span class="badge bg-<?=$pokemon->primaryType?>" style="text-transform: uppercase;">
-                    <?=$pokemon->primaryType?>
-                </span>
-                <?php if ($pokemon->secondaryType) : ?>
-                    <span class="badge bg-<?=$pokemon->secondaryType?>" style="text-transform: uppercase;">
-                        <?=$pokemon->secondaryType?>
-                    </span>
-                <?php endif ?>
-            </span>
-            <span style="margin: 0 0.4rem;">
-                Lv <?=$pokemon->level?>
-            </span>
-        </p>
-        <div class="d-flex align-items-center gap-1" style="margin-top: 0.6rem;">
-            <i class="far fa-fw <?=$pokemon->friendshipIcon?>" style="font-size: 1.4rem; color: #666;"></i>
-            <?=$pokemon->friendship?>
-        </div>
+    <div class="card-body">
+        <table class="table">
+            <tr>
+                <td></td>
+                <td style="text-align: right;"><i class="fas fa-code-branch"></i></td>
+                <td style="text-align: right;"><i class="fas fa-dna"></i></td>
+                <td style="text-align: right;"><i class="fas fa-running"></i></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Physical Attack</td>
+                <td style="text-align: right;"><?=$stats->physicalAttack->base?></td>
+                <td style="text-align: right;">+<?=$stats->physicalAttack->iv?></td>
+                <td style="text-align: right;">+<?=$stats->physicalAttack->ev?></td>
+                <td style="text-align: right;"><strong><?=$stats->physicalAttack->total?></strong></td>
+            </tr>
+            <tr>
+                <td>Physical Defence</td>
+                <td style="text-align: right;"><?=$stats->physicalDefence->base?></td>
+                <td style="text-align: right;">+<?=$stats->physicalDefence->iv?></td>
+                <td style="text-align: right;">+<?=$stats->physicalDefence->ev?></td>
+                <td style="text-align: right;"><strong><?=$stats->physicalDefence->total?></strong></td>
+            </tr>
+            <tr>
+                <td>Special Attack</td>
+                <td style="text-align: right;"><?=$stats->specialAttack->base?></td>
+                <td style="text-align: right;">+<?=$stats->specialAttack->iv?></td>
+                <td style="text-align: right;">+<?=$stats->specialAttack->ev?></td>
+                <td style="text-align: right;"><strong><?=$stats->specialAttack->total?></strong></td>
+            </tr>
+            <tr>
+                <td>Special Defence</td>
+                <td style="text-align: right;"><?=$stats->specialDefence->base?></td>
+                <td style="text-align: right;">+<?=$stats->specialDefence->iv?></td>
+                <td style="text-align: right;">+<?=$stats->specialDefence->ev?></td>
+                <td style="text-align: right;"><strong><?=$stats->specialDefence->total?></strong></td>
+            </tr>
+            <tr>
+                <td>Speed</td>
+                <td style="text-align: right;"><?=$stats->speed->base?></td>
+                <td style="text-align: right;">+<?=$stats->speed->iv?></td>
+                <td style="text-align: right;">+<?=$stats->speed->ev?></td>
+                <td style="text-align: right;"><strong><?=$stats->speed->total?></strong></td>
+            </tr>
+            <tr>
+                <td>HP</td>
+                <td style="text-align: right;"><?=$stats->hp->base?></td>
+                <td style="text-align: right;">+<?=$stats->hp->iv?></td>
+                <td style="text-align: right;">+<?=$stats->hp->ev?></td>
+                <td style="text-align: right;"><strong><?=$stats->hp->total?></strong></td>
+            </tr>
+        </table>
     </div>
-</li>
+</div>

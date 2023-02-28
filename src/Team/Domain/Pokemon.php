@@ -11,6 +11,12 @@ final class Pokemon
         public readonly int $level,
         public readonly int $friendship,
         public readonly bool $isShiny,
+        public readonly Hp $hp,
+        public readonly Stat $physicalAttack,
+        public readonly Stat $physicalDefence,
+        public readonly Stat $specialAttack,
+        public readonly Stat $specialDefence,
+        public readonly Stat $speed,
     ) {}
 
     public function identicalTo(self $other): bool
@@ -35,6 +41,12 @@ final class Pokemon
             $this->level + 1,
             $this->friendship,
             $this->isShiny,
+            $this->hp,
+            $this->physicalAttack,
+            $this->physicalDefence,
+            $this->specialAttack,
+            $this->specialDefence,
+            $this->speed,
         );
     }
 }

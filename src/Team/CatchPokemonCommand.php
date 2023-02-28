@@ -7,8 +7,11 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand as CommandInterface;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonResult;
+use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
+use ConorSmith\Pokemon\Team\Domain\Stat;
 use Doctrine\DBAL\Connection;
+use Exception;
 use Ramsey\Uuid\Uuid;
 
 final class CatchPokemonCommand implements CommandInterface
@@ -38,12 +41,20 @@ final class CatchPokemonCommand implements CommandInterface
             $teamPosition = $positionRow[0] + 1;
         }
 
+        $baseStats = self::createBaseStats($number);
+
         $pokemon = new Pokemon(
             Uuid::uuid4()->toString(),
             $number,
             $level,
             0,
             $isShiny,
+            new Hp($baseStats['hp']),
+            new Stat($baseStats['attack']),
+            new Stat($baseStats['defence']),
+            new Stat($baseStats['spAttack']),
+            new Stat($baseStats['spDefence']),
+            new Stat($baseStats['speed']),
         );
 
         $this->db->insert("caught_pokemon", [
@@ -89,5 +100,19 @@ final class CatchPokemonCommand implements CommandInterface
             $this->friendshipLog->sentToTeam($pokemon);
             return CatchPokemonResult::sentToTeam();
         }
+    }
+
+    private static function createBaseStats(string $number): array
+    {
+        $config = require __DIR__ . "/../../Config/Stats.php";
+
+        /** @var array $entry */
+        foreach ($config as $entry) {
+            if ($entry['number'] === $number) {
+                return $entry;
+            }
+        }
+
+        throw new Exception;
     }
 }

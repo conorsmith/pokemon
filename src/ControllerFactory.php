@@ -24,6 +24,7 @@ use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\WeeklyUpdateForTeamCommand;
+use ConorSmith\Pokemon\Team\Controllers\GetPokemon;
 use ConorSmith\Pokemon\Team\Controllers\GetTeam;
 use ConorSmith\Pokemon\Controllers\GetIndex;
 use ConorSmith\Pokemon\Controllers\GetMap;
@@ -74,6 +75,7 @@ final class ControllerFactory
         $r->get("/map", GetMap::class);
         $r->post("/encounter", PostEncounterStart::class);
         $r->get("/team", GetTeam::class);
+        $r->Get("/team/member/{id}", GetPokemon::class);
         $r->get("/encounter/{id}", GetEncounter::class);
         $r->post("/encounter/{id}/catch", PostEncounterCatch::class);
         $r->post("/encounter/{id}/fight", PostEncounterFight::class);
@@ -175,13 +177,15 @@ final class ControllerFactory
             ),
             PostEncounterStart::class => new PostEncounterStart(
                 $this->db,
-                $this->session,
                 $this->encounterRepository,
                 $this->playerRepository,
                 $this->bagRepository,
             ),
             GetTeam::class => new GetTeam(
                 $this->session,
+                $this->pokemonRepository,
+            ),
+            GetPokemon::class => new GetPokemon(
                 $this->pokemonRepository,
             ),
             GetEncounter::class => new GetEncounter(

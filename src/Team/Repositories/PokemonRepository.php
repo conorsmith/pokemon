@@ -5,9 +5,12 @@ namespace ConorSmith\Pokemon\Team\Repositories;
 
 use ConorSmith\Pokemon\SharedKernel\EarnedGymBadgesQuery;
 use ConorSmith\Pokemon\Team\Domain\DayCare;
+use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
+use ConorSmith\Pokemon\Team\Domain\Stat;
 use ConorSmith\Pokemon\Team\Domain\Team;
 use Doctrine\DBAL\Connection;
+use Exception;
 
 final class PokemonRepository
 {
@@ -71,13 +74,35 @@ final class PokemonRepository
 
     private function createPokemonFromRow(array $row): Pokemon
     {
+        $baseStats = self::createBaseStats($row['pokemon_id']);
+
         return new Pokemon(
             $row['id'],
             $row['pokemon_id'],
             intval($row['level']),
             $this->calculateFriendship($row),
             $row['is_shiny'] === 1,
+            new Hp($baseStats['hp']),
+            new Stat($baseStats['attack']),
+            new Stat($baseStats['defence']),
+            new Stat($baseStats['spAttack']),
+            new Stat($baseStats['spDefence']),
+            new Stat($baseStats['speed']),
         );
+    }
+
+    private static function createBaseStats(string $number): array
+    {
+        $config = require __DIR__ . "/../../Config/Stats.php";
+
+        /** @var array $entry */
+        foreach ($config as $entry) {
+            if ($entry['number'] === $number) {
+                return $entry;
+            }
+        }
+
+        throw new Exception;
     }
 
     public function saveTeam(Team $team): void
