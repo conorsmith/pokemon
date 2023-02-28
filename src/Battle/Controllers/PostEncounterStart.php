@@ -31,12 +31,6 @@ final class PostEncounterStart
         $player = $this->playerRepository->findPlayer();
         $bag = $this->bagRepository->find();
 
-        if (!$bag->hasAnyPokeBall()) {
-            $this->session->getFlashBag()->add("errors", "No Poké Balls remaining.");
-            header("Location: /map");
-            exit;
-        }
-
         $player = $player->reviveTeam();
 
         if ($legendaryPokemonNumber) {
