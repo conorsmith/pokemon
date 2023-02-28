@@ -92,7 +92,7 @@ final class GetMap
         $legendaryConfig = self::findLegendaryConfig($instanceRow['current_location']);
 
         echo TemplateEngine::render(__DIR__ . "/../Templates/Map.php", [
-            'canEncounter' => $bag->hasAnyPokeBall(),
+            'canEncounter' => true,
             'pokeballs' => $bag->countAllPokeBalls(),
             'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
