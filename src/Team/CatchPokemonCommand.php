@@ -104,7 +104,7 @@ final class CatchPokemonCommand implements CommandInterface
 
     private static function createBaseStats(string $number): array
     {
-        $config = require __DIR__ . "/../../Config/Stats.php";
+        $config = require __DIR__ . "/../Config/Stats.php";
 
         /** @var array $entry */
         foreach ($config as $entry) {
