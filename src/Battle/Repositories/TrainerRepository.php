@@ -57,6 +57,30 @@ final class TrainerRepository
         return $this->createTrainer($trainerBattleRow);
     }
 
+    public function findTrainersInLocation(string $locationId): array
+    {
+        $trainerConfig = require __DIR__ . "/../../Config/Trainers.php";
+
+        $trainerIds = [];
+
+        foreach ($trainerConfig as $configLocationId => $trainers) {
+            if ($configLocationId === $locationId) {
+                foreach ($trainers as $trainerConfig) {
+                    $trainerIds[] = $trainerConfig['id'];
+                }
+                break;
+            }
+        }
+
+        $trainers = [];
+
+        foreach ($trainerIds as $trainerId) {
+            $trainers[] = $this->findTrainerByTrainerId($trainerId);
+        }
+
+        return $trainers;
+    }
+
     private function createTrainer(array $trainerBattleRow): Trainer
     {
         $trainerConfig = $this->findTrainerConfig($trainerBattleRow['trainer_id']);
@@ -114,6 +138,7 @@ final class TrainerRepository
             $trainerConfig['name'] ?? null,
             $trainerConfig['class'],
             $team,
+            $trainerConfig['locationId'],
             $trainerBattleRow['is_battling'] === 1,
             is_null($trainerBattleRow['date_last_beaten'])
                 ? null
@@ -140,9 +165,10 @@ final class TrainerRepository
     {
         $trainerConfig = require __DIR__ . "/../../Config/Trainers.php";
 
-        foreach ($trainerConfig as $trainers) {
+        foreach ($trainerConfig as $locationId => $trainers) {
             foreach ($trainers as $trainer) {
                 if ($trainer['id'] === $id) {
+                    $trainer['locationId'] = $locationId;
                     return $trainer;
                 }
             }

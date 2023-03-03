@@ -15,6 +15,7 @@ final class LocationId
     public const VIRIDIAN_FOREST = "689069a9-13a7-4068-a49e-5395c05a4312";
     public const DIGLETTS_CAVE = "59149839-b573-4153-b75e-0664498370f6";
     public const ROUTE_3 = "a5cd2de7-300e-4739-a222-5a0a1fed4d31";
+    public const MT_MOON = "1198096c-850b-4c6c-8df6-af7a1f8c3af6";
     public const MT_MOON_F1 = "7de04a8f-0100-458c-958e-542611282bcf";
     public const MT_MOON_BF1 = "fa9371ac-d8e9-4f57-867f-cb81ff0a3254";
     public const MT_MOON_BF2 = "2d1cbf17-d7e8-4932-b80a-84541668a3d9";
@@ -28,6 +29,7 @@ final class LocationId
     public const VERMILLION_CITY = "41b38040-2b0b-4a4e-9333-67fc7a5bb003";
     public const VERMILLION_GYM = "7551e662-cd6b-4010-934b-6abfa82c4b4f";
     public const VERMILLION_HARBOUR = "c339cff4-4b91-4d31-a2a4-aa1ada551c58";
+    public const SS_ANNE = "b02411f3-caa0-487a-8afc-7443700cb581";
     public const SS_ANNE_1F = "90a089dd-95b7-448c-b561-dbc2cd086740";
     public const SS_ANNE_B1F = "01e45aba-af9a-48e4-9735-b0fd974b0c14";
     public const SS_ANNE_2F = "ae23181e-2200-4fb9-aa35-c0d969276436";
@@ -36,6 +38,7 @@ final class LocationId
     public const CELADON_CITY = "57564cf4-9ac8-4b24-af13-eb158d969bb4";
     public const CELADON_GYM = "acbaddd5-3ccf-4e97-a4df-b0d512c1884b";
     public const ROCKET_GAME_CORNER = "14315b53-fd18-4d83-81c8-591f77ba2a17";
+    public const TEAM_ROCKET_HIDEOUT = "3a4fb0ff-5464-4a7d-b02b-f0d204bd8959";
     public const TEAM_ROCKET_HIDEOUT_B1F = "962d8e48-81a2-4ae2-9385-a2ac4fcbfaa1";
     public const TEAM_ROCKET_HIDEOUT_B2F = "011c4a3d-9c13-4a33-82f4-4b970aacf793";
     public const TEAM_ROCKET_HIDEOUT_B3F = "315b3968-fbf6-4c80-b885-1654b57c3131";
@@ -43,10 +46,12 @@ final class LocationId
     public const ROUTE_8 = "a006849d-3c22-4b57-b6d9-3ab23f6f42cf";
     public const ROUTE_9 = "57968d07-cea1-4a9b-ac21-53609a25ea36";
     public const POWER_PLANT = "01f3a7cb-ca9e-47bc-9976-7e8dbc5c79ad";
+    public const ROCK_TUNNEL = "3d4be21c-d60d-4dc2-aeda-570553d1599b";
     public const ROCK_TUNNEL_1F = "dca3ae52-de54-413b-a838-b4ddf6da97d5";
     public const ROCK_TUNNEL_B1F = "0d6f7674-b690-47dd-833b-602b9bf4f319";
     public const ROUTE_10 = "3d732b49-da46-4985-bd04-a59cce17ee44";
     public const LAVENDER_TOWN = "80bc57a9-d0b9-4d19-9232-5f5cdc1070ed";
+    public const POKEMON_TOWER = "a277e76b-1317-4862-b306-cbe1b3e86139";
     public const POKEMON_TOWER_1F = "12c55b2c-45a6-4456-89ea-cf5adeb74069";
     public const POKEMON_TOWER_2F = "933d842a-5795-4aa8-87a9-bffd83fee5f5";
     public const POKEMON_TOWER_3F = "db3cda09-9bfe-4686-a5e0-9d9e3383e83f";
@@ -54,6 +59,7 @@ final class LocationId
     public const POKEMON_TOWER_5F = "38504bd4-8b09-4354-b79a-17e2f12e0e77";
     public const POKEMON_TOWER_6F = "0b61745c-8531-4bb5-9c72-2f5877fa277d";
     public const POKEMON_TOWER_7F = "4d3ed975-91cc-4900-8f78-09f554be30e6";
+    public const SILPH_CO = "6f633080-a11a-4aea-aeba-047520168011";
     public const SILPH_CO_1F = "11d99fd7-9b0d-49be-8458-e519a285d196";
     public const SILPH_CO_2F = "5cc40f21-cddb-4851-a8a8-cada52786e94";
     public const SILPH_CO_3F = "55826deb-1220-4c77-b55b-109f0509865a";
@@ -91,6 +97,7 @@ final class LocationId
     public const POKEMON_MANSION = "ba90917a-2258-42ae-a4c7-bb074de9f01b";
     public const ROUTE_21 = "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a";
     public const ROUTE_22 = "ef4eb649-cf0c-40f1-a11b-601eb4d78a3c";
+    public const VICTORY_ROAD = "f8581c9e-88cb-4aee-ba7c-93ec85f30202";
     public const VICTORY_ROAD_1F = "2335aa04-4bde-421c-b27e-a680cb3e36b0";
     public const VICTORY_ROAD_2F = "32f2851c-6430-4050-a253-b6191888a537";
     public const VICTORY_ROAD_3F = "6dcf71fd-23dc-4313-8cd7-1d7fc513eba4";

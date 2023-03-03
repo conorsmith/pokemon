@@ -16,6 +16,7 @@ use ConorSmith\Pokemon\Battle\Controllers\PostEncounterFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterRun;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
+use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Controllers\GetBag;
@@ -99,21 +100,22 @@ final class ControllerFactory
     }
 
     public function __construct(
-        private readonly Connection                  $db,
-        private readonly Session                     $session,
-        private readonly CaughtPokemonRepository     $caughtPokemonRepository,
-        private readonly EncounterRepository         $encounterRepository,
-        private readonly TrainerRepository           $trainerRepository,
-        private readonly PlayerRepository            $playerRepository,
-        private readonly BagRepository               $bagRepository,
-        private readonly DailyHabitLogRepository     $dailyHabitLogRepository,
-        private readonly UnlimitedHabitLogRepository $unlimitedHabitLogRepository,
-        private readonly WeeklyHabitLogRepository    $weeklyHabitLogRepository,
-        private readonly PokemonRepository           $pokemonRepository,
-        private readonly FriendshipLog               $friendshipLog,
-        private readonly ViewModelFactory            $viewModelFactory,
-        private readonly CatchPokemonCommand         $catchPokemonCommand,
-        private readonly HabitStreakQuery            $habitStreakQuery,
+        private readonly Connection                      $db,
+        private readonly Session                         $session,
+        private readonly CaughtPokemonRepository         $caughtPokemonRepository,
+        private readonly EncounterRepository             $encounterRepository,
+        private readonly TrainerRepository               $trainerRepository,
+        private readonly PlayerRepository                $playerRepository,
+        private readonly AreaRepository                  $areaRepository,
+        private readonly BagRepository                   $bagRepository,
+        private readonly DailyHabitLogRepository         $dailyHabitLogRepository,
+        private readonly UnlimitedHabitLogRepository     $unlimitedHabitLogRepository,
+        private readonly WeeklyHabitLogRepository        $weeklyHabitLogRepository,
+        private readonly PokemonRepository               $pokemonRepository,
+        private readonly FriendshipLog                   $friendshipLog,
+        private readonly ViewModelFactory                $viewModelFactory,
+        private readonly CatchPokemonCommand             $catchPokemonCommand,
+        private readonly HabitStreakQuery                $habitStreakQuery,
         private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
         private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
         private readonly WeeklyUpdateForTeamCommand  $weeklyUpdateForTeamCommand,
@@ -247,6 +249,7 @@ final class ControllerFactory
                 $this->session,
                 $this->trainerRepository,
                 $this->playerRepository,
+                $this->areaRepository,
                 $this->bagRepository,
                 $this->reportTeamPokemonFaintedCommand,
                 new EventFactory($this->viewModelFactory),

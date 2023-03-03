@@ -27,4 +27,21 @@ final class ItemId
     public const PROTECTOR = "03cb7560-c357-4770-84ed-4346fd499260";
     public const BLACK_AUGURITE = "f2fc57f7-d2d3-4d2b-9c51-465599d28b54";
     public const LINKING_CORD = "1ccb5164-9c45-4adc-b937-a9772f0649b2";
+    public const BLACK_BELT = "83200443-ba76-423e-a7fd-5d24393ef960";
+    public const BLACK_GLASSES = "c6bcc3fd-a1c9-470a-b3d8-a63e09f57b01";
+    public const CHARCOAL = "8001e43b-93ab-4b85-9a02-552d0ec99b9d";
+    public const DRAGON_FANG = "7e7165a6-b942-4e09-a6e2-79c99c1e6b3d";
+    public const HARD_STONE = "3515b3c9-1fd4-4df5-8e5d-1acb7ac2e451";
+    public const MAGNET = "dd0697a4-8fb6-41be-9cb5-00243fc578f1";
+    public const MIRACLE_SEED = "3b3b6108-8b75-40ed-bdfa-6b65d8251cb6";
+    public const MYSTIC_WATER = "82afa785-8c42-416a-bf1a-97109a8a631c";
+    public const NEVER_MELT_ICE = "1046f0a9-fcb3-42ec-95a0-def0d642a0fa";
+    public const POISON_BARB = "f940acca-f830-4969-b06d-ae18d8846066";
+    public const SHARP_BEAK = "5192d3b8-1c3a-4e5d-acb7-c0234be928d6";
+    public const SILK_SCARF = "04a21a38-22d5-465e-b6c1-1a3f07d83eb9";
+    public const SILVER_POWDER = "b6ab52ac-8c44-46ef-8ada-9abd02af0c21";
+    public const SOFT_SAND = "7bd43440-8089-4d89-821d-8562bc73a981";
+    public const SPELL_TAG = "ced0c430-0ed5-4b5a-a533-ce0afff85ef8";
+    public const TWISTED_SPOON = "f34ca1cb-85e0-447e-bc6a-9e5b9a6c26db";
+    public const FAIRY_DUST = "7fd6c818-db55-4012-b3c6-9da401ee4e41";
 }

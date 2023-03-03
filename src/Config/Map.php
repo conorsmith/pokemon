@@ -284,6 +284,7 @@ return [
         'name' => "Mt. Moon",
         'section' => "1st Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::MT_MOON,
         'directions' => [
             LocationId::ROUTE_3,
             Direction::D => LocationId::MT_MOON_BF1,
@@ -312,6 +313,7 @@ return [
         'name' => "Mt. Moon",
         'section' => "1st Basement Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::MT_MOON,
         'directions' => [
             Direction::U => LocationId::MT_MOON_F1,
             Direction::D => LocationId::MT_MOON_BF2,
@@ -328,6 +330,7 @@ return [
         'name' => "Mt. Moon",
         'section' => "2nd Basement Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::MT_MOON,
         'directions' => [
             Direction::U => LocationId::MT_MOON_BF1,
             LocationId::ROUTE_4,
@@ -527,6 +530,7 @@ return [
         'name' => "Silph Co",
         'section' => "1st Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_2F,
             LocationId::SAFFRON_CITY,
@@ -537,6 +541,7 @@ return [
         'name' => "Silph Co",
         'section' => "2nd Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_3F,
             Direction::D => LocationId::SILPH_CO_1F,
@@ -547,6 +552,7 @@ return [
         'name' => "Silph Co",
         'section' => "3rd Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_4F,
             Direction::D => LocationId::SILPH_CO_2F,
@@ -557,6 +563,7 @@ return [
         'name' => "Silph Co",
         'section' => "4th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_5F,
             Direction::D => LocationId::SILPH_CO_3F,
@@ -567,6 +574,7 @@ return [
         'name' => "Silph Co",
         'section' => "5th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_6F,
             Direction::D => LocationId::SILPH_CO_4F,
@@ -577,6 +585,7 @@ return [
         'name' => "Silph Co",
         'section' => "6th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_7F,
             Direction::D => LocationId::SILPH_CO_5F,
@@ -587,6 +596,7 @@ return [
         'name' => "Silph Co",
         'section' => "7th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_8F,
             Direction::D => LocationId::SILPH_CO_6F,
@@ -597,6 +607,7 @@ return [
         'name' => "Silph Co",
         'section' => "8th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_9F,
             Direction::D => LocationId::SILPH_CO_7F,
@@ -607,6 +618,7 @@ return [
         'name' => "Silph Co",
         'section' => "9th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_10F,
             Direction::D => LocationId::SILPH_CO_8F,
@@ -617,6 +629,7 @@ return [
         'name' => "Silph Co",
         'section' => "10th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_11F,
             Direction::D => LocationId::SILPH_CO_9F,
@@ -627,6 +640,7 @@ return [
         'name' => "Silph Co",
         'section' => "11th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SILPH_CO,
         'directions' => [
             Direction::D => LocationId::SILPH_CO_10F,
         ],
@@ -819,6 +833,7 @@ return [
         'id' => LocationId::SS_ANNE_1F,
         'name' => "S.S. Anne",
         'section' => "1st Floor",
+        'area' => LocationId::SS_ANNE,
         'directions' => [
             LocationId::VERMILLION_HARBOUR,
             Direction::D => LocationId::SS_ANNE_B1F,
@@ -829,6 +844,7 @@ return [
         'id' => LocationId::SS_ANNE_B1F,
         'name' => "S.S. Anne",
         'section' => "Basement 1st Floor",
+        'area' => LocationId::SS_ANNE,
         'directions' => [
             Direction::U => LocationId::SS_ANNE_1F,
         ],
@@ -837,6 +853,7 @@ return [
         'id' => LocationId::SS_ANNE_2F,
         'name' => "S.S. Anne",
         'section' => "2nd Floor",
+        'area' => LocationId::SS_ANNE,
         'directions' => [
             Direction::D => LocationId::SS_ANNE_1F,
             Direction::U => LocationId::SS_ANNE_DECK,
@@ -846,6 +863,7 @@ return [
         'id' => LocationId::SS_ANNE_DECK,
         'name' => "S.S. Anne",
         'section' => "Deck",
+        'area' => LocationId::SS_ANNE,
         'directions' => [
             Direction::D => LocationId::SS_ANNE_2F,
         ],
@@ -944,6 +962,7 @@ return [
         'name' => "Team Rocket Hideout",
         'section' => "1st Basement Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::TEAM_ROCKET_HIDEOUT,
         'directions' => [
             Direction::U => LocationId::ROCKET_GAME_CORNER,
             Direction::D => LocationId::TEAM_ROCKET_HIDEOUT_B2F,
@@ -954,6 +973,7 @@ return [
         'name' => "Team Rocket Hideout",
         'section' => "2nd Basement Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::TEAM_ROCKET_HIDEOUT,
         'directions' => [
             Direction::U => LocationId::TEAM_ROCKET_HIDEOUT_B1F,
             Direction::D => LocationId::TEAM_ROCKET_HIDEOUT_B3F,
@@ -964,6 +984,7 @@ return [
         'name' => "Team Rocket Hideout",
         'section' => "3rd Basement Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::TEAM_ROCKET_HIDEOUT,
         'directions' => [
             Direction::U => LocationId::TEAM_ROCKET_HIDEOUT_B2F,
             Direction::D => LocationId::TEAM_ROCKET_HIDEOUT_B4F,
@@ -974,6 +995,7 @@ return [
         'name' => "Team Rocket Hideout",
         'section' => "4th Basement Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::TEAM_ROCKET_HIDEOUT,
         'directions' => [
             Direction::U => LocationId::TEAM_ROCKET_HIDEOUT_B3F,
         ],
@@ -1029,6 +1051,7 @@ return [
         'name' => "Pokémon Tower",
         'section' => "1st Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::POKEMON_TOWER,
         'directions' => [
             Direction::U => LocationId::POKEMON_TOWER_2F,
             LocationId::LAVENDER_TOWN,
@@ -1039,6 +1062,7 @@ return [
         'name' => "Pokémon Tower",
         'section' => "2nd Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::POKEMON_TOWER,
         'directions' => [
             Direction::U => LocationId::POKEMON_TOWER_3F,
             Direction::D => LocationId::POKEMON_TOWER_1F,
@@ -1049,6 +1073,7 @@ return [
         'name' => "Pokémon Tower",
         'section' => "3rd Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::POKEMON_TOWER,
         'directions' => [
             Direction::U => LocationId::POKEMON_TOWER_4F,
             Direction::D => LocationId::POKEMON_TOWER_2F,
@@ -1073,6 +1098,7 @@ return [
         'name' => "Pokémon Tower",
         'section' => "4th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::POKEMON_TOWER,
         'directions' => [
             Direction::U => LocationId::POKEMON_TOWER_5F,
             Direction::D => LocationId::POKEMON_TOWER_3F,
@@ -1097,6 +1123,7 @@ return [
         'name' => "Pokémon Tower",
         'section' => "5th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::POKEMON_TOWER,
         'directions' => [
             Direction::U => LocationId::POKEMON_TOWER_6F,
             Direction::D => LocationId::POKEMON_TOWER_4F,
@@ -1121,6 +1148,7 @@ return [
         'name' => "Pokémon Tower",
         'section' => "6th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::POKEMON_TOWER,
         'directions' => [
             Direction::U => LocationId::POKEMON_TOWER_7F,
             Direction::D => LocationId::POKEMON_TOWER_5F,
@@ -1145,6 +1173,7 @@ return [
         'name' => "Pokémon Tower",
         'section' => "7th Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::POKEMON_TOWER,
         'directions' => [
             Direction::D => LocationId::POKEMON_TOWER_6F,
         ],
@@ -1266,6 +1295,7 @@ return [
         'name' => "Rock Tunnel",
         'section' => "1st Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::ROCK_TUNNEL,
         'directions' => [
             LocationId::ROUTE_9,
             Direction::D => LocationId::ROCK_TUNNEL_B1F,
@@ -1303,6 +1333,7 @@ return [
         'name' => "Rock Tunnel",
         'section' => "1st Basement Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::ROCK_TUNNEL,
         'directions' => [
             Direction::U => LocationId::ROCK_TUNNEL_1F,
         ],
@@ -2929,6 +2960,7 @@ return [
         'name' => "Victory Road",
         'section' => "1st Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::VICTORY_ROAD,
         'directions' => [
             Direction::U => LocationId::VICTORY_ROAD_2F,
             LocationId::ROUTE_22,
@@ -2977,6 +3009,7 @@ return [
         'name' => "Victory Road",
         'section' => "2nd Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::VICTORY_ROAD,
         'directions' => [
             Direction::D => LocationId::VICTORY_ROAD_1F,
             Direction::U => LocationId::VICTORY_ROAD_3F,
@@ -3029,6 +3062,7 @@ return [
         'name' => "Victory Road",
         'section' => "3rd Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::VICTORY_ROAD,
         'directions' => [
             LocationId::ROUTE_23,
             Direction::D => LocationId::VICTORY_ROAD_2F,

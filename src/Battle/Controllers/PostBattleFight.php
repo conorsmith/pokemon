@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\EventFactory;
+use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
@@ -19,14 +20,15 @@ use Symfony\Component\HttpFoundation\Session\Session;
 final class PostBattleFight
 {
     public function __construct(
-        private readonly Connection        $db,
-        private readonly Session           $session,
-        private readonly TrainerRepository $trainerRepository,
-        private readonly PlayerRepository  $playerRepository,
-        private readonly BagRepository     $bagRepository,
+        private readonly Connection                      $db,
+        private readonly Session                         $session,
+        private readonly TrainerRepository               $trainerRepository,
+        private readonly PlayerRepository                $playerRepository,
+        private readonly AreaRepository                  $areaRepository,
+        private readonly BagRepository                   $bagRepository,
         private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
-        private readonly EventFactory      $eventFactory,
-        private readonly ViewModelFactory  $viewModelFactory,
+        private readonly EventFactory                    $eventFactory,
+        private readonly ViewModelFactory                $viewModelFactory,
     ) {}
 
     public function __invoke(array $args): void
@@ -60,6 +62,8 @@ final class PostBattleFight
         $prize = null;
 
         if ($trainer->hasEntireTeamFainted()) {
+            $trainerWasPreviouslyBeaten = $trainer->dateLastBeaten !== null;
+
             $prizeItemId = self::generatePrize(self::getPrizePool($trainer));
             $prize = self::findItem($prizeItemId);
             $bag = $bag->add($prizeItemId);
@@ -68,6 +72,30 @@ final class PostBattleFight
             if ($trainer->isGymLeader() && !$player->hasGymBadge($trainer->gymBadge)) {
                 $player = $player->earn($trainer->gymBadge);
                 $playerEarnedGymBadge = true;
+            }
+
+            $areaJustCleared = false;
+
+            if (!$trainerWasPreviouslyBeaten && !$trainer->isGymLeader()) {
+
+                $area = $this->areaRepository->find($trainer->locationId);
+
+                $areaJustCleared = $area->isOnlyUnbeatenTrainer($trainer);
+
+                $areaClearedPrizes = [];
+
+                if ($areaJustCleared) {
+                    foreach ($area->trainers as $areaTrainer) {
+                        $prizeItemId = self::generatePrize(self::getPrizePool($areaTrainer));
+                        $areaClearedPrizes[] = self::findItem($prizeItemId);
+                        $bag = $bag->add($prizeItemId);
+                    }
+
+                    foreach ($area->getClearancePrizes() as $prizeItemId) {
+                        $areaClearedPrizes[] = self::findItem($prizeItemId);
+                        $bag = $bag->add($prizeItemId);
+                    }
+                }
             }
         }
 
@@ -113,6 +141,13 @@ final class PostBattleFight
                 $events[] = $this->eventFactory->createMessageEvent("You earned the {$this->viewModelFactory->createGymBadgeName($trainer->gymBadge)}");
             }
             $events[] = $this->eventFactory->createMessageEvent("You won a {$prize['name']}");
+
+            if ($areaJustCleared) {
+                $events[] = $this->eventFactory->createMessageEvent("You cleared the area!");
+                foreach ($areaClearedPrizes as $areaClearedPrize) {
+                    $events[] = $this->eventFactory->createMessageEvent("You won a {$areaClearedPrize['name']}");
+                }
+            }
 
         } elseif ($player->hasEntireTeamFainted()) {
             $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
