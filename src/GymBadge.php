@@ -24,7 +24,7 @@ enum GymBadge: int
             self::SOUL => 50,
             self::MARSH => 70,
             self::VOLCANO => 70,
-            self::EARTH => 100,
+            self::EARTH => 90,
         };
     }
 

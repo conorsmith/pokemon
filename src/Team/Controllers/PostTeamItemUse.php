@@ -68,7 +68,7 @@ final class PostTeamItemUse
             return;
         }
 
-        $newLevel = $pokemon->level + 1;
+        $newLevel = self::calculateNewLevel($pokemon->level, $levelLimit);
         $pokemonConfig = $this->pokedex[$pokemon->number];
 
         $pokemonEvolves = false;
@@ -262,5 +262,48 @@ final class PostTeamItemUse
 
         $this->session->getFlashBag()->add("successes", "{$pokemonConfig['name']} evolved into {$this->pokedex[$newPokemonNumber]['name']}");
         header("Location: /");
+    }
+
+    private static function calculateNewLevel(int $currentLevel, int $levelLimit): int
+    {
+        if ($levelLimit === 110) {
+            if ($currentLevel < 20) {
+                return 20;
+            } elseif ($currentLevel < 30) {
+                return 30;
+            } elseif ($currentLevel < 50) {
+                return min($currentLevel + 10, 50);
+            } elseif ($currentLevel < 70) {
+                return min($currentLevel + 2, 70);
+            } else {
+                return $currentLevel + 1;
+            }
+        } elseif ($levelLimit === 90) {
+            if ($currentLevel < 20) {
+                return 20;
+            } elseif ($currentLevel < 30) {
+                return 30;
+            } elseif ($currentLevel < 50) {
+                return min($currentLevel + 2, 50);
+            } else {
+                return $currentLevel + 1;
+            }
+        } elseif ($levelLimit === 70) {
+            if ($currentLevel < 20) {
+                return 20;
+            } elseif ($currentLevel < 30) {
+                return min($currentLevel + 2, 30);
+            } else {
+                return $currentLevel + 1;
+            }
+        } elseif ($levelLimit === 50) {
+            if ($currentLevel < 20) {
+                return min($currentLevel + 2, 20);
+            } else {
+                return $currentLevel + 1;
+            }
+        } else {
+            return $currentLevel + 1;
+        }
     }
 }
