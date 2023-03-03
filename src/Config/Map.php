@@ -1895,6 +1895,10 @@ return [
                     'weight' => 1,
                     'levels' => 28,
                 ],
+                PokedexNo::LICKITUNG => [
+                    'weight' => 1,
+                    'levels' => [25, 28],
+                ],
             ],
             EncounterType::SURFING => [
                 PokedexNo::PSYDUCK => [
@@ -2000,6 +2004,10 @@ return [
                     'weight' => 1,
                     'levels' => 28,
                 ],
+                PokedexNo::LICKITUNG => [
+                    'weight' => 4,
+                    'levels' => [25, 28],
+                ],
             ],
             EncounterType::SURFING => [
                 PokedexNo::PSYDUCK => [
@@ -2104,6 +2112,10 @@ return [
                 PokedexNo::AERODACTYL => [
                     'weight' => 1,
                     'levels' => 30,
+                ],
+                PokedexNo::LICKITUNG => [
+                    'weight' => 1,
+                    'levels' => [25, 28],
                 ],
             ],
             EncounterType::SURFING => [

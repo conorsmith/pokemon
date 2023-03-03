@@ -64,7 +64,7 @@ return [
         'type' => [PokemonType::WATER],
         'evolutions' => [
             PokedexNo::BLASTOISE => [
-                'level' => 16,
+                'level' => 32,
             ],
         ],
     ],
@@ -550,7 +550,7 @@ return [
     ],
     PokedexNo::PONYTA => [
         'name' => "Ponyta",
-        'type' => [PokemonType::WATER],
+        'type' => [PokemonType::FIRE],
         'evolutions' => [
             PokedexNo::RAPIDASH => [
                 'level' => 40,
@@ -559,7 +559,7 @@ return [
     ],
     PokedexNo::RAPIDASH => [
         'name' => "Rapidash",
-        'type' => [PokemonType::WATER],
+        'type' => [PokemonType::FIRE],
     ],
     PokedexNo::SLOWPOKE => [
         'name' => "Slowpoke",
