@@ -76,7 +76,7 @@ final class PostTeamItemUse
 
         if (array_key_exists('evolutions', $pokemonConfig)) {
             foreach ($pokemonConfig['evolutions'] as $number => $evolution) {
-                if (self::canEvolve($pokemon, $evolution)) {
+                if (self::canEvolve($pokemon, $evolution, $newLevel)) {
                     $pokemonEvolves = true;
                     $newPokemonNumber = $number;
                 }
@@ -133,12 +133,12 @@ final class PostTeamItemUse
         header("Location: /team/use/" . ItemId::RARE_CANDY);
     }
 
-    private static function canEvolve(Pokemon $pokemon, array $evolutionConfig): bool
+    private static function canEvolve(Pokemon $pokemon, array $evolutionConfig, int $newLevel): bool
     {
         $requirements = [];
 
         if (array_key_exists('level', $evolutionConfig)) {
-            $requirements[] = $evolutionConfig['level'] <= $pokemon->level + 1;
+            $requirements[] = $evolutionConfig['level'] <= $newLevel;
         }
 
         if (in_array('friendship', $evolutionConfig)) {
