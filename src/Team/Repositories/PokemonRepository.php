@@ -82,12 +82,12 @@ final class PokemonRepository
             intval($row['level']),
             $this->calculateFriendship($row),
             $row['is_shiny'] === 1,
-            new Hp($baseStats['hp']),
-            new Stat($baseStats['attack']),
-            new Stat($baseStats['defence']),
-            new Stat($baseStats['spAttack']),
-            new Stat($baseStats['spDefence']),
-            new Stat($baseStats['speed']),
+            new Hp($baseStats['hp'], $row['iv_hp']),
+            new Stat($baseStats['attack'], $row['iv_physical_attack']),
+            new Stat($baseStats['defence'], $row['iv_physical_defence']),
+            new Stat($baseStats['spAttack'], $row['iv_special_attack']),
+            new Stat($baseStats['spDefence'], $row['iv_special_defence']),
+            new Stat($baseStats['speed'], $row['iv_speed']),
         );
     }
 

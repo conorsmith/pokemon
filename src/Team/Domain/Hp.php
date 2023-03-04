@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Domain;
 
+use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
+
 final class Hp
 {
     public function __construct(
@@ -13,12 +15,6 @@ final class Hp
 
     public function calculate(int $level): int
     {
-        $principalHp = (2 * $this->baseValue) + $this->iv + floor($this->ev / 4);
-
-        $physicalHp = floor($principalHp * $level / 100);
-
-        $effectiveHp = $physicalHp + $level + 10;
-
-        return intval($effectiveHp);
+        return StatCalculator::calculateHp($this->baseValue, $this->iv, $this->ev, $level);
     }
 }

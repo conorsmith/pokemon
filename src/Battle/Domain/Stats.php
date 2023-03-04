@@ -6,11 +6,11 @@ namespace ConorSmith\Pokemon\Battle\Domain;
 final class Stats
 {
     public function __construct(
-        public readonly int $baseHp,
-        public readonly int $baseAttack,
-        public readonly int $baseDefence,
-        public readonly int $baseSpecialAttack,
-        public readonly int $baseSpecialDefence,
-        public readonly int $baseSpeed,
+        public readonly int $hp,
+        public readonly int $physicalAttack,
+        public readonly int $physicalDefence,
+        public readonly int $specialAttack,
+        public readonly int $specialDefence,
+        public readonly int $speed,
     ) {}
 }

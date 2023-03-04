@@ -8,6 +8,7 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
+use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -108,7 +109,7 @@ class TrainerRepository
                 $pokemonConfig['level'],
                 0,
                 isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
-                self::createStats($pokemonConfig['id']),
+                self::createStats($trainerBattleRow['trainer_id'], $pokemonConfig['level'], $pokemonConfig['id']),
                 0,
                 false,
             );
@@ -204,21 +205,34 @@ class TrainerRepository
         }
     }
 
-    private static function createStats(string $number): Stats
+    private static function createStats(string $trainerId, int $level, string $number): Stats
+    {
+        $baseStats = self::findBaseStats($number);
+
+        mt_srand(crc32($trainerId));
+
+        $stats = new Stats(
+            StatCalculator::calculateHp($baseStats['hp'], mt_rand(0, 31), 0, $level),
+            StatCalculator::calculate($baseStats['attack'], mt_rand(0, 31), 0, $level),
+            StatCalculator::calculate($baseStats['defence'], mt_rand(0, 31), 0, $level),
+            StatCalculator::calculate($baseStats['spAttack'], mt_rand(0, 31), 0, $level),
+            StatCalculator::calculate($baseStats['spDefence'], mt_rand(0, 31), 0, $level),
+            StatCalculator::calculate($baseStats['speed'], mt_rand(0, 31), 0, $level),
+        );
+
+        mt_srand();
+
+        return $stats;
+    }
+
+    private static function findBaseStats(string $number): array
     {
         $config = require __DIR__ . "/../../Config/Stats.php";
 
         /** @var array $entry */
         foreach ($config as $entry) {
             if ($entry['number'] === $number) {
-                return new Stats(
-                    $entry['hp'],
-                    $entry['attack'],
-                    $entry['defence'],
-                    $entry['spAttack'],
-                    $entry['spDefence'],
-                    $entry['speed'],
-                );
+                return $entry;
             }
         }
 

@@ -40,90 +40,31 @@ final class Pokemon
 
     public function calculateHp(): int
     {
-        $iv = 0;
-        $ev = 0;
-
-        $principalHp = (2 * $this->stats->baseHp) + $iv + floor($ev / 4);
-
-        $physicalHp = floor($principalHp * $this->level / 100);
-
-        $effectiveHp = $physicalHp + $this->level + 10;
-
-        return intval($effectiveHp);
+        return $this->stats->hp;
     }
 
     public function calculateAttack(): int
     {
-        $iv = 0;
-        $ev = 0;
-        $nature = 1;
-
-        $principalAttack = (2 * $this->stats->baseAttack) + $iv + floor($ev / 4);
-
-        $physicalAttack = floor($principalAttack * $this->level / 100) + 5;
-
-        $effectiveAttack = floor($physicalAttack * $nature);
-
-        return intval($effectiveAttack);
+        return $this->stats->physicalAttack;
     }
 
     public function calculateDefence(): int
     {
-        $iv = 0;
-        $ev = 0;
-        $nature = 1;
-
-        $principalDefence = (2 * $this->stats->baseDefence) + $iv + floor($ev / 4);
-
-        $physicalDefence = floor($principalDefence * $this->level / 100) + 5;
-
-        $effectiveDefence = floor($physicalDefence * $nature);
-
-        return intval($effectiveDefence);
+        return $this->stats->physicalDefence;
     }
 
     public function calculateSpecialAttack(): int
     {
-        $iv = 0;
-        $ev = 0;
-        $nature = 1;
-
-        $principalSpecialAttack = (2 * $this->stats->baseSpecialAttack) + $iv + floor($ev / 4);
-
-        $physicalSpecialAttack = floor($principalSpecialAttack * $this->level / 100) + 5;
-
-        $effectiveSpecialAttack = floor($physicalSpecialAttack * $nature);
-
-        return intval($effectiveSpecialAttack);
+        return $this->stats->specialAttack;
     }
 
     public function calculateSpecialDefence(): int
     {
-        $iv = 0;
-        $ev = 0;
-        $nature = 1;
-
-        $principalSpecialDefence = (2 * $this->stats->baseSpecialDefence) + $iv + floor($ev / 4);
-
-        $physicalSpecialDefence = floor($principalSpecialDefence * $this->level / 100) + 5;
-
-        $effectiveSpecialDefence = floor($physicalSpecialDefence * $nature);
-
-        return intval($effectiveSpecialDefence);
+        return $this->stats->specialDefence;
     }
 
     public function calculateSpeed(): int
     {
-        $iv = 0;
-        $ev = 0;
-        $nature = 1;
-
-        $principalSpeed = (2 * $this->stats->baseSpeed) + $iv + floor($ev / 4);
-
-        $physicalSpeed = floor($principalSpeed * $this->level / 100) + 5;
-
-        $effectiveSpeed = floor($physicalSpeed * $nature);
-
-        return intval($effectiveSpeed);
+        return $this->stats->speed;
     }
 }

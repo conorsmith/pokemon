@@ -19,6 +19,12 @@ final class TeamPokemonQuery implements TeamPokemonQueryInterface
 
         return new TeamPokemon(
             $pokemon->friendship,
+            $pokemon->physicalAttack->calculate($pokemon->level),
+            $pokemon->physicalDefence->calculate($pokemon->level),
+            $pokemon->specialAttack->calculate($pokemon->level),
+            $pokemon->specialDefence->calculate($pokemon->level),
+            $pokemon->speed->calculate($pokemon->level),
+            $pokemon->hp->calculate($pokemon->level),
         );
     }
 }
