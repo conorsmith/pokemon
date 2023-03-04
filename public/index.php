@@ -46,7 +46,7 @@ $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
         new \ConorSmith\Pokemon\Team\TeamPokemonQuery($pokemonRepository),
         $pokedex,
     ),
-    new \ConorSmith\Pokemon\Battle\Repositories\AreaRepository($trainerRepository),
+    new \ConorSmith\Pokemon\Battle\Repositories\AreaRepository($trainerRepository, $map),
     new \ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository($db),
     $dailyHabitLogRepository,
     new \ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository($db),

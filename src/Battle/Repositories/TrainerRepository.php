@@ -12,7 +12,7 @@ use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
 
-final class TrainerRepository
+class TrainerRepository
 {
     public function __construct(
         private readonly Connection $db,
