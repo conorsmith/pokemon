@@ -8,7 +8,9 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
+use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
+use ConorSmith\Pokemon\TrainerClass;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -92,6 +94,8 @@ class TrainerRepository
             'trainerBattleId' => $trainerBattleRow['id'],
         ]);
 
+        RandomNumberGenerator::setSeed(crc32($trainerBattleRow['trainer_id']));
+
         foreach ($trainerConfig['team'] as $i => $pokemonConfig) {
 
             if ($trainerBattlePokemonRows === []) {
@@ -109,7 +113,7 @@ class TrainerRepository
                 $pokemonConfig['level'],
                 0,
                 isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
-                self::createStats($trainerBattleRow['trainer_id'], $pokemonConfig['level'], $pokemonConfig['id']),
+                self::createStats($trainerConfig['class'], $pokemonConfig['level'], $pokemonConfig['id']),
                 0,
                 false,
             );
@@ -133,6 +137,8 @@ class TrainerRepository
 
             $team[] = $pokemon;
         }
+
+        RandomNumberGenerator::unsetSeed();
 
         return new Trainer(
             $trainerBattleRow['id'],
@@ -205,24 +211,31 @@ class TrainerRepository
         }
     }
 
-    private static function createStats(string $trainerId, int $level, string $number): Stats
+    private static function createStats(string $trainerClass, int $level, string $number): Stats
     {
         $baseStats = self::findBaseStats($number);
 
-        mt_srand(crc32($trainerId));
-
         $stats = new Stats(
-            StatCalculator::calculateHp($baseStats['hp'], mt_rand(0, 31), 0, $level),
-            StatCalculator::calculate($baseStats['attack'], mt_rand(0, 31), 0, $level),
-            StatCalculator::calculate($baseStats['defence'], mt_rand(0, 31), 0, $level),
-            StatCalculator::calculate($baseStats['spAttack'], mt_rand(0, 31), 0, $level),
-            StatCalculator::calculate($baseStats['spDefence'], mt_rand(0, 31), 0, $level),
-            StatCalculator::calculate($baseStats['speed'], mt_rand(0, 31), 0, $level),
+            StatCalculator::calculateHp($baseStats['hp'], self::generateIv($trainerClass), 0, $level),
+            StatCalculator::calculate($baseStats['attack'], self::generateIv($trainerClass), 0, $level),
+            StatCalculator::calculate($baseStats['defence'], self::generateIv($trainerClass), 0, $level),
+            StatCalculator::calculate($baseStats['spAttack'], self::generateIv($trainerClass), 0, $level),
+            StatCalculator::calculate($baseStats['spDefence'], self::generateIv($trainerClass), 0, $level),
+            StatCalculator::calculate($baseStats['speed'], self::generateIv($trainerClass), 0, $level),
         );
 
-        mt_srand();
-
         return $stats;
+    }
+
+    private static function generateIv(string $trainerClass): int
+    {
+        $weightedDistribution = TrainerClass::getWeightedDistributionForIvs($trainerClass);
+
+        if (is_null($weightedDistribution)) {
+            return RandomNumberGenerator::generateInRange(0, 31);
+        }
+
+        return RandomNumberGenerator::generateFromWeightedTable($weightedDistribution);
     }
 
     private static function findBaseStats(string $number): array
