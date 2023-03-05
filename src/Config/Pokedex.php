@@ -1086,6 +1086,19 @@ return [
         'name' => "Scizor",
         'type' => [PokemonType::BUG, PokemonType::STEEL],
     ],
+    PokedexNo::SLUGMA => [
+        'name' => "Slugma",
+        'type' => [PokemonType::FIRE],
+        'evolutions' => [
+            PokedexNo::MAGCARGO => [
+                'level' => 38,
+            ],
+        ],
+    ],
+    PokedexNo::MAGCARGO => [
+        'name' => "Magcargo",
+        'type' => [PokemonType::FIRE, PokemonType::ROCK],
+    ],
     PokedexNo::KINGDRA => [
         'name' => "Kingdra",
         'type' => [PokemonType::WATER, PokemonType::DRAGON],

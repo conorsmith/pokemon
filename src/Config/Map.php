@@ -781,6 +781,7 @@ return [
         'directions' => [
             LocationId::VERMILLION_CITY,
             LocationId::SS_ANNE_1F,
+            LocationId::SEAGALLOP_FERRY,
         ],
         'pokemon' => [
             EncounterType::SURFING => [
@@ -3628,6 +3629,618 @@ return [
                 PokedexNo::GRAVELER => [
                     'weight' => 35,
                     'levels' => [40, 55],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::SEAGALLOP_FERRY,
+        'name' => "Seagallop Ferry",
+        'directions' => [
+            LocationId::VERMILLION_HARBOUR,
+            LocationId::KNOT_ISLAND,
+        ],
+    ],
+    [
+        'id' => LocationId::KNOT_ISLAND,
+        'name' => "Knot Island",
+        'directions' => [
+            Direction::E => LocationId::KINDLE_ROAD,
+            Direction::S => LocationId::TREASURE_BEACH,
+            LocationId::SEAGALLOP_FERRY,
+        ],
+        'pokemon' => [
+            EncounterType::SURFING => [
+                PokedexNo::TENTACOOL => [
+                    'weight' => 95,
+                    'levels' => [5, 40],
+                ],
+                PokedexNo::TENTACRUEL => [
+                    'weight' => 5,
+                    'levels' => [35, 40],
+                ],
+            ],
+            EncounterType::FISHING => [
+                PokedexNo::MAGIKARP => [
+                    'weight' => 120,
+                    'levels' => [5, 15],
+                ],
+                PokedexNo::HORSEA => [
+                    'weight' => 120,
+                    'levels' => [5, 25],
+                ],
+                PokedexNo::KRABBY => [
+                    'weight' => 120,
+                    'levels' => [5, 25],
+                ],
+                PokedexNo::SHELLDER => [
+                    'weight' => 40,
+                    'levels' => [15, 25],
+                ],
+                PokedexNo::STARYU => [
+                    'weight' => 40,
+                    'levels' => [15, 25],
+                ],
+                PokedexNo::GYARADOS => [
+                    'weight' => 15,
+                    'levels' => [15, 25],
+                ],
+                PokedexNo::SEADRA => [
+                    'weight' => 4,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::KINGLER => [
+                    'weight' => 4,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::PSYDUCK => [
+                    'weight' => 1,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::SLOWPOKE => [
+                    'weight' => 1,
+                    'levels' => [25, 35],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::TREASURE_BEACH,
+        'name' => "Treasure Beach",
+        'directions' => [
+            Direction::N => LocationId::KNOT_ISLAND,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::SPEAROW => [
+                    'weight' => 30,
+                    'levels' => [31, 32],
+                ],
+                PokedexNo::FEAROW => [
+                    'weight' => 20,
+                    'levels' => [36, 40],
+                ],
+                PokedexNo::MEOWTH => [
+                    'weight' => 10,
+                    'levels' => 31,
+                ],
+                PokedexNo::PERSIAN => [
+                    'weight' => 5,
+                    'levels' => [37, 40],
+                ],
+                PokedexNo::PSYDUCK => [
+                    'weight' => 5,
+                    'levels' => 31,
+                ],
+                PokedexNo::SLOWPOKE => [
+                    'weight' => 5,
+                    'levels' => 31,
+                ],
+                PokedexNo::TANGELA => [
+                    'weight' => 30,
+                    'levels' => [33, 35],
+                ],
+            ],
+            EncounterType::SURFING => [
+                PokedexNo::TENTACOOL => [
+                    'weight' => 95,
+                    'levels' => [5, 40],
+                ],
+                PokedexNo::TENTACRUEL => [
+                    'weight' => 5,
+                    'levels' => [35, 40],
+                ],
+            ],
+            EncounterType::FISHING => [
+                PokedexNo::MAGIKARP => [
+                    'weight' => 120,
+                    'levels' => [5, 15],
+                ],
+                PokedexNo::KRABBY => [
+                    'weight' => 160,
+                    'levels' => [5, 25],
+                ],
+                PokedexNo::HORSEA => [
+                    'weight' => 160,
+                    'levels' => [5, 25],
+                ],
+                PokedexNo::PSYDUCK => [
+                    'weight' => 1,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::SLOWPOKE => [
+                    'weight' => 1,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::KINGLER => [
+                    'weight' => 4,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::SEADRA => [
+                    'weight' => 4,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::GYARADOS => [
+                    'weight' => 15,
+                    'levels' => [15, 25],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::KINDLE_ROAD,
+        'name' => "Kindle Road",
+        'directions' => [
+            Direction::N => LocationId::MT_EMBER_BASE,
+            Direction::W => LocationId::KNOT_ISLAND,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::SPEAROW => [
+                    'weight' => 25,
+                    'levels' => [30, 32],
+                ],
+                PokedexNo::FEAROW => [
+                    'weight' => 10,
+                    'levels' => 36,
+                ],
+                PokedexNo::MEOWTH => [
+                    'weight' => 10,
+                    'levels' => 31,
+                ],
+                PokedexNo::PERSIAN => [
+                    'weight' => 5,
+                    'levels' => [37, 40],
+                ],
+                PokedexNo::PSYDUCK => [
+                    'weight' => 5,
+                    'levels' => 34,
+                ],
+                PokedexNo::GEODUDE => [
+                    'weight' => 10,
+                    'levels' => 31,
+                ],
+                PokedexNo::PONYTA => [
+                    'weight' => 30,
+                    'levels' => [31, 34],
+                ],
+                PokedexNo::RAPIDASH => [
+                    'weight' => 5,
+                    'levels' => [37, 40],
+                ],
+                PokedexNo::SLOWPOKE => [
+                    'weight' => 5,
+                    'levels' => 34,
+                ],
+            ],
+            EncounterType::SURFING => [
+                PokedexNo::TENTACOOL => [
+                    'weight' => 95,
+                    'levels' => [5, 40],
+                ],
+                PokedexNo::TENTACRUEL => [
+                    'weight' => 5,
+                    'levels' => [35, 40],
+                ],
+            ],
+            EncounterType::FISHING => [
+                PokedexNo::MAGIKARP => [
+                    'weight' => 120,
+                    'levels' => [5, 15],
+                ],
+                PokedexNo::KRABBY => [
+                    'weight' => 160,
+                    'levels' => [5, 25],
+                ],
+                PokedexNo::HORSEA => [
+                    'weight' => 160,
+                    'levels' => [5, 25],
+                ],
+                PokedexNo::PSYDUCK => [
+                    'weight' => 1,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::SLOWPOKE => [
+                    'weight' => 1,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::KINGLER => [
+                    'weight' => 4,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::SEADRA => [
+                    'weight' => 4,
+                    'levels' => [25, 35],
+                ],
+                PokedexNo::GYARADOS => [
+                    'weight' => 15,
+                    'levels' => [15, 25],
+                ],
+            ],
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 95,
+                    'levels' => [5, 30],
+                ],
+                PokedexNo::GRAVELER => [
+                    'weight' => 5,
+                    'levels' => [25, 40],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_BASE,
+        'name' => "Mt. Ember",
+        'section' => "Base",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            LocationId::MT_EMBER_SUMMIT_PATH_1,
+            LocationId::MT_EMBER_1F,
+            LocationId::KINDLE_ROAD,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::SPEAROW => [
+                    'weight' => 25,
+                    'levels' => [30, 32],
+                ],
+                PokedexNo::FEAROW => [
+                    'weight' => 25,
+                    'levels' => [38, 40],
+                ],
+                PokedexNo::MACHOP => [
+                    'weight' => 10,
+                    'levels' => 35,
+                ],
+                PokedexNo::GEODUDE => [
+                    'weight' => 10,
+                    'levels' => 33,
+                ],
+                PokedexNo::PONYTA => [
+                    'weight' => 35,
+                    'levels' => [30, 36],
+                ],
+                PokedexNo::RAPIDASH => [
+                    'weight' => 5,
+                    'levels' => [39, 42],
+                ],
+                PokedexNo::MAGMAR => [
+                    'weight' => 5,
+                    'levels' => [38, 40],
+                ],
+            ],
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 95,
+                    'levels' => [5, 30],
+                ],
+                PokedexNo::GRAVELER => [
+                    'weight' => 5,
+                    'levels' => [25, 40],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_SUMMIT_PATH_1,
+        'name' => "Mt. Ember",
+        'section' => "Trail Lv 1",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::U => LocationId::MT_EMBER_SUMMIT_PATH_2,
+            Direction::D => LocationId::MT_EMBER_BASE,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::MACHOP => [
+                    'weight' => 50,
+                    'levels' => [31, 39],
+                ],
+                PokedexNo::GEODUDE => [
+                    'weight' => 50,
+                    'levels' => [29, 37],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_SUMMIT_PATH_2,
+        'name' => "Mt. Ember",
+        'section' => "Trail Lv 2",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::U => LocationId::MT_EMBER_SUMMIT_PATH_3,
+            Direction::D => LocationId::MT_EMBER_SUMMIT_PATH_1,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::MACHOP => [
+                    'weight' => 40,
+                    'levels' => [32, 36],
+                ],
+                PokedexNo::GEODUDE => [
+                    'weight' => 40,
+                    'levels' => [30, 34],
+                ],
+                PokedexNo::MACHOKE => [
+                    'weight' => 20,
+                    'levels' => [38, 40],
+                ],
+            ],
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 95,
+                    'levels' => [5, 30],
+                ],
+                PokedexNo::GRAVELER => [
+                    'weight' => 5,
+                    'levels' => [25, 40],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_SUMMIT_PATH_3,
+        'name' => "Mt. Ember",
+        'section' => "Trail Lv 3",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::U => LocationId::MT_EMBER_SUMMIT,
+            Direction::D => LocationId::MT_EMBER_SUMMIT_PATH_2,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::MACHOP => [
+                    'weight' => 50,
+                    'levels' => [31, 39],
+                ],
+                PokedexNo::GEODUDE => [
+                    'weight' => 50,
+                    'levels' => [29, 37],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_SUMMIT,
+        'name' => "Mt. Ember",
+        'section' => "Summit",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::D => LocationId::MT_EMBER_SUMMIT_PATH_3,
+        ],
+        'pokemon' => [
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 95,
+                    'levels' => [5, 30],
+                ],
+                PokedexNo::GRAVELER => [
+                    'weight' => 5,
+                    'levels' => [25, 40],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_1F,
+        'name' => "Mt. Ember",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::D => LocationId::MT_EMBER_B1F,
+            LocationId::MT_EMBER_BASE,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 50,
+                    'levels' => [32, 40],
+                ],
+                PokedexNo::MACHOP => [
+                    'weight' => 40,
+                    'levels' => [34, 38],
+                ],
+                PokedexNo::MACHOKE => [
+                    'weight' => 10,
+                    'levels' => [40, 42],
+                ],
+            ],
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 65,
+                    'levels' => [25, 40],
+                ],
+                PokedexNo::GRAVELER => [
+                    'weight' => 35,
+                    'levels' => [30, 50],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_B1F,
+        'name' => "Mt. Ember",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::U => LocationId::MT_EMBER_1F,
+            Direction::D => LocationId::MT_EMBER_B2F,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 70,
+                    'levels' => [34, 42],
+                ],
+                PokedexNo::SLUGMA => [
+                    'weight' => 30,
+                    'levels' => [24, 30],
+                ],
+            ],
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 65,
+                    'levels' => [25, 40],
+                ],
+                PokedexNo::GRAVELER => [
+                    'weight' => 35,
+                    'levels' => [30, 50],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_B2F,
+        'name' => "Mt. Ember",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::U => LocationId::MT_EMBER_B1F,
+            Direction::D => LocationId::MT_EMBER_B3F,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::SLUGMA => [
+                    'weight' => 60,
+                    'levels' => [22, 32],
+                ],
+                PokedexNo::GEODUDE => [
+                    'weight' => 40,
+                    'levels' => [40, 44],
+                ],
+            ],
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 65,
+                    'levels' => [25, 40],
+                ],
+                PokedexNo::GRAVELER => [
+                    'weight' => 35,
+                    'levels' => [30, 50],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_B3F,
+        'name' => "Mt. Ember",
+        'section' => "3rd Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::U => LocationId::MT_EMBER_B2F,
+            Direction::D => LocationId::MT_EMBER_B4F,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::SLUGMA => [
+                    'weight' => 100,
+                    'levels' => [18, 36],
+                ],
+            ],
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::SLUGMA => [
+                    'weight' => 90,
+                    'levels' => [15, 35],
+                ],
+                PokedexNo::MAGCARGO => [
+                    'weight' => 10,
+                    'levels' => [25, 45],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_B4F,
+        'name' => "Mt. Ember",
+        'section' => "4th Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::U => LocationId::MT_EMBER_B3F,
+            Direction::D => LocationId::MT_EMBER_B5F,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::SLUGMA => [
+                    'weight' => 60,
+                    'levels' => [22, 32],
+                ],
+                PokedexNo::GEODUDE => [
+                    'weight' => 40,
+                    'levels' => [40, 44],
+                ],
+            ],
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 65,
+                    'levels' => [25, 40],
+                ],
+                PokedexNo::GRAVELER => [
+                    'weight' => 35,
+                    'levels' => [30, 50],
+                ],
+            ],
+        ],
+    ],
+    [
+        'id' => LocationId::MT_EMBER_B5F,
+        'name' => "Mt. Ember",
+        'section' => "5th Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_EMBER,
+        'directions' => [
+            Direction::U => LocationId::MT_EMBER_B4F,
+        ],
+        'pokemon' => [
+            EncounterType::WALKING => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 70,
+                    'levels' => [34, 42],
+                ],
+                PokedexNo::SLUGMA => [
+                    'weight' => 30,
+                    'levels' => [24, 30],
+                ],
+            ],
+            EncounterType::ROCK_SMASH => [
+                PokedexNo::GEODUDE => [
+                    'weight' => 65,
+                    'levels' => [25, 40],
+                ],
+                PokedexNo::GRAVELER => [
+                    'weight' => 35,
+                    'levels' => [30, 50],
                 ],
             ],
         ],

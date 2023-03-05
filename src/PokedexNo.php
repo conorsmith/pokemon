@@ -165,6 +165,8 @@ final class PokedexNo
     public const SLOWKING = "199";
     public const STEELIX = "208";
     public const SCIZOR = "212";
+    public const SLUGMA = "218";
+    public const MAGCARGO = "219";
     public const KINGDRA = "230";
     public const PORYGON2 = "233";
     public const BLISSEY = "242";

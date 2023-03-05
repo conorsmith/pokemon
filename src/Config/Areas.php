@@ -145,4 +145,19 @@ return [
             ItemId::DRAGON_FANG,
         ],
     ],
+    LocationId::TREASURE_BEACH => [
+        'prizes' => [
+            ItemId::MAGNET,
+        ],
+    ],
+    LocationId::KINDLE_ROAD => [
+        'prizes' => [
+            ItemId::BLACK_BELT,
+        ],
+    ],
+    LocationId::MT_EMBER => [
+        'prizes' => [
+            ItemId::CHARCOAL,
+        ],
+    ],
 ];

@@ -218,6 +218,11 @@ final class TrainerClass
             self::SIS_AND_BRO => "https://archives.bulbagarden.net/media/upload/9/94/Spr_FRLG_Sis_and_Bro.png",
             self::BURGLAR => "https://archives.bulbagarden.net/media/upload/7/78/Spr_FRLG_Burglar.png",
             self::COOL_COUPLE => "https://archives.bulbagarden.net/media/upload/c/cf/Spr_FRLG_Cool_Couple.png",
+            self::CRUSH_GIRL => "https://archives.bulbagarden.net/media/upload/d/dc/Spr_FRLG_Crush_Girl.png",
+            self::POKEMON_RANGER => match($gender) {
+                Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/7/76/Spr_FRLG_Pok%C3%A9mon_Ranger_F.png",
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/0/0d/Spr_FRLG_Pok%C3%A9mon_Ranger_M.png",
+            },
             default => null,
         };
     }

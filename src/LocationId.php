@@ -108,4 +108,20 @@ final class LocationId
     public const CERULEAN_CAVE_1F = "feeeeeca-6304-4072-b2c5-3f7babcfa171";
     public const CERULEAN_CAVE_2F = "f3cfa62e-5e98-4814-b8bf-ef43abaa89e2";
     public const CERULEAN_CAVE_B1F = "c4ab39c2-f3b0-4828-aacb-2d26be97a1a2";
+    public const SEAGALLOP_FERRY = "e081a16d-89f3-46f0-aae3-1e4ce917d7e1";
+    public const KNOT_ISLAND = "95c95627-3025-4347-9d15-d5aeed9d957e";
+    public const TREASURE_BEACH = "a3025bfb-a666-4dba-be6a-8858e5176770";
+    public const KINDLE_ROAD = "5cde0f21-51f5-4501-9529-16a6e4d7dd2d";
+    public const MT_EMBER = "5c011324-cf7b-406d-b6b3-08c4d724a06c";
+    public const MT_EMBER_BASE = "c873123a-4c95-42cf-bfae-caedcf2c949d";
+    public const MT_EMBER_SUMMIT_PATH_1 = "3afc8203-ab2b-401f-a778-c983c8de7942";
+    public const MT_EMBER_SUMMIT_PATH_2 = "cdd3822d-7c5b-46bd-acf6-289e5c5ffa1a";
+    public const MT_EMBER_SUMMIT_PATH_3 = "78275fdf-1aa7-4c20-a752-79d6968dee13";
+    public const MT_EMBER_SUMMIT = "32b7307c-7252-45c1-b6b9-27c7aa98df65";
+    public const MT_EMBER_1F = "dea6b623-f171-4b45-87ad-ca579a7c27bc";
+    public const MT_EMBER_B1F = "5e892198-0007-4b62-984e-038be306c73d";
+    public const MT_EMBER_B2F = "e36321ff-a192-4686-9fab-ffa323e54bda";
+    public const MT_EMBER_B3F = "78006109-6498-4a37-b959-bbe1520aae34";
+    public const MT_EMBER_B4F = "9cf15aae-3b3b-484e-aea8-45a529c8a436";
+    public const MT_EMBER_B5F = "09301fa7-c8f6-4e6a-9823-62b9c0bbbb9a";
 }

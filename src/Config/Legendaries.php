@@ -19,7 +19,7 @@ return [
     ],
     [
         'pokemon' => PokedexNo::MOLTRES,
-        'location' => LocationId::VICTORY_ROAD_2F,
+        'location' => LocationId::MT_EMBER_SUMMIT,
         'level' => 50,
         'unlock' => 100,
     ],
