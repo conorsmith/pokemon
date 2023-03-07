@@ -963,6 +963,7 @@ return [
             LocationId::VERMILLION_HARBOUR,
             LocationId::KNOT_ISLAND,
             LocationId::BOON_ISLAND,
+            LocationId::KIN_ISLAND_PORT,
         ],
     ],
     [
@@ -1122,6 +1123,36 @@ return [
         'name' => "Cape Brink",
         'directions' => [
             Direction::S => LocationId::BOON_ISLAND,
+        ],
+    ],
+    [
+        'id' => LocationId::KIN_ISLAND_PORT,
+        'name' => "Kin Island Port",
+        'directions' => [
+            Direction::N => LocationId::KIN_ISLAND,
+        ],
+    ],
+    [
+        'id' => LocationId::KIN_ISLAND,
+        'name' => "Kin Island",
+        'directions' => [
+            Direction::W => LocationId::BOND_BRIDGE,
+            Direction::S => LocationId::KIN_ISLAND_PORT,
+        ],
+    ],
+    [
+        'id' => LocationId::BOND_BRIDGE,
+        'name' => "Bond Bridge",
+        'directions' => [
+            Direction::E => LocationId::KIN_ISLAND,
+            Direction::W => LocationId::BERRY_FOREST,
+        ],
+    ],
+    [
+        'id' => LocationId::BERRY_FOREST,
+        'name' => "Berry Forest",
+        'directions' => [
+            Direction::E => LocationId::BOND_BRIDGE,
         ],
     ],
 ];

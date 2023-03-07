@@ -163,6 +163,7 @@ final class PokedexNo
     public const ESPEON = "196";
     public const UMBREON = "197";
     public const SLOWKING = "199";
+    public const DUNSPARCE = "206";
     public const STEELIX = "208";
     public const SCIZOR = "212";
     public const SLUGMA = "218";

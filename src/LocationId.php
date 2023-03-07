@@ -126,4 +126,8 @@ final class LocationId
     public const MT_EMBER_B5F = "09301fa7-c8f6-4e6a-9823-62b9c0bbbb9a";
     public const BOON_ISLAND = "b13b261d-0cc1-4312-95a5-a618f2372625";
     public const CAPE_BRINK = "b0363087-8dd0-47b4-8666-70417b79eef9";
+    public const KIN_ISLAND = "279429c1-eed1-4305-8d05-07d4b6ac6f01";
+    public const KIN_ISLAND_PORT = "c0d2966e-049d-48a4-9ba3-3a081b42ff78";
+    public const BOND_BRIDGE = "f50306b4-9d5d-429b-84b8-0c6aae0be651";
+    public const BERRY_FOREST = "ebdb47e5-ae4a-4924-af41-343264523c41";
 }

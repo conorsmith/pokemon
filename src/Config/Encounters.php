@@ -3302,4 +3302,208 @@ return [
             ],
         ],
     ],
+    LocationId::KIN_ISLAND_PORT => [
+        EncounterType::WALKING => [
+            PokedexNo::DUNSPARCE => [
+                'weight' => 100,
+                'levels' => [5, 35],
+            ],
+        ],
+    ],
+    LocationId::BOND_BRIDGE => [
+        EncounterType::WALKING => [
+            PokedexNo::PIDGEY => [
+                'weight' => 30,
+                'levels' => [29, 32],
+            ],
+            PokedexNo::PIDGEOTTO => [
+                'weight' => 15,
+                'levels' => [34, 40],
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 20,
+                'levels' => 31,
+            ],
+            PokedexNo::GLOOM => [
+                'weight' => 10,
+                'levels' => 36,
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 5,
+                'levels' => 34,
+            ],
+            PokedexNo::MEOWTH => [
+                'weight' => 10,
+                'levels' => 31,
+            ],
+            PokedexNo::PERSIAN => [
+                'weight' => 5,
+                'levels' => [37, 40],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 5,
+                'levels' => 31,
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 20,
+                'levels' => 31,
+            ],
+            PokedexNo::WEEPINBELL => [
+                'weight' => 10,
+                'levels' => 36,
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 5,
+                'levels' => 31,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 95,
+                'levels' => [5, 40],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 5,
+                'levels' => [35, 40],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 120,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::KRABBY => [
+                'weight' => 160,
+                'levels' => [5, 25],
+            ],
+            PokedexNo::HORSEA => [
+                'weight' => 160,
+                'levels' => [5, 25],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 1,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 1,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 4,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::SEADRA => [
+                'weight' => 4,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::GYARADOS => [
+                'weight' => 15,
+                'levels' => [15, 25],
+            ],
+        ],
+    ],
+    LocationId::BERRY_FOREST => [
+        EncounterType::WALKING => [
+            PokedexNo::PIDGEY => [
+                'weight' => 10,
+                'levels' => 32,
+            ],
+            PokedexNo::PIDGEOTTO => [
+                'weight' => 20,
+                'levels' => 37,
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 10,
+                'levels' => 30,
+            ],
+            PokedexNo::GLOOM => [
+                'weight' => 20,
+                'levels' => 35,
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 10,
+                'levels' => 34,
+            ],
+            PokedexNo::VENOMOTH => [
+                'weight' => 5,
+                'levels' => [37, 40],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 5,
+                'levels' => 31,
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 10,
+                'levels' => 30,
+            ],
+            PokedexNo::WEEPINBELL => [
+                'weight' => 20,
+                'levels' => 35,
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 5,
+                'levels' => 31,
+            ],
+            PokedexNo::DROWZEE => [
+                'weight' => 10,
+                'levels' => 34,
+            ],
+            PokedexNo::HYPNO => [
+                'weight' => 5,
+                'levels' => [37, 40],
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 5,
+                'levels' => 35,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 95,
+                'levels' => [5, 40],
+            ],
+            PokedexNo::GOLDUCK => [
+                'weight' => 5,
+                'levels' => [35, 40],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 95,
+                'levels' => [5, 40],
+            ],
+            PokedexNo::SLOWBRO => [
+                'weight' => 5,
+                'levels' => [35, 40],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 120,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::POLIWAG => [
+                'weight' => 20,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::GOLDEEN => [
+                'weight' => 100,
+                'levels' => [5, 25],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 5,
+                'levels' => [15, 35],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 5,
+                'levels' => [15, 35],
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 40,
+                'levels' => [20, 30],
+            ],
+            PokedexNo::GYARADOS => [
+                'weight' => 15,
+                'levels' => [15, 25],
+            ],
+        ],
+    ],
 ];

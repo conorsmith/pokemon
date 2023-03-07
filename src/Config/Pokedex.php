@@ -1078,6 +1078,10 @@ return [
         'name' => "Slowking",
         'type' => [PokemonType::WATER, PokemonType::PSYCHIC],
     ],
+    PokedexNo::DUNSPARCE => [
+        'name' => "Dunsparce",
+        'type' => [PokemonType::NORMAL],
+    ],
     PokedexNo::STEELIX => [
         'name' => "Steelix",
         'type' => [PokemonType::STEEL, PokemonType::GROUND],
