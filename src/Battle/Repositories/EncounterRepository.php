@@ -185,19 +185,19 @@ final class EncounterRepository
 
     private function findEncounterTable(string $locationId, string $encounterType): ?array
     {
-        $locationConfig = $this->findLocation($locationId);
+        $encountersConfig = require __DIR__ . "/../../Config/Encounters.php";
 
-        if (!isset($locationConfig['pokemon'])) {
+        if (!isset($encountersConfig[$locationId])) {
             return null;
         }
 
-        foreach ($locationConfig['pokemon'] as $key => $value) {
+        foreach ($encountersConfig[$locationId] as $key => $value) {
             if ($key === $encounterType) {
                 return $value;
             }
         }
 
-        return $locationConfig['pokemon'];
+        return null;
     }
 
     private function findLocation(string $id): array

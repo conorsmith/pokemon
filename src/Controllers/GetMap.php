@@ -41,7 +41,10 @@ final class GetMap
 
         $challengeTokens = $bag->count(ItemId::CHALLENGE_TOKEN);
 
-        $currentLocation = $this->createLocationViewModel($this->findLocation($instanceRow['current_location']));
+        $currentLocation = $this->createLocationViewModel(
+            $this->findLocation($instanceRow['current_location']),
+            $this->findEncounterTables($instanceRow['current_location']),
+        );
 
         $successes = $this->session->getFlashBag()->get("successes");
         $errors = $this->session->getFlashBag()->get("errors");
@@ -232,19 +235,30 @@ final class GetMap
 
         throw new \Exception;
     }
-    private function createLocationViewModel(array $location): stdClass
+
+    private function findEncounterTables(string $locationId): ?array
+    {
+        $encountersConfig = require __DIR__ . "/../Config/Encounters.php";
+
+        if (!isset($encountersConfig[$locationId])) {
+            return null;
+        }
+
+        return $encountersConfig[$locationId];
+    }
+
+    private function createLocationViewModel(array $location, ?array $encounterTables): stdClass
     {
         $viewModel = (object) [
             'id' => $location['id'],
             'name' => $location['name'],
             'section' => $location['section'] ?? null,
-            'hasEncounters' => isset($location['pokemon']) && count($location['pokemon']) > 0,
+            'hasEncounters' => !is_null($encounterTables),
             'encounters' => (object) [
-                'walking' => isset($location['pokemon'][EncounterType::WALKING])
-                    || (isset($location['pokemon']) && !in_array(array_key_first($location['pokemon']), EncounterType::ALL)),
-                'surfing' => isset($location['pokemon'][EncounterType::SURFING]),
-                'fishing' => isset($location['pokemon'][EncounterType::FISHING]),
-                'rockSmash' => isset($location['pokemon'][EncounterType::ROCK_SMASH]),
+                'walking' => isset($encounterTables[EncounterType::WALKING]),
+                'surfing' => isset($encounterTables[EncounterType::SURFING]),
+                'fishing' => isset($encounterTables[EncounterType::FISHING]),
+                'rockSmash' => isset($encounterTables[EncounterType::ROCK_SMASH]),
             ],
             'hasCardinalDirections' => false,
             'hasVerticalDirections' => false,

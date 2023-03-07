@@ -124,4 +124,6 @@ final class LocationId
     public const MT_EMBER_B3F = "78006109-6498-4a37-b959-bbe1520aae34";
     public const MT_EMBER_B4F = "9cf15aae-3b3b-484e-aea8-45a529c8a436";
     public const MT_EMBER_B5F = "09301fa7-c8f6-4e6a-9823-62b9c0bbbb9a";
+    public const BOON_ISLAND = "b13b261d-0cc1-4312-95a5-a618f2372625";
+    public const CAPE_BRINK = "b0363087-8dd0-47b4-8666-70417b79eef9";
 }
