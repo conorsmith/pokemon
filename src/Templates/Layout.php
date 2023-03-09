@@ -96,6 +96,12 @@
             }
         }
 
+        .stretched-link--hidden {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
     </style>
 </head>
 <body>
