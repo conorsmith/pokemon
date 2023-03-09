@@ -21,12 +21,14 @@ $pokedex = require __DIR__ . "/../src/Config/Pokedex.php";
 /** @var array $map */
 $map = require __DIR__ . "/../src/Config/Map.php";
 
+$pokemonConfigRepository = new \ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository();
 $caughtPokemonRepository = new \ConorSmith\Pokemon\Repositories\CaughtPokemonRepository($db);
 $trainerRepository = new \ConorSmith\Pokemon\Battle\Repositories\TrainerRepository($db, $pokedex, $map);
 $dailyHabitLogRepository = new \ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository($db);
 $pokemonRepository = new \ConorSmith\Pokemon\Team\Repositories\PokemonRepository(
     $db,
     new \ConorSmith\Pokemon\Player\EarnedGymBadgesQueryDb($db),
+    $pokemonConfigRepository,
 );
 $friendshipLog = new \ConorSmith\Pokemon\Team\FriendshipLog($db);
 
@@ -54,7 +56,7 @@ $controllerFactory = new \ConorSmith\Pokemon\ControllerFactory(
     $pokemonRepository,
     $friendshipLog,
     new \ConorSmith\Pokemon\ViewModelFactory($pokedex),
-    new \ConorSmith\Pokemon\Team\CatchPokemonCommand($db, $friendshipLog),
+    new \ConorSmith\Pokemon\Team\CatchPokemonCommand($db, $friendshipLog, $pokemonConfigRepository),
     new \ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery($dailyHabitLogRepository),
     new \ConorSmith\Pokemon\Team\FriendshipLogReportTeamPokemonFaintedCommand($friendshipLog),
     new \ConorSmith\Pokemon\Team\FriendshipLogReportBattleWithGymLeaderCommand($friendshipLog),

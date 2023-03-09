@@ -2,7 +2,7 @@
     <div class="card-body" style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);">
         <?php require __DIR__ . "/ListPokemon.php" ?>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);">
         <table class="table">
             <tr>
                 <td></td>
@@ -54,5 +54,74 @@
                 <td style="text-align: right;"><strong><?=$stats->hp->total?></strong></td>
             </tr>
         </table>
+    </div>
+    <div class="card-body">
+        <div style="margin-bottom: 1.4rem;">
+            <div style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color); padding-bottom: 0.4rem; margin-bottom: 0.6rem;">
+                <strong>Attacking</strong>
+                <?php if ($pokemon->secondaryType) : ?>
+                    <span class="badge bg-<?=$pokemon->primaryType?>" style="text-transform: uppercase;">
+                        <?=$pokemon->primaryType?>
+                    </span>
+                <?php endif ?>
+            </div>
+            <div>
+                <?php foreach ($typeEffectiveness->primaryAttacking->increase as $type => $multiplier) : ?>
+                    <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
+                        <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                    </span>
+                <?php endforeach ?>
+            </div>
+            <div>
+                <?php foreach ($typeEffectiveness->primaryAttacking->decrease as $type => $multiplier) : ?>
+                    <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
+                        <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                    </span>
+                <?php endforeach ?>
+            </div>
+        </div>
+        <?php if ($pokemon->secondaryType) : ?>
+            <div style="margin-bottom: 1.4rem;">
+                <div style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color); padding-bottom: 0.4rem; margin-bottom: 0.6rem;">
+                    <strong>Attacking</strong>
+                    <span class="badge bg-<?=$pokemon->secondaryType?>" style="text-transform: uppercase;">
+                            <?=$pokemon->secondaryType?>
+                        </span>
+                </div>
+                <div>
+                    <?php foreach ($typeEffectiveness->secondaryAttacking->increase as $type => $multiplier) : ?>
+                        <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
+                            <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                        </span>
+                    <?php endforeach ?>
+                </div>
+                <div>
+                    <?php foreach ($typeEffectiveness->secondaryAttacking->decrease as $type => $multiplier) : ?>
+                        <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
+                            <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                        </span>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        <?php endif ?>
+        <div>
+            <div style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color); padding-bottom: 0.4rem; margin-bottom: 0.6rem;">
+                <strong>Defending</strong>
+            </div>
+            <div>
+                <?php foreach ($typeEffectiveness->defending->decrease as $type => $multiplier) : ?>
+                    <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
+                        <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                    </span>
+                <?php endforeach ?>
+            </div>
+            <div>
+                <?php foreach ($typeEffectiveness->defending->increase as $type => $multiplier) : ?>
+                    <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
+                        <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                    </span>
+                <?php endforeach ?>
+            </div>
+        </div>
     </div>
 </div>

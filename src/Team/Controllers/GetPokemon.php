@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
+use ConorSmith\Pokemon\Team\Domain\Type;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
+use ConorSmith\Pokemon\ViewModelFactory;
 use stdClass;
 
 final class GetPokemon
@@ -24,6 +26,7 @@ final class GetPokemon
         echo TemplateEngine::render(__DIR__ . "/../Templates/Pokemon.php", [
             'pokemon' => PokemonVm::create($pokemon),
             'stats' => self::createStatsVm($pokemon),
+            'typeEffectiveness' => self::createTypeEffectivenessVms($pokemon),
         ]);
     }
 
@@ -67,5 +70,43 @@ final class GetPokemon
                 'ev'    => $pokemon->hp->ev,
             ],
         ];
+    }
+
+    private static function createTypeEffectivenessVms(Pokemon $pokemon): stdClass
+    {
+        return (object) [
+            'primaryAttacking' => self::createTypeEffectivenessVm($pokemon->type->getPrimaryAttackingEffectiveness()),
+            'secondaryAttacking' => $pokemon->hasSecondaryType()
+                ? self::createTypeEffectivenessVm($pokemon->type->getSecondaryAttackingEffectiveness())
+                : null,
+            'defending' => self::createTypeEffectivenessVm($pokemon->type->getDefendingEffectiveness()),
+        ];
+    }
+
+    private static function createTypeEffectivenessVm(array $effectiveness): stdClass
+    {
+        $vm = (object) [
+            'increase' => [],
+            'decrease' => [],
+        ];
+
+        arsort($effectiveness);
+
+        foreach ($effectiveness as $type => $multiplier) {
+            if ($multiplier > 1.0) {
+                $vm->increase[ViewModelFactory::createPokemonTypeName($type)] = match ($multiplier) {
+                    4.0 => "4",
+                    2.0 => "2",
+                };
+            } elseif ($multiplier < 1.0) {
+                $vm->decrease[ViewModelFactory::createPokemonTypeName($type)] = match ($multiplier) {
+                    0.5 => "½",
+                    0.25 => "¼",
+                    0.0 => "0",
+                };
+            }
+        }
+
+        return $vm;
     }
 }

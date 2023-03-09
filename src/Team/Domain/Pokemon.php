@@ -8,6 +8,7 @@ final class Pokemon
     public function __construct(
         public readonly string $id,
         public readonly string $number,
+        public readonly Type $type,
         public readonly int $level,
         public readonly int $friendship,
         public readonly bool $isShiny,
@@ -23,9 +24,15 @@ final class Pokemon
     {
         return $this->id === $other->id
             && $this->number === $other->number
+            && $this->type === $other->type
             && $this->level === $other->level
             && $this->friendship === $other->friendship
             && $this->isShiny === $other->isShiny;
+    }
+
+    public function hasSecondaryType(): bool
+    {
+        return !is_null($this->type->secondaryType);
     }
 
     public function hasMaxFriendship(): bool
@@ -38,6 +45,7 @@ final class Pokemon
         return new self(
             $this->id,
             $this->number,
+            $this->type,
             $this->level + 1,
             $this->friendship,
             $this->isShiny,

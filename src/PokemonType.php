@@ -391,4 +391,20 @@ final class PokemonType
     {
         return floatval(self::MULTIPLIERS[$attack][$defence]);
     }
+
+    public static function getAttackingMultipliers(int $attack): array
+    {
+        return array_map(fn($multiplier) => floatval($multiplier), self::MULTIPLIERS[$attack]);
+    }
+
+    public static function getDefendingMultipliers(int $defence): array
+    {
+        $defendingMultipliers = [];
+
+        foreach (self::MULTIPLIERS as $attack => $attackingMultipliers) {
+            $defendingMultipliers[$attack] = floatval($attackingMultipliers[$defence]);
+        }
+
+        return $defendingMultipliers;
+    }
 }

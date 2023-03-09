@@ -10,6 +10,7 @@ use ConorSmith\Pokemon\SharedKernel\CatchPokemonResult;
 use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Domain\Stat;
+use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -19,6 +20,7 @@ final class CatchPokemonCommand implements CommandInterface
     public function __construct(
         private readonly Connection $db,
         private readonly FriendshipLog $friendshipLog,
+        private readonly PokemonConfigRepository $pokemonConfigRepository,
     ) {}
 
     public function run(
@@ -46,6 +48,7 @@ final class CatchPokemonCommand implements CommandInterface
         $pokemon = new Pokemon(
             Uuid::uuid4()->toString(),
             $number,
+            $this->pokemonConfigRepository->findType($number),
             $level,
             0,
             $isShiny,

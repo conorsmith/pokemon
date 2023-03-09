@@ -17,6 +17,7 @@ final class PokemonRepository
     public function __construct(
         private readonly Connection $db,
         private readonly EarnedGymBadgesQuery $earnedGymBadgesQuery,
+        private readonly PokemonConfigRepository $pokemonConfigRepository,
     ) {}
 
     public function find(string $id): ?Pokemon
@@ -79,6 +80,7 @@ final class PokemonRepository
         return new Pokemon(
             $row['id'],
             $row['pokemon_id'],
+            $this->pokemonConfigRepository->findType($row['pokemon_id']),
             intval($row['level']),
             $this->calculateFriendship($row),
             $row['is_shiny'] === 1,

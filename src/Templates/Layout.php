@@ -62,6 +62,10 @@
             background: #EE99AC;
         }
 
+        .badge-addendum {
+            margin-left: 0.4rem; padding-left: 0.4rem; border-left: 1px #fff solid;
+        }
+
         .pokemon-image {
             width: 6rem;
             margin-right: 1rem;
