@@ -9,6 +9,7 @@ use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
+use stdClass;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetTeam
@@ -54,16 +55,37 @@ final class GetTeam
         ]);
     }
 
-    private static function createCoverageVms(array $coverage): array
+    private static function createCoverageVms(array $coverage): stdClass
     {
-        $vms = [];
+        $vm = (object) [
+            'increase' => [],
+            'unmodified' => [],
+            'decrease' => [],
+            'zero' => [],
+            'counts' => (object) [
+                'increase' => 0,
+                'unmodified' => 0,
+                'decrease' => 0,
+                'zero' => 0,
+            ],
+        ];
 
         foreach ($coverage as $typeId => $multiplier) {
-            if ($multiplier !== 1.0) {
-                $vms[ViewModelFactory::createPokemonTypeName($typeId)] = $multiplier;
+            if ($multiplier > 1.0) {
+                $vm->increase[ViewModelFactory::createPokemonTypeName($typeId)] = $multiplier;
+                $vm->counts->increase++;
+            } elseif ($multiplier === 1.0) {
+                $vm->unmodified[ViewModelFactory::createPokemonTypeName($typeId)] = $multiplier;
+                $vm->counts->unmodified++;
+            } elseif ($multiplier === 0.0) {
+                $vm->zero[ViewModelFactory::createPokemonTypeName($typeId)] = $multiplier;
+                $vm->counts->zero++;
+            } else {
+                $vm->decrease[ViewModelFactory::createPokemonTypeName($typeId)] = $multiplier;
+                $vm->counts->decrease++;
             }
         }
 
-        return $vms;
+        return $vm;
     }
 }

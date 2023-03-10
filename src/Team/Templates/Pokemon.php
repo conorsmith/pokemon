@@ -65,14 +65,14 @@
                     </span>
                 <?php endif ?>
             </div>
-            <div>
+            <div style="text-align: center;">
                 <?php foreach ($typeEffectiveness->primaryAttacking->increase as $type => $multiplier) : ?>
                     <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
                         <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
                     </span>
                 <?php endforeach ?>
             </div>
-            <div>
+            <div style="text-align: center;">
                 <?php foreach ($typeEffectiveness->primaryAttacking->decrease as $type => $multiplier) : ?>
                     <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
                         <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
@@ -88,14 +88,14 @@
                             <?=$pokemon->secondaryType?>
                         </span>
                 </div>
-                <div>
+                <div style="text-align: center;">
                     <?php foreach ($typeEffectiveness->secondaryAttacking->increase as $type => $multiplier) : ?>
                         <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
                             <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
                         </span>
                     <?php endforeach ?>
                 </div>
-                <div>
+                <div style="text-align: center;">
                     <?php foreach ($typeEffectiveness->secondaryAttacking->decrease as $type => $multiplier) : ?>
                         <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
                             <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
@@ -108,14 +108,14 @@
             <div style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color); padding-bottom: 0.4rem; margin-bottom: 0.6rem;">
                 <strong>Defending</strong>
             </div>
-            <div>
+            <div style="text-align: center;">
                 <?php foreach ($typeEffectiveness->defending->decrease as $type => $multiplier) : ?>
                     <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
                         <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
                     </span>
                 <?php endforeach ?>
             </div>
-            <div>
+            <div style="text-align: center;">
                 <?php foreach ($typeEffectiveness->defending->increase as $type => $multiplier) : ?>
                     <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
                         <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
