@@ -1130,6 +1130,7 @@ return [
         'name' => "Kin Island Port",
         'directions' => [
             Direction::N => LocationId::KIN_ISLAND,
+            LocationId::SEAGALLOP_FERRY,
         ],
     ],
     [
