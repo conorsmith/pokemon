@@ -62,6 +62,18 @@
                 </li>
             <?php endforeach ?>
         </ul>
+        <div class="card-body">
+            <div class="d-flex justify-content-between" style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color); padding-bottom: 0.4rem; margin-bottom: 0.6rem;">
+                <strong>Type Coverage</strong> <span><?=count($coverage)?> / 18</span>
+            </div>
+            <div>
+                <?php foreach ($coverage as $type => $multiplier) : ?>
+                    <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
+                        <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
+                    </span>
+                <?php endforeach ?>
+            </div>
+        </div>
     </div>
 
     <div class="card">

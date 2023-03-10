@@ -68,14 +68,14 @@
             <div>
                 <?php foreach ($typeEffectiveness->primaryAttacking->increase as $type => $multiplier) : ?>
                     <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
-                        <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                        <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
                     </span>
                 <?php endforeach ?>
             </div>
             <div>
                 <?php foreach ($typeEffectiveness->primaryAttacking->decrease as $type => $multiplier) : ?>
                     <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
-                        <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                        <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
                     </span>
                 <?php endforeach ?>
             </div>
@@ -91,14 +91,14 @@
                 <div>
                     <?php foreach ($typeEffectiveness->secondaryAttacking->increase as $type => $multiplier) : ?>
                         <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
-                            <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                            <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
                         </span>
                     <?php endforeach ?>
                 </div>
                 <div>
                     <?php foreach ($typeEffectiveness->secondaryAttacking->decrease as $type => $multiplier) : ?>
                         <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
-                            <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                            <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
                         </span>
                     <?php endforeach ?>
                 </div>
@@ -111,14 +111,14 @@
             <div>
                 <?php foreach ($typeEffectiveness->defending->decrease as $type => $multiplier) : ?>
                     <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
-                        <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                        <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
                     </span>
                 <?php endforeach ?>
             </div>
             <div>
                 <?php foreach ($typeEffectiveness->defending->increase as $type => $multiplier) : ?>
                     <span class="badge bg-<?=$type?>" style="text-transform: uppercase;">
-                        <?=$type?><span class="badge-addendum"><?=$multiplier?></span>
+                        <?=$type?><span class="badge-addendum">&times;<?=$multiplier?></span>
                     </span>
                 <?php endforeach ?>
             </div>

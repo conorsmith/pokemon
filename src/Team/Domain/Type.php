@@ -8,6 +8,34 @@ use Exception;
 
 final class Type
 {
+    public static function aggregateAttackingEffectiveness(array $givenTypes): array
+    {
+        $effectivenesses = [];
+
+        /** @var Type $type */
+        foreach ($givenTypes as $type) {
+            $effectivenesses[] = $type->getPrimaryAttackingEffectiveness();
+            if (!is_null($type->secondaryType)) {
+                $effectivenesses[] = $type->getSecondaryAttackingEffectiveness();
+            }
+        }
+
+        $allTypeIds = array_keys($effectivenesses[0]);
+
+        $aggregatedMultipliers = $effectivenesses[0];
+
+        foreach ($allTypeIds as $typeId) {
+            foreach ($effectivenesses as $effectiveness) {
+                $aggregatedMultipliers[$typeId] = max(
+                    $aggregatedMultipliers[$typeId],
+                    $effectiveness[$typeId],
+                );
+            }
+        }
+
+        return $aggregatedMultipliers;
+    }
+
     public function __construct(
         public readonly int $primaryType,
         public readonly ?int $secondaryType,
