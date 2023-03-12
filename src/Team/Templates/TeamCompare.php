@@ -10,20 +10,20 @@
     </style>
 
     <div class="btn-group">
-        <a href="?show=effective-stats&sort=<?=$query->sort?>&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->show === "effective-stats" ? "active" : ""?>">Effective Stats</a>
-        <a href="?show=base-stats&sort=<?=$query->sort?>&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->show === "base-stats" ? "active" : ""?>">Base Stats</a>
-        <a href="?show=genetic-stats&sort=<?=$query->sort?>&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->show === "genetic-stats" ? "active" : ""?>">Genetic Stats</a>
+        <a href="?show=effective-stats&sort=<?=$query->sort?>&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->show === "effective-stats" ? "active" : ""?>">Effective Stats</a>
+        <a href="?show=base-stats&sort=<?=$query->sort?>&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->show === "base-stats" ? "active" : ""?>">Base Stats</a>
+        <a href="?show=genetic-stats&sort=<?=$query->sort?>&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->show === "genetic-stats" ? "active" : ""?>">Genetic Stats</a>
     </div>
 
     <div class="btn-group">
-        <a href="?show=<?=$query->show?>&sort=number&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->sort === "number" ? "active" : ""?>">#</a>
-        <a href="?show=<?=$query->show?>&sort=lv&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->sort === "lv" ? "active" : ""?>">LV</a>
-        <a href="?show=<?=$query->show?>&sort=hp&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->sort === "hp" ? "active" : ""?>">HP</a>
-        <a href="?show=<?=$query->show?>&sort=pa&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->sort === "pa" ? "active" : ""?>">PA</a>
-        <a href="?show=<?=$query->show?>&sort=sa&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->sort === "sa" ? "active" : ""?>">SA</a>
-        <a href="?show=<?=$query->show?>&sort=pd&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->sort === "pd" ? "active" : ""?>">PD</a>
-        <a href="?show=<?=$query->show?>&sort=sd&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->sort === "sd" ? "active" : ""?>">SD</a>
-        <a href="?show=<?=$query->show?>&sort=sp&filter=<?=$query->filter?>" class="btn btn-outline-dark <?=$query->sort === "sp" ? "active" : ""?>">SP</a>
+        <a href="?show=<?=$query->show?>&sort=number&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "number" ? "active" : ""?>">#</a>
+        <a href="?show=<?=$query->show?>&sort=lv&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "lv" ? "active" : ""?>">LV</a>
+        <a href="?show=<?=$query->show?>&sort=hp&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "hp" ? "active" : ""?>">HP</a>
+        <a href="?show=<?=$query->show?>&sort=pa&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "pa" ? "active" : ""?>">PA</a>
+        <a href="?show=<?=$query->show?>&sort=sa&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "sa" ? "active" : ""?>">SA</a>
+        <a href="?show=<?=$query->show?>&sort=pd&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "pd" ? "active" : ""?>">PD</a>
+        <a href="?show=<?=$query->show?>&sort=sd&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "sd" ? "active" : ""?>">SD</a>
+        <a href="?show=<?=$query->show?>&sort=sp&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "sp" ? "active" : ""?>">SP</a>
     </div>
 
     <div>
