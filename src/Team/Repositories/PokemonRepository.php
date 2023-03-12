@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\Team\Domain\Stat;
 use ConorSmith\Pokemon\Team\Domain\Team;
 use Doctrine\DBAL\Connection;
 use Exception;
+use stdClass;
 
 final class PokemonRepository
 {
@@ -71,6 +72,66 @@ final class PokemonRepository
             fn(array $row) => $this->createPokemonFromRow($row),
             $rows
         );
+    }
+
+    public function getAll(stdClass $query): array
+    {
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId ORDER BY (pokemon_id * 1) ASC, level DESC", [
+            'instanceId' => INSTANCE_ID,
+        ]);
+
+        $all = array_map(
+            fn(array $row) => $this->createPokemonFromRow($row),
+            $rows
+        );
+
+        $all = array_filter($all, function(Pokemon $pokemon) use ($query) {
+            if (is_null($query)) {
+                return true;
+            }
+
+            return $pokemon->type->primaryType == $query->filter
+                || $pokemon->type->secondaryType == $query->filter;
+        });
+
+        usort($all, function(Pokemon $a, Pokemon $b) use ($query) {
+            return match($query->sort) {
+                "number" => 0,
+                "lv" => $a->level > $b->level ? -1 : 1,
+                "hp" => match($query->show) {
+                    "effective-stats" => $a->hp->calculate($a->level) > $b->hp->calculate($b->level) ? -1 : 1,
+                    "base-stats" => $a->hp->baseValue > $b->hp->baseValue ? -1 : 1,
+                    "genetic-stats" => $a->hp->iv > $b->hp->iv ? -1 : 1,
+                },
+                "pa" => match($query->show) {
+                    "effective-stats" => $a->physicalAttack->calculate($a->level) > $b->physicalAttack->calculate($b->level) ? -1 : 1,
+                    "base-stats" => $a->physicalAttack->baseValue > $b->physicalAttack->baseValue ? -1 : 1,
+                    "genetic-stats" => $a->physicalAttack->iv > $b->physicalAttack->iv ? -1 : 1,
+                },
+                "sa" => match($query->show) {
+                    "effective-stats" => $a->specialAttack->calculate($a->level) > $b->specialAttack->calculate($b->level) ? -1 : 1,
+                    "base-stats" => $a->specialAttack->baseValue > $b->specialAttack->baseValue ? -1 : 1,
+                    "genetic-stats" => $a->specialAttack->iv > $b->specialAttack->iv ? -1 : 1,
+                },
+                "pd" => match($query->show) {
+                    "effective-stats" => $a->physicalDefence->calculate($a->level) > $b->physicalDefence->calculate($b->level) ? -1 : 1,
+                    "base-stats" => $a->physicalDefence->baseValue > $b->physicalDefence->baseValue ? -1 : 1,
+                    "genetic-stats" => $a->physicalDefence->iv > $b->physicalDefence->iv ? -1 : 1,
+                },
+                "sd" => match($query->show) {
+                    "effective-stats" => $a->specialDefence->calculate($a->level) > $b->specialDefence->calculate($b->level) ? -1 : 1,
+                    "base-stats" => $a->specialDefence->baseValue > $b->specialDefence->baseValue ? -1 : 1,
+                    "genetic-stats" => $a->specialDefence->iv > $b->specialDefence->iv ? -1 : 1,
+                },
+                "sp" => match($query->show) {
+                    "effective-stats" => $a->speed->calculate($a->level) > $b->speed->calculate($b->level) ? -1 : 1,
+                    "base-stats" => $a->speed->baseValue > $b->speed->baseValue ? -1 : 1,
+                    "genetic-stats" => $a->speed->iv > $b->speed->iv ? -1 : 1,
+                },
+            };
+        });
+
+        return $all;
     }
 
     private function createPokemonFromRow(array $row): Pokemon

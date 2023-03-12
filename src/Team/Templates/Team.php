@@ -62,7 +62,7 @@
                 </li>
             <?php endforeach ?>
         </ul>
-        <div class="card-body">
+        <div class="card-body" style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);">
             <div class="d-flex justify-content-between">
                 <strong>Type Coverage</strong>
                 <div style="text-align: right;">
@@ -124,6 +124,9 @@
                     <?php endforeach ?>
                 </div>
             <?php endif ?>
+        </div>
+        <div class="card-body d-grid">
+            <a href="/team/compare" class="btn btn-outline-dark">Compare Stats</a>
         </div>
     </div>
 

@@ -32,6 +32,7 @@ use ConorSmith\Pokemon\Controllers\GetMap;
 use ConorSmith\Pokemon\Controllers\GetTeamItemUse;
 use ConorSmith\Pokemon\Controllers\PostItemUse;
 use ConorSmith\Pokemon\Controllers\PostMapMove;
+use ConorSmith\Pokemon\Team\Controllers\GetTeamCompare;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamItemUse;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamMoveDown;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamMoveUp;
@@ -76,6 +77,7 @@ final class ControllerFactory
         $r->get("/map", GetMap::class);
         $r->post("/encounter", PostEncounterStart::class);
         $r->get("/team", GetTeam::class);
+        $r->get("/team/compare", GetTeamCompare::class);
         $r->Get("/team/member/{id}", GetPokemon::class);
         $r->get("/encounter/{id}", GetEncounter::class);
         $r->post("/encounter/{id}/catch", PostEncounterCatch::class);
@@ -185,6 +187,9 @@ final class ControllerFactory
             ),
             GetTeam::class => new GetTeam(
                 $this->session,
+                $this->pokemonRepository,
+            ),
+            GetTeamCompare::class => new GetTeamCompare(
                 $this->pokemonRepository,
             ),
             GetPokemon::class => new GetPokemon(
