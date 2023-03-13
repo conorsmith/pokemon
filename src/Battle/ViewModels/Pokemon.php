@@ -16,5 +16,7 @@ final class Pokemon
         public readonly string $remainingHp,
         public readonly string $totalHp,
         public readonly bool $hasFainted,
+        public readonly int $physicalAttack,
+        public readonly int $specialAttack,
     ) {}
 }
