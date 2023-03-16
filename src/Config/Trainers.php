@@ -6,6 +6,7 @@ use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\Sex;
 
 return [
     LocationId::VIRIDIAN_GYM => [
@@ -6196,6 +6197,126 @@ return [
                 [
                     'id' => PokedexNo::SANDSLASH,
                     'level' => 35,
+                ],
+            ],
+        ],
+    ],
+    LocationId::BOND_BRIDGE => [
+        [
+            'id' => "af5ae449-195c-4697-a856-6a6966e71775",
+            'class' => TrainerClass::TWINS,
+            'name' => "Joy & Meg",
+            'team' => [
+                [
+                    'id' => PokedexNo::CLEFAIRY,
+                    'sex' => Sex::FEMALE,
+                    'level' => 37,
+                ],
+                [
+                    'id' => PokedexNo::CLEFAIRY,
+                    'sex' => Sex::FEMALE,
+                    'level' => 37,
+                ],
+            ],
+        ],
+        [
+            'id' => "81d62ae1-bee4-42f0-9812-0a21f7df800b",
+            'class' => TrainerClass::AROMA_LADY,
+            'name' => "Violet",
+            'team' => [
+                [
+                    'id' => PokedexNo::BULBASAUR,
+                    'sex' => Sex::MALE,
+                    'level' => 36,
+                ],
+                [
+                    'id' => PokedexNo::IVYSAUR,
+                    'sex' => Sex::MALE,
+                    'level' => 36,
+                ],
+                [
+                    'id' => PokedexNo::IVYSAUR,
+                    'sex' => Sex::MALE,
+                    'level' => 36,
+                ],
+            ],
+        ],
+        [
+            'id' => "d1e23de3-eca2-4d1b-b784-f35251f0a6b0",
+            'class' => TrainerClass::TUBER,
+            'name' => "Alexis",
+            'team' => [
+                [
+                    'id' => PokedexNo::STARYU,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::STARYU,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::KRABBY,
+                    'sex' => Sex::MALE,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::KRABBY,
+                    'sex' => Sex::MALE,
+                    'level' => 34,
+                ],
+            ],
+        ],
+        [
+            'id' => "24c0074f-ddca-47a2-bae9-3c51fd186cf2",
+            'class' => TrainerClass::SWIMMER,
+            'gender' => Gender::FEMALE,
+            'name' => "Tisha",
+            'team' => [
+                [
+                    'id' => PokedexNo::KINGLER,
+                    'sex' => Sex::FEMALE,
+                    'level' => 38,
+                ],
+            ],
+        ],
+        [
+            'id' => "4d95fe0d-7013-4647-9800-2859202e10b5",
+            'class' => TrainerClass::TUBER,
+            'name' => "Amira",
+            'team' => [
+                [
+                    'id' => PokedexNo::POLIWAG,
+                    'sex' => Sex::MALE,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::POLIWHIRL,
+                    'sex' => Sex::MALE,
+                    'level' => 35,
+                ],
+                [
+                    'id' => PokedexNo::POLIWAG,
+                    'sex' => Sex::MALE,
+                    'level' => 34,
+                ],
+            ],
+        ],
+        [
+            'id' => "fdf48865-2a98-47e3-85d4-9a8f0358d0d6",
+            'class' => TrainerClass::AROMA_LADY,
+            'name' => "Nikki",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::FEMALE,
+                    'level' => 37,
+                ],
+                [
+                    'id' => PokedexNo::WEEPINBELL,
+                    'sex' => Sex::FEMALE,
+                    'level' => 37,
                 ],
             ],
         ],

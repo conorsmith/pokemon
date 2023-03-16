@@ -223,6 +223,8 @@ final class TrainerClass
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/7/76/Spr_FRLG_Pok%C3%A9mon_Ranger_F.png",
                 Gender::MALE => "https://archives.bulbagarden.net/media/upload/0/0d/Spr_FRLG_Pok%C3%A9mon_Ranger_M.png",
             },
+            self::AROMA_LADY => "https://archives.bulbagarden.net/media/upload/f/f9/Spr_FRLG_Aroma_Lady.png",
+            self::TUBER => "https://archives.bulbagarden.net/media/upload/8/89/Spr_FRLG_Tuber.png",
             default => null,
         };
     }
