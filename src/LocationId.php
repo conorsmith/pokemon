@@ -130,4 +130,10 @@ final class LocationId
     public const KIN_ISLAND_PORT = "c0d2966e-049d-48a4-9ba3-3a081b42ff78";
     public const BOND_BRIDGE = "f50306b4-9d5d-429b-84b8-0c6aae0be651";
     public const BERRY_FOREST = "ebdb47e5-ae4a-4924-af41-343264523c41";
+    public const FLOE_ISLAND = "b010cbc5-617a-4a5b-b4a0-3d374268ec79";
+    public const ICEFALL_CAVE = "4006ac11-c3a8-4b0b-a22e-63f708f58d90";
+    public const ICEFALL_CAVE_ENTRANCE = "c38c9e38-e358-46f1-ae33-2446ed2929a4";
+    public const ICEFALL_CAVE_1F = "3053fe36-a4de-49d5-8333-2a6007df1fa5";
+    public const ICEFALL_CAVE_B1F = "160b9f1d-c3af-4446-b7da-772bb3cd11cd";
+    public const ICEFALL_CAVE_BACK_CAVE = "64d62daf-9657-4825-905d-e9a72d43e28a";
 }

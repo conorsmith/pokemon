@@ -964,6 +964,7 @@ return [
             LocationId::KNOT_ISLAND,
             LocationId::BOON_ISLAND,
             LocationId::KIN_ISLAND_PORT,
+            LocationId::FLOE_ISLAND,
         ],
     ],
     [
@@ -1154,6 +1155,57 @@ return [
         'name' => "Berry Forest",
         'directions' => [
             Direction::E => LocationId::BOND_BRIDGE,
+        ],
+    ],
+    [
+        'id' => LocationId::FLOE_ISLAND,
+        'name' => "Floe Island",
+        'directions' => [
+            Direction::N => LocationId::ICEFALL_CAVE_ENTRANCE,
+            LocationId::SEAGALLOP_FERRY,
+        ],
+    ],
+    [
+        'id' => LocationId::ICEFALL_CAVE_ENTRANCE,
+        'name' => "Icefall Cave",
+        'section' => "Entrance",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::ICEFALL_CAVE,
+        'directions' => [
+            Direction::N => LocationId::ICEFALL_CAVE_1F,
+            LocationId::FLOE_ISLAND,
+        ],
+    ],
+    [
+        'id' => LocationId::ICEFALL_CAVE_1F,
+        'name' => "Icefall Cave",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::ICEFALL_CAVE,
+        'directions' => [
+            Direction::N => LocationId::ICEFALL_CAVE_BACK_CAVE,
+            Direction::S => LocationId::ICEFALL_CAVE_ENTRANCE,
+            LocationId::ICEFALL_CAVE_B1F,
+        ],
+    ],
+    [
+        'id' => LocationId::ICEFALL_CAVE_B1F,
+        'name' => "Icefall Cave",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::ICEFALL_CAVE,
+        'directions' => [
+            LocationId::ICEFALL_CAVE_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::ICEFALL_CAVE_BACK_CAVE,
+        'name' => "Icefall Cave",
+        'section' => "Back Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::ICEFALL_CAVE,
+        'directions' => [
+            Direction::S => LocationId::ICEFALL_CAVE_1F,
         ],
     ],
 ];

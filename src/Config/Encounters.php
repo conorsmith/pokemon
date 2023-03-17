@@ -1082,7 +1082,7 @@ return [
                 'weight' => 5,
                 'levels' => 25,
             ],
-            PokedexNo::FARFETCHD => [
+            PokedexNo::FARFETCH_D => [
                 'weight' => 25,
                 'levels' => [20, 30],
             ],
@@ -2054,7 +2054,7 @@ return [
                 'weight' => 90,
                 'levels' => [17, 28],
             ],
-            PokedexNo::MRMIME => [
+            PokedexNo::MR_MIME => [
                 'weight' => 10,
                 'levels' => [28, 32],
             ],

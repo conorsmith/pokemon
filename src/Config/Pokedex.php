@@ -595,7 +595,7 @@ return [
             ],
         ],
     ],
-    PokedexNo::FARFETCHD => [
+    PokedexNo::FARFETCH_D => [
         'name' => "Farfetch’d",
         'type' => [PokemonType::NORMAL, PokemonType::FLYING],
     ],
@@ -852,7 +852,7 @@ return [
         'name' => "Starmie",
         'type' => [PokemonType::WATER, PokemonType::PSYCHIC],
     ],
-    PokedexNo::MRMIME => [
+    PokedexNo::MR_MIME => [
         'name' => "Mr. Mime",
         'type' => [PokemonType::PSYCHIC, PokemonType::FAIRY],
     ],

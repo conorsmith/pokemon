@@ -1013,7 +1013,7 @@ return [
         'speed' => 70,
     ],
     [
-        'number' => PokedexNo::FARFETCHD,
+        'number' => PokedexNo::FARFETCH_D,
         'hp' => 52,
         'attack' => 90,
         'defence' => 55,
@@ -1022,7 +1022,7 @@ return [
         'speed' => 60,
     ],
     [
-        'number' => PokedexNo::FARFETCHD,
+        'number' => PokedexNo::FARFETCH_D,
         'hp' => 52,
         'attack' => 95,
         'defence' => 55,
@@ -1454,7 +1454,7 @@ return [
         'speed' => 115,
     ],
     [
-        'number' => PokedexNo::MRMIME,
+        'number' => PokedexNo::MR_MIME,
         'hp' => 40,
         'attack' => 45,
         'defence' => 65,
@@ -1463,7 +1463,7 @@ return [
         'speed' => 90,
     ],
     [
-        'number' => PokedexNo::MRMIME,
+        'number' => PokedexNo::MR_MIME,
         'hp' => 50,
         'attack' => 65,
         'defence' => 65,

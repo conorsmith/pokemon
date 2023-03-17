@@ -337,7 +337,7 @@ return [
         'rate' => 60,
     ],
     [
-        'number' => PokedexNo::FARFETCHD,
+        'number' => PokedexNo::FARFETCH_D,
         'rate' => 45,
     ],
     [
@@ -493,7 +493,7 @@ return [
         'rate' => 60,
     ],
     [
-        'number' => PokedexNo::MRMIME,
+        'number' => PokedexNo::MR_MIME,
         'rate' => 45,
     ],
     [

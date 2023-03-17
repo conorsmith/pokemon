@@ -3271,7 +3271,7 @@ return [
             'name' => "Donald",
             'team' => [
                 [
-                    'id' => PokedexNo::FARFETCHD,
+                    'id' => PokedexNo::FARFETCH_D,
                     'level' => 33,
                 ],
             ],
@@ -3545,7 +3545,7 @@ return [
                     'level' => 26,
                 ],
                 [
-                    'id' => PokedexNo::FARFETCHD,
+                    'id' => PokedexNo::FARFETCH_D,
                     'level' => 26,
                 ],
                 [
@@ -4066,7 +4066,7 @@ return [
             'name' => "Tyron",
             'team' => [
                 [
-                    'id' => PokedexNo::MRMIME,
+                    'id' => PokedexNo::MR_MIME,
                     'level' => 34,
                 ],
                 [
@@ -4143,7 +4143,7 @@ return [
                     'level' => 31,
                 ],
                 [
-                    'id' => PokedexNo::MRMIME,
+                    'id' => PokedexNo::MR_MIME,
                     'level' => 31,
                 ],
                 [
@@ -4170,7 +4170,7 @@ return [
                     'level' => 38,
                 ],
                 [
-                    'id' => PokedexNo::MRMIME,
+                    'id' => PokedexNo::MR_MIME,
                     'level' => 37,
                 ],
                 [
@@ -4379,7 +4379,7 @@ return [
                     'level' => 29,
                 ],
                 [
-                    'id' => PokedexNo::MRMIME,
+                    'id' => PokedexNo::MR_MIME,
                     'level' => 29,
                 ],
             ],
@@ -5715,7 +5715,7 @@ return [
             'name' => "Gregory",
             'team' => [
                 [
-                    'id' => PokedexNo::MRMIME,
+                    'id' => PokedexNo::MR_MIME,
                     'level' => 48,
                 ],
             ],
