@@ -20,28 +20,39 @@ final class EncounterTableFactory
     {
         $encounterTables = [];
 
-        /** @var BulbapediaEncounter $encounter */
-        foreach ($bulbapediaEncounters as $encounter) {
-            $encounterType = $this->createEncounterType($encounter->type);
+        if (array_slice($bulbapediaEncounters, 0, 1) instanceof BulbapediaEncounter) {
+            $encounterGroups = [
+                "Default" => $bulbapediaEncounters,
+            ];
+        } else {
+            $encounterGroups = $bulbapediaEncounters;
+        }
 
-            if ($encounterType->isIrrelevant()) {
-                continue;
-            }
+        foreach ($encounterGroups as $key => $encounterGroup) {
+            $encounterTables[$key] = [];
+            /** @var BulbapediaEncounter $encounter */
+            foreach ($encounterGroup as $encounter) {
+                $encounterType = $this->createEncounterType($encounter->type);
 
-            if (!array_key_exists($encounterType->value, $encounterTables)) {
-                $encounterTables[$encounterType->value] = new EncounterTable(
-                    $encounterType,
-                    [],
+                if ($encounterType->isIrrelevant()) {
+                    continue;
+                }
+
+                if (!array_key_exists($encounterType->value, $encounterTables[$key])) {
+                    $encounterTables[$key][$encounterType->value] = new EncounterTable(
+                        $encounterType,
+                        [],
+                    );
+                }
+
+                $encounterTableEntry = new EncounterTableEntry(
+                    $this->createPokedexNumberFromPokemonName($encounter->name),
+                    intval($encounter->rate),
+                    $this->createLevelRange($encounter->levels),
                 );
+
+                $encounterTables[$key][$encounterType->value] = $encounterTables[$key][$encounterType->value]->add($encounterTableEntry);
             }
-
-            $encounterTableEntry = new EncounterTableEntry(
-                $this->createPokedexNumberFromPokemonName($encounter->name),
-                intval($encounter->rate),
-                $this->createLevelRange($encounter->levels),
-            );
-
-            $encounterTables[$encounterType->value] = $encounterTables[$encounterType->value]->add($encounterTableEntry);
         }
 
         return $encounterTables;
@@ -49,7 +60,7 @@ final class EncounterTableFactory
 
     private function createEncounterType(string $value): EncounterType
     {
-        if ($value === "Grass") {
+        if (in_array($value, ["Cave", "Grass"])) {
             return new EncounterType(EncounterTypeConstants::WALKING);
         }
 

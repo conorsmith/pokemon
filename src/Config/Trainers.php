@@ -6321,4 +6321,27 @@ return [
             ],
         ],
     ],
+    LocationId::ICEFALL_CAVE_BACK_CAVE => [
+        [
+            'id' => "64a14a2c-aef1-49e6-9d70-5f4acc3b2e5b",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'team' => [
+                [
+                    'id' => PokedexNo::ZUBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 38,
+                ],
+                [
+                    'id' => PokedexNo::ZUBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 38,
+                ],
+                [
+                    'id' => PokedexNo::GOLBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 38,
+                ],
+            ],
+        ],
+    ],
 ];

@@ -16,7 +16,7 @@ final class BulbapediaPokemonPage
 {
     public static function fromPokedexNumber(PokedexNumber $pokedexNumber): self
     {
-        $filename = __DIR__ . "/../../.cache/" . str_pad($pokedexNumber->value, 4, "0", STR_PAD_LEFT) . ".html";
+        $filename = __DIR__ . "/../../.cache/pokemon/" . str_pad($pokedexNumber->value, 4, "0", STR_PAD_LEFT) . ".html";
 
         if (!file_exists($filename)) {
             $reflector = new ReflectionClass(PokedexNumberConstants::class);

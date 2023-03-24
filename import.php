@@ -22,9 +22,13 @@ if ($argc < 2 || !in_array($argv[1], ["encounters", "trainers", "pokemonIds", "p
     exit;
 }
 
-$bulbapedia = BulbapediaLocationPage::fromFile(__DIR__ . "/location.html");
-
 if ($argv[1] === "encounters") {
+    if (isset($argv[2])) {
+        $bulbapedia = BulbapediaLocationPage::fromUrl($argv[2]);
+    } else {
+        $bulbapedia = BulbapediaLocationPage::fromFile(__DIR__ . "/location.html");
+    }
+
     $encounterTableFactory = new EncounterTableFactory();
 
     $encounterTables = $encounterTableFactory->createEncounterTablesFromBulbapediaEncounters(
@@ -34,6 +38,12 @@ if ($argv[1] === "encounters") {
     echo EncountersConfig::fromEncounterTables($encounterTables);
 
 } elseif ($argv[1] === "trainers") {
+    if (isset($argv[2])) {
+        $bulbapedia = BulbapediaLocationPage::fromUrl($argv[2]);
+    } else {
+        $bulbapedia = BulbapediaLocationPage::fromFile(__DIR__ . "/location.html");
+    }
+
     $trainerFactory = new TrainerFactory();
 
     $trainers = $trainerFactory->createTrainersFromBulbapediaTrainers(

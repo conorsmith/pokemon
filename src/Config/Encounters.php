@@ -3506,4 +3506,228 @@ return [
             ],
         ],
     ],
+    LocationId::ICEFALL_CAVE_ENTRANCE => [
+        EncounterType::WALKING => [
+            PokedexNo::SEEL => [
+                'weight' => 40,
+                'levels' => [43, 47],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 25,
+                'levels' => [45, 48],
+            ],
+            PokedexNo::DEWGONG => [
+                'weight' => 20,
+                'levels' => [49, 53],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 5,
+                'levels' => 41,
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 5,
+                'levels' => 41,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::SEEL => [
+                'weight' => 60,
+                'levels' => [5, 35],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 30,
+                'levels' => [5, 35],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 30,
+                'levels' => [5, 35],
+            ],
+            PokedexNo::DEWGONG => [
+                'weight' => 5,
+                'levels' => [35, 40],
+            ],
+            PokedexNo::WOOPER => [
+                'weight' => 5,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::MARILL => [
+                'weight' => 5,
+                'levels' => [5, 15],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 120,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::POLIWAG => [
+                'weight' => 100,
+                'levels' => [5, 25],
+            ],
+            PokedexNo::GOLDEEN => [
+                'weight' => 20,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::POLIWHIRL => [
+                'weight' => 40,
+                'levels' => [20, 30],
+            ],
+            PokedexNo::GYARADOS => [
+                'weight' => 15,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 5,
+                'levels' => [15, 35],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 5,
+                'levels' => [15, 35],
+            ],
+        ],
+    ],
+    LocationId::ICEFALL_CAVE_1F => [
+        EncounterType::WALKING => [
+            PokedexNo::SWINUB => [
+                'weight' => 50,
+                'levels' => [23, 31],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 25,
+                'levels' => [45, 48],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 10,
+                'levels' => 45,
+            ],
+            PokedexNo::DELIBIRD => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
+            PokedexNo::SNEASEL => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
+        ],
+    ],
+    LocationId::ICEFALL_CAVE_B1F => [
+        EncounterType::WALKING => [
+            PokedexNo::SWINUB => [
+                'weight' => 50,
+                'levels' => [23, 31],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 25,
+                'levels' => [45, 48],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 10,
+                'levels' => 45,
+            ],
+            PokedexNo::DELIBIRD => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
+            PokedexNo::SNEASEL => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
+        ],
+    ],
+    LocationId::ICEFALL_CAVE_BACK_CAVE => [
+        EncounterType::WALKING => [
+            PokedexNo::SEEL => [
+                'weight' => 40,
+                'levels' => [43, 47],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 25,
+                'levels' => [45, 48],
+            ],
+            PokedexNo::DEWGONG => [
+                'weight' => 20,
+                'levels' => [49, 53],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 5,
+                'levels' => 41,
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 5,
+                'levels' => 41,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 95,
+                'levels' => [5, 45],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 4,
+                'levels' => [35, 45],
+            ],
+            PokedexNo::LAPRAS => [
+                'weight' => 1,
+                'levels' => [30, 45],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 120,
+                'levels' => [5, 15],
+            ],
+            PokedexNo::HORSEA => [
+                'weight' => 120,
+                'levels' => [5, 25],
+            ],
+            PokedexNo::KRABBY => [
+                'weight' => 120,
+                'levels' => [5, 25],
+            ],
+            PokedexNo::SHELLDER => [
+                'weight' => 40,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::STARYU => [
+                'weight' => 40,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::GYARADOS => [
+                'weight' => 15,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::SEADRA => [
+                'weight' => 4,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 4,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 1,
+                'levels' => [25, 35],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 1,
+                'levels' => [25, 35],
+            ],
+        ],
+    ],
 ];

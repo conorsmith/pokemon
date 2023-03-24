@@ -18,15 +18,22 @@ final class EncountersConfig
     {
         $config = "";
 
-        $config .= "[" . PHP_EOL;
+        foreach ($encounterTables as $groupName => $encounterTableGroup) {
 
-        /** @var EncounterTable $encounterTable */
-        foreach ($encounterTables as $encounterTable) {
-            $config .= self::encodeEncounterTable($encounterTable);
+            if (count($encounterTables) > 1) {
+                $config .= "## " . strtoupper($groupName) . PHP_EOL;
+            }
+
+            $config .= "[" . PHP_EOL;
+
+            /** @var EncounterTable $encounterTable */
+            foreach ($encounterTableGroup as $encounterTable) {
+                $config .= self::encodeEncounterTable($encounterTable);
+            }
+
+            $config .= "]," . PHP_EOL;
+            $config .= PHP_EOL;
         }
-
-        $config .= "]," . PHP_EOL;
-        $config .= PHP_EOL;
 
         return $config;
     }

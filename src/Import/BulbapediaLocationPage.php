@@ -6,9 +6,28 @@ namespace ConorSmith\Pokemon\Import;
 use ConorSmith\Pokemon\Import\Domain\BulbapediaEncounter;
 use DOMDocument;
 use DOMNode;
+use Exception;
 
 final class BulbapediaLocationPage
 {
+    public static function fromUrl(string $url): self
+    {
+        $filename = __DIR__ . "/../../.cache/location/" . md5($url) . ".html";
+
+        if (!file_exists($filename)) {
+
+            $page = file_get_contents($url);
+
+            if ($page === false || strlen($page) < 1000) {
+                throw new Exception;
+            }
+
+            file_put_contents($filename, $page);
+        }
+
+        return self::fromFile($filename);
+    }
+
     public static function fromFile(string $filename): self
     {
         libxml_use_internal_errors(true);
@@ -29,8 +48,29 @@ final class BulbapediaLocationPage
     {
         $titleNode = $this->page->getElementById("Pokémon");
 
-        $tableNode = $titleNode->parentNode->nextSibling->nextSibling;
+        $possibleTableNode = $titleNode->parentNode->nextSibling->nextSibling;
 
+        if ($possibleTableNode->nodeName === "table") {
+            return self::extractEncountersFromTableNode($possibleTableNode);
+        }
+
+        $subtitleNode = $possibleTableNode;
+
+        $rawEncounterData = [];
+
+        while ($subtitleNode->nodeName === "h3") {
+            $rawEncounterData[$subtitleNode->textContent] = self::extractEncountersFromTableNode(
+                $subtitleNode->nextSibling->nextSibling
+            );
+
+            $subtitleNode = $subtitleNode->nextSibling->nextSibling->nextSibling->nextSibling;
+        }
+
+        return $rawEncounterData;
+    }
+
+    private static function extractEncountersFromTableNode(DOMNode $tableNode): array
+    {
         $rawEncounterData = [];
 
         /** @var DOMNode $rowNode */
@@ -97,7 +137,7 @@ final class BulbapediaLocationPage
                         ],
                         'pokemon' => [],
                     ];
-                } else {
+                } elseif ($cellNode->childNodes->item(1)->nodeName !== "#text") {
                     $pokemonRow = $cellNode
                         ->childNodes->item(1)
                         ->childNodes->item(1)
