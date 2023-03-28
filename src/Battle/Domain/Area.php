@@ -54,7 +54,7 @@ final class Area
         if (!array_key_exists($this->id, $areaConfigEntries)) {
             $hash = crc32($this->id);
             $index = $hash % count(self::DEFAULT_PRIZES);
-            return self::DEFAULT_PRIZES[$index];
+            return [self::DEFAULT_PRIZES[$index]];
         }
 
         $areaConfig = $areaConfigEntries[$this->id];
