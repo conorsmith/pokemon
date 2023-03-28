@@ -85,6 +85,7 @@ final class TrainerClass
     public const CRUSH_KIN = "f1730617-4401-4bfc-97ea-10f82af1fcf0";
     public const PAINTER = "c58a9944-fc78-490c-b00a-905dab0536b8";
     public const TEAM_ROCKET_ADMIN = "efbbd054-7571-42b3-8fb5-a04d951b76fd";
+    public const BOSS = "79bfa414-bdd4-4964-8a15-a4f581cf4137";
 
     public static function getLabel(string $id): string
     {
@@ -169,6 +170,7 @@ final class TrainerClass
             self::CRUSH_KIN => "Crush Kin",
             self::PAINTER => "Painter",
             self::TEAM_ROCKET_ADMIN => "Team Rocket Admin",
+            self::BOSS => "Boss",
         };
     }
 
@@ -180,18 +182,25 @@ final class TrainerClass
             self::GYM_LEADER => null,
             self::BLACK_BELT => "https://archives.bulbagarden.net/media/upload/8/8e/Spr_FRLG_Black_Belt.png",
             self::COOLTRAINER => match ($gender) {
-                Gender::MALE => "https://archives.bulbagarden.net/media/upload/b/b8/Spr_FRLG_Cooltrainer_M.png",
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/7/7f/Spr_FRLG_Cooltrainer_F.png",
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/b/b8/Spr_FRLG_Cooltrainer_M.png",
             },
             self::TAMER => "https://archives.bulbagarden.net/media/upload/8/89/Spr_FRLG_Tamer.png",
             self::LASS => "https://archives.bulbagarden.net/media/upload/4/46/Spr_FRLG_Lass.png",
             self::YOUNGSTER => "https://archives.bulbagarden.net/media/upload/d/d5/Spr_FRLG_Youngster.png",
             self::SUPER_NERD => "https://archives.bulbagarden.net/media/upload/1/1f/Spr_FRLG_Super_Nerd.png",
             self::HIKER => "https://archives.bulbagarden.net/media/upload/8/8c/Spr_FRLG_Hiker.png",
-            self::TEAM_ROCKET_GRUNT => "https://archives.bulbagarden.net/media/upload/8/85/Spr_FRLG_Team_Rocket_Grunt_M.png",
+            self::TEAM_ROCKET_GRUNT => match ($gender) {
+                Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/6/68/Spr_FRLG_Team_Rocket_Grunt_F.png",
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/8/85/Spr_FRLG_Team_Rocket_Grunt_M.png",
+            },
+            self::TEAM_ROCKET_ADMIN => match ($gender) {
+                Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/6/68/Spr_FRLG_Team_Rocket_Grunt_F.png",
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/8/85/Spr_FRLG_Team_Rocket_Grunt_M.png",
+            },
             self::SWIMMER => match ($gender) {
-                Gender::MALE => "https://archives.bulbagarden.net/media/upload/9/95/Spr_FRLG_Swimmer_M.png",
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/4/4d/Spr_FRLG_Swimmer_F.png",
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/9/95/Spr_FRLG_Swimmer_M.png",
             },
             self::PICNICKER => "https://archives.bulbagarden.net/media/upload/a/a0/Spr_FRLG_Picnicker.png",
             self::SAILOR => "https://archives.bulbagarden.net/media/upload/a/a1/Spr_FRLG_Sailor.png",
@@ -199,13 +208,14 @@ final class TrainerClass
             self::GENTLEMAN => "https://archives.bulbagarden.net/media/upload/9/94/Spr_FRLG_Gentleman.png",
             self::FISHERMAN => match($gender) {
                 Gender::MALE => "https://archives.bulbagarden.net/media/upload/c/c7/Spr_FRLG_Fisherman.png",
+                default => "https://archives.bulbagarden.net/media/upload/c/c7/Spr_FRLG_Fisherman.png",
             },
             self::GAMER => "https://archives.bulbagarden.net/media/upload/1/1e/Spr_FRLG_Gamer.png",
             self::POKEMANIAC => "https://archives.bulbagarden.net/media/upload/0/0e/Spr_FRLG_Pok%C3%A9Maniac.png",
             self::CHANNELER => "https://archives.bulbagarden.net/media/upload/1/1e/Spr_FRLG_Channeler.png",
             self::TWINS => "https://archives.bulbagarden.net/media/upload/a/ab/Spr_FRLG_Twins.png",
             self::BIKER => "https://archives.bulbagarden.net/media/upload/6/6e/Spr_FRLG_Biker.png",
-            self::TEAM_ROCKET_ADMIN => "https://archives.bulbagarden.net/media/upload/4/41/Spr_FRLG_Giovanni.png",
+            self::BOSS => "https://archives.bulbagarden.net/media/upload/4/41/Spr_FRLG_Giovanni.png",
             self::YOUNG_COUPLE => "https://archives.bulbagarden.net/media/upload/2/2b/Spr_FRLG_Young_Couple.png",
             self::CUE_BALL => "https://archives.bulbagarden.net/media/upload/1/19/Spr_FRLG_Cue_Ball.png",
             self::BIRD_KEEPER => "https://archives.bulbagarden.net/media/upload/b/b2/Spr_FRLG_Bird_Keeper.png",
@@ -225,6 +235,10 @@ final class TrainerClass
             },
             self::AROMA_LADY => "https://archives.bulbagarden.net/media/upload/f/f9/Spr_FRLG_Aroma_Lady.png",
             self::TUBER => "https://archives.bulbagarden.net/media/upload/8/89/Spr_FRLG_Tuber.png",
+            self::POKEMON_BREEDER => "https://archives.bulbagarden.net/media/upload/3/3e/Spr_FRLG_Pok%C3%A9mon_Breeder.png",
+            self::PAINTER => "https://archives.bulbagarden.net/media/upload/b/bd/Spr_FRLG_Painter.png",
+            self::LADY => "https://archives.bulbagarden.net/media/upload/9/91/Spr_FRLG_Lady.png",
+            self::RUIN_MANIAC => "https://archives.bulbagarden.net/media/upload/8/81/Spr_FRLG_Ruin_Maniac.png",
             default => null,
         };
     }
@@ -262,31 +276,36 @@ final class TrainerClass
             self::RICH_BOY,
             self::COOL_COUPLE,
             self::TEAM_ROCKET_ADMIN,
+            self::BOSS,
         ]);
     }
 
     public static function getAdditionalPrizePoolItems(string $id): array
     {
         return match($id) {
+            self::AROMA_LADY => [ItemId::SHINY_STONE],
             self::BEAUTY => [ItemId::ICE_STONE],
             self::BIKER => [ItemId::THUNDER_STONE],
             self::BLACK_BELT => [ItemId::PROTECTOR],
             self::CAMPER => [ItemId::LEAF_STONE],
-            self::CHANNELER => [ItemId::MOON_STONE],
+            self::CHANNELER => [ItemId::REAPER_CLOTH],
             self::COOLTRAINER => [ItemId::DRAGON_SCALE, ItemId::KINGS_ROCK, ItemId::METAL_COAT],
             self::CUE_BALL => [ItemId::FIRE_STONE],
-            self::ENGINEER => [ItemId::UPGRADE],
-            self::FISHERMAN => [ItemId::WATER_STONE],
+            self::ENGINEER => [ItemId::THUNDER_STONE],
+            self::FISHERMAN => [ItemId::WATER_STONE, ItemId::DEEP_SEA_TOOTH],
             self::HIKER => [ItemId::MOON_STONE],
             self::LASS => [ItemId::SUN_STONE],
             self::PICNICKER => [ItemId::LEAF_STONE],
             self::POKEMANIAC => [ItemId::ELECTIRIZER, ItemId::MAGMARIZER],
+            self::POKEMON_BREEDER => [ItemId::PRISM_SCALE],
+            self::POKEMON_RANGER => [ItemId::DAWN_STONE, ItemId::DUSK_STONE],
             self::PSYCHIC => [ItemId::SUN_STONE],
-            self::SAILOR => [ItemId::WATER_STONE],
+            self::RUIN_MANIAC => [ItemId::RAZOR_FANG, ItemId::RAZOR_CLAW],
+            self::SAILOR => [ItemId::WATER_STONE, ItemId::DEEP_SEA_SCALE],
             self::SCIENTIST => [ItemId::UPGRADE, ItemId::DUBIOUS_DISC],
             self::SUPER_NERD => [ItemId::LINKING_CORD],
             self::SWIMMER => [ItemId::WATER_STONE],
-            self::TAMER => [ItemId::BLACK_AUGURITE],
+            self::TAMER => [ItemId::BLACK_AUGURITE, ItemId::PEAT_BLOCK],
             default => [],
         };
     }
@@ -297,6 +316,7 @@ final class TrainerClass
             self::GYM_LEADER,
             self::CHAMPION,
             self::ROCKET_EXECUTIVE,
+            self::BOSS,
             self::TEAM_ROCKET_ADMIN,
             self::AQUA_ADMIN,
             self::AQUA_LEADER,

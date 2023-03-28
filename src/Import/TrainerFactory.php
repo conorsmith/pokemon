@@ -33,7 +33,9 @@ final class TrainerFactory
             $trainers[] = new Trainer(
                 Uuid::uuid4()->toString(),
                 self::createTrainerClassFromName($bulbapediaTrainer['trainer']['class']),
-                self::createGenderFromClassName($bulbapediaTrainer['trainer']['class']),
+                is_null($bulbapediaTrainer['trainer']['gender'])
+                    ? self::createGenderFromClassName($bulbapediaTrainer['trainer']['class'])
+                    : self::createGenderFromValue($bulbapediaTrainer['trainer']['gender']),
                 $bulbapediaTrainer['trainer']['name'],
                 $team,
             );
@@ -50,6 +52,11 @@ final class TrainerFactory
         $constantName = str_replace(" ", "_", $constantName);
         $constantName = str_replace("♀", "", $constantName);
         $constantName = str_replace("♂", "", $constantName);
+        $constantName = str_replace("é", "E", $constantName);
+
+        if ($constantName === "EXECUTIVE") {
+            return TrainerClass::TEAM_ROCKET_ADMIN;
+        }
 
         return $trainerClassReflector->getConstants()[$constantName];
     }
@@ -63,9 +70,21 @@ final class TrainerFactory
         };
     }
 
+    public function createGenderFromValue(string $value): Gender
+    {
+        return match($value) {
+            "F" => Gender::female(),
+            "M" => Gender::male(),
+        };
+    }
+
     private function createPokedexNumberFromPokemonName(string $name): PokedexNumber
     {
         $pokedexNoReflector = new ReflectionClass(PokedexNo::class);
+
+        $name = str_replace(" ", "_", $name);
+        $name = str_replace("'", "_", $name);
+        $name = str_replace(".", "", $name);
 
         return new PokedexNumber(
             $pokedexNoReflector->getConstants()[strtoupper($name)],

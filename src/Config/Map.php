@@ -965,6 +965,9 @@ return [
             LocationId::BOON_ISLAND,
             LocationId::KIN_ISLAND_PORT,
             LocationId::FLOE_ISLAND,
+            LocationId::CHRONO_ISLAND,
+            LocationId::FORTUNE_ISLAND,
+            LocationId::QUEST_ISLAND,
         ],
     ],
     [
@@ -1206,6 +1209,385 @@ return [
         'area' => LocationId::ICEFALL_CAVE,
         'directions' => [
             Direction::S => LocationId::ICEFALL_CAVE_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::CHRONO_ISLAND,
+        'name' => "Chrono Island",
+        'directions' => [
+            Direction::N => LocationId::WATER_LABYRINTH,
+            Direction::E => LocationId::CHRONO_ISLE_MEADOW,
+            LocationId::SEAGALLOP_FERRY,
+        ],
+    ],
+    [
+        'id' => LocationId::WATER_LABYRINTH,
+        'name' => "Water Labyrinth",
+        'directions' => [
+            Direction::N => LocationId::RESORT_GORGEOUS,
+            Direction::S => LocationId::CHRONO_ISLAND,
+        ],
+    ],
+    [
+        'id' => LocationId::RESORT_GORGEOUS,
+        'name' => "Resort Gorgeous",
+        'directions' => [
+            Direction::E => LocationId::LOST_CAVE_1F,
+            Direction::S => LocationId::WATER_LABYRINTH,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_1F,
+        'name' => "Lost Cave",
+        'section' => "Entrance",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            LocationId::RESORT_GORGEOUS,
+            LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_1,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_1,
+            Direction::E => LocationId::LOST_CAVE_B1F_2,
+            Direction::W => LocationId::LOST_CAVE_B1F_1,
+            Direction::S => LocationId::LOST_CAVE_B1F_1,
+            LocationId::LOST_CAVE_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_2,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_3,
+            Direction::E => LocationId::LOST_CAVE_B1F_1,
+            Direction::W => LocationId::LOST_CAVE_B1F_1,
+            Direction::S => LocationId::LOST_CAVE_B1F_4,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_3,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_1,
+            Direction::E => LocationId::LOST_CAVE_B1F_1,
+            Direction::W => LocationId::LOST_CAVE_B1F_1,
+            Direction::S => LocationId::LOST_CAVE_B1F_5,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_4,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_5,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_6,
+            Direction::E => LocationId::LOST_CAVE_B1F_1,
+            Direction::W => LocationId::LOST_CAVE_B1F_1,
+            Direction::S => LocationId::LOST_CAVE_B1F_7,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_6,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::S => LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_7,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_1,
+            Direction::E => LocationId::LOST_CAVE_B1F_8,
+            Direction::W => LocationId::LOST_CAVE_B1F_1,
+            Direction::S => LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_8,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_1,
+            Direction::E => LocationId::LOST_CAVE_B1F_9,
+            Direction::W => LocationId::LOST_CAVE_B1F_10,
+            Direction::S => LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_9,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::W => LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_10,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_1,
+            Direction::E => LocationId::LOST_CAVE_B1F_1,
+            Direction::W => LocationId::LOST_CAVE_B1F_1,
+            Direction::S => LocationId::LOST_CAVE_B1F_11,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_11,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_1,
+            Direction::E => LocationId::LOST_CAVE_B1F_12,
+            Direction::W => LocationId::LOST_CAVE_B1F_13,
+            Direction::S => LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_12,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::N => LocationId::LOST_CAVE_B1F_14,
+            Direction::E => LocationId::LOST_CAVE_B1F_1,
+            Direction::W => LocationId::LOST_CAVE_B1F_1,
+            Direction::S => LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_13,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::E => LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::LOST_CAVE_B1F_14,
+        'name' => "Lost Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::LOST_CAVE,
+        'directions' => [
+            Direction::S => LocationId::LOST_CAVE_B1F_1,
+        ],
+    ],
+    [
+        'id' => LocationId::CHRONO_ISLE_MEADOW,
+        'name' => "Chrono Isle Meadow",
+        'directions' => [
+            Direction::E => LocationId::MEMORIAL_PILLAR,
+            Direction::W => LocationId::CHRONO_ISLAND,
+            LocationId::ROCKET_WAREHOUSE,
+        ],
+    ],
+    [
+        'id' => LocationId::ROCKET_WAREHOUSE,
+        'name' => "Rocket Warehouse",
+        'directions' => [
+            LocationId::CHRONO_ISLE_MEADOW,
+        ],
+    ],
+    [
+        'id' => LocationId::MEMORIAL_PILLAR,
+        'name' => "Memorial Pillar",
+        'directions' => [
+            Direction::W => LocationId::CHRONO_ISLE_MEADOW,
+        ],
+    ],
+    [
+        'id' => LocationId::FORTUNE_ISLAND,
+        'name' => "Fortune Island",
+        'directions' => [
+            Direction::E => LocationId::WATER_PATH,
+            LocationId::SEAGALLOP_FERRY,
+        ],
+    ],
+    [
+        'id' => LocationId::WATER_PATH,
+        'name' => "Water Path",
+        'directions' => [
+            Direction::N => LocationId::GREEN_PATH,
+            Direction::W => LocationId::FORTUNE_ISLAND,
+            Direction::S => LocationId::RUIN_VALLEY,
+        ],
+    ],
+    [
+        'id' => LocationId::GREEN_PATH,
+        'name' => "Green Path",
+        'directions' => [
+            Direction::N => LocationId::OUTCAST_ISLAND,
+            Direction::S => LocationId::WATER_PATH,
+            LocationId::PATTERN_BUSH,
+        ],
+    ],
+    [
+        'id' => LocationId::PATTERN_BUSH,
+        'name' => "Pattern Bush",
+        'directions' => [
+            LocationId::GREEN_PATH,
+        ],
+    ],
+    [
+        'id' => LocationId::OUTCAST_ISLAND,
+        'name' => "Outcast Island",
+        'directions' => [
+            Direction::N => LocationId::ALTERING_CAVE,
+            Direction::S => LocationId::GREEN_PATH,
+        ],
+    ],
+    [
+        'id' => LocationId::ALTERING_CAVE,
+        'name' => "Altering Cave",
+        'directions' => [
+            Direction::S => LocationId::OUTCAST_ISLAND,
+        ],
+    ],
+    [
+        'id' => LocationId::RUIN_VALLEY,
+        'name' => "Ruin Valley",
+        'directions' => [
+            Direction::N => LocationId::WATER_PATH,
+            LocationId::DOTTED_HOLE,
+        ],
+    ],
+    [
+        'id' => LocationId::DOTTED_HOLE,
+        'name' => "Dotted Hole",
+        'directions' => [
+            LocationId::RUIN_VALLEY,
+        ],
+    ],
+    [
+        'id' => LocationId::QUEST_ISLAND,
+        'name' => "Quest Island",
+        'directions' => [
+            Direction::N => LocationId::TRAINER_TOWER,
+            Direction::S => LocationId::CANYON_ENTRANCE,
+            LocationId::SEAGALLOP_FERRY,
+        ],
+    ],
+    [
+        'id' => LocationId::TRAINER_TOWER,
+        'name' => "Trainer Tower",
+        'directions' => [
+            Direction::S => LocationId::QUEST_ISLAND,
+        ],
+    ],
+    [
+        'id' => LocationId::CANYON_ENTRANCE,
+        'name' => "Canyon Entrance",
+        'directions' => [
+            Direction::N => LocationId::QUEST_ISLAND,
+            Direction::E => LocationId::SEVAULT_CANYON,
+        ],
+    ],
+    [
+        'id' => LocationId::SEVAULT_CANYON,
+        'name' => "Sevault Canyon",
+        'directions' => [
+            Direction::W => LocationId::CANYON_ENTRANCE,
+            Direction::S => LocationId::TANOBY_RUINS,
+        ],
+    ],
+    [
+        'id' => LocationId::TANOBY_RUINS,
+        'name' => "Tanoby Ruins",
+        'section' => "Surface",
+        'directions' => [
+            Direction::N => LocationId::SEVAULT_CANYON,
+            LocationId::TANOBY_MONEAN_CHAMBER,
+            LocationId::TANOBY_LIPTOO_CHAMBER,
+            LocationId::TANOBY_WEEPTH_CHAMBER,
+            LocationId::TANOBY_DILFORD_CHAMBER,
+            LocationId::TANOBY_SCUFIB_CHAMBER,
+            LocationId::TANOBY_RIXY_CHAMBER,
+            LocationId::TANOBY_VIAPOIS_CHAMBER,
+        ],
+    ],
+    [
+        'id' => LocationId::TANOBY_MONEAN_CHAMBER,
+        'name' => "Tanoby Ruins",
+        'section' => "Monean Chamber",
+        'directions' => [
+            LocationId::TANOBY_RUINS,
+        ],
+    ],
+    [
+        'id' => LocationId::TANOBY_LIPTOO_CHAMBER,
+        'name' => "Tanoby Ruins",
+        'section' => "Liptoo Chamber",
+        'directions' => [
+            LocationId::TANOBY_RUINS,
+        ],
+    ],
+    [
+        'id' => LocationId::TANOBY_WEEPTH_CHAMBER,
+        'name' => "Tanoby Ruins",
+        'section' => "Weepth Chamber",
+        'directions' => [
+            LocationId::TANOBY_RUINS,
+        ],
+    ],
+    [
+        'id' => LocationId::TANOBY_DILFORD_CHAMBER,
+        'name' => "Tanoby Ruins",
+        'section' => "Dilford Chamber",
+        'directions' => [
+            LocationId::TANOBY_RUINS,
+        ],
+    ],
+    [
+        'id' => LocationId::TANOBY_SCUFIB_CHAMBER,
+        'name' => "Tanoby Ruins",
+        'section' => "Scufib Chamber",
+        'directions' => [
+            LocationId::TANOBY_RUINS,
+        ],
+    ],
+    [
+        'id' => LocationId::TANOBY_RIXY_CHAMBER,
+        'name' => "Tanoby Ruins",
+        'section' => "Rixy Chamber",
+        'directions' => [
+            LocationId::TANOBY_RUINS,
+        ],
+    ],
+    [
+        'id' => LocationId::TANOBY_VIAPOIS_CHAMBER,
+        'name' => "Tanoby Ruins",
+        'section' => "Viapois Chamber",
+        'directions' => [
+            LocationId::TANOBY_RUINS,
         ],
     ],
 ];

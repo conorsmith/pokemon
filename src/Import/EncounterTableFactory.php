@@ -20,15 +20,7 @@ final class EncounterTableFactory
     {
         $encounterTables = [];
 
-        if (array_slice($bulbapediaEncounters, 0, 1) instanceof BulbapediaEncounter) {
-            $encounterGroups = [
-                "Default" => $bulbapediaEncounters,
-            ];
-        } else {
-            $encounterGroups = $bulbapediaEncounters;
-        }
-
-        foreach ($encounterGroups as $key => $encounterGroup) {
+        foreach ($bulbapediaEncounters as $key => $encounterGroup) {
             $encounterTables[$key] = [];
             /** @var BulbapediaEncounter $encounter */
             foreach ($encounterGroup as $encounter) {
@@ -72,7 +64,11 @@ final class EncounterTableFactory
             return new EncounterType(EncounterTypeConstants::FISHING);
         }
 
-        if ($value === "Only one") {
+        if ($value === "Rock Smash") {
+            return new EncounterType(EncounterTypeConstants::ROCK_SMASH);
+        }
+
+        if ($value === "Only one" || $value === "Egg") {
             return EncounterType::irrelevant();
         }
 

@@ -43,7 +43,9 @@ final class TrainersConfig
             $config .= "        'gender' => " . self::encodeGender($trainer->gender) . "," . PHP_EOL;
 
         }
-        $config .= "        'name' => \"{$trainer->name}\"," . PHP_EOL;
+        if ($trainer->name !== "") {
+            $config .= "        'name' => \"{$trainer->name}\"," . PHP_EOL;
+        }
         $config .= "        'team' => [" . PHP_EOL;
         /** @var TrainerPokemon $pokemon */
         foreach ($trainer->team as $pokemon) {
