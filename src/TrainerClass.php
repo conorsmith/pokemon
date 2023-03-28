@@ -193,6 +193,7 @@ final class TrainerClass
             self::TEAM_ROCKET_GRUNT => match ($gender) {
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/6/68/Spr_FRLG_Team_Rocket_Grunt_F.png",
                 Gender::MALE => "https://archives.bulbagarden.net/media/upload/8/85/Spr_FRLG_Team_Rocket_Grunt_M.png",
+                default => "https://archives.bulbagarden.net/media/upload/8/85/Spr_FRLG_Team_Rocket_Grunt_M.png",
             },
             self::TEAM_ROCKET_ADMIN => match ($gender) {
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/6/68/Spr_FRLG_Team_Rocket_Grunt_F.png",
