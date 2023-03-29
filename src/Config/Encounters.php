@@ -4999,4 +4999,20 @@ return [
             ],
         ],
     ],
+    LocationId::TANOBY_MONEAN_CHAMBER => [
+        EncounterType::WALKING => [
+            PokedexNo::UNOWN => [
+                [
+                    'form' => "A",
+                    'weight' => 99,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "?",
+                    'weight' => 1,
+                    'levels' => 25,
+                ],
+            ],
+        ],
+    ],
 ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Repositories;
 
 use ConorSmith\Pokemon\Battle\Domain\Encounter;
+use ConorSmith\Pokemon\Battle\Domain\EncounterTableEntry;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
@@ -31,10 +32,9 @@ final class EncounterRepository
             throw new Exception;
         }
 
-        $number = self::generateEncounteredPokemon($encounterTable);
-        $level = self::generateEncounteredLevel($encounterTable, $number);
+        $encounterTableEntry = self::randomlySelectEntry($encounterTable);
 
-        return $this->generate($number, $level);
+        return $this->generate($encounterTableEntry->pokedexNumber, $encounterTableEntry->generateLevel());
     }
 
     public function generateLegendaryEncounter(string $number): Encounter
@@ -191,52 +191,67 @@ final class EncounterRepository
             return null;
         }
 
-        foreach ($encountersConfig[$locationId] as $key => $value) {
+        foreach ($encountersConfig[$locationId] as $key => $encounterTableConfig) {
             if ($key === $encounterType) {
-                return $value;
+                return self::createEncounterTableEntries($encounterTableConfig);
             }
         }
 
         return null;
     }
 
-    private function findLocation(string $id): array
+    private static function createEncounterTableEntries(array $encounterTableConfig): array
     {
-        /** @var array $location */
-        foreach ($this->map as $location) {
-            if ($location['id'] === $id) {
-                return $location;
+        $entries = [];
+
+        foreach ($encounterTableConfig as $pokedexNumber => $entryConfig) {
+            if (array_key_exists('weight', $entryConfig)) {
+                $entries[] = self::createEncounterTableEntry(strval($pokedexNumber), $entryConfig);
+            } else {
+                foreach ($entryConfig as $formEntryConfig) {
+                    $entries[] = self::createEncounterTableEntry(strval($pokedexNumber), $formEntryConfig);
+                }
+            }
+        }
+
+        return $entries;
+    }
+
+    private static function createEncounterTableEntry(string $pokedexNumber, array $entryConfig): EncounterTableEntry
+    {
+        return new EncounterTableEntry(
+            $pokedexNumber,
+            $entryConfig['weight'],
+            is_array($entryConfig['levels'])
+                ? $entryConfig['levels'][0]
+                : $entryConfig['levels'],
+            is_array($entryConfig['levels'])
+                ? $entryConfig['levels'][1]
+                : $entryConfig['levels'],
+        );
+    }
+
+    private static function randomlySelectEntry(array $encounterTable): EncounterTableEntry
+    {
+        $aggregatedWeight = array_reduce(
+            $encounterTable,
+            function ($carry, EncounterTableEntry $encounterTableEntry) {
+                return $carry + $encounterTableEntry->weight;
+            },
+            0,
+        );
+
+        $randomlySelectedValue = mt_rand(1, $aggregatedWeight);
+
+        /** @var EncounterTableEntry $encounterTableEntry */
+        foreach ($encounterTable as $encounterTableEntry) {
+            $randomlySelectedValue -= $encounterTableEntry->weight;
+            if ($randomlySelectedValue <= 0) {
+                return $encounterTableEntry;
             }
         }
 
         throw new Exception;
-    }
-
-    private static function generateEncounteredPokemon(array $encounterTable): string
-    {
-        $selectedValue = mt_rand(1, array_reduce($encounterTable, function ($carry, array $encounterData) {
-            return $carry + $encounterData['weight'];
-        }, 0));
-
-        foreach ($encounterTable as $pokemonId => $encounterData) {
-            $selectedValue -= $encounterData['weight'];
-            if ($selectedValue <= 0) {
-                return strval($pokemonId);
-            }
-        }
-
-        throw new Exception;
-    }
-
-    private static function generateEncounteredLevel(array $encounterTable, string $pokemonId): int
-    {
-        $levels = $encounterTable[$pokemonId]['levels'];
-
-        if (is_int($levels)) {
-            return $levels;
-        }
-
-        return mt_rand($levels[0], $levels[1]);
     }
 
     private function generateEncounteredShininess(): bool
