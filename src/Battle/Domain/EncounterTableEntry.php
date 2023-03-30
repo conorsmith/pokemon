@@ -7,6 +7,7 @@ final class EncounterTableEntry
 {
     public function __construct(
         public readonly string $pokedexNumber,
+        public readonly ?string $form,
         public readonly int $weight,
         public readonly int $levelsLowerBound,
         public readonly int $levelsUpperBound,

@@ -32,33 +32,39 @@ final class EncounterRepository
             throw new Exception;
         }
 
-        $encounterTableEntry = self::randomlySelectEntry($encounterTable);
-
-        return $this->generate($encounterTableEntry->pokedexNumber, $encounterTableEntry->generateLevel());
+        return $this->generate(
+            self::randomlySelectEntry($encounterTable)
+        );
     }
 
     public function generateLegendaryEncounter(string $number): Encounter
     {
-        return $this->generate($number, self::findLegendaryPokemonLevel($number));
+        return $this->generate(new EncounterTableEntry(
+            $number,
+            null,
+            1,
+            self::findLegendaryPokemonLevel($number),
+            self::findLegendaryPokemonLevel($number),
+        ));
     }
 
-    private function generate(string $number, int $level): Encounter
+    private function generate(EncounterTableEntry $encounterTableEntry): Encounter
     {
         $isShiny = $this->generateEncounteredShininess();
 
         $encounterId = Uuid::uuid4()->toString();
 
-        $pokedexEntry = $this->pokedex[$number];
+        $pokedexEntry = $this->pokedex[$encounterTableEntry->pokedexNumber];
 
         $pokemon = new Pokemon(
             $encounterId,
-            $number,
+            $encounterTableEntry->pokedexNumber,
             $pokedexEntry['type'][0],
             $pokedexEntry['type'][1] ?? null,
-            $level,
+            $encounterTableEntry->generateLevel(),
             0,
             $isShiny,
-            self::createStats($number),
+            self::createStats($encounterTableEntry->pokedexNumber),
             0,
             false,
         );
@@ -221,6 +227,7 @@ final class EncounterRepository
     {
         return new EncounterTableEntry(
             $pokedexNumber,
+            $entryConfig['form'] ?? null,
             $entryConfig['weight'],
             is_array($entryConfig['levels'])
                 ? $entryConfig['levels'][0]
