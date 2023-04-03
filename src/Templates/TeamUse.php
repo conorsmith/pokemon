@@ -21,7 +21,12 @@
                     <img src="<?=$pokemon->imageUrl?>">
                 </div>
                 <div>
-                    <h5><?=$pokemon->name?></h5>
+                    <h5>
+                        <?=$pokemon->name?>
+                        <?php if ($pokemon->form) : ?>
+                            <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$pokemon->form?> Form</span>
+                        <?php endif ?>
+                     </h5>
                     <p class="mb-0">
                         <span>
                             <span class="badge bg-<?=$pokemon->primaryType?>" style="text-transform: uppercase;">

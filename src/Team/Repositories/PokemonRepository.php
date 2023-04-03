@@ -141,6 +141,7 @@ final class PokemonRepository
         return new Pokemon(
             $row['id'],
             $row['pokemon_id'],
+            $row['form'],
             $this->pokemonConfigRepository->findType($row['pokemon_id']),
             intval($row['level']),
             $this->calculateFriendship($row),

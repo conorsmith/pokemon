@@ -8,6 +8,7 @@ final class Pokemon
     public function __construct(
         public readonly string $id,
         public readonly string $number,
+        public readonly ?string $form,
         public readonly Type $type,
         public readonly int $level,
         public readonly int $friendship,
@@ -45,6 +46,7 @@ final class Pokemon
         return new self(
             $this->id,
             $this->number,
+            $this->form,
             $this->type,
             $this->level + 1,
             $this->friendship,

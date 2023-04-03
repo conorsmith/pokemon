@@ -18,7 +18,8 @@ final class Pokemon
         return new self(
             $pokemon->id,
             $pokemonConfig['name'],
-            TeamMember::createImageUrl($pokemon->number),
+            $pokemon->form,
+            TeamMember::createImageUrl($pokemon->number, $pokemon->form),
             ViewModelFactory::createPokemonTypeName($pokemonConfig['type'][0]),
             isset($pokemonConfig['type'][1]) ? ViewModelFactory::createPokemonTypeName($pokemonConfig['type'][1]) : null,
             strval($pokemon->level),
@@ -40,6 +41,7 @@ final class Pokemon
     public function __construct(
         public readonly string $id,
         public readonly string $name,
+        public readonly ?string $form,
         public readonly string $imageUrl,
         public readonly string $primaryType,
         public readonly ?string $secondaryType,

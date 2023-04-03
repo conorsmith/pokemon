@@ -38,6 +38,7 @@ final class PlayerRepository
             $team[] = new Pokemon(
                 $caughtPokemonRow['id'],
                 $caughtPokemonRow['pokemon_id'],
+                $caughtPokemonRow['form'],
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,
                 $caughtPokemonRow['level'],

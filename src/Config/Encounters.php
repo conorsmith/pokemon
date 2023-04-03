@@ -5015,4 +5015,170 @@ return [
             ],
         ],
     ],
+    LocationId::TANOBY_LIPTOO_CHAMBER => [
+        EncounterType::WALKING => [
+            PokedexNo::UNOWN => [
+                [
+                    'form' => "C",
+                    'weight' => 50,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "D",
+                    'weight' => 30,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "H",
+                    'weight' => 14,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "U",
+                    'weight' => 5,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "O",
+                    'weight' => 1,
+                    'levels' => 25,
+                ],
+            ],
+        ],
+    ],
+    LocationId::TANOBY_WEEPTH_CHAMBER => [
+        EncounterType::WALKING => [
+            PokedexNo::UNOWN => [
+                [
+                    'form' => "N",
+                    'weight' => 60,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "S",
+                    'weight' => 30,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "I",
+                    'weight' => 8,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "E",
+                    'weight' => 2,
+                    'levels' => 25,
+                ],
+            ],
+        ],
+    ],
+    LocationId::TANOBY_DILFORD_CHAMBER => [
+        EncounterType::WALKING => [
+            PokedexNo::UNOWN => [
+                [
+                    'form' => "P",
+                    'weight' => 40,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "J",
+                    'weight' => 20,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "L",
+                    'weight' => 20,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "R",
+                    'weight' => 14,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "Q",
+                    'weight' => 6,
+                    'levels' => 25,
+                ],
+            ],
+        ],
+    ],
+    LocationId::TANOBY_SCUFIB_CHAMBER => [
+        EncounterType::WALKING => [
+            PokedexNo::UNOWN => [
+                [
+                    'form' => "Y",
+                    'weight' => 40,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "G",
+                    'weight' => 25,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "T",
+                    'weight' => 20,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "F",
+                    'weight' => 13,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "K",
+                    'weight' => 2,
+                    'levels' => 25,
+                ],
+            ],
+        ],
+    ],
+    LocationId::TANOBY_RIXY_CHAMBER => [
+        EncounterType::WALKING => [
+            PokedexNo::UNOWN => [
+                [
+                    'form' => "V",
+                    'weight' => 50,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "W",
+                    'weight' => 30,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "X",
+                    'weight' => 10,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "M",
+                    'weight' => 8,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "B",
+                    'weight' => 2,
+                    'levels' => 25,
+                ],
+            ],
+        ],
+    ],
+    LocationId::TANOBY_VIAPOIS_CHAMBER => [
+        EncounterType::WALKING => [
+            PokedexNo::UNOWN => [
+                [
+                    'form' => "Z",
+                    'weight' => 99,
+                    'levels' => 25,
+                ],
+                [
+                    'form' => "!",
+                    'weight' => 1,
+                    'levels' => 25,
+                ],
+            ],
+        ],
+    ],
 ];

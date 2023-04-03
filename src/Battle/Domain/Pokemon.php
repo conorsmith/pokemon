@@ -8,6 +8,7 @@ final class Pokemon
     public function __construct(
         public readonly string $id,
         public readonly string $number,
+        public readonly ?string $form,
         public readonly int $primaryType,
         public readonly ?int $secondaryType,
         public readonly int $level,

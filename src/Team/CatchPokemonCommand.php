@@ -25,6 +25,7 @@ final class CatchPokemonCommand implements CommandInterface
 
     public function run(
         string $number,
+        ?string $form,
         bool $isShiny,
         int $level,
         bool $isLegendary,
@@ -48,6 +49,7 @@ final class CatchPokemonCommand implements CommandInterface
         $pokemon = new Pokemon(
             Uuid::uuid4()->toString(),
             $number,
+            $form,
             $this->pokemonConfigRepository->findType($number),
             $level,
             0,
@@ -64,6 +66,7 @@ final class CatchPokemonCommand implements CommandInterface
             'id' => $pokemon->id,
             'instance_id' => INSTANCE_ID,
             'pokemon_id' => $pokemon->number,
+            'form' => $form,
             'is_shiny' => $pokemon->isShiny ? 1 : 0,
             'iv_physical_attack' => $pokemon->physicalAttack->iv,
             'iv_physical_defence' => $pokemon->physicalDefence->iv,
@@ -79,9 +82,10 @@ final class CatchPokemonCommand implements CommandInterface
             'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
         ]);
 
-        $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
+        $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number AND form = :form", [
             'instanceId' => INSTANCE_ID,
             'number' => $pokemon->number,
+            'form' => $pokemon->form,
         ]);
 
         if ($pokedexRow === false) {
@@ -89,6 +93,7 @@ final class CatchPokemonCommand implements CommandInterface
                 'id' => Uuid::uuid4(),
                 'instance_id' => INSTANCE_ID,
                 'number' => $pokemon->number,
+                'form' => $pokemon->form,
                 'date_added' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
             ]);
         }

@@ -7,6 +7,7 @@ interface CatchPokemonCommand
 {
     public function run(
         string $number,
+        ?string $form,
         bool $isShiny,
         int $level,
         bool $isLegendary,

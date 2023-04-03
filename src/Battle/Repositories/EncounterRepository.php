@@ -59,6 +59,7 @@ final class EncounterRepository
         $pokemon = new Pokemon(
             $encounterId,
             $encounterTableEntry->pokedexNumber,
+            $encounterTableEntry->form,
             $pokedexEntry['type'][0],
             $pokedexEntry['type'][1] ?? null,
             $encounterTableEntry->generateLevel(),
@@ -96,6 +97,7 @@ final class EncounterRepository
         $pokemon = new Pokemon(
             $id,
             $encounterRow['pokemon_id'],
+            $encounterRow['form'],
             $pokedexEntry['type'][0],
             $pokedexEntry['type'][1] ?? null,
             $encounterRow['level'],
@@ -132,6 +134,7 @@ final class EncounterRepository
                 'id' => $encounter->id,
                 'instance_id' => INSTANCE_ID,
                 'pokemon_id' => $encounter->pokemon->number,
+                'form' => $encounter->pokemon->form,
                 'level' => $encounter->pokemon->level,
                 'is_shiny' => $encounter->pokemon->isShiny ? 1 : 0,
                 'is_legendary' => $encounter->isLegendary ? 1 : 0,

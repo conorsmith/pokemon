@@ -108,6 +108,7 @@ class TrainerRepository
             $pokemon = new Pokemon(
                 $trainerBattlePokemonId,
                 $pokemonConfig['id'],
+                $pokemonConfig['form'] ?? null,
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,
                 $pokemonConfig['level'],

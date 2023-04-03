@@ -20,7 +20,8 @@ final class ViewModelFactory
         return (object) [
             'id' => $pokemon->id,
             'name' => $this->pokedex[$pokemon->number]['name'],
-            'imageUrl' => TeamMember::createImageUrl($pokemon->number),
+            'form' => $pokemon->form,
+            'imageUrl' => TeamMember::createImageUrl($pokemon->number, $pokemon->form),
             'primaryType' => self::createPokemonTypeName($pokemon->primaryType),
             'secondaryType' => is_null($pokemon->secondaryType) ? null : self::createPokemonTypeName($pokemon->secondaryType),
             'level' => strval($pokemon->level),
@@ -33,7 +34,8 @@ final class ViewModelFactory
         return new PokemonVm(
             $pokemon->id,
             $this->pokedex[$pokemon->number]['name'],
-            TeamMember::createImageUrl($pokemon->number),
+            $pokemon->form,
+            TeamMember::createImageUrl($pokemon->number, $pokemon->form),
             self::createPokemonTypeName($pokemon->primaryType),
             is_null($pokemon->secondaryType) ? null : self::createPokemonTypeName($pokemon->secondaryType),
             strval($pokemon->level),

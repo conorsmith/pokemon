@@ -21,7 +21,12 @@
             <img src="<?=$opponentPokemon->imageUrl?>">
         </div>
         <div style="text-align: right; flex-grow: 1;">
-            <h5><?=$opponentPokemon->name?></h5>
+            <h5>
+                <?=$opponentPokemon->name?>
+                <?php if ($opponentPokemon->form) : ?>
+                    <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$opponentPokemon->form?> Form</span>
+                <?php endif ?>
+            </h5>
             <div class="mb-3 d-flex flex-row-reverse">
                 <span class="js-types">
                     <span class="badge bg-<?=$opponentPokemon->primaryType?>" style="text-transform: uppercase;">
@@ -50,7 +55,12 @@
             <img src="<?=$playerPokemon->imageUrl?>">
         </div>
         <div style="flex-grow: 1">
-            <h5><?=$playerPokemon->name?></h5>
+            <h5>
+                <?=$playerPokemon->name?>
+                <?php if ($playerPokemon->form) : ?>
+                    <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$playerPokemon->form?> Form</span>
+                <?php endif ?>
+            </h5>
             <div class="mb-3">
                 <span class="js-types">
                     <span class="badge bg-<?=$playerPokemon->primaryType?>" style="text-transform: uppercase;">
