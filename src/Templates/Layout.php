@@ -137,7 +137,7 @@
 
 </div>
 
-<div class="position-fixed bottom-0 end-0 m-3 d-flex align-items-end">
+<div class="position-fixed bottom-0 end-0 m-3 d-flex align-items-end" style="z-index: 2;">
     <div class="list-group mx-3 d-none" style="box-shadow: 0px 0px 0.6rem 0px rgba(0,0,0,0.3);">
         <a href="/log/food-diary" class="list-group-item list-group-item-action">Log Completed Food Diary</a>
         <a href="/log/calorie-goal" class="list-group-item list-group-item-action">Log Attained Calorie Goal</a>
