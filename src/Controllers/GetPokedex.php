@@ -64,6 +64,34 @@ final class GetPokedex
             }
         }
 
+        $configuredPokemonNumbers = array_keys($this->pokedex);
+
+        $lastEntryNumber = count($viewModels);
+        $entryNumbersToRemove = [];
+
+        foreach ($configuredPokemonNumbers as $i => $number) {
+            if ($i < 4 || $i > $lastEntryNumber - 3) {
+                continue;
+            }
+
+            if (is_null($viewModels[$configuredPokemonNumbers[$i]])
+                && is_null($viewModels[$configuredPokemonNumbers[$i - 1]])
+                && is_null($viewModels[$configuredPokemonNumbers[$i - 2]])
+                && is_null($viewModels[$configuredPokemonNumbers[$i - 3]])
+                && is_null($viewModels[$configuredPokemonNumbers[$i + 1]])
+                && is_null($viewModels[$configuredPokemonNumbers[$i + 2]])
+                && is_null($viewModels[$configuredPokemonNumbers[$i + 3]])
+            ) {
+                $entryNumbersToRemove[] = $configuredPokemonNumbers[$i];
+            }
+        }
+
+        foreach ($viewModels as $number => $viewModel) {
+            if (in_array($number, $entryNumbersToRemove)) {
+                unset($viewModels[$number]);
+            }
+        }
+
         echo TemplateEngine::render(__DIR__ . "/../Templates/Pokedex.php", [
             'count' => count($rows),
             'pokedex' => $viewModels,

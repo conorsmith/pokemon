@@ -8,7 +8,13 @@
             <strong><?=$count?></strong> entries
         </li>
 
+        <?php $previousNumber = null ?>
         <?php foreach ($pokedex as $number => $pokemon) : ?>
+            <?php if ($number !== $previousNumber + 1) : ?>
+                <li class="list-group-item" style="text-align: center; color: #aaa;">
+                    <i class="fas fa-ellipsis-v"></i>
+                </li>
+            <?php endif ?>
             <li class="list-group-item d-flex">
                 <?php if ($pokemon) : ?>
                     <div class="pokemon-image">
@@ -102,6 +108,7 @@
                     </li>
                 <?php endforeach ?>
             <?php endif ?>
+            <?php $previousNumber = $number ?>
         <?php endforeach ?>
     </ul>
 
