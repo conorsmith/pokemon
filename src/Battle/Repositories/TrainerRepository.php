@@ -182,6 +182,17 @@ class TrainerRepository
             }
         }
 
+        $eliteFourConfig = require __DIR__ . "/../../Config/EliteFour.php";
+
+        foreach ($eliteFourConfig as $config) {
+            foreach ($config['members'] as $member) {
+                if ($member['id'] === $id) {
+                    $member['locationId'] = $config['location'];
+                    return $member;
+                }
+            }
+        }
+
         throw new Exception;
     }
 

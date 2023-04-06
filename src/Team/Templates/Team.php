@@ -1,13 +1,5 @@
 <div class="d-grid gap-4">
 
-    <?php foreach ($errors as $error) : ?>
-        <div class="alert alert-danger"><?=$error?></div>
-    <?php endforeach ?>
-
-    <?php foreach ($successes as $success) : ?>
-        <div class="alert alert-success"><?=$success?></div>
-    <?php endforeach ?>
-
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div><strong>Team</strong></div>

@@ -1,9 +1,5 @@
 <?php require __DIR__ . "/BattleScript.php" ?>
 
-<?php foreach ($errors as $error) : ?>
-    <div class="alert alert-danger"><?=$error?></div>
-<?php endforeach ?>
-
 <ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
     <li class="list-group-item" style="text-align: center;">
         <div><strong><?=$trainer->name?></strong></div>

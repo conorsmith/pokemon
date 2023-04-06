@@ -1,7 +1,3 @@
-<?php foreach ($successes as $success) : ?>
-    <div class="alert alert-success"><?=$success?></div>
-<?php endforeach ?>
-
 <style>
     .bagSummary img {
         width: 24px;

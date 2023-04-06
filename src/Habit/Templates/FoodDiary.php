@@ -6,10 +6,6 @@
         <strong><?=$streak?></strong> day streak
     </div>
 
-    <?php foreach ($errors as $error) : ?>
-        <div class="alert alert-danger"><?=$error?></div>
-    <?php endforeach ?>
-
     <form method="POST" class="d-grid">
         <input type="hidden" name="date" value="<?=$yesterday?>">
         <button type="submit" class="btn btn-primary btn-lg" <?=$isYesterdayLogged ? "disabled" : ""?>>Completed Yesterday's Food Diary</button>

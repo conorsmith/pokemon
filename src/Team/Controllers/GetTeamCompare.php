@@ -6,7 +6,6 @@ namespace ConorSmith\Pokemon\Team\Controllers;
 use ConorSmith\Pokemon\PokemonType;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
-use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use stdClass;
@@ -15,6 +14,7 @@ final class GetTeamCompare
 {
     public function __construct(
         private readonly PokemonRepository $pokemonRepository,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function __invoke(): void
@@ -27,7 +27,7 @@ final class GetTeamCompare
 
         $allPokemon = $this->pokemonRepository->getAll($query);
 
-        echo TemplateEngine::render(__DIR__ . "/../Templates/TeamCompare.php", [
+        echo $this->templateEngine->render(__DIR__ . "/../Templates/TeamCompare.php", [
             'query' => $query,
             'allPokemon' => array_map(
                 fn(Pokemon $pokemon) => self::createPokemonVm($pokemon),

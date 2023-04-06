@@ -2,10 +2,6 @@
 
     <h1>Exercise</h1>
 
-    <?php foreach ($errors as $error) : ?>
-        <div class="alert alert-danger"><?=$error?></div>
-    <?php endforeach ?>
-
     <form method="POST">
 
         <div class="btn-group-vertical btn-group-lg d-flex mb-4">

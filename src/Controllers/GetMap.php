@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\LocationType;
+use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
@@ -18,17 +19,16 @@ use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
 use stdClass;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetMap
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly Session $session,
         private readonly BagRepository $bagRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly array $map,
         private readonly array $pokedex,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function __invoke(): void
@@ -45,9 +45,6 @@ final class GetMap
             $this->findLocation($instanceRow['current_location']),
             $this->findEncounterTables($instanceRow['current_location']),
         );
-
-        $successes = $this->session->getFlashBag()->get("successes");
-        $errors = $this->session->getFlashBag()->get("errors");
 
         $trainers = [];
 
@@ -77,6 +74,10 @@ final class GetMap
                     $hasCompletedPrerequisite = $this->hasBeatenAllGymTrainers($trainer, $trainerConfigFile[$instanceRow['current_location']]);
                 }
 
+                if (array_key_exists('prerequisite', $trainer) && $trainer['prerequisite'] === Region::KANTO) {
+                    continue;
+                }
+
                 $trainers[] = (object)[
                     'id'          => $trainer['id'],
                     'name'        => TrainerClass::getLabel($trainer['class']) . (isset($trainer['name']) ? " {$trainer['name']}" : ""),
@@ -94,15 +95,14 @@ final class GetMap
 
         $legendaryConfig = self::findLegendaryConfig($instanceRow['current_location']);
 
-        echo TemplateEngine::render(__DIR__ . "/../Templates/Map.php", [
+        echo $this->templateEngine->render(__DIR__ . "/../Templates/Map.php", [
             'canEncounter' => true,
             'pokeballs' => $bag->countAllPokeBalls(),
             'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
             'trainers' => $trainers,
             'legendary' => $this->createLegendaryViewModel($legendaryConfig),
-            'successes' => $successes,
-            'errors' => $errors,
+            'eliteFour' => $this->createEliteFourViewModel(self::findEliteFourConfig($instanceRow['current_location'])),
         ]);
     }
 
@@ -195,6 +195,26 @@ final class GetMap
         ];
     }
 
+    private function createEliteFourViewModel(?array $eliteFourConfig): ?stdClass
+    {
+        if (is_null($eliteFourConfig)) {
+            return null;
+        }
+
+        $bag = $this->bagRepository->find();
+
+        $canChallenge = $bag->count(ItemId::CHALLENGE_TOKEN) >= 5;
+
+        return (object) [
+            'memberImageUrls' => array_map(
+                fn (array $config) => $config['imageUrl'],
+                array_slice($eliteFourConfig['members'], 0, 4),
+            ),
+            'region' => $eliteFourConfig['region']->value,
+            'canChallenge' => $canChallenge,
+        ];
+    }
+
     private static function findLevelLimit(array $instanceRow): int
     {
         $gymBadges = array_map(
@@ -216,6 +236,19 @@ final class GetMap
         $legendariesConfig = require __DIR__ . "/../Config/Legendaries.php";
 
         foreach ($legendariesConfig as $config) {
+            if ($config['location'] === $locationId) {
+                return $config;
+            }
+        }
+
+        return null;
+    }
+
+    private static function findEliteFourConfig(string $locationId): ?array
+    {
+        $eliteFourConfig = require __DIR__ . "/../Config/EliteFour.php";
+
+        foreach ($eliteFourConfig as $config) {
             if ($config['location'] === $locationId) {
                 return $config;
             }

@@ -118,6 +118,11 @@
                     target.querySelector(".js-remaining-hp").innerText = event.next.remainingHp;
                     target.querySelector(".js-total-hp").innerText = event.next.totalHp;
 
+                    if (event.isPlayerPokemon) {
+                        document.querySelector(".js-interaction[value='physical'] .badge").innerText = event.next.physicalAttack;
+                        document.querySelector(".js-interaction[value='special'] .badge").innerText = event.next.specialAttack;
+                    }
+
                     processNextEvent(responseData, fnCallback);
                 }, {
                     once: true

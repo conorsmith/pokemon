@@ -1,11 +1,3 @@
-<?php foreach ($successes as $success) : ?>
-    <div class="alert alert-success"><?=$success?></div>
-<?php endforeach ?>
-
-<?php foreach ($errors as $error) : ?>
-    <div class="alert alert-danger"><?=$error?></div>
-<?php endforeach ?>
-
 <div style="text-align: center;">
     Choose Pokémon on which to use
 </div>

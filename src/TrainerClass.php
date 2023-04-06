@@ -86,6 +86,8 @@ final class TrainerClass
     public const PAINTER = "c58a9944-fc78-490c-b00a-905dab0536b8";
     public const TEAM_ROCKET_ADMIN = "efbbd054-7571-42b3-8fb5-a04d951b76fd";
     public const BOSS = "79bfa414-bdd4-4964-8a15-a4f581cf4137";
+    public const ELITE_FOUR = "a5bf9ec9-effe-4a22-b4c8-a9c89a7b6481";
+    public const RETIRED_TRAINER = "cb2b9587-8dd5-4570-a3f7-d5dcf4be7c32";
 
     public static function getLabel(string $id): string
     {
@@ -171,6 +173,8 @@ final class TrainerClass
             self::PAINTER => "Painter",
             self::TEAM_ROCKET_ADMIN => "Team Rocket Admin",
             self::BOSS => "Boss",
+            self::ELITE_FOUR => "Elite Four",
+            self::RETIRED_TRAINER => "Retired Trainer",
         };
     }
 
@@ -278,6 +282,8 @@ final class TrainerClass
             self::COOL_COUPLE,
             self::TEAM_ROCKET_ADMIN,
             self::BOSS,
+            self::ELITE_FOUR,
+            self::RETIRED_TRAINER,
         ]);
     }
 
@@ -323,6 +329,8 @@ final class TrainerClass
             self::AQUA_LEADER,
             self::MAGMA_ADMIN,
             self::MAGMA_LEADER,
+            self::ELITE_FOUR,
+            self::RETIRED_TRAINER,
             => [
                 0 => 0,
                 1 => 1,

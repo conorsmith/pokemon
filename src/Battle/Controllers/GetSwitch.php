@@ -12,6 +12,7 @@ final class GetSwitch
     public function __construct(
         private readonly PlayerRepository $playerRepository,
         private readonly ViewModelFactory $viewModelFactory,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function __invoke(array $args): void
@@ -26,7 +27,7 @@ final class GetSwitch
             $teamViewModels[] = $this->viewModelFactory->createPokemonInBattle($pokemon);
         }
 
-        echo TemplateEngine::render(__DIR__ . "/../Templates/Switch.php", [
+        echo $this->templateEngine->render(__DIR__ . "/../Templates/Switch.php", [
             'team' => $teamViewModels,
             'redirectUrl' => $redirectUrl,
         ]);

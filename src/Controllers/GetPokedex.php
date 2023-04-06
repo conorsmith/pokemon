@@ -13,6 +13,7 @@ final class GetPokedex
     public function __construct(
         private readonly Connection $db,
         private readonly array $pokedex,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function __invoke(): void
@@ -92,7 +93,7 @@ final class GetPokedex
             }
         }
 
-        echo TemplateEngine::render(__DIR__ . "/../Templates/Pokedex.php", [
+        echo $this->templateEngine->render(__DIR__ . "/../Templates/Pokedex.php", [
             'count' => count($rows),
             'pokedex' => $viewModels,
         ]);

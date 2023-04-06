@@ -2,10 +2,6 @@
 
     <h1 style="text-align: center;">Weekly Review</h1>
 
-    <?php foreach ($errors as $error) : ?>
-        <div class="alert alert-danger"><?=$error?></div>
-    <?php endforeach ?>
-
     <form method="POST" class="d-grid gap-2">
 
         <div class="mb-3">

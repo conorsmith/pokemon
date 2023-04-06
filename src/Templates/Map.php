@@ -2,14 +2,6 @@
 
     <h1 style="text-align: center;"><?=$currentLocation->name?></h1>
 
-    <?php foreach ($errors as $error) : ?>
-        <div class="alert alert-danger"><?=$error?></div>
-    <?php endforeach ?>
-
-    <?php foreach ($successes as $success) : ?>
-        <div class="alert alert-success"><?=$success?></div>
-    <?php endforeach ?>
-
     <style>
         .directions-cardinal button {
             flex-direction: column;
@@ -237,7 +229,7 @@
                             <small><i class="fas fa-star"></i> Lv <?=$legendary->level?></small>
                         </div>
                         <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
-                            <form method="POST" action="/map" style="margin-right: 0.6rem;">
+                            <form method="POST" action="/encounter" style="margin-right: 0.6rem;">
                                 <input type="hidden" name="legendary" value="<?=$legendary->number?>">
                                 <button type="submit" class="btn btn-outline-dark btn-sm" <?=$legendary->canBattle ? "" : "disabled"?>>Battle</button>
                             </form>
@@ -245,6 +237,38 @@
                                 <span style="font-size: 0.8rem;">Last encountered <?=$legendary->lastEncountered?></span>
                             <?php endif ?>
                         </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    <?php endif ?>
+
+    <?php if ($eliteFour) : ?>
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div><strong>Elite Four</strong></div>
+                <div class="d-flex" style="text-align: center; gap: 4px;">
+                    <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                    <span><?=$challengeTokens?></span>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex flex-column">
+                    <div class="d-flex justify-content-center w-100">
+                        <?php foreach ($eliteFour->memberImageUrls as $memberImageUrl) : ?>
+                            <div class="me-2" style="width: 64px;">
+                                <img src="<?=$memberImageUrl?>">
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+                    <div class="d-flex justify-content-center w-100 mt-3 mb-2">
+                        <form method="POST" action="/challenge/elite-four/<?=$eliteFour->region?>">
+                            <button type="submit" class="btn btn-outline-dark btn-sm" <?=$eliteFour->canChallenge ? "" : "disabled"?>>
+                                Challenge the Elite Four
+                            </button>
+                        </form>
                     </div>
                 </li>
             </ul>

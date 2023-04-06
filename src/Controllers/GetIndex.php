@@ -20,10 +20,10 @@ final class GetIndex
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly Session $session,
         private readonly PokemonRepository $pokemonRepository,
         private readonly BagRepository $bagRepository,
         private readonly ViewModelFactory $viewModelFactory,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function __invoke(): void
@@ -35,9 +35,7 @@ final class GetIndex
         $bag = $this->bagRepository->find();
         $team = $this->pokemonRepository->getTeam();
 
-        $successes = $this->session->getFlashBag()->get("successes");
-
-        echo TemplateEngine::render(__DIR__ . "/../Templates/Index.php", [
+        echo $this->templateEngine->render(__DIR__ . "/../Templates/Index.php", [
             'bagSummary' => self::createBagSummary($bag),
             'team' => array_map(
                 fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
@@ -47,7 +45,6 @@ final class GetIndex
                 fn(int $value) => $this->viewModelFactory->createGymBadge(GymBadge::from($value)),
                 json_decode($instanceRow['badges'])
             ),
-            'successes' => $successes,
         ]);
     }
 

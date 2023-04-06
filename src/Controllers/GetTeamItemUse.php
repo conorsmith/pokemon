@@ -17,6 +17,7 @@ final class GetTeamItemUse
         private readonly BagRepository $bagRepository,
         private readonly PlayerRepository $playerRepository,
         private readonly ViewModelFactory $viewModelFactory,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function __invoke(array $args): void
@@ -35,15 +36,13 @@ final class GetTeamItemUse
             return;
         }
 
-        echo TemplateEngine::render(__DIR__ . "/../Templates/TeamUse.php", [
+        echo $this->templateEngine->render(__DIR__ . "/../Templates/TeamUse.php", [
             'item' => (object) [
                 'id' => $itemId,
                 'name' => $itemConfig[$itemId]['name'],
                 'imageUrl' => $itemConfig[$itemId]['imageUrl'],
             ],
             'team' => $this->createTeamViewModels($player),
-            'successes' => $this->session->getFlashBag()->get("successes"),
-            'errors' => $this->session->getFlashBag()->get("errors"),
         ]);
     }
 

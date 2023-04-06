@@ -130,4 +130,9 @@ final class Trainer
     {
         return !is_null($this->gymBadge);
     }
+
+    public function hasBeenBeaten(): bool
+    {
+        return !is_null($this->dateLastBeaten);
+    }
 }

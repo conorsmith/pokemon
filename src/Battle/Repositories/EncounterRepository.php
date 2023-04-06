@@ -33,22 +33,26 @@ final class EncounterRepository
         }
 
         return $this->generate(
-            self::randomlySelectEntry($encounterTable)
+            self::randomlySelectEntry($encounterTable),
+            false,
         );
     }
 
     public function generateLegendaryEncounter(string $number): Encounter
     {
-        return $this->generate(new EncounterTableEntry(
-            $number,
-            null,
-            1,
-            self::findLegendaryPokemonLevel($number),
-            self::findLegendaryPokemonLevel($number),
-        ));
+        return $this->generate(
+            new EncounterTableEntry(
+                $number,
+                null,
+                1,
+                self::findLegendaryPokemonLevel($number),
+                self::findLegendaryPokemonLevel($number),
+            ),
+            true
+        );
     }
 
-    private function generate(EncounterTableEntry $encounterTableEntry): Encounter
+    private function generate(EncounterTableEntry $encounterTableEntry, bool $isLegendary): Encounter
     {
         $isShiny = $this->generateEncounteredShininess();
 
@@ -75,7 +79,7 @@ final class EncounterRepository
         return new Encounter(
             $encounterId,
             $pokemon,
-            false,
+            $isLegendary,
             false,
             false,
         );

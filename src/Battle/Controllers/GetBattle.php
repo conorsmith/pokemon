@@ -7,15 +7,14 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetBattle
 {
     public function __construct(
-        private readonly Session $session,
         private readonly TrainerRepository $trainerRepository,
         private readonly PlayerRepository $playerRepository,
         private readonly ViewModelFactory $viewModelFactory,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function __invoke(array $args): void
@@ -32,17 +31,12 @@ final class GetBattle
             ? $player->getLastFaintedPokemon()
             : $player->getLeadPokemon();
 
-        $successes = $this->session->getFlashBag()->get("successes");
-        $errors = $this->session->getFlashBag()->get("errors");
-
-        echo TemplateEngine::render(__DIR__ . "/../Templates/Battle.php", [
+        echo $this->templateEngine->render(__DIR__ . "/../Templates/Battle.php", [
             'id' => $trainer->id,
             'opponentPokemon' => $this->viewModelFactory->createPokemonInBattle($trainerLeadPokemon),
             'playerPokemon' => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
             'trainer' => $this->viewModelFactory->createTrainerInBattle($trainer),
             'isBattleOver' => $trainer->hasEntireTeamFainted() || $player->hasEntireTeamFainted(),
-            'successes' => $successes,
-            'errors' => $errors,
         ]);
     }
 }

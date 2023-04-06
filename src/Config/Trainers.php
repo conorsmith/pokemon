@@ -7,8 +7,50 @@ use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\Sex;
+use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 
 return [
+    LocationId::PALLET_TOWN => [
+        [
+            'id' => "5f56e328-457b-4327-8100-1a452d9dc013",
+            'class' => TrainerClass::RETIRED_TRAINER,
+            'name' => "Blue",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/10/Spr_FRLG_Blue_3.png",
+            'prerequisite' => Region::KANTO,
+            'team' => [
+                [
+                    'id' => PokedexNo::HERACROSS,
+                    'sex' => Sex::MALE,
+                    'level' => 72,
+                ],
+                [
+                    'id' => PokedexNo::ALAKAZAM,
+                    'sex' => Sex::MALE,
+                    'level' => 73,
+                ],
+                [
+                    'id' => PokedexNo::TYRANITAR,
+                    'sex' => Sex::MALE,
+                    'level' => 72,
+                ],
+                [
+                    'id' => PokedexNo::VENUSAUR,
+                    'sex' => Sex::MALE,
+                    'level' => 75,
+                ],
+                [
+                    'id' => PokedexNo::CHARIZARD,
+                    'sex' => Sex::MALE,
+                    'level' => 75,
+                ],
+                [
+                    'id' => PokedexNo::BLASTOISE,
+                    'sex' => Sex::MALE,
+                    'level' => 75,
+                ],
+            ],
+        ],
+    ],
     LocationId::VIRIDIAN_GYM => [
         [
             'id' => "dd360fe7-c9bd-46d8-9c30-f8ce4e09566d",
@@ -5867,6 +5909,144 @@ return [
                 [
                     'id' => PokedexNo::NIDOQUEEN,
                     'level' => 45,
+                ],
+            ],
+        ],
+    ],
+    LocationId::INDIGO_PLATEAU => [
+        [
+            'id' => "3be7e165-f553-41c7-87ee-37389aaeea82",
+            'class' => TrainerClass::ELITE_FOUR,
+            'name' => "Lorelei",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/db/Spr_FRLG_Lorelei.png",
+            'prerequisite' => Region::KANTO,
+            'team' => [
+                [
+                    'id' => PokedexNo::DEWGONG,
+                    'sex' => Sex::MALE,
+                    'level' => 64,
+                ],
+                [
+                    'id' => PokedexNo::CLOYSTER,
+                    'sex' => Sex::MALE,
+                    'level' => 63,
+                ],
+                [
+                    'id' => PokedexNo::PILOSWINE,
+                    'sex' => Sex::MALE,
+                    'level' => 63,
+                ],
+                [
+                    'id' => PokedexNo::JYNX,
+                    'sex' => Sex::FEMALE,
+                    'level' => 66,
+                ],
+                [
+                    'id' => PokedexNo::LAPRAS,
+                    'sex' => Sex::MALE,
+                    'level' => 66,
+                ],
+            ],
+        ],
+        [
+            'id' => "b09db16b-eba5-4821-abe1-b287646f7ed3",
+            'class' => TrainerClass::ELITE_FOUR,
+            'name' => "Bruno",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/f7/Spr_FRLG_Bruno.png",
+            'prerequisite' => Region::KANTO,
+            'team' => [
+                [
+                    'id' => PokedexNo::STEELIX,
+                    'sex' => Sex::MALE,
+                    'level' => 65,
+                ],
+                [
+                    'id' => PokedexNo::HITMONCHAN,
+                    'sex' => Sex::MALE,
+                    'level' => 65,
+                ],
+                [
+                    'id' => PokedexNo::HITMONLEE,
+                    'sex' => Sex::MALE,
+                    'level' => 65,
+                ],
+                [
+                    'id' => PokedexNo::STEELIX,
+                    'sex' => Sex::MALE,
+                    'level' => 66,
+                ],
+                [
+                    'id' => PokedexNo::MACHAMP,
+                    'sex' => Sex::MALE,
+                    'level' => 68,
+                ],
+            ],
+        ],
+        [
+            'id' => "bdefb7de-7234-4f42-bd0f-8d7254ae7f08",
+            'class' => TrainerClass::ELITE_FOUR,
+            'name' => "Agatha",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/56/Spr_FRLG_Agatha.png",
+            'prerequisite' => Region::KANTO,
+            'team' => [
+                [
+                    'id' => PokedexNo::GENGAR,
+                    'sex' => Sex::MALE,
+                    'level' => 66,
+                ],
+                [
+                    'id' => PokedexNo::CROBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 66,
+                ],
+                [
+                    'id' => PokedexNo::MISDREAVUS,
+                    'sex' => Sex::MALE,
+                    'level' => 65,
+                ],
+                [
+                    'id' => PokedexNo::ARBOK,
+                    'sex' => Sex::MALE,
+                    'level' => 68,
+                ],
+                [
+                    'id' => PokedexNo::GENGAR,
+                    'sex' => Sex::MALE,
+                    'level' => 70,
+                ],
+            ],
+        ],
+        [
+            'id' => "2e3067a1-dcf6-4e39-8a3f-9fd12af58683",
+            'class' => TrainerClass::ELITE_FOUR,
+            'name' => "Lance",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/fb/Spr_FRLG_Lance.png",
+            'prerequisite' => Region::KANTO,
+            'team' => [
+                [
+                    'id' => PokedexNo::GYARADOS,
+                    'sex' => Sex::MALE,
+                    'level' => 68,
+                ],
+                [
+                    'id' => PokedexNo::DRAGONITE,
+                    'sex' => Sex::MALE,
+                    'level' => 66,
+                ],
+                [
+                    'id' => PokedexNo::KINGDRA,
+                    'sex' => Sex::MALE,
+                    'level' => 66,
+                ],
+                [
+                    'id' => PokedexNo::AERODACTYL,
+                    'sex' => Sex::MALE,
+                    'level' => 70,
+                ],
+                [
+                    'id' => PokedexNo::DRAGONITE,
+                    'sex' => Sex::MALE,
+                    'level' => 72,
                 ],
             ],
         ],

@@ -10,13 +10,12 @@ use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use stdClass;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetTeam
 {
     public function __construct(
-        private readonly Session $session,
         private readonly PokemonRepository $pokemonRepository,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function __invoke(): void
@@ -29,10 +28,7 @@ final class GetTeam
             array_map(fn(Pokemon $pokemon) => $pokemon->type, $team->members)
         );
 
-        $successes = $this->session->getFlashBag()->get("successes");
-        $errors = $this->session->getFlashBag()->get("errors");
-
-        echo TemplateEngine::render(__DIR__ . "/../Templates/Team.php", [
+        echo $this->templateEngine->render(__DIR__ . "/../Templates/Team.php", [
             'team' => array_map(
                 fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
                 $team->members
@@ -50,8 +46,6 @@ final class GetTeam
             'dayCareIsFull' => $dayCare->isFull(),
             'teamHasSingleRemainingMember' => count($team->members) === 1,
             'coverage' => self::createCoverageVms($coverage),
-            'successes' => $successes,
-            'errors' => $errors,
         ]);
     }
 

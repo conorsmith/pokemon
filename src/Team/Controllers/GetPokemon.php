@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
-use ConorSmith\Pokemon\Team\Domain\Type;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -15,6 +14,7 @@ final class GetPokemon
 {
     public function __construct(
         private readonly PokemonRepository $pokemonRepository,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function __invoke(array $args): void
@@ -23,7 +23,7 @@ final class GetPokemon
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
-        echo TemplateEngine::render(__DIR__ . "/../Templates/Pokemon.php", [
+        echo $this->templateEngine->render(__DIR__ . "/../Templates/Pokemon.php", [
             'pokemon' => PokemonVm::create($pokemon),
             'stats' => self::createStatsVm($pokemon),
             'typeEffectiveness' => self::createTypeEffectivenessVms($pokemon),
