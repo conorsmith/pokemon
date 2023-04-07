@@ -271,6 +271,7 @@ final class ControllerFactory
                 ),
             ),
             GetBattle::class => new GetBattle(
+                $this->db,
                 $this->trainerRepository,
                 $this->playerRepository,
                 $this->viewModelFactory,

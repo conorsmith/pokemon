@@ -72,11 +72,11 @@ final class ViewModelFactory
         };
     }
 
-    public function createTrainerInBattle(Trainer $trainer): stdClass
+    public function createTrainerInBattle(Trainer $trainer, string $imageUrl): stdClass
     {
         return (object) [
             'name' => TrainerClass::getLabel($trainer->class) . ($trainer->name ? " {$trainer->name}" : ""),
-            'imageUrl' => TrainerClass::getImageUrl($trainer->class, $trainer->gender),
+            'imageUrl' => $imageUrl,
             'team' => (object) [
                 'fainted' => $trainer->countFaintedTeamMembers(),
                 'active' => $trainer->countActiveTeamMembers(),
