@@ -1,4 +1,25 @@
 <script>
+    const types = [
+        "normal",
+        "fighting",
+        "flying",
+        "poison",
+        "ground",
+        "rock",
+        "bug",
+        "ghost",
+        "steel",
+        "fire",
+        "water",
+        "grass",
+        "electric",
+        "psychic",
+        "ice",
+        "dragon",
+        "dark",
+        "fairy"
+    ];
+
     document.addEventListener("DOMContentLoaded", function () {
 
         function processNextEvent(responseData, fnCallback) {
@@ -119,8 +140,32 @@
                     target.querySelector(".js-total-hp").innerText = event.next.totalHp;
 
                     if (event.isPlayerPokemon) {
-                        document.querySelector(".js-interaction[value='physical'] .badge").innerText = event.next.physicalAttack;
-                        document.querySelector(".js-interaction[value='special'] .badge").innerText = event.next.specialAttack;
+                        const physicalPrimaryBtnEl = document.querySelector(".js-interaction[value='physical-primary']");
+                        const specialPrimaryBtnEl = document.querySelector(".js-interaction[value='special-primary']");
+                        const physicalSecondaryBtnEl = document.querySelector(".js-interaction[value='physical-secondary']");
+                        const specialSecondaryBtnEl = document.querySelector(".js-interaction[value='special-secondary']");
+
+                        physicalPrimaryBtnEl.querySelector(".badge").innerText = event.next.physicalAttack;
+                        physicalPrimaryBtnEl.classList.remove(...types.map((type) => "btn-" + type));
+                        physicalPrimaryBtnEl.classList.add("btn-" + event.next.primaryType);
+
+                        specialPrimaryBtnEl.querySelector(".badge").innerText = event.next.specialAttack;
+                        specialPrimaryBtnEl.classList.remove(...types.map((type) => "btn-" + type));
+                        specialPrimaryBtnEl.classList.add("btn-" + event.next.primaryType);
+
+                        if (event.next.secondaryType) {
+                            physicalSecondaryBtnEl.parentNode.classList.remove("d-none");
+
+                            physicalSecondaryBtnEl.querySelector(".badge").innerText = event.next.physicalAttack;
+                            physicalSecondaryBtnEl.classList.remove(...types.map((type) => "btn-" + type));
+                            physicalSecondaryBtnEl.classList.add("btn-" + event.next.secondaryType);
+
+                            specialSecondaryBtnEl.querySelector(".badge").innerText = event.next.specialAttack;
+                            specialSecondaryBtnEl.classList.remove(...types.map((type) => "btn-" + type));
+                            specialSecondaryBtnEl.classList.add("btn-" + event.next.secondaryType);
+                        } else {
+                            physicalSecondaryBtnEl.parentNode.classList.add("d-none");
+                        }
                     }
 
                     processNextEvent(responseData, fnCallback);

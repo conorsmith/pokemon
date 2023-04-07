@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
+use ConorSmith\Pokemon\Battle\Domain\Attack;
 use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\EventFactory;
@@ -34,7 +35,7 @@ final class PostBattleFight
     public function __invoke(array $args): void
     {
         $trainerBattleId = $args['id'];
-        $playerAttackType = $_POST['attack'];
+        $playerAttackInput = $_POST['attack'];
 
         $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
@@ -48,7 +49,12 @@ final class PostBattleFight
         $playerPokemon = $player->getLeadPokemon();
         $opponentPokemon = $trainer->getLeadPokemon();
 
-        $round = Round::execute($playerPokemon, $opponentPokemon, $playerAttackType);
+        $playerAttack = new Attack(
+            explode("-", $playerAttackInput)[0],
+            explode("-", $playerAttackInput)[1],
+        );
+
+        $round = Round::execute($playerPokemon, $opponentPokemon, $playerAttack);
 
         if ($playerPokemon->hasFainted) {
             $this->reportTeamPokemonFaintedCommand->run(

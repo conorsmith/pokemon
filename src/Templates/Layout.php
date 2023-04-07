@@ -62,6 +62,98 @@
             background: #EE99AC;
         }
 
+
+        .btn-normal, .btn-normal:hover, .btn-normal:disabled {
+            background-color: #A8A878;
+            border-color: #A8A878;
+            color: #fff;
+        }
+        .btn-fighting, .btn-fighting:hover, .btn-fighting:disabled {
+            background-color: #C03028;
+            border-color: #C03028;
+            color: #fff;
+        }
+        .btn-flying, .btn-flying:hover, .btn-flying:disabled {
+            background-color: #A890F0;
+            border-color: #A890F0;
+            color: #fff;
+        }
+        .btn-poison, .btn-poison:hover, .btn-poison:disabled {
+            background-color: #A040A0;
+            border-color: #A040A0;
+            color: #fff;
+        }
+        .btn-ground, .btn-ground:hover, .btn-ground:disabled {
+            background-color: #E0C068;
+            border-color: #E0C068;
+            color: #fff;
+        }
+        .btn-rock, .btn-rock:hover, .btn-rock:disabled {
+            background-color: #B8A038;
+            border-color: #B8A038;
+            color: #fff;
+        }
+        .btn-bug, .btn-bug:hover, .btn-bug:disabled {
+            background-color: #A8B820;
+            border-color: #A8B820;
+            color: #fff;
+        }
+        .btn-ghost, .btn-ghost:hover, .btn-ghost:disabled {
+            background-color: #705898;
+            border-color: #705898;
+            color: #fff;
+        }
+        .btn-steel, .btn-steel:hover, .btn-steel:disabled {
+            background-color: #B8B8D0;
+            border-color: #B8B8D0;
+            color: #fff;
+        }
+        .btn-fire, .btn-fire:hover, .btn-fire:disabled {
+            background-color: #F08030;
+            border-color: #F08030;
+            color: #fff;
+        }
+        .btn-water, .btn-water:hover, .btn-water:disabled {
+            background-color: #6890F0;
+            border-color: #6890F0;
+            color: #fff;
+        }
+        .btn-grass, .btn-grass:hover, .btn-grass:disabled {
+            background-color: #78C850;
+            border-color: #78C850;
+            color: #fff;
+        }
+        .btn-electric, .btn-electric:hover, .btn-electric:disabled {
+            background-color: #F8D030;
+            border-color: #F8D030;
+            color: #fff;
+        }
+        .btn-psychic, .btn-psychic:hover, .btn-psychic:disabled {
+            background-color: #F85888;
+            border-color: #F85888;
+            color: #fff;
+        }
+        .btn-ice, .btn-ice:hover, .btn-ice:disabled {
+            background-color: #98D8D8;
+            border-color: #98D8D8;
+            color: #fff;
+        }
+        .btn-dragon, .btn-dragon:hover, .btn-dragon:disabled {
+            background-color: #7038F8;
+            border-color: #7038F8;
+            color: #fff;
+        }
+        .btn-dark, .btn-dark:hover, .btn-dark:disabled {
+            background-color: #705848;
+            border-color: #705848;
+            color: #fff;
+        }
+        .btn-fairy, .btn-fairy:hover, .btn-fairy:disabled {
+            background-color: #EE99AC;
+            border-color: #EE99AC;
+            color: #fff;
+        }
+
         .badge-addendum {
             margin-left: 0.4rem; padding-left: 0.4rem; border-left: 1px #fff solid;
         }

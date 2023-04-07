@@ -7,14 +7,14 @@ use ConorSmith\Pokemon\PokemonType;
 
 final class Round
 {
-    public static function execute(Pokemon $playerPokemon, Pokemon $opponentPokemon, string $playerAttackType): self
+    public static function execute(Pokemon $playerPokemon, Pokemon $opponentPokemon, Attack $playerAttack): self
     {
         if ($opponentPokemon->calculateAttack() > $opponentPokemon->calculateSpecialAttack()) {
-            $opponentAttackType = "physical";
+            $opponentAttack = Attack::physical();
         } elseif ($opponentPokemon->calculateAttack() < $opponentPokemon->calculateSpecialAttack()) {
-            $opponentAttackType = "special";
+            $opponentAttack = Attack::special();
         } else {
-            $opponentAttackType = mt_rand(0, 1) === 0 ? "physical" : "special";
+            $opponentAttack = mt_rand(0, 1) === 0 ? Attack::physical() : Attack::special();
         }
 
         if ($playerPokemon->calculateSpeed() > $opponentPokemon->calculateSpeed()) {
@@ -28,22 +28,22 @@ final class Round
         if ($playerGoesFirst) {
             $firstPokemon = $playerPokemon;
             $secondPokemon = $opponentPokemon;
-            $firstAttackType = $playerAttackType;
-            $secondAttackType = $opponentAttackType;
+            $firstAttack = $playerAttack;
+            $secondAttack = $opponentAttack;
         } else {
             $firstPokemon = $opponentPokemon;
             $secondPokemon = $playerPokemon;
-            $firstAttackType = $opponentAttackType;
-            $secondAttackType = $playerAttackType;
+            $firstAttack = $opponentAttack;
+            $secondAttack = $playerAttack;
         }
 
-        $firstAttackOutcome = self::attack($firstPokemon, $secondPokemon, $firstAttackType);
-        $secondAttackOutcome = self::attack($secondPokemon, $firstPokemon, $secondAttackType);
+        $firstAttackOutcome = self::attack($firstPokemon, $secondPokemon, $firstAttack);
+        $secondAttackOutcome = self::attack($secondPokemon, $firstPokemon, $secondAttack);
 
         return new self($playerGoesFirst, $firstPokemon, $secondPokemon, $firstAttackOutcome, $secondAttackOutcome);
     }
 
-    private static function attack(Pokemon $attacker, Pokemon $defender, string $attackType): AttackOutcome
+    private static function attack(Pokemon $attacker, Pokemon $defender, Attack $attack): AttackOutcome
     {
         $typeMultiplier = 1.0;
 
@@ -55,7 +55,7 @@ final class Round
             $typeMultiplier = self::calculateTypeMultiplier($attacker, $defender);
             $damageTaken = min(
                 $defender->remainingHp,
-                self::calculateDamage($attacker, $defender, $attackType, $criticalHit, $typeMultiplier),
+                self::calculateDamage($attacker, $defender, $attack, $criticalHit, $typeMultiplier),
             );
             if ($damageTaken === $defender->remainingHp) {
                 $survivedHit = self::calculateHitSurvival($defender);
@@ -98,14 +98,14 @@ final class Round
     private static function calculateDamage(
         Pokemon $attacker,
         Pokemon $defender,
-        string $attackType,
+        Attack $attack,
         bool $isCriticalHit,
         float $typeMultiplier,
     ): int {
         $power = 40;
 
         $levelFactor = (2 * $attacker->level / 5) + 2;
-        if ($attackType === "physical") {
+        if ($attack->isPhysical()) {
             $statFactor = $attacker->calculateAttack() / $defender->calculateDefence();
         } else {
             $statFactor = $attacker->calculateSpecialAttack() / $defender->calculateSpecialDefence();
