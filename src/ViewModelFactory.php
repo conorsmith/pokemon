@@ -76,6 +76,7 @@ final class ViewModelFactory
     {
         return (object) [
             'name' => TrainerClass::getLabel($trainer->class) . ($trainer->name ? " {$trainer->name}" : ""),
+            'imageUrl' => TrainerClass::getImageUrl($trainer->class, $trainer->gender),
             'team' => (object) [
                 'fainted' => $trainer->countFaintedTeamMembers(),
                 'active' => $trainer->countActiveTeamMembers(),

@@ -1,15 +1,20 @@
 <?php require __DIR__ . "/BattleScript.php" ?>
 
-<ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
-    <li class="list-group-item" style="text-align: center;">
-        <div><strong><?=$trainer->name?></strong></div>
-        <div class="js-trainer-team">
-            <?php for ($i = 0; $i < $trainer->team->fainted; $i++) : ?>
-                <i class="far fa-circle"></i>
-            <?php endfor ?>
-            <?php for ($i = 0; $i < $trainer->team->active; $i++) : ?>
-                <i class="fas fa-circle"></i>
-            <?php endfor ?>
+<ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between">
+        <div>
+            <div><strong><?=$trainer->name?></strong></div>
+            <div class="js-trainer-team">
+                <?php for ($i = 0; $i < $trainer->team->fainted; $i++) : ?>
+                    <i class="far fa-circle"></i>
+                <?php endfor ?>
+                <?php for ($i = 0; $i < $trainer->team->active; $i++) : ?>
+                    <i class="fas fa-circle"></i>
+                <?php endfor ?>
+            </div>
+        </div>
+        <div>
+            <img src="<?=$trainer->imageUrl?>">
         </div>
     </li>
     <li class="list-group-item d-flex flex-row-reverse" data-target-id="<?=$opponentPokemon->id?>">

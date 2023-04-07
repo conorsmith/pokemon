@@ -8,6 +8,7 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
+use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use ConorSmith\Pokemon\TrainerClass;
@@ -145,6 +146,7 @@ class TrainerRepository
             $trainerBattleRow['id'],
             $trainerConfig['name'] ?? null,
             $trainerConfig['class'],
+            $trainerConfig['gender'] ?? Gender::IMMATERIAL,
             $team,
             $trainerConfig['locationId'],
             $trainerBattleRow['is_battling'] === 1,

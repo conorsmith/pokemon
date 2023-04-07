@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Battle\Domain;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\TrainerClass;
 use Exception;
@@ -15,6 +16,7 @@ final class Trainer
         public readonly string $id,
         public readonly ?string $name,
         public readonly string $class,
+        public readonly Gender $gender,
         public readonly array $team,
         public readonly string $locationId,
         public readonly bool $isBattling,
@@ -29,6 +31,7 @@ final class Trainer
             $this->id,
             $this->name,
             $this->class,
+            $this->gender,
             $this->team,
             $this->locationId,
             true,
@@ -44,6 +47,7 @@ final class Trainer
             $this->id,
             $this->name,
             $this->class,
+            $this->gender,
             $this->team,
             $this->locationId,
             $this->isBattling,
@@ -59,6 +63,7 @@ final class Trainer
             $this->id,
             $this->name,
             $this->class,
+            $this->gender,
             $this->team,
             $this->locationId,
             false,
