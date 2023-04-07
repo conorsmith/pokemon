@@ -9,6 +9,6 @@ final class BulbapediaEncounter
         public readonly string $name,
         public readonly string $type,
         public readonly string $levels,
-        public readonly string $rate,
+        public readonly string|array $rate,
     ) {}
 }

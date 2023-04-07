@@ -84,7 +84,7 @@ final class BulbapediaLocationPage
                 $row[] = trim($cellNode->textContent);
             }
 
-            if (count($row) !== 4) {
+            if (count($row) !== 4 && count($row) !== 6) {
                 continue;
             }
 
@@ -92,7 +92,9 @@ final class BulbapediaLocationPage
                 $row[0],
                 $row[1],
                 $row[2],
-                $row[3],
+                count($row) === 4
+                    ? $row[3]
+                    : [$row[3], $row[4], $row[5]],
             );
         }
 

@@ -39,7 +39,7 @@ final class EncounterTableFactory
 
                 $encounterTableEntry = new EncounterTableEntry(
                     $this->createPokedexNumberFromPokemonName($encounter->name),
-                    intval($encounter->rate),
+                    self::createWeight($encounter),
                     $this->createLevelRange($encounter->levels),
                 );
 
@@ -48,6 +48,19 @@ final class EncounterTableFactory
         }
 
         return $encounterTables;
+    }
+
+    private static function createWeight(BulbapediaEncounter $encounter): int
+    {
+        if (is_string($encounter->rate)) {
+            return intval($encounter->rate);
+        }
+
+        return array_reduce(
+            $encounter->rate,
+            fn (int $carry, string $rate) => max($carry, intval($rate)),
+            0
+        );
     }
 
     private function createEncounterType(string $value): EncounterType
@@ -68,7 +81,7 @@ final class EncounterTableFactory
             return new EncounterType(EncounterTypeConstants::ROCK_SMASH);
         }
 
-        if ($value === "Only one" || $value === "Egg") {
+        if ($value === "Only one" || $value === "Egg" || $value === "Headbutt" || $value === "Hoenn Sound" || $value === "Sinnoh Sound") {
             return EncounterType::irrelevant();
         }
 

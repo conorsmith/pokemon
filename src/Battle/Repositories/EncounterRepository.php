@@ -7,6 +7,7 @@ use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\Domain\EncounterTableEntry;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
+use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -16,6 +17,7 @@ final class EncounterRepository
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly array $pokedex,
         private readonly HabitStreakQuery $habitStreakQuery,
     ) {}
@@ -197,13 +199,9 @@ final class EncounterRepository
 
     private function findEncounterTable(string $locationId, string $encounterType): ?array
     {
-        $encountersConfig = require __DIR__ . "/../../Config/Encounters.php";
+        $encountersConfig = $this->encounterConfigRepository->findEncounters($locationId);
 
-        if (!isset($encountersConfig[$locationId])) {
-            return null;
-        }
-
-        foreach ($encountersConfig[$locationId] as $key => $encounterTableConfig) {
+        foreach ($encountersConfig as $key => $encounterTableConfig) {
             if ($key === $encounterType) {
                 return self::createEncounterTableEntries($encounterTableConfig);
             }

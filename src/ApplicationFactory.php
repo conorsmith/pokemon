@@ -49,9 +49,11 @@ final class ApplicationFactory
             self::createDatabaseConnection(),
             self::createSessionManager(),
             new CaughtPokemonRepository(self::createDatabaseConnection()),
+            new EncounterConfigRepository(),
             new LocationConfigRepository(),
             new EncounterRepository(
                 self::createDatabaseConnection(),
+                new EncounterConfigRepository(),
                 self::createPokedexConfigArray(),
                 new FoodDiaryHabitStreakQuery(self::createDailyHabitLogRepository()),
             ),

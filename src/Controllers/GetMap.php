@@ -7,6 +7,7 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Direction;
+use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\GymBadge;
@@ -29,6 +30,7 @@ final class GetMap
         private readonly BagRepository $bagRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly array $pokedex,
         private readonly TemplateEngine $templateEngine,
@@ -46,7 +48,7 @@ final class GetMap
 
         $currentLocation = $this->createLocationViewModel(
             $this->findLocation($instanceRow['current_location']),
-            $this->findEncounterTables($instanceRow['current_location']),
+            $this->encounterConfigRepository->findEncounters($instanceRow['current_location']),
         );
 
         $trainers = [];
@@ -284,17 +286,6 @@ final class GetMap
         }
 
         return $location;
-    }
-
-    private function findEncounterTables(string $locationId): ?array
-    {
-        $encountersConfig = require __DIR__ . "/../Config/Encounters.php";
-
-        if (!isset($encountersConfig[$locationId])) {
-            return null;
-        }
-
-        return $encountersConfig[$locationId];
     }
 
     private function createLocationViewModel(array $location, ?array $encounterTables): stdClass
