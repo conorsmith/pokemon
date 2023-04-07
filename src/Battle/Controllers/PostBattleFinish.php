@@ -44,7 +44,9 @@ final class PostBattleFinish
         }
 
         $this->trainerRepository->saveTrainer($trainer);
-        $this->eliteFourChallengeRepository->save($eliteFourChallenge);
+        if ($eliteFourChallenge) {
+            $this->eliteFourChallengeRepository->save($eliteFourChallenge);
+        }
 
         if ($eliteFourChallenge && $eliteFourChallenge->isInProgress()) {
             header("Location: /battle/{$result->id}");
