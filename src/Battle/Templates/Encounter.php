@@ -96,19 +96,20 @@
         <a href="/team/switch?redirect=<?=urlencode("/encounter/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
             Switch
         </a>
-        <?php foreach ($pokeballs as $pokeball) : ?>
-            <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid js-catch <?=$isBattleOver ? "d-none" : ""?>">
-                <button type="submit" name="pokeball" value="<?=$pokeball->id?>" class="btn btn-outline-primary d-flex justify-content-between js-interaction">
-                    <div class="me-2" style="width: 40px; text-align: center;">
-                        <img src="<?=$pokeball->imageUrl?>">
-                    </div>
-                    Throw <?=$pokeball->name?>
-                    <div style="width: 40px; text-align: center;">
-                        <span class="badge text-bg-primary"><?=$pokeball->amount?></span>
-                    </div>
-                </button>
-            </form>
-        <?php endforeach ?>
+        <div class="d-grid" style="grid-template-columns: 1fr 1fr; column-gap: 0.5rem;">
+            <?php foreach ($pokeballs as $pokeball) : ?>
+                <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid js-catch <?=$isBattleOver ? "d-none" : ""?>">
+                    <button type="submit" name="pokeball" value="<?=$pokeball->id?>" class="btn btn-outline-primary d-flex justify-content-center align-items-center js-interaction">
+                        <div class="me-1">
+                            <img src="<?=$pokeball->imageUrl?>">
+                        </div>
+                        <div>
+                            <span class="badge text-bg-primary"><?=$pokeball->amount?></span>
+                        </div>
+                    </button>
+                </form>
+            <?php endforeach ?>
+        </div>
         <form method="POST" action="/encounter/<?=$id?>/run" class="d-grid <?=$isBattleOver ? "d-none" : ""?>">
             <button type="submit" class="btn btn-outline-secondary js-interaction">Run</button>
         </form>
