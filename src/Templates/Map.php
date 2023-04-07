@@ -1,6 +1,11 @@
 <div class="d-grid gap-4">
 
-    <h1 style="text-align: center;"><?=$currentLocation->name?></h1>
+    <div class="d-flex justify-content-between align-items-end">
+        <h2 class="mb-0"><?=$currentLocation->name?></h2>
+        <div>
+            <span class="badge bg-secondary"><?=$currentLocation->region?></span>
+        </div>
+    </div>
 
     <style>
         .directions-cardinal button {

@@ -2,10 +2,8 @@
 declare(strict_types=1);
 
 use ConorSmith\Pokemon\Direction;
-use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\LocationType;
-use ConorSmith\Pokemon\PokedexNo;
 
 return [
     [
@@ -866,6 +864,7 @@ return [
         'directions' => [
             Direction::N => LocationId::VICTORY_ROAD_1F,
             Direction::E => LocationId::ROUTE_22,
+            Direction::S => LocationId::ROUTE_26,
         ],
     ],
     [

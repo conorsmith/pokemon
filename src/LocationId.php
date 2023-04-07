@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon;
 
 final class LocationId
 {
+    // KANTO
     public const PALLET_TOWN = "0998d25b-6afd-4bde-9ddc-57560660ffc3";
     public const ROUTE_1 = "0e27acd0-1d6e-458a-9ba8-7344f90761e1";
     public const VIRIDIAN_CITY = "e130f4d7-38f3-4a0b-89b4-fa8480e888ac";
@@ -179,4 +180,7 @@ final class LocationId
     public const TANOBY_SCUFIB_CHAMBER = "b033de21-f54a-4ec5-86b0-fd2621b0a064";
     public const TANOBY_RIXY_CHAMBER = "0e18eebb-4258-4de9-a033-e17eee94add4";
     public const TANOBY_VIAPOIS_CHAMBER = "2396d8c1-1e5d-44ff-a4bc-7e221c96eb30";
+
+    // JOHTO
+    public const ROUTE_26 = "4d431c27-f7e0-4b3f-937a-421af4e5bf63";
 }

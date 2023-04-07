@@ -13,6 +13,7 @@ use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\LocationType;
+use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
@@ -301,6 +302,10 @@ final class GetMap
         $viewModel = (object) [
             'id' => $location['id'],
             'name' => $location['name'],
+            'region' => match ($location['region']) {
+                Region::KANTO => "Kanto",
+                Region::JOHTO => "Johto",
+            },
             'section' => $location['section'] ?? null,
             'hasEncounters' => !is_null($encounterTables),
             'encounters' => (object) [
@@ -331,6 +336,7 @@ final class GetMap
                 'id'   => $directionLocation['id'],
                 'name' => $directionLocation['name'],
                 'section' => $section,
+                'isLocked' => $this->regionIsLocked($directionLocation),
                 'icon' => match ($directionLocation['type'] ?? null) {
                     LocationType::CITY => "fas fa-city",
                     LocationType::CAVE => "fas fa-mountain",
@@ -352,5 +358,20 @@ final class GetMap
         }
 
         return $viewModel;
+    }
+
+    private function regionIsLocked(array $location): bool
+    {
+        if ($location['region'] === Region::KANTO) {
+            return false;
+        }
+
+        $requiredRegion = match($location['region']) {
+            Region::JOHTO => Region::KANTO,
+        };
+
+        $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($requiredRegion);
+
+        return is_null($eliteFourChallenge);
     }
 }

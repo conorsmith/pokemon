@@ -14,6 +14,7 @@ final class LocationConfigRepository
     {
         $this->locationConfigByRegion = new WeakMap();
         $this->locationConfigByRegion[Region::KANTO] = require __DIR__ . "/Config/Locations/Kanto.php";
+        $this->locationConfigByRegion[Region::JOHTO] = require __DIR__ . "/Config/Locations/Johto.php";
     }
 
     public function findLocation(string $locationId): ?array
@@ -21,6 +22,7 @@ final class LocationConfigRepository
         foreach ($this->locationConfigByRegion as $region => $config) {
             foreach ($config as $entry) {
                 if ($entry['id'] === $locationId) {
+                    $entry['region'] = $region;
                     return $entry;
                 }
             }
@@ -36,6 +38,7 @@ final class LocationConfigRepository
         foreach ($this->locationConfigByRegion as $region => $config) {
             foreach ($config as $entry) {
                 if (isset($entry['area']) && $entry['area'] === $areaId) {
+                    $entry['region'] = $region;
                     $locations[] = $entry;
                 }
             }
