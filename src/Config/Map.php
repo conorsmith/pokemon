@@ -855,8 +855,17 @@ return [
         'name' => "Route 22",
         'type' => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::VICTORY_ROAD_1F,
+            Direction::W => LocationId::POKEMON_LEAGUE_FRONT_GATE,
             Direction::E => LocationId::VIRIDIAN_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::POKEMON_LEAGUE_FRONT_GATE,
+        'name' => "Pokémon League Front Gate",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            Direction::N => LocationId::VICTORY_ROAD_1F,
+            Direction::E => LocationId::ROUTE_22,
         ],
     ],
     [
@@ -867,7 +876,7 @@ return [
         'area' => LocationId::VICTORY_ROAD,
         'directions' => [
             Direction::U => LocationId::VICTORY_ROAD_2F,
-            LocationId::ROUTE_22,
+            LocationId::POKEMON_LEAGUE_FRONT_GATE,
         ],
     ],
     [

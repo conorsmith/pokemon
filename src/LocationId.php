@@ -97,6 +97,7 @@ final class LocationId
     public const POKEMON_MANSION = "ba90917a-2258-42ae-a4c7-bb074de9f01b";
     public const ROUTE_21 = "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a";
     public const ROUTE_22 = "ef4eb649-cf0c-40f1-a11b-601eb4d78a3c";
+    public const POKEMON_LEAGUE_FRONT_GATE = "5d769d58-8fb9-4b8f-8858-ad0af184aab4";
     public const VICTORY_ROAD = "f8581c9e-88cb-4aee-ba7c-93ec85f30202";
     public const VICTORY_ROAD_1F = "2335aa04-4bde-421c-b27e-a680cb3e36b0";
     public const VICTORY_ROAD_2F = "32f2851c-6430-4050-a253-b6191888a537";
