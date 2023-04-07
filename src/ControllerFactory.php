@@ -186,6 +186,7 @@ final class ControllerFactory
             GetMap::class => new GetMap(
                 $this->db,
                 $this->bagRepository,
+                $this->eliteFourChallengeRepository,
                 $this->viewModelFactory,
                 $this->map,
                 $this->pokedex,

@@ -16,7 +16,9 @@ return [
             'class' => TrainerClass::RETIRED_TRAINER,
             'name' => "Blue",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/10/Spr_FRLG_Blue_3.png",
-            'prerequisite' => Region::KANTO,
+            'prerequisite' => [
+                'champion' => Region::KANTO,
+            ],
             'team' => [
                 [
                     'id' => PokedexNo::HERACROSS,
@@ -5919,7 +5921,9 @@ return [
             'class' => TrainerClass::ELITE_FOUR,
             'name' => "Lorelei",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/db/Spr_FRLG_Lorelei.png",
-            'prerequisite' => Region::KANTO,
+            'prerequisite' => [
+                'champion' => Region::KANTO,
+            ],
             'team' => [
                 [
                     'id' => PokedexNo::DEWGONG,
@@ -5953,7 +5957,9 @@ return [
             'class' => TrainerClass::ELITE_FOUR,
             'name' => "Bruno",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/f7/Spr_FRLG_Bruno.png",
-            'prerequisite' => Region::KANTO,
+            'prerequisite' => [
+                'champion' => Region::KANTO,
+            ],
             'team' => [
                 [
                     'id' => PokedexNo::STEELIX,
@@ -5987,7 +5993,9 @@ return [
             'class' => TrainerClass::ELITE_FOUR,
             'name' => "Agatha",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/56/Spr_FRLG_Agatha.png",
-            'prerequisite' => Region::KANTO,
+            'prerequisite' => [
+                'champion' => Region::KANTO,
+            ],
             'team' => [
                 [
                     'id' => PokedexNo::GENGAR,
@@ -6021,7 +6029,9 @@ return [
             'class' => TrainerClass::ELITE_FOUR,
             'name' => "Lance",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/fb/Spr_FRLG_Lance.png",
-            'prerequisite' => Region::KANTO,
+            'prerequisite' => [
+                'champion' => Region::KANTO,
+            ],
             'team' => [
                 [
                     'id' => PokedexNo::GYARADOS,

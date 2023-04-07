@@ -5,13 +5,13 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Direction;
 use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\LocationType;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
@@ -25,6 +25,7 @@ final class GetMap
     public function __construct(
         private readonly Connection $db,
         private readonly BagRepository $bagRepository,
+        private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly array $map,
         private readonly array $pokedex,
@@ -65,7 +66,11 @@ final class GetMap
                     $isInCooldownWindow = false;
                 }
 
-                $imageUrl = TrainerClass::getImageUrl($trainer['class'], $trainer['gender'] ?? Gender::IMMATERIAL);
+                if (array_key_exists('imageUrl', $trainer)) {
+                    $imageUrl = $trainer['imageUrl'];
+                } else {
+                    $imageUrl = TrainerClass::getImageUrl($trainer['class'], $trainer['gender'] ?? Gender::IMMATERIAL);
+                }
 
                 $hasCompletedPrerequisite = true;
 
@@ -74,8 +79,13 @@ final class GetMap
                     $hasCompletedPrerequisite = $this->hasBeatenAllGymTrainers($trainer, $trainerConfigFile[$instanceRow['current_location']]);
                 }
 
-                if (array_key_exists('prerequisite', $trainer) && $trainer['prerequisite'] === Region::KANTO) {
-                    continue;
+                if (array_key_exists('prerequisite', $trainer)
+                    && array_key_exists('champion', $trainer['prerequisite'])
+                ) {
+                    $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($trainer['prerequisite']['champion']);
+                    if (is_null($eliteFourChallenge)) {
+                        continue;
+                    }
                 }
 
                 $trainers[] = (object)[
@@ -198,6 +208,12 @@ final class GetMap
     private function createEliteFourViewModel(?array $eliteFourConfig): ?stdClass
     {
         if (is_null($eliteFourConfig)) {
+            return null;
+        }
+
+        $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($eliteFourConfig['region']);
+
+        if (!is_null($eliteFourChallenge)) {
             return null;
         }
 

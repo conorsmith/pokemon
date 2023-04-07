@@ -24,6 +24,24 @@ final class EliteFourChallengeRepository
             return null;
         }
 
+        return self::createFromRow($row);
+    }
+
+    public function findVictoryInRegion(Region $region): ?EliteFourChallenge
+    {
+        $row = $this->db->fetchAssociative("SELECT * FROM elite_four_challenges WHERE date_completed IS NOT NULL AND victory = 1 AND region = :region", [
+            'region' => $region->value,
+        ]);
+
+        if ($row === false) {
+            return null;
+        }
+
+        return self::createFromRow($row);
+    }
+
+    private static function createFromRow(array $row): EliteFourChallenge
+    {
         $region = Region::from($row['region']);
 
         return self::createEliteFourChallenge(

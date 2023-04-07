@@ -159,6 +159,25 @@ final class PostBattleFight
 
     private static function getPrizePool(Trainer $trainer): array
     {
+        if ($trainer->class === TrainerClass::ELITE_FOUR
+            || $trainer->class === TrainerClass::CHAMPION
+        ) {
+            return [
+                ItemId::ULTRA_BALL => 1,
+                ItemId::CHALLENGE_TOKEN => 1,
+                ItemId::FIRE_STONE => 1,
+                ItemId::WATER_STONE => 1,
+                ItemId::THUNDER_STONE => 1,
+                ItemId::LEAF_STONE => 1,
+                ItemId::MOON_STONE => 1,
+                ItemId::SUN_STONE => 1,
+                ItemId::ICE_STONE => 1,
+                ItemId::DUSK_STONE => 1,
+                ItemId::SHINY_STONE => 1,
+                ItemId::DAWN_STONE => 1,
+            ];
+        }
+
         if (TrainerClass::hasUltraBallInPrizePool($trainer->class)) {
             $pool = [
                 ItemId::POKE_BALL => 1,
