@@ -96,9 +96,9 @@
         <a href="/team/switch?redirect=<?=urlencode("/encounter/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
             Switch
         </a>
-        <div class="d-grid" style="grid-template-columns: 1fr 1fr; column-gap: 0.5rem;">
+        <div class="d-flex w-100 gap-2">
             <?php foreach ($pokeballs as $pokeball) : ?>
-                <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid js-catch <?=$isBattleOver ? "d-none" : ""?>">
+                <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid flex-grow-1 js-catch <?=$isBattleOver ? "d-none" : ""?>">
                     <button type="submit" name="pokeball" value="<?=$pokeball->id?>" class="btn btn-outline-primary d-flex justify-content-center align-items-center js-interaction">
                         <div class="me-1">
                             <img src="<?=$pokeball->imageUrl?>">
