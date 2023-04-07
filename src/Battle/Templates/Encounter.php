@@ -114,3 +114,20 @@
         </form>
     </li>
 </ul>
+
+<div class="modal js-pokeball-confirmation" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+            </div>
+            <div class="modal-body">
+                <p>Throw?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary js-pokeball-confirmation-cancel">Cancel</button>
+                <button type="button" class="btn btn-primary js-pokeball-confirmation-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>

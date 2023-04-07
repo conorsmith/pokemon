@@ -223,7 +223,7 @@
 
         const messagesEl = document.getElementById("messages");
 
-        document.querySelectorAll(".js-attack, .js-catch").forEach(function (el) {
+        document.querySelectorAll(".js-attack").forEach(function (el) {
             el.addEventListener("submit", function (e) {
                 interactionButtons.disable();
                 const formData = new FormData(el);
@@ -245,6 +245,56 @@
                             interactionButtons.enable();
                         });
                     });
+            });
+        });
+
+        document.querySelectorAll(".js-catch").forEach(function (el) {
+            el.addEventListener("submit", function (e) {
+                const confirmationModal = new bootstrap.Modal(document.querySelector('.js-pokeball-confirmation'), {});
+
+                confirmationModal.show();
+                let formSubmitterName = e.submitter.name;
+                let formSubmitterValue = e.submitter.value;
+                e.preventDefault();
+
+                confirmationModal._element.querySelector(".js-pokeball-confirmation-cancel").addEventListener("click", function (e) {
+                    confirmationModal.hide();
+
+                    const oldModalEl = confirmationModal._element;
+                    const newModalEl = oldModalEl.cloneNode(true);
+                    oldModalEl.parentNode.replaceChild(newModalEl, oldModalEl);
+
+                    e.preventDefault();
+                });
+
+                confirmationModal._element.querySelector(".js-pokeball-confirmation-confirm").addEventListener("click", function (e) {
+                    confirmationModal.hide();
+                    interactionButtons.disable();
+                    const formData = new FormData(el);
+                    formData.append(formSubmitterName, formSubmitterValue);
+                    e.preventDefault();
+                    fetch(new Request(
+                        el.action,
+                        {
+                            method: el.method,
+                            body: formData
+                        }
+                    ))
+                        .then(response => response.json())
+                        .then(responseData => {
+
+                            const oldModalEl = confirmationModal._element;
+                            const newModalEl = oldModalEl.cloneNode(true);
+                            oldModalEl.parentNode.replaceChild(newModalEl, oldModalEl);
+
+                            messagesEl.style.removeProperty("display");
+                            messagesEl.querySelector("ul").innerHTML = "";
+
+                            processNextEvent(responseData, function () {
+                                interactionButtons.enable();
+                            });
+                        });
+                });
             });
         });
     });
