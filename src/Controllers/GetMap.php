@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\LocationType;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -26,8 +27,8 @@ final class GetMap
         private readonly Connection $db,
         private readonly BagRepository $bagRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
         private readonly ViewModelFactory $viewModelFactory,
-        private readonly array $map,
         private readonly array $pokedex,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -275,14 +276,13 @@ final class GetMap
 
     private function findLocation(string $id): array
     {
-        /** @var array $location */
-        foreach ($this->map as $location) {
-            if ($location['id'] === $id) {
-                return $location;
-            }
+        $location = $this->locationConfigRepository->findLocation($id);
+
+        if (is_null($location)) {
+            throw new \Exception;
         }
 
-        throw new \Exception;
+        return $location;
     }
 
     private function findEncounterTables(string $locationId): ?array

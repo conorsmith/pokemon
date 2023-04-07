@@ -4,17 +4,18 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Repositories;
 
 use ConorSmith\Pokemon\Battle\Domain\Area;
+use ConorSmith\Pokemon\LocationConfigRepository;
 
 final class AreaRepository
 {
     public function __construct(
         private readonly TrainerRepository $trainerRepository,
-        private readonly array $locationConfig,
+        private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
     public function find(string $locationId): ?Area
     {
-        $location = $this->findLocation($locationId);
+        $location = $this->locationConfigRepository->findLocation($locationId);
 
         if (is_null($location)) {
             return null;
@@ -26,7 +27,7 @@ final class AreaRepository
             return new Area($locationId, $trainers);
         }
 
-        $locations = $this->findLocationsInArea($location['area']);
+        $locations = $this->locationConfigRepository->findLocationsInArea($location['area']);
 
         $trainers = [];
 
@@ -38,29 +39,5 @@ final class AreaRepository
         }
 
         return new Area($location['area'], $trainers);
-    }
-
-    private function findLocation(string $locationId): ?array
-    {
-        foreach ($this->locationConfig as $configEntry) {
-            if ($configEntry['id'] === $locationId) {
-                return $configEntry;
-            }
-        }
-
-        return null;
-    }
-
-    private function findLocationsInArea(string $areaId): array
-    {
-        $locations = [];
-
-        foreach ($this->locationConfig as $configEntry) {
-            if (isset($configEntry['area']) && $configEntry['area'] === $areaId) {
-                $locations[] = $configEntry;
-            }
-        }
-
-        return $locations;
     }
 }

@@ -7,6 +7,7 @@ use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\GymBadge;
@@ -18,9 +19,9 @@ final class PostEncounterCatch
         private readonly Connection $db,
         private readonly EncounterRepository $encounterRepository,
         private readonly BagRepository $bagRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
         private readonly CatchPokemonCommand $catchPokemonCommand,
         private readonly EventFactory $eventFactory,
-        private readonly array $map,
     ) {}
 
     public function __invoke(array $args): void
@@ -155,14 +156,13 @@ final class PostEncounterCatch
 
     private function findLocation(string $id): array
     {
-        /** @var array $location */
-        foreach ($this->map as $location) {
-            if ($location['id'] === $id) {
-                return $location;
-            }
+        $location = $this->locationConfigRepository->findLocation($id);
+
+        if (is_null($location)) {
+            throw new \Exception;
         }
 
-        throw new \Exception;
+        return $location;
     }
 
     private static function findLevelLimit(array $instanceRow): int

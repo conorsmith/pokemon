@@ -21,7 +21,6 @@ class TrainerRepository
     public function __construct(
         private readonly Connection $db,
         private readonly array $pokedex,
-        private readonly array $map,
     ) {}
 
     public function findTrainer(string $id): Trainer

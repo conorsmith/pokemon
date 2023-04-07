@@ -17,7 +17,6 @@ final class EncounterRepository
     public function __construct(
         private readonly Connection $db,
         private readonly array $pokedex,
-        private readonly array $map,
         private readonly HabitStreakQuery $habitStreakQuery,
     ) {}
 

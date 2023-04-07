@@ -49,10 +49,10 @@ final class ApplicationFactory
             self::createDatabaseConnection(),
             self::createSessionManager(),
             new CaughtPokemonRepository(self::createDatabaseConnection()),
+            new LocationConfigRepository(),
             new EncounterRepository(
                 self::createDatabaseConnection(),
                 self::createPokedexConfigArray(),
-                self::createMapConfigArray(),
                 new FoodDiaryHabitStreakQuery(self::createDailyHabitLogRepository()),
             ),
             self::createTrainerRepository(),
@@ -64,7 +64,7 @@ final class ApplicationFactory
             new EliteFourChallengeRepository(self::createDatabaseConnection()),
             new AreaRepository(
                 self::createTrainerRepository(),
-                self::createMapConfigArray(),
+                new LocationConfigRepository(),
             ),
             new BagRepository(self::createDatabaseConnection()),
             self::createDailyHabitLogRepository(),
@@ -85,7 +85,6 @@ final class ApplicationFactory
                 self::createPokemonRepository(),
             ),
             self::createPokedexConfigArray(),
-            self::createMapConfigArray(),
             new TemplateEngine(self::createSessionManager()),
         );
     }
@@ -120,11 +119,6 @@ final class ApplicationFactory
         return require __DIR__ . "/Config/Pokedex.php";
     }
 
-    private static function createMapConfigArray(): array
-    {
-        return require __DIR__ . "/Config/Map.php";
-    }
-
     private static function createDailyHabitLogRepository(): DailyHabitLogRepository
     {
         return new DailyHabitLogRepository(self::createDatabaseConnection());
@@ -135,7 +129,6 @@ final class ApplicationFactory
         return new TrainerRepository(
             self::createDatabaseConnection(),
             self::createPokedexConfigArray(),
-            self::createMapConfigArray(),
         );
     }
 

@@ -108,6 +108,7 @@ final class ControllerFactory
         private readonly Connection                       $db,
         private readonly Session                          $session,
         private readonly CaughtPokemonRepository          $caughtPokemonRepository,
+        private readonly LocationConfigRepository         $locationConfigRepository,
         private readonly EncounterRepository              $encounterRepository,
         private readonly TrainerRepository                $trainerRepository,
         private readonly PlayerRepository                 $playerRepository,
@@ -125,7 +126,6 @@ final class ControllerFactory
         private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
         private readonly WeeklyUpdateForTeamCommand       $weeklyUpdateForTeamCommand,
         private readonly array                            $pokedex,
-        private readonly array                            $map,
         private readonly TemplateEngine                   $templateEngine,
     ) {}
 
@@ -171,7 +171,7 @@ final class ControllerFactory
             PostMapMove::class => new PostMapMove(
                 $this->db,
                 $this->session,
-                $this->map,
+                $this->locationConfigRepository,
             ),
             GetLogExercise::class => new GetLogExercise(
                 $this->unlimitedHabitLogRepository,
@@ -187,8 +187,8 @@ final class ControllerFactory
                 $this->db,
                 $this->bagRepository,
                 $this->eliteFourChallengeRepository,
+                $this->locationConfigRepository,
                 $this->viewModelFactory,
-                $this->map,
                 $this->pokedex,
                 $this->templateEngine,
             ),
@@ -221,9 +221,9 @@ final class ControllerFactory
                 $this->db,
                 $this->encounterRepository,
                 $this->bagRepository,
+                $this->locationConfigRepository,
                 $this->catchPokemonCommand,
                 new EventFactory($this->viewModelFactory),
-                $this->map,
             ),
             PostEncounterRun::class => new PostEncounterRun(
                 $this->db,

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\LocationConfigRepository;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -11,7 +12,7 @@ final class PostMapMove
     public function __construct(
         private readonly Connection $db,
         private readonly Session $session,
-        private readonly array $map,
+        private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
     public function __invoke(): void
@@ -40,13 +41,12 @@ final class PostMapMove
 
     private function findLocation(string $id): array
     {
-        /** @var array $location */
-        foreach ($this->map as $location) {
-            if ($location['id'] === $id) {
-                return $location;
-            }
+        $location = $this->locationConfigRepository->findLocation($id);
+
+        if (is_null($location)) {
+            throw new \Exception;
         }
 
-        throw new \Exception;
+        return $location;
     }
 }
