@@ -136,6 +136,13 @@ final class Trainer
         return !is_null($this->gymBadge);
     }
 
+    public function isEliteFourOrEquivalent(): bool
+    {
+        return $this->class === TrainerClass::ELITE_FOUR
+            || $this->class === TrainerClass::CHAMPION
+            || $this->class === TrainerClass::RETIRED_TRAINER;
+    }
+
     public function hasBeenBeaten(): bool
     {
         return !is_null($this->dateLastBeaten);

@@ -33,7 +33,7 @@ final class StartABattle
         $trainer = $this->trainerRepository->findTrainerByTrainerId($trainerId);
         $eliteFourChallenge = $this->eliteFourChallengeRepository->findActive();
 
-        if ($trainer->isGymLeader()) {
+        if ($trainer->isGymLeader() || $trainer->isEliteFourOrEquivalent()) {
             $this->reportBattleWithGymLeaderCommand->run(array_map(
                 fn(Pokemon $pokemon) => $pokemon->id,
                 $player->team,
