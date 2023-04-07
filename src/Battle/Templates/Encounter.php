@@ -1,6 +1,6 @@
 <?php require __DIR__ . "/BattleScript.php" ?>
 
-<ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
+<ul class="list-group">
     <li class="list-group-item" style="text-align: center;">
         <?php if ($isLegendary) : ?>
             <strong>You encounter the legendary Pokémon <?=$opponentPokemon->name?></strong>
@@ -91,14 +91,8 @@
                 Finish
             </button>
         </form>
-        <form method="POST" action="/encounter/<?=$id?>/fight" class="d-grid flex-row js-attack <?=$isBattleOver ? "d-none" : ""?>" style="grid-template-columns: 1fr 1fr; column-gap: 0.5rem;">
-            <button type="submit" class="btn btn-primary js-interaction" name="attack" value="physical">
-                <i class="fas fa-fw fa-paw"></i> Physical
-            </button>
-            <button type="submit" class="btn btn-primary js-interaction" name="attack" value="special">
-                <i class="fas fa-fw fa-wifi"></i> Special
-            </button>
-        </form>
+        <?php $mode = "encounter" ?>
+        <?php require __DIR__ . "/ButtonsAttack.php" ?>
         <a href="/team/switch?redirect=<?=urlencode("/encounter/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
             Switch
         </a>
