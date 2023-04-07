@@ -52,7 +52,7 @@ final class Round
 
         if ($hit) {
             $criticalHit = self::calculateCriticalHit($attacker, $defender);
-            $typeMultiplier = self::calculateTypeMultiplier($attacker, $defender);
+            $typeMultiplier = self::calculateTypeMultiplier($attack, $attacker, $defender);
             $damageTaken = min(
                 $defender->remainingHp,
                 self::calculateDamage($attacker, $defender, $attack, $criticalHit, $typeMultiplier),
@@ -125,7 +125,7 @@ final class Round
         return mt_rand(1, 24) === 1;
     }
 
-    private static function calculateTypeMultiplier(Pokemon $attacker, Pokemon $defender): float
+    private static function calculateTypeMultiplier(Attack $attack, Pokemon $attacker, Pokemon $defender): float
     {
         $primaryTypeMultiplier = self::calculatePrimaryTypeMultiplier($attacker, $defender);
         $secondaryTypeMultiplier = 0.0;
@@ -134,7 +134,15 @@ final class Round
             $secondaryTypeMultiplier = self::calculateSecondaryTypeMultiplier($attacker, $defender);
         }
 
-        return max($primaryTypeMultiplier, $secondaryTypeMultiplier);
+        if ($attack->isPrimaryType()) {
+            return $primaryTypeMultiplier;
+
+        } elseif ($attack->isSecondaryType()) {
+            return $secondaryTypeMultiplier;
+
+        } else {
+            return max($primaryTypeMultiplier, $secondaryTypeMultiplier);
+        }
     }
 
     private static function calculatePrimaryTypeMultiplier(Pokemon $attacker, Pokemon $defender): float

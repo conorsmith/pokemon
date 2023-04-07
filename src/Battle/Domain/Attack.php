@@ -24,4 +24,14 @@ final class Attack
     {
         return $this->damageCategory === "physical";
     }
+
+    public function isPrimaryType(): bool
+    {
+        return $this->typeOrdinal === "primary";
+    }
+
+    public function isSecondaryType(): bool
+    {
+        return $this->typeOrdinal === "secondary";
+    }
 }
