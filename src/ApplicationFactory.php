@@ -51,6 +51,7 @@ final class ApplicationFactory
             new CaughtPokemonRepository(self::createDatabaseConnection()),
             new EncounterConfigRepository(),
             new LocationConfigRepository(),
+            new TrainerConfigRepository(),
             new EncounterRepository(
                 self::createDatabaseConnection(),
                 new EncounterConfigRepository(),
@@ -131,6 +132,7 @@ final class ApplicationFactory
         return new TrainerRepository(
             self::createDatabaseConnection(),
             self::createPokedexConfigArray(),
+            new TrainerConfigRepository(),
         );
     }
 

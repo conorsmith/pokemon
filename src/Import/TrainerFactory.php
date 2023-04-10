@@ -19,26 +19,29 @@ final class TrainerFactory
     {
         $trainers = [];
 
-        foreach ($bulbapediaTrainers as $bulbapediaTrainer) {
-            $team = [];
+        foreach ($bulbapediaTrainers as $key => $trainerGroup) {
+            $trainers[$key] = [];
+            foreach ($trainerGroup as $bulbapediaTrainer) {
+                $team = [];
 
-            foreach ($bulbapediaTrainer['pokemon'] as $pokemon) {
-                $team[] = new TrainerPokemon(
-                    self::createPokedexNumberFromPokemonName($pokemon['name']),
-                    self::createSexFromSymbol($pokemon['sex']),
-                    intval($pokemon['level']),
+                foreach ($bulbapediaTrainer['pokemon'] as $pokemon) {
+                    $team[] = new TrainerPokemon(
+                        self::createPokedexNumberFromPokemonName($pokemon['name']),
+                        self::createSexFromSymbol($pokemon['sex']),
+                        intval($pokemon['level']),
+                    );
+                }
+
+                $trainers[$key][] = new Trainer(
+                    Uuid::uuid4()->toString(),
+                    self::createTrainerClassFromName($bulbapediaTrainer['trainer']['class']),
+                    is_null($bulbapediaTrainer['trainer']['gender'])
+                        ? self::createGenderFromClassName($bulbapediaTrainer['trainer']['class'])
+                        : self::createGenderFromValue($bulbapediaTrainer['trainer']['gender']),
+                    $bulbapediaTrainer['trainer']['name'],
+                    $team,
                 );
             }
-
-            $trainers[] = new Trainer(
-                Uuid::uuid4()->toString(),
-                self::createTrainerClassFromName($bulbapediaTrainer['trainer']['class']),
-                is_null($bulbapediaTrainer['trainer']['gender'])
-                    ? self::createGenderFromClassName($bulbapediaTrainer['trainer']['class'])
-                    : self::createGenderFromValue($bulbapediaTrainer['trainer']['gender']),
-                $bulbapediaTrainer['trainer']['name'],
-                $team,
-            );
         }
 
         return $trainers;
@@ -54,11 +57,12 @@ final class TrainerFactory
         $constantName = str_replace("♂", "", $constantName);
         $constantName = str_replace("é", "E", $constantName);
 
-        if ($constantName === "EXECUTIVE") {
-            return TrainerClass::TEAM_ROCKET_ADMIN;
-        }
-
-        return $trainerClassReflector->getConstants()[$constantName];
+        return match ($constantName) {
+            "EXECUTIVE" => TrainerClass::TEAM_ROCKET_ADMIN,
+            "FISHER" => TrainerClass::FISHERMAN,
+            "ACE_TRAINER" => TrainerClass::COOLTRAINER,
+            default => $trainerClassReflector->getConstants()[$constantName],
+        };
     }
 
     public function createGenderFromClassName(string $class): Gender

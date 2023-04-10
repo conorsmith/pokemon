@@ -18,6 +18,7 @@ use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
@@ -31,6 +32,7 @@ final class GetMap
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly EncounterConfigRepository $encounterConfigRepository,
+        private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly array $pokedex,
         private readonly TemplateEngine $templateEngine,
@@ -53,10 +55,10 @@ final class GetMap
 
         $trainers = [];
 
-        $trainerConfigFile = require __DIR__ . "/../Config/Trainers.php";
+        $trainersInLocation = $this->trainerConfigRepository->findTrainersInLocation($instanceRow['current_location']);
 
-        if (array_key_exists($instanceRow['current_location'], $trainerConfigFile)) {
-            foreach ($trainerConfigFile[$instanceRow['current_location']] as $trainer) {
+        if (!is_null($trainersInLocation)) {
+            foreach ($trainersInLocation as $trainer) {
                 $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
                     'instanceId' => INSTANCE_ID,
                     'trainerId'  => $trainer['id'],
@@ -80,7 +82,7 @@ final class GetMap
 
                 if (array_key_exists('leader', $trainer)) {
                     $imageUrl = $trainer['leader']['imageUrl'];
-                    $hasCompletedPrerequisite = $this->hasBeatenAllGymTrainers($trainer, $trainerConfigFile[$instanceRow['current_location']]);
+                    $hasCompletedPrerequisite = $this->hasBeatenAllGymTrainers($trainer, $trainersInLocation);
                 }
 
                 if (array_key_exists('prerequisite', $trainer)

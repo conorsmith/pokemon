@@ -12,6 +12,7 @@ use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\TrainerConfigRepository;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -21,6 +22,7 @@ class TrainerRepository
     public function __construct(
         private readonly Connection $db,
         private readonly array $pokedex,
+        private readonly TrainerConfigRepository $trainerConfigRepository,
     ) {}
 
     public function findTrainer(string $id): Trainer
@@ -62,23 +64,12 @@ class TrainerRepository
 
     public function findTrainersInLocation(string $locationId): array
     {
-        $trainerConfig = require __DIR__ . "/../../Config/Trainers.php";
-
-        $trainerIds = [];
-
-        foreach ($trainerConfig as $configLocationId => $trainers) {
-            if ($configLocationId === $locationId) {
-                foreach ($trainers as $trainerConfig) {
-                    $trainerIds[] = $trainerConfig['id'];
-                }
-                break;
-            }
-        }
+        $config = $this->trainerConfigRepository->findTrainersInLocation($locationId);
 
         $trainers = [];
 
-        foreach ($trainerIds as $trainerId) {
-            $trainers[] = $this->findTrainerByTrainerId($trainerId);
+        foreach ($config as $entry) {
+            $trainers[] = $this->findTrainerByTrainerId($entry['id']);
         }
 
         return $trainers;
@@ -86,7 +77,7 @@ class TrainerRepository
 
     private function createTrainer(array $trainerBattleRow): Trainer
     {
-        $trainerConfig = $this->findTrainerConfig($trainerBattleRow['trainer_id']);
+        $trainerConfig = $this->trainerConfigRepository->findTrainer($trainerBattleRow['trainer_id']);
 
         $team = [];
 
@@ -168,33 +159,6 @@ class TrainerRepository
         }
 
         return $this->pokedex[$number];
-    }
-
-    private function findTrainerConfig(string $id): array
-    {
-        $trainerConfig = require __DIR__ . "/../../Config/Trainers.php";
-
-        foreach ($trainerConfig as $locationId => $trainers) {
-            foreach ($trainers as $trainer) {
-                if ($trainer['id'] === $id) {
-                    $trainer['locationId'] = $locationId;
-                    return $trainer;
-                }
-            }
-        }
-
-        $eliteFourConfig = require __DIR__ . "/../../Config/EliteFour.php";
-
-        foreach ($eliteFourConfig as $config) {
-            foreach ($config['members'] as $member) {
-                if ($member['id'] === $id) {
-                    $member['locationId'] = $config['location'];
-                    return $member;
-                }
-            }
-        }
-
-        throw new Exception;
     }
 
     public function saveTrainer(Trainer $battleTrainer): void

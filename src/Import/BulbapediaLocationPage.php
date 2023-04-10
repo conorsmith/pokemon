@@ -105,214 +105,232 @@ final class BulbapediaLocationPage
     {
         $titleNode = $this->page->getElementById("Trainers");
 
-        $tableNode = $titleNode->parentNode;
-
-        $trainerCount = 0;
+        $possibleTableNode = $titleNode->parentNode->nextSibling->nextSibling;
 
         $rawTrainerData = [];
 
-        do {
-            while ($tableNode->nodeName !== "table") {
-                $tableNode = $tableNode->nextSibling;
-                if ($tableNode->nodeName === "h2") {
-                    return $rawTrainerData;
+        $mostRecentSubtitle = "Default";
+        $currentNode = $possibleTableNode;
+
+        while (!is_null($currentNode)) {
+            if ($currentNode->nodeName === "table") {
+                $rawTrainerData[$mostRecentSubtitle] = self::extractTrainersFromTableNode($currentNode);
+            } elseif ($currentNode->nodeName === "h3") {
+                $mostRecentSubtitle = $currentNode->textContent;
+            } elseif ($currentNode->nodeName === "h2") {
+                break;
+            }
+            $currentNode = $currentNode->nextSibling;
+        }
+
+        return $rawTrainerData;
+    }
+
+    private static function extractTrainersFromTableNode(DOMNode $tableNode): array
+    {
+        $trainerCount = 0;
+
+        if ($tableNode->attributes->getNamedItem("class")->nodeValue === "expandable") {
+            $trainerRowNodes = $tableNode
+                ->firstChild->nextSibling
+                ->firstChild
+                ->firstChild->nextSibling
+                ->firstChild->nextSibling
+                ->firstChild->nextSibling
+                ->firstChild
+                ->firstChild->nextSibling->nextSibling->nextSibling
+                ->firstChild->nextSibling
+                ->firstChild->nextSibling
+                ->childNodes;
+
+            $classNode = $trainerRowNodes->item(0)
+                ->firstChild->nextSibling
+                ->firstChild
+                ->firstChild
+                ->firstChild;
+
+            $nameNode = $trainerRowNodes->item(2)
+                ->firstChild->nextSibling
+                ->firstChild
+                ->firstChild
+                ->firstChild
+                ->firstChild;
+
+            $trainerCount++;
+            $rawTrainerData[$trainerCount] = [
+                'trainer' => [
+                    'class' => substr(
+                        $classNode->attributes->getNamedItem("title")->nodeValue,
+                        0,
+                        strlen(" (Trainer class)") * -1,
+                    ),
+                    'name'  => trim($nameNode->textContent),
+                ],
+                'pokemon' => [],
+            ];
+
+            $rowNodes = $tableNode
+                ->firstChild->nextSibling
+                ->firstChild->nextSibling->nextSibling
+                ->firstChild->nextSibling
+                ->firstChild->nextSibling
+                ->firstChild->nextSibling
+                ->childNodes;
+
+            foreach ($rowNodes as $rowNode) {
+                /** @var DOMNode $cellNode */
+                foreach ($rowNode->childNodes as $cellNode) {
+                    if ($cellNode->nodeName !== "td") {
+                        continue;
+                    }
+
+                    $pokemonNode = $cellNode
+                        ->firstChild->nextSibling
+                        ->firstChild->nextSibling
+                        ->firstChild->nextSibling->nextSibling
+                        ->firstChild->nextSibling;
+
+                    preg_match("/(\w+)([♀♂]?)\sLv.(\d+)/u", $pokemonNode->textContent, $matches);
+
+                    $rawTrainerData[$trainerCount]['pokemon'][] = [
+                        'name'  => $matches[1],
+                        'sex'   => $matches[2],
+                        'level' => $matches[3],
+                    ];
                 }
             }
+        } else {
 
-            if ($tableNode->attributes->getNamedItem("class")->nodeValue === "expandable") {
-                $trainerRowNodes = $tableNode
-                    ->firstChild->nextSibling
-                    ->firstChild
-                    ->firstChild->nextSibling
-                    ->firstChild->nextSibling
-                    ->firstChild->nextSibling
-                    ->firstChild
-                    ->firstChild->nextSibling->nextSibling->nextSibling
-                    ->firstChild->nextSibling
-                    ->firstChild->nextSibling
-                    ->childNodes;
+            /** @var DOMNode $rowNode */
+            foreach ($tableNode->childNodes->item(1)->childNodes as $rowNode) {
+                if (trim($rowNode->textContent) === "Rematch") {
+                    break;
+                }
 
-                $classNode = $trainerRowNodes->item(0)
-                    ->firstChild->nextSibling
-                    ->firstChild
-                    ->firstChild
-                    ->firstChild;
+                $row = [];
+                /** @var DOMNode $cellNode */
+                foreach ($rowNode->childNodes as $cellNode) {
+                    if ($cellNode->nodeName !== "td") {
+                        continue;
+                    }
 
-                $nameNode = $trainerRowNodes->item(2)
-                    ->firstChild->nextSibling
-                    ->firstChild
-                    ->firstChild
-                    ->firstChild
-                    ->firstChild;
+                    if ($cellNode->attributes->getNamedItem("rowspan")) {
+                        $trainerCell = $cellNode->childNodes->item(1)
+                            ->childNodes->item(1)
+                            ->childNodes->item(2)
+                            ->childNodes->item(3)
+                            ->childNodes->item(0);
 
-                $trainerCount++;
-                $rawTrainerData[$trainerCount] = [
-                    'trainer' => [
-                        'class' => substr(
-                            $classNode->attributes->getNamedItem("title")->nodeValue,
-                            0,
-                            strlen(" (Trainer class)") * -1,
-                        ),
-                        'name'  => trim($nameNode->textContent),
-                    ],
-                    'pokemon' => [],
-                ];
+                        $className = $trainerCell->childNodes->item(0)->textContent;
 
-                $rowNodes = $tableNode
-                    ->firstChild->nextSibling
-                    ->firstChild->nextSibling->nextSibling
-                    ->firstChild->nextSibling
-                    ->firstChild->nextSibling
-                    ->firstChild->nextSibling
-                    ->childNodes;
+                        if ($className === "Team Rocket Grunt") {
+                            $imageNode = $cellNode->childNodes->item(1)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(0);
 
-                foreach ($rowNodes as $rowNode) {
-                    /** @var DOMNode $cellNode */
-                    foreach ($rowNode->childNodes as $cellNode) {
-                        if ($cellNode->nodeName !== "td") {
-                            continue;
+                            $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
+
+                            preg_match("/FRLG_Team_Rocket_Grunt_(\w)/", $imageUrl, $matches);
+
+                            $gender = $matches[1];
+                        } elseif ($className === "Swimmer") {
+                            $imageNode = $cellNode->childNodes->item(1)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(0);
+
+                            $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
+
+                            preg_match("/FRLG_Swimmer_(\w)/", $imageUrl, $matches);
+
+                            $gender = $matches[1];
+                        } elseif ($className === "Pokémon Ranger") {
+                            $imageNode = $cellNode->childNodes->item(1)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(0);
+
+                            $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
+
+                            preg_match("/FRLG_Pok%C3%A9mon_Ranger_(\w)/", $imageUrl, $matches);
+
+                            $gender = $matches[1];
+                        } elseif ($className === "Cooltrainer") {
+                            $imageNode = $cellNode->childNodes->item(1)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(0);
+
+                            $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
+
+                            preg_match("/_Cooltrainer_(\w)/", $imageUrl, $matches);
+
+                            $gender = $matches[1];
+                        } else {
+                            $imageNode = $cellNode->childNodes->item(1)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(1)
+                                ->childNodes->item(0)
+                                ->childNodes->item(0);
+
+                            $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
+
+                            preg_match("/_([MF])\./", $imageUrl, $matches);
+
+                            $gender = $matches[1];
                         }
 
-                        $pokemonNode = $cellNode
-                            ->firstChild->nextSibling
-                            ->firstChild->nextSibling
-                            ->firstChild->nextSibling->nextSibling
-                            ->firstChild->nextSibling;
+                        $trainerCount++;
+                        $rawTrainerData[$trainerCount] = [
+                            'trainer' => [
+                                'class' => $trainerCell->childNodes->item(0)->textContent,
+                                'gender' => $gender,
+                                'name'  => trim($trainerCell->childNodes->item(1)->textContent),
+                            ],
+                            'pokemon' => [],
+                        ];
+                    } elseif ($cellNode->childNodes->item(1)->nodeName !== "#text") {
+                        $pokemonRow = $cellNode
+                            ->childNodes->item(1)
+                            ->childNodes->item(1)
+                            ->childNodes->item(0);
 
-                        preg_match("/(\w+)([♀♂]?)\sLv.(\d+)/u", $pokemonNode->textContent, $matches);
+                        if (is_null($pokemonRow
+                            ->childNodes->item(3)
+                            ->childNodes->item(1)
+                            ->textContent)) {
+                            dd($pokemonRow->ownerDocument->saveHTML($pokemonRow));
+                        }
 
                         $rawTrainerData[$trainerCount]['pokemon'][] = [
-                            'name'  => $matches[1],
-                            'sex'   => $matches[2],
-                            'level' => $matches[3],
+                            'name'  => $pokemonRow
+                                ->childNodes->item(3)
+                                ->childNodes->item(0)
+                                ->textContent,
+                            'sex'   => trim($pokemonRow
+                                ->childNodes->item(3)
+                                ->childNodes->item(1)
+                                ->textContent),
+                            'level' => $pokemonRow
+                                ->childNodes->item(5)
+                                ->childNodes->item(0)
+                                ->childNodes->item(1)
+                                ->textContent,
                         ];
                     }
                 }
-            } else {
-
-                /** @var DOMNode $rowNode */
-                foreach ($tableNode->childNodes->item(1)->childNodes as $rowNode) {
-                    if (trim($rowNode->textContent) === "Rematch") {
-                        break;
-                    }
-
-                    $row = [];
-                    /** @var DOMNode $cellNode */
-                    foreach ($rowNode->childNodes as $cellNode) {
-                        if ($cellNode->nodeName !== "td") {
-                            continue;
-                        }
-
-                        if ($cellNode->attributes->getNamedItem("rowspan")) {
-                            $trainerCell = $cellNode->childNodes->item(1)
-                                ->childNodes->item(1)
-                                ->childNodes->item(2)
-                                ->childNodes->item(3)
-                                ->childNodes->item(0);
-
-                            $className = $trainerCell->childNodes->item(0)->textContent;
-
-                            if ($className === "Team Rocket Grunt") {
-                                $imageNode = $cellNode->childNodes->item(1)
-                                    ->childNodes->item(1)
-                                    ->childNodes->item(0)
-                                    ->childNodes->item(1)
-                                    ->childNodes->item(0)
-                                    ->childNodes->item(0);
-
-                                $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
-
-                                preg_match("/FRLG_Team_Rocket_Grunt_(\w)/", $imageUrl, $matches);
-
-                                $gender = $matches[1];
-                            } elseif ($className === "Swimmer") {
-                                $imageNode = $cellNode->childNodes->item(1)
-                                    ->childNodes->item(1)
-                                    ->childNodes->item(0)
-                                    ->childNodes->item(1)
-                                    ->childNodes->item(0)
-                                    ->childNodes->item(0);
-
-                                $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
-
-                                preg_match("/FRLG_Swimmer_(\w)/", $imageUrl, $matches);
-
-                                $gender = $matches[1];
-                            } elseif ($className === "Pokémon Ranger") {
-                                $imageNode = $cellNode->childNodes->item(1)
-                                    ->childNodes->item(1)
-                                    ->childNodes->item(0)
-                                    ->childNodes->item(1)
-                                    ->childNodes->item(0)
-                                    ->childNodes->item(0);
-
-                                $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
-
-                                preg_match("/FRLG_Pok%C3%A9mon_Ranger_(\w)/", $imageUrl, $matches);
-
-                                $gender = $matches[1];
-                            } elseif ($className === "Cooltrainer") {
-                                $imageNode = $cellNode->childNodes->item(1)
-                                    ->childNodes->item(1)
-                                    ->childNodes->item(0)
-                                    ->childNodes->item(1)
-                                    ->childNodes->item(0)
-                                    ->childNodes->item(0);
-
-                                $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
-
-                                preg_match("/FRLG_Cooltrainer_(\w)/", $imageUrl, $matches);
-
-                                $gender = $matches[1];
-                            } else {
-                                $gender = null;
-                            }
-
-                            $trainerCount++;
-                            $rawTrainerData[$trainerCount] = [
-                                'trainer' => [
-                                    'class' => $trainerCell->childNodes->item(0)->textContent,
-                                    'gender' => $gender,
-                                    'name'  => trim($trainerCell->childNodes->item(1)->textContent),
-                                ],
-                                'pokemon' => [],
-                            ];
-                        } elseif ($cellNode->childNodes->item(1)->nodeName !== "#text") {
-                            $pokemonRow = $cellNode
-                                ->childNodes->item(1)
-                                ->childNodes->item(1)
-                                ->childNodes->item(0);
-
-                            if (is_null($pokemonRow
-                                ->childNodes->item(3)
-                                ->childNodes->item(1)
-                                ->textContent)) {
-                                dd($pokemonRow->ownerDocument->saveHTML($pokemonRow));
-                            }
-
-                            $rawTrainerData[$trainerCount]['pokemon'][] = [
-                                'name'  => $pokemonRow
-                                    ->childNodes->item(3)
-                                    ->childNodes->item(0)
-                                    ->textContent,
-                                'sex'   => trim($pokemonRow
-                                    ->childNodes->item(3)
-                                    ->childNodes->item(1)
-                                    ->textContent),
-                                'level' => $pokemonRow
-                                    ->childNodes->item(5)
-                                    ->childNodes->item(0)
-                                    ->childNodes->item(1)
-                                    ->textContent,
-                            ];
-                        }
-                    }
-                }
             }
-
-            $tableNode = $tableNode->nextSibling;
-
-        } while (!is_null($tableNode));
+        }
 
         return $rawTrainerData;
     }

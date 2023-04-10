@@ -19,15 +19,22 @@ final class TrainersConfig
     {
         $config = "";
 
-        $config .= "[" . PHP_EOL;
+        foreach ($trainers as $groupName => $trainersGroup) {
 
-        /** @var Trainer $trainer */
-        foreach ($trainers as $trainer) {
-            $config .= self::encodeTrainer($trainer);
+            if (count($trainers) > 1) {
+                $config .= "## " . strtoupper($groupName) . PHP_EOL;
+            }
+
+            $config .= "[" . PHP_EOL;
+
+            /** @var Trainer $trainer */
+            foreach ($trainersGroup as $trainer) {
+                $config .= self::encodeTrainer($trainer);
+            }
+
+            $config .= "]," . PHP_EOL;
+            $config .= PHP_EOL;
         }
-
-        $config .= "]," . PHP_EOL;
-        $config .= PHP_EOL;
 
         return $config;
     }

@@ -8,6 +8,7 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -16,6 +17,7 @@ final class GetBattle
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly TrainerRepository $trainerRepository,
         private readonly PlayerRepository $playerRepository,
         private readonly ViewModelFactory $viewModelFactory,
@@ -56,7 +58,7 @@ final class GetBattle
             ]);
 
             if ($trainerBattleRow !== false) {
-                $trainerConfig = self::findTrainerConfig($trainerBattleRow['trainer_id']);
+                $trainerConfig = $this->findTrainerConfig($trainerBattleRow['trainer_id']);
                 if (array_key_exists('imageUrl', $trainerConfig)) {
                     $imageUrl = $trainerConfig['imageUrl'];
                 }
@@ -66,27 +68,12 @@ final class GetBattle
         return $imageUrl;
     }
 
-    private static function findTrainerConfig(string $trainerId): array
+    private function findTrainerConfig(string $trainerId): array
     {
-        $config = require __DIR__ . "/../../Config/Trainers.php";
+        $trainer = $this->trainerConfigRepository->findTrainer($trainerId);
 
-        foreach ($config as $locationEntries) {
-            foreach ($locationEntries as $entry) {
-                if ($entry['id'] === $trainerId) {
-                    return $entry;
-                }
-            }
-        }
-
-        $eliteFourConfig = require __DIR__ . "/../../Config/EliteFour.php";
-
-        foreach ($eliteFourConfig as $config) {
-            foreach ($config['members'] as $member) {
-                if ($member['id'] === $trainerId) {
-                    $member['locationId'] = $config['location'];
-                    return $member;
-                }
-            }
+        if (!is_null($trainer)) {
+            return $trainer;
         }
 
         throw new Exception;

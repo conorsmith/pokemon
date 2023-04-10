@@ -110,6 +110,7 @@ final class ControllerFactory
         private readonly CaughtPokemonRepository          $caughtPokemonRepository,
         private readonly EncounterConfigRepository        $encounterConfigRepository,
         private readonly LocationConfigRepository         $locationConfigRepository,
+        private readonly TrainerConfigRepository          $trainerConfigRepository,
         private readonly EncounterRepository              $encounterRepository,
         private readonly TrainerRepository                $trainerRepository,
         private readonly PlayerRepository                 $playerRepository,
@@ -190,6 +191,7 @@ final class ControllerFactory
                 $this->eliteFourChallengeRepository,
                 $this->locationConfigRepository,
                 $this->encounterConfigRepository,
+                $this->trainerConfigRepository,
                 $this->viewModelFactory,
                 $this->pokedex,
                 $this->templateEngine,
@@ -274,6 +276,7 @@ final class ControllerFactory
             ),
             GetBattle::class => new GetBattle(
                 $this->db,
+                $this->trainerConfigRepository,
                 $this->trainerRepository,
                 $this->playerRepository,
                 $this->viewModelFactory,
