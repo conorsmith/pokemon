@@ -78,6 +78,17 @@ final class GetBattle
             }
         }
 
+        $eliteFourConfig = require __DIR__ . "/../../Config/EliteFour.php";
+
+        foreach ($eliteFourConfig as $config) {
+            foreach ($config['members'] as $member) {
+                if ($member['id'] === $trainerId) {
+                    $member['locationId'] = $config['location'];
+                    return $member;
+                }
+            }
+        }
+
         throw new Exception;
     }
 }
