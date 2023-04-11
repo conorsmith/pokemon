@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Battle\Repositories;
 
 use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\Domain\EncounterTableEntry;
+use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\EncounterConfigRepository;
@@ -22,10 +23,10 @@ final class EncounterRepository
         private readonly HabitStreakQuery $habitStreakQuery,
     ) {}
 
-    public function generateWildEncounter(string $locationId, string $encounterType): Encounter
+    public function generateWildEncounter(Location $location, string $encounterType): Encounter
     {
         $encounterTable = $this->findEncounterTable(
-            $locationId,
+            $location,
             $encounterType,
         );
 
@@ -197,29 +198,29 @@ final class EncounterRepository
         return null;
     }
 
-    private function findEncounterTable(string $locationId, string $encounterType): ?array
+    private function findEncounterTable(Location $location, string $encounterType): ?array
     {
-        $encountersConfig = $this->encounterConfigRepository->findEncounters($locationId);
+        $encountersConfig = $this->encounterConfigRepository->findEncounters($location->id);
 
         foreach ($encountersConfig as $key => $encounterTableConfig) {
             if ($key === $encounterType) {
-                return self::createEncounterTableEntries($encounterTableConfig);
+                return self::createEncounterTableEntries($location, $encounterTableConfig);
             }
         }
 
         return null;
     }
 
-    private static function createEncounterTableEntries(array $encounterTableConfig): array
+    private static function createEncounterTableEntries(Location $location, array $encounterTableConfig): array
     {
         $entries = [];
 
         foreach ($encounterTableConfig as $pokedexNumber => $entryConfig) {
             if (array_key_exists('weight', $entryConfig)) {
-                $entries[] = self::createEncounterTableEntry(strval($pokedexNumber), $entryConfig);
+                $entries[] = self::createEncounterTableEntry($location, strval($pokedexNumber), $entryConfig);
             } else {
                 foreach ($entryConfig as $formEntryConfig) {
-                    $entries[] = self::createEncounterTableEntry(strval($pokedexNumber), $formEntryConfig);
+                    $entries[] = self::createEncounterTableEntry($location, strval($pokedexNumber), $formEntryConfig);
                 }
             }
         }
@@ -227,18 +228,18 @@ final class EncounterRepository
         return $entries;
     }
 
-    private static function createEncounterTableEntry(string $pokedexNumber, array $entryConfig): EncounterTableEntry
+    private static function createEncounterTableEntry(Location $location, string $pokedexNumber, array $entryConfig): EncounterTableEntry
     {
         return new EncounterTableEntry(
             $pokedexNumber,
             $entryConfig['form'] ?? null,
             $entryConfig['weight'],
             is_array($entryConfig['levels'])
-                ? $entryConfig['levels'][0]
-                : $entryConfig['levels'],
+                ? $entryConfig['levels'][0] + $location->calculateRegionalLevelOffset()
+                : $entryConfig['levels'] + $location->calculateRegionalLevelOffset(),
             is_array($entryConfig['levels'])
-                ? $entryConfig['levels'][1]
-                : $entryConfig['levels'],
+                ? $entryConfig['levels'][1] + $location->calculateRegionalLevelOffset()
+                : $entryConfig['levels'] + $location->calculateRegionalLevelOffset(),
         );
     }
 

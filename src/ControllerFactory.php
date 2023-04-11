@@ -201,6 +201,7 @@ final class ControllerFactory
                 $this->encounterRepository,
                 $this->playerRepository,
                 $this->bagRepository,
+                $this->locationConfigRepository,
             ),
             GetTeam::class => new GetTeam(
                 $this->pokemonRepository,

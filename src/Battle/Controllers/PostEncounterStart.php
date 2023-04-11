@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
+use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostEncounterStart
 {
@@ -17,6 +18,7 @@ final class PostEncounterStart
         private readonly EncounterRepository $encounterRepository,
         private readonly PlayerRepository $playerRepository,
         private readonly BagRepository $bagRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
     public function __invoke(): void
@@ -36,7 +38,7 @@ final class PostEncounterStart
             $encounter = $this->encounterRepository->generateLegendaryEncounter($legendaryPokemonNumber);
         } else {
             $encounter = $this->encounterRepository->generateWildEncounter(
-                $instanceRow['current_location'],
+                $this->findLocation($instanceRow['current_location']),
                 $_POST['encounterType'],
             );
         }
@@ -50,5 +52,15 @@ final class PostEncounterStart
         }
 
         header("Location: /encounter/{$encounter->id}");
+    }
+
+    private function findLocation(string $locationId): Location
+    {
+        $config = $this->locationConfigRepository->findLocation($locationId);
+
+        return new Location(
+            $locationId,
+            $config['region'],
+        );
     }
 }
