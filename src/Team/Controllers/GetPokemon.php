@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Controllers;
 
+use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\LocationType;
+use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
@@ -14,6 +17,7 @@ final class GetPokemon
 {
     public function __construct(
         private readonly PokemonRepository $pokemonRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
@@ -25,9 +29,30 @@ final class GetPokemon
 
         echo $this->templateEngine->render(__DIR__ . "/../Templates/Pokemon.php", [
             'pokemon' => PokemonVm::create($pokemon),
+            'capture' => $this->createCaptureVm($pokemon),
             'stats' => self::createStatsVm($pokemon),
             'typeEffectiveness' => self::createTypeEffectivenessVms($pokemon),
         ]);
+    }
+
+    private function createCaptureVm(Pokemon $pokemon): stdClass
+    {
+        $locationConfig = $this->locationConfigRepository->findLocation($pokemon->caughtLocationId);
+
+        return (object) [
+            'location' => $locationConfig['name'],
+            'region' => match ($locationConfig['region']) {
+                Region::KANTO => "Kanto",
+                Region::JOHTO => "Johto",
+            },
+            'preposition' => match ($locationConfig['type']) {
+                LocationType::ROUTE => "on",
+                LocationType::CITY => "in",
+                LocationType::CAVE => "in",
+                LocationType::TOWER => "in",
+                default => "on",
+            },
+        ];
     }
 
     private static function createStatsVm(Pokemon $pokemon): stdClass

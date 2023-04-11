@@ -213,6 +213,7 @@ final class ControllerFactory
             ),
             GetPokemon::class => new GetPokemon(
                 $this->pokemonRepository,
+                $this->locationConfigRepository,
                 $this->templateEngine,
             ),
             GetEncounter::class => new GetEncounter(

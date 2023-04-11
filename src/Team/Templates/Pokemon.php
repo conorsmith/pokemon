@@ -1,6 +1,10 @@
 <div class="card">
     <div class="card-body" style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);">
         <?php require __DIR__ . "/ListPokemon.php" ?>
+        <div class="mt-2">
+            <div>Joined the team <?=$capture->preposition?></div>
+            <div><strong><?=$capture->location?></strong> <span class="badge bg-secondary"><?=$capture->region?></span></div>
+        </div>
     </div>
     <div class="card-body" style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);">
         <table class="table">
