@@ -60,6 +60,7 @@ final class CatchPokemonCommand implements CommandInterface
             new Stat($baseStats['spAttack'], mt_rand(0, 31)),
             new Stat($baseStats['spDefence'], mt_rand(0, 31)),
             new Stat($baseStats['speed'], mt_rand(0, 31)),
+            $caughtLocationId,
         );
 
         $this->db->insert("caught_pokemon", [

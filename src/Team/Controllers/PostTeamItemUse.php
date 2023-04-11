@@ -7,6 +7,8 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\FriendshipLog;
@@ -24,6 +26,7 @@ final class PostTeamItemUse
         private readonly BagRepository $bagRepository,
         private readonly PokemonRepository $pokemonRepository,
         private readonly FriendshipLog $friendshipLog,
+        private readonly LocationConfigRepository $locationConfigRepository,
         private readonly array $pokedex,
     ) {}
 
@@ -76,7 +79,7 @@ final class PostTeamItemUse
 
         if (array_key_exists('evolutions', $pokemonConfig)) {
             foreach ($pokemonConfig['evolutions'] as $number => $evolution) {
-                if (self::canEvolve($pokemon, $evolution, $newLevel)) {
+                if ($this->canEvolve($pokemon, $evolution, $newLevel)) {
                     $pokemonEvolves = true;
                     $newPokemonNumber = $number;
                 }
@@ -133,12 +136,19 @@ final class PostTeamItemUse
         header("Location: /team/use/" . ItemId::RARE_CANDY);
     }
 
-    private static function canEvolve(Pokemon $pokemon, array $evolutionConfig, int $newLevel): bool
+    private function canEvolve(Pokemon $pokemon, array $evolutionConfig, int $newLevel): bool
     {
         $requirements = [];
 
         if (array_key_exists('level', $evolutionConfig)) {
-            $requirements[] = $evolutionConfig['level'] <= $newLevel;
+            $locationConfig = $this->locationConfigRepository->findLocation($pokemon->caughtLocationId);
+
+            $regionalLevelOffset = match ($locationConfig['region']) {
+                Region::KANTO => 0,
+                Region::JOHTO => 50,
+            };
+
+            $requirements[] = $evolutionConfig['level'] + $regionalLevelOffset <= $newLevel;
         }
 
         if (in_array('friendship', $evolutionConfig)) {

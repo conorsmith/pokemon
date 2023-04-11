@@ -332,6 +332,7 @@ final class ControllerFactory
                 $this->bagRepository,
                 $this->pokemonRepository,
                 $this->friendshipLog,
+                $this->locationConfigRepository,
                 $this->pokedex,
             ),
             PostChallengeEliteFour::class => new PostChallengeEliteFour(

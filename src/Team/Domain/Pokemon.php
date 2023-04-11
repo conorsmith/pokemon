@@ -19,6 +19,7 @@ final class Pokemon
         public readonly Stat $specialAttack,
         public readonly Stat $specialDefence,
         public readonly Stat $speed,
+        public readonly string $caughtLocationId,
     ) {}
 
     public function identicalTo(self $other): bool
@@ -57,6 +58,7 @@ final class Pokemon
             $this->specialAttack,
             $this->specialDefence,
             $this->speed,
+            $this->caughtLocationId,
         );
     }
 }

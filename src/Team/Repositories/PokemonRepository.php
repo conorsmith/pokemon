@@ -152,6 +152,7 @@ final class PokemonRepository
             new Stat($baseStats['spAttack'], $row['iv_special_attack']),
             new Stat($baseStats['spDefence'], $row['iv_special_defence']),
             new Stat($baseStats['speed'], $row['iv_speed']),
+            $row['location_caught'],
         );
     }
 
