@@ -36,17 +36,17 @@ return [
                     'level' => 72,
                 ],
                 [
-                    'id' => PokedexNo::VENUSAUR,
+                    'id' => PokedexNo::EXEGGUTOR,
                     'sex' => Sex::MALE,
                     'level' => 75,
                 ],
                 [
-                    'id' => PokedexNo::CHARIZARD,
+                    'id' => PokedexNo::GYARADOS,
                     'sex' => Sex::MALE,
                     'level' => 75,
                 ],
                 [
-                    'id' => PokedexNo::BLASTOISE,
+                    'id' => PokedexNo::ARCANINE,
                     'sex' => Sex::MALE,
                     'level' => 75,
                 ],

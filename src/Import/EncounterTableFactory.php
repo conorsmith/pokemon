@@ -81,7 +81,14 @@ final class EncounterTableFactory
             return new EncounterType(EncounterTypeConstants::ROCK_SMASH);
         }
 
-        if ($value === "Only one" || $value === "Egg" || $value === "Headbutt" || $value === "Hoenn Sound" || $value === "Sinnoh Sound") {
+        if ($value === "Only one"
+            || $value === "Egg"
+            || $value === "Headbutt"
+            || $value === "Hoenn Sound"
+            || $value === "Sinnoh Sound"
+            || $value === "Swarm"
+            || $value === "Starter Pokémon"
+        ) {
             return EncounterType::irrelevant();
         }
 

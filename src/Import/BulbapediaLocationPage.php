@@ -53,13 +53,16 @@ final class BulbapediaLocationPage
         $rawEncounterData = [];
 
         $mostRecentSubtitle = "Default";
+        $mostRecentSubSubtitle = "";
         $currentNode = $possibleTableNode;
 
         while (!is_null($currentNode)) {
             if ($currentNode->nodeName === "table") {
-                $rawEncounterData[$mostRecentSubtitle] = self::extractEncountersFromTableNode($currentNode);
+                $rawEncounterData[$mostRecentSubtitle . $mostRecentSubSubtitle] = self::extractEncountersFromTableNode($currentNode);
             } elseif ($currentNode->nodeName === "h3") {
                 $mostRecentSubtitle = $currentNode->textContent;
+            } elseif ($currentNode->nodeName === "h4") {
+                $mostRecentSubSubtitle = $currentNode->textContent;
             } elseif ($currentNode->nodeName === "h2") {
                 break;
             }
@@ -285,9 +288,13 @@ final class BulbapediaLocationPage
 
                             $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
 
-                            preg_match("/_([MF])\./", $imageUrl, $matches);
+                            $foundMatch = preg_match("/_([MF])\./", $imageUrl, $matches);
 
-                            $gender = $matches[1];
+                            if ($foundMatch === 1) {
+                                $gender = $matches[1];
+                            } else {
+                                $gender = null;
+                            }
                         }
 
                         $trainerCount++;
@@ -304,13 +311,6 @@ final class BulbapediaLocationPage
                             ->childNodes->item(1)
                             ->childNodes->item(1)
                             ->childNodes->item(0);
-
-                        if (is_null($pokemonRow
-                            ->childNodes->item(3)
-                            ->childNodes->item(1)
-                            ->textContent)) {
-                            dd($pokemonRow->ownerDocument->saveHTML($pokemonRow));
-                        }
 
                         $rawTrainerData[$trainerCount]['pokemon'][] = [
                             'name'  => $pokemonRow

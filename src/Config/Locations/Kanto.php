@@ -864,6 +864,7 @@ return [
         'directions' => [
             Direction::N => LocationId::VICTORY_ROAD_1F,
             Direction::E => LocationId::ROUTE_22,
+            Direction::W => LocationId::ROUTE_28,
             Direction::S => LocationId::ROUTE_26,
         ],
     ],

@@ -32,9 +32,15 @@ final class TrainerFactory
                     );
                 }
 
+                if ($bulbapediaTrainer['trainer']['name'] === "Red") {
+                    $class = TrainerClass::RETIRED_TRAINER;
+                } else {
+                    $class = self::createTrainerClassFromName($bulbapediaTrainer['trainer']['class']);
+                }
+
                 $trainers[$key][] = new Trainer(
                     Uuid::uuid4()->toString(),
-                    self::createTrainerClassFromName($bulbapediaTrainer['trainer']['class']),
+                    $class,
                     is_null($bulbapediaTrainer['trainer']['gender'])
                         ? self::createGenderFromClassName($bulbapediaTrainer['trainer']['class'])
                         : self::createGenderFromValue($bulbapediaTrainer['trainer']['gender']),

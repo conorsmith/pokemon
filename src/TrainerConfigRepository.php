@@ -40,10 +40,12 @@ final class TrainerConfigRepository
     public function findTrainer(string $trainerId): ?array
     {
         foreach ($this->trainerConfigRepository as $region => $config) {
-            foreach ($config as $locationId => $entry) {
-                if ($entry['id'] === $trainerId) {
-                    $entry['locationId'] = $locationId;
-                    return $entry;
+            foreach ($config as $locationId => $entries) {
+                foreach ($entries as $entry) {
+                    if ($entry['id'] === $trainerId) {
+                        $entry['locationId'] = $locationId;
+                        return $entry;
+                    }
                 }
             }
         }

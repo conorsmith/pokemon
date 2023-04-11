@@ -183,4 +183,19 @@ final class LocationId
 
     // JOHTO
     public const ROUTE_26 = "4d431c27-f7e0-4b3f-937a-421af4e5bf63";
+    public const ROUTE_27 = "def091ff-8479-473e-9022-75456557be33";
+    public const TOHJO_FALLS = "b9f52d98-65c8-4b85-89f1-1fe731cdf95a";
+    public const ROUTE_28 = "0793f081-12d6-4a22-9301-d5ef0a537488";
+    public const MT_SILVER = "291e7d63-c652-4093-9543-992e4b50fbab";
+    public const MT_SILVER_EXTERIOR = "4acba97c-d535-4dfc-a948-130e1d86e70c";
+    public const MT_SILVER_1F = "52a8c19f-86af-4935-8f7b-9dbde4e7809d";
+    public const MT_SILVER_2F = "6b85f923-fb14-46eb-82a1-9c291ec5a79f";
+    public const MT_SILVER_3F = "34f06989-61c5-4975-9749-b89c73f885ee";
+    public const MT_SILVER_LOWER_MOUNTAINSIDE = "844e6717-f61f-407f-b93d-d6263b25d759";
+    public const MT_SILVER_UPPER_MOUNTAINSIDE = "03b63f0e-8d04-464b-9538-d1e6957c5355";
+    public const MT_SILVER_SUMMIT = "effbbaae-836b-4b6f-97d4-a5a8be675e09";
+    public const NEW_BARK_TOWN = "da7816a2-d476-4968-b60e-c5428b970131";
+    public const ROUTE_29 = "4678a84c-4e6d-4030-9e2e-2c5a7436f1f7";
+    public const CHERRYGROVE_CITY = "d3709b73-1230-40da-845e-5ea9f50775f2";
+    public const ROUTE_30 = "8737ff23-d092-407c-8a98-9f1fd7d93910";
 }
