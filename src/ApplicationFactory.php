@@ -133,6 +133,7 @@ final class ApplicationFactory
             self::createDatabaseConnection(),
             self::createPokedexConfigArray(),
             new TrainerConfigRepository(),
+            new LocationConfigRepository(),
         );
     }
 

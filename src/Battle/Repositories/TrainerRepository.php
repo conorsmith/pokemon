@@ -5,10 +5,12 @@ namespace ConorSmith\Pokemon\Battle\Repositories;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Gender;
+use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use ConorSmith\Pokemon\TrainerClass;
@@ -23,6 +25,7 @@ class TrainerRepository
         private readonly Connection $db,
         private readonly array $pokedex,
         private readonly TrainerConfigRepository $trainerConfigRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
     public function findTrainer(string $id): Trainer
@@ -78,6 +81,9 @@ class TrainerRepository
     private function createTrainer(array $trainerBattleRow): Trainer
     {
         $trainerConfig = $this->trainerConfigRepository->findTrainer($trainerBattleRow['trainer_id']);
+        
+        $locationConfig = $this->locationConfigRepository->findLocation($trainerConfig['locationId']);
+        $location = new Location($locationConfig['id'], $locationConfig['region']);
 
         $team = [];
 
@@ -95,6 +101,8 @@ class TrainerRepository
                 $trainerBattlePokemonId = $trainerBattlePokemonRows[$i]['id'];
             }
 
+            $level = $pokemonConfig['level'] + $location->calculateRegionalLevelOffset();
+
             $pokedexEntry = $this->findPokedexEntry($pokemonConfig['id']);
             $pokemon = new Pokemon(
                 $trainerBattlePokemonId,
@@ -102,10 +110,10 @@ class TrainerRepository
                 $pokemonConfig['form'] ?? null,
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,
-                $pokemonConfig['level'],
+                $level,
                 0,
                 isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
-                self::createStats($trainerConfig['class'], $pokemonConfig['level'], $pokemonConfig['id']),
+                self::createStats($trainerConfig['class'], $level, $pokemonConfig['id']),
                 0,
                 false,
             );
