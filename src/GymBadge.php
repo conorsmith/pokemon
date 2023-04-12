@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon;
 
 enum GymBadge: int
 {
+    // KANTO
     case BOULDER = 1;
     case CASCADE = 2;
     case THUNDER = 3;
@@ -13,6 +14,16 @@ enum GymBadge: int
     case MARSH = 6;
     case VOLCANO = 7;
     case EARTH = 8;
+
+    // JOHTO
+    case ZEPHYR = 9;
+    case HIVE = 10;
+    case PLAIN = 11;
+    case FOG = 12;
+    case STORM = 13;
+    case MINERAL = 14;
+    case GLACIER = 15;
+    case RISING = 16;
 
     public function levelLimit(): int
     {
@@ -25,6 +36,14 @@ enum GymBadge: int
             self::MARSH => 70,
             self::VOLCANO => 70,
             self::EARTH => 90,
+            self::ZEPHYR => 90,
+            self::HIVE => 90,
+            self::PLAIN => 90,
+            self::FOG => 100,
+            self::STORM => 120,
+            self::MINERAL => 120,
+            self::GLACIER => 120,
+            self::RISING => 140,
         };
     }
 

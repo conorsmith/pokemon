@@ -150,7 +150,56 @@ return [
         'name' => "Route 30",
         'type' => LocationType::ROUTE,
         'directions' => [
+            Direction::N => LocationId::ROUTE_31,
             Direction::S => LocationId::CHERRYGROVE_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_31,
+        'name' => "Route 31",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::W => LocationId::VIOLET_CITY,
+            Direction::S => LocationId::ROUTE_30,
+            LocationId::DARK_CAVE_WEST,
+        ],
+    ],
+    [
+        'id' => LocationId::DARK_CAVE_WEST,
+        'name' => "Dark Cave",
+        'section' => "West",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::DARK_CAVE,
+        'directions' => [
+            Direction::E => LocationId::DARK_CAVE_EAST,
+            LocationId::ROUTE_31,
+        ],
+    ],
+    [
+        'id' => LocationId::DARK_CAVE_EAST,
+        'name' => "Dark Cave",
+        'section' => "East",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::DARK_CAVE,
+        'directions' => [
+            Direction::W => LocationId::DARK_CAVE_WEST,
+        ],
+    ],
+    [
+        'id' => LocationId::VIOLET_CITY,
+        'name' => "Violet City",
+        'type' => LocationType::CITY,
+        'directions' => [
+            Direction::E => LocationId::ROUTE_31,
+            LocationId::VIOLET_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::VIOLET_GYM,
+        'name' => "Violet Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::VIOLET_CITY,
         ],
     ],
 ];

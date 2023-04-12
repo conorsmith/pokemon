@@ -339,4 +339,85 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_31 => [
+        [
+            'id' => "6f9c031b-286f-4909-95a4-a1267ac177b6",
+            'class' => TrainerClass::BUG_CATCHER,
+            'name' => "Wade",
+            'team' => [
+                [
+                    'id' => PokedexNo::CATERPIE,
+                    'sex' => Sex::MALE,
+                    'level' => 2,
+                ],
+                [
+                    'id' => PokedexNo::CATERPIE,
+                    'sex' => Sex::MALE,
+                    'level' => 2,
+                ],
+                [
+                    'id' => PokedexNo::CATERPIE,
+                    'sex' => Sex::MALE,
+                    'level' => 2,
+                ],
+                [
+                    'id' => PokedexNo::WEEDLE,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+            ],
+        ],
+    ],
+    LocationId::VIOLET_GYM => [
+        [
+            'id' => "ae9c5e64-d849-4acf-9aa0-546237ea236a",
+            'class' => TrainerClass::BIRD_KEEPER,
+            'name' => "Abe",
+            'team' => [
+                [
+                    'id' => PokedexNo::SPEAROW,
+                    'sex' => Sex::MALE,
+                    'level' => 9,
+                ],
+            ],
+        ],
+        [
+            'id' => "b9a05374-1b3f-47b2-acc4-d132d13e1808",
+            'class' => TrainerClass::BIRD_KEEPER,
+            'name' => "Rod",
+            'team' => [
+                [
+                    'id' => PokedexNo::PIDGEY,
+                    'sex' => Sex::MALE,
+                    'level' => 7,
+                ],
+                [
+                    'id' => PokedexNo::PIDGEY,
+                    'sex' => Sex::MALE,
+                    'level' => 7,
+                ],
+            ],
+        ],
+        [
+            'id' => "fa8e997f-764c-49d0-8f97-56a8ae9c4b63",
+            'class' => TrainerClass::GYM_LEADER,
+            'name' => "Falkner",
+            'leader' => [
+                'badge' => GymBadge::ZEPHYR,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/2b/Spr_HGSS_Falkner.png",
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::PIDGEY,
+                    'sex' => Sex::MALE,
+                    'level' => 9,
+                ],
+                [
+                    'id' => PokedexNo::PIDGEOTTO,
+                    'sex' => Sex::MALE,
+                    'level' => 13,
+                ],
+            ],
+        ],
+    ],
 ];

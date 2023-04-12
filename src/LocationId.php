@@ -198,4 +198,11 @@ final class LocationId
     public const ROUTE_29 = "4678a84c-4e6d-4030-9e2e-2c5a7436f1f7";
     public const CHERRYGROVE_CITY = "d3709b73-1230-40da-845e-5ea9f50775f2";
     public const ROUTE_30 = "8737ff23-d092-407c-8a98-9f1fd7d93910";
+    public const ROUTE_31 = "d1a20d4f-af06-4bd4-af40-7b07d2084ca1";
+    public const DARK_CAVE = "7254ec8e-e993-4687-b018-946f3585ce2f";
+    public const DARK_CAVE_WEST = "e51d6191-c00a-413e-a54d-99cc55e6180d";
+    public const DARK_CAVE_EAST = "7e0ef702-18e9-474e-a967-dd635bb5d98c";
+    public const VIOLET_CITY = "a9f502e7-230f-4aea-828f-4d95896927a7";
+    public const VIOLET_GYM = "7932b248-d78b-4989-8bd7-b4517902c1ec";
+    public const SPROUT_TOWER = "5442608c-a4a3-4bde-89ad-ad9a8f8807ce";
 }

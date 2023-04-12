@@ -674,4 +674,180 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_31 => [
+        EncounterType::WALKING => [
+            PokedexNo::CATERPIE => [
+                'weight' => 35,
+                'levels' => [4, 5],
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 5,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => [4, 5],
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 5,
+            ],
+            PokedexNo::PIDGEY => [
+                'weight' => 70,
+                'levels' => 3,
+            ],
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => [4, 5],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 20,
+                'levels' => 3,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => [4, 5],
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 30,
+                'levels' => 4,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 30,
+                'levels' => 3,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 90,
+                'levels' => [10, 15],
+            ],
+            PokedexNo::POLIWHIRL => [
+                'weight' => 10,
+                'levels' => [15, 32],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 135,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 165,
+                'levels' => 10,
+            ],
+        ],
+    ],
+    LocationId::DARK_CAVE_WEST => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 58,
+                'levels' => [2, 4],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 100,
+                'levels' => [2, 4],
+            ],
+            PokedexNo::DUNSPARCE => [
+                'weight' => 42,
+                'levels' => [2, 4],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 100,
+                'levels' => [2, 20],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+        EncounterType::ROCK_SMASH => [
+            PokedexNo::GEODUDE => [
+                'weight' => 10,
+                'levels' => [8, 14],
+            ],
+            PokedexNo::DUNSPARCE => [
+                'weight' => 90,
+                'levels' => [4, 8],
+            ],
+        ],
+    ],
+    LocationId::DARK_CAVE_EAST => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => 23,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 23,
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 30,
+                'levels' => 23,
+            ],
+            PokedexNo::GRAVELER => [
+                'weight' => 20,
+                'levels' => 25,
+            ],
+            PokedexNo::WOBBUFFET => [
+                'weight' => 15,
+                'levels' => [20, 25],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 100,
+                'levels' => [2, 20],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::VIOLET_CITY => [
+        EncounterType::SURFING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::POLIWHIRL => [
+                'weight' => 10,
+                'levels' => [15, 32],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 155,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+        ],
+    ],
 ];

@@ -88,11 +88,12 @@ final class EncounterTableFactory
             || $value === "Sinnoh Sound"
             || $value === "Swarm"
             || $value === "Starter Pokémon"
+            || substr($value, 0, 5) === "Trade"
         ) {
             return EncounterType::irrelevant();
         }
 
-        throw new Exception;
+        throw new Exception("Invalid value '$value'");
     }
 
     private function createPokedexNumberFromPokemonName(string $name): PokedexNumber

@@ -103,6 +103,14 @@ final class ViewModelFactory
             GymBadge::MARSH => "Marsh",
             GymBadge::VOLCANO => "Volcano",
             GymBadge::EARTH => "Earth",
+            GymBadge::ZEPHYR => "Zephyr",
+            GymBadge::HIVE => "Hive",
+            GymBadge::PLAIN => "Plain",
+            GymBadge::FOG => "Fog",
+            GymBadge::STORM => "Storm",
+            GymBadge::MINERAL => "Mineral",
+            GymBadge::GLACIER => "Glacier",
+            GymBadge::RISING => "Rising",
         };
 
         return "{$name} Badge";
@@ -119,6 +127,14 @@ final class ViewModelFactory
             GymBadge::MARSH => "/assets/badges/75px-Marsh_Badge.png",
             GymBadge::VOLCANO => "/assets/badges/75px-Volcano_Badge.png",
             GymBadge::EARTH => "/assets/badges/75px-Earth_Badge.png",
+            GymBadge::ZEPHYR => "/assets/badges/75px-Zephyr_Badge.png",
+            GymBadge::HIVE => "/assets/badges/75px-Hive_Badge.png",
+            GymBadge::PLAIN => "/assets/badges/75px-Plain_Badge.png",
+            GymBadge::FOG => "/assets/badges/75px-Fog_Badge.png",
+            GymBadge::STORM => "/assets/badges/75px-Storm_Badge.png",
+            GymBadge::MINERAL => "/assets/badges/75px-Mineral_Badge.png",
+            GymBadge::GLACIER => "/assets/badges/75px-Glacier_Badge.png",
+            GymBadge::RISING => "/assets/badges/75px-Rising_Badge.png",
         };
     }
 }
