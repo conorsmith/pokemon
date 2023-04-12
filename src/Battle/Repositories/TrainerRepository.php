@@ -200,16 +200,21 @@ class TrainerRepository
     {
         $baseStats = self::findBaseStats($number);
 
-        $stats = new Stats(
-            StatCalculator::calculateHp($baseStats['hp'], self::generateIv($trainerClass), 0, $level),
-            StatCalculator::calculate($baseStats['attack'], self::generateIv($trainerClass), 0, $level),
-            StatCalculator::calculate($baseStats['defence'], self::generateIv($trainerClass), 0, $level),
-            StatCalculator::calculate($baseStats['spAttack'], self::generateIv($trainerClass), 0, $level),
-            StatCalculator::calculate($baseStats['spDefence'], self::generateIv($trainerClass), 0, $level),
-            StatCalculator::calculate($baseStats['speed'], self::generateIv($trainerClass), 0, $level),
+        return new Stats(
+            $level,
+            $baseStats['hp'],
+            $baseStats['attack'],
+            $baseStats['defence'],
+            $baseStats['spAttack'],
+            $baseStats['spDefence'],
+            $baseStats['speed'],
+            self::generateIv($trainerClass),
+            self::generateIv($trainerClass),
+            self::generateIv($trainerClass),
+            self::generateIv($trainerClass),
+            self::generateIv($trainerClass),
+            self::generateIv($trainerClass),
         );
-
-        return $stats;
     }
 
     private static function generateIv(string $trainerClass): int

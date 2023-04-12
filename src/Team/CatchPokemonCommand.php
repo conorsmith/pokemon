@@ -29,6 +29,12 @@ final class CatchPokemonCommand implements CommandInterface
         bool $isShiny,
         int $level,
         bool $isLegendary,
+        int $ivHp,
+        int $ivPhysicalAttack,
+        int $ivPhysicalDefence,
+        int $ivSpecialAttack,
+        int $ivSpecialDefence,
+        int $ivSpeed,
         string $caughtLocationId,
     ): CatchPokemonResult {
 
@@ -54,12 +60,12 @@ final class CatchPokemonCommand implements CommandInterface
             $level,
             0,
             $isShiny,
-            new Hp($baseStats['hp'], mt_rand(0, 31)),
-            new Stat($baseStats['attack'], mt_rand(0, 31)),
-            new Stat($baseStats['defence'], mt_rand(0, 31)),
-            new Stat($baseStats['spAttack'], mt_rand(0, 31)),
-            new Stat($baseStats['spDefence'], mt_rand(0, 31)),
-            new Stat($baseStats['speed'], mt_rand(0, 31)),
+            new Hp($baseStats['hp'], $ivHp),
+            new Stat($baseStats['attack'], $ivPhysicalAttack),
+            new Stat($baseStats['defence'], $ivPhysicalDefence),
+            new Stat($baseStats['spAttack'], $ivSpecialAttack),
+            new Stat($baseStats['spDefence'], $ivSpecialDefence),
+            new Stat($baseStats['speed'], $ivSpeed),
             $caughtLocationId,
         );
 

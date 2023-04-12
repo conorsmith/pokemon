@@ -9,6 +9,8 @@ use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\EncounterConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
+use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -62,16 +64,18 @@ final class EncounterRepository
 
         $pokedexEntry = $this->pokedex[$encounterTableEntry->pokedexNumber];
 
+        $level = $encounterTableEntry->generateLevel();
+
         $pokemon = new Pokemon(
             $encounterId,
             $encounterTableEntry->pokedexNumber,
             $encounterTableEntry->form,
             $pokedexEntry['type'][0],
             $pokedexEntry['type'][1] ?? null,
-            $encounterTableEntry->generateLevel(),
+            $level,
             0,
             $isShiny,
-            self::createStats($encounterTableEntry->pokedexNumber),
+            self::generateStats($level, $encounterTableEntry->pokedexNumber),
             0,
             false,
         );
@@ -109,7 +113,7 @@ final class EncounterRepository
             $encounterRow['level'],
             0,
             $encounterRow['is_shiny'] === 1,
-            self::createStats($encounterRow['pokemon_id']),
+            self::createStatsFromRow($encounterRow),
             $encounterRow['remaining_hp'],
             $encounterRow['remaining_hp'] === 0,
         );
@@ -144,6 +148,12 @@ final class EncounterRepository
                 'level' => $encounter->pokemon->level,
                 'is_shiny' => $encounter->pokemon->isShiny ? 1 : 0,
                 'is_legendary' => $encounter->isLegendary ? 1 : 0,
+                'iv_hp' => $encounter->pokemon->stats->ivHp,
+                'iv_physical_attack' => $encounter->pokemon->stats->ivPhysicalAttack,
+                'iv_physical_defence' => $encounter->pokemon->stats->ivPhysicalDefence,
+                'iv_special_attack' => $encounter->pokemon->stats->ivSpecialAttack,
+                'iv_special_defence' => $encounter->pokemon->stats->ivSpecialDefence,
+                'iv_speed' => $encounter->pokemon->stats->ivSpeed,
                 'remaining_hp' => $encounter->pokemon->remainingHp,
                 'was_caught' => 0,
             ]);
@@ -157,21 +167,56 @@ final class EncounterRepository
         }
     }
 
-    private static function createStats(string $number): Stats
+    private static function generateStats(int $level, string $number): Stats
+    {
+        $baseStats = self::findBaseStats($number);
+
+        return new Stats(
+            $level,
+            $baseStats['hp'],
+            $baseStats['attack'],
+            $baseStats['defence'],
+            $baseStats['spAttack'],
+            $baseStats['spDefence'],
+            $baseStats['speed'],
+            RandomNumberGenerator::generateInRange(0, 31),
+            RandomNumberGenerator::generateInRange(0, 31),
+            RandomNumberGenerator::generateInRange(0, 31),
+            RandomNumberGenerator::generateInRange(0, 31),
+            RandomNumberGenerator::generateInRange(0, 31),
+            RandomNumberGenerator::generateInRange(0, 31),
+        );
+    }
+
+    private static function createStatsFromRow(array $row): Stats
+    {
+        $baseStats = self::findBaseStats($row['pokemon_id']);
+
+        return new Stats(
+            $row['level'],
+            $baseStats['hp'],
+            $baseStats['attack'],
+            $baseStats['defence'],
+            $baseStats['spAttack'],
+            $baseStats['spDefence'],
+            $baseStats['speed'],
+            $row['iv_hp'],
+            $row['iv_physical_attack'],
+            $row['iv_physical_defence'],
+            $row['iv_special_attack'],
+            $row['iv_special_defence'],
+            $row['iv_speed'],
+        );
+    }
+
+    private static function findBaseStats(string $number): array
     {
         $config = require __DIR__ . "/../../Config/Stats.php";
 
         /** @var array $entry */
         foreach ($config as $entry) {
             if ($entry['number'] === $number) {
-                return new Stats(
-                    $entry['hp'],
-                    $entry['attack'],
-                    $entry['defence'],
-                    $entry['spAttack'],
-                    $entry['spDefence'],
-                    $entry['speed'],
-                );
+                return $entry;
             }
         }
 

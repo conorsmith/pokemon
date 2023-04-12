@@ -43,8 +43,8 @@ final class ViewModelFactory
             strval($pokemon->remainingHp),
             strval($pokemon->calculateHp()),
             $pokemon->remainingHp === 0,
-            $pokemon->stats->physicalAttack,
-            $pokemon->stats->specialAttack,
+            $pokemon->stats->calculatePhysicalAttack(),
+            $pokemon->stats->calculateSpecialAttack(),
         );
     }
 

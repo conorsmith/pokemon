@@ -41,31 +41,31 @@ final class Pokemon
 
     public function calculateHp(): int
     {
-        return $this->stats->hp;
+        return $this->stats->calculateHp();
     }
 
     public function calculateAttack(): int
     {
-        return $this->stats->physicalAttack;
+        return $this->stats->calculatePhysicalAttack();
     }
 
     public function calculateDefence(): int
     {
-        return $this->stats->physicalDefence;
+        return $this->stats->calculatePhysicalDefence();
     }
 
     public function calculateSpecialAttack(): int
     {
-        return $this->stats->specialAttack;
+        return $this->stats->calculateSpecialAttack();
     }
 
     public function calculateSpecialDefence(): int
     {
-        return $this->stats->specialDefence;
+        return $this->stats->calculateSpecialDefence();
     }
 
     public function calculateSpeed(): int
     {
-        return $this->stats->speed;
+        return $this->stats->calculateSpeed();
     }
 }

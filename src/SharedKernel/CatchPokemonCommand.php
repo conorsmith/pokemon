@@ -11,6 +11,12 @@ interface CatchPokemonCommand
         bool $isShiny,
         int $level,
         bool $isLegendary,
+        int $ivHp,
+        int $ivPhysicalAttack,
+        int $ivPhysicalDefence,
+        int $ivSpecialAttack,
+        int $ivSpecialDefence,
+        int $ivSpeed,
         string $caughtLocationId,
     ): CatchPokemonResult;
 }
