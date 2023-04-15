@@ -117,7 +117,10 @@ final class BulbapediaLocationPage
 
         while (!is_null($currentNode)) {
             if ($currentNode->nodeName === "table") {
-                $rawTrainerData[$mostRecentSubtitle] = self::extractTrainersFromTableNode($currentNode);
+                $rawTrainerData[$mostRecentSubtitle] = array_merge(
+                    $rawTrainerData[$mostRecentSubtitle] ?? [],
+                    self::extractTrainersFromTableNode($currentNode),
+                );
             } elseif ($currentNode->nodeName === "h3") {
                 $mostRecentSubtitle = $currentNode->textContent;
             } elseif ($currentNode->nodeName === "h2") {
@@ -159,14 +162,20 @@ final class BulbapediaLocationPage
                 ->firstChild
                 ->firstChild;
 
+            $class = substr(
+                $classNode->attributes->getNamedItem("title")->nodeValue,
+                0,
+                strlen(" (Trainer class)") * -1,
+            );
+            if ($class === "") {
+                $class = $classNode->attributes->getNamedItem("title")->nodeValue;
+            }
+
             $trainerCount++;
             $rawTrainerData[$trainerCount] = [
                 'trainer' => [
-                    'class' => substr(
-                        $classNode->attributes->getNamedItem("title")->nodeValue,
-                        0,
-                        strlen(" (Trainer class)") * -1,
-                    ),
+                    'class' => $class,
+                    'gender' => null,
                     'name'  => trim($nameNode->textContent),
                 ],
                 'pokemon' => [],

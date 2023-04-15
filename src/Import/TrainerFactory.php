@@ -67,6 +67,7 @@ final class TrainerFactory
             "EXECUTIVE" => TrainerClass::TEAM_ROCKET_ADMIN,
             "FISHER" => TrainerClass::FISHERMAN,
             "ACE_TRAINER" => TrainerClass::COOLTRAINER,
+            "LI" => TrainerClass::ELDER,
             default => $trainerClassReflector->getConstants()[$constantName],
         };
     }

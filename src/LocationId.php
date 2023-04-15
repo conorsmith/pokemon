@@ -205,4 +205,7 @@ final class LocationId
     public const VIOLET_CITY = "a9f502e7-230f-4aea-828f-4d95896927a7";
     public const VIOLET_GYM = "7932b248-d78b-4989-8bd7-b4517902c1ec";
     public const SPROUT_TOWER = "5442608c-a4a3-4bde-89ad-ad9a8f8807ce";
+    public const SPROUT_TOWER_1F = "94fc7786-f9f9-4cf9-a9bc-05ba32279b09";
+    public const SPROUT_TOWER_2F = "0a690058-9ec3-492d-b01c-d9c8ae53541e";
+    public const SPROUT_TOWER_3F = "2977b1e5-648b-4519-8500-02db8cfb8332";
 }

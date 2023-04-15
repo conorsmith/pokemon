@@ -192,6 +192,7 @@ return [
         'directions' => [
             Direction::E => LocationId::ROUTE_31,
             LocationId::VIOLET_GYM,
+            LocationId::SPROUT_TOWER_1F,
         ],
     ],
     [
@@ -200,6 +201,38 @@ return [
         'type' => LocationType::GYM,
         'directions' => [
             LocationId::VIOLET_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::SPROUT_TOWER_1F,
+        'name' => "Sprout Tower",
+        'section' => "1st Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::SPROUT_TOWER,
+        'directions' => [
+            Direction::U => LocationId::SPROUT_TOWER_2F,
+            LocationId::VIOLET_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::SPROUT_TOWER_2F,
+        'name' => "Sprout Tower",
+        'section' => "2nd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::SPROUT_TOWER,
+        'directions' => [
+            Direction::U => LocationId::SPROUT_TOWER_3F,
+            Direction::D => LocationId::SPROUT_TOWER_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::SPROUT_TOWER_3F,
+        'name' => "Sprout Tower",
+        'section' => "3rd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::SPROUT_TOWER,
+        'directions' => [
+            Direction::D => LocationId::SPROUT_TOWER_2F,
         ],
     ],
 ];

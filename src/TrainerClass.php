@@ -88,6 +88,7 @@ final class TrainerClass
     public const BOSS = "79bfa414-bdd4-4964-8a15-a4f581cf4137";
     public const ELITE_FOUR = "a5bf9ec9-effe-4a22-b4c8-a9c89a7b6481";
     public const RETIRED_TRAINER = "cb2b9587-8dd5-4570-a3f7-d5dcf4be7c32";
+    public const ELDER = "69624863-15ca-44b1-839c-0591f03ee7f6";
 
     public static function getLabel(string $id): string
     {
@@ -175,6 +176,7 @@ final class TrainerClass
             self::BOSS => "Boss",
             self::ELITE_FOUR => "Elite Four",
             self::RETIRED_TRAINER => "Retired Trainer",
+            self::ELDER => "Elder",
         };
     }
 
@@ -244,6 +246,7 @@ final class TrainerClass
             self::PAINTER => "https://archives.bulbagarden.net/media/upload/b/bd/Spr_FRLG_Painter.png",
             self::LADY => "https://archives.bulbagarden.net/media/upload/9/91/Spr_FRLG_Lady.png",
             self::RUIN_MANIAC => "https://archives.bulbagarden.net/media/upload/8/81/Spr_FRLG_Ruin_Maniac.png",
+            self::SAGE => "https://archives.bulbagarden.net/media/upload/0/07/Spr_HGSS_Sage.png",
             default => null,
         };
     }

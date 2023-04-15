@@ -850,4 +850,28 @@ return [
             ],
         ],
     ],
+    LocationId::SPROUT_TOWER_2F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 115,
+                'levels' => [3, 6],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 85,
+                'levels' => [3, 6],
+            ],
+        ],
+    ],
+    LocationId::SPROUT_TOWER_3F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 115,
+                'levels' => [3, 6],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 85,
+                'levels' => [3, 6],
+            ],
+        ],
+    ],
 ];

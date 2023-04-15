@@ -177,7 +177,7 @@
             <ul class="list-group list-group-flush">
                 <?php foreach ($trainers as $trainer) : ?>
                     <li class="list-group-item d-flex align-items-start">
-                        <div class="me-2" style="width: 64px;">
+                        <div class="me-2" style="width: 80px;">
                             <?php if (!is_null($trainer->imageUrl)) : ?>
                                 <img src="<?=$trainer->imageUrl?>">
                             <?php endif ?>
@@ -263,7 +263,7 @@
                 <li class="list-group-item d-flex flex-column">
                     <div class="d-flex justify-content-center w-100">
                         <?php foreach ($eliteFour->memberImageUrls as $memberImageUrl) : ?>
-                            <div class="me-2" style="width: 64px;">
+                            <div class="me-2" style="width: 80px;">
                                 <img src="<?=$memberImageUrl?>">
                             </div>
                         <?php endforeach ?>

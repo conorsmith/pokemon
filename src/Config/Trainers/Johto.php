@@ -420,4 +420,140 @@ return [
             ],
         ],
     ],
+    LocationId::SPROUT_TOWER_1F => [
+        [
+            'id' => "29ce4a16-0f3a-40fe-afb6-e84b03bac89e",
+            'class' => TrainerClass::SAGE,
+            'name' => "Nico",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+            ],
+        ],
+    ],
+    LocationId::SPROUT_TOWER_2F => [
+        [
+            'id' => "46db15b9-61de-4a7e-89a5-fd9af53d9fe9",
+            'class' => TrainerClass::SAGE,
+            'name' => "Chow",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+            ],
+        ],
+        [
+            'id' => "1f4f7dbb-8b06-4fe5-8404-f851b5a400bb",
+            'class' => TrainerClass::SAGE,
+            'name' => "Edmond",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+            ],
+        ],
+    ],
+    LocationId::SPROUT_TOWER_3F => [
+        [
+            'id' => "5994663d-6878-4b92-a2ec-04294e9d4680",
+            'class' => TrainerClass::SAGE,
+            'name' => "Jin",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 6,
+                ],
+            ],
+        ],
+        [
+            'id' => "1cc6d43f-3231-4cad-9fb6-687725006362",
+            'class' => TrainerClass::SAGE,
+            'name' => "Neal",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 6,
+                ],
+            ],
+        ],
+        [
+            'id' => "da34bb33-c5e4-43e6-bdcd-5746421c6ddd",
+            'class' => TrainerClass::SAGE,
+            'name' => "Troy",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 7,
+                ],
+                [
+                    'id' => PokedexNo::HOOTHOOT,
+                    'sex' => Sex::MALE,
+                    'level' => 7,
+                ],
+            ],
+        ],
+        [
+            'id' => "aa4adde3-4885-4470-9834-1f30bc2d9351",
+            'class' => TrainerClass::ELDER,
+            'name' => "Li",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/f3/Spr_HGSS_Li.png",
+            'team' => [
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 7,
+                ],
+                [
+                    'id' => PokedexNo::BELLSPROUT,
+                    'sex' => Sex::MALE,
+                    'level' => 7,
+                ],
+                [
+                    'id' => PokedexNo::HOOTHOOT,
+                    'sex' => Sex::MALE,
+                    'level' => 10,
+                ],
+            ],
+        ],
+    ],
 ];
