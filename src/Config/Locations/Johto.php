@@ -191,6 +191,7 @@ return [
         'type' => LocationType::CITY,
         'directions' => [
             Direction::E => LocationId::ROUTE_31,
+            Direction::S => LocationId::ROUTE_32,
             LocationId::VIOLET_GYM,
             LocationId::SPROUT_TOWER_1F,
         ],
@@ -233,6 +234,129 @@ return [
         'area' => LocationId::SPROUT_TOWER,
         'directions' => [
             Direction::D => LocationId::SPROUT_TOWER_2F,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_32,
+        'name' => "Route 32",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::VIOLET_CITY,
+            Direction::W => LocationId::RUINS_OF_ALPH_OUTSIDE,
+            Direction::S => LocationId::UNION_CAVE_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::RUINS_OF_ALPH_OUTSIDE,
+        'name' => "Ruins of Alph",
+        'section' => "Outside",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::RUINS_OF_ALPH,
+        'directions' => [
+            Direction::E => LocationId::ROUTE_32,
+            LocationId::RUINS_OF_ALPH_CHAMBER,
+        ],
+    ],
+    [
+        'id' => LocationId::RUINS_OF_ALPH_CHAMBER,
+        'name' => "Ruins of Alph",
+        'section' => "Chamber",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::RUINS_OF_ALPH,
+        'directions' => [
+            LocationId::RUINS_OF_ALPH_OUTSIDE,
+        ],
+    ],
+    [
+        'id' => LocationId::UNION_CAVE_1F,
+        'name' => "Union Cave",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::UNION_CAVE,
+        'directions' => [
+            Direction::D => LocationId::UNION_CAVE_B1F,
+            LocationId::ROUTE_32,
+        ],
+    ],
+    [
+        'id' => LocationId::UNION_CAVE_B1F,
+        'name' => "Union Cave",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::UNION_CAVE,
+        'directions' => [
+            Direction::U => LocationId::UNION_CAVE_1F,
+            Direction::D => LocationId::UNION_CAVE_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::UNION_CAVE_B2F,
+        'name' => "Union Cave",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::UNION_CAVE,
+        'directions' => [
+            Direction::U => LocationId::UNION_CAVE_B1F,
+            LocationId::ROUTE_33,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_33,
+        'name' => "Route 33",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::UNION_CAVE_B2F,
+            Direction::W => LocationId::AZALEA_TOWN,
+        ],
+    ],
+    [
+        'id' => LocationId::AZALEA_TOWN,
+        'name' => "Azalea Town",
+        'type' => LocationType::CITY,
+        'directions' => [
+            Direction::E => LocationId::ROUTE_33,
+            LocationId::AZALEA_GYM,
+            LocationId::SLOWPOKE_WELL_ENTRANCE,
+        ],
+    ],
+    [
+        'id' => LocationId::AZALEA_GYM,
+        'name' => "Azalea Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::AZALEA_TOWN,
+        ],
+    ],
+    [
+        'id' => LocationId::SLOWPOKE_WELL_ENTRANCE,
+        'name' => "Slowpoke Well",
+        'section' => "Entrance",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::SLOWPOKE_WELL,
+        'directions' => [
+            Direction::D => LocationId::SLOWPOKE_WELL_B1F,
+            LocationId::AZALEA_TOWN,
+        ],
+    ],
+    [
+        'id' => LocationId::SLOWPOKE_WELL_B1F,
+        'name' => "Slowpoke Well",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::SLOWPOKE_WELL,
+        'directions' => [
+            Direction::U => LocationId::SLOWPOKE_WELL_ENTRANCE,
+            Direction::D => LocationId::SLOWPOKE_WELL_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::SLOWPOKE_WELL_B2F,
+        'name' => "Slowpoke Well",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::SLOWPOKE_WELL,
+        'directions' => [
+            Direction::U => LocationId::SLOWPOKE_WELL_B1F,
         ],
     ],
 ];

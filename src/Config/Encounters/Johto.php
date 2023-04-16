@@ -874,4 +874,504 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_32 => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 85,
+                'levels' => [4, 6],
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 30,
+                'levels' => 4,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 5,
+                'levels' => 4,
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 30,
+                'levels' => 6,
+            ],
+            PokedexNo::MAREEP => [
+                'weight' => 20,
+                'levels' => 6,
+            ],
+            PokedexNo::HOPPIP => [
+                'weight' => 10,
+                'levels' => 6,
+            ],
+            PokedexNo::WOOPER => [
+                'weight' => 35,
+                'levels' => 6,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 60,
+                'levels' => [10, 20],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 10,
+                'levels' => [15, 36],
+            ],
+            PokedexNo::QUAGSIRE => [
+                'weight' => 30,
+                'levels' => [15, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 140,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::QWILFISH => [
+                'weight' => 15,
+                'levels' => 20,
+            ],
+        ],
+    ],
+    LocationId::RUINS_OF_ALPH_OUTSIDE => [
+        EncounterType::WALKING => [
+            PokedexNo::NATU => [
+                'weight' => 90,
+                'levels' => [18, 24],
+            ],
+            PokedexNo::SMEARGLE => [
+                'weight' => 10,
+                'levels' => [20, 22],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::WOOPER => [
+                'weight' => 60,
+                'levels' => [10, 20],
+            ],
+            PokedexNo::QUAGSIRE => [
+                'weight' => 40,
+                'levels' => [10, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 135,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 165,
+                'levels' => 10,
+            ],
+        ],
+        EncounterType::ROCK_SMASH => [
+            PokedexNo::GEODUDE => [
+                'weight' => 100,
+                'levels' => [3, 14],
+            ],
+        ],
+    ],
+    LocationId::RUINS_OF_ALPH_CHAMBER => [
+        EncounterType::WALKING => [
+            PokedexNo::UNOWN => [
+                [
+                    'form' => "A",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "B",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "C",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "D",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "E",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "F",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "G",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "H",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "I",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "J",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "K",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "L",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "M",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "N",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "O",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "P",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "Q",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "R",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "S",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "T",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "U",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "V",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "W",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "X",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "Y",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "Z",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "?",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+                [
+                    'form' => "!",
+                    'weight' => 1,
+                    'levels' => 5,
+                ],
+            ],
+        ],
+    ],
+    LocationId::UNION_CAVE_1F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 50,
+                'levels' => [4, 6],
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 30,
+                'levels' => 6,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 25,
+                'levels' => [5, 7],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 30,
+                'levels' => 6,
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 5,
+                'levels' => 6,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::WOOPER => [
+                'weight' => 60,
+                'levels' => [10, 20],
+            ],
+            PokedexNo::QUAGSIRE => [
+                'weight' => 40,
+                'levels' => [10, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::UNION_CAVE_B1F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => [6, 8],
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 30,
+                'levels' => 8,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 25,
+                'levels' => [7, 9],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 30,
+                'levels' => 8,
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 10,
+                'levels' => 8,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::WOOPER => [
+                'weight' => 60,
+                'levels' => [10, 20],
+            ],
+            PokedexNo::QUAGSIRE => [
+                'weight' => 40,
+                'levels' => [10, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::UNION_CAVE_B2F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 5,
+                'levels' => 20,
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 30,
+                'levels' => 22,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => 22,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 20,
+                'levels' => 22,
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 10,
+                'levels' => 21,
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 5,
+                'levels' => 23,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 60,
+                'levels' => [10, 20],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::QUAGSIRE => [
+                'weight' => 30,
+                'levels' => [15, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::KRABBY => [
+                'weight' => 125,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 125,
+                'levels' => 10,
+            ],
+            PokedexNo::STARYU => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::CORSOLA => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::ROUTE_33 => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 140,
+                'levels' => [4, 7],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 20,
+                'levels' => 6,
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 30,
+                'levels' => 7,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 45,
+                'levels' => [4, 8],
+            ],
+            PokedexNo::HOPPIP => [
+                'weight' => 35,
+                'levels' => [6, 8],
+            ],
+        ],
+    ],
+    LocationId::SLOWPOKE_WELL_B1F => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 85,
+                'levels' => [5, 8],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 15,
+                'levels' => [6, 8],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::SLOWPOKE => [
+                'weight' => 100,
+                'levels' => [5, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::SLOWPOKE_WELL_B2F => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 80,
+                'levels' => [19, 23],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 23,
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 15,
+                'levels' => [21, 23],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::SLOWPOKE => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::SLOWBRO => [
+                'weight' => 10,
+                'levels' => [15, 30],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
 ];

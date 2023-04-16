@@ -208,4 +208,19 @@ final class LocationId
     public const SPROUT_TOWER_1F = "94fc7786-f9f9-4cf9-a9bc-05ba32279b09";
     public const SPROUT_TOWER_2F = "0a690058-9ec3-492d-b01c-d9c8ae53541e";
     public const SPROUT_TOWER_3F = "2977b1e5-648b-4519-8500-02db8cfb8332";
+    public const ROUTE_32 = "a4797456-c8c5-477c-b47c-3fe25d8c22e2";
+    public const RUINS_OF_ALPH = "810b157c-d233-4038-8bda-e722c3b5e671";
+    public const RUINS_OF_ALPH_OUTSIDE = "51e7f69f-aa1a-4a06-8546-08bbcd59da52";
+    public const RUINS_OF_ALPH_CHAMBER = "a51a26e5-18c3-43c1-97fe-7f70dd4eb3f8";
+    public const UNION_CAVE = "e5dcb38c-6034-4050-9711-031f402e0834";
+    public const UNION_CAVE_1F = "f294b3ef-6d64-4b3c-9167-6f20287c59b1";
+    public const UNION_CAVE_B1F = "1cbcb14f-f9cc-41c3-9273-03d53d44b790";
+    public const UNION_CAVE_B2F = "9249014f-fb72-49fc-8b93-5d9fd5caa51b";
+    public const ROUTE_33 = "4a23c130-b8f4-4f6e-ba83-42705e184caa";
+    public const AZALEA_TOWN = "c335b0e9-2b82-43c3-a9d8-f2b7f12e3e2e";
+    public const AZALEA_GYM = "10fc6f41-4dd2-4e87-b8a9-94ed63a05686";
+    public const SLOWPOKE_WELL = "32ba6ca0-7334-4447-9074-55cf7562c5b2";
+    public const SLOWPOKE_WELL_ENTRANCE = "91ebbdbc-c7c0-48dd-a52b-cef10c44c6d9";
+    public const SLOWPOKE_WELL_B1F = "b1e8ef23-7ed5-4699-b3fd-c5ca85a12f8d";
+    public const SLOWPOKE_WELL_B2F = "59a3cd84-9754-4e96-84ba-e9bde79ae097";
 }

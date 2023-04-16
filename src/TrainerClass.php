@@ -247,6 +247,7 @@ final class TrainerClass
             self::LADY => "https://archives.bulbagarden.net/media/upload/9/91/Spr_FRLG_Lady.png",
             self::RUIN_MANIAC => "https://archives.bulbagarden.net/media/upload/8/81/Spr_FRLG_Ruin_Maniac.png",
             self::SAGE => "https://archives.bulbagarden.net/media/upload/0/07/Spr_HGSS_Sage.png",
+            self::FIREBREATHER => "https://archives.bulbagarden.net/media/upload/a/a7/Spr_HGSS_Firebreather.png",
             default => null,
         };
     }

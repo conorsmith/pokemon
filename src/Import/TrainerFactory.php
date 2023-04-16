@@ -68,6 +68,8 @@ final class TrainerFactory
             "FISHER" => TrainerClass::FISHERMAN,
             "ACE_TRAINER" => TrainerClass::COOLTRAINER,
             "LI" => TrainerClass::ELDER,
+            "POKE_MANIAC" => TrainerClass::POKEMANIAC,
+            "ROCKET_GRUNT" => TrainerClass::TEAM_ROCKET_GRUNT,
             default => $trainerClassReflector->getConstants()[$constantName],
         };
     }
@@ -96,6 +98,8 @@ final class TrainerFactory
         $name = str_replace(" ", "_", $name);
         $name = str_replace("'", "_", $name);
         $name = str_replace(".", "", $name);
+        $name = str_replace("♀", "_F", $name);
+        $name = str_replace("♂", "_M", $name);
 
         return new PokedexNumber(
             $pokedexNoReflector->getConstants()[strtoupper($name)],
