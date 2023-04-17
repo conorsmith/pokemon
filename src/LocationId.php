@@ -223,4 +223,11 @@ final class LocationId
     public const SLOWPOKE_WELL_ENTRANCE = "91ebbdbc-c7c0-48dd-a52b-cef10c44c6d9";
     public const SLOWPOKE_WELL_B1F = "b1e8ef23-7ed5-4699-b3fd-c5ca85a12f8d";
     public const SLOWPOKE_WELL_B2F = "59a3cd84-9754-4e96-84ba-e9bde79ae097";
+    public const ILEX_FOREST = "8074c97b-e20b-420b-bf7e-805698ddfd0f";
+    public const ROUTE_34 = "60e23471-1179-41a2-b6d9-50cef3f357f6";
+    public const GOLDENROD_CITY = "de72d39c-94ab-472b-a695-ac693067a919";
+    public const GOLDENROD_TUNNEL = "88ff330a-9d52-4aed-8e7b-41e395971804";
+    public const GOLDENROD_TUNNEL_B1F = "e3f8b50b-f883-4c35-aada-1f17ce5ddf23";
+    public const GOLDENROD_TUNNEL_B2F = "4146da56-9681-4de7-9dc9-d2b5f7ec53b4";
+    public const GOLDENROD_TUNNEL_WAREHOUSE = "e5d512dc-30af-4acd-8a2d-92b042f86fba";
 }

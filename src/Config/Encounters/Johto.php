@@ -1374,4 +1374,108 @@ return [
             ],
         ],
     ],
+    LocationId::ILEX_FOREST => [
+        EncounterType::WALKING => [
+            PokedexNo::CATERPIE => [
+                'weight' => 60,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 30,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 60,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 30,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 25,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 60,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::PARAS => [
+                'weight' => 15,
+                'levels' => [5, 6],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 90,
+                'levels' => [5, 20],
+            ],
+            PokedexNo::GOLDUCK => [
+                'weight' => 10,
+                'levels' => [10, 20],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 155,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+        ],
+    ],
+    LocationId::ROUTE_34 => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 35,
+                'levels' => [11, 13],
+            ],
+            PokedexNo::ABRA => [
+                'weight' => 10,
+                'levels' => 10,
+            ],
+            PokedexNo::DROWZEE => [
+                'weight' => 50,
+                'levels' => [10, 12],
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 10,
+                'levels' => [15, 29],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::KRABBY => [
+                'weight' => 115,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 135,
+                'levels' => 10,
+            ],
+            PokedexNo::STARYU => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::CORSOLA => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
 ];

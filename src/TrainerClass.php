@@ -89,6 +89,7 @@ final class TrainerClass
     public const ELITE_FOUR = "a5bf9ec9-effe-4a22-b4c8-a9c89a7b6481";
     public const RETIRED_TRAINER = "cb2b9587-8dd5-4570-a3f7-d5dcf4be7c32";
     public const ELDER = "69624863-15ca-44b1-839c-0591f03ee7f6";
+    public const RIVAL = "7e87dafe-b95e-4ca7-9f30-d37aa1bb51f8";
 
     public static function getLabel(string $id): string
     {
@@ -129,7 +130,7 @@ final class TrainerClass
             self::GUITARIST => "Guitarist",
             self::KIMONO_GIRL => "Kimono Girl",
             self::MEDIUM => "Medium",
-            self::OFFICER => "Officer",
+            self::OFFICER => "Police Officer",
             self::POKEFAN => "Pokéfan",
             self::POKEMON_TRAINER => "Pokémon Trainer",
             self::ROCKET_EXECUTIVE => "Rocket Executive",
@@ -248,6 +249,11 @@ final class TrainerClass
             self::RUIN_MANIAC => "https://archives.bulbagarden.net/media/upload/8/81/Spr_FRLG_Ruin_Maniac.png",
             self::SAGE => "https://archives.bulbagarden.net/media/upload/0/07/Spr_HGSS_Sage.png",
             self::FIREBREATHER => "https://archives.bulbagarden.net/media/upload/a/a7/Spr_HGSS_Firebreather.png",
+            self::POKEFAN => match($gender) {
+                Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/6/63/Spr_RS_Pok%C3%A9fan_F.png",
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/a/a3/Spr_RS_Pok%C3%A9fan_M.png",
+            },
+            self::OFFICER => "https://archives.bulbagarden.net/media/upload/0/0d/Spr_DP_Officer.png",
             default => null,
         };
     }

@@ -1007,4 +1007,501 @@ return [
             ],
         ],
     ],
+    LocationId::AZALEA_GYM => [
+        [
+            'id' => "2db91f43-247c-4438-b60a-46b361f58bc9",
+            'class' => TrainerClass::BUG_CATCHER,
+            'name' => "Al",
+            'team' => [
+                [
+                    'id' => PokedexNo::CATERPIE,
+                    'sex' => Sex::MALE,
+                    'level' => 12,
+                ],
+                [
+                    'id' => PokedexNo::WEEDLE,
+                    'sex' => Sex::MALE,
+                    'level' => 12,
+                ],
+            ],
+        ],
+        [
+            'id' => "ece40096-4ee5-48d1-a0fa-b1aeed074453",
+            'class' => TrainerClass::BUG_CATCHER,
+            'name' => "Benny",
+            'team' => [
+                [
+                    'id' => PokedexNo::WEEDLE,
+                    'sex' => Sex::MALE,
+                    'level' => 7,
+                ],
+                [
+                    'id' => PokedexNo::KAKUNA,
+                    'sex' => Sex::MALE,
+                    'level' => 9,
+                ],
+                [
+                    'id' => PokedexNo::BEEDRILL,
+                    'sex' => Sex::MALE,
+                    'level' => 12,
+                ],
+            ],
+        ],
+        [
+            'id' => "c305f50e-5a22-4d26-864e-efe53682091e",
+            'class' => TrainerClass::BUG_CATCHER,
+            'name' => "Josh",
+            'team' => [
+                [
+                    'id' => PokedexNo::PARAS,
+                    'sex' => Sex::MALE,
+                    'level' => 13,
+                ],
+            ],
+        ],
+        [
+            'id' => "09448ad5-e591-4d7d-8c98-555e19f50f46",
+            'class' => TrainerClass::TWINS,
+            'name' => "Amy & Mimi",
+            'team' => [
+                [
+                    'id' => PokedexNo::LEDYBA,
+                    'sex' => Sex::FEMALE,
+                    'level' => 10,
+                ],
+                [
+                    'id' => PokedexNo::SPINARAK,
+                    'sex' => Sex::FEMALE,
+                    'level' => 10,
+                ],
+            ],
+        ],
+        [
+            'id' => "b776573c-3965-4170-ae87-36b30645e1e1",
+            'class' => TrainerClass::GYM_LEADER,
+            'name' => "Bugsy",
+            'leader' => [
+                'badge' => GymBadge::HIVE,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/b6/Spr_HGSS_Bugsy.png",
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::SCYTHER,
+                    'sex' => Sex::FEMALE,
+                    'level' => 17,
+                ],
+                [
+                    'id' => PokedexNo::METAPOD,
+                    'sex' => Sex::FEMALE,
+                    'level' => 15,
+                ],
+                [
+                    'id' => PokedexNo::KAKUNA,
+                    'sex' => Sex::FEMALE,
+                    'level' => 15,
+                ],
+            ],
+        ],
+    ],
+    LocationId::ROUTE_34 => [
+        [
+            'id' => "9a320c7c-54c2-42ce-8614-030a789e8758",
+            'class' => TrainerClass::YOUNGSTER,
+            'name' => "Samuel",
+            'team' => [
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 7,
+                ],
+                [
+                    'id' => PokedexNo::SANDSHREW,
+                    'sex' => Sex::MALE,
+                    'level' => 10,
+                ],
+                [
+                    'id' => PokedexNo::SPEAROW,
+                    'sex' => Sex::MALE,
+                    'level' => 8,
+                ],
+                [
+                    'id' => PokedexNo::SPEAROW,
+                    'sex' => Sex::MALE,
+                    'level' => 8,
+                ],
+            ],
+        ],
+        [
+            'id' => "ca7315a4-e890-4963-9700-b74d894d9988",
+            'class' => TrainerClass::POKEFAN,
+            'gender' => Gender::MALE,
+            'name' => "Brandon",
+            'team' => [
+                [
+                    'id' => PokedexNo::SNUBBULL,
+                    'sex' => Sex::FEMALE,
+                    'level' => 13,
+                ],
+                [
+                    'id' => PokedexNo::MAREEP,
+                    'sex' => Sex::MALE,
+                    'level' => 13,
+                ],
+            ],
+        ],
+        [
+            'id' => "ef50ccf2-af8c-4dc7-aed7-13b4739f942d",
+            'class' => TrainerClass::PICNICKER,
+            'name' => "Gina",
+            'team' => [
+                [
+                    'id' => PokedexNo::HOPPIP,
+                    'sex' => Sex::FEMALE,
+                    'level' => 9,
+                ],
+                [
+                    'id' => PokedexNo::HOPPIP,
+                    'sex' => Sex::FEMALE,
+                    'level' => 9,
+                ],
+                [
+                    'id' => PokedexNo::BULBASAUR,
+                    'sex' => Sex::MALE,
+                    'level' => 12,
+                ],
+            ],
+        ],
+        [
+            'id' => "d75bf19e-143a-4ad3-8e52-946405d49237",
+            'class' => TrainerClass::YOUNGSTER,
+            'name' => "Ian",
+            'team' => [
+                [
+                    'id' => PokedexNo::MANKEY,
+                    'sex' => Sex::MALE,
+                    'level' => 10,
+                ],
+                [
+                    'id' => PokedexNo::DIGLETT,
+                    'sex' => Sex::MALE,
+                    'level' => 12,
+                ],
+            ],
+        ],
+        [
+            'id' => "9184fc5c-fd2f-4224-b0e5-41d2be92d533",
+            'class' => TrainerClass::OFFICER,
+            'name' => "Keith",
+            'team' => [
+                [
+                    'id' => PokedexNo::GROWLITHE,
+                    'sex' => Sex::MALE,
+                    'level' => 17,
+                ],
+            ],
+        ],
+        [
+            'id' => "90df73d9-6680-40a3-b535-ba68340e47b2",
+            'class' => TrainerClass::CAMPER,
+            'name' => "Todd",
+            'team' => [
+                [
+                    'id' => PokedexNo::PSYDUCK,
+                    'sex' => Sex::MALE,
+                    'level' => 14,
+                ],
+            ],
+        ],
+        [
+            'id' => "abf73918-a2ab-47ed-a131-65d8490bd8c6",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::FEMALE,
+            'name' => "Irene",
+            'team' => [
+                [
+                    'id' => PokedexNo::GOLDEEN,
+                    'sex' => Sex::FEMALE,
+                    'level' => 22,
+                ],
+                [
+                    'id' => PokedexNo::SEAKING,
+                    'sex' => Sex::FEMALE,
+                    'level' => 24,
+                ],
+            ],
+        ],
+        [
+            'id' => "6bea598c-cd72-415d-b901-98220b59f751",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::FEMALE,
+            'name' => "Jenn",
+            'team' => [
+                [
+                    'id' => PokedexNo::STARYU,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 24,
+                ],
+                [
+                    'id' => PokedexNo::STARMIE,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 26,
+                ],
+            ],
+        ],
+        [
+            'id' => "8b48d10b-c329-45f8-a85f-b931ce97d581",
+            'class' => TrainerClass::COOLTRAINER,
+            'gender' => Gender::FEMALE,
+            'name' => "Kate",
+            'team' => [
+                [
+                    'id' => PokedexNo::SHELLDER,
+                    'sex' => Sex::FEMALE,
+                    'level' => 26,
+                ],
+                [
+                    'id' => PokedexNo::CLOYSTER,
+                    'sex' => Sex::FEMALE,
+                    'level' => 28,
+                ],
+            ],
+        ],
+    ],
+    LocationId::GOLDENROD_TUNNEL_B1F => [
+        [
+            'id' => "3d215e78-520e-474e-ab10-fad14ae1680c",
+            'class' => TrainerClass::POKEMANIAC,
+            'name' => "Donald",
+            'team' => [
+                [
+                    'id' => PokedexNo::SLOWPOKE,
+                    'sex' => Sex::MALE,
+                    'level' => 11,
+                ],
+                [
+                    'id' => PokedexNo::SLOWPOKE,
+                    'sex' => Sex::MALE,
+                    'level' => 11,
+                ],
+            ],
+        ],
+        [
+            'id' => "4a9668f3-7b18-4845-a43e-4662e67c31a3",
+            'class' => TrainerClass::SUPER_NERD,
+            'name' => "Teru",
+            'team' => [
+                [
+                    'id' => PokedexNo::MAGNEMITE,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 7,
+                ],
+                [
+                    'id' => PokedexNo::MAGNEMITE,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 7,
+                ],
+                [
+                    'id' => PokedexNo::MAGNEMITE,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 9,
+                ],
+                [
+                    'id' => PokedexNo::VOLTORB,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 11,
+                ],
+            ],
+        ],
+        [
+            'id' => "a39f1893-cf7d-4d05-b2d4-be3ae8d3f568",
+            'class' => TrainerClass::POKEMANIAC,
+            'name' => "Issac",
+            'team' => [
+                [
+                    'id' => PokedexNo::LICKITUNG,
+                    'sex' => Sex::MALE,
+                    'level' => 12,
+                ],
+            ],
+        ],
+        [
+            'id' => "4bb3f198-2943-4bb2-9776-05374ff51a39",
+            'class' => TrainerClass::SUPER_NERD,
+            'name' => "Eric",
+            'team' => [
+                [
+                    'id' => PokedexNo::GRIMER,
+                    'sex' => Sex::MALE,
+                    'level' => 11,
+                ],
+                [
+                    'id' => PokedexNo::GRIMER,
+                    'sex' => Sex::MALE,
+                    'level' => 11,
+                ],
+            ],
+        ],
+    ],
+    LocationId::GOLDENROD_TUNNEL_B2F => [
+        [
+            'id' => "bf679401-c23c-41c6-8091-b82da31dfe42",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 27,
+                ],
+            ],
+        ],
+        [
+            'id' => "21db28ee-810f-4190-b4a6-0f21e481aaae",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::MUK,
+                    'sex' => Sex::MALE,
+                    'level' => 23,
+                ],
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 23,
+                ],
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+            ],
+        ],
+        [
+            'id' => "a2da5894-465d-429f-a8ba-e19aebc2298e",
+            'class' => TrainerClass::BURGLAR,
+            'name' => "Duncan",
+            'team' => [
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 23,
+                ],
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 23,
+                ],
+                [
+                    'id' => PokedexNo::MAGMAR,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+            ],
+        ],
+        [
+            'id' => "dfcccb43-3ed0-4380-b313-bef82b6daece",
+            'class' => TrainerClass::BURGLAR,
+            'name' => "Orson",
+            'team' => [
+                [
+                    'id' => PokedexNo::GROWLITHE,
+                    'sex' => Sex::MALE,
+                    'level' => 26,
+                ],
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 24,
+                ],
+            ],
+        ],
+        [
+            'id' => "b237193e-2bdb-4945-ad4a-a63a6201708f",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 24,
+                ],
+                [
+                    'id' => PokedexNo::MUK,
+                    'sex' => Sex::MALE,
+                    'level' => 24,
+                ],
+            ],
+        ],
+        [
+            'id' => "f1b8f8af-5ad0-43bf-9089-e7d3c3cf310c",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::FEMALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::GLOOM,
+                    'sex' => Sex::FEMALE,
+                    'level' => 25,
+                ],
+                [
+                    'id' => PokedexNo::GLOOM,
+                    'sex' => Sex::FEMALE,
+                    'level' => 25,
+                ],
+            ],
+        ],
+    ],
+    LocationId::GOLDENROD_TUNNEL_WAREHOUSE => [
+        [
+            'id' => "b8b906ec-4f0e-496c-b9a3-244b79dc08af",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::RATICATE,
+                    'sex' => Sex::MALE,
+                    'level' => 24,
+                ],
+                [
+                    'id' => PokedexNo::GOLBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 24,
+                ],
+            ],
+        ],
+        [
+            'id' => "b0344979-3448-4269-854b-2fefaab46038",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::GRIMER,
+                    'sex' => Sex::MALE,
+                    'level' => 26,
+                ],
+                [
+                    'id' => PokedexNo::WEEZING,
+                    'sex' => Sex::MALE,
+                    'level' => 23,
+                ],
+            ],
+        ],
+        [
+            'id' => "50d71ccf-476a-49ab-bfba-c8e5abf55e58",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+            ],
+        ],
+    ],
 ];

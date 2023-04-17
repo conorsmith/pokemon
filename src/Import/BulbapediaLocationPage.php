@@ -135,6 +135,7 @@ final class BulbapediaLocationPage
     private static function extractTrainersFromTableNode(DOMNode $tableNode): array
     {
         $trainerCount = 0;
+        $rawTrainerData = [];
 
         if ($tableNode->attributes->getNamedItem("class")->nodeValue === "expandable") {
             $trainerRowNodes = $tableNode
@@ -149,7 +150,14 @@ final class BulbapediaLocationPage
                 ->firstChild->nextSibling
                 ->childNodes;
 
-            $classNode = $trainerRowNodes->item(0)
+            if (trim($trainerRowNodes->item(0)->textContent) === "") {
+                $classNodeIndex = 2;
+                //dd($trainerRowNodes->item(1)->ownerDocument->saveHTML($trainerRowNodes->item(2)));
+            } else {
+                $classNodeIndex = 0;
+            }
+
+            $classNode = $trainerRowNodes->item($classNodeIndex)
                 ->firstChild->nextSibling
                 ->firstChild
                 ->firstChild
@@ -226,6 +234,10 @@ final class BulbapediaLocationPage
                         continue;
                     }
 
+                    if (is_null($cellNode->childNodes->item(1))) {
+                        continue;
+                    }
+
                     if ($cellNode->attributes->getNamedItem("rowspan")) {
                         $trainerCell = $cellNode->childNodes->item(1)
                             ->childNodes->item(1)
@@ -235,20 +247,7 @@ final class BulbapediaLocationPage
 
                         $className = $trainerCell->childNodes->item(0)->textContent;
 
-                        if ($className === "Team Rocket Grunt") {
-                            $imageNode = $cellNode->childNodes->item(1)
-                                ->childNodes->item(1)
-                                ->childNodes->item(0)
-                                ->childNodes->item(1)
-                                ->childNodes->item(0)
-                                ->childNodes->item(0);
-
-                            $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
-
-                            preg_match("/FRLG_Team_Rocket_Grunt_(\w)/", $imageUrl, $matches);
-
-                            $gender = $matches[1];
-                        } elseif ($className === "Swimmer") {
+                        if ($className === "Swimmer") {
                             $imageNode = $cellNode->childNodes->item(1)
                                 ->childNodes->item(1)
                                 ->childNodes->item(0)

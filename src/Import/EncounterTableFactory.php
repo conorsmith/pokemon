@@ -89,6 +89,7 @@ final class EncounterTableFactory
             || $value === "Swarm"
             || $value === "Starter Pokémon"
             || substr($value, 0, 5) === "Trade"
+            || substr($value, 0, 5) === "Event"
         ) {
             return EncounterType::irrelevant();
         }

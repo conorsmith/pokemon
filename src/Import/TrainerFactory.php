@@ -70,6 +70,8 @@ final class TrainerFactory
             "LI" => TrainerClass::ELDER,
             "POKE_MANIAC" => TrainerClass::POKEMANIAC,
             "ROCKET_GRUNT" => TrainerClass::TEAM_ROCKET_GRUNT,
+            "POLICEMAN" => TrainerClass::OFFICER,
+            "SILVER_(GAME)" => TrainerClass::RIVAL,
             default => $trainerClassReflector->getConstants()[$constantName],
         };
     }

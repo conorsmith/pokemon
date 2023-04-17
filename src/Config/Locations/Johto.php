@@ -315,6 +315,7 @@ return [
         'type' => LocationType::CITY,
         'directions' => [
             Direction::E => LocationId::ROUTE_33,
+            Direction::W => LocationId::ILEX_FOREST,
             LocationId::AZALEA_GYM,
             LocationId::SLOWPOKE_WELL_ENTRANCE,
         ],
@@ -357,6 +358,64 @@ return [
         'area' => LocationId::SLOWPOKE_WELL,
         'directions' => [
             Direction::U => LocationId::SLOWPOKE_WELL_B1F,
+        ],
+    ],
+    [
+        'id' => LocationId::ILEX_FOREST,
+        'name' => "Ilex Forest",
+        'directions' => [
+            Direction::N => LocationId::ROUTE_34,
+            Direction::E => LocationId::AZALEA_TOWN,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_34,
+        'name' => "Route 34",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::GOLDENROD_CITY,
+            Direction::S => LocationId::ILEX_FOREST,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_CITY,
+        'name' => "Goldenrod City",
+        'type' => LocationType::CITY,
+        'directions' => [
+            Direction::S => LocationId::ROUTE_34,
+            LocationId::GOLDENROD_TUNNEL_B1F,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_TUNNEL_B1F,
+        'name' => "Goldenrod Tunnel",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GOLDENROD_TUNNEL,
+        'directions' => [
+            Direction::U => LocationId::GOLDENROD_CITY,
+            Direction::D => LocationId::GOLDENROD_TUNNEL_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_TUNNEL_B2F,
+        'name' => "Goldenrod Tunnel",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GOLDENROD_TUNNEL,
+        'directions' => [
+            Direction::U => LocationId::GOLDENROD_TUNNEL_B1F,
+            Direction::D => LocationId::GOLDENROD_TUNNEL_WAREHOUSE,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_TUNNEL_WAREHOUSE,
+        'name' => "Goldenrod Tunnel",
+        'section' => "Warehouse",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GOLDENROD_TUNNEL,
+        'directions' => [
+            Direction::U => LocationId::GOLDENROD_TUNNEL_B2F,
         ],
     ],
 ];
