@@ -8,6 +8,7 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallenge;
 use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use Doctrine\DBAL\Connection;
+use Exception;
 use Ramsey\Uuid\Uuid;
 
 final class EliteFourChallengeRepository
@@ -38,6 +39,24 @@ final class EliteFourChallengeRepository
         }
 
         return self::createFromRow($row);
+    }
+
+    public function findCurrentPokemonLeagueRegion(): Region
+    {
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM elite_four_challenges WHERE date_completed IS NOT NULL AND victory = 1");
+
+        $regionsWithVictory = array_map(
+            fn(array $row) => Region::from($row['region']),
+            $rows
+        );
+
+        foreach (Region::all() as $region) {
+            if (!in_array($region, $regionsWithVictory)) {
+                return $region;
+            }
+        }
+
+        throw new Exception("Victory in all Pokemon Leagues");
     }
 
     private static function createFromRow(array $row): EliteFourChallenge

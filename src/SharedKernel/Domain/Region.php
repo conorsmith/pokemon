@@ -14,4 +14,19 @@ enum Region: string
     case ALOLA = "ALOLA";
     case GALAR = "GALAR";
     case PALDEA = "PALDEA";
+
+    public static function all(): array
+    {
+        return [
+            self::KANTO,
+            self::JOHTO,
+            self::HOENN,
+            self::SINNOH,
+            self::UNOVA,
+            self::KALOS,
+            self::ALOLA,
+            self::GALAR,
+            self::PALDEA,
+        ];
+    }
 }

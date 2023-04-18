@@ -352,6 +352,7 @@ final class ControllerFactory
                 $this->db,
                 $this->pokemonRepository,
                 $this->bagRepository,
+                $this->eliteFourChallengeRepository,
                 $this->viewModelFactory,
                 $this->templateEngine,
             ),

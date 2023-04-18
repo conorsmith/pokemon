@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\Bag;
+use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
@@ -22,6 +24,7 @@ final class GetIndex
         private readonly Connection $db,
         private readonly PokemonRepository $pokemonRepository,
         private readonly BagRepository $bagRepository,
+        private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -35,16 +38,37 @@ final class GetIndex
         $bag = $this->bagRepository->find();
         $team = $this->pokemonRepository->getTeam();
 
+        $currentPokemonLeague = $this->eliteFourChallengeRepository->findCurrentPokemonLeagueRegion();
+
+        $regionalBadgeIdOffset = match($currentPokemonLeague) {
+            Region::KANTO => 0,
+            Region::JOHTO => 8,
+        };
+
+        $earnedBadgeIds = json_decode($instanceRow['badges']);
+
+        $badgeViewModels = [];
+
+        for ($i = 1; $i <= 8; $i++) {
+            $badgeId = $i + $regionalBadgeIdOffset;
+            if (in_array($badgeId, $earnedBadgeIds)) {
+                $badgeViewModels[] = $this->viewModelFactory->createGymBadge(GymBadge::from($badgeId));
+            } else {
+                $badgeViewModels[] = null;
+            }
+        }
+
         echo $this->templateEngine->render(__DIR__ . "/../Templates/Index.php", [
             'bagSummary' => self::createBagSummary($bag),
             'team' => array_map(
                 fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
                 $team->members
             ),
-            'badges' => array_map(
-                fn(int $value) => $this->viewModelFactory->createGymBadge(GymBadge::from($value)),
-                json_decode($instanceRow['badges'])
-            ),
+            'currentPokemonLeague' => match($currentPokemonLeague) {
+                Region::KANTO => "Kanto",
+                Region::JOHTO => "Johto",
+            },
+            'badges' => $badgeViewModels,
         ]);
     }
 
