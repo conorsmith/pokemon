@@ -230,4 +230,11 @@ final class LocationId
     public const GOLDENROD_TUNNEL_B1F = "e3f8b50b-f883-4c35-aada-1f17ce5ddf23";
     public const GOLDENROD_TUNNEL_B2F = "4146da56-9681-4de7-9dc9-d2b5f7ec53b4";
     public const GOLDENROD_TUNNEL_WAREHOUSE = "e5d512dc-30af-4acd-8a2d-92b042f86fba";
+    public const GOLDENROD_RADIO_TOWER = "a82e665b-0eca-4452-9d16-63c871fb84b3";
+    public const GOLDENROD_RADIO_TOWER_1F = "7ef0fd3d-d4a4-475c-b36c-2e3c1e88baa3";
+    public const GOLDENROD_RADIO_TOWER_2F = "28501752-8307-4d77-8440-2576ac11bd80";
+    public const GOLDENROD_RADIO_TOWER_3F = "b819727e-eb64-45af-bfcb-81f582fee53c";
+    public const GOLDENROD_RADIO_TOWER_4F = "1311310e-c4ee-4138-be2a-bd40e697826a";
+    public const GOLDENROD_RADIO_TOWER_5F = "5f326850-09c1-4c21-aa7a-886b039ee9bd";
+    public const GOLDENROD_RADIO_TOWER_OBSERVATION_DECK = "9a7c6be1-d4aa-49d3-b82d-7344c9592433";
 }

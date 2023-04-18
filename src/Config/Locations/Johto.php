@@ -383,6 +383,7 @@ return [
         'type' => LocationType::CITY,
         'directions' => [
             Direction::S => LocationId::ROUTE_34,
+            LocationId::GOLDENROD_RADIO_TOWER_1F,
             LocationId::GOLDENROD_TUNNEL_B1F,
         ],
     ],
@@ -416,6 +417,71 @@ return [
         'area' => LocationId::GOLDENROD_TUNNEL,
         'directions' => [
             Direction::U => LocationId::GOLDENROD_TUNNEL_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_RADIO_TOWER_1F,
+        'name' => "Goldenrod Radio Tower",
+        'section' => "1st Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GOLDENROD_RADIO_TOWER,
+        'directions' => [
+            Direction::U => LocationId::GOLDENROD_RADIO_TOWER_2F,
+            Direction::D => LocationId::GOLDENROD_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_RADIO_TOWER_2F,
+        'name' => "Goldenrod Radio Tower",
+        'section' => "2nd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GOLDENROD_RADIO_TOWER,
+        'directions' => [
+            Direction::U => LocationId::GOLDENROD_RADIO_TOWER_3F,
+            Direction::D => LocationId::GOLDENROD_RADIO_TOWER_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_RADIO_TOWER_3F,
+        'name' => "Goldenrod Radio Tower",
+        'section' => "3rd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GOLDENROD_RADIO_TOWER,
+        'directions' => [
+            Direction::U => LocationId::GOLDENROD_RADIO_TOWER_4F,
+            Direction::D => LocationId::GOLDENROD_RADIO_TOWER_2F,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_RADIO_TOWER_4F,
+        'name' => "Goldenrod Radio Tower",
+        'section' => "4th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GOLDENROD_RADIO_TOWER,
+        'directions' => [
+            Direction::U => LocationId::GOLDENROD_RADIO_TOWER_5F,
+            Direction::D => LocationId::GOLDENROD_RADIO_TOWER_3F,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_RADIO_TOWER_5F,
+        'name' => "Goldenrod Radio Tower",
+        'section' => "5th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GOLDENROD_RADIO_TOWER,
+        'directions' => [
+            Direction::U => LocationId::GOLDENROD_RADIO_TOWER_OBSERVATION_DECK,
+            Direction::D => LocationId::GOLDENROD_RADIO_TOWER_4F,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_RADIO_TOWER_OBSERVATION_DECK,
+        'name' => "Goldenrod Radio Tower",
+        'section' => "Observation Deck",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GOLDENROD_RADIO_TOWER,
+        'directions' => [
+            Direction::D => LocationId::GOLDENROD_RADIO_TOWER_5F,
         ],
     ],
 ];

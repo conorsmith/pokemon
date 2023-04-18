@@ -184,7 +184,7 @@ final class BulbapediaLocationPage
                 'trainer' => [
                     'class' => $class,
                     'gender' => null,
-                    'name'  => trim($nameNode->textContent),
+                    'name'  => is_null($nameNode) ? "" : trim($nameNode->textContent),
                 ],
                 'pokemon' => [],
             ];
