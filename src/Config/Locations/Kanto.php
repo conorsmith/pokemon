@@ -180,6 +180,7 @@ return [
             Direction::S => LocationId::ROUTE_6,
             LocationId::SAFFRON_GYM,
             LocationId::SILPH_CO_1F,
+            LocationId::SAFFRON_MAGNET_TRAIN_STATION,
         ],
     ],
     [
@@ -187,6 +188,14 @@ return [
         'name' => "Saffron Gym",
         'type' => LocationType::GYM,
         'directions' => [
+            LocationId::SAFFRON_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::SAFFRON_MAGNET_TRAIN_STATION,
+        'name' => "Saffron Station",
+        'directions' => [
+            LocationId::MAGNET_TRAIN,
             LocationId::SAFFRON_CITY,
         ],
     ],

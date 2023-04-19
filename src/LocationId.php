@@ -237,4 +237,14 @@ final class LocationId
     public const GOLDENROD_RADIO_TOWER_4F = "1311310e-c4ee-4138-be2a-bd40e697826a";
     public const GOLDENROD_RADIO_TOWER_5F = "5f326850-09c1-4c21-aa7a-886b039ee9bd";
     public const GOLDENROD_RADIO_TOWER_OBSERVATION_DECK = "9a7c6be1-d4aa-49d3-b82d-7344c9592433";
+    public const GOLDENROD_MAGNET_TRAIN_STATION = "98f9cde4-1eeb-42db-8f70-6aa81451e15a";
+    public const SAFFRON_MAGNET_TRAIN_STATION = "acba49ea-4524-4867-b4ea-e08fa62c3805";
+    public const MAGNET_TRAIN = "b5bc6f54-1f6c-4d3b-96d8-e52e30e19ad2";
+    public const GOLDENROD_GYM = "e255f8a1-dc6c-4a39-9895-cfbd50c03c1e";
+    public const ROUTE_35 = "a82822f6-e700-4040-9185-3f14642d8e99";
+    public const NATIONAL_PARK = "467651e6-7014-4cb2-a503-607523117826";
+    public const ROUTE_36 = "bf4ad969-842a-4bef-ab62-914140ceda66";
+
+    public const BELL_TOWER_ROOF = "bb28ac83-ab68-4f8b-a214-d129b01431e5";
+    public const WHIRL_ISLANDS_B3F = "e0842da4-ae8f-47c7-9f51-2e56d130b244";
 }

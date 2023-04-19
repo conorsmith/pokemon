@@ -1478,4 +1478,124 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_35 => [
+        EncounterType::WALKING => [
+            PokedexNo::PIDGEY => [
+                'weight' => 5,
+                'levels' => 14,
+            ],
+            PokedexNo::NIDORAN_F => [
+                'weight' => 30,
+                'levels' => 12,
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 30,
+                'levels' => 12,
+            ],
+            PokedexNo::ABRA => [
+                'weight' => 10,
+                'levels' => 10,
+            ],
+            PokedexNo::DROWZEE => [
+                'weight' => 20,
+                'levels' => 14,
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 4,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 5,
+                'levels' => 14,
+            ],
+            PokedexNo::YANMA => [
+                'weight' => 1,
+                'levels' => 12,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::GOLDUCK => [
+                'weight' => 10,
+                'levels' => [15, 31],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 138,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 162,
+                'levels' => 10,
+            ],
+        ],
+    ],
+    LocationId::NATIONAL_PARK => [
+        EncounterType::WALKING => [
+            PokedexNo::CATERPIE => [
+                'weight' => 80,
+                'levels' => [10, 12],
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 80,
+                'levels' => [10, 12],
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+            PokedexNo::PIDGEY => [
+                'weight' => 35,
+                'levels' => [10, 14],
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 100,
+                'levels' => [10, 14],
+            ],
+            PokedexNo::SUNKERN => [
+                'weight' => 25,
+                'levels' => [10, 12],
+            ],
+        ],
+    ],
+    LocationId::ROUTE_36 => [
+        EncounterType::WALKING => [
+            PokedexNo::PIDGEY => [
+                'weight' => 45,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::NIDORAN_F => [
+                'weight' => 30,
+                'levels' => 12,
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 30,
+                'levels' => 12,
+            ],
+            PokedexNo::VULPIX => [
+                'weight' => 25,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::GROWLITHE => [
+                'weight' => 25,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 25,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::STANTLER => [
+                'weight' => 5,
+                'levels' => 13,
+            ],
+        ],
+    ],
 ];

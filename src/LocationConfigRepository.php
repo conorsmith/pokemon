@@ -46,4 +46,9 @@ final class LocationConfigRepository
 
         return $locations;
     }
+
+    public function findAllLocationsInRegion(Region $region): array
+    {
+        return $this->locationConfigByRegion[$region];
+    }
 }

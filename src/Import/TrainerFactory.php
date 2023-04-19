@@ -72,6 +72,7 @@ final class TrainerFactory
             "ROCKET_GRUNT" => TrainerClass::TEAM_ROCKET_GRUNT,
             "POLICEMAN" => TrainerClass::OFFICER,
             "SILVER_(GAME)" => TrainerClass::RIVAL,
+            "SCHOOLBOY" => TrainerClass::SCHOOL_KID,
             default => $trainerClassReflector->getConstants()[$constantName],
         };
     }

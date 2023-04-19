@@ -259,6 +259,7 @@ final class TrainerClass
                 default => null,
             },
             self::OFFICER => "https://archives.bulbagarden.net/media/upload/0/0d/Spr_DP_Officer.png",
+            self::SCHOOL_KID => "https://archives.bulbagarden.net/media/upload/f/f4/Spr_HGSS_School_Kid.png",
             default => null,
         };
     }

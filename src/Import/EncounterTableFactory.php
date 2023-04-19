@@ -88,6 +88,7 @@ final class EncounterTableFactory
             || $value === "Sinnoh Sound"
             || $value === "Swarm"
             || $value === "Starter Pokémon"
+            || $value === "Gift"
             || substr($value, 0, 5) === "Trade"
             || substr($value, 0, 5) === "Event"
         ) {
@@ -101,8 +102,12 @@ final class EncounterTableFactory
     {
         $pokedexNoReflector = new ReflectionClass(PokedexNo::class);
 
+        $name = strtoupper($name);
+        $name = str_replace("♀", "_F", $name);
+        $name = str_replace("♂", "_M", $name);
+
         return new PokedexNumber(
-            $pokedexNoReflector->getConstants()[strtoupper($name)],
+            $pokedexNoReflector->getConstants()[$name],
         );
     }
 

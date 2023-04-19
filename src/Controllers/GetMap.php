@@ -14,6 +14,7 @@ use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\LocationType;
+use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -109,7 +110,7 @@ final class GetMap
             }
         }
 
-        $legendaryConfig = self::findLegendaryConfig($instanceRow['current_location']);
+        $legendaryConfig = $this->findLegendaryConfig($instanceRow['current_location']);
 
         echo $this->templateEngine->render(__DIR__ . "/../Templates/Map.php", [
             'canEncounter' => true,
@@ -117,7 +118,10 @@ final class GetMap
             'challengeTokens' => $challengeTokens,
             'currentLocation' => $currentLocation,
             'trainers' => $trainers,
-            'legendary' => $this->createLegendaryViewModel($legendaryConfig),
+            'legendary' => $this->createLegendaryViewModel(
+                $this->locationConfigRepository->findLocation($instanceRow['current_location']),
+                $legendaryConfig,
+            ),
             'eliteFour' => $this->createEliteFourViewModel(self::findEliteFourConfig($instanceRow['current_location'])),
         ]);
     }
@@ -152,7 +156,7 @@ final class GetMap
         return $gymTrainerIds === $beatenGymTrainerIds;
     }
 
-    private function createLegendaryViewModel(?array $legendaryConfig): ?stdClass
+    private function createLegendaryViewModel(array $currentLocation, ?array $legendaryConfig): ?stdClass
     {
         if (is_null($legendaryConfig)) {
             return null;
@@ -201,11 +205,16 @@ final class GetMap
             $canBattle = false;
         }
 
+        $regionalLevelOffset = match ($currentLocation['region']) {
+            Region::KANTO => 0,
+            Region::JOHTO => 50,
+        };
+
         return (object) [
             'number'          => $legendaryConfig['pokemon'],
             'name'            => $this->pokedex[$legendaryConfig['pokemon']]['name'],
             'imageUrl'        => TeamMember::createImageUrl($legendaryConfig['pokemon']),
-            'level'           => $legendaryConfig['level'],
+            'level'           => $legendaryConfig['level'] + $regionalLevelOffset,
             'canBattle'       => $canBattle,
             'lastEncountered' => $lastCaught ? $lastCaught->ago() : "",
         ];
@@ -253,17 +262,35 @@ final class GetMap
         return $highestRankedBadge->levelLimit();
     }
 
-    private static function findLegendaryConfig(string $locationId): ?array
+    private function findLegendaryConfig(string $locationId): ?array
     {
         $legendariesConfig = require __DIR__ . "/../Config/Legendaries.php";
 
         foreach ($legendariesConfig as $config) {
+            if ($config['location'] instanceof Region
+                && $this->encounterRoamingLegendary($locationId, $config)
+            ) {
+                return $config;
+            }
             if ($config['location'] === $locationId) {
                 return $config;
             }
         }
 
         return null;
+    }
+
+    private function encounterRoamingLegendary(string $currentLocationId, array $legendaryConfig): bool
+    {
+        RandomNumberGenerator::setSeed(crc32($legendaryConfig['pokemon'] . date("Y-m-d")));
+
+        $locations = $this->locationConfigRepository->findAllLocationsInRegion($legendaryConfig['location']);
+
+        $roamingLocation = $locations[RandomNumberGenerator::generateInRange(0, count($locations))];
+
+        RandomNumberGenerator::unsetSeed();
+
+        return $currentLocationId === $roamingLocation['id'];
     }
 
     private static function findEliteFourConfig(string $locationId): ?array

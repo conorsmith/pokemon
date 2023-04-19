@@ -253,6 +253,7 @@ return [
         'type' => LocationType::CAVE,
         'area' => LocationId::RUINS_OF_ALPH,
         'directions' => [
+            Direction::N => LocationId::ROUTE_36,
             Direction::E => LocationId::ROUTE_32,
             LocationId::RUINS_OF_ALPH_CHAMBER,
         ],
@@ -382,9 +383,12 @@ return [
         'name' => "Goldenrod City",
         'type' => LocationType::CITY,
         'directions' => [
+            Direction::N => LocationId::ROUTE_35,
             Direction::S => LocationId::ROUTE_34,
             LocationId::GOLDENROD_RADIO_TOWER_1F,
             LocationId::GOLDENROD_TUNNEL_B1F,
+            LocationId::GOLDENROD_MAGNET_TRAIN_STATION,
+            LocationId::GOLDENROD_GYM,
         ],
     ],
     [
@@ -482,6 +486,57 @@ return [
         'area' => LocationId::GOLDENROD_RADIO_TOWER,
         'directions' => [
             Direction::D => LocationId::GOLDENROD_RADIO_TOWER_5F,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_MAGNET_TRAIN_STATION,
+        'name' => "Goldenrod Station",
+        'directions' => [
+            LocationId::MAGNET_TRAIN,
+            LocationId::GOLDENROD_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::MAGNET_TRAIN,
+        'name' => "Magnet Train",
+        'directions' => [
+            LocationId::GOLDENROD_MAGNET_TRAIN_STATION,
+            LocationId::SAFFRON_MAGNET_TRAIN_STATION,
+        ],
+    ],
+    [
+        'id' => LocationId::GOLDENROD_GYM,
+        'name' => "Goldenrod Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::GOLDENROD_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_35,
+        'name' => "Route 35",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::NATIONAL_PARK,
+            Direction::S => LocationId::GOLDENROD_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::NATIONAL_PARK,
+        'name' => "National Park",
+        'directions' => [
+            Direction::E => LocationId::ROUTE_36,
+            Direction::S => LocationId::ROUTE_35,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_36,
+        'name' => "Route 36",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::E => LocationId::VIOLET_CITY,
+            Direction::W => LocationId::NATIONAL_PARK,
+            Direction::S => LocationId::RUINS_OF_ALPH_OUTSIDE,
         ],
     ],
 ];
