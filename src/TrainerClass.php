@@ -191,6 +191,7 @@ final class TrainerClass
             self::COOLTRAINER => match ($gender) {
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/7/7f/Spr_FRLG_Cooltrainer_F.png",
                 Gender::MALE => "https://archives.bulbagarden.net/media/upload/b/b8/Spr_FRLG_Cooltrainer_M.png",
+                default => null,
             },
             self::TAMER => "https://archives.bulbagarden.net/media/upload/8/89/Spr_FRLG_Tamer.png",
             self::LASS => "https://archives.bulbagarden.net/media/upload/4/46/Spr_FRLG_Lass.png",
@@ -205,10 +206,12 @@ final class TrainerClass
             self::TEAM_ROCKET_ADMIN => match ($gender) {
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/6/68/Spr_FRLG_Team_Rocket_Grunt_F.png",
                 Gender::MALE => "https://archives.bulbagarden.net/media/upload/8/85/Spr_FRLG_Team_Rocket_Grunt_M.png",
+                default => null,
             },
             self::SWIMMER => match ($gender) {
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/4/4d/Spr_FRLG_Swimmer_F.png",
                 Gender::MALE => "https://archives.bulbagarden.net/media/upload/9/95/Spr_FRLG_Swimmer_M.png",
+                default => null,
             },
             self::PICNICKER => "https://archives.bulbagarden.net/media/upload/a/a0/Spr_FRLG_Picnicker.png",
             self::SAILOR => "https://archives.bulbagarden.net/media/upload/a/a1/Spr_FRLG_Sailor.png",
@@ -240,6 +243,7 @@ final class TrainerClass
             self::POKEMON_RANGER => match($gender) {
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/7/76/Spr_FRLG_Pok%C3%A9mon_Ranger_F.png",
                 Gender::MALE => "https://archives.bulbagarden.net/media/upload/0/0d/Spr_FRLG_Pok%C3%A9mon_Ranger_M.png",
+                default => null,
             },
             self::AROMA_LADY => "https://archives.bulbagarden.net/media/upload/f/f9/Spr_FRLG_Aroma_Lady.png",
             self::TUBER => "https://archives.bulbagarden.net/media/upload/8/89/Spr_FRLG_Tuber.png",
@@ -252,6 +256,7 @@ final class TrainerClass
             self::POKEFAN => match($gender) {
                 Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/6/63/Spr_RS_Pok%C3%A9fan_F.png",
                 Gender::MALE => "https://archives.bulbagarden.net/media/upload/a/a3/Spr_RS_Pok%C3%A9fan_M.png",
+                default => null,
             },
             self::OFFICER => "https://archives.bulbagarden.net/media/upload/0/0d/Spr_DP_Officer.png",
             default => null,

@@ -61,6 +61,8 @@ final class GetBattle
                 $trainerConfig = $this->findTrainerConfig($trainerBattleRow['trainer_id']);
                 if (array_key_exists('imageUrl', $trainerConfig)) {
                     $imageUrl = $trainerConfig['imageUrl'];
+                } elseif (array_key_exists('leader', $trainerConfig)) {
+                    $imageUrl = $trainerConfig['leader']['imageUrl'];
                 }
             }
         }
