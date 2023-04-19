@@ -263,6 +263,6 @@ final class LocationId
     public const BELL_TOWER_9F = "36a9689b-b71b-4319-a728-7a4d77420629";
     public const BELL_TOWER_10F = "81c11cbc-e417-4c95-a6a1-47b726df50d4";
     public const BELL_TOWER_ROOF = "bb28ac83-ab68-4f8b-a214-d129b01431e5";
-    
+
     public const WHIRL_ISLANDS_B3F = "e0842da4-ae8f-47c7-9f51-2e56d130b244";
 }

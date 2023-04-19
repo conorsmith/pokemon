@@ -191,6 +191,7 @@ return [
         'type' => LocationType::CITY,
         'directions' => [
             Direction::E => LocationId::ROUTE_31,
+            Direction::W => LocationId::ROUTE_36,
             Direction::S => LocationId::ROUTE_32,
             LocationId::VIOLET_GYM,
             LocationId::SPROUT_TOWER_1F,
