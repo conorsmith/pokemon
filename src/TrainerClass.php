@@ -260,6 +260,8 @@ final class TrainerClass
             },
             self::OFFICER => "https://archives.bulbagarden.net/media/upload/0/0d/Spr_DP_Officer.png",
             self::SCHOOL_KID => "https://archives.bulbagarden.net/media/upload/f/f4/Spr_HGSS_School_Kid.png",
+            self::MEDIUM => "https://archives.bulbagarden.net/media/upload/5/56/Spr_HGSS_Medium.png",
+            self::KIMONO_GIRL => "https://archives.bulbagarden.net/media/upload/0/01/Spr_HGSS_Kimono_Girl.png",
             default => null,
         };
     }

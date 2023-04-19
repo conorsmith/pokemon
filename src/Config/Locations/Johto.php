@@ -534,9 +534,187 @@ return [
         'name' => "Route 36",
         'type' => LocationType::ROUTE,
         'directions' => [
+            Direction::N => LocationId::ROUTE_37,
             Direction::E => LocationId::VIOLET_CITY,
             Direction::W => LocationId::NATIONAL_PARK,
             Direction::S => LocationId::RUINS_OF_ALPH_OUTSIDE,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_37,
+        'name' => "Route 37",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::ECRUTEAK_CITY,
+            Direction::S => LocationId::ROUTE_36,
+        ],
+    ],
+    [
+        'id' => LocationId::ECRUTEAK_CITY,
+        'name' => "Ecruteak City",
+        'type' => LocationType::CITY,
+        'directions' => [
+            Direction::S => LocationId::ROUTE_37,
+            LocationId::ECRUTEAK_DANCE_THEATRE,
+            LocationId::BURNED_TOWER_1F,
+            LocationId::BELL_TOWER_1F,
+            LocationId::ECRUTEAK_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::ECRUTEAK_GYM,
+        'name' => "Ecruteak Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::ECRUTEAK_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::BURNED_TOWER_1F,
+        'name' => "Burned Tower",
+        'section' => "1st Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BURNED_TOWER,
+        'directions' => [
+            Direction::U => LocationId::ECRUTEAK_CITY,
+            Direction::D => LocationId::BURNED_TOWER_B1F,
+        ],
+    ],
+    [
+        'id' => LocationId::BURNED_TOWER_B1F,
+        'name' => "Burned Tower",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BURNED_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BURNED_TOWER_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::ECRUTEAK_DANCE_THEATRE,
+        'name' => "Ecruteak Dance Theatre",
+        'directions' => [
+            LocationId::ECRUTEAK_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_1F,
+        'name' => "Bell Tower",
+        'section' => "1st Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_2F,
+            Direction::D => LocationId::ECRUTEAK_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_2F,
+        'name' => "Bell Tower",
+        'section' => "2nd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_3F,
+            Direction::D => LocationId::BELL_TOWER_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_3F,
+        'name' => "Bell Tower",
+        'section' => "3rd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_4F,
+            Direction::D => LocationId::BELL_TOWER_2F,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_4F,
+        'name' => "Bell Tower",
+        'section' => "4th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_5F,
+            Direction::D => LocationId::BELL_TOWER_3F,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_5F,
+        'name' => "Bell Tower",
+        'section' => "5th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_6F,
+            Direction::D => LocationId::BELL_TOWER_4F,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_6F,
+        'name' => "Bell Tower",
+        'section' => "6th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_7F,
+            Direction::D => LocationId::BELL_TOWER_5F,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_7F,
+        'name' => "Bell Tower",
+        'section' => "7th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_8F,
+            Direction::D => LocationId::BELL_TOWER_6F,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_8F,
+        'name' => "Bell Tower",
+        'section' => "8th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_9F,
+            Direction::D => LocationId::BELL_TOWER_7F,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_9F,
+        'name' => "Bell Tower",
+        'section' => "9th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_10F,
+            Direction::D => LocationId::BELL_TOWER_8F,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_10F,
+        'name' => "Bell Tower",
+        'section' => "10th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::U => LocationId::BELL_TOWER_ROOF,
+            Direction::D => LocationId::BELL_TOWER_9F,
+        ],
+    ],
+    [
+        'id' => LocationId::BELL_TOWER_ROOF,
+        'name' => "Bell Tower",
+        'section' => "Roof",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::BELL_TOWER,
+        'directions' => [
+            Direction::D => LocationId::BELL_TOWER_10F,
         ],
     ],
 ];

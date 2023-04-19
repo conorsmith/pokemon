@@ -244,7 +244,25 @@ final class LocationId
     public const ROUTE_35 = "a82822f6-e700-4040-9185-3f14642d8e99";
     public const NATIONAL_PARK = "467651e6-7014-4cb2-a503-607523117826";
     public const ROUTE_36 = "bf4ad969-842a-4bef-ab62-914140ceda66";
-
+    public const ROUTE_37 = "6a5c2cbf-af86-4b5f-8cf7-838507d5202f";
+    public const ECRUTEAK_CITY = "6513b181-4611-4f60-a063-f74da6b766b5";
+    public const ECRUTEAK_GYM = "829a04ed-51b3-4b93-bead-b4e4f4d52ba8";
+    public const BURNED_TOWER = "45332893-756d-4d3d-933e-03750f4e7091";
+    public const BURNED_TOWER_1F = "0de6d72c-6313-4ba1-b7ee-855ef7c0e2fe";
+    public const BURNED_TOWER_B1F = "5da1fde7-ad17-4144-82b9-0b60cd682a20";
+    public const ECRUTEAK_DANCE_THEATRE = "64812ad6-aee4-4809-a141-07270054c8d9";
+    public const BELL_TOWER = "7dc9ae10-abcc-459d-b8d5-5afdfd10938c";
+    public const BELL_TOWER_1F = "3a1213da-850c-494c-a8d9-e9eb4bed76a0";
+    public const BELL_TOWER_2F = "f1af98f4-10e1-4013-b355-818b3fe2462f";
+    public const BELL_TOWER_3F = "4d3f8f05-be1f-477f-8f52-0d229e9ea15e";
+    public const BELL_TOWER_4F = "2941fac1-2a2c-4a14-849d-e9040dcec575";
+    public const BELL_TOWER_5F = "564fd3ce-ac10-422e-ad0f-cca2edc0054c";
+    public const BELL_TOWER_6F = "2ea83273-a67d-4303-a43d-a0d40d965956";
+    public const BELL_TOWER_7F = "3bd752e7-45d1-4181-90b3-dea002b6be67";
+    public const BELL_TOWER_8F = "82b71fbc-57c5-4b0e-8461-d28357ad98df";
+    public const BELL_TOWER_9F = "36a9689b-b71b-4319-a728-7a4d77420629";
+    public const BELL_TOWER_10F = "81c11cbc-e417-4c95-a6a1-47b726df50d4";
     public const BELL_TOWER_ROOF = "bb28ac83-ab68-4f8b-a214-d129b01431e5";
+    
     public const WHIRL_ISLANDS_B3F = "e0842da4-ae8f-47c7-9f51-2e56d130b244";
 }

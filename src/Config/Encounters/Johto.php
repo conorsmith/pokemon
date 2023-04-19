@@ -1598,4 +1598,210 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_37 => [
+        EncounterType::WALKING => [
+            PokedexNo::PIDGEY => [
+                'weight' => 130,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::PIDGEOTTO => [
+                'weight' => 5,
+                'levels' => 15,
+            ],
+            PokedexNo::VULPIX => [
+                'weight' => 25,
+                'levels' => [14, 15],
+            ],
+            PokedexNo::GROWLITHE => [
+                'weight' => 25,
+                'levels' => [14, 15],
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 80,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 40,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 40,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::STANTLER => [
+                'weight' => 30,
+                'levels' => 15,
+            ],
+        ],
+    ],
+    LocationId::BURNED_TOWER_1F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 50,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 5,
+                'levels' => 15,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 10,
+                'levels' => 14,
+            ],
+            PokedexNo::KOFFING => [
+                'weight' => 35,
+                'levels' => [14, 16],
+            ],
+        ],
+    ],
+    LocationId::BURNED_TOWER_B1F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 75,
+                'levels' => [14, 16],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 5,
+                'levels' => 15,
+            ],
+            PokedexNo::KOFFING => [
+                'weight' => 50,
+                'levels' => [14, 16],
+            ],
+            PokedexNo::MAGMAR => [
+                'weight' => 15,
+                'levels' => 14,
+            ],
+        ],
+    ],
+    LocationId::ECRUTEAK_CITY => [
+        EncounterType::SURFING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::POLIWHIRL => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 158,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 142,
+                'levels' => 10,
+            ],
+        ],
+    ],
+    LocationId::BELL_TOWER_2F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 100,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 80,
+                'levels' => [20, 22],
+            ],
+        ],
+    ],
+    LocationId::BELL_TOWER_3F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 100,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 80,
+                'levels' => [20, 22],
+            ],
+        ],
+    ],
+    LocationId::BELL_TOWER_4F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 100,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 80,
+                'levels' => [20, 22],
+            ],
+        ],
+    ],
+    LocationId::BELL_TOWER_5F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 100,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 80,
+                'levels' => [20, 22],
+            ],
+        ],
+    ],
+    LocationId::BELL_TOWER_6F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 100,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 80,
+                'levels' => [20, 22],
+            ],
+        ],
+    ],
+    LocationId::BELL_TOWER_7F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 100,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 80,
+                'levels' => [20, 22],
+            ],
+        ],
+    ],
+    LocationId::BELL_TOWER_8F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 100,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 80,
+                'levels' => [20, 22],
+            ],
+        ],
+    ],
+    LocationId::BELL_TOWER_9F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 100,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 80,
+                'levels' => [20, 22],
+            ],
+        ],
+    ],
+    LocationId::BELL_TOWER_10F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 100,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 80,
+                'levels' => [20, 22],
+            ],
+        ],
+    ],
 ];
