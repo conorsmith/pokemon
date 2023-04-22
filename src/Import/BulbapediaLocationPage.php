@@ -58,7 +58,10 @@ final class BulbapediaLocationPage
 
         while (!is_null($currentNode)) {
             if ($currentNode->nodeName === "table") {
-                $rawEncounterData[$mostRecentSubtitle . $mostRecentSubSubtitle] = self::extractEncountersFromTableNode($currentNode);
+                $rawEncounterData[$mostRecentSubtitle . $mostRecentSubSubtitle] = array_merge(
+                    $rawEncounterData[$mostRecentSubtitle . $mostRecentSubSubtitle] ?? [],
+                    self::extractEncountersFromTableNode($currentNode),
+                );
             } elseif ($currentNode->nodeName === "h3") {
                 $mostRecentSubtitle = $currentNode->textContent;
             } elseif ($currentNode->nodeName === "h4") {
@@ -88,6 +91,10 @@ final class BulbapediaLocationPage
             }
 
             if (count($row) !== 4 && count($row) !== 6) {
+                continue;
+            }
+
+            if (in_array($row[0], ["", "Surf", "Walking", "Waterside", "Good Rod", "Super Rod"])) {
                 continue;
             }
 

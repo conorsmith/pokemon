@@ -3706,4 +3706,165 @@ return [
             ],
         ],
     ],
+    LocationId::CIANWOOD_GYM => [
+        [
+            'id' => "98daf23e-20b5-4893-8936-9d0b33ca6ae9",
+            'class' => TrainerClass::BLACK_BELT,
+            'name' => "Yoshi",
+            'team' => [
+                [
+                    'id' => PokedexNo::HITMONLEE,
+                    'sex' => Sex::MALE,
+                    'level' => 27,
+                ],
+            ],
+        ],
+        [
+            'id' => "65e35205-5944-41a1-a623-68c76a7b9f90",
+            'class' => TrainerClass::BLACK_BELT,
+            'name' => "Lao",
+            'team' => [
+                [
+                    'id' => PokedexNo::HITMONCHAN,
+                    'sex' => Sex::MALE,
+                    'level' => 27,
+                ],
+            ],
+        ],
+        [
+            'id' => "96d6ba08-88ec-4cf8-bc4f-f3861ee7c838",
+            'class' => TrainerClass::BLACK_BELT,
+            'name' => "Nob",
+            'team' => [
+                [
+                    'id' => PokedexNo::MACHOP,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+                [
+                    'id' => PokedexNo::MACHOKE,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+            ],
+        ],
+        [
+            'id' => "0e0ac645-32b6-4332-839e-d217c9244759",
+            'class' => TrainerClass::BLACK_BELT,
+            'name' => "Lung",
+            'team' => [
+                [
+                    'id' => PokedexNo::MANKEY,
+                    'sex' => Sex::MALE,
+                    'level' => 23,
+                ],
+                [
+                    'id' => PokedexNo::MANKEY,
+                    'sex' => Sex::MALE,
+                    'level' => 23,
+                ],
+                [
+                    'id' => PokedexNo::PRIMEAPE,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+            ],
+        ],
+        [
+            'id' => "1e2908fd-0ae1-446f-b676-321b0f87c47e",
+            'class' => TrainerClass::GYM_LEADER,
+            'name' => "Chuck",
+            'leader' => [
+                'badge' => GymBadge::STORM,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/fd/Spr_HGSS_Chuck.png",
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::PRIMEAPE,
+                    'sex' => Sex::MALE,
+                    'level' => 29,
+                ],
+                [
+                    'id' => PokedexNo::POLIWRATH,
+                    'sex' => Sex::MALE,
+                    'level' => 31,
+                ],
+            ],
+        ],
+    ],
+    LocationId::ROUTE_47 => [
+        [
+            'id' => "0c54b8f2-c157-405c-b402-e32f778f44d0",
+            'class' => TrainerClass::HIKER,
+            'name' => "Devin",
+            'team' => [
+                [
+                    'id' => PokedexNo::DUNSPARCE,
+                    'sex' => Sex::MALE,
+                    'level' => 19,
+                ],
+                [
+                    'id' => PokedexNo::DUNSPARCE,
+                    'sex' => Sex::MALE,
+                    'level' => 19,
+                ],
+                [
+                    'id' => PokedexNo::DUNSPARCE,
+                    'sex' => Sex::MALE,
+                    'level' => 19,
+                ],
+            ],
+        ],
+        [
+            'id' => "75d59813-f60b-4cb0-80a6-8a24e21c68d8",
+            'class' => TrainerClass::CAMPER,
+            'name' => "Grant",
+            'team' => [
+                [
+                    'id' => PokedexNo::SKIPLOOM,
+                    'sex' => Sex::MALE,
+                    'level' => 21,
+                ],
+                [
+                    'id' => PokedexNo::MARILL,
+                    'sex' => Sex::MALE,
+                    'level' => 21,
+                ],
+            ],
+        ],
+        [
+            'id' => "41cc05ad-a20d-4b9b-8978-05819e90b88c",
+            'class' => TrainerClass::DOUBLE_TEAM,
+            'name' => "Thom & Kae",
+            'team' => [
+                [
+                    'id' => PokedexNo::MAGMAR,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+                [
+                    'id' => PokedexNo::ELECTABUZZ,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+            ],
+        ],
+        [
+            'id' => "81ec3f95-a73d-4d6e-b211-566b026e2142",
+            'class' => TrainerClass::YOUNG_COUPLE,
+            'name' => "Duff & Eda",
+            'team' => [
+                [
+                    'id' => PokedexNo::CLOYSTER,
+                    'sex' => Sex::MALE,
+                    'level' => 22,
+                ],
+                [
+                    'id' => PokedexNo::ONIX,
+                    'sex' => Sex::MALE,
+                    'level' => 22,
+                ],
+            ],
+        ],
+    ],
 ];

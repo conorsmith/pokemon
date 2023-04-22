@@ -106,6 +106,8 @@ final class EncounterTableFactory
         $name = str_replace("♀", "_F", $name);
         $name = str_replace("♂", "_M", $name);
         $name = str_replace("'", "_", $name);
+        $name = str_replace(".", "", $name);
+        $name = str_replace(" ", "_", $name);
 
         return new PokedexNumber(
             $pokedexNoReflector->getConstants()[$name],

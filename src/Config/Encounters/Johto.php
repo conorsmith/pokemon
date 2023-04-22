@@ -2214,4 +2214,728 @@ return [
             ],
         ],
     ],
+    LocationId::CLIFF_GATE_EDGE => [
+        EncounterType::SURFING => [
+            PokedexNo::WOOPER => [
+                'weight' => 90,
+                'levels' => [20, 30],
+            ],
+            PokedexNo::QUAGSIRE => [
+                'weight' => 10,
+                'levels' => [30, 40],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 255,
+                'levels' => 10,
+            ],
+            PokedexNo::POLIWAG => [
+                'weight' => 45,
+                'levels' => 20,
+            ],
+        ],
+    ],
+    LocationId::ROUTE_47 => [
+        EncounterType::WALKING => [
+            PokedexNo::RATICATE => [
+                'weight' => 5,
+                'levels' => [31, 33],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 5,
+                'levels' => 31,
+            ],
+            PokedexNo::FEAROW => [
+                'weight' => 4,
+                'levels' => 34,
+            ],
+            PokedexNo::GLOOM => [
+                'weight' => 5,
+                'levels' => 32,
+            ],
+            PokedexNo::FARFETCH_D => [
+                'weight' => 20,
+                'levels' => 35,
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 41,
+                'levels' => [31, 40],
+            ],
+            PokedexNo::NOCTOWL => [
+                'weight' => 20,
+                'levels' => 35,
+            ],
+            PokedexNo::MILTANK => [
+                'weight' => 20,
+                'levels' => 35,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 60,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 30,
+                'levels' => [10, 20],
+            ],
+            PokedexNo::STARYU => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 45,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 125,
+                'levels' => 10,
+            ],
+            PokedexNo::SHELLDER => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::CHINCHOU => [
+                'weight' => 60,
+                'levels' => 20,
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 20,
+                'levels' => 40,
+            ],
+            PokedexNo::LANTURN => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::CLIFF_CAVE => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 5,
+                'levels' => 18,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 24,
+                'levels' => 20,
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 10,
+                'levels' => 19,
+            ],
+            PokedexNo::MACHOKE => [
+                'weight' => 4,
+                'levels' => 22,
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 20,
+                'levels' => 19,
+            ],
+            PokedexNo::GRAVELER => [
+                'weight' => 4,
+                'levels' => 20,
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 10,
+                'levels' => 20,
+            ],
+            PokedexNo::KRABBY => [
+                'weight' => 10,
+                'levels' => 20,
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 10,
+                'levels' => 22,
+            ],
+            PokedexNo::WOOPER => [
+                'weight' => 5,
+                'levels' => 18,
+            ],
+            PokedexNo::QUAGSIRE => [
+                'weight' => 5,
+                'levels' => 20,
+            ],
+            PokedexNo::MISDREAVUS => [
+                'weight' => 5,
+                'levels' => 20,
+            ],
+            PokedexNo::STEELIX => [
+                'weight' => 2,
+                'levels' => 23,
+            ],
+        ],
+        EncounterType::ROCK_SMASH => [
+            PokedexNo::KRABBY => [
+                'weight' => 90,
+                'levels' => [20, 26],
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 10,
+                'levels' => [28, 31],
+            ],
+        ],
+    ],
+    LocationId::ROUTE_48 => [
+        EncounterType::WALKING => [
+            PokedexNo::FEAROW => [
+                'weight' => 10,
+                'levels' => 21,
+            ],
+            PokedexNo::VULPIX => [
+                'weight' => 29,
+                'levels' => [21, 22],
+            ],
+            PokedexNo::GLOOM => [
+                'weight' => 20,
+                'levels' => [22, 24],
+            ],
+            PokedexNo::DIGLETT => [
+                'weight' => 4,
+                'levels' => 20,
+            ],
+            PokedexNo::GROWLITHE => [
+                'weight' => 29,
+                'levels' => [21, 22],
+            ],
+            PokedexNo::FARFETCH_D => [
+                'weight' => 40,
+                'levels' => 24,
+            ],
+            PokedexNo::TAUROS => [
+                'weight' => 21,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::HOPPIP => [
+                'weight' => 11,
+                'levels' => [20, 22],
+            ],
+            PokedexNo::GIRAFARIG => [
+                'weight' => 5,
+                'levels' => 20,
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_PEAK => [
+        EncounterType::WALKING => [
+            PokedexNo::GEODUDE => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::GRAVELER => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::MAGNEMITE => [
+                'weight' => 20,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::MAGNETON => [
+                'weight' => 20,
+                'levels' => 17,
+            ],
+            PokedexNo::MAGMAR => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::WOBBUFFET => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_DESERT => [
+        EncounterType::WALKING => [
+            PokedexNo::FEAROW => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::SANDSHREW => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::SANDSLASH => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::CUBONE => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::MAROWAK => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_PLAINS => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::ABRA => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::GIRAFARIG => [
+                'weight' => 50,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::STANTLER => [
+                'weight' => 20,
+                'levels' => 17,
+            ],
+            PokedexNo::SMEARGLE => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_MEADOW => [
+        EncounterType::WALKING => [
+            PokedexNo::CLEFAIRY => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::JIGGLYPUFF => [
+                'weight' => 50,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::MARILL => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::HOPPIP => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::SKIPLOOM => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::SUNKERN => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::WOOPER => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 50,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::MARILL => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::WOOPER => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 120,
+                'levels' => [12, 36],
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 100,
+                'levels' => [12, 24],
+            ],
+            PokedexNo::POLIWHIRL => [
+                'weight' => 80,
+                'levels' => [24, 38],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_FOREST => [
+        EncounterType::WALKING => [
+            PokedexNo::PIDGEY => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::BELLSPROUT => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::GASTLY => [
+                'weight' => 20,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::HAUNTER => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::MR_MIME => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::MISDREAVUS => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_SWAMP => [
+        EncounterType::WALKING => [
+            PokedexNo::JIGGLYPUFF => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::PARAS => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::DROWZEE => [
+                'weight' => 20,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::HYPNO => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::SENTRET => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::MURKROW => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 60,
+                'levels' => [15, 17],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 140,
+                'levels' => [12, 24],
+            ],
+            PokedexNo::GOLDEEN => [
+                'weight' => 80,
+                'levels' => [22, 37],
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 60,
+                'levels' => [24, 37],
+            ],
+            PokedexNo::DRATINI => [
+                'weight' => 20,
+                'levels' => [36, 37],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_MARSHLAND => [
+        EncounterType::WALKING => [
+            PokedexNo::EKANS => [
+                'weight' => 20,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::ARBOK => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::ODDISH => [
+                'weight' => 20,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::GLOOM => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::GRIMER => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::KOFFING => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::WEEZING => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::WOOPER => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::GRIMER => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::WOOPER => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 40,
+                'levels' => [12, 15],
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 100,
+                'levels' => [12, 24],
+            ],
+            PokedexNo::POLIWHIRL => [
+                'weight' => 140,
+                'levels' => [24, 38],
+            ],
+            PokedexNo::GYARADOS => [
+                'weight' => 20,
+                'levels' => [36, 37],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_MOUNTAIN => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 20,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::MAGNETON => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::LICKITUNG => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::LARVITAR => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_ROCKY_BEACH => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::SLOWPOKE => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::SLOWBRO => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::DODUO => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::KRABBY => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 30,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::POLIWHIRL => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 30,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::LAPRAS => [
+                'weight' => 20,
+                'levels' => [15, 16],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::KRABBY => [
+                'weight' => 70,
+                'levels' => [13, 25],
+            ],
+            PokedexNo::GOLDEEN => [
+                'weight' => 100,
+                'levels' => [13, 38],
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 70,
+                'levels' => [12, 23],
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 20,
+                'levels' => [38, 39],
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 40,
+                'levels' => [35, 38],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_WASTELAND => [
+        EncounterType::WALKING => [
+            PokedexNo::FEAROW => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::MACHOKE => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::MAGNEMITE => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::ONIX => [
+                'weight' => 60,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::KANGASKHAN => [
+                'weight' => 20,
+                'levels' => [15, 17],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_SAVANNAH => [
+        EncounterType::WALKING => [
+            PokedexNo::NIDORAN_F => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::NIDORINA => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::NIDORAN_M => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::NIDORINO => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::RHYHORN => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::TAUROS => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_WETLAND => [
+        EncounterType::WALKING => [
+            PokedexNo::SPEAROW => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::PSYDUCK => [
+                'weight' => 20,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::GOLDUCK => [
+                'weight' => 20,
+                'levels' => 17,
+            ],
+            PokedexNo::FARFETCH_D => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::DITTO => [
+                'weight' => 10,
+                'levels' => 17,
+            ],
+            PokedexNo::SENTRET => [
+                'weight' => 30,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::WOOPER => [
+                'weight' => 40,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::QUAGSIRE => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::PSYDUCK => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+            PokedexNo::POLIWAG => [
+                'weight' => 30,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::WOOPER => [
+                'weight' => 30,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::QUAGSIRE => [
+                'weight' => 20,
+                'levels' => [16, 17],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 160,
+                'levels' => [12, 37],
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 60,
+                'levels' => [12, 15],
+            ],
+            PokedexNo::POLIWHIRL => [
+                'weight' => 80,
+                'levels' => [23, 37],
+            ],
+        ],
+    ],
 ];

@@ -82,10 +82,10 @@ final class LocationId
     public const ROUTE_18 = "ed95c624-3b6e-410e-b527-62f56d17f5f6";
     public const FUCHSIA_CITY = "e4f336d0-78a0-49bb-87a8-beceb810c097";
     public const FUCHSIA_GYM = "7406717d-0a53-4539-ba87-08c84adb5152";
-    public const SAFARI_ZONE_S = "0383556c-0b2e-4a33-a178-1b078fc60352";
-    public const SAFARI_ZONE_N = "a44f53b0-5bb8-4fab-944b-07a1d027981e";
-    public const SAFARI_ZONE_E = "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8";
-    public const SAFARI_ZONE_W = "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f";
+    public const KANTO_SAFARI_ZONE_S = "0383556c-0b2e-4a33-a178-1b078fc60352";
+    public const KANTO_SAFARI_ZONE_N = "a44f53b0-5bb8-4fab-944b-07a1d027981e";
+    public const KANTO_SAFARI_ZONE_E = "e0958c26-8d73-48a9-9e13-c4f73d6ae1e8";
+    public const KANTO_SAFARI_ZONE_W = "8dbd8491-1e94-4a2b-8bfe-b3e019d92c6f";
     public const ROUTE_19 = "27940ef2-9539-4cdf-b16b-1551cf5259e3";
     public const ROUTE_20 = "4311bda4-3e6a-46be-944d-4df4301c696d";
     public const SEAFOAM_ISLANDS_1F = "3d36df91-cc9b-474a-9ae9-c53b5d15470b";
@@ -287,4 +287,22 @@ final class LocationId
     public const WHIRL_ISLANDS_B3F = "e0842da4-ae8f-47c7-9f51-2e56d130b244";
     public const CIANWOOD_CITY = "83a7d80b-0141-4a69-a9b6-322d1f48357d";
     public const CIANWOOD_GYM = "6e0f7196-a30b-4094-9c10-06590150003d";
+    public const CLIFF_GATE_EDGE = "63a57bb4-a81c-4d14-ac6a-f2b4d95438fb";
+    public const ROUTE_47 = "2afbe576-f908-40a4-b2cb-eae6ce7a1e6e";
+    public const CLIFF_CAVE = "26d1674d-b3fa-4fcf-9f4b-a99b4c56943d";
+    public const ROUTE_48 = "7d01ebc5-33ca-4681-aaa8-8649199fdc20";
+    public const JOHTO_SAFARI_ZONE = "115a19bd-8c4f-4072-b701-1843e04abb12";
+    public const JOHTO_SAFARI_ZONE_GATE = "e4ce56a8-9c3c-4252-88ad-1220349d7a4a";
+    public const JOHTO_SAFARI_ZONE_PEAK = "8ab048a5-597e-4279-94c4-eb813c4c21fe";
+    public const JOHTO_SAFARI_ZONE_DESERT = "08f4e109-7894-46f3-82ea-e0265fe7cc5a";
+    public const JOHTO_SAFARI_ZONE_PLAINS = "70667e32-e945-4766-b762-a87436b2dd94";
+    public const JOHTO_SAFARI_ZONE_MEADOW = "87cb6e12-1b6c-472d-bc3f-521b15777b9b";
+    public const JOHTO_SAFARI_ZONE_FOREST = "6486d7a8-7306-47a1-9a27-09c7c6c1f046";
+    public const JOHTO_SAFARI_ZONE_SWAMP = "2506bb61-2d00-4b02-8b8b-1ee89d35759c";
+    public const JOHTO_SAFARI_ZONE_MARSHLAND = "a4d1b070-c883-4ee2-a17a-2cfc3674b064";
+    public const JOHTO_SAFARI_ZONE_MOUNTAIN = "c99eab29-a4a3-4e56-b6d5-6c15554db461";
+    public const JOHTO_SAFARI_ZONE_ROCKY_BEACH = "9003cda1-58b1-47c7-920e-f6a000d913a4";
+    public const JOHTO_SAFARI_ZONE_WASTELAND = "b80eaf09-135e-4017-90ab-30fac6b0744e";
+    public const JOHTO_SAFARI_ZONE_SAVANNAH = "c1352ad3-d1e7-45b0-b40a-e7e333951482";
+    public const JOHTO_SAFARI_ZONE_WETLAND = "49e510ec-f68b-4969-9895-83c034ad4dc0";
 }

@@ -921,6 +921,180 @@ return [
         'type' => LocationType::CITY,
         'directions' => [
             Direction::E => LocationId::ROUTE_41,
+            Direction::W => LocationId::CLIFF_GATE_EDGE,
+            LocationId::CIANWOOD_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::CIANWOOD_GYM,
+        'name' => "Cianwood Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::CIANWOOD_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::CLIFF_GATE_EDGE,
+        'name' => "Cliff Gate Edge",
+        'directions' => [
+            Direction::E => LocationId::CIANWOOD_CITY,
+            Direction::W => LocationId::ROUTE_47,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_47,
+        'name' => "Route 47",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::ROUTE_48,
+            Direction::E => LocationId::CLIFF_GATE_EDGE,
+            LocationId::CLIFF_CAVE,
+        ],
+    ],
+    [
+        'id' => LocationId::CLIFF_CAVE,
+        'name' => "Cliff Cave",
+        'type' => LocationType::CAVE,
+        'directions' => [
+            LocationId::ROUTE_47,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_48,
+        'name' => "Route 48",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::JOHTO_SAFARI_ZONE_GATE,
+            Direction::S => LocationId::ROUTE_47,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_GATE,
+        'name' => "Safari Zone",
+        'section' => "Gate",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            Direction::S => LocationId::ROUTE_48,
+            LocationId::JOHTO_SAFARI_ZONE_PEAK,
+            LocationId::JOHTO_SAFARI_ZONE_DESERT,
+            LocationId::JOHTO_SAFARI_ZONE_PLAINS,
+            LocationId::JOHTO_SAFARI_ZONE_MEADOW,
+            LocationId::JOHTO_SAFARI_ZONE_FOREST,
+            LocationId::JOHTO_SAFARI_ZONE_SWAMP,
+            LocationId::JOHTO_SAFARI_ZONE_MARSHLAND,
+            LocationId::JOHTO_SAFARI_ZONE_MOUNTAIN,
+            LocationId::JOHTO_SAFARI_ZONE_ROCKY_BEACH,
+            LocationId::JOHTO_SAFARI_ZONE_WASTELAND,
+            LocationId::JOHTO_SAFARI_ZONE_SAVANNAH,
+            LocationId::JOHTO_SAFARI_ZONE_WETLAND,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_PEAK,
+        'name' => "Safari Zone",
+        'section' => "Peak",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_DESERT,
+        'name' => "Safari Zone",
+        'section' => "Desert",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_PLAINS,
+        'name' => "Safari Zone",
+        'section' => "Plains",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_MEADOW,
+        'name' => "Safari Zone",
+        'section' => "Meadow",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_FOREST,
+        'name' => "Safari Zone",
+        'section' => "Forest",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_SWAMP,
+        'name' => "Safari Zone",
+        'section' => "Swamp",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_MARSHLAND,
+        'name' => "Safari Zone",
+        'section' => "Marshland",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_MOUNTAIN,
+        'name' => "Safari Zone",
+        'section' => "Mountain",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_ROCKY_BEACH,
+        'name' => "Safari Zone",
+        'section' => "Rocky Beach",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_WASTELAND,
+        'name' => "Safari Zone",
+        'section' => "Wasteland",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_SAVANNAH,
+        'name' => "Safari Zone",
+        'section' => "Savannah",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_SAFARI_ZONE_WETLAND,
+        'name' => "Safari Zone",
+        'section' => "Wetland",
+        'area' => LocationId::JOHTO_SAFARI_ZONE,
+        'directions' => [
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
         ],
     ],
 ];

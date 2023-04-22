@@ -90,6 +90,7 @@ final class TrainerClass
     public const RETIRED_TRAINER = "cb2b9587-8dd5-4570-a3f7-d5dcf4be7c32";
     public const ELDER = "69624863-15ca-44b1-839c-0591f03ee7f6";
     public const RIVAL = "7e87dafe-b95e-4ca7-9f30-d37aa1bb51f8";
+    public const DOUBLE_TEAM = "8f741e23-4115-491d-b526-5ef4966183f6";
 
     public static function getLabel(string $id): string
     {
@@ -178,6 +179,7 @@ final class TrainerClass
             self::ELITE_FOUR => "Elite Four",
             self::RETIRED_TRAINER => "Retired Trainer",
             self::ELDER => "Elder",
+            self::DOUBLE_TEAM => "Double Team",
         };
     }
 
@@ -265,6 +267,7 @@ final class TrainerClass
             self::GUITARIST => "https://archives.bulbagarden.net/media/upload/1/14/Spr_RS_Guitarist.png",
             self::TEACHER => "https://archives.bulbagarden.net/media/upload/a/ab/Spr_HGSS_Teacher.png",
             self::MYSTICALMAN => "https://archives.bulbagarden.net/media/upload/4/4a/Spr_HGSS_Eusine.png",
+            self::DOUBLE_TEAM => "https://archives.bulbagarden.net/media/upload/2/28/Spr_HGSS_Double_Team.png",
             default => null,
         };
     }

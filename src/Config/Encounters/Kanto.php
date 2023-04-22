@@ -1130,7 +1130,7 @@ return [
             ],
         ],
     ],
-    LocationId::SAFARI_ZONE_S => [
+    LocationId::KANTO_SAFARI_ZONE_S => [
         EncounterType::WALKING => [
             PokedexNo::NIDORAN_F => [
                 'weight' => 20,
@@ -1230,7 +1230,7 @@ return [
             ],
         ],
     ],
-    LocationId::SAFARI_ZONE_N => [
+    LocationId::KANTO_SAFARI_ZONE_N => [
         EncounterType::WALKING => [
             PokedexNo::NIDORAN_F => [
                 'weight' => 20,
@@ -1326,7 +1326,7 @@ return [
             ],
         ],
     ],
-    LocationId::SAFARI_ZONE_E => [
+    LocationId::KANTO_SAFARI_ZONE_E => [
         EncounterType::WALKING => [
             PokedexNo::NIDORAN_F => [
                 'weight' => 20,
@@ -1426,7 +1426,7 @@ return [
             ],
         ],
     ],
-    LocationId::SAFARI_ZONE_W => [
+    LocationId::KANTO_SAFARI_ZONE_W => [
         EncounterType::WALKING => [
             PokedexNo::NIDORAN_F => [
                 'weight' => 20,
