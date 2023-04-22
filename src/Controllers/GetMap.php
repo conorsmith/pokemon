@@ -286,7 +286,7 @@ final class GetMap
 
         $locations = $this->locationConfigRepository->findAllLocationsInRegion($legendaryConfig['location']);
 
-        $roamingLocation = $locations[RandomNumberGenerator::generateInRange(0, count($locations))];
+        $roamingLocation = $locations[RandomNumberGenerator::generateInRange(0, count($locations) - 1)];
 
         RandomNumberGenerator::unsetSeed();
 

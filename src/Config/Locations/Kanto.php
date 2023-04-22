@@ -354,6 +354,7 @@ return [
             LocationId::VERMILLION_CITY,
             LocationId::SS_ANNE_1F,
             LocationId::SEAGALLOP_FERRY,
+            LocationId::SS_AQUA_1F,
         ],
     ],
     [

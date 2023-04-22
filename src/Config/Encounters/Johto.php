@@ -1804,4 +1804,414 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_38 => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => 16,
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 30,
+                'levels' => 16,
+            ],
+            PokedexNo::MEOWTH => [
+                'weight' => 40,
+                'levels' => 16,
+            ],
+            PokedexNo::MAGNEMITE => [
+                'weight' => 20,
+                'levels' => 16,
+            ],
+            PokedexNo::FARFETCH_D => [
+                'weight' => 10,
+                'levels' => 16,
+            ],
+            PokedexNo::TAUROS => [
+                'weight' => 4,
+                'levels' => 13,
+            ],
+            PokedexNo::SNUBBULL => [
+                'weight' => 1,
+                'levels' => 13,
+            ],
+            PokedexNo::MILTANK => [
+                'weight' => 5,
+                'levels' => 13,
+            ],
+        ],
+    ],
+    LocationId::ROUTE_39 => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 40,
+                'levels' => 16,
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 30,
+                'levels' => 17,
+            ],
+            PokedexNo::MEOWTH => [
+                'weight' => 40,
+                'levels' => 16,
+            ],
+            PokedexNo::MAGNEMITE => [
+                'weight' => 20,
+                'levels' => 16,
+            ],
+            PokedexNo::FARFETCH_D => [
+                'weight' => 10,
+                'levels' => 16,
+            ],
+            PokedexNo::TAUROS => [
+                'weight' => 5,
+                'levels' => 15,
+            ],
+            PokedexNo::MILTANK => [
+                'weight' => 5,
+                'levels' => 15,
+            ],
+        ],
+    ],
+    LocationId::OLIVINE_CITY => [
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 10,
+                'levels' => [15, 29],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::KRABBY => [
+                'weight' => 109,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 155,
+                'levels' => 10,
+            ],
+            PokedexNo::STARYU => [
+                'weight' => 33,
+                'levels' => 20,
+            ],
+            PokedexNo::CORSOLA => [
+                'weight' => 33,
+                'levels' => 20,
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 3,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::ROUTE_40 => [
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 10,
+                'levels' => [15, 29],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::KRABBY => [
+                'weight' => 125,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 55,
+                'levels' => 10,
+            ],
+            PokedexNo::STARYU => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::CORSOLA => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::ROUTE_41 => [
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 60,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 70,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::MANTINE => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 45,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 125,
+                'levels' => 10,
+            ],
+            PokedexNo::SHELLDER => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::CHINCHOU => [
+                'weight' => 60,
+                'levels' => 20,
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 20,
+                'levels' => 40,
+            ],
+            PokedexNo::LANTURN => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::WHIRL_ISLANDS_1F => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => 23,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 23,
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 15,
+                'levels' => [22, 24],
+            ],
+            PokedexNo::KRABBY => [
+                'weight' => 50,
+                'levels' => [22, 24],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 60,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::HORSEA => [
+                'weight' => 30,
+                'levels' => [10, 20],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::KRABBY => [
+                'weight' => 105,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 125,
+                'levels' => 10,
+            ],
+            PokedexNo::HORSEA => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 20,
+                'levels' => 40,
+            ],
+            PokedexNo::SEADRA => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::WHIRL_ISLANDS_B1F => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => 23,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 23,
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 15,
+                'levels' => [22, 24],
+            ],
+            PokedexNo::KRABBY => [
+                'weight' => 50,
+                'levels' => [22, 24],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 60,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::HORSEA => [
+                'weight' => 30,
+                'levels' => [10, 20],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::KRABBY => [
+                'weight' => 105,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 125,
+                'levels' => 10,
+            ],
+            PokedexNo::HORSEA => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 20,
+                'levels' => 40,
+            ],
+            PokedexNo::SEADRA => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::WHIRL_ISLANDS_B2F => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => 23,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 23,
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 15,
+                'levels' => [22, 24],
+            ],
+            PokedexNo::KRABBY => [
+                'weight' => 50,
+                'levels' => [22, 24],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::TENTACRUEL => [
+                'weight' => 30,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::HORSEA => [
+                'weight' => 60,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::SEADRA => [
+                'weight' => 10,
+                'levels' => [10, 30],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::KRABBY => [
+                'weight' => 105,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 125,
+                'levels' => 10,
+            ],
+            PokedexNo::HORSEA => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 20,
+                'levels' => 40,
+            ],
+            PokedexNo::SEADRA => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::WHIRL_ISLANDS_B3F => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => 24,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 24,
+            ],
+            PokedexNo::SEEL => [
+                'weight' => 15,
+                'levels' => [23, 25],
+            ],
+            PokedexNo::KRABBY => [
+                'weight' => 50,
+                'levels' => [23, 25],
+            ],
+        ],
+    ],
+    LocationId::CIANWOOD_CITY => [
+        EncounterType::SURFING => [
+            PokedexNo::TENTACOOL => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::TENTACRUEL => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::KRABBY => [
+                'weight' => 109,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 155,
+                'levels' => 10,
+            ],
+            PokedexNo::STARYU => [
+                'weight' => 33,
+                'levels' => 20,
+            ],
+            PokedexNo::CORSOLA => [
+                'weight' => 33,
+                'levels' => 20,
+            ],
+            PokedexNo::KINGLER => [
+                'weight' => 3,
+                'levels' => 40,
+            ],
+        ],
+        EncounterType::ROCK_SMASH => [
+            PokedexNo::KRABBY => [
+                'weight' => 90,
+                'levels' => [15, 24],
+            ],
+            PokedexNo::SHUCKLE => [
+                'weight' => 10,
+                'levels' => [23, 29],
+            ],
+        ],
+    ],
 ];

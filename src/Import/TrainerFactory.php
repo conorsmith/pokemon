@@ -73,6 +73,8 @@ final class TrainerFactory
             "POLICEMAN" => TrainerClass::OFFICER,
             "SILVER_(GAME)" => TrainerClass::RIVAL,
             "SCHOOLBOY" => TrainerClass::SCHOOL_KID,
+            "BLACKBELT" => TrainerClass::BLACK_BELT,
+            "MYSTERY_MAN" => TrainerClass::MYSTICALMAN,
             default => $trainerClassReflector->getConstants()[$constantName],
         };
     }

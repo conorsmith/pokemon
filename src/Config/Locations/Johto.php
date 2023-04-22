@@ -555,6 +555,7 @@ return [
         'name' => "Ecruteak City",
         'type' => LocationType::CITY,
         'directions' => [
+            Direction::W => LocationId::ROUTE_38,
             Direction::S => LocationId::ROUTE_37,
             LocationId::ECRUTEAK_DANCE_THEATRE,
             LocationId::BURNED_TOWER_1F,
@@ -716,6 +717,210 @@ return [
         'area' => LocationId::BELL_TOWER,
         'directions' => [
             Direction::D => LocationId::BELL_TOWER_10F,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_38,
+        'name' => "Route 38",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::E => LocationId::ECRUTEAK_CITY,
+            Direction::W => LocationId::ROUTE_39,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_39,
+        'name' => "Route 39",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::E => LocationId::ROUTE_38,
+            Direction::S => LocationId::OLIVINE_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::OLIVINE_CITY,
+        'name' => "Olivine City",
+        'type' => LocationType::CITY,
+        'directions' => [
+            Direction::N => LocationId::ROUTE_39,
+            Direction::W => LocationId::ROUTE_40,
+            LocationId::GLITTER_LIGHTHOUSE_1F,
+            LocationId::SS_AQUA_1F,
+            LocationId::OLIVINE_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::OLIVINE_GYM,
+        'name' => "Olivine Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::OLIVINE_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::GLITTER_LIGHTHOUSE_1F,
+        'name' => "Glitter Lighthouse",
+        'section' => "1st Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GLITTER_LIGHTHOUSE,
+        'directions' => [
+            Direction::U => LocationId::GLITTER_LIGHTHOUSE_2F,
+            Direction::D => LocationId::OLIVINE_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::GLITTER_LIGHTHOUSE_2F,
+        'name' => "Glitter Lighthouse",
+        'section' => "2nd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GLITTER_LIGHTHOUSE,
+        'directions' => [
+            Direction::U => LocationId::GLITTER_LIGHTHOUSE_3F,
+            Direction::D => LocationId::GLITTER_LIGHTHOUSE_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::GLITTER_LIGHTHOUSE_3F,
+        'name' => "Glitter Lighthouse",
+        'section' => "3rd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GLITTER_LIGHTHOUSE,
+        'directions' => [
+            Direction::U => LocationId::GLITTER_LIGHTHOUSE_EXTERIOR,
+            Direction::D => LocationId::GLITTER_LIGHTHOUSE_2F,
+        ],
+    ],
+    [
+        'id' => LocationId::GLITTER_LIGHTHOUSE_EXTERIOR,
+        'name' => "Glitter Lighthouse",
+        'section' => "Exterior",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GLITTER_LIGHTHOUSE,
+        'directions' => [
+            Direction::U => LocationId::GLITTER_LIGHTHOUSE_4F,
+            Direction::D => LocationId::GLITTER_LIGHTHOUSE_3F,
+        ],
+    ],
+    [
+        'id' => LocationId::GLITTER_LIGHTHOUSE_4F,
+        'name' => "Glitter Lighthouse",
+        'section' => "4th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GLITTER_LIGHTHOUSE,
+        'directions' => [
+            Direction::U => LocationId::GLITTER_LIGHTHOUSE_5F,
+            Direction::D => LocationId::GLITTER_LIGHTHOUSE_EXTERIOR,
+        ],
+    ],
+    [
+        'id' => LocationId::GLITTER_LIGHTHOUSE_5F,
+        'name' => "Glitter Lighthouse",
+        'section' => "5th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GLITTER_LIGHTHOUSE,
+        'directions' => [
+            Direction::U => LocationId::GLITTER_LIGHTHOUSE_LIGHT_ROOM,
+            Direction::D => LocationId::GLITTER_LIGHTHOUSE_4F,
+        ],
+    ],
+    [
+        'id' => LocationId::GLITTER_LIGHTHOUSE_LIGHT_ROOM,
+        'name' => "Glitter Lighthouse",
+        'section' => "Light Room",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::GLITTER_LIGHTHOUSE,
+        'directions' => [
+            Direction::D => LocationId::GLITTER_LIGHTHOUSE_5F,
+        ],
+    ],
+    [
+        'id' => LocationId::SS_AQUA_1F,
+        'name' => "SS Aqua",
+        'section' => "Upper Deck",
+        'area' => LocationId::SS_AQUA,
+        'directions' => [
+            Direction::D => LocationId::SS_AQUA_B1F,
+            LocationId::OLIVINE_CITY,
+            LocationId::VERMILLION_HARBOUR,
+        ],
+    ],
+    [
+        'id' => LocationId::SS_AQUA_B1F,
+        'name' => "SS Aqua",
+        'section' => "Lower Deck",
+        'area' => LocationId::SS_AQUA,
+        'directions' => [
+            Direction::U => LocationId::SS_AQUA_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_40,
+        'name' => "Route 40",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::E => LocationId::OLIVINE_CITY,
+            Direction::S => LocationId::ROUTE_41,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_41,
+        'name' => "Route 41",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::ROUTE_40,
+            Direction::W => LocationId::CIANWOOD_CITY,
+            LocationId::WHIRL_ISLANDS_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::WHIRL_ISLANDS_1F,
+        'name' => "Whirl Islands",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::WHIRL_ISLANDS,
+        'directions' => [
+            Direction::U => LocationId::ROUTE_41,
+            Direction::D => LocationId::WHIRL_ISLANDS_B1F,
+        ],
+    ],
+    [
+        'id' => LocationId::WHIRL_ISLANDS_B1F,
+        'name' => "Whirl Islands",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::WHIRL_ISLANDS,
+        'directions' => [
+            Direction::U => LocationId::WHIRL_ISLANDS_1F,
+            Direction::D => LocationId::WHIRL_ISLANDS_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::WHIRL_ISLANDS_B2F,
+        'name' => "Whirl Islands",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::WHIRL_ISLANDS,
+        'directions' => [
+            Direction::U => LocationId::WHIRL_ISLANDS_B1F,
+            Direction::D => LocationId::WHIRL_ISLANDS_B3F,
+        ],
+    ],
+    [
+        'id' => LocationId::WHIRL_ISLANDS_B3F,
+        'name' => "Whirl Islands",
+        'section' => "3rd Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::WHIRL_ISLANDS,
+        'directions' => [
+            Direction::U => LocationId::WHIRL_ISLANDS_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::CIANWOOD_CITY,
+        'name' => "Cianwood City",
+        'type' => LocationType::CITY,
+        'directions' => [
+            Direction::E => LocationId::ROUTE_41,
         ],
     ],
 ];

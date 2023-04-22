@@ -263,6 +263,28 @@ final class LocationId
     public const BELL_TOWER_9F = "36a9689b-b71b-4319-a728-7a4d77420629";
     public const BELL_TOWER_10F = "81c11cbc-e417-4c95-a6a1-47b726df50d4";
     public const BELL_TOWER_ROOF = "bb28ac83-ab68-4f8b-a214-d129b01431e5";
-
+    public const ROUTE_38 = "57859799-bf75-4831-896e-4148f09c86b8";
+    public const ROUTE_39 = "a7db5fcc-cf48-46bf-a660-d2e377060009";
+    public const OLIVINE_CITY = "bd5e8ff2-f793-4c5d-9aba-e9a680f4763c";
+    public const OLIVINE_GYM = "521ecd98-cf0f-4d9c-8a70-ebbb4bcfee88";
+    public const GLITTER_LIGHTHOUSE = "aa9eadfd-e9ed-4a0b-9531-84c815f7290d";
+    public const GLITTER_LIGHTHOUSE_1F = "3d22a24e-ea73-4e5f-a2b7-1bb63d44b283";
+    public const GLITTER_LIGHTHOUSE_2F = "6d27a803-ab83-419a-932b-d6be95deb7ea";
+    public const GLITTER_LIGHTHOUSE_3F = "a8b86565-020f-49f1-a6e8-ba1c5897eb60";
+    public const GLITTER_LIGHTHOUSE_EXTERIOR = "0321b407-5a47-4461-b61a-857ea7a3f411";
+    public const GLITTER_LIGHTHOUSE_4F = "c2f0e8d5-f44d-4256-b241-eabd6079c321";
+    public const GLITTER_LIGHTHOUSE_5F = "571f3589-335e-4c5f-8bd5-9027b2c6a9f3";
+    public const GLITTER_LIGHTHOUSE_LIGHT_ROOM = "b3100fba-38ee-4fd0-b49e-a7dc983c5772";
+    public const SS_AQUA = "f649c961-dbfc-4602-992c-9a3ebe0d0c4e";
+    public const SS_AQUA_1F = "85882dda-76f6-4ede-bcac-b20678c0c30b";
+    public const SS_AQUA_B1F = "abf6a931-e224-4ed2-b90e-d5bd3148da9c";
+    public const ROUTE_40 = "ac6b0c48-f16a-483d-8ac8-c1af668a2f00";
+    public const ROUTE_41 = "cc782fe5-7bcf-4914-9f34-bcaaf4785261";
+    public const WHIRL_ISLANDS = "a08d5bbb-856e-4e21-beda-32ae6a4319ea";
+    public const WHIRL_ISLANDS_1F = "8dd06af7-0fcc-4c7d-9fca-26b33e4ed2fc";
+    public const WHIRL_ISLANDS_B1F = "3756b828-2877-4988-b1ec-14bf799c03c8";
+    public const WHIRL_ISLANDS_B2F = "67b95dda-75b7-4c75-bfbf-e5479717692f";
     public const WHIRL_ISLANDS_B3F = "e0842da4-ae8f-47c7-9f51-2e56d130b244";
+    public const CIANWOOD_CITY = "83a7d80b-0141-4a69-a9b6-322d1f48357d";
+    public const CIANWOOD_GYM = "6e0f7196-a30b-4094-9c10-06590150003d";
 }

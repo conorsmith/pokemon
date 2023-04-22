@@ -262,6 +262,9 @@ final class TrainerClass
             self::SCHOOL_KID => "https://archives.bulbagarden.net/media/upload/f/f4/Spr_HGSS_School_Kid.png",
             self::MEDIUM => "https://archives.bulbagarden.net/media/upload/5/56/Spr_HGSS_Medium.png",
             self::KIMONO_GIRL => "https://archives.bulbagarden.net/media/upload/0/01/Spr_HGSS_Kimono_Girl.png",
+            self::GUITARIST => "https://archives.bulbagarden.net/media/upload/1/14/Spr_RS_Guitarist.png",
+            self::TEACHER => "https://archives.bulbagarden.net/media/upload/a/ab/Spr_HGSS_Teacher.png",
+            self::MYSTICALMAN => "https://archives.bulbagarden.net/media/upload/4/4a/Spr_HGSS_Eusine.png",
             default => null,
         };
     }
