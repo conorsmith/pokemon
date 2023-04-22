@@ -305,4 +305,17 @@ final class LocationId
     public const JOHTO_SAFARI_ZONE_WASTELAND = "b80eaf09-135e-4017-90ab-30fac6b0744e";
     public const JOHTO_SAFARI_ZONE_SAVANNAH = "c1352ad3-d1e7-45b0-b40a-e7e333951482";
     public const JOHTO_SAFARI_ZONE_WETLAND = "49e510ec-f68b-4969-9895-83c034ad4dc0";
+    public const ROUTE_42 = "39cb5279-2b12-4b22-b75c-345fb05b5c9b";
+    public const MT_MORTAR = "18b5d14a-96b7-4ee9-94cf-6794c3d2058c";
+    public const MT_MORTAR_1F_ENTRANCE = "fdad0de0-4fd1-49eb-a766-5c0f2a52981c";
+    public const MT_MORTAR_1F_BACK = "7bee0958-3ef2-4d21-80af-c78874cc1602";
+    public const MT_MORTAR_2F = "07b87ebe-0e36-4c64-8734-f4ae3d452cdd";
+    public const MT_MORTAR_B1F = "86abea0f-7722-4d8b-9b91-02b34c5ad7c4";
+    public const MAHOGANY_TOWN = "3dc5dccd-65cd-4ffd-b7a6-f9f909dae368";
+    public const MAHOGANY_GYM = "8b5110bc-6f3e-4928-a3a9-1adfaf524b3b";
+    public const MAHOGANY_SOUVENIR_SHOP = "237031e9-b6f1-409d-ac91-77e6759a3de6";
+    public const TEAM_ROCKET_HQ = "4bf23324-db6f-47ba-bb71-87891960a241";
+    public const TEAM_ROCKET_HQ_B1F = "5075a379-19d0-47d8-8e07-b0380d960d75";
+    public const TEAM_ROCKET_HQ_B2F = "2a6a05b0-d8b4-4e7b-a0db-dca478a1ae09";
+    public const TEAM_ROCKET_HQ_B3F = "f1151fb6-002e-4991-bd5d-55afebe87c9e";
 }

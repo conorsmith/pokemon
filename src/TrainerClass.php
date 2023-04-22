@@ -268,6 +268,8 @@ final class TrainerClass
             self::TEACHER => "https://archives.bulbagarden.net/media/upload/a/ab/Spr_HGSS_Teacher.png",
             self::MYSTICALMAN => "https://archives.bulbagarden.net/media/upload/4/4a/Spr_HGSS_Eusine.png",
             self::DOUBLE_TEAM => "https://archives.bulbagarden.net/media/upload/2/28/Spr_HGSS_Double_Team.png",
+            self::SKIER => "https://archives.bulbagarden.net/media/upload/4/41/Spr_HGSS_Skier.png",
+            self::BOARDER => "https://archives.bulbagarden.net/media/upload/4/42/Spr_HGSS_Boarder.png",
             default => null,
         };
     }

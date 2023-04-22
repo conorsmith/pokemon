@@ -2938,4 +2938,220 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_42 => [
+        EncounterType::WALKING => [
+            PokedexNo::SPEAROW => [
+                'weight' => 70,
+                'levels' => [14, 16],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 70,
+                'levels' => [14, 16],
+            ],
+            PokedexNo::MANKEY => [
+                'weight' => 30,
+                'levels' => 15,
+            ],
+            PokedexNo::MAREEP => [
+                'weight' => 80,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::FLAAFFY => [
+                'weight' => 10,
+                'levels' => [15, 17],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::MT_MORTAR_1F_ENTRANCE => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 28,
+                'levels' => [14, 16],
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 80,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 40,
+                'levels' => 14,
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 10,
+                'levels' => 14,
+            ],
+            PokedexNo::MARILL => [
+                'weight' => 42,
+                'levels' => [13, 15],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 90,
+                'levels' => [10, 25],
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::MT_MORTAR_1F_BACK => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 10,
+                'levels' => 14,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 5,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 35,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 50,
+                'levels' => [13, 15],
+            ],
+        ],
+    ],
+    LocationId::MT_MORTAR_2F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATICATE => [
+                'weight' => 10,
+                'levels' => 30,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 5,
+                'levels' => 30,
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 5,
+                'levels' => 28,
+            ],
+            PokedexNo::MACHOKE => [
+                'weight' => 30,
+                'levels' => 32,
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 20,
+                'levels' => 31,
+            ],
+            PokedexNo::GRAVELER => [
+                'weight' => 30,
+                'levels' => 31,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 90,
+                'levels' => [15, 30],
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => [20, 30],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::MT_MORTAR_B1F => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 20,
+                'levels' => 16,
+            ],
+            PokedexNo::RATICATE => [
+                'weight' => 5,
+                'levels' => 16,
+            ],
+            PokedexNo::ZUBAT => [
+                'weight' => 60,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::MACHOP => [
+                'weight' => 10,
+                'levels' => [13, 16],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 5,
+                'levels' => [13, 16],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 90,
+                'levels' => [10, 15],
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 15,
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+            PokedexNo::SEAKING => [
+                'weight' => 10,
+                'levels' => 40,
+            ],
+        ],
+    ],
 ];

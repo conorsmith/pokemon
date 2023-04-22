@@ -129,6 +129,9 @@ final class BulbapediaLocationPage
                     self::extractTrainersFromTableNode($currentNode),
                 );
             } elseif ($currentNode->nodeName === "h3") {
+                if ($currentNode->textContent === "Layout") {
+                    break;
+                }
                 $mostRecentSubtitle = $currentNode->textContent;
             } elseif ($currentNode->nodeName === "h2") {
                 break;

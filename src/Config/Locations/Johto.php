@@ -555,6 +555,7 @@ return [
         'name' => "Ecruteak City",
         'type' => LocationType::CITY,
         'directions' => [
+            Direction::E => LocationId::ROUTE_42,
             Direction::W => LocationId::ROUTE_38,
             Direction::S => LocationId::ROUTE_37,
             LocationId::ECRUTEAK_DANCE_THEATRE,
@@ -1095,6 +1096,115 @@ return [
         'area' => LocationId::JOHTO_SAFARI_ZONE,
         'directions' => [
             LocationId::JOHTO_SAFARI_ZONE_GATE,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_42,
+        'name' => "Route 42",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::MT_MORTAR_1F_ENTRANCE,
+            Direction::E => LocationId::MAHOGANY_TOWN,
+            Direction::W => LocationId::ECRUTEAK_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_MORTAR_1F_ENTRANCE,
+        'name' => "Mt Mortar",
+        'section' => "1st Floor (Entrance)",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_MORTAR,
+        'directions' => [
+            Direction::U => LocationId::MT_MORTAR_2F,
+            Direction::D => LocationId::MT_MORTAR_B1F,
+            LocationId::MT_MORTAR_1F_BACK,
+            LocationId::ROUTE_42,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_MORTAR_1F_BACK,
+        'name' => "Mt Mortar",
+        'section' => "1st Floor (Back)",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_MORTAR,
+        'directions' => [
+            LocationId::MT_MORTAR_1F_ENTRANCE,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_MORTAR_2F,
+        'name' => "Mt Mortar",
+        'section' => "2nd Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_MORTAR,
+        'directions' => [
+            Direction::D => LocationId::MT_MORTAR_1F_ENTRANCE,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_MORTAR_B1F,
+        'name' => "Mt Mortar",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_MORTAR,
+        'directions' => [
+            Direction::U => LocationId::MT_MORTAR_1F_ENTRANCE,
+        ],
+    ],
+    [
+        'id' => LocationId::MAHOGANY_TOWN,
+        'name' => "Mahogany Town",
+        'type' => LocationType::CITY,
+        'directions' => [
+            Direction::W => LocationId::ROUTE_42,
+            LocationId::MAHOGANY_SOUVENIR_SHOP,
+            LocationId::MAHOGANY_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::MAHOGANY_GYM,
+        'name' => "Mahogany Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::MAHOGANY_TOWN,
+        ],
+    ],
+    [
+        'id' => LocationId::MAHOGANY_SOUVENIR_SHOP,
+        'name' => "Souvenir Shop",
+        'area' => LocationId::TEAM_ROCKET_HQ,
+        'directions' => [
+            Direction::D => LocationId::TEAM_ROCKET_HQ_B1F,
+            LocationId::MAHOGANY_TOWN,
+        ],
+    ],
+    [
+        'id' => LocationId::TEAM_ROCKET_HQ_B1F,
+        'name' => "Team Rocket HQ",
+        'section' => "1st Basement Floor",
+        'area' => LocationId::TEAM_ROCKET_HQ,
+        'directions' => [
+            Direction::U => LocationId::MAHOGANY_SOUVENIR_SHOP,
+            Direction::D => LocationId::TEAM_ROCKET_HQ_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::TEAM_ROCKET_HQ_B2F,
+        'name' => "Team Rocket HQ",
+        'section' => "2nd Basement Floor",
+        'area' => LocationId::TEAM_ROCKET_HQ,
+        'directions' => [
+            Direction::U => LocationId::TEAM_ROCKET_HQ_B1F,
+            Direction::D => LocationId::TEAM_ROCKET_HQ_B3F,
+        ],
+    ],
+    [
+        'id' => LocationId::TEAM_ROCKET_HQ_B3F,
+        'name' => "Team Rocket HQ",
+        'section' => "3rd Basement Floor",
+        'area' => LocationId::TEAM_ROCKET_HQ,
+        'directions' => [
+            Direction::U => LocationId::TEAM_ROCKET_HQ_B2F,
         ],
     ],
 ];

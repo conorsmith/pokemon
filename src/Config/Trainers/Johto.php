@@ -3867,4 +3867,493 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_42 => [
+        [
+            'id' => "813356ce-2933-403e-90db-a181aabf0dd0",
+            'class' => TrainerClass::FISHERMAN,
+            'name' => "Tully",
+            'team' => [
+                [
+                    'id' => PokedexNo::QWILFISH,
+                    'sex' => Sex::MALE,
+                    'level' => 19,
+                ],
+            ],
+        ],
+        [
+            'id' => "778f1210-9a14-4fd4-9540-4751c3352129",
+            'class' => TrainerClass::POKEMANIAC,
+            'name' => "Shane",
+            'team' => [
+                [
+                    'id' => PokedexNo::NIDORINA,
+                    'sex' => Sex::FEMALE,
+                    'level' => 17,
+                ],
+                [
+                    'id' => PokedexNo::NIDORINO,
+                    'sex' => Sex::MALE,
+                    'level' => 17,
+                ],
+            ],
+        ],
+        [
+            'id' => "d1767a48-ab2b-4f22-9585-7da7d98ad514",
+            'class' => TrainerClass::HIKER,
+            'name' => "Benjamin",
+            'team' => [
+                [
+                    'id' => PokedexNo::DIGLETT,
+                    'sex' => Sex::MALE,
+                    'level' => 15,
+                ],
+                [
+                    'id' => PokedexNo::GEODUDE,
+                    'sex' => Sex::MALE,
+                    'level' => 15,
+                ],
+                [
+                    'id' => PokedexNo::DUGTRIO,
+                    'sex' => Sex::MALE,
+                    'level' => 17,
+                ],
+            ],
+        ],
+    ],
+    LocationId::MT_MORTAR_1F_ENTRANCE => [
+        [
+            'id' => "d8819afe-c5bc-45b1-816b-8b899ba1c7c9",
+            'class' => TrainerClass::POKEMANIAC,
+            'name' => "Harrison",
+            'team' => [
+                [
+                    'id' => PokedexNo::NIDOKING,
+                    'sex' => Sex::MALE,
+                    'level' => 17,
+                ],
+                [
+                    'id' => PokedexNo::NIDOQUEEN,
+                    'sex' => Sex::FEMALE,
+                    'level' => 17,
+                ],
+            ],
+        ],
+        [
+            'id' => "173f9538-ee91-462d-baa8-0ac702d2d4e2",
+            'class' => TrainerClass::SUPER_NERD,
+            'name' => "Markus",
+            'team' => [
+                [
+                    'id' => PokedexNo::SLOWPOKE,
+                    'sex' => Sex::MALE,
+                    'level' => 19,
+                ],
+            ],
+        ],
+    ],
+    LocationId::MT_MORTAR_2F => [
+        [
+            'id' => "3cb72ffc-02f3-467d-bc30-0f628ae2a5b7",
+            'class' => TrainerClass::SUPER_NERD,
+            'name' => "Hugh",
+            'team' => [
+                [
+                    'id' => PokedexNo::SEADRA,
+                    'sex' => Sex::MALE,
+                    'level' => 39,
+                ],
+            ],
+        ],
+    ],
+    LocationId::MT_MORTAR_B1F => [
+        [
+            'id' => "64edd8b1-68ae-4c4c-8b85-7c349319749e",
+            'class' => TrainerClass::BLACK_BELT,
+            'name' => "Kiyo",
+            'team' => [
+                [
+                    'id' => PokedexNo::HITMONLEE,
+                    'sex' => Sex::MALE,
+                    'level' => 34,
+                ],
+                [
+                    'id' => PokedexNo::HITMONCHAN,
+                    'sex' => Sex::MALE,
+                    'level' => 34,
+                ],
+            ],
+        ],
+    ],
+    LocationId::MAHOGANY_GYM => [
+        [
+            'id' => "1ddda37b-46f2-4f56-9547-01633df97f44",
+            'class' => TrainerClass::SKIER,
+            'name' => "Diana",
+            'team' => [
+                [
+                    'id' => PokedexNo::JYNX,
+                    'sex' => Sex::FEMALE,
+                    'level' => 29,
+                ],
+            ],
+        ],
+        [
+            'id' => "ad075a01-d29e-4cb5-8267-443d17943eac",
+            'class' => TrainerClass::BOARDER,
+            'name' => "Patton",
+            'team' => [
+                [
+                    'id' => PokedexNo::SWINUB,
+                    'sex' => Sex::MALE,
+                    'level' => 27,
+                ],
+                [
+                    'id' => PokedexNo::SWINUB,
+                    'sex' => Sex::MALE,
+                    'level' => 27,
+                ],
+            ],
+        ],
+        [
+            'id' => "c764b074-ca51-4b07-99ee-48eb414f482e",
+            'class' => TrainerClass::BOARDER,
+            'name' => "Deandre",
+            'team' => [
+                [
+                    'id' => PokedexNo::SEEL,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+                [
+                    'id' => PokedexNo::DEWGONG,
+                    'sex' => Sex::MALE,
+                    'level' => 26,
+                ],
+                [
+                    'id' => PokedexNo::SEEL,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+            ],
+        ],
+        [
+            'id' => "cf66c55a-4a9f-4a57-a369-4abf32c0a7cf",
+            'class' => TrainerClass::SKIER,
+            'name' => "Jill",
+            'team' => [
+                [
+                    'id' => PokedexNo::DEWGONG,
+                    'sex' => Sex::FEMALE,
+                    'level' => 29,
+                ],
+            ],
+        ],
+        [
+            'id' => "7278f621-95e7-427c-8724-3e19d2899797",
+            'class' => TrainerClass::BOARDER,
+            'name' => "Gerardo",
+            'team' => [
+                [
+                    'id' => PokedexNo::SHELLDER,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+                [
+                    'id' => PokedexNo::CLOYSTER,
+                    'sex' => Sex::MALE,
+                    'level' => 26,
+                ],
+                [
+                    'id' => PokedexNo::SEEL,
+                    'sex' => Sex::MALE,
+                    'level' => 25,
+                ],
+            ],
+        ],
+        [
+            'id' => "033b43c5-ea94-4a9d-ad77-fd409840600a",
+            'class' => TrainerClass::GYM_LEADER,
+            'name' => "Pryce",
+            'leader' => [
+                'badge' => GymBadge::GLACIER,
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/43/Spr_HGSS_Pryce.png",
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::SEEL,
+                    'sex' => Sex::MALE,
+                    'level' => 30,
+                ],
+                [
+                    'id' => PokedexNo::DEWGONG,
+                    'sex' => Sex::MALE,
+                    'level' => 32,
+                ],
+                [
+                    'id' => PokedexNo::PILOSWINE,
+                    'sex' => Sex::MALE,
+                    'level' => 34,
+                ],
+            ],
+        ],
+    ],
+    LocationId::TEAM_ROCKET_HQ_B1F => [
+        [
+            'id' => "e7e0c20a-62ae-4ec1-a5fe-b18603028254",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 16,
+                ],
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 16,
+                ],
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 16,
+                ],
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 16,
+                ],
+            ],
+        ],
+        [
+            'id' => "e04d1a96-5e06-46cb-87ae-6fef4c3daa97",
+            'class' => TrainerClass::SCIENTIST,
+            'name' => "Gregg",
+            'team' => [
+                [
+                    'id' => PokedexNo::MAGNEMITE,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 20,
+                ],
+                [
+                    'id' => PokedexNo::MAGNEMITE,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 20,
+                ],
+                [
+                    'id' => PokedexNo::MAGNEMITE,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 20,
+                ],
+            ],
+        ],
+        [
+            'id' => "d6f5469e-fcb0-431b-8147-df0a7ff4d989",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::DROWZEE,
+                    'sex' => Sex::MALE,
+                    'level' => 17,
+                ],
+                [
+                    'id' => PokedexNo::ZUBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 19,
+                ],
+            ],
+        ],
+        [
+            'id' => "f09d07da-7fda-4179-9ea1-6907fa65c872",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::ZUBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 16,
+                ],
+                [
+                    'id' => PokedexNo::GRIMER,
+                    'sex' => Sex::MALE,
+                    'level' => 17,
+                ],
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 18,
+                ],
+            ],
+        ],
+    ],
+    LocationId::TEAM_ROCKET_HQ_B2F => [
+        [
+            'id' => "384d67f9-30a5-4347-8f84-0b3b94054afb",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::VENONAT,
+                    'sex' => Sex::MALE,
+                    'level' => 18,
+                ],
+                [
+                    'id' => PokedexNo::VENONAT,
+                    'sex' => Sex::MALE,
+                    'level' => 18,
+                ],
+            ],
+        ],
+        [
+            'id' => "7bf9017e-a050-4c6d-bc49-c089db8301ac",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::GOLBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 18,
+                ],
+            ],
+        ],
+        [
+            'id' => "efc623a6-4b08-4569-9c1e-4a9da84a1eaa",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 17,
+                ],
+                [
+                    'id' => PokedexNo::RATTATA,
+                    'sex' => Sex::MALE,
+                    'level' => 17,
+                ],
+                [
+                    'id' => PokedexNo::ZUBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 17,
+                ],
+            ],
+        ],
+        [
+            'id' => "cc5a37ca-d0e7-434b-90b3-24b947a6cb47",
+            'class' => TrainerClass::TEAM_ROCKET_ADMIN,
+            'name' => "Ariana",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/20/Spr_HGSS_Ariana.png",
+            'team' => [
+                [
+                    'id' => PokedexNo::ARBOK,
+                    'sex' => Sex::FEMALE,
+                    'level' => 25,
+                ],
+                [
+                    'id' => PokedexNo::GLOOM,
+                    'sex' => Sex::FEMALE,
+                    'level' => 25,
+                ],
+                [
+                    'id' => PokedexNo::MURKROW,
+                    'sex' => Sex::FEMALE,
+                    'level' => 27,
+                ],
+                [
+                    'id' => PokedexNo::DROWZEE,
+                    'sex' => Sex::MALE,
+                    'level' => 18,
+                ],
+                [
+                    'id' => PokedexNo::GRIMER,
+                    'sex' => Sex::MALE,
+                    'level' => 20,
+                ],
+            ],
+        ],
+    ],
+    LocationId::TEAM_ROCKET_HQ_B3F => [
+        [
+            'id' => "1fa643fd-9c34-4ee7-8347-4e4eadeef39a",
+            'class' => TrainerClass::SCIENTIST,
+            'name' => "Ross",
+            'team' => [
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 22,
+                ],
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 22,
+                ],
+            ],
+        ],
+        [
+            'id' => "f9a71012-af4a-4f89-995b-fa4eff5cabaf",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::FEMALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::EKANS,
+                    'sex' => Sex::FEMALE,
+                    'level' => 18,
+                ],
+                [
+                    'id' => PokedexNo::GLOOM,
+                    'sex' => Sex::FEMALE,
+                    'level' => 18,
+                ],
+            ],
+        ],
+        [
+            'id' => "2c3ec731-ebf2-4fb5-8647-1777d72c098c",
+            'class' => TrainerClass::SCIENTIST,
+            'name' => "Mitch",
+            'team' => [
+                [
+                    'id' => PokedexNo::DITTO,
+                    'sex' => Sex::UNKNOWN,
+                    'level' => 24,
+                ],
+            ],
+        ],
+        [
+            'id' => "34a3934c-8a1c-4319-a9da-0386ec160bfc",
+            'class' => TrainerClass::TEAM_ROCKET_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::RATICATE,
+                    'sex' => Sex::MALE,
+                    'level' => 19,
+                ],
+            ],
+        ],
+        [
+            'id' => "beca3a8f-dfa6-450f-a609-467f19c18b72",
+            'class' => TrainerClass::TEAM_ROCKET_ADMIN,
+            'name' => "Petrel",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/9/96/Spr_HGSS_Petrel.png",
+            'team' => [
+                [
+                    'id' => PokedexNo::ZUBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 22,
+                ],
+                [
+                    'id' => PokedexNo::KOFFING,
+                    'sex' => Sex::MALE,
+                    'level' => 22,
+                ],
+                [
+                    'id' => PokedexNo::RATICATE,
+                    'sex' => Sex::MALE,
+                    'level' => 24,
+                ],
+            ],
+        ],
+    ],
 ];
