@@ -3154,4 +3154,242 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_43 => [
+        EncounterType::WALKING => [
+            PokedexNo::PIDGEOTTO => [
+                'weight' => 25,
+                'levels' => 17,
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 20,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::NOCTOWL => [
+                'weight' => 20,
+                'levels' => 17,
+            ],
+            PokedexNo::MAREEP => [
+                'weight' => 15,
+                'levels' => 15,
+            ],
+            PokedexNo::FLAAFFY => [
+                'weight' => 70,
+                'levels' => [15, 17],
+            ],
+            PokedexNo::GIRAFARIG => [
+                'weight' => 30,
+                'levels' => 15,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 100,
+                'levels' => [5, 50],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 155,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+        ],
+    ],
+    LocationId::LAKE_OF_RAGE => [
+        EncounterType::SURFING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 90,
+                'levels' => [5, 20],
+            ],
+            PokedexNo::GYARADOS => [
+                'weight' => 10,
+                'levels' => [10, 20],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 260,
+                'levels' => 10,
+            ],
+            PokedexNo::GYARADOS => [
+                'weight' => 40,
+                'levels' => 20,
+            ],
+        ],
+    ],
+    LocationId::ROUTE_44 => [
+        EncounterType::WALKING => [
+            PokedexNo::BELLSPROUT => [
+                'weight' => 20,
+                'levels' => 22,
+            ],
+            PokedexNo::WEEPINBELL => [
+                'weight' => 35,
+                'levels' => [22, 24],
+            ],
+            PokedexNo::LICKITUNG => [
+                'weight' => 15,
+                'levels' => [24, 26],
+            ],
+            PokedexNo::TANGELA => [
+                'weight' => 30,
+                'levels' => 23,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 90,
+                'levels' => [10, 30],
+            ],
+            PokedexNo::POLIWHIRL => [
+                'weight' => 10,
+                'levels' => [15, 32],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 185,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 215,
+                'levels' => 10,
+            ],
+            PokedexNo::REMORAID => [
+                'weight' => 200,
+                'levels' => 10,
+            ],
+        ],
+    ],
+    LocationId::ICE_PATH => [
+        EncounterType::WALKING => [
+            PokedexNo::ZUBAT => [
+                'weight' => 30,
+                'levels' => 22,
+            ],
+            PokedexNo::GOLBAT => [
+                'weight' => 30,
+                'levels' => 22,
+            ],
+            PokedexNo::JYNX => [
+                'weight' => 10,
+                'levels' => 22,
+            ],
+            PokedexNo::SWINUB => [
+                'weight' => 40,
+                'levels' => [21, 24],
+            ],
+            PokedexNo::DELIBIRD => [
+                'weight' => 20,
+                'levels' => [22, 23],
+            ],
+        ],
+    ],
+    LocationId::BLACKTHORN_CITY => [
+        EncounterType::SURFING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 100,
+                'levels' => [2, 20],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 138,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 162,
+                'levels' => 10,
+            ],
+        ],
+    ],
+    LocationId::DRAGONS_DEN => [
+        EncounterType::SURFING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 90,
+                'levels' => [5, 20],
+            ],
+            PokedexNo::DRATINI => [
+                'weight' => 10,
+                'levels' => [5, 15],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 261,
+                'levels' => 10,
+            ],
+            PokedexNo::DRATINI => [
+                'weight' => 36,
+                'levels' => 20,
+            ],
+            PokedexNo::DRAGONAIR => [
+                'weight' => 3,
+                'levels' => 40,
+            ],
+        ],
+    ],
+    LocationId::ROUTE_45 => [
+        EncounterType::WALKING => [
+            PokedexNo::GEODUDE => [
+                'weight' => 30,
+                'levels' => 23,
+            ],
+            PokedexNo::GRAVELER => [
+                'weight' => 95,
+                'levels' => [23, 27],
+            ],
+            PokedexNo::GLIGAR => [
+                'weight' => 20,
+                'levels' => 24,
+            ],
+            PokedexNo::TEDDIURSA => [
+                'weight' => 10,
+                'levels' => 20,
+            ],
+            PokedexNo::SKARMORY => [
+                'weight' => 5,
+                'levels' => 27,
+            ],
+            PokedexNo::PHANPY => [
+                'weight' => 10,
+                'levels' => 20,
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::MAGIKARP => [
+                'weight' => 100,
+                'levels' => [2, 25],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::POLIWAG => [
+                'weight' => 155,
+                'levels' => 10,
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 145,
+                'levels' => 10,
+            ],
+        ],
+    ],
+    LocationId::ROUTE_46 => [
+        EncounterType::WALKING => [
+            PokedexNo::RATTATA => [
+                'weight' => 55,
+                'levels' => [2, 4],
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 35,
+                'levels' => [2, 3],
+            ],
+            PokedexNo::GEODUDE => [
+                'weight' => 45,
+                'levels' => [2, 3],
+            ],
+        ],
+    ],
 ];

@@ -22,6 +22,10 @@ final class TrainerFactory
         foreach ($bulbapediaTrainers as $key => $trainerGroup) {
             $trainers[$key] = [];
             foreach ($trainerGroup as $bulbapediaTrainer) {
+                if (!isset($bulbapediaTrainer['trainer'])) {
+                    continue;
+                }
+
                 $team = [];
 
                 foreach ($bulbapediaTrainer['pokemon'] as $pokemon) {

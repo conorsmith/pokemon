@@ -318,4 +318,13 @@ final class LocationId
     public const TEAM_ROCKET_HQ_B1F = "5075a379-19d0-47d8-8e07-b0380d960d75";
     public const TEAM_ROCKET_HQ_B2F = "2a6a05b0-d8b4-4e7b-a0db-dca478a1ae09";
     public const TEAM_ROCKET_HQ_B3F = "f1151fb6-002e-4991-bd5d-55afebe87c9e";
+    public const ROUTE_43 = "74530fe0-de37-444f-bf53-d43fdbb5c4bb";
+    public const LAKE_OF_RAGE = "a67cb480-ca11-4373-ab3e-1bc2dcc31999";
+    public const ROUTE_44 = "c360f024-5f19-4a48-8dd3-38597e2f803e";
+    public const ICE_PATH = "2f990dca-5c3e-4ecf-9836-6d5e9ba349fb";
+    public const BLACKTHORN_CITY = "d9751b28-c4f0-4f51-b4f2-acc9019b97e4";
+    public const BLACKTHORN_GYM = "4856f215-10a7-46ce-ad85-755f9f44044d";
+    public const DRAGONS_DEN = "458b39f6-d21f-4f66-898f-faa0f58592fa";
+    public const ROUTE_45 = "9a4d8e26-75bd-43de-bfab-d58ba512815e";
+    public const ROUTE_46 = "20e5f78c-730c-4574-968b-f56d1e5fe7c7";
 }

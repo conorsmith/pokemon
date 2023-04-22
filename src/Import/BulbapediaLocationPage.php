@@ -129,7 +129,9 @@ final class BulbapediaLocationPage
                     self::extractTrainersFromTableNode($currentNode),
                 );
             } elseif ($currentNode->nodeName === "h3") {
-                if ($currentNode->textContent === "Layout") {
+                if ($currentNode->textContent === "Layout"
+                    || $currentNode->textContent === "Items"
+                ) {
                     break;
                 }
                 $mostRecentSubtitle = $currentNode->textContent;
@@ -325,10 +327,26 @@ final class BulbapediaLocationPage
                             'pokemon' => [],
                         ];
                     } elseif ($cellNode->childNodes->item(1)->nodeName !== "#text") {
+
+                        if (is_null($cellNode
+                            ->childNodes->item(1)
+                            ->childNodes->item(1)
+                            ->childNodes)
+                        ) {
+                            continue;
+                        }
+
                         $pokemonRow = $cellNode
                             ->childNodes->item(1)
                             ->childNodes->item(1)
                             ->childNodes->item(0);
+
+                        if (is_null($pokemonRow
+                            ->childNodes->item(5)
+                            ->childNodes)
+                        ) {
+                            continue;
+                        }
 
                         $rawTrainerData[$trainerCount]['pokemon'][] = [
                             'name'  => $pokemonRow

@@ -132,6 +132,7 @@ return [
         'name' => "Route 29",
         'type' => LocationType::ROUTE,
         'directions' => [
+            Direction::N => LocationId::ROUTE_46,
             Direction::E => LocationId::NEW_BARK_TOWN,
             Direction::W => LocationId::CHERRYGROVE_CITY,
         ],
@@ -183,6 +184,8 @@ return [
         'area' => LocationId::DARK_CAVE,
         'directions' => [
             Direction::W => LocationId::DARK_CAVE_WEST,
+            LocationId::ROUTE_45,
+            LocationId::ROUTE_46,
         ],
     ],
     [
@@ -1156,6 +1159,8 @@ return [
         'name' => "Mahogany Town",
         'type' => LocationType::CITY,
         'directions' => [
+            Direction::N => LocationId::ROUTE_43,
+            Direction::E => LocationId::ROUTE_44,
             Direction::W => LocationId::ROUTE_42,
             LocationId::MAHOGANY_SOUVENIR_SHOP,
             LocationId::MAHOGANY_GYM,
@@ -1205,6 +1210,87 @@ return [
         'area' => LocationId::TEAM_ROCKET_HQ,
         'directions' => [
             Direction::U => LocationId::TEAM_ROCKET_HQ_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_43,
+        'name' => "Route 43",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::LAKE_OF_RAGE,
+            Direction::S => LocationId::MAHOGANY_TOWN,
+        ],
+    ],
+    [
+        'id' => LocationId::LAKE_OF_RAGE,
+        'name' => "Lake of Rage",
+        'directions' => [
+            Direction::S => LocationId::ROUTE_43,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_44,
+        'name' => "Route 44",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::E => LocationId::ICE_PATH,
+            Direction::W => LocationId::MAHOGANY_TOWN,
+        ],
+    ],
+    [
+        'id' => LocationId::ICE_PATH,
+        'name' => "Ice Path",
+        'type' => LocationType::CAVE,
+        'directions' => [
+            Direction::W => LocationId::ROUTE_44,
+            Direction::S => LocationId::BLACKTHORN_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::BLACKTHORN_CITY,
+        'name' => "Blackthorn City",
+        'type' => LocationType::CITY,
+        'directions' => [
+            Direction::N => LocationId::ICE_PATH,
+            Direction::S => LocationId::ROUTE_45,
+            LocationId::DRAGONS_DEN,
+            LocationId::BLACKTHORN_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::BLACKTHORN_GYM,
+        'name' => "Blackthorn Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::BLACKTHORN_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::DRAGONS_DEN,
+        'name' => "Dragon's Den",
+        'type' => LocationType::CAVE,
+        'directions' => [
+            LocationId::BLACKTHORN_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_45,
+        'name' => "Route 45",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::N => LocationId::BLACKTHORN_CITY,
+            Direction::W => LocationId::ROUTE_46,
+            LocationId::DARK_CAVE_EAST,
+        ],
+    ],
+    [
+        'id' => LocationId::ROUTE_46,
+        'name' => "Route 46",
+        'type' => LocationType::ROUTE,
+        'directions' => [
+            Direction::E => LocationId::ROUTE_45,
+            Direction::S => LocationId::ROUTE_29,
+            LocationId::DARK_CAVE_EAST,
         ],
     ],
 ];
