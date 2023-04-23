@@ -4457,6 +4457,47 @@ return [
     ],
     LocationId::LAKE_OF_RAGE => [
         [
+            'id' => "f584b3d5-99b1-45db-acce-82a07db2368c",
+            'class' => TrainerClass::RETIRED_TRAINER,
+            'name' => "Lance",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/1f/Spr_HGSS_Lance.png",
+            'prerequisite' => [
+                'champion' => Region::JOHTO,
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::SALAMENCE,
+                    'sex' => Sex::MALE,
+                    'level' => 72,
+                ],
+                [
+                    'id' => PokedexNo::GYARADOS,
+                    'sex' => Sex::MALE,
+                    'level' => 68,
+                ],
+                [
+                    'id' => PokedexNo::GARCHOMP,
+                    'sex' => Sex::MALE,
+                    'level' => 72,
+                ],
+                [
+                    'id' => PokedexNo::ALTARIA,
+                    'sex' => Sex::MALE,
+                    'level' => 73,
+                ],
+                [
+                    'id' => PokedexNo::CHARIZARD,
+                    'sex' => Sex::MALE,
+                    'level' => 68,
+                ],
+                [
+                    'id' => PokedexNo::DRAGONITE,
+                    'sex' => Sex::MALE,
+                    'level' => 75,
+                ],
+            ],
+        ],
+        [
             'id' => "8ced76e6-5ed4-4b7c-a94f-74803f623d42",
             'class' => TrainerClass::FISHERMAN,
             'name' => "Andre",
@@ -4847,7 +4888,7 @@ return [
         ],
         [
             'id' => "1bc9ef4a-321d-43f4-8664-954c2c3f4e9a",
-            'class' => TrainerClass::ELITE_FOUR,
+            'class' => TrainerClass::POKEMON_TRAINER,
             'name' => "Lance",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/1f/Spr_HGSS_Lance.png",
             'team' => [

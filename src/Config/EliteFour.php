@@ -10,7 +10,7 @@ use ConorSmith\Pokemon\TrainerClass;
 return [
     [
         'region' => Region::KANTO,
-        'location' => LocationId::INDIGO_PLATEAU,
+        'location' => LocationId::KANTO_LEAGUE_CHAMBER,
         'members' => [
             [
                 'id' => "e06b0584-3f6d-47ce-a100-fab5b75e62b5",
@@ -179,6 +179,182 @@ return [
                         'id' => PokedexNo::ARCANINE,
                         'sex' => Sex::MALE,
                         'level' => 63,
+                    ],
+                ],
+            ],
+        ],
+    ],
+    [
+        'region' => Region::JOHTO,
+        'location' => LocationId::JOHTO_LEAGUE_CHAMBER,
+        'members' => [
+            [
+                'id' => "c4b69d52-a5f2-4a5f-b1fc-8fb373dda796",
+                'class' => TrainerClass::ELITE_FOUR,
+                'name' => "Will",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/fd/Spr_HGSS_Will.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::XATU,
+                        'sex' => Sex::FEMALE,
+                        'level' => 40,
+                    ],
+                    [
+                        'id' => PokedexNo::JYNX,
+                        'sex' => Sex::FEMALE,
+                        'level' => 41,
+                    ],
+                    [
+                        'id' => PokedexNo::SLOWBRO,
+                        'sex' => Sex::FEMALE,
+                        'level' => 41,
+                    ],
+                    [
+                        'id' => PokedexNo::EXEGGUTOR,
+                        'sex' => Sex::FEMALE,
+                        'level' => 41,
+                    ],
+                    [
+                        'id' => PokedexNo::XATU,
+                        'sex' => Sex::FEMALE,
+                        'level' => 42,
+                    ],
+                ],
+            ],
+            [
+                'id' => "d0bb3d94-545b-47ed-9bca-49806508e80f",
+                'class' => TrainerClass::ELITE_FOUR,
+                'name' => "Koga",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/18/Spr_HGSS_Koga.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::ARIADOS,
+                        'sex' => Sex::MALE,
+                        'level' => 40,
+                    ],
+                    [
+                        'id' => PokedexNo::FORRETRESS,
+                        'sex' => Sex::MALE,
+                        'level' => 43,
+                    ],
+                    [
+                        'id' => PokedexNo::MUK,
+                        'sex' => Sex::MALE,
+                        'level' => 42,
+                    ],
+                    [
+                        'id' => PokedexNo::VENOMOTH,
+                        'sex' => Sex::MALE,
+                        'level' => 41,
+                    ],
+                    [
+                        'id' => PokedexNo::CROBAT,
+                        'sex' => Sex::MALE,
+                        'level' => 44,
+                    ],
+                ],
+            ],
+            [
+                'id' => "6d9e5acf-9df2-4c4c-b739-599ea9e3d15e",
+                'class' => TrainerClass::ELITE_FOUR,
+                'name' => "Bruno",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/ee/Spr_HGSS_Bruno.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::HITMONTOP,
+                        'sex' => Sex::MALE,
+                        'level' => 42,
+                    ],
+                    [
+                        'id' => PokedexNo::HITMONLEE,
+                        'sex' => Sex::MALE,
+                        'level' => 42,
+                    ],
+                    [
+                        'id' => PokedexNo::HITMONCHAN,
+                        'sex' => Sex::MALE,
+                        'level' => 42,
+                    ],
+                    [
+                        'id' => PokedexNo::ONIX,
+                        'sex' => Sex::MALE,
+                        'level' => 43,
+                    ],
+                    [
+                        'id' => PokedexNo::MACHAMP,
+                        'sex' => Sex::MALE,
+                        'level' => 46,
+                    ],
+                ],
+            ],
+            [
+                'id' => "fcd989e3-dce0-48d5-bd49-56dac6476787",
+                'class' => TrainerClass::ELITE_FOUR,
+                'name' => "Karen",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/a2/Spr_HGSS_Karen.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::UMBREON,
+                        'sex' => Sex::MALE,
+                        'level' => 42,
+                    ],
+                    [
+                        'id' => PokedexNo::VILEPLUME,
+                        'sex' => Sex::FEMALE,
+                        'level' => 42,
+                    ],
+                    [
+                        'id' => PokedexNo::MURKROW,
+                        'sex' => Sex::FEMALE,
+                        'level' => 44,
+                    ],
+                    [
+                        'id' => PokedexNo::GENGAR,
+                        'sex' => Sex::FEMALE,
+                        'level' => 45,
+                    ],
+                    [
+                        'id' => PokedexNo::HOUNDOOM,
+                        'sex' => Sex::FEMALE,
+                        'level' => 47,
+                    ],
+                ],
+            ],
+            [
+                'id' => "f47e15c6-fe2a-4c51-b9e8-547583f81f0a",
+                'class' => TrainerClass::CHAMPION,
+                'name' => "Lance",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/1f/Spr_HGSS_Lance.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::GYARADOS,
+                        'sex' => Sex::MALE,
+                        'level' => 46,
+                    ],
+                    [
+                        'id' => PokedexNo::DRAGONITE,
+                        'sex' => Sex::MALE,
+                        'level' => 49,
+                    ],
+                    [
+                        'id' => PokedexNo::DRAGONITE,
+                        'sex' => Sex::MALE,
+                        'level' => 49,
+                    ],
+                    [
+                        'id' => PokedexNo::AERODACTYL,
+                        'sex' => Sex::MALE,
+                        'level' => 48,
+                    ],
+                    [
+                        'id' => PokedexNo::CHARIZARD,
+                        'sex' => Sex::MALE,
+                        'level' => 48,
+                    ],
+                    [
+                        'id' => PokedexNo::DRAGONITE,
+                        'sex' => Sex::MALE,
+                        'level' => 50,
                     ],
                 ],
             ],

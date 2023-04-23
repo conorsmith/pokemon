@@ -104,6 +104,8 @@ final class LocationId
     public const VICTORY_ROAD_2F = "32f2851c-6430-4050-a253-b6191888a537";
     public const VICTORY_ROAD_3F = "6dcf71fd-23dc-4313-8cd7-1d7fc513eba4";
     public const INDIGO_PLATEAU = "36c7585c-c0df-4bd5-8e50-5c92487d44d8";
+    public const KANTO_LEAGUE_CHAMBER = "9f3e88e4-b42a-41ca-ac94-9eba2d215d79";
+    public const JOHTO_LEAGUE_CHAMBER = "b515a271-d67a-49c9-8030-4f7208f01112";
     public const ROUTE_23 = "91743725-50c2-4185-925c-a1dad7db2c90";
     public const ROUTE_24 = "04fe98e1-051d-4eb4-90bf-8e788b33fda6";
     public const ROUTE_25 = "bb9a23b0-c473-46ae-b663-fdabc187a7f0";

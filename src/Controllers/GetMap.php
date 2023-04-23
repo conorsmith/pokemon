@@ -122,7 +122,10 @@ final class GetMap
                 $this->locationConfigRepository->findLocation($instanceRow['current_location']),
                 $legendaryConfig,
             ),
-            'eliteFour' => $this->createEliteFourViewModel(self::findEliteFourConfig($instanceRow['current_location'])),
+            'eliteFour' => $this->createEliteFourViewModel(
+                self::findEliteFourConfig($instanceRow['current_location']),
+                $instanceRow,
+            ),
         ]);
     }
 
@@ -220,7 +223,7 @@ final class GetMap
         ];
     }
 
-    private function createEliteFourViewModel(?array $eliteFourConfig): ?stdClass
+    private function createEliteFourViewModel(?array $eliteFourConfig, array $instanceRow): ?stdClass
     {
         if (is_null($eliteFourConfig)) {
             return null;
@@ -234,7 +237,8 @@ final class GetMap
 
         $bag = $this->bagRepository->find();
 
-        $canChallenge = $bag->count(ItemId::CHALLENGE_TOKEN) >= 5;
+        $canChallenge = $bag->count(ItemId::CHALLENGE_TOKEN) >= 5
+            && self::hasAllRegionalGymBadges($instanceRow, $eliteFourConfig['region']);
 
         return (object) [
             'memberImageUrls' => array_map(
@@ -244,6 +248,22 @@ final class GetMap
             'region' => $eliteFourConfig['region']->value,
             'canChallenge' => $canChallenge,
         ];
+    }
+
+    private static function hasAllRegionalGymBadges(array $instanceRow, Region $region): bool
+    {
+        $gymBadges = array_map(
+            fn(int $value) => GymBadge::from($value),
+            json_decode($instanceRow['badges'])
+        );
+
+        foreach (GymBadge::allFromRegion($region) as $gymBadge) {
+            if (!in_array($gymBadge, $gymBadges)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static function findLevelLimit(array $instanceRow): int

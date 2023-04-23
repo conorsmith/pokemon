@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+
 enum GymBadge: int
 {
     // KANTO
@@ -59,5 +61,31 @@ enum GymBadge: int
         }
 
         return $highestRanked;
+    }
+
+    public static function allFromRegion(Region $region): array
+    {
+        return match($region) {
+            Region::KANTO => [
+                self::BOULDER,
+                self::CASCADE,
+                self::THUNDER,
+                self::RAINBOW,
+                self::SOUL,
+                self::MARSH,
+                self::VOLCANO,
+                self::EARTH,
+            ],
+            Region::JOHTO => [
+                self::ZEPHYR,
+                self::HIVE,
+                self::PLAIN,
+                self::FOG,
+                self::STORM,
+                self::MINERAL,
+                self::GLACIER,
+                self::RISING,
+            ],
+        };
     }
 }

@@ -923,9 +923,26 @@ return [
     [
         'id' => LocationId::INDIGO_PLATEAU,
         'name' => "Indigo Plateau",
+        'directions' => [
+            LocationId::KANTO_LEAGUE_CHAMBER,
+            LocationId::JOHTO_LEAGUE_CHAMBER,
+            LocationId::ROUTE_23,
+        ],
+    ],
+    [
+        'id' => LocationId::KANTO_LEAGUE_CHAMBER,
+        'name' => "Kanto League Chamber",
         'type' => LocationType::GYM,
         'directions' => [
-            LocationId::ROUTE_23,
+            LocationId::INDIGO_PLATEAU,
+        ],
+    ],
+    [
+        'id' => LocationId::JOHTO_LEAGUE_CHAMBER,
+        'name' => "Johto League Chamber",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::INDIGO_PLATEAU,
         ],
     ],
     [

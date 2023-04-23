@@ -5915,7 +5915,7 @@ return [
             ],
         ],
     ],
-    LocationId::INDIGO_PLATEAU => [
+    LocationId::KANTO_LEAGUE_CHAMBER => [
         [
             'id' => "3be7e165-f553-41c7-87ee-37389aaeea82",
             'class' => TrainerClass::ELITE_FOUR,
@@ -6057,6 +6057,172 @@ return [
                     'id' => PokedexNo::DRAGONITE,
                     'sex' => Sex::MALE,
                     'level' => 72,
+                ],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_LEAGUE_CHAMBER => [
+        [
+            'id' => "5daee68c-acf7-469b-8f55-5588b23817eb",
+            'class' => TrainerClass::ELITE_FOUR,
+            'name' => "Will",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/fd/Spr_HGSS_Will.png",
+            'prerequisite' => [
+                'champion' => Region::JOHTO,
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::BRONZONG,
+                    'sex' => Sex::MALE,
+                    'level' => 58,
+                ],
+                [
+                    'id' => PokedexNo::JYNX,
+                    'sex' => Sex::FEMALE,
+                    'level' => 60,
+                ],
+                [
+                    'id' => PokedexNo::GRUMPIG,
+                    'sex' => Sex::FEMALE,
+                    'level' => 59,
+                ],
+                [
+                    'id' => PokedexNo::SLOWBRO,
+                    'sex' => Sex::FEMALE,
+                    'level' => 60,
+                ],
+                [
+                    'id' => PokedexNo::GARDEVOIR,
+                    'sex' => Sex::FEMALE,
+                    'level' => 61,
+                ],
+                [
+                    'id' => PokedexNo::XATU,
+                    'sex' => Sex::FEMALE,
+                    'level' => 62,
+                ],
+            ],
+        ],
+        [
+            'id' => "2284432e-1259-44c6-8547-db5814fe4a42",
+            'class' => TrainerClass::ELITE_FOUR,
+            'name' => "Koga",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/18/Spr_HGSS_Koga.png",
+            'prerequisite' => [
+                'champion' => Region::JOHTO,
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::SKUNTANK,
+                    'sex' => Sex::MALE,
+                    'level' => 61,
+                ],
+                [
+                    'id' => PokedexNo::VENOMOTH,
+                    'sex' => Sex::MALE,
+                    'level' => 63,
+                ],
+                [
+                    'id' => PokedexNo::TOXICROAK,
+                    'sex' => Sex::MALE,
+                    'level' => 60,
+                ],
+                [
+                    'id' => PokedexNo::SWALOT,
+                    'sex' => Sex::MALE,
+                    'level' => 62,
+                ],
+                [
+                    'id' => PokedexNo::CROBAT,
+                    'sex' => Sex::MALE,
+                    'level' => 64,
+                ],
+                [
+                    'id' => PokedexNo::MUK,
+                    'sex' => Sex::MALE,
+                    'level' => 62,
+                ],
+            ],
+        ],
+        [
+            'id' => "47f575f1-5941-481a-afc5-ca30416c0998",
+            'class' => TrainerClass::ELITE_FOUR,
+            'name' => "Bruno",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/ee/Spr_HGSS_Bruno.png",
+            'prerequisite' => [
+                'champion' => Region::JOHTO,
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::HITMONTOP,
+                    'sex' => Sex::MALE,
+                    'level' => 62,
+                ],
+                [
+                    'id' => PokedexNo::HITMONLEE,
+                    'sex' => Sex::MALE,
+                    'level' => 61,
+                ],
+                [
+                    'id' => PokedexNo::HITMONCHAN,
+                    'sex' => Sex::MALE,
+                    'level' => 61,
+                ],
+                [
+                    'id' => PokedexNo::HARIYAMA,
+                    'sex' => Sex::MALE,
+                    'level' => 62,
+                ],
+                [
+                    'id' => PokedexNo::MACHAMP,
+                    'sex' => Sex::MALE,
+                    'level' => 64,
+                ],
+                [
+                    'id' => PokedexNo::LUCARIO,
+                    'sex' => Sex::MALE,
+                    'level' => 64,
+                ],
+            ],
+        ],
+        [
+            'id' => "5a2d94f2-4a50-4c24-8e8d-d7ea571fef91",
+            'class' => TrainerClass::ELITE_FOUR,
+            'name' => "Karen",
+            'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/a2/Spr_HGSS_Karen.png",
+            'prerequisite' => [
+                'champion' => Region::JOHTO,
+            ],
+            'team' => [
+                [
+                    'id' => PokedexNo::WEAVILE,
+                    'sex' => Sex::FEMALE,
+                    'level' => 62,
+                ],
+                [
+                    'id' => PokedexNo::ABSOL,
+                    'sex' => Sex::FEMALE,
+                    'level' => 62,
+                ],
+                [
+                    'id' => PokedexNo::SPIRITOMB,
+                    'sex' => Sex::FEMALE,
+                    'level' => 62,
+                ],
+                [
+                    'id' => PokedexNo::HOUNDOOM,
+                    'sex' => Sex::FEMALE,
+                    'level' => 63,
+                ],
+                [
+                    'id' => PokedexNo::HONCHKROW,
+                    'sex' => Sex::FEMALE,
+                    'level' => 64,
+                ],
+                [
+                    'id' => PokedexNo::UMBREON,
+                    'sex' => Sex::FEMALE,
+                    'level' => 64,
                 ],
             ],
         ],
