@@ -283,6 +283,13 @@
                         .then(response => response.json())
                         .then(responseData => {
 
+                            const counterEl = el.querySelector("span");
+                            let count = parseInt(counterEl.innerText, 10);
+                            if (count > 0) {
+                                count--;
+                            }
+                            counterEl.innerText = count;
+
                             const oldModalEl = confirmationModal._element;
                             const newModalEl = oldModalEl.cloneNode(true);
                             oldModalEl.parentNode.replaceChild(newModalEl, oldModalEl);

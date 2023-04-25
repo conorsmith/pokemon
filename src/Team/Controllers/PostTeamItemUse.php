@@ -276,7 +276,37 @@ final class PostTeamItemUse
 
     private static function calculateNewLevel(int $currentLevel, int $levelLimit): int
     {
-        if ($levelLimit === 110) {
+        if ($levelLimit === 140) {
+            if ($currentLevel < 20) {
+                return 20;
+            } elseif ($currentLevel < 30) {
+                return 30;
+            } elseif ($currentLevel < 50) {
+                return 50;
+            } elseif ($currentLevel < 70) {
+                return 70;
+            } elseif ($currentLevel < 90) {
+                return min($currentLevel + 10, 90);
+            } elseif ($currentLevel < 100) {
+                return min($currentLevel + 2, 100);
+            } else {
+                return $currentLevel + 1;
+            }
+        } elseif ($levelLimit === 120) {
+            if ($currentLevel < 20) {
+                return 20;
+            } elseif ($currentLevel < 30) {
+                return 30;
+            } elseif ($currentLevel < 50) {
+                return 50;
+            } elseif ($currentLevel < 70) {
+                return min($currentLevel + 10, 70);
+            } elseif ($currentLevel < 90) {
+                return min($currentLevel + 2, 90);
+            } else {
+                return $currentLevel + 1;
+            }
+        } elseif ($levelLimit === 100) {
             if ($currentLevel < 20) {
                 return 20;
             } elseif ($currentLevel < 30) {

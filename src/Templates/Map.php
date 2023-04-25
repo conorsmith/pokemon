@@ -180,7 +180,7 @@
                     <?php endif ?>
                     <?php if ($wildPokemon->encounters->rockSmash) : ?>
                         <a href="/track-pokemon/rockSmash" class="flex-fill btn btn-info btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fas fa-fw fa-sith"></i>
+                            <i class="fab fa-fw fa-sith"></i>
                         </a>
                     <?php endif ?>
                 </div>
