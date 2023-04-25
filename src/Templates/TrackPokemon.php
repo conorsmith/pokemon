@@ -81,7 +81,7 @@
                     })
 
                     const speedRand = Math.floor(Math.random() * (10 - 1 + 1) + 1);
-                    const slowRand = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+                    const slowRand = Math.floor(Math.random() * (10 - 1 + 1) + 1);
                     const fastRand = Math.floor(Math.random() * (3 - 1 + 1) + 1);
                     const rand = speedRand > 7 ? slowRand : fastRand;
 
