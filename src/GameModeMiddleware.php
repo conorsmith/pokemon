@@ -77,7 +77,7 @@ final class GameModeMiddleware
             return false;
         }
 
-        $activeEncounter = $this->db->fetchAssociative("SELECT * FROM encounters ORDER BY id");
+        $activeEncounter = $this->db->fetchAssociative("SELECT * FROM encounters WHERE has_started = 1 ORDER BY id");
 
         if ($activeEncounter === false) {
             return false;

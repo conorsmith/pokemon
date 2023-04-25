@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Repositories;
 
+use Carbon\CarbonImmutable;
 use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\Domain\EncounterTableEntry;
 use ConorSmith\Pokemon\Battle\Domain\Location;
@@ -14,6 +15,7 @@ use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
+use GuzzleHttp\Psr7\InflateStream;
 use Ramsey\Uuid\Uuid;
 
 final class EncounterRepository
@@ -82,11 +84,17 @@ final class EncounterRepository
 
         $pokemon->remainingHp = $pokemon->calculateHp();
 
+        $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
+            'instanceId' => INSTANCE_ID,
+            'number' => $pokemon->number,
+        ]);
+
         return new Encounter(
             $encounterId,
             $pokemon,
-            $isLegendary,
             false,
+            $isLegendary,
+            $pokedexRow !== false,
             false,
         );
     }
@@ -126,6 +134,7 @@ final class EncounterRepository
         return new Encounter(
             $id,
             $pokemon,
+            $encounterRow['has_started'] === 1 ? true : false,
             $encounterRow['is_legendary'] === 0 ? false : true,
             $pokedexRow !== false,
             $encounterRow['was_caught'] === 1 ? true : false,
@@ -155,14 +164,43 @@ final class EncounterRepository
                 'iv_special_defence' => $encounter->pokemon->stats->ivSpecialDefence,
                 'iv_speed' => $encounter->pokemon->stats->ivSpeed,
                 'remaining_hp' => $encounter->pokemon->remainingHp,
+                'has_started' => $encounter->hasStarted ? 1 : 0,
                 'was_caught' => 0,
+                'generated_at' => CarbonImmutable::now("Europe/Dublin")->format("Y-m-d H:i:s"),
             ]);
         } else {
             $this->db->update("encounters", [
                 'remaining_hp' => $encounter->pokemon->remainingHp,
+                'has_started' => $encounter->hasStarted ? 1 : 0,
                 'was_caught' => $encounter->wasCaught ? 1 : 0,
             ], [
                 'id' => $encounter->id,
+            ]);
+        }
+    }
+
+    public function delete(Encounter $encounter): void
+    {
+        $this->db->delete("encounters", [
+            'instance_id' => INSTANCE_ID,
+            'id' => $encounter->id,
+        ]);
+    }
+
+    public function deleteOldestEncountersOutsideLimit(): void
+    {
+        $limit = 10;
+
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM encounters WHERE has_started = 0 ORDER BY generated_at ASC", [
+            'instance_id' => INSTANCE_ID,
+        ]);
+
+        $rowsToDelete = array_splice($rows, 0, $limit * -1);
+
+        foreach ($rowsToDelete as $row) {
+            $this->db->delete("encounters", [
+                'instance_id' => INSTANCE_ID,
+                'id' => $row['id'],
             ]);
         }
     }

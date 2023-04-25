@@ -10,8 +10,10 @@ use ConorSmith\Pokemon\Battle\Controllers\PostBattleFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFinish;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleStart;
 use ConorSmith\Pokemon\Battle\Controllers\PostChallengeEliteFour;
-use ConorSmith\Pokemon\Battle\Controllers\PostSwitch;
+use ConorSmith\Pokemon\Battle\Controllers\PostEncounterGenerate;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterStart;
+use ConorSmith\Pokemon\Battle\Controllers\PostSwitch;
+use ConorSmith\Pokemon\Battle\Controllers\PostEncounterGenerateAndStart;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterRun;
@@ -19,11 +21,17 @@ use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
+use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Battle\UseCase\StartABattle;
+use ConorSmith\Pokemon\Battle\UseCase\CreateALegendaryEncounter;
+use ConorSmith\Pokemon\Battle\UseCase\CreateAWildEncounter;
+use ConorSmith\Pokemon\Battle\UseCase\StartAnEncounter;
 use ConorSmith\Pokemon\Controllers\GetBag;
 use ConorSmith\Pokemon\Controllers\GetPokedex;
+use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
+use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
@@ -77,11 +85,14 @@ final class ControllerFactory
         $r->get("/pokedex", GetPokedex::class);
         $r->post("/map/move", PostMapMove::class);
         $r->get("/map", GetMap::class);
-        $r->post("/encounter", PostEncounterStart::class);
+        $r->get("/track-pokemon/{encounterType}", GetTrackPokemon::class);
+        $r->post("/encounter", PostEncounterGenerateAndStart::class);
+        $r->post("/encounter/generate", PostEncounterGenerate::class);
         $r->get("/team", GetTeam::class);
         $r->get("/team/compare", GetTeamCompare::class);
         $r->Get("/team/member/{id}", GetPokemon::class);
         $r->get("/encounter/{id}", GetEncounter::class);
+        $r->post("/encounter/{id}/start", PostEncounterStart::class);
         $r->post("/encounter/{id}/catch", PostEncounterCatch::class);
         $r->post("/encounter/{id}/fight", PostEncounterFight::class);
         $r->post("/encounter/{id}/run", PostEncounterRun::class);
@@ -105,34 +116,41 @@ final class ControllerFactory
     }
 
     public function __construct(
-        private readonly Connection                       $db,
-        private readonly Session                          $session,
-        private readonly CaughtPokemonRepository          $caughtPokemonRepository,
-        private readonly EncounterConfigRepository        $encounterConfigRepository,
-        private readonly LocationConfigRepository         $locationConfigRepository,
-        private readonly TrainerConfigRepository          $trainerConfigRepository,
-        private readonly EncounterRepository              $encounterRepository,
-        private readonly TrainerRepository                $trainerRepository,
-        private readonly PlayerRepository                 $playerRepository,
-        private readonly EliteFourChallengeRepository     $eliteFourChallengeRepository,
-        private readonly AreaRepository                   $areaRepository,
-        private readonly BagRepository                    $bagRepository,
-        private readonly DailyHabitLogRepository          $dailyHabitLogRepository,
-        private readonly UnlimitedHabitLogRepository      $unlimitedHabitLogRepository,
-        private readonly WeeklyHabitLogRepository         $weeklyHabitLogRepository,
-        private readonly PokemonRepository                $pokemonRepository,
-        private readonly FriendshipLog                    $friendshipLog,
-        private readonly ViewModelFactory                 $viewModelFactory,
-        private readonly CatchPokemonCommand              $catchPokemonCommand,
-        private readonly ReportTeamPokemonFaintedCommand  $reportTeamPokemonFaintedCommand,
+        private readonly LocationControllerFactory $locationControllerFactory,
+        private readonly Connection $db,
+        private readonly Session $session,
+        private readonly CaughtPokemonRepository $caughtPokemonRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly TrainerConfigRepository $trainerConfigRepository,
+        private readonly EncounterRepository $encounterRepository,
+        private readonly LocationRepository $locationRepository,
+        private readonly TrainerRepository $trainerRepository,
+        private readonly PlayerRepository $playerRepository,
+        private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
+        private readonly AreaRepository $areaRepository,
+        private readonly BagRepository $bagRepository,
+        private readonly DailyHabitLogRepository $dailyHabitLogRepository,
+        private readonly UnlimitedHabitLogRepository $unlimitedHabitLogRepository,
+        private readonly WeeklyHabitLogRepository $weeklyHabitLogRepository,
+        private readonly PokemonRepository $pokemonRepository,
+        private readonly FriendshipLog $friendshipLog,
+        private readonly ViewModelFactory $viewModelFactory,
+        private readonly CatchPokemonCommand $catchPokemonCommand,
+        private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
         private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
-        private readonly WeeklyUpdateForTeamCommand       $weeklyUpdateForTeamCommand,
-        private readonly array                            $pokedex,
-        private readonly TemplateEngine                   $templateEngine,
+        private readonly WeeklyUpdateForTeamCommand $weeklyUpdateForTeamCommand,
+        private readonly array $pokedex,
+        private readonly TemplateEngine $templateEngine,
     ) {}
 
     public function create(string $className): mixed
     {
+        $controller = $this->locationControllerFactory->create($className);
+
+        if (!is_null($controller)) {
+            return $controller;
+        }
+
         return match ($className) {
             GetLogFoodDiary::class => new GetLogFoodDiary(
                 $this->dailyHabitLogRepository,
@@ -185,23 +203,30 @@ final class ControllerFactory
                 $this->bagRepository,
                 $this->unlimitedHabitLogRepository,
             ),
-            GetMap::class => new GetMap(
-                $this->db,
-                $this->bagRepository,
-                $this->eliteFourChallengeRepository,
-                $this->locationConfigRepository,
-                $this->encounterConfigRepository,
-                $this->trainerConfigRepository,
+            PostEncounterGenerateAndStart::class => new PostEncounterGenerateAndStart(
+                new CreateAWildEncounter(
+                    $this->encounterRepository,
+                    $this->locationRepository,
+                ),
+                new CreateALegendaryEncounter(
+                    $this->encounterRepository,
+                    $this->bagRepository,
+                ),
+                new StartAnEncounter(
+                    $this->encounterRepository,
+                ),
+            ),
+            PostEncounterGenerate::class => new PostEncounterGenerate(
+                new CreateAWildEncounter(
+                    $this->encounterRepository,
+                    $this->locationRepository,
+                ),
                 $this->viewModelFactory,
-                $this->pokedex,
-                $this->templateEngine,
             ),
             PostEncounterStart::class => new PostEncounterStart(
-                $this->db,
-                $this->encounterRepository,
-                $this->playerRepository,
-                $this->bagRepository,
-                $this->locationConfigRepository,
+                new StartAnEncounter(
+                    $this->encounterRepository,
+                ),
             ),
             GetTeam::class => new GetTeam(
                 $this->pokemonRepository,
@@ -232,7 +257,8 @@ final class ControllerFactory
                 new EventFactory($this->viewModelFactory),
             ),
             PostEncounterRun::class => new PostEncounterRun(
-                $this->db,
+                $this->encounterRepository,
+                $this->playerRepository,
             ),
             PostEncounterFight::class => new PostEncounterFight(
                 $this->session,

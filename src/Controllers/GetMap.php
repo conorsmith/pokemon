@@ -6,21 +6,21 @@ namespace ConorSmith\Pokemon\Controllers;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
-use ConorSmith\Pokemon\Direction;
 use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
+use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\LocationType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\TrainerConfigRepository;
-use ConorSmith\Pokemon\ViewModelFactory;
+use ConorSmith\Pokemon\ViewModelFactory as SharedViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
 use stdClass;
@@ -29,12 +29,14 @@ final class GetMap
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly LocationRepository $locationRepository,
         private readonly BagRepository $bagRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly ViewModelFactory $viewModelFactory,
+        private readonly SharedViewModelFactory $sharedViewModelFactory,
         private readonly array $pokedex,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -49,9 +51,8 @@ final class GetMap
 
         $challengeTokens = $bag->count(ItemId::CHALLENGE_TOKEN);
 
-        $currentLocation = $this->createLocationViewModel(
-            $this->findLocation($instanceRow['current_location']),
-            $this->encounterConfigRepository->findEncounters($instanceRow['current_location']),
+        $currentLocationViewModel = $this->viewModelFactory->createLocation(
+            $this->locationRepository->findCurrentLocation(),
         );
 
         $trainers = [];
@@ -104,7 +105,7 @@ final class GetMap
                     'lastBeaten'  => $lastBeaten ? $lastBeaten->ago() : "",
                     'isGymLeader' => array_key_exists('leader', $trainer),
                     'leaderBadge' => array_key_exists('leader', $trainer)
-                        ? $this->viewModelFactory->createGymBadgeName($trainer['leader']['badge'])
+                        ? $this->sharedViewModelFactory->createGymBadgeName($trainer['leader']['badge'])
                         : "",
                 ];
             }
@@ -116,7 +117,10 @@ final class GetMap
             'canEncounter' => true,
             'pokeballs' => $bag->countAllPokeBalls(),
             'challengeTokens' => $challengeTokens,
-            'currentLocation' => $currentLocation,
+            'currentLocation' => $currentLocationViewModel,
+            'wildPokemon' => $this->createWildPokemonViewModel(
+                $this->encounterConfigRepository->findEncounters($instanceRow['current_location']),
+            ),
             'trainers' => $trainers,
             'legendary' => $this->createLegendaryViewModel(
                 $this->locationConfigRepository->findLocation($instanceRow['current_location']),
@@ -254,7 +258,7 @@ final class GetMap
     {
         $gymBadges = array_map(
             fn(int $value) => GymBadge::from($value),
-            json_decode($instanceRow['badges'])
+            json_decode($instanceRow['badges']),
         );
 
         foreach (GymBadge::allFromRegion($region) as $gymBadge) {
@@ -270,7 +274,7 @@ final class GetMap
     {
         $gymBadges = array_map(
             fn(int $value) => GymBadge::from($value),
-            json_decode($instanceRow['badges'])
+            json_decode($instanceRow['badges']),
         );
 
         if (count($gymBadges) === 0) {
@@ -326,27 +330,9 @@ final class GetMap
         return null;
     }
 
-    private function findLocation(string $id): array
+    private function createWildPokemonViewModel(?array $encounterTables): stdClass
     {
-        $location = $this->locationConfigRepository->findLocation($id);
-
-        if (is_null($location)) {
-            throw new \Exception;
-        }
-
-        return $location;
-    }
-
-    private function createLocationViewModel(array $location, ?array $encounterTables): stdClass
-    {
-        $viewModel = (object) [
-            'id' => $location['id'],
-            'name' => $location['name'],
-            'region' => match ($location['region']) {
-                Region::KANTO => "Kanto",
-                Region::JOHTO => "Johto",
-            },
-            'section' => $location['section'] ?? null,
+        return (object) [
             'hasEncounters' => !is_null($encounterTables),
             'encounters' => (object) [
                 'walking' => isset($encounterTables[EncounterType::WALKING]),
@@ -354,64 +340,6 @@ final class GetMap
                 'fishing' => isset($encounterTables[EncounterType::FISHING]),
                 'rockSmash' => isset($encounterTables[EncounterType::ROCK_SMASH]),
             ],
-            'hasCardinalDirections' => false,
-            'hasVerticalDirections' => false,
-            'directions' => [],
         ];
-
-        /** @var string $locationId */
-        foreach ($location['directions'] as $key => $locationId) {
-            $directionLocation = $this->findLocation($locationId);
-
-            $section = $directionLocation['section'] ?? null;
-
-            if (!isset($location['type']) && isset($directionLocation['type'])
-                || !isset($directionLocation['type']) && isset($location['type'])
-                || isset($location['type']) && isset($directionLocation['type']) && $location['type'] !== $directionLocation['type']
-            ) {
-                $section = null;
-            }
-
-            $directionViewModel = (object) [
-                'id'   => $directionLocation['id'],
-                'name' => $directionLocation['name'],
-                'section' => $section,
-                'isLocked' => $this->regionIsLocked($directionLocation),
-                'icon' => match ($directionLocation['type'] ?? null) {
-                    LocationType::CITY => "fas fa-city",
-                    LocationType::CAVE => "fas fa-mountain",
-                    LocationType::TOWER => "far fa-building",
-                    LocationType::GYM => "fas fa-dumbbell",
-                    default => null,
-                }
-            ];
-            if (Direction::isCardinal($key)) {
-                $viewModel->hasCardinalDirections = true;
-                $viewModel->{Direction::toSlug($key)} = $directionViewModel;
-            } elseif (Direction::isVertical($key)) {
-                $viewModel->hasVerticalDirections = true;
-                $directionViewModel->icon = null;
-                $viewModel->{Direction::toSlug($key)} = $directionViewModel;
-            } else {
-                $viewModel->directions[] = $directionViewModel;
-            }
-        }
-
-        return $viewModel;
-    }
-
-    private function regionIsLocked(array $location): bool
-    {
-        if ($location['region'] === Region::KANTO) {
-            return false;
-        }
-
-        $requiredRegion = match($location['region']) {
-            Region::JOHTO => Region::KANTO,
-        };
-
-        $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($requiredRegion);
-
-        return is_null($eliteFourChallenge);
     }
 }

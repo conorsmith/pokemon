@@ -178,6 +178,9 @@
             animation-fill-mode: both;
             animation-iteration-count: 3;
         }
+        .pokemon-image.pokemon-image--unregistered img {
+            filter: brightness(0);
+        }
 
         @keyframes flash {
             0%, 100% {

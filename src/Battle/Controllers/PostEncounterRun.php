@@ -2,22 +2,27 @@
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
-use Doctrine\DBAL\Connection;
+use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 
 final class PostEncounterRun
 {
     public function __construct(
-        private readonly Connection $db,
+        private readonly EncounterRepository $encounterRepository,
+        private readonly PlayerRepository $playerRepository,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(array $args): void
     {
-        $id = substr(substr($_SERVER['REQUEST_URI'], strlen("/encounter/")), 0, -strlen("/run"));
+        $encounterId = $args['id'];
 
-        $this->db->delete("encounters", [
-            'instance_id' => INSTANCE_ID,
-            'id' => $id,
-        ]);
+        $encounter = $this->encounterRepository->find($encounterId);
+        $player = $this->playerRepository->findPlayer();
+
+        $player = $player->reviveTeam();
+
+        $this->encounterRepository->delete($encounter);
+        $this->playerRepository->savePlayer($player);
 
         header("Location: /map");
     }

@@ -3,15 +3,18 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\Battle\EliteFourChallengeRegionalVictoryQuery;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
+use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
+use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\Player\EarnedGymBadgesQueryDb;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
@@ -46,10 +49,23 @@ final class ApplicationFactory
     private static function createControllerFactory(): ControllerFactory
     {
         return new ControllerFactory(
+            new LocationControllerFactory(
+                self::createDatabaseConnection(),
+                new EncounterConfigRepository(),
+                new LocationConfigRepository(),
+                new TrainerConfigRepository(),
+                new EliteFourChallengeRepository(self::createDatabaseConnection()),
+                new BagRepository(self::createDatabaseConnection()),
+                new EliteFourChallengeRegionalVictoryQuery(
+                    new EliteFourChallengeRepository(self::createDatabaseConnection())
+                ),
+                new ViewModelFactory(self::createPokedexConfigArray()),
+                self::createPokedexConfigArray(),
+                new TemplateEngine(self::createSessionManager()),
+            ),
             self::createDatabaseConnection(),
             self::createSessionManager(),
             new CaughtPokemonRepository(self::createDatabaseConnection()),
-            new EncounterConfigRepository(),
             new LocationConfigRepository(),
             new TrainerConfigRepository(),
             new EncounterRepository(
@@ -57,6 +73,10 @@ final class ApplicationFactory
                 new EncounterConfigRepository(),
                 self::createPokedexConfigArray(),
                 new FoodDiaryHabitStreakQuery(self::createDailyHabitLogRepository()),
+            ),
+            new LocationRepository(
+                self::createDatabaseConnection(),
+                new LocationConfigRepository(),
             ),
             self::createTrainerRepository(),
             new PlayerRepository(
