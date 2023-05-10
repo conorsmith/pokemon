@@ -37,7 +37,7 @@ final class GetPokemon
 
     private function createCaptureVm(Pokemon $pokemon): stdClass
     {
-        $locationConfig = $this->locationConfigRepository->findLocation($pokemon->caughtLocationId);
+        $locationConfig = $this->locationConfigRepository->findLocation($pokemon->caughtLocation);
 
         return (object) [
             'location' => $locationConfig['name'],

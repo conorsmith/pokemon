@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Repositories;
 
+use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\EarnedGymBadgesQuery;
+use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
 use ConorSmith\Pokemon\Team\Domain\DayCare;
 use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
@@ -19,6 +21,7 @@ final class PokemonRepository
         private readonly Connection $db,
         private readonly EarnedGymBadgesQuery $earnedGymBadgesQuery,
         private readonly PokemonConfigRepository $pokemonConfigRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
     public function find(string $id): ?Pokemon
@@ -137,6 +140,7 @@ final class PokemonRepository
     private function createPokemonFromRow(array $row): Pokemon
     {
         $baseStats = self::createBaseStats($row['pokemon_id']);
+        $caughtLocationConfig = $this->locationConfigRepository->findLocation($row['location_caught']);
 
         return new Pokemon(
             $row['id'],
@@ -152,7 +156,10 @@ final class PokemonRepository
             new Stat($baseStats['spAttack'], $row['iv_special_attack']),
             new Stat($baseStats['spDefence'], $row['iv_special_defence']),
             new Stat($baseStats['speed'], $row['iv_speed']),
-            $row['location_caught'],
+            new CaughtLocation(
+                $row['location_caught'],
+                $caughtLocationConfig['region'],
+            ),
         );
     }
 
@@ -178,6 +185,7 @@ final class PokemonRepository
          */
         foreach ($team->members as $position => $pokemon) {
             $this->db->update("caught_pokemon", [
+                'pokemon_id' => $pokemon->number,
                 'level' => $pokemon->level,
                 'team_position' => $position,
                 'location' => "team",

@@ -5,8 +5,10 @@ namespace ConorSmith\Pokemon\Team;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand as CommandInterface;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonResult;
+use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
 use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Domain\Stat;
@@ -21,6 +23,7 @@ final class CatchPokemonCommand implements CommandInterface
         private readonly Connection $db,
         private readonly FriendshipLog $friendshipLog,
         private readonly PokemonConfigRepository $pokemonConfigRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
     public function run(
@@ -51,6 +54,7 @@ final class CatchPokemonCommand implements CommandInterface
         }
 
         $baseStats = self::createBaseStats($number);
+        $caughtLocationConfig = $this->locationConfigRepository->findLocation($caughtLocationId);
 
         $pokemon = new Pokemon(
             Uuid::uuid4()->toString(),
@@ -66,7 +70,10 @@ final class CatchPokemonCommand implements CommandInterface
             new Stat($baseStats['spAttack'], $ivSpecialAttack),
             new Stat($baseStats['spDefence'], $ivSpecialDefence),
             new Stat($baseStats['speed'], $ivSpeed),
-            $caughtLocationId,
+            new CaughtLocation(
+                $caughtLocationId,
+                $caughtLocationConfig['region'],
+            ),
         );
 
         $this->db->insert("caught_pokemon", [

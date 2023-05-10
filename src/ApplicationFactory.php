@@ -71,6 +71,7 @@ final class ApplicationFactory
             new EncounterRepository(
                 self::createDatabaseConnection(),
                 new EncounterConfigRepository(),
+                new LocationConfigRepository(),
                 self::createPokedexConfigArray(),
                 new FoodDiaryHabitStreakQuery(self::createDailyHabitLogRepository()),
             ),
@@ -100,6 +101,7 @@ final class ApplicationFactory
                 self::createDatabaseConnection(),
                 self::createFriendshipLog(),
                 self::createPokemonConfigRepository(),
+                new LocationConfigRepository(),
             ),
             new FriendshipLogReportTeamPokemonFaintedCommand(self::createFriendshipLog()),
             new FriendshipLogReportBattleWithGymLeaderCommand(self::createFriendshipLog()),
@@ -163,6 +165,7 @@ final class ApplicationFactory
             self::createDatabaseConnection(),
             new EarnedGymBadgesQueryDb(self::createDatabaseConnection()),
             self::createPokemonConfigRepository(),
+            new LocationConfigRepository(),
         );
     }
 

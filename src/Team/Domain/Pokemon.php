@@ -19,7 +19,7 @@ final class Pokemon
         public readonly Stat $specialAttack,
         public readonly Stat $specialDefence,
         public readonly Stat $speed,
-        public readonly string $caughtLocationId,
+        public readonly CaughtLocation $caughtLocation,
     ) {}
 
     public function identicalTo(self $other): bool
@@ -42,14 +42,14 @@ final class Pokemon
         return $this->friendship === 255;
     }
 
-    public function levelUp(): self
+    public function levelUp(int $newLevel = null): self
     {
         return new self(
             $this->id,
             $this->number,
             $this->form,
             $this->type,
-            $this->level + 1,
+            $newLevel ?? $this->level + 1,
             $this->friendship,
             $this->isShiny,
             $this->hp,
@@ -58,7 +58,27 @@ final class Pokemon
             $this->specialAttack,
             $this->specialDefence,
             $this->speed,
-            $this->caughtLocationId,
+            $this->caughtLocation,
+        );
+    }
+
+    public function evolve(string $newNumber): self
+    {
+        return new self(
+            $this->id,
+            $newNumber,
+            $this->form,
+            $this->type,
+            $this->level,
+            $this->friendship,
+            $this->isShiny,
+            $this->hp,
+            $this->physicalAttack,
+            $this->physicalDefence,
+            $this->specialAttack,
+            $this->specialDefence,
+            $this->speed,
+            $this->caughtLocation,
         );
     }
 }

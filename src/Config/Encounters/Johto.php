@@ -1140,6 +1140,10 @@ return [
                 'weight' => 5,
                 'levels' => 6,
             ],
+            PokedexNo::TOGEPI => [
+                'weight' => 1,
+                'levels' => 6,
+            ],
         ],
         EncounterType::SURFING => [
             PokedexNo::WOOPER => [
@@ -1187,6 +1191,10 @@ return [
             PokedexNo::ONIX => [
                 'weight' => 10,
                 'levels' => 8,
+            ],
+            PokedexNo::TOGEPI => [
+                'weight' => 1,
+                'levels' => 6,
             ],
         ],
         EncounterType::SURFING => [
@@ -1239,6 +1247,10 @@ return [
             PokedexNo::ONIX => [
                 'weight' => 5,
                 'levels' => 23,
+            ],
+            PokedexNo::TOGEPI => [
+                'weight' => 1,
+                'levels' => [6, 12],
             ],
         ],
         EncounterType::SURFING => [
@@ -1404,6 +1416,10 @@ return [
                 'weight' => 15,
                 'levels' => [5, 6],
             ],
+            PokedexNo::SUDOWOODO => [
+                'weight' => 15,
+                'levels' => [5, 6],
+            ],
         ],
         EncounterType::SURFING => [
             PokedexNo::PSYDUCK => [
@@ -1564,6 +1580,10 @@ return [
                 'weight' => 25,
                 'levels' => [10, 12],
             ],
+            PokedexNo::CHIKORITA => [
+                'weight' => 25,
+                'levels' => [10, 12],
+            ],
         ],
     ],
     LocationId::ROUTE_36 => [
@@ -1669,6 +1689,10 @@ return [
                 'levels' => [14, 16],
             ],
             PokedexNo::MAGMAR => [
+                'weight' => 15,
+                'levels' => 14,
+            ],
+            PokedexNo::CYNDAQUIL => [
                 'weight' => 15,
                 'levels' => 14,
             ],
@@ -1916,6 +1940,10 @@ return [
                 'weight' => 10,
                 'levels' => [15, 29],
             ],
+            PokedexNo::TOTODILE => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
         ],
         EncounterType::FISHING => [
             PokedexNo::KRABBY => [
@@ -1951,6 +1979,10 @@ return [
                 'levels' => [15, 25],
             ],
             PokedexNo::MANTINE => [
+                'weight' => 10,
+                'levels' => [15, 25],
+            ],
+            PokedexNo::TOTODILE => [
                 'weight' => 10,
                 'levels' => [15, 25],
             ],
@@ -3050,6 +3082,10 @@ return [
             ],
             PokedexNo::GEODUDE => [
                 'weight' => 50,
+                'levels' => [13, 15],
+            ],
+            PokedexNo::HOUNDOUR => [
+                'weight' => 5,
                 'levels' => [13, 15],
             ],
         ],

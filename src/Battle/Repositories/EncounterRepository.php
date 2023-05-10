@@ -10,7 +10,9 @@ use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\EncounterConfigRepository;
+use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
+use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use Doctrine\DBAL\Connection;
@@ -23,6 +25,7 @@ final class EncounterRepository
     public function __construct(
         private readonly Connection $db,
         private readonly EncounterConfigRepository $encounterConfigRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
         private readonly array $pokedex,
         private readonly HabitStreakQuery $habitStreakQuery,
     ) {}
@@ -265,7 +268,20 @@ final class EncounterRepository
     {
         $legendaryConfig = self::findLegendaryConfig($legendaryPokemonNumber);
 
-        return $legendaryConfig['level'];
+        if ($legendaryConfig['location'] instanceof Region) {
+            $region = $legendaryConfig['location'];
+        } else {
+            $locationConfig = $this->locationConfigRepository->findLocation($legendaryConfig['location']);
+
+            $region = $legendaryConfig['region'];
+        }
+
+        $regionalLevelOffset = match ($region) {
+            Region::KANTO => 0,
+            Region::JOHTO => 50,
+        };
+
+        return $legendaryConfig['level'] + $regionalLevelOffset;
     }
 
     private static function findLegendaryConfig(string $legendaryPokemonNumber): ?array

@@ -103,4 +103,20 @@ final class Team
 
         return new self($members);
     }
+
+    public function replace(Pokemon $pokemon): self
+    {
+        $members = [];
+
+        /** @var Pokemon $member */
+        foreach ($this->members as $member) {
+            if ($member->id === $pokemon->id) {
+                $members[] = $pokemon;
+            } else {
+                $members[] = $member;
+            }
+        }
+
+        return new self($members);
+    }
 }

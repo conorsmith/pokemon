@@ -17,7 +17,7 @@ final class PostEncounterGenerateAndStart
 
     public function __invoke(): void
     {
-        $encounterType = $_POST['encounterType'];
+        $encounterType = $_POST['encounterType'] ?? null;
         $legendaryPokemonNumber = $_POST['legendary'] ?? null;
 
         if ($legendaryPokemonNumber) {

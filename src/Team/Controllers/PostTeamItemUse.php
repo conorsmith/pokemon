@@ -5,16 +5,11 @@ namespace ConorSmith\Pokemon\Team\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
-use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
-use ConorSmith\Pokemon\Team\Domain\Pokemon;
-use ConorSmith\Pokemon\Team\FriendshipLog;
+use ConorSmith\Pokemon\Team\LevelUpPokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use Doctrine\DBAL\Connection;
-use GuzzleHttp\Client;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -25,8 +20,7 @@ final class PostTeamItemUse
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
         private readonly PokemonRepository $pokemonRepository,
-        private readonly FriendshipLog $friendshipLog,
-        private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly LevelUpPokemon $levelUpPokemon,
         private readonly array $pokedex,
     ) {}
 
@@ -45,6 +39,14 @@ final class PostTeamItemUse
 
     private function attemptToLevelUpPokemon(string $pokemonId): void
     {
+        $bag = $this->bagRepository->find();
+
+        if (!$bag->has(ItemId::RARE_CANDY)) {
+            $this->session->getFlashBag()->add("errors", "No rare candies remaining.");
+            header("Location: /team/use/" . ItemId::RARE_CANDY);
+            return;
+        }
+
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
         if (is_null($pokemon)) {
@@ -53,158 +55,28 @@ final class PostTeamItemUse
             return;
         }
 
-        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
-        ]);
+        $result = $this->levelUpPokemon->run($pokemonId);
 
-        if ($instanceRow['unused_level_ups'] < 1) {
-            $this->session->getFlashBag()->add("errors", "No rare candies remaining.");
+        if ($result->beyondLevelLimit) {
+            $this->session->getFlashBag()->add("errors", "You can't level up Pokémon beyond level {$result->levelLimit}");
             header("Location: /team/use/" . ItemId::RARE_CANDY);
             return;
         }
 
-        $levelLimit = self::findLevelLimit($instanceRow);
+        $bag = $bag->use(ItemId::RARE_CANDY);
+        $this->bagRepository->save($bag);
 
-        if ($pokemon->level + 1 > $levelLimit) {
-            $this->session->getFlashBag()->add("errors", "You can't level up Pokémon beyond level {$levelLimit}");
-            header("Location: /team/use/" . ItemId::RARE_CANDY);
-            return;
-        }
-
-        $newLevel = self::calculateNewLevel($pokemon->level, $levelLimit);
         $pokemonConfig = $this->pokedex[$pokemon->number];
 
-        $pokemonEvolves = false;
-        $newPokemonNumber = null;
+        $this->session->getFlashBag()->add("successes", "{$pokemonConfig['name']} levelled up to level {$result->newLevel}");
 
-        if (array_key_exists('evolutions', $pokemonConfig)) {
-            foreach ($pokemonConfig['evolutions'] as $number => $evolution) {
-                if ($this->canEvolve($pokemon, $evolution, $newLevel)) {
-                    $pokemonEvolves = true;
-                    $newPokemonNumber = $number;
-                }
-            }
-        }
-
-        $this->friendshipLog->levelUp($pokemon);
-
-        $this->db->beginTransaction();
-
-        $this->db->update("instances", [
-            'unused_level_ups' => $instanceRow['unused_level_ups'] - 1,
-        ], [
-            'id' => INSTANCE_ID,
-        ]);
-
-        $this->db->update("caught_pokemon", [
-            'level' => $newLevel,
-        ], [
-            'id' => $pokemon->id,
-        ]);
-
-        if ($pokemonEvolves) {
-            $this->db->update("caught_pokemon", [
-                'pokemon_id' => $newPokemonNumber,
-            ], [
-                'id' => $pokemon->id,
-            ]);
-
-            $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
-                'instanceId' => INSTANCE_ID,
-                'number' => $newPokemonNumber,
-            ]);
-
-            if ($pokedexRow === false) {
-                $this->db->insert("pokedex_entries", [
-                    'id' => Uuid::uuid4(),
-                    'instance_id' => INSTANCE_ID,
-                    'number' => $newPokemonNumber,
-                    'date_added' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
-                ]);
-            }
-        }
-
-        $this->db->commit();
-
-        $this->session->getFlashBag()->add("successes", "{$pokemonConfig['name']} levelled up to level {$newLevel}");
-
-        if ($pokemonEvolves) {
-            $newPokemon = $this->pokedex[$newPokemonNumber];
-            $this->session->getFlashBag()->add("successes", "Your {$pokemonConfig['name']} evolved into {$newPokemon['name']}!");
+        if ($result->evolved) {
+            $oldPokemon = $pokemonConfig;
+            $newPokemon = $this->pokedex[$result->newPokedexNumber];
+            $this->session->getFlashBag()->add("successes", "Your {$oldPokemon['name']} evolved into {$newPokemon['name']}!");
         }
 
         header("Location: /team/use/" . ItemId::RARE_CANDY);
-    }
-
-    private function canEvolve(Pokemon $pokemon, array $evolutionConfig, int $newLevel): bool
-    {
-        $requirements = [];
-
-        if (array_key_exists('level', $evolutionConfig)) {
-            $locationConfig = $this->locationConfigRepository->findLocation($pokemon->caughtLocationId);
-
-            $regionalLevelOffset = match ($locationConfig['region']) {
-                Region::KANTO => 0,
-                Region::JOHTO => 50,
-            };
-
-            $requirements[] = $evolutionConfig['level'] + $regionalLevelOffset <= $newLevel;
-        }
-
-        if (in_array('friendship', $evolutionConfig)) {
-            $requirements[] = $pokemon->friendship >= 220;
-        }
-
-        if (array_key_exists('time', $evolutionConfig)) {
-
-            $now = CarbonImmutable::now("Europe/Dublin");
-
-            $response = (new Client())->get("https://api.sunrisesunset.io/json?lat=53.34981&lng=-6.26031&timezone=Europe%2FDublin&date=today");
-
-            $data = json_decode($response->getBody()->getContents(), true);
-
-            $sunrise = CarbonImmutable::createFromFormat(
-                "Y-m-d g:i:s A",
-                $now->format("Y-m-d ") . $data['results']['sunrise'],
-                "Europe/Dublin"
-            );
-            $sunset = CarbonImmutable::createFromFormat(
-                "Y-m-d g:i:s A",
-                $now->format("Y-m-d ") . $data['results']['sunset'],
-                "Europe/Dublin"
-            );
-
-            $requirements[] = match ($evolutionConfig['time']) {
-                "day" => $now->isAfter($sunrise) && $now->isBefore($sunset),
-                "night" => $now->isBefore($sunrise) && $now->isAfter($sunset),
-            };
-        }
-
-        if (count($requirements) === 0) {
-            return false;
-        }
-
-        return array_reduce(
-            $requirements,
-            fn(bool $requirement, bool $carry) => $requirement && $carry,
-            true
-        );
-    }
-
-    private static function findLevelLimit(array $instanceRow): int
-    {
-        $gymBadges = array_map(
-            fn(int $value) => GymBadge::from($value),
-            json_decode($instanceRow['badges'])
-        );
-
-        if (count($gymBadges) === 0) {
-            return GymBadge::BOULDER->levelLimit();
-        }
-
-        $highestRankedBadge = GymBadge::findHighestRanked($gymBadges);
-
-        return $highestRankedBadge->levelLimit();
     }
 
     private function attemptToEvolvePokemon(string $itemId, string $pokemonId): void
@@ -272,78 +144,5 @@ final class PostTeamItemUse
 
         $this->session->getFlashBag()->add("successes", "{$pokemonConfig['name']} evolved into {$this->pokedex[$newPokemonNumber]['name']}");
         header("Location: /");
-    }
-
-    private static function calculateNewLevel(int $currentLevel, int $levelLimit): int
-    {
-        if ($levelLimit === 140) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return 30;
-            } elseif ($currentLevel < 50) {
-                return 50;
-            } elseif ($currentLevel < 70) {
-                return 70;
-            } elseif ($currentLevel < 90) {
-                return min($currentLevel + 10, 90);
-            } elseif ($currentLevel < 100) {
-                return min($currentLevel + 2, 100);
-            } else {
-                return $currentLevel + 1;
-            }
-        } elseif ($levelLimit === 120) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return 30;
-            } elseif ($currentLevel < 50) {
-                return 50;
-            } elseif ($currentLevel < 70) {
-                return min($currentLevel + 10, 70);
-            } elseif ($currentLevel < 90) {
-                return min($currentLevel + 2, 90);
-            } else {
-                return $currentLevel + 1;
-            }
-        } elseif ($levelLimit === 100) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return 30;
-            } elseif ($currentLevel < 50) {
-                return min($currentLevel + 10, 50);
-            } elseif ($currentLevel < 70) {
-                return min($currentLevel + 2, 70);
-            } else {
-                return $currentLevel + 1;
-            }
-        } elseif ($levelLimit === 90) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return 30;
-            } elseif ($currentLevel < 50) {
-                return min($currentLevel + 2, 50);
-            } else {
-                return $currentLevel + 1;
-            }
-        } elseif ($levelLimit === 70) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return min($currentLevel + 2, 30);
-            } else {
-                return $currentLevel + 1;
-            }
-        } elseif ($levelLimit === 50) {
-            if ($currentLevel < 20) {
-                return min($currentLevel + 2, 20);
-            } else {
-                return $currentLevel + 1;
-            }
-        } else {
-            return $currentLevel + 1;
-        }
     }
 }
