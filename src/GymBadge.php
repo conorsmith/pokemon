@@ -49,6 +49,28 @@ enum GymBadge: int
         };
     }
 
+    public static function all(): array
+    {
+        return [
+            self::BOULDER,
+            self::CASCADE,
+            self::THUNDER,
+            self::RAINBOW,
+            self::SOUL,
+            self::MARSH,
+            self::VOLCANO,
+            self::EARTH,
+            self::ZEPHYR,
+            self::HIVE,
+            self::PLAIN,
+            self::FOG,
+            self::STORM,
+            self::MINERAL,
+            self::GLACIER,
+            self::RISING,
+        ];
+    }
+
     public static function findHighestRanked(array $gymBadges): self
     {
         $highestRanked = self::BOULDER;

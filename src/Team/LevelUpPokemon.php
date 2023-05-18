@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Team;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\HighestRankedGymBadgeQuery;
 use ConorSmith\Pokemon\Team\Domain\Evolution;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
@@ -91,74 +92,43 @@ final class LevelUpPokemon
         }
     }
 
-    private static function calculateNewLevel(int $currentLevel, int $levelLimit): int
+    public static function calculateNewLevel(int $currentLevel, int $levelLimit): int
     {
-        if ($levelLimit === 140) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return 30;
-            } elseif ($currentLevel < 50) {
-                return 50;
-            } elseif ($currentLevel < 70) {
-                return 70;
-            } elseif ($currentLevel < 90) {
-                return min($currentLevel + 10, 90);
-            } elseif ($currentLevel < 100) {
-                return min($currentLevel + 2, 100);
-            } else {
-                return $currentLevel + 1;
+        $allLevelLimits = array_map(
+            fn(GymBadge $gymBadge) => $gymBadge->levelLimit(),
+            GymBadge::all(),
+        );
+
+        $distinctLevelLimits = array_unique($allLevelLimits);
+
+        $previousLevelLimits = array_filter(
+            $distinctLevelLimits,
+            fn(int $possibleLevelLimit) => $possibleLevelLimit < $levelLimit,
+        );
+
+        sort($distinctLevelLimits);
+
+        $mostRecentLevelLimit = array_pop($previousLevelLimits);
+        $secondMostRecentLevelLimit = array_pop($previousLevelLimits);
+        $thirdMostRecentLevelLimit = array_pop($previousLevelLimits);
+
+        $remainingRecentLevelLimits = $previousLevelLimits;
+
+        foreach ($remainingRecentLevelLimits as $recentLevelLimit) {
+            if ($currentLevel < $recentLevelLimit) {
+                return $recentLevelLimit;
             }
-        } elseif ($levelLimit === 120) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return 30;
-            } elseif ($currentLevel < 50) {
-                return 50;
-            } elseif ($currentLevel < 70) {
-                return min($currentLevel + 10, 70);
-            } elseif ($currentLevel < 90) {
-                return min($currentLevel + 2, 90);
-            } else {
-                return $currentLevel + 1;
-            }
-        } elseif ($levelLimit === 100) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return 30;
-            } elseif ($currentLevel < 50) {
-                return min($currentLevel + 10, 50);
-            } elseif ($currentLevel < 70) {
-                return min($currentLevel + 2, 70);
-            } else {
-                return $currentLevel + 1;
-            }
-        } elseif ($levelLimit === 90) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return 30;
-            } elseif ($currentLevel < 50) {
-                return min($currentLevel + 2, 50);
-            } else {
-                return $currentLevel + 1;
-            }
-        } elseif ($levelLimit === 70) {
-            if ($currentLevel < 20) {
-                return 20;
-            } elseif ($currentLevel < 30) {
-                return min($currentLevel + 2, 30);
-            } else {
-                return $currentLevel + 1;
-            }
-        } elseif ($levelLimit === 50) {
-            if ($currentLevel < 20) {
-                return min($currentLevel + 2, 20);
-            } else {
-                return $currentLevel + 1;
-            }
+        }
+
+        if ($currentLevel < $thirdMostRecentLevelLimit) {
+            return min($currentLevel + 10, $thirdMostRecentLevelLimit);
+
+        } elseif ($currentLevel < $secondMostRecentLevelLimit) {
+            return min($currentLevel + 2, $secondMostRecentLevelLimit);
+
+        } elseif ($currentLevel < $mostRecentLevelLimit) {
+            return min($currentLevel + 1, $mostRecentLevelLimit);
+
         } else {
             return $currentLevel + 1;
         }
