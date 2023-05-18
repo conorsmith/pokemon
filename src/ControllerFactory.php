@@ -378,6 +378,7 @@ final class ControllerFactory
             PostChallengeEliteFour::class => new PostChallengeEliteFour(
                 $this->session,
                 $this->bagRepository,
+                $this->playerRepository,
                 $this->eliteFourChallengeRepository,
                 new StartABattle(
                     $this->bagRepository,

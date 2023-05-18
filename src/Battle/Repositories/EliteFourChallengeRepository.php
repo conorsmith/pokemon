@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Battle\Repositories;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallenge;
+use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
 use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -63,9 +64,20 @@ final class EliteFourChallengeRepository
     {
         $region = Region::from($row['region']);
 
+        $team = array_map(
+            fn(array $member) => new EliteFourChallengeTeamMember(
+                $member['id'],
+                $member['pokedexNumber'],
+                $member['form'],
+                $member['level'],
+            ),
+            json_decode($row['team'], true),
+        );
+
         return self::createEliteFourChallenge(
             $row['id'],
             $region,
+            $team,
             $row['stage'],
             $row['victory'] === 1,
             null
@@ -81,6 +93,15 @@ final class EliteFourChallengeRepository
         if ($row === false) {
             $this->db->insert("elite_four_challenges", [
                 'id'           => $eliteFourChallenge->id,
+                'team'         => json_encode(array_map(
+                    fn(EliteFourChallengeTeamMember $member) => [
+                        'id'            => $member->id,
+                        'pokedexNumber' => $member->pokedexNumber,
+                        'form'          => $member->form,
+                        'level'         => $member->level,
+                    ],
+                    $eliteFourChallenge->team,
+                )),
                 'region'       => $eliteFourChallenge->region->value,
                 'stage'        => $eliteFourChallenge->stage,
                 'victory'      => 0,
@@ -101,6 +122,7 @@ final class EliteFourChallengeRepository
     public static function createEliteFourChallenge(
         string $id,
         Region $region,
+        array $team,
         int $stage,
         bool $victory,
         ?CarbonImmutable $dateCompleted,
@@ -116,6 +138,7 @@ final class EliteFourChallengeRepository
             $id,
             $region,
             $memberIds,
+            $team,
             $stage,
             $victory,
             $dateCompleted,

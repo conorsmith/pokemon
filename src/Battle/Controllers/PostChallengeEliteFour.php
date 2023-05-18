@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
+use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
+use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\UseCase\StartABattle;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\Region;
@@ -16,6 +19,7 @@ final class PostChallengeEliteFour
     public function __construct(
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
+        private readonly PlayerRepository $playerRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly StartABattle $startABattleUseCase,
     ) {}
@@ -31,6 +35,7 @@ final class PostChallengeEliteFour
         }
 
         $bag = $this->bagRepository->find();
+        $player = $this->playerRepository->findPlayer();
 
         if ($bag->count(ItemId::CHALLENGE_TOKEN) < 5) {
             $this->session->getFlashBag()->add("errors", "Not enough unused challenge tokens.");
@@ -43,6 +48,15 @@ final class PostChallengeEliteFour
         $eliteFourChallenge = EliteFourChallengeRepository::createEliteFourChallenge(
             Uuid::uuid4()->toString(),
             $region,
+            array_map(
+                fn(Pokemon $pokemon) => new EliteFourChallengeTeamMember(
+                    $pokemon->id,
+                    $pokemon->number,
+                    $pokemon->form,
+                    $pokemon->level,
+                ),
+                $player->team,
+            ),
             0,
             false,
             null,
