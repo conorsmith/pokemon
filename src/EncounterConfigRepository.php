@@ -15,6 +15,7 @@ final class EncounterConfigRepository
         $this->encounterConfigRepository = new WeakMap();
         $this->encounterConfigRepository[Region::KANTO] = require __DIR__ . "/Config/Encounters/Kanto.php";
         $this->encounterConfigRepository[Region::JOHTO] = require __DIR__ . "/Config/Encounters/Johto.php";
+        $this->encounterConfigRepository[Region::HOENN] = [];
     }
 
     public function findEncounters(string $locationId): ?array

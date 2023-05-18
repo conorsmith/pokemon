@@ -218,6 +218,7 @@ final class GetMap
         $regionalLevelOffset = match ($currentLocation['region']) {
             Region::KANTO => 0,
             Region::JOHTO => 50,
+            Region::HOENN => 100,
         };
 
         return (object) [

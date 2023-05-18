@@ -279,6 +279,7 @@ final class EncounterRepository
         $regionalLevelOffset = match ($region) {
             Region::KANTO => 0,
             Region::JOHTO => 50,
+            Region::HOENN => 100,
         };
 
         return $legendaryConfig['level'] + $regionalLevelOffset;

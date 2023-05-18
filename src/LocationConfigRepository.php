@@ -15,6 +15,7 @@ final class LocationConfigRepository
         $this->locationConfigByRegion = new WeakMap();
         $this->locationConfigByRegion[Region::KANTO] = require __DIR__ . "/Config/Locations/Kanto.php";
         $this->locationConfigByRegion[Region::JOHTO] = require __DIR__ . "/Config/Locations/Johto.php";
+        $this->locationConfigByRegion[Region::HOENN] = require __DIR__ . "/Config/Locations/Hoenn.php";
     }
 
     public function findLocation(string $locationId): ?array

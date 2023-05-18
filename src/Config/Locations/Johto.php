@@ -750,6 +750,7 @@ return [
             Direction::W => LocationId::ROUTE_40,
             LocationId::GLITTER_LIGHTHOUSE_1F,
             LocationId::SS_AQUA_1F,
+            LocationId::SS_TIDAL,
             LocationId::OLIVINE_GYM,
         ],
     ],

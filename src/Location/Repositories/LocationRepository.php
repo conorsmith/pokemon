@@ -50,6 +50,7 @@ final class LocationRepository
 
         $requiredRegion = match($region) {
             Region::JOHTO => Region::KANTO,
+            Region::HOENN => Region::JOHTO,
         };
 
         return !$this->regionalVictoryQuery->run($requiredRegion);

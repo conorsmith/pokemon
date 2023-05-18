@@ -44,6 +44,7 @@ final class GetPokemon
             'region' => match ($locationConfig['region']) {
                 Region::KANTO => "Kanto",
                 Region::JOHTO => "Johto",
+                Region::HOENN => "Hoenn",
             },
             'preposition' => match ($locationConfig['type']) {
                 LocationType::ROUTE => "on",

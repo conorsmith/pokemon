@@ -23,6 +23,7 @@ final class Evolution
             $regionalLevelOffset = match ($pokemon->caughtLocation->region) {
                 Region::KANTO => 0,
                 Region::JOHTO => 50,
+                Region::HOENN => 100,
             };
 
             $requirements[] = $this->minimumLevel + $regionalLevelOffset <= $level;

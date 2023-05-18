@@ -43,6 +43,7 @@ final class GetIndex
         $regionalBadgeIdOffset = match($currentPokemonLeague) {
             Region::KANTO => 0,
             Region::JOHTO => 8,
+            Region::HOENN => 16,
         };
 
         $earnedBadgeIds = json_decode($instanceRow['badges']);
@@ -67,6 +68,7 @@ final class GetIndex
             'currentPokemonLeague' => match($currentPokemonLeague) {
                 Region::KANTO => "Kanto",
                 Region::JOHTO => "Johto",
+                Region::HOENN => "Hoenn",
             },
             'badges' => $badgeViewModels,
         ]);

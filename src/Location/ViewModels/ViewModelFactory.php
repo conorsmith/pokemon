@@ -59,6 +59,7 @@ final class ViewModelFactory
             match ($locationConfig['region']) {
                 Region::KANTO => "Kanto",
                 Region::JOHTO => "Johto",
+                Region::HOENN => "Hoenn",
             },
             $locationConfig['section'] ?? null,
             $hasCardinalDirections,

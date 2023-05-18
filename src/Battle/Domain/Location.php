@@ -22,6 +22,7 @@ final class Location
         return match($this->region) {
             Region::KANTO => 0,
             Region::JOHTO => 50,
+            Region::HOENN => 100,
         };
     }
 }
