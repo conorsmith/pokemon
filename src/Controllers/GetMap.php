@@ -176,6 +176,12 @@ final class GetMap
             'instanceId' => INSTANCE_ID,
         ]);
 
+        if ($legendaryConfig['unlock'] instanceof Region
+            && !$this->isPokedexRegionComplete($legendaryConfig['unlock'])
+        ) {
+            return null;
+        }
+
         if (count($pokedexRows) < $legendaryConfig['unlock']) {
             return null;
         }
@@ -229,6 +235,44 @@ final class GetMap
             'canBattle'       => $canBattle,
             'lastEncountered' => $lastCaught ? $lastCaught->ago() : "",
         ];
+    }
+
+    private function isPokedexRegionComplete(Region $region): bool
+    {
+        $pokedexRegionRanges = match ($region) {
+            Region::KANTO => [1, 150],
+            Region::JOHTO => [152, 250],
+            Region::HOENN => [252, 384],
+            Region::SINNOH => [387, 488],
+            Region::UNOVA => [495, 646],
+            Region::KALOS => [650, 718],
+            Region::ALOLA => [[722, 800], [803, 806]],
+            Region::GALAR => [[810, 892], [894, 905]],
+            Region::PALDEA => [906, 1010],
+        };
+
+        if (is_integer($pokedexRegionRanges[0])) {
+            $pokedexRegionRanges = [$pokedexRegionRanges];
+        }
+
+        $requiredPokedexNumbers = [];
+
+        foreach ($pokedexRegionRanges as $range) {
+            $requiredPokedexNumbers = array_merge($requiredPokedexNumbers, range($range[0], $range[1]));
+        }
+
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId", [
+            'instanceId' => INSTANCE_ID,
+        ]);
+
+        $registeredPokedexNumbers = array_map(
+            fn(array $row) => $row['number'],
+            $rows,
+        );
+
+        $missingPokedexNumbers = array_diff($requiredPokedexNumbers, $registeredPokedexNumbers);
+
+        return count($missingPokedexNumbers) === 0;
     }
 
     private function createEliteFourViewModel(?array $eliteFourConfig, array $instanceRow): ?stdClass

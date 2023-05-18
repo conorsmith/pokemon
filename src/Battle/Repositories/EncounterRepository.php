@@ -273,7 +273,7 @@ final class EncounterRepository
         } else {
             $locationConfig = $this->locationConfigRepository->findLocation($legendaryConfig['location']);
 
-            $region = $legendaryConfig['region'];
+            $region = $locationConfig['region'];
         }
 
         $regionalLevelOffset = match ($region) {

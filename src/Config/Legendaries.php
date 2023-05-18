@@ -31,6 +31,12 @@ return [
         'unlock' => 125,
     ],
     [
+        'pokemon' => PokedexNo::MEW,
+        'location' => LocationId::VERMILLION_HARBOUR,
+        'level' => 10,
+        'unlock' => Region::KANTO,
+    ],
+    [
         'pokemon' => PokedexNo::RAIKOU,
         'location' => Region::JOHTO,
         'level' => 40,
@@ -59,5 +65,11 @@ return [
         'location' => LocationId::BELL_TOWER_ROOF,
         'level' => 70,
         'unlock' => 250,
+    ],
+    [
+        'pokemon' => PokedexNo::CELEBI,
+        'location' => LocationId::ILEX_FOREST,
+        'level' => 30,
+        'unlock' => Region::JOHTO,
     ],
 ];
