@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon;
 
 use ConorSmith\Pokemon\Battle\Controllers\GetBattle;
+use ConorSmith\Pokemon\Battle\Controllers\GetHallOfFame;
 use ConorSmith\Pokemon\Battle\Controllers\GetSwitch;
 use ConorSmith\Pokemon\Battle\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Battle\Controllers\PostBattleFight;
@@ -112,6 +113,7 @@ final class ControllerFactory
         $r->post("/team/switch", PostSwitch::class);
         $r->post("/battle/{id}/finish", PostBattleFinish::class);
         $r->post("/challenge/elite-four/{region}", PostChallengeEliteFour::class);
+        $r->get("/hall-of-fame/{region}", GetHallOfFame::class);
         $r->get("/bag", GetBag::class);
         $r->post("/item/{id}/use", PostItemUse::class);
         $r->get("/team/use/{id}", GetTeamItemUse::class);
@@ -312,6 +314,12 @@ final class ControllerFactory
                 $this->trainerRepository,
                 $this->playerRepository,
                 $this->viewModelFactory,
+                $this->templateEngine,
+            ),
+            GetHallOfFame::class => new GetHallOfFame(
+                $this->session,
+                $this->eliteFourChallengeRepository,
+                new PokedexConfigRepository(),
                 $this->templateEngine,
             ),
             PostBattleFight::class => new PostBattleFight(

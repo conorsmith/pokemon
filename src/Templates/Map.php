@@ -122,6 +122,19 @@
 
     </div>
 
+    <?php if ($hallOfFame) : ?>
+        <div class="card" style="text-align: center;">
+            <div class="card-body d-grid gap-2 p-2">
+                <a href="/hall-of-fame/<?=$hallOfFame->region?>"
+                        class="btn btn-warning"
+                        style="font-weight: bold;"
+                >
+                    Hall of Fame
+                </a>
+            </div>
+        </div>
+    <?php endif ?>
+
     <?php if ($wildPokemon->hasEncounters) : ?>
         <div class="card">
             <div class="card-header d-flex justify-content-between">

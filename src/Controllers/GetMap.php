@@ -130,6 +130,9 @@ final class GetMap
                 self::findEliteFourConfig($instanceRow['current_location']),
                 $instanceRow,
             ),
+            'hallOfFame' => $this->createHallOfFameViewModel(
+                self::findEliteFourConfig($instanceRow['current_location']),
+            ),
         ]);
     }
 
@@ -251,6 +254,23 @@ final class GetMap
             ),
             'region' => $eliteFourConfig['region']->value,
             'canChallenge' => $canChallenge,
+        ];
+    }
+
+    private function createHallOfFameViewModel(?array $eliteFourConfig): ?stdClass
+    {
+        if (is_null($eliteFourConfig)) {
+            return null;
+        }
+
+        $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($eliteFourConfig['region']);
+
+        if (is_null($eliteFourChallenge)) {
+            return null;
+        }
+
+        return (object) [
+            'region' => strtolower($eliteFourConfig['region']->value),
         ];
     }
 

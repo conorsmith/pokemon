@@ -62,6 +62,10 @@ final class EliteFourChallengeRepository
 
     private static function createFromRow(array $row): EliteFourChallenge
     {
+        if ($row['team'] === "null") {
+            throw new Exception("Outdated data, 'team' value is missing");
+        }
+
         $region = Region::from($row['region']);
 
         $team = array_map(
