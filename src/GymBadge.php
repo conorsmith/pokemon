@@ -27,6 +27,16 @@ enum GymBadge: int
     case GLACIER = 15;
     case RISING = 16;
 
+    // HOENN
+    case STONE = 17;
+    case KNUCKLE = 18;
+    case DYNAMO = 19;
+    case HEAT = 20;
+    case BALANCE = 21;
+    case FEATHER = 22;
+    case MIND = 23;
+    case RAIN = 24;
+
     public function levelLimit(): int
     {
         return match($this) {
@@ -46,6 +56,14 @@ enum GymBadge: int
             self::MINERAL => 120,
             self::GLACIER => 120,
             self::RISING => 140,
+            self::STONE => 140,
+            self::KNUCKLE => 140,
+            self::DYNAMO => 140,
+            self::HEAT => 150,
+            self::BALANCE => 160,
+            self::FEATHER => 170,
+            self::MIND => 180,
+            self::RAIN => 200,
         };
     }
 
@@ -68,6 +86,14 @@ enum GymBadge: int
             self::MINERAL,
             self::GLACIER,
             self::RISING,
+            self::STONE,
+            self::KNUCKLE,
+            self::DYNAMO,
+            self::HEAT,
+            self::BALANCE,
+            self::FEATHER,
+            self::MIND,
+            self::RAIN,
         ];
     }
 
@@ -107,6 +133,16 @@ enum GymBadge: int
                 self::MINERAL,
                 self::GLACIER,
                 self::RISING,
+            ],
+            Region::HOENN => [
+                self::STONE,
+                self::KNUCKLE,
+                self::DYNAMO,
+                self::HEAT,
+                self::BALANCE,
+                self::FEATHER,
+                self::MIND,
+                self::RAIN,
             ],
         };
     }

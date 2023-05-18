@@ -33,7 +33,6 @@ use ConorSmith\Pokemon\Controllers\GetBag;
 use ConorSmith\Pokemon\Controllers\GetPokedex;
 use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
-use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
@@ -67,8 +66,6 @@ use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\LevelUpPokemon;
-use ConorSmith\Pokemon\Team\Repositories\EvolutionRepository;
-use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
@@ -145,6 +142,7 @@ final class ControllerFactory
         private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
         private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
         private readonly WeeklyUpdateForTeamCommand $weeklyUpdateForTeamCommand,
+        private readonly LevelUpPokemon $levelUpPokemon,
         private readonly array $pokedex,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -370,17 +368,7 @@ final class ControllerFactory
                 $this->session,
                 $this->bagRepository,
                 $this->pokemonRepository,
-                new LevelUpPokemon(
-                    $this->db,
-                    $this->pokemonRepository,
-                    new EvolutionRepository(
-                        new PokemonConfigRepository(),
-                    ),
-                    $this->friendshipLog,
-                    new HighestRankedGymBadgeQueryDb(
-                        $this->db,
-                    ),
-                ),
+                $this->levelUpPokemon,
                 $this->pokedex,
             ),
             PostChallengeEliteFour::class => new PostChallengeEliteFour(

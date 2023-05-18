@@ -2,6 +2,7 @@
 
 namespace ConorSmith\Pokemon\Team;
 
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\WeeklyUpdateForTeamCommand as CommandInterface;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
@@ -12,24 +13,39 @@ final class WeeklyUpdateForTeamCommand implements CommandInterface
     public function __construct(
         private readonly Session $session,
         private readonly PokemonRepository $pokemonRepository,
+        private readonly LevelUpPokemon $levelUpPokemon,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
     ) {}
 
     public function run(): void
     {
         $team = $this->pokemonRepository->getTeam();
 
-        // TODO: Handle evolvution
-        $levelledUpTeam = $team->levelUpAllMembersWithMaxFriendship();
+        $members = $team->findAllMembersWithMaxFriendship();
 
-        $this->pokemonRepository->saveTeam($levelledUpTeam);
+        $results = [];
 
-        $teamDiff = $team->diff($levelledUpTeam);
+        /** @var Pokemon $member */
+        foreach ($members as $member) {
+            $results[$member->number] = $this->levelUpPokemon->run($member->id);
+        }
 
-        $pokemonConfig = require __DIR__ . "/../Config/Pokedex.php";
+        /** @var ResultOfLevellingUp $result */
+        foreach ($results as $pokedexNumber => $result) {
+            $pokemonConfig = $this->pokedexConfigRepository->find($pokedexNumber);
+            $this->session->getFlashBag()->add(
+                "successes",
+                "{$pokemonConfig['name']} levelled up to level {$result->newLevel}",
+            );
 
-        /** @var Pokemon $pokemon */
-        foreach ($teamDiff as [$before, $after]) {
-            $this->session->getFlashBag()->add("successes", "{$pokemonConfig[$before->number]['name']} levelled up to level {$after->level}");
+            if ($result->evolved) {
+                $oldPokemonConfig = $pokemonConfig;
+                $newPokemonConfig = $this->pokedexConfigRepository->find($result->newPokedexNumber);
+                $this->session->getFlashBag()->add(
+                    "successes",
+                    "Your {$oldPokemonConfig['name']} evolved into {$newPokemonConfig['name']}!",
+                );
+            }
         }
     }
 }

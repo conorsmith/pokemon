@@ -16,12 +16,15 @@ use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\Player\EarnedGymBadgesQueryDb;
+use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\CatchPokemonCommand;
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\FriendshipLogReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\Team\FriendshipLogReportTeamPokemonFaintedCommand;
+use ConorSmith\Pokemon\Team\LevelUpPokemon;
+use ConorSmith\Pokemon\Team\Repositories\EvolutionRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use ConorSmith\Pokemon\Team\TeamPokemonQuery;
@@ -108,7 +111,10 @@ final class ApplicationFactory
             new WeeklyUpdateForTeamCommand(
                 self::createSessionManager(),
                 self::createPokemonRepository(),
+                self::createLevelUpPokemon(),
+                new PokedexConfigRepository(),
             ),
+            self::createLevelUpPokemon(),
             self::createPokedexConfigArray(),
             new TemplateEngine(self::createSessionManager()),
         );
@@ -177,5 +183,20 @@ final class ApplicationFactory
     private static function createPokemonConfigRepository(): PokemonConfigRepository
     {
         return new PokemonConfigRepository();
+    }
+
+    private static function createLevelUpPokemon(): LevelUpPokemon
+    {
+        return new LevelUpPokemon(
+            self::createDatabaseConnection(),
+            self::createPokemonRepository(),
+            new EvolutionRepository(
+                new PokemonConfigRepository(),
+            ),
+            self::createFriendshipLog(),
+            new HighestRankedGymBadgeQueryDb(
+                self::createDatabaseConnection(),
+            ),
+        );
     }
 }
