@@ -12,6 +12,15 @@ final class ItemConfigRepository
         $this->config = require __DIR__ . "/Config/Items.php";
     }
 
+    public function find(string $id): ?array
+    {
+        if (!array_key_exists($id, $this->config)) {
+            return null;
+        }
+
+        return $this->config[$id];
+    }
+
     public function findByType(ItemType $itemType): array
     {
         return array_filter(

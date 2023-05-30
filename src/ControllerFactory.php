@@ -353,6 +353,7 @@ final class ControllerFactory
             ),
             GetBag::class => new GetBag(
                 $this->bagRepository,
+                new ItemConfigRepository(),
                 $this->templateEngine,
             ),
             PostItemUse::class => new PostItemUse(

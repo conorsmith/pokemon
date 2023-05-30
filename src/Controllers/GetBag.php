@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
+use ConorSmith\Pokemon\ItemConfigRepository;
+use ConorSmith\Pokemon\ItemType;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 
@@ -10,6 +12,7 @@ final class GetBag
 {
     public function __construct(
         private readonly BagRepository $bagRepository,
+        private readonly ItemConfigRepository $itemConfigRepository,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
@@ -17,23 +20,31 @@ final class GetBag
     {
         $bag = $this->bagRepository->find();
 
-        $itemConfig = require __DIR__ . "/../Config/Items.php";
-
         $itemViewModels = [];
+        $evolutionItemViewModels = [];
+        $heldItemViewModels = [];
 
         foreach ($bag->items as $item) {
-            $itemViewModels[] = (object) [
+            $configEntry = $this->itemConfigRepository->find($item->id);
+            $itemViewModel = (object) [
                 'id' => $item->id,
-                'name' => $itemConfig[$item->id]['name'],
-                'imageUrl' => $itemConfig[$item->id]['imageUrl'],
+                'name' => $configEntry['name'],
+                'imageUrl' => $configEntry['imageUrl'],
                 'amount' => $item->quantity,
-                'hasUse' => array_key_exists('hasUse', $itemConfig[$item->id])
-                    && $itemConfig[$item->id]['hasUse'],
+                'hasUse' => array_key_exists('hasUse', $configEntry)
+                    && $configEntry['hasUse'],
             ];
+            match ($configEntry['type'] ?? null) {
+                ItemType::EVOLUTION => $evolutionItemViewModels[] = $itemViewModel,
+                ItemType::HELD => $heldItemViewModels[] = $itemViewModel,
+                default => $itemViewModels[] = $itemViewModel,
+            };
         }
 
         echo $this->templateEngine->render(__DIR__ . "/../Templates/Bag.php", [
             'items' => $itemViewModels,
+            'evolutionItems' => $evolutionItemViewModels,
+            'heldItems' => $heldItemViewModels,
         ]);
     }
 }

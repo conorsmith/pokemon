@@ -80,10 +80,6 @@ final class GetIndex
             'pokeBalls' => $bag->countAllPokeBalls(),
             'rareCandy' => $bag->count(ItemId::RARE_CANDY),
             'challengeTokens' => $bag->count(ItemId::CHALLENGE_TOKEN),
-            'other' => $bag->countAllItems()
-                - $bag->countAllPokeBalls()
-                - $bag->count(ItemId::RARE_CANDY)
-                - $bag->count(ItemId::CHALLENGE_TOKEN),
         ];
     }
 }

@@ -19,10 +19,6 @@
             <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
             <?=$bagSummary->challengeTokens?>
         </div>
-        <div class="d-flex flex-column align-items-center">
-            <img src="https://archives.bulbagarden.net/media/upload/8/86/Bag_Fire_Stone_Sprite.png">
-            <?=$bagSummary->other?>
-        </div>
     </div>
     <a href="/bag" class="stretched-link stretched-link--hidden">Go to Bag</a>
 </div>

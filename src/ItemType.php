@@ -7,5 +7,5 @@ enum ItemType
 {
     case POKE_BALL;
     case EVOLUTION;
-    case TYPE_BOOST;
+    case HELD;
 }
