@@ -111,6 +111,14 @@ final class ViewModelFactory
             GymBadge::MINERAL => "Mineral",
             GymBadge::GLACIER => "Glacier",
             GymBadge::RISING => "Rising",
+            GymBadge::STONE => "Stone",
+            GymBadge::KNUCKLE => "Knuckle",
+            GymBadge::DYNAMO => "Dynamo",
+            GymBadge::HEAT => "Heat",
+            GymBadge::BALANCE => "Balance",
+            GymBadge::FEATHER => "Feather",
+            GymBadge::MIND => "Mind",
+            GymBadge::RAIN => "Rain",
         };
 
         return "{$name} Badge";

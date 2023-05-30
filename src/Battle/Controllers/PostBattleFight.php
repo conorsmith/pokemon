@@ -8,6 +8,8 @@ use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
+use ConorSmith\Pokemon\ItemConfigRepository;
+use ConorSmith\Pokemon\ItemType;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
@@ -23,6 +25,7 @@ final class PostBattleFight
     public function __construct(
         private readonly Connection                      $db,
         private readonly Session                         $session,
+        private readonly ItemConfigRepository            $itemConfigRepository,
         private readonly TrainerRepository               $trainerRepository,
         private readonly PlayerRepository                $playerRepository,
         private readonly AreaRepository                  $areaRepository,
@@ -70,7 +73,7 @@ final class PostBattleFight
         if ($trainer->hasEntireTeamFainted()) {
             $trainerWasPreviouslyBeaten = $trainer->dateLastBeaten !== null;
 
-            $prizeItemId = self::generatePrize(self::getPrizePool($trainer));
+            $prizeItemId = self::generatePrize($this->getPrizePool($trainer));
             $prize = self::findItem($prizeItemId);
             $bag = $bag->add($prizeItemId);
             $trainer = $trainer->defeat();
@@ -92,7 +95,7 @@ final class PostBattleFight
 
                 if ($areaJustCleared) {
                     foreach ($area->trainers as $areaTrainer) {
-                        $prizeItemId = self::generatePrize(self::getPrizePool($areaTrainer));
+                        $prizeItemId = self::generatePrize($this->getPrizePool($areaTrainer));
                         $areaClearedPrizes[] = self::findItem($prizeItemId);
                         $bag = $bag->add($prizeItemId);
                     }
@@ -163,7 +166,7 @@ final class PostBattleFight
         echo json_encode($events);
     }
 
-    private static function getPrizePool(Trainer $trainer): array
+    private function getPrizePool(Trainer $trainer): array
     {
         if ($trainer->class === TrainerClass::ELITE_FOUR
             || $trainer->class === TrainerClass::CHAMPION
@@ -208,6 +211,19 @@ final class PostBattleFight
         } else {
             foreach ($additionalPrizes as $prize) {
                 $pool[$prize] = 1;
+            }
+        }
+
+        $pool = array_map(
+            fn(int $weight) => $weight * 20,
+            $pool,
+        );
+
+        $evolutionItems = $this->itemConfigRepository->findByType(ItemType::EVOLUTION);
+
+        foreach ($evolutionItems as $itemId => $itemConfig) {
+            if (!array_key_exists($itemId, $pool)) {
+                $pool[$itemId] = 1;
             }
         }
 

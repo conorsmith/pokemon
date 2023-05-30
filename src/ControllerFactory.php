@@ -323,6 +323,7 @@ final class ControllerFactory
             PostBattleFight::class => new PostBattleFight(
                 $this->db,
                 $this->session,
+                new ItemConfigRepository(),
                 $this->trainerRepository,
                 $this->playerRepository,
                 $this->areaRepository,

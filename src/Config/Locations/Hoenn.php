@@ -58,6 +58,15 @@ return [
         'directions' => [
             Direction::E => LocationId::ROUTE_102,
             Direction::W => LocationId::ROUTE_104,
+            LocationId::PETALBURG_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::PETALBURG_GYM,
+        'name' => "Petalburg Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::PETALBURG_CITY,
         ],
     ],
     [

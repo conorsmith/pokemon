@@ -89,6 +89,7 @@ final class EncounterTableFactory
             || $value === "Swarm"
             || $value === "Starter Pokémon"
             || $value === "Gift"
+            || $value === "Horde Encounter"
             || substr($value, 0, 5) === "Trade"
             || substr($value, 0, 5) === "Event"
         ) {

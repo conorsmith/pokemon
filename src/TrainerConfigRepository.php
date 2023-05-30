@@ -15,7 +15,7 @@ final class TrainerConfigRepository
         $this->trainerConfigRepository = new WeakMap();
         $this->trainerConfigRepository[Region::KANTO] = require __DIR__ . "/Config/Trainers/Kanto.php";
         $this->trainerConfigRepository[Region::JOHTO] = require __DIR__ . "/Config/Trainers/Johto.php";
-        $this->trainerConfigRepository[Region::HOENN] = [];
+        $this->trainerConfigRepository[Region::HOENN] = require __DIR__ . "/Config/Trainers/Hoenn.php";
     }
 
     public function findTrainersInLocation(string $locationId): ?array
