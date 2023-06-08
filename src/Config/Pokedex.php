@@ -2699,6 +2699,10 @@ return [
         'type' => [PokemonType::DARK, PokemonType::FLYING],
         'friendship' => 35,
     ],
+    PokedexNo::GARCHOMP => [
+        'name' => "Garchomp",
+        'type' => [PokemonType::DRAGON, PokemonType::GROUND],
+    ],
     PokedexNo::WEAVILE => [
         'name' => "Weavile",
         'type' => [PokemonType::DARK, PokemonType::ICE],

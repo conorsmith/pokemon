@@ -182,6 +182,11 @@
             filter: brightness(0);
         }
 
+        .pokemon-level {
+            margin: 0 0.4rem;
+            font-size: 0.8rem;
+        }
+
         @keyframes flash {
             0%, 100% {
                 opacity: 1;

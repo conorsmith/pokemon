@@ -19,7 +19,7 @@
                             </span>
                         <?php endif ?>
                     </span>
-                    <span class="js-level" style="margin: 0 0.4rem;">
+                    <span class="js-level pokemon-level">
                     Lv <?=$pokemon->level?>
                 </span>
                 </div>

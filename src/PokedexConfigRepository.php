@@ -12,6 +12,11 @@ final class PokedexConfigRepository
         $this->config = require __DIR__ . "/Config/Pokedex.php";
     }
 
+    public function all(): array
+    {
+        return $this->config;
+    }
+
     public function find(string $pokedexNumber): array
     {
         return $this->config[$pokedexNumber];

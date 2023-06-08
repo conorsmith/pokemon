@@ -125,7 +125,7 @@
                             </span>
                             ${secondaryTypeElement}
                         </span>
-                        <span style="margin: 0 0.4rem;">
+                        <span class="pokemon-level">
                             Lv ${pokemon.level}
                         </span>
                     </div>
@@ -151,7 +151,7 @@
                                 ???
                             </span>
                         </span>
-                        <span style="margin: 0 0.4rem;">
+                        <span class="pokemon-level">
                             Lv ${pokemon.level}
                         </span>
                     </div>

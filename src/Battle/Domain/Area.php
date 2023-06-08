@@ -35,6 +35,10 @@ final class Area
 
     public function isOnlyUnbeatenTrainer(Trainer $unbeatenTrainer): bool
     {
+        if (count($this->trainers) === 0) {
+            return false;
+        }
+
         /** @var Trainer $areaTrainer */
         foreach ($this->trainers as $areaTrainer) {
             if ($areaTrainer->id !== $unbeatenTrainer->id

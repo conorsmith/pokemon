@@ -17,6 +17,7 @@ use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\Region;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\TrainerConfigRepository;
@@ -37,6 +38,7 @@ final class GetMap
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly SharedViewModelFactory $sharedViewModelFactory,
+        private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
         private readonly array $pokedex,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -172,17 +174,13 @@ final class GetMap
             return null;
         }
 
-        $pokedexRows = $this->db->fetchAllAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
-        ]);
-
         if ($legendaryConfig['unlock'] instanceof Region
             && !$this->isPokedexRegionComplete($legendaryConfig['unlock'])
         ) {
             return null;
         }
 
-        if (count($pokedexRows) < $legendaryConfig['unlock']) {
+        if ($this->totalRegisteredPokemonQuery->run() < $legendaryConfig['unlock']) {
             return null;
         }
 

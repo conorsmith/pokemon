@@ -160,6 +160,7 @@ final class ApplicationFactory
         return new TrainerRepository(
             self::createDatabaseConnection(),
             self::createPokedexConfigArray(),
+            new EliteFourChallengeRepository(self::createDatabaseConnection()),
             new TrainerConfigRepository(),
             new LocationConfigRepository(),
         );

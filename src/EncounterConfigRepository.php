@@ -18,6 +18,11 @@ final class EncounterConfigRepository
         $this->encounterConfigRepository[Region::HOENN] = require __DIR__ . "/Config/Encounters/Hoenn.php";
     }
 
+    public function allByRegion(): WeakMap
+    {
+        return $this->encounterConfigRepository;
+    }
+
     public function findEncounters(string $locationId): ?array
     {
         foreach ($this->encounterConfigRepository as $region => $config) {

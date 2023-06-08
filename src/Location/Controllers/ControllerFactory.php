@@ -10,6 +10,9 @@ use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
+use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\RegionalVictoryQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -52,6 +55,12 @@ final class ControllerFactory
                     $this->locationConfigRepository,
                 ),
                 $this->sharedViewModelFactory,
+                new TotalRegisteredPokemonQuery(
+                    new PokedexEntryRepository(
+                        $this->db,
+                        new PokedexConfigRepository()
+                    ),
+                ),
                 $this->pokedex,
                 $this->templateEngine,
             ),

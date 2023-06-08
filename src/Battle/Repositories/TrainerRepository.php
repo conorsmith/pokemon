@@ -12,7 +12,6 @@ use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
-use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use Doctrine\DBAL\Connection;
@@ -24,6 +23,7 @@ class TrainerRepository
     public function __construct(
         private readonly Connection $db,
         private readonly array $pokedex,
+        private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
@@ -72,6 +72,16 @@ class TrainerRepository
         $trainers = [];
 
         foreach ($config as $entry) {
+
+            if (array_key_exists('prerequisite', $entry)
+                && array_key_exists('champion', $entry['prerequisite'])
+            ) {
+                $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($entry['prerequisite']['champion']);
+                if (is_null($eliteFourChallenge)) {
+                    continue;
+                }
+            }
+
             $trainers[] = $this->findTrainerByTrainerId($entry['id']);
         }
 

@@ -30,9 +30,11 @@ use ConorSmith\Pokemon\Battle\UseCase\CreateALegendaryEncounter;
 use ConorSmith\Pokemon\Battle\UseCase\CreateAWildEncounter;
 use ConorSmith\Pokemon\Battle\UseCase\StartAnEncounter;
 use ConorSmith\Pokemon\Controllers\GetBag;
-use ConorSmith\Pokemon\Controllers\GetPokedex;
+use ConorSmith\Pokemon\Pokedex\Controllers\GetPokedex;
 use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
+use ConorSmith\Pokemon\Pokedex\Controllers\GetPokedexEntry;
+use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
@@ -85,6 +87,7 @@ final class ControllerFactory
         $r->post("/log/weekly-review", PostLogWeeklyReview::class);
 
         $r->get("/pokedex", GetPokedex::class);
+        $r->get("/pokedex/{number}", GetPokedexEntry::class);
         $r->post("/map/move", PostMapMove::class);
         $r->get("/map", GetMap::class);
         $r->get("/track-pokemon/{encounterType}", GetTrackPokemon::class);
@@ -178,8 +181,21 @@ final class ControllerFactory
                 $this->weeklyUpdateForTeamCommand,
             ),
             GetPokedex::class => new GetPokedex(
-                $this->db,
-                $this->pokedex,
+                new PokedexEntryRepository(
+                    $this->db,
+                    new PokedexConfigRepository(),
+                ),
+                new PokedexConfigRepository(),
+                $this->templateEngine,
+            ),
+            GetPokedexEntry::class => new GetPokedexEntry(
+                new PokedexEntryRepository(
+                    $this->db,
+                    new PokedexConfigRepository(),
+                ),
+                new EncounterConfigRepository(),
+                new LocationConfigRepository(),
+                new PokedexConfigRepository(),
                 $this->templateEngine,
             ),
             GetLogCalorieGoal::class => new GetLogCalorieGoal(

@@ -30,7 +30,7 @@
                                 </span>
                             <?php endif ?>
                         </span>
-                        <span style="margin: 0 0.4rem;">
+                        <span class="pokemon-level">
                             Lv <?=$pokemon->level?>
                         </span>
                     </p>

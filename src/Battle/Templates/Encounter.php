@@ -24,7 +24,7 @@
                     <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$opponentPokemon->form?> Form</span>
                 <?php endif ?>
             </h5>
-            <div class="mb-3 d-flex flex-row-reverse">
+            <div class="mb-3 d-flex align-items-center flex-row-reverse">
                 <span class="js-types">
                     <span class="badge bg-<?=$opponentPokemon->primaryType?>" style="text-transform: uppercase;">
                         <?=$opponentPokemon->primaryType?>
@@ -35,7 +35,7 @@
                         </span>
                     <?php endif ?>
                 </span>
-                <span class="js-level" style="margin: 0 0.4rem;">
+                <span class="js-level pokemon-level">
                     Lv <?=$opponentPokemon->level?>
                 </span>
             </div>
@@ -69,7 +69,7 @@
                         </span>
                     <?php endif ?>
                 </span>
-                <span class="js-level" style="margin: 0 0.4rem;">
+                <span class="js-level pokemon-level">
                     Lv <?=$playerPokemon->level?>
                 </span>
             </div>

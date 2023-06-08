@@ -215,7 +215,7 @@ final class PostBattleFight
         }
 
         $pool = array_map(
-            fn(int $weight) => $weight * 20,
+            fn(int $weight) => $weight * 30,
             $pool,
         );
 
@@ -223,7 +223,7 @@ final class PostBattleFight
 
         foreach ($evolutionItems as $itemId => $itemConfig) {
             if (!array_key_exists($itemId, $pool)) {
-                $pool[$itemId] = 1;
+                $pool[$itemId] = $itemConfig['targets'] ?? 1;
             }
         }
 
