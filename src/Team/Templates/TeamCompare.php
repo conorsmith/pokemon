@@ -3,6 +3,18 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap');
 
+        .team-stats {
+            font-size: 0.8rem;
+        }
+
+        .team-stats .positive {
+            color: #4AA14D;
+        }
+
+        .team-stats .negative {
+            color: #FF1111;
+        }
+
         .stat {
             font-family: 'Source Code Pro', monospace;
             text-align: right;
@@ -33,7 +45,7 @@
         <a href="?show=<?=$query->show?>&sort=<?=$query->sort?>"><span class="badge text-bg-light">Clear</span></a>
     </div>
 
-    <table class="table table-sm">
+    <table class="table table-sm team-stats">
         <tr>
             <td></td>
             <td class="stat">LV</td>
@@ -63,12 +75,12 @@
                     <td class="stat"><?=$pokemon->baseStats->specialDefence?></td>
                     <td class="stat"><?=$pokemon->baseStats->speed?></td>
                 <?php elseif ($query->show === "genetic-stats") : ?>
-                    <td class="stat"><?=$pokemon->geneticStats->hp?></td>
-                    <td class="stat"><?=$pokemon->geneticStats->physicalAttack?></td>
-                    <td class="stat"><?=$pokemon->geneticStats->specialAttack?></td>
-                    <td class="stat"><?=$pokemon->geneticStats->physicalDefence?></td>
-                    <td class="stat"><?=$pokemon->geneticStats->specialDefence?></td>
-                    <td class="stat"><?=$pokemon->geneticStats->speed?></td>
+                    <td class="stat <?=$pokemon->geneticStats->hp->class?>"><?=$pokemon->geneticStats->hp->value?></td>
+                    <td class="stat <?=$pokemon->geneticStats->physicalAttack->class?>"><?=$pokemon->geneticStats->physicalAttack->value?></td>
+                    <td class="stat <?=$pokemon->geneticStats->specialAttack->class?>"><?=$pokemon->geneticStats->specialAttack->value?></td>
+                    <td class="stat <?=$pokemon->geneticStats->physicalDefence->class?>"><?=$pokemon->geneticStats->physicalDefence->value?></td>
+                    <td class="stat <?=$pokemon->geneticStats->specialDefence->class?>"><?=$pokemon->geneticStats->specialDefence->value?></td>
+                    <td class="stat <?=$pokemon->geneticStats->speed->class?>"><?=$pokemon->geneticStats->speed->value?></td>
                 <?php endif ?>
             </tr>
         <?php endforeach ?>

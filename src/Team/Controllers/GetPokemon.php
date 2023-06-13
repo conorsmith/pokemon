@@ -59,42 +59,54 @@ final class GetPokemon
     private static function createStatsVm(Pokemon $pokemon): stdClass
     {
         return (object) [
-            'physicalAttack' => (object) [
-                'total' => $pokemon->physicalAttack->calculate($pokemon->level),
-                'base'  => $pokemon->physicalAttack->baseValue,
-                'iv'    => $pokemon->physicalAttack->iv,
-                'ev'    => $pokemon->physicalAttack->ev,
+            'physicalAttack'  => (object) [
+                'total'       => $pokemon->physicalAttack->calculate($pokemon->level),
+                'base'        => $pokemon->physicalAttack->baseValue,
+                'ev'          => $pokemon->physicalAttack->ev,
+                'ivDeviation' => self::createIvDeviationVm($pokemon->physicalAttack->iv),
             ],
             'physicalDefence' => (object) [
-                'total' => $pokemon->physicalDefence->calculate($pokemon->level),
-                'base'  => $pokemon->physicalDefence->baseValue,
-                'iv'    => $pokemon->physicalDefence->iv,
-                'ev'    => $pokemon->physicalDefence->ev,
+                'total'       => $pokemon->physicalDefence->calculate($pokemon->level),
+                'base'        => $pokemon->physicalDefence->baseValue,
+                'ev'          => $pokemon->physicalDefence->ev,
+                'ivDeviation' => self::createIvDeviationVm($pokemon->physicalDefence->iv),
             ],
-            'specialAttack' => (object) [
-                'total' => $pokemon->specialAttack->calculate($pokemon->level),
-                'base'  => $pokemon->specialAttack->baseValue,
-                'iv'    => $pokemon->specialAttack->iv,
-                'ev'    => $pokemon->specialAttack->ev,
+            'specialAttack'   => (object) [
+                'total'       => $pokemon->specialAttack->calculate($pokemon->level),
+                'base'        => $pokemon->specialAttack->baseValue,
+                'ev'          => $pokemon->specialAttack->ev,
+                'ivDeviation' => self::createIvDeviationVm($pokemon->specialAttack->iv),
             ],
-            'specialDefence' => (object) [
-                'total' => $pokemon->specialDefence->calculate($pokemon->level),
-                'base'  => $pokemon->specialDefence->baseValue,
-                'iv'    => $pokemon->specialDefence->iv,
-                'ev'    => $pokemon->specialDefence->ev,
+            'specialDefence'  => (object) [
+                'total'       => $pokemon->specialDefence->calculate($pokemon->level),
+                'base'        => $pokemon->specialDefence->baseValue,
+                'ev'          => $pokemon->specialDefence->ev,
+                'ivDeviation' => self::createIvDeviationVm($pokemon->specialDefence->iv),
             ],
-            'speed' => (object) [
-                'total' => $pokemon->speed->calculate($pokemon->level),
-                'base'  => $pokemon->speed->baseValue,
-                'iv'    => $pokemon->speed->iv,
-                'ev'    => $pokemon->speed->ev,
+            'speed'           => (object) [
+                'total'       => $pokemon->speed->calculate($pokemon->level),
+                'base'        => $pokemon->speed->baseValue,
+                'ev'          => $pokemon->speed->ev,
+                'ivDeviation' => self::createIvDeviationVm($pokemon->speed->iv),
             ],
-            'hp' => (object) [
-                'total' => $pokemon->hp->calculate($pokemon->level),
-                'base'  => $pokemon->hp->baseValue,
-                'iv'    => $pokemon->hp->iv,
-                'ev'    => $pokemon->hp->ev,
+            'hp'              => (object) [
+                'total'       => $pokemon->hp->calculate($pokemon->level),
+                'base'        => $pokemon->hp->baseValue,
+                'ev'          => $pokemon->hp->ev,
+                'ivDeviation' => self::createIvDeviationVm($pokemon->hp->iv),
             ],
+        ];
+    }
+
+    private static function createIvDeviationVm(int $iv): stdClass
+    {
+        $deviation = $iv - 16;
+
+        return (object) [
+            'class' => $deviation === 0
+                ? ""
+                : ($deviation > 0 ? "positive" : "negative"),
+            'value' => ($deviation > 0 ? "+" : "") . round($deviation / 0.16) . "%",
         ];
     }
 

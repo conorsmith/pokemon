@@ -92,13 +92,25 @@ final class GetTeamCompare
                 'speed' => $pokemon->speed->baseValue,
             ],
             'geneticStats' => (object) [
-                'hp' => $pokemon->hp->iv,
-                'physicalAttack' => $pokemon->physicalAttack->iv,
-                'physicalDefence' => $pokemon->physicalDefence->iv,
-                'specialAttack' => $pokemon->specialAttack->iv,
-                'specialDefence' => $pokemon->specialDefence->iv,
-                'speed' => $pokemon->speed->iv,
+                'hp' => self::createIvDeviationVm($pokemon->hp->iv),
+                'physicalAttack' => self::createIvDeviationVm($pokemon->physicalAttack->iv),
+                'physicalDefence' => self::createIvDeviationVm($pokemon->physicalDefence->iv),
+                'specialAttack' => self::createIvDeviationVm($pokemon->specialAttack->iv),
+                'specialDefence' => self::createIvDeviationVm($pokemon->specialDefence->iv),
+                'speed' => self::createIvDeviationVm($pokemon->speed->iv),
             ],
+        ];
+    }
+
+    private static function createIvDeviationVm(int $iv): stdClass
+    {
+        $deviation = $iv - 16;
+
+        return (object) [
+            'class' => $deviation === 0
+                ? ""
+                : ($deviation > 0 ? "positive" : "negative"),
+            'value' => ($deviation > 0 ? "+" : "") . round($deviation / 0.16),
         ];
     }
 }
