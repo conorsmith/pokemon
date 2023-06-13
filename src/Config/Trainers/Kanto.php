@@ -7,7 +7,7 @@ use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\Sex;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 
 return [
     LocationId::PALLET_TOWN => [
@@ -17,7 +17,7 @@ return [
             'name' => "Blue",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/10/Spr_FRLG_Blue_3.png",
             'prerequisite' => [
-                'champion' => Region::KANTO,
+                'champion' => RegionId::KANTO,
             ],
             'team' => [
                 [
@@ -5922,7 +5922,7 @@ return [
             'name' => "Lorelei",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/db/Spr_FRLG_Lorelei.png",
             'prerequisite' => [
-                'champion' => Region::KANTO,
+                'champion' => RegionId::KANTO,
             ],
             'team' => [
                 [
@@ -5958,7 +5958,7 @@ return [
             'name' => "Bruno",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/f7/Spr_FRLG_Bruno.png",
             'prerequisite' => [
-                'champion' => Region::KANTO,
+                'champion' => RegionId::KANTO,
             ],
             'team' => [
                 [
@@ -5994,7 +5994,7 @@ return [
             'name' => "Agatha",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/56/Spr_FRLG_Agatha.png",
             'prerequisite' => [
-                'champion' => Region::KANTO,
+                'champion' => RegionId::KANTO,
             ],
             'team' => [
                 [
@@ -6030,7 +6030,7 @@ return [
             'name' => "Lance",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/fb/Spr_FRLG_Lance.png",
             'prerequisite' => [
-                'champion' => Region::KANTO,
+                'champion' => RegionId::KANTO,
             ],
             'team' => [
                 [
@@ -6068,7 +6068,7 @@ return [
             'name' => "Will",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/fd/Spr_HGSS_Will.png",
             'prerequisite' => [
-                'champion' => Region::JOHTO,
+                'champion' => RegionId::JOHTO,
             ],
             'team' => [
                 [
@@ -6109,7 +6109,7 @@ return [
             'name' => "Koga",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/18/Spr_HGSS_Koga.png",
             'prerequisite' => [
-                'champion' => Region::JOHTO,
+                'champion' => RegionId::JOHTO,
             ],
             'team' => [
                 [
@@ -6150,7 +6150,7 @@ return [
             'name' => "Bruno",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/ee/Spr_HGSS_Bruno.png",
             'prerequisite' => [
-                'champion' => Region::JOHTO,
+                'champion' => RegionId::JOHTO,
             ],
             'team' => [
                 [
@@ -6191,7 +6191,7 @@ return [
             'name' => "Karen",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/a2/Spr_HGSS_Karen.png",
             'prerequisite' => [
-                'champion' => Region::JOHTO,
+                'champion' => RegionId::JOHTO,
             ],
             'team' => [
                 [

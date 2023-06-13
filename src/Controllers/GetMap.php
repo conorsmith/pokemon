@@ -15,7 +15,7 @@ use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -174,7 +174,7 @@ final class GetMap
             return null;
         }
 
-        if ($legendaryConfig['unlock'] instanceof Region
+        if ($legendaryConfig['unlock'] instanceof RegionId
             && !$this->isPokedexRegionComplete($legendaryConfig['unlock'])
         ) {
             return null;
@@ -220,9 +220,9 @@ final class GetMap
         }
 
         $regionalLevelOffset = match ($currentLocation['region']) {
-            Region::KANTO => 0,
-            Region::JOHTO => 50,
-            Region::HOENN => 100,
+            RegionId::KANTO => 0,
+            RegionId::JOHTO => 50,
+            RegionId::HOENN => 100,
         };
 
         return (object) [
@@ -235,18 +235,18 @@ final class GetMap
         ];
     }
 
-    private function isPokedexRegionComplete(Region $region): bool
+    private function isPokedexRegionComplete(RegionId $region): bool
     {
         $pokedexRegionRanges = match ($region) {
-            Region::KANTO => [1, 150],
-            Region::JOHTO => [152, 250],
-            Region::HOENN => [252, 384],
-            Region::SINNOH => [387, 488],
-            Region::UNOVA => [495, 646],
-            Region::KALOS => [650, 718],
-            Region::ALOLA => [[722, 800], [803, 806]],
-            Region::GALAR => [[810, 892], [894, 905]],
-            Region::PALDEA => [906, 1010],
+            RegionId::KANTO  => [1, 150],
+            RegionId::JOHTO  => [152, 250],
+            RegionId::HOENN  => [252, 384],
+            RegionId::SINNOH => [387, 488],
+            RegionId::UNOVA  => [495, 646],
+            RegionId::KALOS  => [650, 718],
+            RegionId::ALOLA  => [[722, 800], [803, 806]],
+            RegionId::GALAR  => [[810, 892], [894, 905]],
+            RegionId::PALDEA => [906, 1010],
         };
 
         if (is_integer($pokedexRegionRanges[0])) {
@@ -317,7 +317,7 @@ final class GetMap
         ];
     }
 
-    private static function hasAllRegionalGymBadges(array $instanceRow, Region $region): bool
+    private static function hasAllRegionalGymBadges(array $instanceRow, RegionId $region): bool
     {
         $gymBadges = array_map(
             fn(int $value) => GymBadge::from($value),
@@ -354,7 +354,7 @@ final class GetMap
         $legendariesConfig = require __DIR__ . "/../Config/Legendaries.php";
 
         foreach ($legendariesConfig as $config) {
-            if ($config['location'] instanceof Region
+            if ($config['location'] instanceof RegionId
                 && $this->encounterRoamingLegendary($locationId, $config)
             ) {
                 return $config;

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 
 enum GymBadge: int
 {
@@ -111,10 +111,10 @@ enum GymBadge: int
         return $highestRanked;
     }
 
-    public static function allFromRegion(Region $region): array
+    public static function allFromRegion(RegionId $region): array
     {
         return match($region) {
-            Region::KANTO => [
+            RegionId::KANTO => [
                 self::BOULDER,
                 self::CASCADE,
                 self::THUNDER,
@@ -124,7 +124,7 @@ enum GymBadge: int
                 self::VOLCANO,
                 self::EARTH,
             ],
-            Region::JOHTO => [
+            RegionId::JOHTO => [
                 self::ZEPHYR,
                 self::HIVE,
                 self::PLAIN,
@@ -134,7 +134,7 @@ enum GymBadge: int
                 self::GLACIER,
                 self::RISING,
             ],
-            Region::HOENN => [
+            RegionId::HOENN => [
                 self::STONE,
                 self::KNUCKLE,
                 self::DYNAMO,

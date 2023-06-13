@@ -160,6 +160,7 @@
 
         .pokemon-image {
             width: 6rem;
+            height: 6rem;
             margin-right: 1rem;
         }
         .flex-row-reverse .pokemon-image {

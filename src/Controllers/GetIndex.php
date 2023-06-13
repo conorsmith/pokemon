@@ -7,7 +7,7 @@ use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\Bag;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
@@ -41,9 +41,9 @@ final class GetIndex
         $currentPokemonLeague = $this->eliteFourChallengeRepository->findCurrentPokemonLeagueRegion();
 
         $regionalBadgeIdOffset = match($currentPokemonLeague) {
-            Region::KANTO => 0,
-            Region::JOHTO => 8,
-            Region::HOENN => 16,
+            RegionId::KANTO => 0,
+            RegionId::JOHTO => 8,
+            RegionId::HOENN => 16,
         };
 
         $earnedBadgeIds = json_decode($instanceRow['badges']);
@@ -66,9 +66,9 @@ final class GetIndex
                 $team->members
             ),
             'currentPokemonLeague' => match($currentPokemonLeague) {
-                Region::KANTO => "Kanto",
-                Region::JOHTO => "Johto",
-                Region::HOENN => "Hoenn",
+                RegionId::KANTO => "Kanto",
+                RegionId::JOHTO => "Johto",
+                RegionId::HOENN => "Hoenn",
             },
             'badges' => $badgeViewModels,
         ]);

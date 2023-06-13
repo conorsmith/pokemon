@@ -1,3 +1,21 @@
+<style>
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    @keyframes textBounce {
+        0% { transform: scale(0.6); }
+        60% { transform: scale(1.2); }
+        80% { transform: scale(0.9); }
+        100% { transform: scale(1); }
+    }
+
+    .tracked-pokemon {
+        animation: fadeIn 500ms;
+    }
+</style>
+
 <div class="d-grid gap-4">
 
     <div class="d-flex justify-content-between align-items-end">
@@ -9,11 +27,22 @@
 
     <div class="card">
         <div class="card-header d-flex justify-content-between">
-            <div><strong>Tracking Wild Pokémon</strong></div>
+            <div>
+                <i class="fa-fw me-1 <?=$encounterTypeClasses?>"></i>
+                <strong>Tracking Wild Pokémon</strong>
+            </div>
             <div class="d-flex" style="text-align: center; gap: 4px;">
                 <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
                 <span><?=$pokeballs?></span>
             </div>
+        </div>
+        <div class="card-body d-flex justify-content-center align-items-center gap-2 js-tracked-pokemon-indicator" style="height: 6.5rem;">
+            <div class="spinner-grow spinner-grow-sm" style="animation-duration: 1s;"></div>
+            <div class="spinner-grow spinner-grow-sm" style="animation-duration: 1s; animation-delay: 150ms;"></div>
+            <div class="spinner-grow spinner-grow-sm" style="animation-duration: 1s; animation-delay: 300ms;"></div>
+        </div>
+        <div class="card-body d-none justify-content-center align-items-center js-tracked-pokemon-alert" style="height: 6.5rem;">
+            <i class="fas fa-exclamation" style="font-size: 3rem; animation: textBounce 500ms;"></i>
         </div>
         <div class="card-body d-flex flex-column gap-2 js-tracked-pokemon-container">
         </div>
@@ -30,6 +59,9 @@
     const scriptData = JSON.parse(document.getElementById("script-data").innerText);
 
     const el = document.querySelector(".js-tracked-pokemon-container");
+
+    const indicatorEl = document.querySelector(".js-tracked-pokemon-indicator");
+    const alertEl = document.querySelector(".js-tracked-pokemon-alert");
 
     const formData = new FormData();
     formData.append("encounterType", scriptData.encounterType);
@@ -52,6 +84,9 @@
                     el.dataset.isDisabled = true;
                 });
 
+                indicatorEl.classList.replace("d-flex", "d-none");
+                alertEl.classList.replace("d-none", "d-flex");
+
                 setTimeout(function () {
 
                     el.style.removeProperty("opacity");
@@ -65,10 +100,17 @@
                     } else {
                         div.innerHTML = renderUnregisteredTrackedPokemon(responseData.id, responseData.pokemon).trim();
                     }
+
                     el.prepend(div.firstChild);
                     if (el.children.length > 9) {
                         el.lastChild.remove();
                     }
+
+                    el.firstChild.classList.replace("d-none", "d-flex");
+                    alertEl.classList.replace("d-flex", "d-none");
+                    setTimeout(function () {
+                        indicatorEl.classList.replace("d-none", "d-flex");
+                    }, 1000);
 
                     el.firstChild.addEventListener("click", function (e) {
                         if (e.currentTarget.dataset.isDisabled) {
@@ -109,7 +151,7 @@
         }
 
         return `
-            <form method="POST" action="/encounter/${encounterId}/start" class="d-flex js-tracked-pokemon">
+            <form method="POST" action="/encounter/${encounterId}/start" class="d-none tracked-pokemon js-tracked-pokemon">
                 <div class="pokemon-image pokemon-image--encounter ${pokemon.isShiny ? "pokemon-image--shiny" : "" }">
                     <img src="${pokemon.imageUrl}">
                 </div>
@@ -137,7 +179,7 @@
     function renderUnregisteredTrackedPokemon(encounterId, pokemon) {
 
         return `
-            <form method="POST" action="/encounter/${encounterId}/start" class="d-flex js-tracked-pokemon" style="transition: opacity 0.5s;">
+            <form method="POST" action="/encounter/${encounterId}/start" class="d-none tracked-pokemon js-tracked-pokemon" style="transition: opacity 0.5s;">
                 <div class="pokemon-image pokemon-image--encounter pokemon-image--unregistered ${pokemon.isShiny ? "pokemon-image--shiny" : "" }">
                     <img src="${pokemon.imageUrl}">
                 </div>

@@ -7,7 +7,7 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallenge;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -29,7 +29,7 @@ final class EliteFourChallengeRepository
         return self::createFromRow($row);
     }
 
-    public function findVictoryInRegion(Region $region): ?EliteFourChallenge
+    public function findVictoryInRegion(RegionId $region): ?EliteFourChallenge
     {
         $row = $this->db->fetchAssociative("SELECT * FROM elite_four_challenges WHERE date_completed IS NOT NULL AND victory = 1 AND region = :region", [
             'region' => $region->value,
@@ -42,16 +42,16 @@ final class EliteFourChallengeRepository
         return self::createFromRow($row);
     }
 
-    public function findCurrentPokemonLeagueRegion(): Region
+    public function findCurrentPokemonLeagueRegion(): RegionId
     {
         $rows = $this->db->fetchAllAssociative("SELECT * FROM elite_four_challenges WHERE date_completed IS NOT NULL AND victory = 1");
 
         $regionsWithVictory = array_map(
-            fn(array $row) => Region::from($row['region']),
+            fn(array $row) => RegionId::from($row['region']),
             $rows
         );
 
-        foreach (Region::all() as $region) {
+        foreach (RegionId::all() as $region) {
             if (!in_array($region, $regionsWithVictory)) {
                 return $region;
             }
@@ -66,7 +66,7 @@ final class EliteFourChallengeRepository
             throw new Exception("Outdated data, 'team' value is missing");
         }
 
-        $region = Region::from($row['region']);
+        $region = RegionId::from($row['region']);
 
         $team = array_map(
             fn(array $member) => new EliteFourChallengeTeamMember(
@@ -125,7 +125,7 @@ final class EliteFourChallengeRepository
 
     public static function createEliteFourChallenge(
         string $id,
-        Region $region,
+        RegionId $region,
         array $team,
         int $stage,
         bool $victory,
@@ -149,7 +149,7 @@ final class EliteFourChallengeRepository
         );
     }
 
-    private static function findEliteFourConfig(Region $region): ?array
+    private static function findEliteFourConfig(RegionId $region): ?array
     {
         $eliteFourConfig = require __DIR__ . "/../../Config/EliteFour.php";
 

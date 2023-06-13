@@ -8,11 +8,13 @@ use ConorSmith\Pokemon\Controllers\GetMap;
 use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
 use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
+use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\RegionConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\RegionalVictoryQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -43,7 +45,10 @@ final class ControllerFactory
                 $this->db,
                 new LocationRepository(
                     $this->db,
-                    $this->regionalVictoryQuery,
+                    new RegionRepository(
+                        new RegionConfigRepository(),
+                        $this->regionalVictoryQuery,
+                    ),
                     $this->locationConfigRepository,
                 ),
                 $this->bagRepository,
@@ -67,7 +72,10 @@ final class ControllerFactory
             GetTrackPokemon::class => new GetTrackPokemon(
                 new LocationRepository(
                     $this->db,
-                    $this->regionalVictoryQuery,
+                    new RegionRepository(
+                        new RegionConfigRepository(),
+                        $this->regionalVictoryQuery,
+                    ),
                     $this->locationConfigRepository,
                 ),
                 $this->bagRepository,

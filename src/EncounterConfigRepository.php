@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use WeakMap;
 
 final class EncounterConfigRepository
@@ -13,9 +13,9 @@ final class EncounterConfigRepository
     public function __construct()
     {
         $this->encounterConfigRepository = new WeakMap();
-        $this->encounterConfigRepository[Region::KANTO] = require __DIR__ . "/Config/Encounters/Kanto.php";
-        $this->encounterConfigRepository[Region::JOHTO] = require __DIR__ . "/Config/Encounters/Johto.php";
-        $this->encounterConfigRepository[Region::HOENN] = require __DIR__ . "/Config/Encounters/Hoenn.php";
+        $this->encounterConfigRepository[RegionId::KANTO] = require __DIR__ . "/Config/Encounters/Kanto.php";
+        $this->encounterConfigRepository[RegionId::JOHTO] = require __DIR__ . "/Config/Encounters/Johto.php";
+        $this->encounterConfigRepository[RegionId::HOENN] = require __DIR__ . "/Config/Encounters/Hoenn.php";
     }
 
     public function allByRegion(): WeakMap

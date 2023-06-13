@@ -8,7 +8,7 @@ use ConorSmith\Pokemon\Location\Domain\AdjacentLocation;
 use ConorSmith\Pokemon\Location\Domain\Location;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\LocationType;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 
 final class ViewModelFactory
 {
@@ -57,9 +57,9 @@ final class ViewModelFactory
             $location->id,
             $locationConfig['name'],
             match ($locationConfig['region']) {
-                Region::KANTO => "Kanto",
-                Region::JOHTO => "Johto",
-                Region::HOENN => "Hoenn",
+                RegionId::KANTO => "Kanto",
+                RegionId::JOHTO => "Johto",
+                RegionId::HOENN => "Hoenn",
             },
             $locationConfig['section'] ?? null,
             $hasCardinalDirections,

@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
@@ -23,7 +23,7 @@ final class GetHallOfFame
 
     public function __invoke(array $args): void
     {
-        $region = Region::tryFrom(strtoupper($args['region']));
+        $region = RegionId::tryFrom(strtoupper($args['region']));
 
         if (is_null($region)) {
             $this->session->getFlashBag()->add("errors", "Unknown region");

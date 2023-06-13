@@ -7,7 +7,7 @@ use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\Sex;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 
 return [
     LocationId::ROUTE_102 => [

@@ -6,15 +6,13 @@ namespace ConorSmith\Pokemon\Location\Repositories;
 use ConorSmith\Pokemon\Location\Domain\AdjacentLocation;
 use ConorSmith\Pokemon\Location\Domain\Location;
 use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
-use ConorSmith\Pokemon\SharedKernel\RegionalVictoryQuery;
 use Doctrine\DBAL\Connection;
 
 final class LocationRepository
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly RegionalVictoryQuery $regionalVictoryQuery,
+        private readonly RegionRepository $regionRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
@@ -31,28 +29,15 @@ final class LocationRepository
         /** @var string $directionLocationId */
         foreach ($locationConfig['directions'] as $key => $directionLocationId) {
             $directionConfig = $this->locationConfigRepository->findLocation($directionLocationId);
+            $directionRegion = $this->regionRepository->find($directionConfig['region']);
 
             $adjacentLocations[] = new AdjacentLocation(
                 $directionConfig['id'],
                 is_string($key) ? $key : null,
-                $this->regionIsLocked($directionConfig['region']),
+                $directionRegion->isLocked,
             );
         }
 
         return new Location($locationConfig['id'], $adjacentLocations);
-    }
-
-    private function regionIsLocked(Region $region): bool
-    {
-        if ($region === Region::KANTO) {
-            return false;
-        }
-
-        $requiredRegion = match($region) {
-            Region::JOHTO => Region::KANTO,
-            Region::HOENN => Region::JOHTO,
-        };
-
-        return !$this->regionalVictoryQuery->run($requiredRegion);
     }
 }

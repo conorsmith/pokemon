@@ -5,7 +5,7 @@ namespace ConorSmith\Pokemon\SharedKernel;
 
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 
-interface RegionalVictoryQuery
+interface RegionIsLockedQuery
 {
-    public function run(RegionId $region): bool;
+    public function run(RegionId $regionId): bool;
 }

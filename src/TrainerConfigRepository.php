@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use WeakMap;
 
 final class TrainerConfigRepository
@@ -13,9 +13,9 @@ final class TrainerConfigRepository
     public function __construct()
     {
         $this->trainerConfigRepository = new WeakMap();
-        $this->trainerConfigRepository[Region::KANTO] = require __DIR__ . "/Config/Trainers/Kanto.php";
-        $this->trainerConfigRepository[Region::JOHTO] = require __DIR__ . "/Config/Trainers/Johto.php";
-        $this->trainerConfigRepository[Region::HOENN] = require __DIR__ . "/Config/Trainers/Hoenn.php";
+        $this->trainerConfigRepository[RegionId::KANTO] = require __DIR__ . "/Config/Trainers/Kanto.php";
+        $this->trainerConfigRepository[RegionId::JOHTO] = require __DIR__ . "/Config/Trainers/Johto.php";
+        $this->trainerConfigRepository[RegionId::HOENN] = require __DIR__ . "/Config/Trainers/Hoenn.php";
     }
 
     public function findTrainersInLocation(string $locationId): ?array

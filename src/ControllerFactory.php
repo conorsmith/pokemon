@@ -18,6 +18,7 @@ use ConorSmith\Pokemon\Battle\Controllers\PostEncounterGenerateAndStart;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterRun;
+use ConorSmith\Pokemon\Battle\EliteFourChallengeRegionalVictoryQuery;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
@@ -30,6 +31,8 @@ use ConorSmith\Pokemon\Battle\UseCase\CreateALegendaryEncounter;
 use ConorSmith\Pokemon\Battle\UseCase\CreateAWildEncounter;
 use ConorSmith\Pokemon\Battle\UseCase\StartAnEncounter;
 use ConorSmith\Pokemon\Controllers\GetBag;
+use ConorSmith\Pokemon\Location\RegionRepositoryRegionIsLockedQuery;
+use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
 use ConorSmith\Pokemon\Pokedex\Controllers\GetPokedex;
 use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
@@ -193,6 +196,14 @@ final class ControllerFactory
                     $this->db,
                     new PokedexConfigRepository(),
                 ),
+                new RegionRepositoryRegionIsLockedQuery(
+                    new RegionRepository(
+                        new RegionConfigRepository(),
+                        new EliteFourChallengeRegionalVictoryQuery(
+                            $this->eliteFourChallengeRepository,
+                        ),
+                    ),
+                ),
                 new EncounterConfigRepository(),
                 new LocationConfigRepository(),
                 new PokedexConfigRepository(),
@@ -224,10 +235,6 @@ final class ControllerFactory
                 $this->unlimitedHabitLogRepository,
             ),
             PostEncounterGenerateAndStart::class => new PostEncounterGenerateAndStart(
-                new CreateAWildEncounter(
-                    $this->encounterRepository,
-                    $this->locationRepository,
-                ),
                 new CreateALegendaryEncounter(
                     $this->encounterRepository,
                     $this->bagRepository,

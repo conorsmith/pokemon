@@ -5,14 +5,14 @@ namespace ConorSmith\Pokemon\Battle\Domain;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use Exception;
 
 final class EliteFourChallenge
 {
     public function __construct(
         public readonly string $id,
-        public readonly Region $region,
+        public readonly RegionId $region,
         public readonly array $memberIds,
         public readonly array $team,
         public readonly int $stage,

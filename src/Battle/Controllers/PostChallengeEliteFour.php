@@ -9,7 +9,7 @@ use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\UseCase\StartABattle;
 use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -26,7 +26,7 @@ final class PostChallengeEliteFour
 
     public function __invoke(array $args): void
     {
-        $region = Region::tryFrom($args['region']);
+        $region = RegionId::tryFrom($args['region']);
 
         if (is_null($region)) {
             $this->session->getFlashBag()->add("errors", "Unknown region");

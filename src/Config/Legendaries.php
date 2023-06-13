@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 
 return [
     [
@@ -34,23 +34,23 @@ return [
         'pokemon' => PokedexNo::MEW,
         'location' => LocationId::VERMILLION_HARBOUR,
         'level' => 10,
-        'unlock' => Region::KANTO,
+        'unlock' => RegionId::KANTO,
     ],
     [
         'pokemon' => PokedexNo::RAIKOU,
-        'location' => Region::JOHTO,
+        'location' => RegionId::JOHTO,
         'level' => 40,
         'unlock' => 150,
     ],
     [
         'pokemon' => PokedexNo::ENTEI,
-        'location' => Region::JOHTO,
+        'location' => RegionId::JOHTO,
         'level' => 40,
         'unlock' => 175,
     ],
     [
         'pokemon' => PokedexNo::SUICUNE,
-        'location' => Region::JOHTO,
+        'location' => RegionId::JOHTO,
         'level' => 40,
         'unlock' => 200,
     ],
@@ -70,6 +70,6 @@ return [
         'pokemon' => PokedexNo::CELEBI,
         'location' => LocationId::ILEX_FOREST,
         'level' => 30,
-        'unlock' => Region::JOHTO,
+        'unlock' => RegionId::JOHTO,
     ],
 ];

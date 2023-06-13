@@ -5,7 +5,7 @@ namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\LocationType;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
@@ -42,9 +42,9 @@ final class GetPokemon
         return (object) [
             'location' => $locationConfig['name'],
             'region' => match ($locationConfig['region']) {
-                Region::KANTO => "Kanto",
-                Region::JOHTO => "Johto",
-                Region::HOENN => "Hoenn",
+                RegionId::KANTO => "Kanto",
+                RegionId::JOHTO => "Johto",
+                RegionId::HOENN => "Hoenn",
             },
             'preposition' => match ($locationConfig['type']) {
                 LocationType::ROUTE => "on",

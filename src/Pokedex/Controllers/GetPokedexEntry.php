@@ -11,7 +11,8 @@ use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\ViewModelFactory;
 use ConorSmith\Pokemon\PokedexConfigRepository;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use ConorSmith\Pokemon\SharedKernel\RegionIsLockedQuery;
 use ConorSmith\Pokemon\TemplateEngine;
 use stdClass;
 
@@ -19,6 +20,7 @@ final class GetPokedexEntry
 {
     public function __construct(
         private readonly PokedexEntryRepository $pokedexEntryRepository,
+        private readonly RegionIsLockedQuery $regionIsLockedQuery,
         private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
@@ -59,6 +61,9 @@ final class GetPokedexEntry
         $locations = [];
 
         foreach ($this->encounterConfigRepository->allByRegion() as $region => $regionEncountersConfig) {
+            if ($this->regionIsLockedQuery->run($region)) {
+                continue;
+            }
             foreach ($regionEncountersConfig as $locationId => $locationEncountersConfig) {
                 foreach ($locationEncountersConfig as $encounterType => $encountersConfig) {
                     $totalWeight = array_reduce(
@@ -105,9 +110,9 @@ final class GetPokedexEntry
             'name' => $locationConfig['name'],
             'section' => $locationConfig['section'] ?? "",
             'region' => match ($encounterLocation->region) {
-                Region::KANTO => "Kanto",
-                Region::JOHTO => "Johto",
-                Region::HOENN => "Hoenn",
+                RegionId::KANTO => "Kanto",
+                RegionId::JOHTO => "Johto",
+                RegionId::HOENN => "Hoenn",
             },
             'encounterTypeIcon' => match ($encounterLocation->encounterType) {
                 EncounterType::WALKING => "fas fa-shoe-prints",

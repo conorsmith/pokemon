@@ -4,12 +4,12 @@ declare(strict_types=1);
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\Sex;
-use ConorSmith\Pokemon\SharedKernel\Domain\Region;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\TrainerClass;
 
 return [
     [
-        'region' => Region::KANTO,
+        'region' => RegionId::KANTO,
         'location' => LocationId::KANTO_LEAGUE_CHAMBER,
         'members' => [
             [
@@ -185,7 +185,7 @@ return [
         ],
     ],
     [
-        'region' => Region::JOHTO,
+        'region' => RegionId::JOHTO,
         'location' => LocationId::JOHTO_LEAGUE_CHAMBER,
         'members' => [
             [

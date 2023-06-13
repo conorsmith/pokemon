@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\SharedKernel\Domain;
 
-enum Region: string
+enum RegionId: string
 {
     case KANTO = "KANTO";
     case JOHTO = "JOHTO";
