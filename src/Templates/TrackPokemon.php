@@ -166,13 +166,13 @@
                         ${pokemon.name}
                         ${formElement}
                     </h5>
-                    <div class="mb-3 d-flex">
-                        <span>
+                    <div class="mb-3 d-flex align-items-center">
+                        <div class="d-flex align-items-center gap-1">
                             <span class="badge bg-${pokemon.primaryType}" style="text-transform: uppercase;">
                                 ${pokemon.primaryType}
                             </span>
                             ${secondaryTypeElement}
-                        </span>
+                        </div>
                         <span class="pokemon-level">
                             Lv ${pokemon.level}
                         </span>
@@ -193,11 +193,9 @@
                     <h5>
                         ???
                     </h5>
-                    <div class="mb-3 d-flex">
-                        <span>
-                            <span class="badge" style="text-transform: uppercase; background-color: #aaa; color: #fff;">
-                                ???
-                            </span>
+                    <div class="mb-3 d-flex align-items-center">
+                        <span class="badge" style="text-transform: uppercase; background-color: #aaa; color: #fff;">
+                            ???
                         </span>
                         <span class="pokemon-level">
                             Lv ${pokemon.level}

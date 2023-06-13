@@ -38,7 +38,7 @@ final class ViewModelFactory
 
         /** @var AdjacentLocation $adjacentLocation */
         foreach ($location->adjacentLocations as $adjacentLocation) {
-            $adjacentLocationViewModel = $this->createAdjacentLocationViewModel($adjacentLocation);
+            $adjacentLocationViewModel = $this->createAdjacentLocationViewModel($adjacentLocation, $locationConfig);
 
             if ($adjacentLocation->isInACardinalDirection()) {
                 $hasCardinalDirections = true;
@@ -74,8 +74,10 @@ final class ViewModelFactory
         );
     }
 
-    public function createAdjacentLocationViewModel(AdjacentLocation $adjacentLocation): AdjacentLocationViewModel
-    {
+    public function createAdjacentLocationViewModel(
+        AdjacentLocation $adjacentLocation,
+        array $locationConfig
+    ): AdjacentLocationViewModel {
         $adjacentLocationConfig = $this->locationConfigRepository->findLocation($adjacentLocation->id);
 
         $section = $adjacentLocationConfig['section'] ?? null;
