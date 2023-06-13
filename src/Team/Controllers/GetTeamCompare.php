@@ -106,10 +106,12 @@ final class GetTeamCompare
     {
         $deviation = $iv - 16;
 
+        if ($deviation >= 0) {
+            $deviation++;
+        }
+
         return (object) [
-            'class' => $deviation === 0
-                ? ""
-                : ($deviation > 0 ? "positive" : "negative"),
+            'class' => $deviation > 0 ? "positive" : "negative",
             'value' => ($deviation > 0 ? "+" : "") . round($deviation / 0.16),
         ];
     }
