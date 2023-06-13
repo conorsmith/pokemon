@@ -6,12 +6,14 @@ namespace ConorSmith\Pokemon\Battle;
 use ConorSmith\Pokemon\Battle\Domain\AttackOutcome;
 use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 
 final class EventFactory
 {
     public function __construct(
         private readonly ViewModelFactory $viewModelFactory,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
     ) {}
 
     public function createBattleRoundEvents(
@@ -212,5 +214,17 @@ final class EventFactory
             'shake' => $shakeProbability,
             'roll' => $shakeRoll,
         ];
+    }
+
+    public function createPokedexRegistrationEvent(Encounter $encounter): array
+    {
+        $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
+        return $this->createMessageEvent("{$pokemonVm->name} has been registered in your Pokédex");
+    }
+
+    public function createLegendaryUnlockEvent(string $pokedexNumber): array
+    {
+        $pokedexConfig = $this->pokedexConfigRepository->find($pokedexNumber);
+        return $this->createMessageEvent("The legendary Pokémon {$pokedexConfig['name']} has been sighted!");
     }
 }

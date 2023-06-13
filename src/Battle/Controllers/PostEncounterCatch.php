@@ -9,8 +9,10 @@ use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery;
 use Doctrine\DBAL\Connection;
 
 final class PostEncounterCatch
@@ -21,6 +23,7 @@ final class PostEncounterCatch
         private readonly BagRepository $bagRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly CatchPokemonCommand $catchPokemonCommand,
+        private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
         private readonly EventFactory $eventFactory,
     ) {}
 
@@ -79,6 +82,8 @@ final class PostEncounterCatch
 
             $currentLocation = $this->findLocation($instanceRow['current_location']);
 
+            $totalRegisteredPokemonBeforeCatch = $this->totalRegisteredPokemonQuery->run();
+
             $result = $this->catchPokemonCommand->run(
                 $encounter->pokemon->number,
                 $encounter->pokemon->form,
@@ -96,6 +101,17 @@ final class PostEncounterCatch
 
             if ($result->wasSentToBox()) {
                 $events[] = $this->eventFactory->createCaughtPokemonSentToBoxEvent($encounter);
+            }
+
+            $totalRegisteredPokemonAfterCatch = $this->totalRegisteredPokemonQuery->run();
+
+            if ($totalRegisteredPokemonAfterCatch > $totalRegisteredPokemonBeforeCatch) {
+                $events[] = $this->eventFactory->createPokedexRegistrationEvent($encounter);
+
+                $legendaryConfig = $this->findLegendaryUnlock($totalRegisteredPokemonAfterCatch);
+                if (!is_null($legendaryConfig)) {
+                    $events[] = $this->eventFactory->createLegendaryUnlockEvent($legendaryConfig['pokemon']);
+                }
             }
 
             $bag = $bag->use($pokeballItemId);
@@ -185,5 +201,18 @@ final class PostEncounterCatch
         $highestRankedBadge = GymBadge::findHighestRanked($gymBadges);
 
         return $highestRankedBadge->levelLimit();
+    }
+
+    private function findLegendaryUnlock(int $totalRegisteredPokemon): ?array
+    {
+        $legendariesConfig = require __DIR__ . "/../../Config/Legendaries.php";
+
+        foreach ($legendariesConfig as $configEntry) {
+            if ($configEntry['unlock'] === $totalRegisteredPokemon) {
+                return $configEntry;
+            }
+        }
+
+        return null;
     }
 }

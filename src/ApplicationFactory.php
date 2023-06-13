@@ -17,6 +17,7 @@ use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\Player\EarnedGymBadgesQueryDb;
 use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
+use ConorSmith\Pokemon\Pokedex\RegisterNewPokemonCommand;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\CatchPokemonCommand;
@@ -103,6 +104,9 @@ final class ApplicationFactory
             new CatchPokemonCommand(
                 self::createDatabaseConnection(),
                 self::createFriendshipLog(),
+                new RegisterNewPokemonCommand(
+                    self::createDatabaseConnection(),
+                ),
                 self::createPokemonConfigRepository(),
                 new LocationConfigRepository(),
             ),

@@ -38,6 +38,7 @@ use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\Pokedex\Controllers\GetPokedexEntry;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
+use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
@@ -281,7 +282,16 @@ final class ControllerFactory
                 $this->bagRepository,
                 $this->locationConfigRepository,
                 $this->catchPokemonCommand,
-                new EventFactory($this->viewModelFactory),
+                new TotalRegisteredPokemonQuery(
+                    new PokedexEntryRepository(
+                        $this->db,
+                        new PokedexConfigRepository(),
+                    ),
+                ),
+                new EventFactory(
+                    $this->viewModelFactory,
+                    new PokedexConfigRepository(),
+                ),
             ),
             PostEncounterRun::class => new PostEncounterRun(
                 $this->encounterRepository,
@@ -291,7 +301,10 @@ final class ControllerFactory
                 $this->session,
                 $this->encounterRepository,
                 $this->playerRepository,
-                new EventFactory($this->viewModelFactory),
+                new EventFactory(
+                    $this->viewModelFactory,
+                    new PokedexConfigRepository(),
+                ),
                 $this->reportTeamPokemonFaintedCommand,
             ),
             PostTeamMoveUp::class => new PostTeamMoveUp(
@@ -352,7 +365,10 @@ final class ControllerFactory
                 $this->areaRepository,
                 $this->bagRepository,
                 $this->reportTeamPokemonFaintedCommand,
-                new EventFactory($this->viewModelFactory),
+                new EventFactory(
+                    $this->viewModelFactory,
+                    new PokedexConfigRepository(),
+                ),
                 $this->viewModelFactory,
             ),
             GetSwitch::class => new GetSwitch(

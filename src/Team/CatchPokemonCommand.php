@@ -8,6 +8,7 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand as CommandInterface;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonResult;
+use ConorSmith\Pokemon\SharedKernel\RegisterNewPokemonCommand;
 use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
 use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
@@ -22,6 +23,7 @@ final class CatchPokemonCommand implements CommandInterface
     public function __construct(
         private readonly Connection $db,
         private readonly FriendshipLog $friendshipLog,
+        private readonly RegisterNewPokemonCommand $registerNewPokemonCommand,
         private readonly PokemonConfigRepository $pokemonConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
@@ -96,21 +98,7 @@ final class CatchPokemonCommand implements CommandInterface
             'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
         ]);
 
-        $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number AND form = :form", [
-            'instanceId' => INSTANCE_ID,
-            'number' => $pokemon->number,
-            'form' => $pokemon->form,
-        ]);
-
-        if ($pokedexRow === false) {
-            $this->db->insert("pokedex_entries", [
-                'id' => Uuid::uuid4(),
-                'instance_id' => INSTANCE_ID,
-                'number' => $pokemon->number,
-                'form' => $pokemon->form,
-                'date_added' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
-            ]);
-        }
+        $this->registerNewPokemonCommand->run($pokemon->number, $pokemon->form);
 
         if ($isLegendary) {
             $this->db->insert("legendary_captures", [
