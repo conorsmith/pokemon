@@ -20,9 +20,7 @@
 
     <div class="d-flex justify-content-between align-items-end">
         <h2 class="mb-0"><?=$currentLocation->name?></h2>
-        <div>
-            <span class="badge bg-secondary"><?=$currentLocation->region?></span>
-        </div>
+        <a href="/map" class="btn btn-sm btn-outline-dark">Stop Tracking</a>
     </div>
 
     <div class="card">
@@ -44,12 +42,9 @@
         <div class="card-body d-none justify-content-center align-items-center js-tracked-pokemon-alert" style="height: 6.5rem;">
             <i class="fas fa-exclamation" style="font-size: 3rem; animation: textBounce 500ms;"></i>
         </div>
+        <div class="card-body d-none justify-content-center align-items-center js-tracked-pokemon-message" style="height: 6.5rem; font-weight: bold;"></div>
         <div class="card-body d-flex flex-column gap-2 js-tracked-pokemon-container">
         </div>
-    </div>
-
-    <div class="d-grid">
-        <a href="/map" class="btn btn-outline-secondary">Stop Tracking</a>
     </div>
 
 </div>
@@ -58,10 +53,13 @@
 <script>
     const scriptData = JSON.parse(document.getElementById("script-data").innerText);
 
+    const indicatorDelay = 1500;
+
     const el = document.querySelector(".js-tracked-pokemon-container");
 
     const indicatorEl = document.querySelector(".js-tracked-pokemon-indicator");
     const alertEl = document.querySelector(".js-tracked-pokemon-alert");
+    const messageEl = document.querySelector(".js-tracked-pokemon-message");
 
     const formData = new FormData();
     formData.append("encounterType", scriptData.encounterType);
@@ -106,11 +104,19 @@
                         el.lastChild.remove();
                     }
 
+                    if (responseData.isRegistered) {
+                        messageEl.innerText = "It's a wild " + responseData.pokemon.name + "!";
+                    } else {
+                        messageEl.innerText = "Who's that Pokémon!?";
+                    }
+
                     el.firstChild.classList.replace("d-none", "d-flex");
                     alertEl.classList.replace("d-flex", "d-none");
+                    messageEl.classList.replace("d-none", "d-flex");
                     setTimeout(function () {
                         indicatorEl.classList.replace("d-none", "d-flex");
-                    }, 1000);
+                        messageEl.classList.replace("d-flex", "d-none");
+                    }, indicatorDelay);
 
                     el.firstChild.addEventListener("click", function (e) {
                         if (e.currentTarget.dataset.isDisabled) {
@@ -127,7 +133,7 @@
                     const fastRand = Math.floor(Math.random() * (3 - 1 + 1) + 1);
                     const rand = speedRand > 7 ? slowRand : fastRand;
 
-                    setTimeout(requestTrackedPokemon, rand  * 1000);
+                    setTimeout(requestTrackedPokemon, Math.max(indicatorDelay, rand  * 1000));
                 }, 1000);
             });
     }
