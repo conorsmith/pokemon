@@ -23,6 +23,7 @@ final class GetBag
         $itemViewModels = [];
         $evolutionItemViewModels = [];
         $heldItemViewModels = [];
+        $statsItemViewModels = [];
 
         foreach ($bag->items as $item) {
             $configEntry = $this->itemConfigRepository->find($item->id);
@@ -37,6 +38,7 @@ final class GetBag
             match ($configEntry['type'] ?? null) {
                 ItemType::EVOLUTION => $evolutionItemViewModels[] = $itemViewModel,
                 ItemType::HELD => $heldItemViewModels[] = $itemViewModel,
+                ItemType::STATS => $statsItemViewModels[] = $itemViewModel,
                 default => $itemViewModels[] = $itemViewModel,
             };
         }
@@ -45,6 +47,7 @@ final class GetBag
             'items' => $itemViewModels,
             'evolutionItems' => $evolutionItemViewModels,
             'heldItems' => $heldItemViewModels,
+            'statsItems' => $statsItemViewModels,
         ]);
     }
 }

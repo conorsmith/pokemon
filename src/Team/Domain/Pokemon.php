@@ -44,41 +44,91 @@ final class Pokemon
 
     public function levelUp(int $newLevel = null): self
     {
-        return new self(
-            $this->id,
-            $this->number,
-            $this->form,
-            $this->type,
-            $newLevel ?? $this->level + 1,
-            $this->friendship,
-            $this->isShiny,
-            $this->hp,
-            $this->physicalAttack,
-            $this->physicalDefence,
-            $this->specialAttack,
-            $this->specialDefence,
-            $this->speed,
-            $this->caughtLocation,
+        return $this->clone(
+            level: $newLevel ?? $this->level + 1,
         );
     }
 
     public function evolve(string $newNumber): self
     {
+        return $this->clone(
+            number: $newNumber,
+        );
+    }
+
+    public function boostHpEv(int $increment): self
+    {
+        return $this->clone(
+            hp: $this->hp->boostEv($increment),
+        );
+    }
+
+    public function boostPhysicalAttackEv(int $increment): self
+    {
+        return $this->clone(
+            physicalAttack: $this->physicalAttack->boostEv($increment),
+        );
+    }
+
+    public function boostPhysicalDefenceEv(int $increment): self
+    {
+        return $this->clone(
+            physicalDefence: $this->physicalDefence->boostEv($increment),
+        );
+    }
+
+    public function boostSpecialAttackEv(int $increment): self
+    {
+        return $this->clone(
+            specialAttack: $this->specialAttack->boostEv($increment),
+        );
+    }
+
+    public function boostSpecialDefenceEv(int $increment): self
+    {
+        return $this->clone(
+            specialDefence: $this->specialDefence->boostEv($increment),
+        );
+    }
+
+    public function boostSpeedEv(int $increment): self
+    {
+        return $this->clone(
+            speed: $this->speed->boostEv($increment),
+        );
+    }
+
+    private function clone(
+        string $id = null,
+        string $number = null,
+        ?string $form = null,
+        Type $type = null,
+        int $level = null,
+        int $friendship = null,
+        bool $isShiny = null,
+        Hp $hp = null,
+        Stat $physicalAttack = null,
+        Stat $physicalDefence = null,
+        Stat $specialAttack = null,
+        Stat $specialDefence = null,
+        Stat $speed = null,
+        CaughtLocation $caughtLocation = null,
+    ) {
         return new self(
-            $this->id,
-            $newNumber,
-            $this->form,
-            $this->type,
-            $this->level,
-            $this->friendship,
-            $this->isShiny,
-            $this->hp,
-            $this->physicalAttack,
-            $this->physicalDefence,
-            $this->specialAttack,
-            $this->specialDefence,
-            $this->speed,
-            $this->caughtLocation,
+            $id ?? $this->id,
+            $number ?? $this->number,
+            $form ?? $this->form,
+            $type ?? $this->type,
+            $level ?? $this->level,
+            $friendship ?? $this->friendship,
+            $isShiny ?? $this->isShiny,
+            $hp ?? $this->hp,
+            $physicalAttack ?? $this->physicalAttack,
+            $physicalDefence ?? $this->physicalDefence,
+            $specialAttack ?? $this->specialAttack,
+            $specialDefence ?? $this->specialDefence,
+            $speed ?? $this->speed,
+            $caughtLocation ?? $this->caughtLocation,
         );
     }
 }

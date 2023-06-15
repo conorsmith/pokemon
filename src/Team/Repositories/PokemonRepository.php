@@ -150,12 +150,12 @@ final class PokemonRepository
             intval($row['level']),
             $this->calculateFriendship($row),
             $row['is_shiny'] === 1,
-            new Hp($baseStats['hp'], $row['iv_hp']),
-            new Stat($baseStats['attack'], $row['iv_physical_attack']),
-            new Stat($baseStats['defence'], $row['iv_physical_defence']),
-            new Stat($baseStats['spAttack'], $row['iv_special_attack']),
-            new Stat($baseStats['spDefence'], $row['iv_special_defence']),
-            new Stat($baseStats['speed'], $row['iv_speed']),
+            new Hp($baseStats['hp'], $row['iv_hp'], $row['ev_hp']),
+            new Stat($baseStats['attack'], $row['iv_physical_attack'], $row['ev_physical_attack']),
+            new Stat($baseStats['defence'], $row['iv_physical_defence'], $row['ev_physical_defence']),
+            new Stat($baseStats['spAttack'], $row['iv_special_attack'], $row['ev_special_attack']),
+            new Stat($baseStats['spDefence'], $row['iv_special_defence'], $row['ev_special_defence']),
+            new Stat($baseStats['speed'], $row['iv_speed'], $row['ev_speed']),
             new CaughtLocation(
                 $row['location_caught'],
                 $caughtLocationConfig['region'],
@@ -214,6 +214,23 @@ final class PokemonRepository
         $this->db->update("caught_pokemon", [
             'team_position' => null,
             'location' => "box",
+        ], [
+            'id' => $pokemon->id,
+        ]);
+    }
+
+    public function save(Pokemon $pokemon): void
+    {
+        $this->db->update("caught_pokemon", [
+            'pokemon_id' => $pokemon->number,
+            'form' => $pokemon->form,
+            'level' => $pokemon->level,
+            'ev_hp' => $pokemon->hp->ev,
+            'ev_physical_attack' => $pokemon->physicalAttack->ev,
+            'ev_physical_defence' => $pokemon->physicalDefence->ev,
+            'ev_special_attack' => $pokemon->specialAttack->ev,
+            'ev_special_defence' => $pokemon->specialDefence->ev,
+            'ev_speed' => $pokemon->speed->ev,
         ], [
             'id' => $pokemon->id,
         ]);

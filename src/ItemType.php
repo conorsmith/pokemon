@@ -8,4 +8,5 @@ enum ItemType
     case POKE_BALL;
     case EVOLUTION;
     case HELD;
+    case STATS;
 }

@@ -43,6 +43,7 @@ use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\WeeklyUpdateForTeamCommand;
+use ConorSmith\Pokemon\Team\BoostPokemonEvsCommand;
 use ConorSmith\Pokemon\Team\Controllers\GetPokemon;
 use ConorSmith\Pokemon\Team\Controllers\GetTeam;
 use ConorSmith\Pokemon\Controllers\GetIndex;
@@ -365,6 +366,9 @@ final class ControllerFactory
                 $this->areaRepository,
                 $this->bagRepository,
                 $this->reportTeamPokemonFaintedCommand,
+                new BoostPokemonEvsCommand(
+                    $this->pokemonRepository
+                ),
                 new EventFactory(
                     $this->viewModelFactory,
                     new PokedexConfigRepository(),
@@ -410,6 +414,7 @@ final class ControllerFactory
                 $this->bagRepository,
                 $this->pokemonRepository,
                 $this->levelUpPokemon,
+                new ItemConfigRepository(),
                 $this->pokedex,
             ),
             PostChallengeEliteFour::class => new PostChallengeEliteFour(

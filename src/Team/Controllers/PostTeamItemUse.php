@@ -5,11 +5,14 @@ namespace ConorSmith\Pokemon\Team\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\ItemType;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\LevelUpPokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use Doctrine\DBAL\Connection;
+use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -21,6 +24,7 @@ final class PostTeamItemUse
         private readonly BagRepository $bagRepository,
         private readonly PokemonRepository $pokemonRepository,
         private readonly LevelUpPokemon $levelUpPokemon,
+        private readonly ItemConfigRepository $itemConfigRepository,
         private readonly array $pokedex,
     ) {}
 
@@ -29,12 +33,55 @@ final class PostTeamItemUse
         $itemId = $args['id'];
         $pokemonId = $_POST['pokemon'];
 
+        $itemConfig = $this->itemConfigRepository->find($itemId);
+
         if ($itemId === ItemId::RARE_CANDY) {
             $this->attemptToLevelUpPokemon($pokemonId);
+
+        } elseif ($itemConfig['type'] === ItemType::STATS) {
+            $this->attemptToAlterPokemonEvs($pokemonId, $itemId, $itemConfig);
+
+        } elseif ($itemConfig['type'] === ItemType::EVOLUTION) {
+            $this->attemptToEvolvePokemon($itemId, $pokemonId);
+
+        } else {
+            throw new Exception("Unhandled item");
+        }
+    }
+
+    private function attemptToAlterPokemonEvs(string $pokemonId, string $itemId, array $itemConfig): void
+    {
+        $bag = $this->bagRepository->find();
+
+        if (!$bag->has($itemId)) {
+            $this->session->getFlashBag()->add("errors", "No {$itemConfig['name']} remaining.");
+            header("Location: /team/use/" . $itemId);
             return;
         }
 
-        $this->attemptToEvolvePokemon($itemId, $pokemonId);
+        $pokemon = $this->pokemonRepository->find($pokemonId);
+
+        if (is_null($pokemon)) {
+            $this->session->getFlashBag()->add("errors", "Pokémon not found.");
+            header("Location: /team/use/" . $itemId);
+            return;
+        }
+
+        $pokemon = match ($itemId) {
+            ItemId::HP_UP   => $pokemon->boostHpEv(10),
+            ItemId::PROTEIN => $pokemon->boostPhysicalAttackEv(10),
+            ItemId::IRON    => $pokemon->boostPhysicalDefenceEv(10),
+            ItemId::CALCIUM => $pokemon->boostSpecialAttackEv(10),
+            ItemId::ZINC    => $pokemon->boostSpecialDefenceEv(10),
+            ItemId::CARBOS  => $pokemon->boostSpeedEv(10),
+        };
+
+        $bag = $bag->use($itemId);
+
+        $this->bagRepository->save($bag);
+        $this->pokemonRepository->save($pokemon);
+
+        header("Location: /team/use/" . $itemId);
     }
 
     private function attemptToLevelUpPokemon(string $pokemonId): void

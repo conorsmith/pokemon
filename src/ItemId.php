@@ -54,4 +54,10 @@ final class ItemId
     public const REAPER_CLOTH = "b555bca7-2c71-4f73-9212-62d9acf8440f";
     public const DEEP_SEA_TOOTH = "d044a1d6-9820-4987-8a62-10c6cc7c6ae7";
     public const DEEP_SEA_SCALE = "50ee10b0-00f4-4ce8-aa8c-5e52db1fd440";
+    public const HP_UP = "12115fe2-6766-4434-9a0b-abc852d387d1";
+    public const PROTEIN = "58f2766e-5fe7-4f58-91e5-942851f929ab";
+    public const IRON = "710fe4a0-c8a2-42a7-9d49-65b50c7482ef";
+    public const CALCIUM = "ce0caaef-6766-4189-b608-db760c5b190e";
+    public const ZINC = "79563cc8-13c1-499d-8551-b5ce3a8edab6";
+    public const CARBOS = "ece6c73f-32f7-40fa-b1c9-1e15b34caed0";
 }

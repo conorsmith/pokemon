@@ -303,4 +303,40 @@ return [
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/c5/Bag_Soft_Sand_Sprite.png",
         'type' => ItemType::HELD,
     ],
+    ItemId::HP_UP => [
+        'name' => "HP Up",
+        'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/5e/Bag_HP_Up_Sprite.png",
+        'type' => ItemType::STATS,
+        'hasUse' => true,
+    ],
+    ItemId::PROTEIN => [
+        'name' => "Protein",
+        'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/aa/Bag_Protein_Sprite.png",
+        'type' => ItemType::STATS,
+        'hasUse' => true,
+    ],
+    ItemId::IRON => [
+        'name' => "Iron",
+        'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/a5/Bag_Iron_Sprite.png",
+        'type' => ItemType::STATS,
+        'hasUse' => true,
+    ],
+    ItemId::CALCIUM => [
+        'name' => "Calcium",
+        'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/d8/Bag_Calcium_Sprite.png",
+        'type' => ItemType::STATS,
+        'hasUse' => true,
+    ],
+    ItemId::ZINC => [
+        'name' => "Zinc",
+        'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/25/Bag_Zinc_Sprite.png",
+        'type' => ItemType::STATS,
+        'hasUse' => true,
+    ],
+    ItemId::CARBOS => [
+        'name' => "Carbos",
+        'imageUrl' => "https://archives.bulbagarden.net/media/upload/9/9e/Bag_Carbos_Sprite.png",
+        'type' => ItemType::STATS,
+        'hasUse' => true,
+    ],
 ];

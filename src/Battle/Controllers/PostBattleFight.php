@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Domain\Attack;
+use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
 use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\ItemType;
+use ConorSmith\Pokemon\SharedKernel\BoostPokemonEvsCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
@@ -18,6 +20,7 @@ use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
+use Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostBattleFight
@@ -31,6 +34,7 @@ final class PostBattleFight
         private readonly AreaRepository                  $areaRepository,
         private readonly BagRepository                   $bagRepository,
         private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
+        private readonly BoostPokemonEvsCommand          $boostPokemonEvsCommand,
         private readonly EventFactory                    $eventFactory,
         private readonly ViewModelFactory                $viewModelFactory,
     ) {}
@@ -65,6 +69,10 @@ final class PostBattleFight
                 $playerPokemon->level,
                 $opponentPokemon->level,
             );
+        }
+
+        if ($opponentPokemon->hasFainted) {
+            $this->boostPokemonEvs($playerPokemon, $opponentPokemon);
         }
 
         $playerEarnedGymBadge = false;
@@ -251,5 +259,45 @@ final class PostBattleFight
         $itemConfig = require __DIR__ . "/../../Config/Items.php";
 
         return $itemConfig[$id];
+    }
+
+    private function boostPokemonEvs(Pokemon $playerPokemon, Pokemon $opponentPokemon): void
+    {
+        $evYieldsConfig = self::findEvYield($opponentPokemon->number, $opponentPokemon->form);
+
+        $this->boostPokemonEvsCommand->run(
+            $playerPokemon->id,
+            $evYieldsConfig['hp'],
+            $evYieldsConfig['physicalAttack'],
+            $evYieldsConfig['physicalDefence'],
+            $evYieldsConfig['specialAttack'],
+            $evYieldsConfig['specialDefence'],
+            $evYieldsConfig['speed'],
+        );
+    }
+
+    private static function findEvYield(string $pokedexNumber, ?string $form): array
+    {
+        $evYieldsConfig = require __DIR__ . "/../../Config/EvYields.php";
+
+        foreach ($evYieldsConfig as $config) {
+            if ($config['pokedexNumber'] !== $pokedexNumber) {
+                continue;
+            }
+
+            if (is_null($form)) {
+                if (!array_key_exists('form', $config)) {
+                    return $config;
+                }
+            } else {
+                if (array_key_exists('form', $config)
+                    && $form === $config['form']
+                ) {
+                    return $config;
+                }
+            }
+        }
+
+        throw new Exception("Could not find EV yield for given Pokemon");
     }
 }

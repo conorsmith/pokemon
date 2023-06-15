@@ -3,11 +3,15 @@ declare(strict_types=1);
 
 require_once __DIR__ . "/vendor/autoload.php";
 
+use ConorSmith\Pokemon\Import\BulbapediaEvsPage;
 use ConorSmith\Pokemon\Import\BulbapediaPokedexPage;
 use ConorSmith\Pokemon\Import\BulbapediaPokemonPage;
 use ConorSmith\Pokemon\Import\BulbapediaLocationPage;
+use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
+use ConorSmith\Pokemon\Import\Domain\PokemonEvYield;
 use ConorSmith\Pokemon\Import\EncountersConfig;
 use ConorSmith\Pokemon\Import\EncounterTableFactory;
+use ConorSmith\Pokemon\Import\EvYieldsConfig;
 use ConorSmith\Pokemon\Import\PokemonConfig;
 use ConorSmith\Pokemon\Import\PokedexNoConstants;
 use ConorSmith\Pokemon\Import\PokedexNumberConstantFactory;
@@ -15,10 +19,10 @@ use ConorSmith\Pokemon\Import\PokemonSpeciesFactory;
 use ConorSmith\Pokemon\Import\TrainerFactory;
 use ConorSmith\Pokemon\Import\TrainersConfig;
 
-if ($argc < 2 || !in_array($argv[1], ["encounters", "trainers", "pokemonIds", "pokemon"])) {
+if ($argc < 2 || !in_array($argv[1], ["encounters", "trainers", "pokemonIds", "pokemon", "evs"])) {
     echo PHP_EOL;
     echo "[ USAGE ]" . PHP_EOL;
-    echo "php import.php [encounters|trainers|pokemonIds|pokemon] (pokemon:lower_bound) (pokemon:upper_bound)" . PHP_EOL . PHP_EOL;
+    echo "php import.php [encounters|trainers|pokemonIds|pokemon|evs] (pokemon:lower_bound) (pokemon:upper_bound)" . PHP_EOL . PHP_EOL;
     exit;
 }
 
@@ -89,4 +93,25 @@ if ($argv[1] === "encounters") {
 
         echo PokemonConfig::fromPokemonSpecies($pokemonSpecies);
     }
+} elseif ($argv[1] === "evs") {
+
+    $bulbapedia = BulbapediaEvsPage::fromFile(__DIR__ . "/evs.html");
+
+    $evYields = [];
+
+    foreach ($bulbapedia->extractEvs() as $bulbapediaEntry) {
+        $evYields[] = new PokemonEvYield(
+            new PokedexNumber(strval(intval($bulbapediaEntry['pokedexNumber']))),
+            $bulbapediaEntry['form'] ?? null,
+            $bulbapediaEntry['exp'] === "Unknown" ? null : intval($bulbapediaEntry['exp']),
+            intval($bulbapediaEntry['hp']),
+            intval($bulbapediaEntry['physicalAttack']),
+            intval($bulbapediaEntry['physicalDefence']),
+            intval($bulbapediaEntry['specialAttack']),
+            intval($bulbapediaEntry['specialDefence']),
+            intval($bulbapediaEntry['speed']),
+        );
+    }
+
+    echo EvYieldsConfig::fromPokemonEvYields($evYields);
 }
