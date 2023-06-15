@@ -51,6 +51,7 @@ use ConorSmith\Pokemon\Controllers\GetMap;
 use ConorSmith\Pokemon\Controllers\GetTeamItemUse;
 use ConorSmith\Pokemon\Controllers\PostItemUse;
 use ConorSmith\Pokemon\Controllers\PostMapMove;
+use ConorSmith\Pokemon\Team\Controllers\GetTeamCombinations;
 use ConorSmith\Pokemon\Team\Controllers\GetTeamCompare;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamItemUse;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamMoveDown;
@@ -73,6 +74,7 @@ use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\LevelUpPokemon;
+use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
@@ -100,6 +102,7 @@ final class ControllerFactory
         $r->post("/encounter/generate", PostEncounterGenerate::class);
         $r->get("/team", GetTeam::class);
         $r->get("/team/compare", GetTeamCompare::class);
+        $r->get("/team/combinations", GetTeamCombinations::class);
         $r->Get("/team/member/{id}", GetPokemon::class);
         $r->get("/encounter/{id}", GetEncounter::class);
         $r->post("/encounter/{id}/start", PostEncounterStart::class);
@@ -263,6 +266,14 @@ final class ControllerFactory
             ),
             GetTeamCompare::class => new GetTeamCompare(
                 $this->pokemonRepository,
+                $this->templateEngine,
+            ),
+            GetTeamCombinations::class => new GetTeamCombinations(
+                new PokedexEntryRepository(
+                    $this->db,
+                    new PokedexConfigRepository()
+                ),
+                new PokemonConfigRepository(),
                 $this->templateEngine,
             ),
             GetPokemon::class => new GetPokemon(

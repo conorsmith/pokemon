@@ -1,8 +1,6 @@
 <div class="d-grid gap-4">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap');
-
         .team-stats {
             font-size: 0.8rem;
         }
@@ -13,11 +11,6 @@
 
         .team-stats .negative {
             color: #FF1111;
-        }
-
-        .stat {
-            font-family: 'Source Code Pro', monospace;
-            text-align: right;
         }
     </style>
 

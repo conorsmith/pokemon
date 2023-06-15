@@ -117,8 +117,9 @@
                 </div>
             <?php endif ?>
         </div>
-        <div class="card-body d-grid">
+        <div class="card-body d-grid gap-2">
             <a href="/team/compare" class="btn btn-outline-dark">Compare Stats</a>
+            <a href="/team/combinations" class="btn btn-outline-dark">Strongest Pokémon</a>
         </div>
     </div>
 
