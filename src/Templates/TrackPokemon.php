@@ -54,6 +54,7 @@
     const scriptData = JSON.parse(document.getElementById("script-data").innerText);
 
     const indicatorDelay = 1500;
+    let enableTracking = true;
 
     const el = document.querySelector(".js-tracked-pokemon-container");
 
@@ -67,6 +68,10 @@
     requestTrackedPokemon();
 
     function requestTrackedPokemon() {
+        if (enableTracking !== true) {
+            return;
+        }
+
         fetch(new Request(
             "/encounter/generate",
             {
@@ -177,6 +182,12 @@
                             Lv ${pokemon.level}
                         </span>
                     </div>
+                    <div class="d-flex align-items-center strength-indicator strength-indicator--aggregate">
+                        <i class="fa-fw fas fa-dna me-2"></i>
+                        <div class="progress" style="width: 6rem; height: 3px;">
+                            <div class="progress-bar bg-warning" style="width: ${pokemon.ivs.total * 100}%"></div>
+                        </div>
+                    </div>
                 </div>
             </form>
         `;
@@ -204,6 +215,10 @@
                 </div>
             </form>
         `;
+    }
+
+    function disableTracking() {
+        enableTracking = false;
     }
 </script>
 

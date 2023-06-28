@@ -227,4 +227,15 @@ final class EventFactory
         $pokedexConfig = $this->pokedexConfigRepository->find($pokedexNumber);
         return $this->createMessageEvent("The legendary Pokémon {$pokedexConfig['name']} has been sighted!");
     }
+
+    public function createStrengthIndicatorProgressesEvent(Encounter $encounter): array
+    {
+        $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
+
+        return [
+            'type' => "strengthIndicatorProgresses",
+            'value' => "You learn more about the strengths of the wild {$pokemonVm->name}",
+            'progress' => $encounter->strengthIndicatorProgress,
+        ];
+    }
 }

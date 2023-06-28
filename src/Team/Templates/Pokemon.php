@@ -37,42 +37,42 @@
                 <td></td>
             </tr>
             <tr>
-                <td>Physical Attack</td>
+                <td><i class="fa-fw fas fa-paw"></i> Physical Attack</td>
                 <td class="stat"><?=$stats->physicalAttack->base?></td>
                 <td class="stat <?=$stats->physicalAttack->ivDeviation->class?>" style="text-align: right;"><?=$stats->physicalAttack->ivDeviation->value?></td>
                 <td class="stat"><?=$stats->physicalAttack->ev?></td>
                 <td class="stat"><strong><?=$stats->physicalAttack->total?></strong></td>
             </tr>
             <tr>
-                <td>Special Attack</td>
+                <td><i class="fa-fw fas fa-wifi"></i> Special Attack</td>
                 <td class="stat"><?=$stats->specialAttack->base?></td>
                 <td class="stat <?=$stats->specialAttack->ivDeviation->class?>" style="text-align: right;"><?=$stats->specialAttack->ivDeviation->value?></td>
                 <td class="stat"><?=$stats->specialAttack->ev?></td>
                 <td class="stat"><strong><?=$stats->specialAttack->total?></strong></td>
             </tr>
             <tr>
-                <td>Physical Defence</td>
+                <td><i class="fa-fw fas fa-shield-alt"></i> Physical Defence</td>
                 <td class="stat"><?=$stats->physicalDefence->base?></td>
                 <td class="stat <?=$stats->physicalDefence->ivDeviation->class?>" style="text-align: right;"><?=$stats->physicalDefence->ivDeviation->value?></td>
                 <td class="stat"><?=$stats->physicalDefence->ev?></td>
                 <td class="stat"><strong><?=$stats->physicalDefence->total?></strong></td>
             </tr>
             <tr>
-                <td>Special Defence</td>
+                <td><i class="fa-fw fas fa-expand"></i> Special Defence</td>
                 <td class="stat"><?=$stats->specialDefence->base?></td>
                 <td class="stat <?=$stats->specialDefence->ivDeviation->class?>" style="text-align: right;"><?=$stats->specialDefence->ivDeviation->value?></td>
                 <td class="stat"><?=$stats->specialDefence->ev?></td>
                 <td class="stat"><strong><?=$stats->specialDefence->total?></strong></td>
             </tr>
             <tr>
-                <td>Speed</td>
+                <td><i class="fa-fw fas fa-wind"></i> Speed</td>
                 <td class="stat"><?=$stats->speed->base?></td>
                 <td class="stat <?=$stats->speed->ivDeviation->class?>" style="text-align: right;"><?=$stats->speed->ivDeviation->value?></td>
                 <td class="stat"><?=$stats->speed->ev?></td>
                 <td class="stat"><strong><?=$stats->speed->total?></strong></td>
             </tr>
             <tr>
-                <td>HP</td>
+                <td><i class="fa-fw fas fa-heartbeat"></i> HP</td>
                 <td class="stat"><?=$stats->hp->base?></td>
                 <td class="stat <?=$stats->hp->ivDeviation->class?>" style="text-align: right;"><?=$stats->hp->ivDeviation->value?></td>
                 <td class="stat"><?=$stats->hp->ev?></td>

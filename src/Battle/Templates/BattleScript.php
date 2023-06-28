@@ -175,6 +175,21 @@
 
                 target.querySelector(".pokemon-image").classList.add("slide-down");
 
+            } else if (event.type === "strengthIndicatorProgresses") {
+
+                document.querySelector(".js-strength-indicator[data-phase='" + (event.progress - 1) + "']")
+                    .classList.replace("d-flex", "d-none");
+
+                document.querySelector("." +
+                    "js-strength-indicator[data-phase='" + event.progress + "']")
+                    .classList.replace("d-none", "d-flex");
+
+                const messageEl = document.createElement("li");
+                messagesEl.querySelector("ul").appendChild(messageEl);
+                typeWriter(messagesEl.querySelector("ul").lastChild, event.value, 0, function () {
+                    processNextEvent(responseData, fnCallback);
+                });
+
             } else {
                 processNextEvent(responseData, fnCallback);
             }

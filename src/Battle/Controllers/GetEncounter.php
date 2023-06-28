@@ -43,6 +43,7 @@ final class GetEncounter
         echo $this->templateEngine->render(__DIR__ . "/../Templates/Encounter.php", [
             'id' => $encounter->id,
             'encounteredPokemonIsRegistered' => $encounter->isRegistered,
+            'encounteredPokemonStrengthIndicatorProgress' => $encounter->strengthIndicatorProgress,
             'opponentPokemon' => $this->viewModelFactory->createPokemonInBattle($encounter->pokemon),
             'playerPokemon' => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
             'pokeballs' => $pokeballs,

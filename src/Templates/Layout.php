@@ -217,6 +217,27 @@
         .stat--selected {
             font-weight: 600;
         }
+
+        .strength-indicator .progress {
+            width: 100%;
+            height: 3px;
+        }
+
+        .strength-indicator--aggregate .progress-bar {
+            animation: shiftSize 3s infinite linear;
+            transform-origin: top left;
+        }
+        .strength-indicator--aggregate:nth-child(2) .progress-bar {
+            animation-delay: -1s;
+        }
+
+        @keyframes shiftSize {
+            0% { transform: scale(1.1, 1); }
+            25% { transform: scale(0.8, 1); }
+            50% { transform: scale(1.2, 1); }
+            75% { transform: scale(0.9, 1); }
+            100% { transform: scale(1.1, 1); }
+        }
     </style>
 </head>
 <body>

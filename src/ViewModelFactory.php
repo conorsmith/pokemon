@@ -5,7 +5,9 @@ namespace ConorSmith\Pokemon;
 
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\ViewModels\IvStrength;
 use ConorSmith\Pokemon\Battle\ViewModels\Pokemon as PokemonVm;
+use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use stdClass;
 
@@ -31,6 +33,24 @@ final class ViewModelFactory
 
     public function createPokemonInBattle(Pokemon $pokemon): PokemonVm
     {
+        RandomNumberGenerator::setSeed(crc32($pokemon->id));
+
+        $ivStrength = new IvStrength(
+            $pokemon->stats->calculateTotalStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->calculateOffensiveStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->calculateDefensiveStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->calculateAttackStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->calculateDefenceStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->ivPhysicalAttack / 31,
+            $pokemon->stats->ivPhysicalDefence / 31,
+            $pokemon->stats->ivSpecialAttack / 31,
+            $pokemon->stats->ivSpecialDefence / 31,
+            $pokemon->stats->ivSpeed / 31,
+            $pokemon->stats->ivHp / 31,
+        );
+
+        RandomNumberGenerator::unsetSeed();
+
         return new PokemonVm(
             $pokemon->id,
             $this->pokedex[$pokemon->number]['name'],
@@ -45,6 +65,7 @@ final class ViewModelFactory
             $pokemon->remainingHp === 0,
             $pokemon->stats->calculatePhysicalAttack(),
             $pokemon->stats->calculateSpecialAttack(),
+            $ivStrength,
         );
     }
 

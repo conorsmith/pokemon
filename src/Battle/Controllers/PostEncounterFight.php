@@ -48,7 +48,7 @@ final class PostEncounterFight
             explode("-", $playerAttackInput)[1],
         );
 
-        $round = Round::execute($playerPokemon, $opponentPokemon, $playerAttack);
+        $round = Round::execute($playerPokemon, $opponentPokemon, $playerAttack, $encounter);
 
         if ($playerPokemon->hasFainted) {
             $this->reportTeamPokemonFaintedCommand->run(
@@ -56,6 +56,10 @@ final class PostEncounterFight
                 $playerPokemon->level,
                 $opponentPokemon->level,
             );
+        }
+
+        if ($round->strengthIndicatorProgresses) {
+            $encounter = $encounter->strengthIndicatorProgresses();
         }
 
         $this->playerRepository->savePlayer($player);
@@ -89,6 +93,10 @@ final class PostEncounterFight
 
         if ($player->hasEntireTeamFainted()) {
             $events[] = $this->eventFactory->createEncounterDefeatEvent($encounter);
+        }
+
+        if ($round->strengthIndicatorProgresses && !$opponentPokemon->hasFainted) {
+            $events[] = $this->eventFactory->createStrengthIndicatorProgressesEvent($encounter);
         }
 
         echo json_encode($events);

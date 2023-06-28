@@ -7,8 +7,12 @@ use ConorSmith\Pokemon\PokemonType;
 
 final class Round
 {
-    public static function execute(Pokemon $playerPokemon, Pokemon $opponentPokemon, Attack $playerAttack): self
-    {
+    public static function execute(
+        Pokemon $playerPokemon,
+        Pokemon $opponentPokemon,
+        Attack $playerAttack,
+        Encounter $encounter
+    ): self {
         if ($opponentPokemon->calculateAttack() > $opponentPokemon->calculateSpecialAttack()) {
             $opponentAttack = Attack::physical();
         } elseif ($opponentPokemon->calculateAttack() < $opponentPokemon->calculateSpecialAttack()) {
@@ -40,7 +44,14 @@ final class Round
         $firstAttackOutcome = self::attack($firstPokemon, $secondPokemon, $firstAttack);
         $secondAttackOutcome = self::attack($secondPokemon, $firstPokemon, $secondAttack);
 
-        return new self($playerGoesFirst, $firstPokemon, $secondPokemon, $firstAttackOutcome, $secondAttackOutcome);
+        return new self(
+            $playerGoesFirst,
+            $firstPokemon,
+            $secondPokemon,
+            $firstAttackOutcome,
+            $secondAttackOutcome,
+            self::determineIfStrengthIndicatorProgresses($encounter),
+        );
     }
 
     private static function attack(Pokemon $attacker, Pokemon $defender, Attack $attack): AttackOutcome
@@ -171,11 +182,21 @@ final class Round
         return $multiplier;
     }
 
+    private static function determineIfStrengthIndicatorProgresses(Encounter $encounter): bool
+    {
+        if (!$encounter->canStrengthIndicatorProgress()) {
+            return false;
+        }
+
+        return mt_rand(0, 3) === 0;
+    }
+
     public function __construct(
         public readonly bool $playerFirst,
         public readonly Pokemon $firstPokemon,
         public readonly Pokemon $secondPokemon,
         public readonly AttackOutcome $firstAttack,
         public readonly AttackOutcome $secondAttack,
+        public readonly bool $strengthIndicatorProgresses,
     ) {}
 }

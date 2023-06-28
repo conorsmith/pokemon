@@ -99,6 +99,7 @@ final class EncounterRepository
             $isLegendary,
             $pokedexRow !== false,
             false,
+            0
         );
     }
 
@@ -141,6 +142,7 @@ final class EncounterRepository
             $encounterRow['is_legendary'] === 0 ? false : true,
             $pokedexRow !== false,
             $encounterRow['was_caught'] === 1 ? true : false,
+            $encounterRow['strength_indicator_progress']
         );
     }
 
@@ -169,6 +171,7 @@ final class EncounterRepository
                 'remaining_hp' => $encounter->pokemon->remainingHp,
                 'has_started' => $encounter->hasStarted ? 1 : 0,
                 'was_caught' => 0,
+                'strength_indicator_progress' => $encounter->strengthIndicatorProgress,
                 'generated_at' => CarbonImmutable::now("Europe/Dublin")->format("Y-m-d H:i:s"),
             ]);
         } else {
@@ -176,6 +179,7 @@ final class EncounterRepository
                 'remaining_hp' => $encounter->pokemon->remainingHp,
                 'has_started' => $encounter->hasStarted ? 1 : 0,
                 'was_caught' => $encounter->wasCaught ? 1 : 0,
+                'strength_indicator_progress' => $encounter->strengthIndicatorProgress,
             ], [
                 'id' => $encounter->id,
             ]);

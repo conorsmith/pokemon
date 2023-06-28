@@ -52,4 +52,70 @@ final class Stats
     {
         return StatCalculator::calculate($this->baseSpeed, $this->ivSpeed, 0, $this->level);
     }
+
+    public function calculateTotalStrength(int $offset): float
+    {
+        $totalIvs = $this->ivPhysicalAttack
+            + $this->ivPhysicalDefence
+            + $this->ivSpecialAttack
+            + $this->ivSpecialDefence
+            + $this->ivSpeed
+            + $this->ivHp;
+
+        $totalIvs += $offset;
+        $totalIvs = min($totalIvs, 31 * 6);
+        $totalIvs = max($totalIvs, 0);
+
+        return $totalIvs / (31 * 6);
+    }
+
+    public function calculateOffensiveStrength(int $offset): float
+    {
+        $totalIvs = $this->ivPhysicalAttack
+            + $this->ivSpecialAttack
+            + $this->ivSpeed;
+
+        $totalIvs += $offset;
+        $totalIvs = min($totalIvs, 31 * 3);
+        $totalIvs = max($totalIvs, 0);
+
+        return $totalIvs / (31 * 3);
+    }
+
+    public function calculateDefensiveStrength(int $offset): float
+    {
+        $totalIvs = $this->ivPhysicalDefence
+            + $this->ivSpecialDefence
+            + $this->ivHp;
+
+        $totalIvs += $offset;
+        $totalIvs = min($totalIvs, 31 * 3);
+        $totalIvs = max($totalIvs, 0);
+
+        return $totalIvs / (31 * 3);
+    }
+
+    public function calculateAttackStrength(int $offset): float
+    {
+        $totalIvs = $this->ivPhysicalAttack
+            + $this->ivSpecialAttack;
+
+        $totalIvs += $offset;
+        $totalIvs = min($totalIvs, 31 * 2);
+        $totalIvs = max($totalIvs, 0);
+
+        return $totalIvs / (31 * 2);
+    }
+
+    public function calculateDefenceStrength(int $offset): float
+    {
+        $totalIvs = $this->ivPhysicalDefence
+            + $this->ivSpecialDefence;
+
+        $totalIvs += $offset;
+        $totalIvs = min($totalIvs, 31 * 2);
+        $totalIvs = max($totalIvs, 0);
+
+        return $totalIvs / (31 * 2);
+    }
 }

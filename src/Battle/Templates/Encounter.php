@@ -8,7 +8,7 @@
             <strong>You encounter a wild <?=$opponentPokemon->name?></strong>
         <?php endif ?>
     </li>
-    <li class="list-group-item d-flex flex-row-reverse" data-target-id="<?=$opponentPokemon->id?>">
+    <li class="list-group-item d-flex flex-row-reverse" data-target-id="<?=$opponentPokemon->id?>" style="border-bottom-width: 0;">
         <div class="pokemon-image pokemon-image--encounter <?=$opponentPokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$opponentPokemon->hasFainted ? "slid-down" : ""?>">
             <img src="<?=$opponentPokemon->imageUrl?>">
         </div>
@@ -45,6 +45,64 @@
                 </div>
                 <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$opponentPokemon->remainingHp?></span> / <span class="js-total-hp"><?=$opponentPokemon->totalHp?></span> HP</div>
             </div>
+        </div>
+    </li>
+    <li class="list-group-item <?=$encounteredPokemonStrengthIndicatorProgress === 0 ? "d-flex" : "d-none" ?> align-items-center gap-2 strength-indicator js-strength-indicator" data-phase="0">
+        <div><i class="fa-fw fas fa-dna"></i></div>
+        <div class="progress strength-indicator--aggregate">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->total * 100?>%"></div>
+        </div>
+    </li>
+    <li class="list-group-item <?=$encounteredPokemonStrengthIndicatorProgress === 1 ? "d-flex" : "d-none" ?> align-items-center gap-2 strength-indicator js-strength-indicator" data-phase="1">
+        <div><i class="fa-fw fas fa-dna"></i></div>
+        <div class="progress strength-indicator--aggregate">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->offensiveTotal * 100?>%"></div>
+        </div>
+        <div class="progress strength-indicator--aggregate">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->defensiveTotal * 100?>%"></div>
+        </div>
+    </li>
+    <li class="list-group-item <?=$encounteredPokemonStrengthIndicatorProgress === 2 ? "d-flex" : "d-none" ?> align-items-center gap-2 strength-indicator js-strength-indicator" data-phase="2">
+        <div><i class="fa-fw fas fa-dna"></i></div>
+        <div class="progress strength-indicator--aggregate">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->attackTotal * 100?>%"></div>
+        </div>
+        <div class="progress strength-indicator--aggregate">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->defenceTotal * 100?>%"></div>
+        </div>
+        <div><i class="fa-fw fas fa-wind"></i></div>
+        <div class="progress">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->speed * 100?>%"></div>
+        </div>
+        <div><i class="fa-fw fas fa-heartbeat"></i></div>
+        <div class="progress">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->hp * 100?>%"></div>
+        </div>
+    </li>
+    <li class="list-group-item <?=$encounteredPokemonStrengthIndicatorProgress === 3 ? "d-flex" : "d-none" ?> align-items-center gap-1 strength-indicator js-strength-indicator" data-phase="3">
+        <div><i class="fa-fw fas fa-paw"></i></div>
+        <div class="progress me-1">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->physicalAttack * 100?>%"></div>
+        </div>
+        <div><i class="fa-fw fas fa-wifi"></i></div>
+        <div class="progress me-1">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->specialAttack * 100?>%"></div>
+        </div>
+        <div><i class="fa-fw fas fa-shield-alt"></i></div>
+        <div class="progress me-1">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->physicalDefence * 100?>%"></div>
+        </div>
+        <div><i class="fa-fw fas fa-expand"></i></div>
+        <div class="progress me-1">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->specialDefence * 100?>%"></div>
+        </div>
+        <div><i class="fa-fw fas fa-wind"></i></div>
+        <div class="progress me-1">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->speed * 100?>%"></div>
+        </div>
+        <div><i class="fa-fw fas fa-heartbeat"></i></div>
+        <div class="progress">
+            <div class="progress-bar bg-warning" style="width:<?=$opponentPokemon->ivs->hp * 100?>%"></div>
         </div>
     </li>
     <li class="list-group-item d-flex" data-target-id="<?=$playerPokemon->id?>">

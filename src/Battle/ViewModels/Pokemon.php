@@ -19,5 +19,6 @@ final class Pokemon
         public readonly bool $hasFainted,
         public readonly int $physicalAttack,
         public readonly int $specialAttack,
+        public readonly IvStrength $ivs,
     ) {}
 }
