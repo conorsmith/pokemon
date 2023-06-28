@@ -19,5 +19,11 @@ final class TeamPokemon
         public readonly int $ivSpecialDefence,
         public readonly int $ivSpeed,
         public readonly int $ivHp,
+        public readonly int $evPhysicalAttack,
+        public readonly int $evPhysicalDefence,
+        public readonly int $evSpecialAttack,
+        public readonly int $evSpecialDefence,
+        public readonly int $evSpeed,
+        public readonly int $evHp,
     ) {}
 }

@@ -224,6 +224,12 @@ class TrainerRepository
             self::generateIv($trainerClass),
             self::generateIv($trainerClass),
             self::generateIv($trainerClass),
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
         );
     }
 

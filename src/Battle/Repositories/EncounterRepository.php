@@ -230,6 +230,12 @@ final class EncounterRepository
             RandomNumberGenerator::generateInRange(0, 31),
             RandomNumberGenerator::generateInRange(0, 31),
             RandomNumberGenerator::generateInRange(0, 31),
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
         );
     }
 
@@ -251,6 +257,12 @@ final class EncounterRepository
             $row['iv_special_attack'],
             $row['iv_special_defence'],
             $row['iv_speed'],
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
         );
     }
 

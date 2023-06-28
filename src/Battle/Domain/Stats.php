@@ -21,36 +21,42 @@ final class Stats
         public readonly int $ivSpecialAttack,
         public readonly int $ivSpecialDefence,
         public readonly int $ivSpeed,
+        public readonly int $evHp,
+        public readonly int $evPhysicalAttack,
+        public readonly int $evPhysicalDefence,
+        public readonly int $evSpecialAttack,
+        public readonly int $evSpecialDefence,
+        public readonly int $evSpeed,
     ) {}
 
     public function calculateHp(): int
     {
-        return StatCalculator::calculateHp($this->baseHp, $this->ivHp, 0, $this->level);
+        return StatCalculator::calculateHp($this->baseHp, $this->ivHp, $this->evHp, $this->level);
     }
 
     public function calculatePhysicalAttack(): int
     {
-        return StatCalculator::calculate($this->basePhysicalAttack, $this->ivPhysicalAttack, 0, $this->level);
+        return StatCalculator::calculate($this->basePhysicalAttack, $this->ivPhysicalAttack, $this->evPhysicalAttack, $this->level);
     }
 
     public function calculatePhysicalDefence(): int
     {
-        return StatCalculator::calculate($this->basePhysicalDefence, $this->ivPhysicalDefence, 0, $this->level);;
+        return StatCalculator::calculate($this->basePhysicalDefence, $this->ivPhysicalDefence, $this->evPhysicalDefence, $this->level);
     }
 
     public function calculateSpecialAttack(): int
     {
-        return StatCalculator::calculate($this->baseSpecialAttack, $this->ivSpecialAttack, 0, $this->level);
+        return StatCalculator::calculate($this->baseSpecialAttack, $this->ivSpecialAttack, $this->evSpecialAttack, $this->level);
     }
 
     public function calculateSpecialDefence(): int
     {
-        return StatCalculator::calculate($this->baseSpecialDefence, $this->ivSpecialDefence, 0, $this->level);
+        return StatCalculator::calculate($this->baseSpecialDefence, $this->ivSpecialDefence, $this->evSpecialDefence, $this->level);
     }
 
     public function calculateSpeed(): int
     {
-        return StatCalculator::calculate($this->baseSpeed, $this->ivSpeed, 0, $this->level);
+        return StatCalculator::calculate($this->baseSpeed, $this->ivSpeed, $this->evSpeed, $this->level);
     }
 
     public function calculateTotalStrength(int $offset): float

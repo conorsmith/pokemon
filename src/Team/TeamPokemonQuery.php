@@ -31,6 +31,12 @@ final class TeamPokemonQuery implements TeamPokemonQueryInterface
             $pokemon->specialDefence->iv,
             $pokemon->speed->iv,
             $pokemon->hp->iv,
+            $pokemon->physicalAttack->ev,
+            $pokemon->physicalDefence->ev,
+            $pokemon->specialAttack->ev,
+            $pokemon->specialDefence->ev,
+            $pokemon->speed->ev,
+            $pokemon->hp->ev,
         );
     }
 }

@@ -11,7 +11,7 @@ final class Round
         Pokemon $playerPokemon,
         Pokemon $opponentPokemon,
         Attack $playerAttack,
-        Encounter $encounter
+        Encounter $encounter = null
     ): self {
         if ($opponentPokemon->calculateAttack() > $opponentPokemon->calculateSpecialAttack()) {
             $opponentAttack = Attack::physical();
@@ -182,8 +182,12 @@ final class Round
         return $multiplier;
     }
 
-    private static function determineIfStrengthIndicatorProgresses(Encounter $encounter): bool
+    private static function determineIfStrengthIndicatorProgresses(?Encounter $encounter): bool
     {
+        if (is_null($encounter)) {
+            return false;
+        }
+
         if (!$encounter->canStrengthIndicatorProgress()) {
             return false;
         }
