@@ -15,6 +15,9 @@ use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\RegionIsLockedQuery;
 use ConorSmith\Pokemon\TemplateEngine;
 use stdClass;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetPokedexEntry
 {
@@ -27,22 +30,21 @@ final class GetPokedexEntry
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $pokedexNumber = $args['number'];
 
         $entry = $this->pokedexEntryRepository->find($pokedexNumber);
 
         if (!$entry->isRegistered) {
-            header("Location: /pokedex");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/pokedex");
         }
 
         $config = $this->pokedexConfigRepository->find($entry->pokedexNumber);
 
         $encounterLocations = $this->findEncounterLocations($entry);
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/Entry.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Entry.php", [
             'pokemon'            => ViewModelFactory::createPokemonViewModel($entry, $config),
             'encounterLocations' => array_map(
                 fn(EncounterLocation $encounterLocation) => self::createEncounterLocationViewModel(
@@ -51,7 +53,7 @@ final class GetPokedexEntry
                 ),
                 $encounterLocations,
             )
-        ]);
+        ]));
     }
 
     private function findEncounterLocations(PokemonEntry $entry): array

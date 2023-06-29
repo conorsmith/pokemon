@@ -3,8 +3,12 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use function FastRoute\simpleDispatcher;
 
 final class HttpKernel
@@ -14,36 +18,46 @@ final class HttpKernel
         private readonly GameModeMiddleware $gameModeMiddleware,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request): Response
     {
         $dispatcher = simpleDispatcher(function(RouteCollector $r) {
             ControllerFactory::routes($r);
         });
 
-        parse_str(parse_url($_SERVER['REQUEST_URI'])['query'] ?? "", $_GET);
+        if ($request->getPathInfo() === "/") {
+            return new RedirectResponse("/8a04a1fc-f9e9-4feb-98fc-470f90c8fdb1/");
+        }
+
+        $instanceId = substr($request->getPathInfo(), 1, 36);
+        $effectivePath = substr($request->getPathInfo(), 37);
 
         $routeInfo = $dispatcher->dispatch(
-            $_SERVER['REQUEST_METHOD'],
-            parse_url($_SERVER['REQUEST_URI'])['path']
+            $request->getMethod(),
+            $effectivePath
         );
 
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
             case Dispatcher::METHOD_NOT_ALLOWED:
-                echo "Page Not Found";
-                break;
+                return new Response("Page Not Found", 404);
+
             case Dispatcher::FOUND:
                 $handler = $routeInfo[1];
                 $vars = $routeInfo[2];
 
-                $activated = $this->gameModeMiddleware->__invoke($handler);
+                $vars['instanceId'] = $instanceId;
 
-                if (!$activated) {
-                    $this->controllerFactory->create($handler)($vars);
+                $activated = $this->gameModeMiddleware->__invoke($handler, new InstanceId($instanceId));
+
+                if ($activated) {
+                    return $activated;
                 }
 
-                break;
+                $controller = $this->controllerFactory->create($handler, new InstanceId($instanceId));
+
+                return $controller($request, $vars);
         }
 
+        return new Response("Server Error", 500);
     }
 }

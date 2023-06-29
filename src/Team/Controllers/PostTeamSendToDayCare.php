@@ -5,6 +5,9 @@ namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostTeamSendToDayCare
@@ -15,24 +18,22 @@ final class PostTeamSendToDayCare
         private readonly FriendshipLog $friendshipLog,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
-        $pokemonId = $_POST['pokemon'];
+        $pokemonId = $request->request->get('pokemon');
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
         if (is_null($pokemon)) {
             $this->session->getFlashBag()->add("errors", "Pokémon not found.");
-            header("Location: /team");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/team");
         }
 
         $dayCare = $this->pokemonRepository->getDayCare();
 
         if ($dayCare->isFull()) {
             $this->session->getFlashBag()->add("errors", "Day Care is full.");
-            header("Location: /team");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/team");
         }
 
         $dayCare = $dayCare->dropOff($pokemon);
@@ -41,6 +42,6 @@ final class PostTeamSendToDayCare
 
         $this->pokemonRepository->saveDayCare($dayCare);
 
-        header("Location: /team");
+        return new RedirectResponse("/{$args['instanceId']}/team");
     }
 }

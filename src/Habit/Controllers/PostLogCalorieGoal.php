@@ -9,6 +9,9 @@ use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostLogCalorieGoal
@@ -20,20 +23,18 @@ final class PostLogCalorieGoal
         private readonly BagRepository           $bagRepository,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
-        if ($_POST['date'] === "") {
+        if ($request->request->get('date') === "") {
             $this->session->getFlashBag()->add("errors", "Given date is empty.");
-            header("Location: /log/calorie-goal");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/log/calorie-goal/");
         }
 
-        $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $_POST['date']);
+        $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $request->request->get('date'));
 
         if ($submittedDate->isFuture()) {
             $this->session->getFlashBag()->add("errors", "Given date is in the future.");
-            header("Location: /log/calorie-goal");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/log/calorie-goal");
         }
 
         $habitLog = $this->habitLogRepository->find(Habit::CALORIE_GOAL_ATTAINED);
@@ -42,8 +43,7 @@ final class PostLogCalorieGoal
         if ($habitLog->isDateLogged($submittedDate)) {
             $formattedDate = $submittedDate->format("Y-m-d");
             $this->session->getFlashBag()->add("errors", "Date '{$formattedDate}' has already been logged");
-            header("Location: /log/calorie-goal");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/log/calorie-goal");
         }
 
         $habitLog = $habitLog->record($submittedDate);
@@ -58,6 +58,6 @@ final class PostLogCalorieGoal
 
         $this->session->getFlashBag()->add("successes", "You earned 1 Challenge Token!");
 
-        header("Location: /");
+        return new RedirectResponse("/{$args['instanceId']}/");
     }
 }

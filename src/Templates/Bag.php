@@ -14,7 +14,7 @@
                 </div>
                 <div class="d-flex justify-content-between" style="width: 5rem;">
                     <?php if ($item->hasUse) : ?>
-                        <form method="POST" action="/item/<?=$item->id?>/use">
+                        <form method="POST" action="/<?=$instanceId?>/item/<?=$item->id?>/use">
                             <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
                                 Use
                             </button>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="d-flex justify-content-between" style="width: 5rem;">
                         <?php if ($item->hasUse) : ?>
-                            <form method="POST" action="/item/<?=$item->id?>/use">
+                            <form method="POST" action="/<?=$instanceId?>/item/<?=$item->id?>/use">
                                 <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
                                     Use
                                 </button>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="d-flex justify-content-between" style="width: 5rem;">
                         <?php if ($item->hasUse) : ?>
-                            <form method="POST" action="/item/<?=$item->id?>/use">
+                            <form method="POST" action="/<?=$instanceId?>/item/<?=$item->id?>/use">
                                 <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
                                     Use
                                 </button>
@@ -117,7 +117,7 @@
                     </div>
                     <div class="d-flex justify-content-between" style="width: 5rem;">
                         <?php if ($item->hasUse) : ?>
-                            <form method="POST" action="/item/<?=$item->id?>/use">
+                            <form method="POST" action="/<?=$instanceId?>/item/<?=$item->id?>/use">
                                 <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
                                     Use
                                 </button>

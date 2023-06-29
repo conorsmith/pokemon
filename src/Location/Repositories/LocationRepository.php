@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Location\Repositories;
 use ConorSmith\Pokemon\Location\Domain\AdjacentLocation;
 use ConorSmith\Pokemon\Location\Domain\Location;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 
 final class LocationRepository
@@ -14,12 +15,13 @@ final class LocationRepository
         private readonly Connection $db,
         private readonly RegionRepository $regionRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function findCurrentLocation(): Location
     {
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $locationConfig = $this->locationConfigRepository->findLocation($instanceRow['current_location']);

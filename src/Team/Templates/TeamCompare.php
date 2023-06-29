@@ -51,7 +51,7 @@
         </tr>
         <?php foreach ($allPokemon as $pokemon) : ?>
             <tr>
-                <td><a href="/team/member/<?=$pokemon->id?>"><?=$pokemon->name?></a></td>
+                <td><a href="/<?=$instanceId?>/team/member/<?=$pokemon->id?>"><?=$pokemon->name?></a></td>
                 <td class="stat"><?=$pokemon->level?></td>
                 <?php if ($query->show === "effective-stats") : ?>
                     <td class="stat"><?=$pokemon->effectiveStats->hp?></td>

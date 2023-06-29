@@ -11,11 +11,14 @@
         "guzzlehttp/guzzle": "^7.5",
         "phpunit/phpunit": "^10.0",
         "symfony/dom-crawler": "^6.2",
-        "symfony/css-selector": "^6.2"
+        "symfony/css-selector": "^6.2",
+        "vlucas/phpdotenv": "^5.5",
+        "robmorgan/phinx": "^0.13.4"
     },
     "autoload": {
         "psr-4": {
-            "ConorSmith\\Pokemon\\": "src/"
+            "ConorSmith\\Pokemon\\": "src/",
+            "ConorSmith\\PokemonTest\\": "tests/"
         }
     }
 }

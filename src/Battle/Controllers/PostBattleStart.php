@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\UseCase\StartABattle;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostBattleStart
@@ -13,7 +16,7 @@ final class PostBattleStart
         private readonly StartABattle $startABattleUseCase,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $trainerId = $args['id'];
 
@@ -21,10 +24,9 @@ final class PostBattleStart
 
         if (!$result->succeeded()) {
             $this->session->getFlashBag()->add("errors", "No unused challenge tokens remaining.");
-            header("Location: /map");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
-        header("Location: /battle/{$result->id}");
+        return new RedirectResponse("/{$args['instanceId']}/battle/{$result->id}");
     }
 }

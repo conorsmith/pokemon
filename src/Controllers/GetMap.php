@@ -25,6 +25,8 @@ use ConorSmith\Pokemon\ViewModelFactory as SharedViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
 use stdClass;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetMap
 {
@@ -43,10 +45,10 @@ final class GetMap
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $args['instanceId'],
         ]);
 
         $bag = $this->bagRepository->find();
@@ -64,7 +66,7 @@ final class GetMap
         if (!is_null($trainersInLocation)) {
             foreach ($trainersInLocation as $trainer) {
                 $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
-                    'instanceId' => INSTANCE_ID,
+                    'instanceId' => $args['instanceId'],
                     'trainerId'  => $trainer['id'],
                 ]);
 
@@ -86,7 +88,7 @@ final class GetMap
 
                 if (array_key_exists('leader', $trainer)) {
                     $imageUrl = $trainer['leader']['imageUrl'];
-                    $hasCompletedPrerequisite = $this->hasBeatenAllGymTrainers($trainer, $trainersInLocation);
+                    $hasCompletedPrerequisite = $this->hasBeatenAllGymTrainers($args['instanceId'], $trainer, $trainersInLocation);
                 }
 
                 if (array_key_exists('prerequisite', $trainer)
@@ -115,7 +117,7 @@ final class GetMap
 
         $legendaryConfig = $this->findLegendaryConfig($instanceRow['current_location']);
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/Map.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Map.php", [
             'canEncounter' => true,
             'pokeballs' => $bag->countAllPokeBalls(),
             'challengeTokens' => $challengeTokens,
@@ -125,6 +127,7 @@ final class GetMap
             ),
             'trainers' => $trainers,
             'legendary' => $this->createLegendaryViewModel(
+                $args['instanceId'],
                 $this->locationConfigRepository->findLocation($instanceRow['current_location']),
                 $legendaryConfig,
             ),
@@ -135,10 +138,10 @@ final class GetMap
             'hallOfFame' => $this->createHallOfFameViewModel(
                 self::findEliteFourConfig($instanceRow['current_location']),
             ),
-        ]);
+        ]));
     }
 
-    private function hasBeatenAllGymTrainers(array $trainer, array $otherTrainersInLocation): bool
+    private function hasBeatenAllGymTrainers(string $instanceId, array $trainer, array $otherTrainersInLocation): bool
     {
         $gymTrainerIds = array_filter(
             array_map(
@@ -151,7 +154,7 @@ final class GetMap
         $beatenGymTrainerIds = [];
 
         $rows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $instanceId,
         ]);
 
         foreach ($rows as $row) {
@@ -168,14 +171,14 @@ final class GetMap
         return $gymTrainerIds === $beatenGymTrainerIds;
     }
 
-    private function createLegendaryViewModel(array $currentLocation, ?array $legendaryConfig): ?stdClass
+    private function createLegendaryViewModel(string $instanceId, array $currentLocation, ?array $legendaryConfig): ?stdClass
     {
         if (is_null($legendaryConfig)) {
             return null;
         }
 
         if ($legendaryConfig['unlock'] instanceof RegionId
-            && !$this->isPokedexRegionComplete($legendaryConfig['unlock'])
+            && !$this->isPokedexRegionComplete($instanceId, $legendaryConfig['unlock'])
         ) {
             return null;
         }
@@ -185,7 +188,7 @@ final class GetMap
         }
 
         $latestCaptureRow = $this->db->fetchAssociative("SELECT * FROM legendary_captures WHERE instance_id = :instanceId AND pokemon_id = :pokemonId ORDER BY date_caught DESC", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $instanceId,
             'pokemonId' => $legendaryConfig['pokemon'],
         ]);
 
@@ -210,7 +213,7 @@ final class GetMap
         }
 
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $instanceId,
         ]);
 
         $levelLimit = self::findLevelLimit($instanceRow);
@@ -235,7 +238,7 @@ final class GetMap
         ];
     }
 
-    private function isPokedexRegionComplete(RegionId $region): bool
+    private function isPokedexRegionComplete(string $instanceId, RegionId $region): bool
     {
         $pokedexRegionRanges = match ($region) {
             RegionId::KANTO  => [1, 150],
@@ -260,7 +263,7 @@ final class GetMap
         }
 
         $rows = $this->db->fetchAllAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $instanceId,
         ]);
 
         $registeredPokedexNumbers = array_map(

@@ -5,18 +5,20 @@ namespace ConorSmith\Pokemon\Player;
 
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\EarnedGymBadgesQuery;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 
 final class EarnedGymBadgesQueryDb implements EarnedGymBadgesQuery
 {
     public function __construct(
-        private readonly Connection $db
+        private readonly Connection $db,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function run(): int
     {
         $playerInstanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $gymBadges = array_map(

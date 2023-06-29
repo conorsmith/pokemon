@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Habit\Repositories;
 use Carbon\CarbonImmutable;
 use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Domain\DailyHabitLog;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 
@@ -13,6 +14,7 @@ final class DailyHabitLogRepository
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function find(Habit $habit): DailyHabitLog
@@ -24,7 +26,7 @@ final class DailyHabitLogRepository
                 Habit::CALORIE_GOAL_ATTAINED => "log_calorie_goal",
             })
             ->where("instance_id = :instanceId")
-            ->setParameter('instanceId', INSTANCE_ID)
+            ->setParameter('instanceId', $this->instanceId->value)
             ->orderBy("date_logged", "DESC")
             ->executeQuery()
             ->fetchAllAssociative();
@@ -53,7 +55,7 @@ final class DailyHabitLogRepository
                 },
                 [
                     'id' => Uuid::uuid4(),
-                    'instance_id' => INSTANCE_ID,
+                    'instance_id' => $this->instanceId->value,
                     'date_logged' => $newDate->format("Y-m-d") . " 12:00:00",
                 ]
             );

@@ -19,7 +19,7 @@
             <li class="list-group-item d-flex">
                 <?php if ($pokemon) : ?>
                     <?php include __DIR__ . "/PokemonListItem.php" ?>
-                    <a href="/pokedex/<?=$number?>" class="stretched-link stretched-link--hidden">Go to Pokédex Entry</a>
+                    <a href="/<?=$instanceId?>/pokedex/<?=$number?>" class="stretched-link stretched-link--hidden">Go to Pokédex Entry</a>
                 <?php else : ?>
                     <div class="d-flex align-items-center justify-content-center" style="width: 6rem; height: 5rem; margin-right: 1rem; color: #aaa;">
                         <i class="fas fa-question-circle"></i>

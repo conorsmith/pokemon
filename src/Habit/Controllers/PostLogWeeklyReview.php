@@ -14,6 +14,9 @@ use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\SharedKernel\WeeklyUpdateForTeamCommand;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostLogWeeklyReview
@@ -27,21 +30,19 @@ final class PostLogWeeklyReview
         private readonly WeeklyUpdateForTeamCommand $weeklyUpdateForTeamCommand,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
-        $totalExcess = intval($_POST['total']);
-        $mondayOfSubmittedWeek = CarbonImmutable::createFromFormat("Y-m-d", $_POST['date'])->midDay();
+        $totalExcess = intval($request->request->get('total'));
+        $mondayOfSubmittedWeek = CarbonImmutable::createFromFormat("Y-m-d", $request->request->get('date'))->midDay();
 
         if (!$mondayOfSubmittedWeek->isMonday()) {
             $this->session->getFlashBag()->add("errors", "Given date must be a Monday.");
-            header("Location: /log/weekly-review");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
         }
 
         if ($mondayOfSubmittedWeek->isFuture()) {
             $this->session->getFlashBag()->add("errors", "Given date cannot be in the future.");
-            header("Location: /log/weekly-review");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
         }
 
         $submittedWeek = CarbonPeriod::between($mondayOfSubmittedWeek, $mondayOfSubmittedWeek->addDays(6));
@@ -54,8 +55,7 @@ final class PostLogWeeklyReview
         if ($weeklyHabitLog->isWeekLogged($submittedWeek)) {
             $formattedDate = $mondayOfSubmittedWeek->format("Y-m-d");
             $this->session->getFlashBag()->add("errors", "Week of '{$formattedDate}' has already been logged");
-            header("Location: /log/weekly-review");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
         }
 
         $grossBonus = $foodDiaryHabitLog->count($submittedWeek) + $calorieGoalHabitLog->count($submittedWeek);
@@ -84,6 +84,6 @@ final class PostLogWeeklyReview
         $this->session->getFlashBag()->add("successes", "You earned {$rareCandy} Rare Candy!");
         $this->session->getFlashBag()->add("successes", "You earned {$challengeTokens} Challenge Tokens!");
 
-        header("Location: /");
+        return new RedirectResponse("/{$args['instanceId']}/");
     }
 }

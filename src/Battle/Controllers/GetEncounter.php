@@ -10,6 +10,8 @@ use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use stdClass;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetEncounter
 {
@@ -21,7 +23,7 @@ final class GetEncounter
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $encounterId = $args['id'];
 
@@ -40,7 +42,7 @@ final class GetEncounter
             ? $player->getLastFaintedPokemon()
             : $player->getLeadPokemon();
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/Encounter.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Encounter.php", [
             'id' => $encounter->id,
             'encounteredPokemonIsRegistered' => $encounter->isRegistered,
             'encounteredPokemonStrengthIndicatorProgress' => $encounter->strengthIndicatorProgress,
@@ -49,7 +51,7 @@ final class GetEncounter
             'pokeballs' => $pokeballs,
             'isLegendary' => $encounter->isLegendary,
             'isBattleOver' => $encounter->pokemon->hasFainted || $encounter->wasCaught,
-        ]);
+        ]));
     }
 
     private static function createPokeBallViewModel(Item $pokeBall): stdClass

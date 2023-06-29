@@ -20,7 +20,7 @@
             <?=$bagSummary->challengeTokens?>
         </div>
     </div>
-    <a href="/bag" class="stretched-link stretched-link--hidden">Go to Bag</a>
+    <a href="/<?=$instanceId?>/bag" class="stretched-link stretched-link--hidden">Go to Bag</a>
 </div>
 
 <ul class="list-group" style="margin-top: 2rem;">

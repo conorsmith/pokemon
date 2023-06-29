@@ -1,4 +1,4 @@
-<form method="POST" action="/map/move" style="height: 100%;">
+<form method="POST" action="/<?=$instanceId?>/map/move" style="height: 100%;">
     <input type="hidden" name="location" value="<?=$location->id?>">
     <button type="submit"
             class="btn btn-primary d-flex align-items-center justify-content-center"

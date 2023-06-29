@@ -5,6 +5,9 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\UseCase\CreateALegendaryEncounter;
 use ConorSmith\Pokemon\Battle\UseCase\StartAnEncounter;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class PostEncounterGenerateAndStart
 {
@@ -13,14 +16,14 @@ final class PostEncounterGenerateAndStart
         private readonly StartAnEncounter $startAnEncounter,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
-        $legendaryPokemonNumber = $_POST['legendary'];
+        $legendaryPokemonNumber = $request->request->get('legendary');
 
         $result = $this->createALegendaryEncounter->__invoke($legendaryPokemonNumber);
 
         $this->startAnEncounter->__invoke($result->encounter->id);
 
-        header("Location: /encounter/{$result->encounter->id}");
+        return new RedirectResponse("/{$args['instanceId']}/encounter/{$result->encounter->id}");
     }
 }

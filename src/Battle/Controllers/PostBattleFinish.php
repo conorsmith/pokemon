@@ -7,6 +7,9 @@ use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Battle\UseCase\StartABattle;
 use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class PostBattleFinish
 {
@@ -16,7 +19,7 @@ final class PostBattleFinish
         private readonly StartABattle $startABattleUseCase,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $trainerBattleId = $args['id'];
 
@@ -49,9 +52,9 @@ final class PostBattleFinish
         }
 
         if ($eliteFourChallenge && $eliteFourChallenge->isInProgress()) {
-            header("Location: /battle/{$result->id}");
+            return new RedirectResponse("/{$args['instanceId']}/battle/{$result->id}");
         } else {
-            header("Location: /map");
+            return new RedirectResponse("/{$args['instanceId']}/map");
         }
     }
 }

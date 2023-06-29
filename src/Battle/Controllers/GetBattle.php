@@ -12,6 +12,8 @@ use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetBattle
 {
@@ -24,7 +26,7 @@ final class GetBattle
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $trainerBattleId = $args['id'];
 
@@ -38,22 +40,22 @@ final class GetBattle
             ? $player->getLastFaintedPokemon()
             : $player->getLeadPokemon();
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/Battle.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Battle.php", [
             'id' => $trainer->id,
             'opponentPokemon' => $this->viewModelFactory->createPokemonInBattle($trainerLeadPokemon),
             'playerPokemon' => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
-            'trainer' => $this->viewModelFactory->createTrainerInBattle($trainer, $this->createImageUrl($trainer)),
+            'trainer' => $this->viewModelFactory->createTrainerInBattle($trainer, $this->createImageUrl($args['instanceId'], $trainer)),
             'isBattleOver' => $trainer->hasEntireTeamFainted() || $player->hasEntireTeamFainted(),
-        ]);
+        ]));
     }
 
-    private function createImageUrl(Trainer $trainer): string
+    private function createImageUrl(string $instanceId, Trainer $trainer): string
     {
         $imageUrl = TrainerClass::getImageUrl($trainer->class, $trainer->gender);
 
         if (is_null($imageUrl)) {
             $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND id = :id", [
-                'instanceId' => INSTANCE_ID,
+                'instanceId' => $instanceId,
                 'id' => $trainer->id,
             ]);
 

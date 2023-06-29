@@ -14,6 +14,9 @@ use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostTeamItemUse
@@ -28,43 +31,41 @@ final class PostTeamItemUse
         private readonly array $pokedex,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $itemId = $args['id'];
-        $pokemonId = $_POST['pokemon'];
+        $pokemonId = $request->request->get('pokemon');
 
         $itemConfig = $this->itemConfigRepository->find($itemId);
 
         if ($itemId === ItemId::RARE_CANDY) {
-            $this->attemptToLevelUpPokemon($pokemonId);
+            return $this->attemptToLevelUpPokemon($args['instanceId'], $pokemonId);
 
         } elseif ($itemConfig['type'] === ItemType::STATS) {
-            $this->attemptToAlterPokemonEvs($pokemonId, $itemId, $itemConfig);
+            return $this->attemptToAlterPokemonEvs($args['instanceId'], $pokemonId, $itemId, $itemConfig);
 
         } elseif ($itemConfig['type'] === ItemType::EVOLUTION) {
-            $this->attemptToEvolvePokemon($itemId, $pokemonId);
+            return $this->attemptToEvolvePokemon($args['instanceId'], $itemId, $pokemonId);
 
         } else {
             throw new Exception("Unhandled item");
         }
     }
 
-    private function attemptToAlterPokemonEvs(string $pokemonId, string $itemId, array $itemConfig): void
+    private function attemptToAlterPokemonEvs(string $instanceId, string $pokemonId, string $itemId, array $itemConfig): Response
     {
         $bag = $this->bagRepository->find();
 
         if (!$bag->has($itemId)) {
             $this->session->getFlashBag()->add("errors", "No {$itemConfig['name']} remaining.");
-            header("Location: /team/use/" . $itemId);
-            return;
+            return new RedirectResponse("/{$instanceId}/team/use/" . $itemId);
         }
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
         if (is_null($pokemon)) {
             $this->session->getFlashBag()->add("errors", "Pokémon not found.");
-            header("Location: /team/use/" . $itemId);
-            return;
+            return new RedirectResponse("/{$instanceId}/team/use/" . $itemId);
         }
 
         $pokemon = match ($itemId) {
@@ -81,33 +82,30 @@ final class PostTeamItemUse
         $this->bagRepository->save($bag);
         $this->pokemonRepository->save($pokemon);
 
-        header("Location: /team/use/" . $itemId);
+        return new RedirectResponse("/{$instanceId}/team/use/" . $itemId);
     }
 
-    private function attemptToLevelUpPokemon(string $pokemonId): void
+    private function attemptToLevelUpPokemon(string $instanceId, string $pokemonId): Response
     {
         $bag = $this->bagRepository->find();
 
         if (!$bag->has(ItemId::RARE_CANDY)) {
             $this->session->getFlashBag()->add("errors", "No rare candies remaining.");
-            header("Location: /team/use/" . ItemId::RARE_CANDY);
-            return;
+            return new RedirectResponse("/{$instanceId}/team/use/" . ItemId::RARE_CANDY);
         }
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
         if (is_null($pokemon)) {
             $this->session->getFlashBag()->add("errors", "Pokémon not found.");
-            header("Location: /team/use/" . ItemId::RARE_CANDY);
-            return;
+            return new RedirectResponse("/{$instanceId}/team/use/" . ItemId::RARE_CANDY);
         }
 
         $result = $this->levelUpPokemon->run($pokemonId);
 
         if ($result->beyondLevelLimit) {
             $this->session->getFlashBag()->add("errors", "You can't level up Pokémon beyond level {$result->levelLimit}");
-            header("Location: /team/use/" . ItemId::RARE_CANDY);
-            return;
+            return new RedirectResponse("/{$instanceId}/team/use/" . ItemId::RARE_CANDY);
         }
 
         $bag = $bag->use(ItemId::RARE_CANDY);
@@ -123,13 +121,13 @@ final class PostTeamItemUse
             $this->session->getFlashBag()->add("successes", "Your {$oldPokemon['name']} evolved into {$newPokemon['name']}!");
         }
 
-        header("Location: /team/use/" . ItemId::RARE_CANDY);
+        return new RedirectResponse("/{$instanceId}/team/use/" . ItemId::RARE_CANDY);
     }
 
-    private function attemptToEvolvePokemon(string $itemId, string $pokemonId): void
+    private function attemptToEvolvePokemon(string $instanceId, string $itemId, string $pokemonId): Response
     {
         $pokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId and id = :pokemonId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $instanceId,
             'pokemonId' => $pokemonId,
         ]);
 
@@ -137,8 +135,7 @@ final class PostTeamItemUse
 
         if (!array_key_exists('evolutions', $pokemonConfig)) {
             $this->session->getFlashBag()->add("successes", "That did nothing!");
-            header("Location: /team/use/{$itemId}");
-            return;
+            return new RedirectResponse("/{$instanceId}/team/use/{$itemId}");
         }
 
         $canEvolveUsingThisItem = false;
@@ -155,8 +152,7 @@ final class PostTeamItemUse
 
         if ($canEvolveUsingThisItem === false) {
             $this->session->getFlashBag()->add("successes", "That did nothing!");
-            header("Location: /team/use/{$itemId}");
-            return;
+            return new RedirectResponse("/{$instanceId}/team/use/{$itemId}");
         }
 
         $bag = $this->bagRepository->find();
@@ -174,14 +170,14 @@ final class PostTeamItemUse
         ]);
 
         $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $instanceId,
             'number' => $newPokemonNumber,
         ]);
 
         if ($pokedexRow === false) {
             $this->db->insert("pokedex_entries", [
                 'id' => Uuid::uuid4(),
-                'instance_id' => INSTANCE_ID,
+                'instance_id' => $instanceId,
                 'number' => $newPokemonNumber,
                 'date_added' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
             ]);
@@ -190,6 +186,6 @@ final class PostTeamItemUse
         $this->db->commit();
 
         $this->session->getFlashBag()->add("successes", "{$pokemonConfig['name']} evolved into {$this->pokedex[$newPokemonNumber]['name']}");
-        header("Location: /");
+        return new RedirectResponse("/{$instanceId}/");
     }
 }

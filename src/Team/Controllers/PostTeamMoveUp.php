@@ -5,6 +5,9 @@ namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostTeamMoveUp
@@ -15,9 +18,9 @@ final class PostTeamMoveUp
         private readonly CaughtPokemonRepository $caughtPokemonRepository
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
-        $pokemonId = $_POST['pokemon'];
+        $pokemonId = $request->request->get('pokemon');
 
         $rows = $this->caughtPokemonRepository->getTeam();
 
@@ -25,8 +28,7 @@ final class PostTeamMoveUp
             if ($pokemonRow['id'] === $pokemonId) {
                 if ($pokemonRow['team_position'] === 0) {
                     $this->session->getFlashBag()->add("errors", "Target Pokémon cannot be moved up");
-                    header("Location: /team");
-                    return;
+                    return new RedirectResponse("/{$args['instanceId']}/team");
                 }
                 $targetPokemon = $rows[$i];
                 $affectedPokemon = $rows[$i - 1];
@@ -35,8 +37,7 @@ final class PostTeamMoveUp
 
         if (!isset($targetPokemon)) {
             $this->session->getFlashBag()->add("errors", "Target Pokémon not found");
-            header("Location: /team");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/team");
         }
 
         $this->db->beginTransaction();
@@ -55,6 +56,6 @@ final class PostTeamMoveUp
 
         $this->db->commit();
 
-        header("Location: /team");
+        return new RedirectResponse("/{$args['instanceId']}/team");
     }
 }

@@ -7,6 +7,7 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\HighestRankedGymBadgeQuery;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\Team\Domain\Evolution;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Repositories\EvolutionRepository;
@@ -23,6 +24,7 @@ final class LevelUpPokemon
         private readonly EvolutionRepository $evolutionRepository,
         private readonly FriendshipLog $friendshipLog,
         private readonly HighestRankedGymBadgeQuery $highestRankedGymBadgeQuery,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function run(string $pokemonId): ResultOfLevellingUp
@@ -78,14 +80,14 @@ final class LevelUpPokemon
     private function addPokedexEntryIfNecessary(Pokemon $pokemon): void
     {
         $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
             'number' => $pokemon->number,
         ]);
 
         if ($pokedexRow === false) {
             $this->db->insert("pokedex_entries", [
                 'id' => Uuid::uuid4(),
-                'instance_id' => INSTANCE_ID,
+                'instance_id' => $this->instanceId->value,
                 'number' => $pokemon->number,
                 'date_added' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
             ]);

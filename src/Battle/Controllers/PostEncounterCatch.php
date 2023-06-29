@@ -14,6 +14,9 @@ use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class PostEncounterCatch
 {
@@ -27,34 +30,32 @@ final class PostEncounterCatch
         private readonly EventFactory $eventFactory,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $encounterId = $args['id'];
-        $pokeballItemId = $_POST['pokeball'];
+        $pokeballItemId = $request->request->get('pokeball');
 
         $encounter = $this->encounterRepository->find($encounterId);
 
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $args['instanceId'],
         ]);
 
         $bag = $this->bagRepository->find();
 
         if (!$bag->has($pokeballItemId)) {
             $itemConfig = require __DIR__ . "/../../Config/Items.php";
-            echo json_encode([
+            return new JsonResponse([
                 $this->eventFactory->createMessageEvent("No {$itemConfig[$pokeballItemId]['name']} remaining."),
             ]);
-            return;
         }
 
         $levelLimit = self::findLevelLimit($instanceRow);
 
         if ($encounter->pokemon->level > $levelLimit) {
-            echo json_encode([
+            return new JsonResponse([
                 $this->eventFactory->createMessageEvent("You can't catch Pokémon above level {$levelLimit}"),
             ]);
-            return;
         }
 
         $events = [];
@@ -128,7 +129,7 @@ final class PostEncounterCatch
             $events[] = $this->eventFactory->createCatchFailureEvent($encounter);
         }
 
-        echo json_encode($events);
+        return new JsonResponse($events);
     }
 
     private static function calculateCatchRate(Encounter $encounter, string $pokeBallItemId): float

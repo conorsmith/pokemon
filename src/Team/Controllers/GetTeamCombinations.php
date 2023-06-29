@@ -9,6 +9,8 @@ use ConorSmith\Pokemon\Team\Domain\Type;
 use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Team\ViewModelFactory;
 use ConorSmith\Pokemon\TemplateEngine;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetTeamCombinations
 {
@@ -18,10 +20,10 @@ final class GetTeamCombinations
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
         $query = (object) [
-            'sort' => $_GET['sort'] ?? "total",
+            'sort' => $request->query->get('sort') ?? "total",
         ];
 
         $pokedexEntries = array_filter(
@@ -91,7 +93,7 @@ final class GetTeamCombinations
             );
         }
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/TeamCombinations.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/TeamCombinations.php", [
             'query' => $query,
             'availableTypes' => count($availableTypes),
             'options' => $this->createBestStatsVm($bestStatsByType[match($query->sort) {
@@ -103,7 +105,7 @@ final class GetTeamCombinations
                 'sd' => "spDefence",
                 'sp' => "speed",
             }]),
-        ]);
+        ]));
     }
 
     private function createBestStatsVm(array $bestStats): array

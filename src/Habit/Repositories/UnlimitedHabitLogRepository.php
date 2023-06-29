@@ -8,6 +8,7 @@ use ConorSmith\Pokemon\Habit\Domain\EntryType;
 use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Domain\UnlimitedHabitLog;
 use ConorSmith\Pokemon\Habit\Domain\UnlimitedHabitLogEntry;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -16,6 +17,7 @@ final class UnlimitedHabitLogRepository
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function find(Habit $habit): UnlimitedHabitLog
@@ -25,7 +27,7 @@ final class UnlimitedHabitLogRepository
         }
 
         $rows = $this->db->fetchAllAssociative("SELECT * FROM log_exercise WHERE instance_id = :instanceId ORDER BY date_logged DESC", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         return new UnlimitedHabitLog(
@@ -57,7 +59,7 @@ final class UnlimitedHabitLogRepository
                 "log_exercise",
                 [
                     'id' => $newEntry->id->toString(),
-                    'instance_id' => INSTANCE_ID,
+                    'instance_id' => $this->instanceId->value,
                     'type' => $newEntry->entryType->value,
                     'date_logged' => $newEntry->date->format("Y-m-d") . " 12:00:00",
                 ]

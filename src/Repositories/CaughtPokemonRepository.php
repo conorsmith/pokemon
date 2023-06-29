@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Repositories;
 
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 
 final class CaughtPokemonRepository
 {
     public function __construct(
-        private readonly Connection $db
+        private readonly Connection $db,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function getTeam(): array
@@ -19,7 +21,7 @@ final class CaughtPokemonRepository
                     WHERE instance_id = :instanceId AND location = 'team'
                     ORDER BY team_position",
             [
-                'instanceId' => INSTANCE_ID,
+                'instanceId' => $this->instanceId->value,
             ]
         );
     }

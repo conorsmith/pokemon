@@ -12,6 +12,9 @@ use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostLogExercise
@@ -23,26 +26,24 @@ final class PostLogExercise
         private readonly UnlimitedHabitLogRepository $habitLogRepository,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
-        if (!isset($_POST['date']) && $_POST['earlier_date'] === "") {
+        if (!$request->request->has('date') && $request->request->get('earlier_date') === "") {
             $this->session->getFlashBag()->add("errors", "Given date is empty.");
-            header("Location: /log/exercise");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/log/exercise");
         }
 
-        if (!isset($_POST['date'])) {
-            $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $_POST['earlier_date']);
+        if (!$request->request->has('date')) {
+            $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $request->request->get('earlier_date'));
         } else {
-            $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $_POST['date']);
+            $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $request->request->get('date'));
         }
 
-        $entryType = EntryType::from($_POST['type']);
+        $entryType = EntryType::from($request->request->get('type'));
 
         if ($submittedDate->isFuture()) {
             $this->session->getFlashBag()->add("errors", "Given date is in the future.");
-            header("Location: /log/exercise");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/log/exercise");
         }
 
         $habitLog = $this->habitLogRepository->find(Habit::EXERCISE);
@@ -71,6 +72,6 @@ final class PostLogExercise
         $itemConfig = require __DIR__ . "/../../Config/Items.php";
         $this->session->getFlashBag()->add("successes", "You earned 1 {$itemConfig[$earnedItemId]['name']}!");
 
-        header("Location: /");
+        return new RedirectResponse("/{$args['instanceId']}/");
     }
 }

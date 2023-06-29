@@ -5,6 +5,9 @@ namespace ConorSmith\Pokemon\Controllers;
 
 use ConorSmith\Pokemon\LocationConfigRepository;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostMapMove
@@ -15,28 +18,26 @@ final class PostMapMove
         private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $args['instanceId'],
         ]);
 
         $currentLocation = $this->findLocation($instanceRow['current_location']);
 
-        if (!in_array($_POST['location'], $currentLocation['directions'])) {
+        if (!in_array($request->request->get('location'), $currentLocation['directions'])) {
             $this->session->getFlashBag()->add("errors", "Cannot move there from current location.");
-            header("Location: /map/move");
-            exit;
+            return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
         $this->db->update("instances", [
-            'current_location' => $_POST['location'],
+            'current_location' => $request->request->get('location'),
         ], [
-            'id' => INSTANCE_ID,
+            'id' => $args['instanceId'],
         ]);
 
-        header("Location: /map");
-        exit;
+        return new RedirectResponse("/{$args['instanceId']}/map");
     }
 
     private function findLocation(string $id): array

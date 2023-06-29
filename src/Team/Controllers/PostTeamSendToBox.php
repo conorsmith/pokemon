@@ -7,6 +7,9 @@ use ConorSmith\Pokemon\Team\Domain\DayCare;
 use ConorSmith\Pokemon\Team\Domain\Team;
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostTeamSendToBox
@@ -17,9 +20,9 @@ final class PostTeamSendToBox
         private readonly FriendshipLog $friendshipLog,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
-        $pokemonId = $_POST['pokemon'];
+        $pokemonId = $request->request->get('pokemon');
 
         $team = $this->pokemonRepository->getTeam();
         $dayCare = $this->pokemonRepository->getDayCare();
@@ -30,11 +33,10 @@ final class PostTeamSendToBox
             $this->moveFromDayCareToBox($pokemonId, $dayCare);
         } else {
             $this->session->getFlashBag()->add("errors", "Pokémon not found.");
-            header("Location: /team");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/team");
         }
 
-        header("Location: /team");
+        return new RedirectResponse("/{$args['instanceId']}/team");
     }
 
     private function moveFromTeamToBox(string $pokemonId, Team $team): void

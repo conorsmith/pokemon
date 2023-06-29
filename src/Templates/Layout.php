@@ -244,23 +244,23 @@
 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Pokémon</a>
+        <a class="navbar-brand" href="/<?=$instanceId?>/">Pokémon</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/team">Team</a>
+                    <a class="nav-link" href="/<?=$instanceId?>/team">Team</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/bag">Bag</a>
+                    <a class="nav-link" href="/<?=$instanceId?>/bag">Bag</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/pokedex">Pokédex</a>
+                    <a class="nav-link" href="/<?=$instanceId?>/pokedex">Pokédex</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/map">Map</a>
+                    <a class="nav-link" href="/<?=$instanceId?>/map">Map</a>
                 </li>
             </ul>
         </div>
@@ -275,10 +275,10 @@
 
 <div class="position-fixed bottom-0 end-0 m-3 d-flex align-items-end" style="z-index: 2;">
     <div class="list-group mx-3 d-none" style="box-shadow: 0px 0px 0.6rem 0px rgba(0,0,0,0.3);">
-        <a href="/log/food-diary" class="list-group-item list-group-item-action">Log Completed Food Diary</a>
-        <a href="/log/calorie-goal" class="list-group-item list-group-item-action">Log Attained Calorie Goal</a>
-        <a href="/log/exercise" class="list-group-item list-group-item-action">Log Exercise</a>
-        <a href="/log/weekly-review" class="list-group-item list-group-item-action">Log Weekly Review</a>
+        <a href="/<?=$instanceId?>/log/food-diary" class="list-group-item list-group-item-action">Log Completed Food Diary</a>
+        <a href="/<?=$instanceId?>/log/calorie-goal" class="list-group-item list-group-item-action">Log Attained Calorie Goal</a>
+        <a href="/<?=$instanceId?>/log/exercise" class="list-group-item list-group-item-action">Log Exercise</a>
+        <a href="/<?=$instanceId?>/log/weekly-review" class="list-group-item list-group-item-action">Log Weekly Review</a>
     </div>
     <button id="log-menu-button" type="button" class="btn btn-primary btn-lg" style="width: 4rem; height: 4rem; border-radius: 3rem; font-weight: bold; font-size: 2rem; line-height: 1rem; box-shadow: 0px 0px 0.6rem 0px rgba(0,0,0,0.3);"><i class="fas fa-plus"></i></button>
 </div>

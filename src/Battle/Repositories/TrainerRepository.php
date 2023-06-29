@@ -12,6 +12,7 @@ use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use Doctrine\DBAL\Connection;
@@ -26,12 +27,13 @@ class TrainerRepository
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function findTrainer(string $id): Trainer
     {
         $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND id = :id", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
             'id' => $id,
         ]);
 
@@ -41,14 +43,14 @@ class TrainerRepository
     public function findTrainerByTrainerId(string $trainerId): Trainer
     {
         $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
             'trainerId' => $trainerId,
         ]);
 
         if ($trainerBattleRow === false) {
             $this->db->insert("trainer_battles", [
                 'id' => Uuid::uuid4(),
-                'instance_id' => INSTANCE_ID,
+                'instance_id' => $this->instanceId->value,
                 'trainer_id' => $trainerId,
                 'is_battling' => 0,
                 'date_last_beaten' => null,
@@ -57,7 +59,7 @@ class TrainerRepository
             ]);
 
             $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
-                'instanceId' => INSTANCE_ID,
+                'instanceId' => $this->instanceId->value,
                 'trainerId' => $trainerId,
             ]);
         }

@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Team\Repositories;
 
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\EarnedGymBadgesQuery;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
 use ConorSmith\Pokemon\Team\Domain\DayCare;
 use ConorSmith\Pokemon\Team\Domain\Hp;
@@ -22,12 +23,13 @@ final class PokemonRepository
         private readonly EarnedGymBadgesQuery $earnedGymBadgesQuery,
         private readonly PokemonConfigRepository $pokemonConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function find(string $id): ?Pokemon
     {
         $row = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND id = :id", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
             'id' => $id,
         ]);
 
@@ -41,7 +43,7 @@ final class PokemonRepository
     public function getTeam(): Team
     {
         $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'team' ORDER BY team_position", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         return new Team(array_map(
@@ -53,7 +55,7 @@ final class PokemonRepository
     public function getDayCare(): DayCare
     {
         $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'dayCare' ORDER BY (pokemon_id * 1) ASC, level DESC", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         return new DayCare(
@@ -68,7 +70,7 @@ final class PokemonRepository
     public function getBox(): array
     {
         $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'box' ORDER BY (pokemon_id * 1) ASC, level DESC", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         return array_map(
@@ -80,7 +82,7 @@ final class PokemonRepository
     public function getAll(stdClass $query): array
     {
         $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId ORDER BY (pokemon_id * 1) ASC, level DESC", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $all = array_map(

@@ -29,5 +29,5 @@
             <?=$pokemon->friendship?>
         </div>
     </div>
-    <a href="/team/member/<?=$pokemon->id?>" class="stretched-link stretched-link--hidden">Go to Stats</a>
+    <a href="/<?=$instanceId?>/team/member/<?=$pokemon->id?>" class="stretched-link stretched-link--hidden">Go to Stats</a>
 </li>

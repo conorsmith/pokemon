@@ -90,14 +90,14 @@
         </ul>
     </li>
     <li class="list-group-item d-grid gap-2 js-interaction-container" style="text-align: center;">
-        <form method="POST" action="/battle/<?=$id?>/finish" class="d-grid <?=$isBattleOver ? "" : "d-none"?>">
+        <form method="POST" action="/<?=$instanceId?>/battle/<?=$id?>/finish" class="d-grid <?=$isBattleOver ? "" : "d-none"?>">
             <button type="submit" class="btn btn-outline-dark js-interaction">
                 Finish
             </button>
         </form>
         <?php $mode = "battle" ?>
         <?php require __DIR__ . "/ButtonsAttack.php" ?>
-        <a href="/team/switch?redirect=<?=urlencode("/battle/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
+        <a href="/<?=$instanceId?>/team/switch?redirect=<?=urlencode("/{$instanceId}/battle/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
             Switch
         </a>
     </li>

@@ -20,6 +20,10 @@ final class Type
             }
         }
 
+        if (count($effectivenesses) == 0) {
+            return [];
+        }
+
         $allTypeIds = array_keys($effectivenesses[0]);
 
         $aggregatedMultipliers = $effectivenesses[0];

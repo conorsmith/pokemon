@@ -15,6 +15,7 @@ use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 use Exception;
 use GuzzleHttp\Psr7\InflateStream;
@@ -28,6 +29,7 @@ final class EncounterRepository
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly array $pokedex,
         private readonly HabitStreakQuery $habitStreakQuery,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function generateWildEncounter(Location $location, string $encounterType): Encounter
@@ -88,7 +90,7 @@ final class EncounterRepository
         $pokemon->remainingHp = $pokemon->calculateHp();
 
         $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
             'number' => $pokemon->number,
         ]);
 
@@ -106,7 +108,7 @@ final class EncounterRepository
     public function find(string $id): ?Encounter
     {
         $encounterRow = $this->db->fetchAssociative("SELECT * FROM encounters WHERE instance_id = :instanceId AND id = :id", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
             'id' => $id,
         ]);
 
@@ -131,7 +133,7 @@ final class EncounterRepository
         );
 
         $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
             'number' => $pokemon->number,
         ]);
 
@@ -149,14 +151,14 @@ final class EncounterRepository
     public function save(Encounter $encounter): void
     {
         $row = $this->db->fetchAssociative("SELECT * FROM encounters WHERE instance_id = :instanceId AND id = :encounterId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
             'encounterId' => $encounter->id,
         ]);
 
         if ($row === false) {
             $this->db->insert("encounters", [
                 'id' => $encounter->id,
-                'instance_id' => INSTANCE_ID,
+                'instance_id' => $this->instanceId->value,
                 'pokemon_id' => $encounter->pokemon->number,
                 'form' => $encounter->pokemon->form,
                 'level' => $encounter->pokemon->level,
@@ -189,7 +191,7 @@ final class EncounterRepository
     public function delete(Encounter $encounter): void
     {
         $this->db->delete("encounters", [
-            'instance_id' => INSTANCE_ID,
+            'instance_id' => $this->instanceId->value,
             'id' => $encounter->id,
         ]);
     }
@@ -199,14 +201,14 @@ final class EncounterRepository
         $limit = 10;
 
         $rows = $this->db->fetchAllAssociative("SELECT * FROM encounters WHERE has_started = 0 ORDER BY generated_at ASC", [
-            'instance_id' => INSTANCE_ID,
+            'instance_id' => $this->instanceId->value,
         ]);
 
         $rowsToDelete = array_splice($rows, 0, $limit * -1);
 
         foreach ($rowsToDelete as $row) {
             $this->db->delete("encounters", [
-                'instance_id' => INSTANCE_ID,
+                'instance_id' => $this->instanceId->value,
                 'id' => $row['id'],
             ]);
         }

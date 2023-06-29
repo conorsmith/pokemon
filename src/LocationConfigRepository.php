@@ -10,12 +10,16 @@ final class LocationConfigRepository
 {
     private WeakMap $locationConfigByRegion;
 
-    public function __construct()
+    public function __construct(WeakMap $locationConfigByRegion = null)
     {
-        $this->locationConfigByRegion = new WeakMap();
-        $this->locationConfigByRegion[RegionId::KANTO] = require __DIR__ . "/Config/Locations/Kanto.php";
-        $this->locationConfigByRegion[RegionId::JOHTO] = require __DIR__ . "/Config/Locations/Johto.php";
-        $this->locationConfigByRegion[RegionId::HOENN] = require __DIR__ . "/Config/Locations/Hoenn.php";
+        if (is_null($locationConfigByRegion)) {
+            $this->locationConfigByRegion = new WeakMap();
+            $this->locationConfigByRegion[RegionId::KANTO] = require __DIR__ . "/Config/Locations/Kanto.php";
+            $this->locationConfigByRegion[RegionId::JOHTO] = require __DIR__ . "/Config/Locations/Johto.php";
+            $this->locationConfigByRegion[RegionId::HOENN] = require __DIR__ . "/Config/Locations/Hoenn.php";
+        } else {
+            $this->locationConfigByRegion = $locationConfigByRegion;
+        }
     }
 
     public function findLocation(string $locationId): ?array

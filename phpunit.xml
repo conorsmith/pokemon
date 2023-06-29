@@ -3,4 +3,10 @@
     colors="true"
     displayDetailsOnTestsThatTriggerWarnings="true"
 >
+    <php>
+        <env name="DB_NAME" value="pokemon_test" />
+        <env name="DB_USER" value="pokemon_test" />
+        <env name="DB_PASS" value="password" />
+        <env name="DB_HOST" value="localhost" />
+    </php>
 </phpunit>

@@ -9,6 +9,8 @@ use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use stdClass;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetTeamCompare
 {
@@ -17,17 +19,17 @@ final class GetTeamCompare
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
         $query = (object) [
-            'show' => $_GET['show'] ?? "effective-stats",
-            'sort' => $_GET['sort'] ?? "number",
-            'filter' => $_GET['filter'] ?? null,
+            'show' => $request->query->get('show') ?? "effective-stats",
+            'sort' => $request->query->get('sort') ?? "number",
+            'filter' => $request->query->get('filter') ?? null,
         ];
 
         $allPokemon = $this->pokemonRepository->getAll($query);
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/TeamCompare.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/TeamCompare.php", [
             'query' => $query,
             'allPokemon' => array_map(
                 fn(Pokemon $pokemon) => self::createPokemonVm($pokemon),
@@ -53,7 +55,7 @@ final class GetTeamCompare
                 PokemonType::DARK,
                 PokemonType::FAIRY,
             ])
-        ]);
+        ]));
     }
 
     private static function createTypeFilterVm(int $typeId, stdClass $query): stdClass

@@ -20,7 +20,7 @@
 
     <div class="d-flex justify-content-between align-items-end">
         <h2 class="mb-0"><?=$currentLocation->name?></h2>
-        <a href="/map" class="btn btn-sm btn-outline-dark">Stop Tracking</a>
+        <a href="/<?=$instanceId?>/map" class="btn btn-sm btn-outline-dark">Stop Tracking</a>
     </div>
 
     <div class="card">
@@ -73,7 +73,7 @@
         }
 
         fetch(new Request(
-            "/encounter/generate",
+            `/${scriptData.instanceId}/encounter/generate`,
             {
                 method: "POST",
                 body: formData
@@ -162,7 +162,7 @@
         }
 
         return `
-            <form method="POST" action="/encounter/${encounterId}/start" class="d-none tracked-pokemon js-tracked-pokemon">
+            <form method="POST" action="/${scriptData.instanceId}/encounter/${encounterId}/start" class="d-none tracked-pokemon js-tracked-pokemon">
                 <div class="pokemon-image pokemon-image--encounter ${pokemon.isShiny ? "pokemon-image--shiny" : "" }">
                     <img src="${pokemon.imageUrl}">
                 </div>
@@ -196,7 +196,7 @@
     function renderUnregisteredTrackedPokemon(encounterId, pokemon) {
 
         return `
-            <form method="POST" action="/encounter/${encounterId}/start" class="d-none tracked-pokemon js-tracked-pokemon" style="transition: opacity 0.5s;">
+            <form method="POST" action="/${scriptData.instanceId}/encounter/${encounterId}/start" class="d-none tracked-pokemon js-tracked-pokemon" style="transition: opacity 0.5s;">
                 <div class="pokemon-image pokemon-image--encounter pokemon-image--unregistered ${pokemon.isShiny ? "pokemon-image--shiny" : "" }">
                     <img src="${pokemon.imageUrl}">
                 </div>

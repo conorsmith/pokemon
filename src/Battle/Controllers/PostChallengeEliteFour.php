@@ -12,6 +12,9 @@ use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostChallengeEliteFour
@@ -24,14 +27,13 @@ final class PostChallengeEliteFour
         private readonly StartABattle $startABattleUseCase,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $region = RegionId::tryFrom($args['region']);
 
         if (is_null($region)) {
             $this->session->getFlashBag()->add("errors", "Unknown region");
-            header("Location: /map");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
         $bag = $this->bagRepository->find();
@@ -39,8 +41,7 @@ final class PostChallengeEliteFour
 
         if ($bag->count(ItemId::CHALLENGE_TOKEN) < 5) {
             $this->session->getFlashBag()->add("errors", "Not enough unused challenge tokens.");
-            header("Location: /map");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
         $bag = $bag->use(ItemId::CHALLENGE_TOKEN, 5);
@@ -69,10 +70,9 @@ final class PostChallengeEliteFour
 
         if (!$result->succeeded()) {
             $this->session->getFlashBag()->add("errors", "No unused challenge tokens remaining.");
-            header("Location: /map");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
-        header("Location: /battle/{$result->id}");
+        return new RedirectResponse("/{$args['instanceId']}/battle/{$result->id}");
     }
 }

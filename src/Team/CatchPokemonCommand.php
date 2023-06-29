@@ -8,6 +8,7 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand as CommandInterface;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonResult;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\RegisterNewPokemonCommand;
 use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
 use ConorSmith\Pokemon\Team\Domain\Hp;
@@ -26,6 +27,7 @@ final class CatchPokemonCommand implements CommandInterface
         private readonly RegisterNewPokemonCommand $registerNewPokemonCommand,
         private readonly PokemonConfigRepository $pokemonConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function run(
@@ -44,7 +46,7 @@ final class CatchPokemonCommand implements CommandInterface
     ): CatchPokemonResult {
 
         $positionRow = $this->db->fetchNumeric("SELECT MAX(team_position) FROM caught_pokemon WHERE instance_id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $isTeamFull = $positionRow[0] >= 5;
@@ -80,7 +82,7 @@ final class CatchPokemonCommand implements CommandInterface
 
         $this->db->insert("caught_pokemon", [
             'id' => $pokemon->id,
-            'instance_id' => INSTANCE_ID,
+            'instance_id' => $this->instanceId->value,
             'pokemon_id' => $pokemon->number,
             'form' => $form,
             'is_shiny' => $pokemon->isShiny ? 1 : 0,
@@ -109,7 +111,7 @@ final class CatchPokemonCommand implements CommandInterface
         if ($isLegendary) {
             $this->db->insert("legendary_captures", [
                 'id' => Uuid::uuid4(),
-                'instance_id' => INSTANCE_ID,
+                'instance_id' => $this->instanceId->value,
                 'pokemon_id' => $pokemon->number,
                 'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
             ]);

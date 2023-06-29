@@ -16,9 +16,12 @@ final class TemplateEngine
     {
         if (array_key_exists('successes', $variables)
             || array_key_exists('failures', $variables)
+            || array_key_exists('instanceId', $variables)
         ) {
             throw new Exception("Reserved template variable given");
         }
+
+        $variables['instanceId'] = "8a04a1fc-f9e9-4feb-98fc-470f90c8fdb1";
 
         extract($variables);
 

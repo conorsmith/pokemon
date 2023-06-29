@@ -8,6 +8,8 @@ use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\ViewModelFactory;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\TemplateEngine;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetPokedex
 {
@@ -17,7 +19,7 @@ final class GetPokedex
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
         $entries = $this->pokedexEntryRepository->all();
 
@@ -85,9 +87,9 @@ final class GetPokedex
             }
         }
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/List.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/List.php", [
             'count' => $count,
             'pokedex' => $viewModels,
-        ]);
+        ]));
     }
 }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class PostSwitch
 {
@@ -11,10 +14,10 @@ final class PostSwitch
         private readonly PlayerRepository $playerRepository,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
-        $pokemonId = $_POST['pokemon'];
-        $redirectUrl = $_POST['redirectUrl'];
+        $pokemonId = $request->request->get('pokemon');
+        $redirectUrl = $request->request->get('redirectUrl');
 
         $player = $this->playerRepository->findPlayer();
 
@@ -25,6 +28,6 @@ final class PostSwitch
 
         $this->playerRepository->savePlayer($player);
 
-        header("Location: {$redirectUrl}");
+        return new RedirectResponse($redirectUrl);
     }
 }

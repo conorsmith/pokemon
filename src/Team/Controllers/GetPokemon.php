@@ -12,6 +12,8 @@ use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use stdClass;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetPokemon
 {
@@ -21,18 +23,18 @@ final class GetPokemon
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $pokemonId = $args['id'];
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/Pokemon.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Pokemon.php", [
             'pokemon' => PokemonVm::create($pokemon),
             'capture' => $this->createCaptureVm($pokemon),
             'stats' => self::createStatsVm($pokemon),
             'typeEffectiveness' => self::createTypeEffectivenessVms($pokemon),
-        ]);
+        ]));
     }
 
     private function createCaptureVm(Pokemon $pokemon): stdClass

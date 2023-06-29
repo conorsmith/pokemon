@@ -125,7 +125,7 @@
     <?php if ($hallOfFame) : ?>
         <div class="card" style="text-align: center;">
             <div class="card-body d-grid gap-2 p-2">
-                <a href="/hall-of-fame/<?=$hallOfFame->region?>"
+                <a href="/<?=$instanceId?>/hall-of-fame/<?=$hallOfFame->region?>"
                         class="btn btn-warning"
                         style="font-weight: bold;"
                 >
@@ -147,22 +147,22 @@
             <div class="card-body">
                 <div class="d-flex gap-2">
                     <?php if ($wildPokemon->encounters->walking) : ?>
-                        <a href="/track-pokemon/walking" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
+                        <a href="/<?=$instanceId?>/track-pokemon/walking" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
                             <i class="fas fa-fw fa-shoe-prints"></i>
                         </a>
                     <?php endif ?>
                     <?php if ($wildPokemon->encounters->surfing) : ?>
-                        <a href="/track-pokemon/surfing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
+                        <a href="/<?=$instanceId?>/track-pokemon/surfing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
                             <i class="fas fa-fw fa-water"></i>
                         </a>
                     <?php endif ?>
                     <?php if ($wildPokemon->encounters->fishing) : ?>
-                        <a href="/track-pokemon/fishing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
+                        <a href="/<?=$instanceId?>/track-pokemon/fishing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
                             <i class="fas fa-fw fa-fish"></i>
                         </a>
                     <?php endif ?>
                     <?php if ($wildPokemon->encounters->rockSmash) : ?>
-                        <a href="/track-pokemon/rockSmash" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
+                        <a href="/<?=$instanceId?>/track-pokemon/rockSmash" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
                             <i class="fab fa-fw fa-sith"></i>
                         </a>
                     <?php endif ?>
@@ -203,7 +203,7 @@
                                 <?php endif ?>
                             </div>
                             <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
-                                <form method="POST" action="/battle/trainer/<?=$trainer->id?>" style="margin-right: 0.6rem;">
+                                <form method="POST" action="/<?=$instanceId?>/battle/trainer/<?=$trainer->id?>" style="margin-right: 0.6rem;">
                                     <button type="submit" class="btn btn-outline-dark btn-sm" <?=$trainer->canBattle ? "" : "disabled"?>>Battle</button>
                                 </form>
                                 <?php if ($trainer->lastBeaten) : ?>
@@ -241,7 +241,7 @@
                             <small><i class="fas fa-star"></i> Lv <?=$legendary->level?></small>
                         </div>
                         <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
-                            <form method="POST" action="/encounter" style="margin-right: 0.6rem;">
+                            <form method="POST" action="/<?=$instanceId?>/encounter" style="margin-right: 0.6rem;">
                                 <input type="hidden" name="legendary" value="<?=$legendary->number?>">
                                 <button type="submit" class="btn btn-outline-dark btn-sm" <?=$legendary->canBattle ? "" : "disabled"?>>Battle</button>
                             </form>
@@ -276,7 +276,7 @@
                         <?php endforeach ?>
                     </div>
                     <div class="d-flex justify-content-center w-100 mt-3 mb-2">
-                        <form method="POST" action="/challenge/elite-four/<?=$eliteFour->region?>">
+                        <form method="POST" action="/<?=$instanceId?>/challenge/elite-four/<?=$eliteFour->region?>">
                             <button type="submit" class="btn btn-outline-dark btn-sm" <?=$eliteFour->canChallenge ? "" : "disabled"?>>
                                 Challenge the Elite Four
                             </button>

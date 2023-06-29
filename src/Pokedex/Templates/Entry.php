@@ -2,7 +2,7 @@
 
     <div class="d-flex justify-content-between align-items-end">
         <h2 class="mb-0">Pokédex</h2>
-        <a href="/pokedex" class="btn btn-sm btn-outline-dark">Back</a>
+        <a href="/<?=$instanceId?>/pokedex" class="btn btn-sm btn-outline-dark">Back</a>
     </div>
 
     <ul class="list-group">

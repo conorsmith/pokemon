@@ -16,6 +16,8 @@ use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use stdClass;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetIndex
@@ -29,10 +31,10 @@ final class GetIndex
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $args['instanceId'],
         ]);
 
         $bag = $this->bagRepository->find();
@@ -59,7 +61,7 @@ final class GetIndex
             }
         }
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/Index.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Index.php", [
             'bagSummary' => self::createBagSummary($bag),
             'team' => array_map(
                 fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
@@ -71,7 +73,7 @@ final class GetIndex
                 RegionId::HOENN => "Hoenn",
             },
             'badges' => $badgeViewModels,
-        ]);
+        ]));
     }
 
     private static function createBagSummary(Bag $bag): stdClass

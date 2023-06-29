@@ -18,11 +18,12 @@ use ConorSmith\Pokemon\Import\PokedexNumberConstantFactory;
 use ConorSmith\Pokemon\Import\PokemonSpeciesFactory;
 use ConorSmith\Pokemon\Import\TrainerFactory;
 use ConorSmith\Pokemon\Import\TrainersConfig;
+use ConorSmith\Pokemon\PokedexNo;
 
-if ($argc < 2 || !in_array($argv[1], ["encounters", "trainers", "pokemonIds", "pokemon", "evs"])) {
+if ($argc < 2 || !in_array($argv[1], ["encounters", "trainers", "pokemonIds", "pokemon", "evs", "check"])) {
     echo PHP_EOL;
     echo "[ USAGE ]" . PHP_EOL;
-    echo "php import.php [encounters|trainers|pokemonIds|pokemon|evs] (pokemon:lower_bound) (pokemon:upper_bound)" . PHP_EOL . PHP_EOL;
+    echo "php import.php [encounters|trainers|pokemonIds|pokemon|evs|check] (pokemon:lower_bound) (pokemon:upper_bound)" . PHP_EOL . PHP_EOL;
     exit;
 }
 
@@ -30,7 +31,7 @@ if ($argv[1] === "encounters") {
     if (isset($argv[2])) {
         $bulbapedia = BulbapediaLocationPage::fromUrl($argv[2]);
     } else {
-        $bulbapedia = BulbapediaLocationPage::fromFile(__DIR__ . "/location.html");
+        $bulbapedia = BulbapediaLocationPage::fromFile(__DIR__ . "/.cache/location.html");
     }
 
     $encounterTableFactory = new EncounterTableFactory();
@@ -45,7 +46,7 @@ if ($argv[1] === "encounters") {
     if (isset($argv[2])) {
         $bulbapedia = BulbapediaLocationPage::fromUrl($argv[2]);
     } else {
-        $bulbapedia = BulbapediaLocationPage::fromFile(__DIR__ . "/location.html");
+        $bulbapedia = BulbapediaLocationPage::fromFile(__DIR__ . "/.cache/location.html");
     }
 
     $trainerFactory = new TrainerFactory();
@@ -57,7 +58,7 @@ if ($argv[1] === "encounters") {
     echo TrainersConfig::fromTrainers($trainers);
 
 } elseif ($argv[1] === "pokemonIds") {
-    $bulbapedia = BulbapediaPokedexPage::fromFile(__DIR__ . "/pokedex.html");
+    $bulbapedia = BulbapediaPokedexPage::fromFile(__DIR__ . "/.cache/pokedex.html");
 
     $pokedexNumberConstantFactory = new PokedexNumberConstantFactory();
 
@@ -95,7 +96,7 @@ if ($argv[1] === "encounters") {
     }
 } elseif ($argv[1] === "evs") {
 
-    $bulbapedia = BulbapediaEvsPage::fromFile(__DIR__ . "/evs.html");
+    $bulbapedia = BulbapediaEvsPage::fromFile(__DIR__ . "/.cache/evs.html");
 
     $evYields = [];
 
@@ -114,4 +115,34 @@ if ($argv[1] === "encounters") {
     }
 
     echo EvYieldsConfig::fromPokemonEvYields($evYields);
+
+} elseif ($argv[1] === "check") {
+
+    $pokedex = require __DIR__ . "/src/Config/Pokedex.php";
+    $encounters = require __DIR__ . "/src/Config/Encounters/Johto.php";
+
+    $encounterablePokedexNumbers = [];
+
+    foreach ($encounters as $locationEncounters) {
+        foreach ($locationEncounters as $encounters) {
+            foreach ($encounters as $pokedexNumber => $encounter) {
+                $encounterablePokedexNumbers[] = $pokedexNumber;
+            }
+        }
+    }
+
+    $encounterablePokedexNumbers = array_unique($encounterablePokedexNumbers);
+    sort($encounterablePokedexNumbers);
+
+    $pokemonByIds = array_flip((new ReflectionClass(PokedexNo::class))->getConstants());
+
+    $unencounterableJohtoPokemon = [];
+
+    for ($i = 152; $i <= 251; $i++) {
+        if (!in_array($i, $encounterablePokedexNumbers)) {
+            $unencounterableJohtoPokemon[] = $pokemonByIds[$i];
+        }
+    }
+
+    dd($unencounterableJohtoPokemon);
 }

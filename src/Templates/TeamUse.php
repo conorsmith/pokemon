@@ -6,7 +6,7 @@
 </div>
 
 <ul class="list-group" style="margin-top: 2rem;">
-    <form method="POST" action="/team/use/<?=$item->id?>">
+    <form method="POST" action="/<?=$instanceId?>/team/use/<?=$item->id?>">
         <?php foreach ($team as $pokemon) : ?>
             <button type="submit" name="pokemon" value="<?=$pokemon->id?>" class="list-group-item list-group-item-action d-flex">
                 <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>">
@@ -39,7 +39,7 @@
         <?php endforeach ?>
     </form>
     <div class="d-grid mt-5">
-        <a href="/bag" class="btn btn-outline-secondary">Cancel</a>
+        <a href="/<?=$instanceId?>/bag" class="btn btn-outline-secondary">Cancel</a>
     </div>
 </ul>
 

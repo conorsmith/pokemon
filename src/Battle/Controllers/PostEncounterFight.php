@@ -10,6 +10,10 @@ use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\TrainerClass;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostEncounterFight
@@ -22,22 +26,22 @@ final class PostEncounterFight
         private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $encounterId = $args['id'];
-        $playerAttackInput = $_POST['attack'];
+        $playerAttackInput = $request->request->get('attack');
 
         $encounter = $this->encounterRepository->find($encounterId);
         $player = $this->playerRepository->findPlayer();
 
         if (is_null($encounter)) {
             $this->session->getFlashBag()->add("errors", "Encounter not found");
-            header("Location: /map");
+            return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
         if ($player->hasEntireTeamFainted()) {
             $this->session->getFlashBag()->add("errors", "Your team has fainted.");
-            header("Location: /encounter/{$encounter->id}");
+            return new RedirectResponse("/{$args['instanceId']}/encounter/{$encounter->id}");
         }
 
         $playerPokemon = $player->getLeadPokemon();
@@ -99,6 +103,6 @@ final class PostEncounterFight
             $events[] = $this->eventFactory->createStrengthIndicatorProgressesEvent($encounter);
         }
 
-        echo json_encode($events);
+        return new JsonResponse($events);
     }
 }

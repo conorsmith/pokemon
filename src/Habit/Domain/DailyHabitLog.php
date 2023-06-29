@@ -87,6 +87,10 @@ final class DailyHabitLog
     {
         $workingDates = $this->dates;
 
+        if (count($workingDates) === 0) {
+            return 0;
+        }
+
         /** @var CarbonImmutable $latestDate */
         $latestDate = array_shift($workingDates);
 

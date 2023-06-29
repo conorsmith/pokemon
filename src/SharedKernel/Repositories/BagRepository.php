@@ -6,22 +6,24 @@ namespace ConorSmith\Pokemon\SharedKernel\Repositories;
 use ConorSmith\Pokemon\SharedKernel\Domain\Bag;
 use ConorSmith\Pokemon\SharedKernel\Domain\Item;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 
 final class BagRepository
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function find(): Bag
     {
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $itemRows = $this->db->fetchAllAssociative("SELECT * FROM items WHERE instance_id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $items = [
@@ -68,7 +70,7 @@ final class BagRepository
     public function save(Bag $bag): void
     {
         $existingItemRows = $this->db->fetchAllAssociative("SELECT * FROM items WHERE instance_id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $idsOfExistingItems = array_map(
@@ -94,11 +96,11 @@ final class BagRepository
                         'quantity' => $item->quantity,
                     ], [
                         'item_id'     => $item->id,
-                        'instance_id' => INSTANCE_ID,
+                        'instance_id' => $this->instanceId->value,
                     ]);
                 } else {
                     $this->db->insert("items", [
-                        'instance_id' => INSTANCE_ID,
+                        'instance_id' => $this->instanceId->value,
                         'item_id'     => $item->id,
                         'quantity'    => $item->quantity,
                     ]);
@@ -107,7 +109,7 @@ final class BagRepository
         }
 
         $this->db->update("instances", $instanceTableUpdate, [
-            'id' => INSTANCE_ID,
+            'id' => $this->instanceId->value,
         ]);
     }
 }

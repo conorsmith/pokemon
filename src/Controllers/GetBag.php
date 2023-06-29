@@ -7,6 +7,8 @@ use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\ItemType;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetBag
 {
@@ -16,7 +18,7 @@ final class GetBag
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $bag = $this->bagRepository->find();
 
@@ -43,11 +45,11 @@ final class GetBag
             };
         }
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/Bag.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Bag.php", [
             'items' => $itemViewModels,
             'evolutionItems' => $evolutionItemViewModels,
             'heldItems' => $heldItemViewModels,
             'statsItems' => $statsItemViewModels,
-        ]);
+        ]));
     }
 }

@@ -8,14 +8,12 @@ use ConorSmith\Pokemon\Controllers\GetMap;
 use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
 use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
-use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
+use ConorSmith\Pokemon\Location\RepositoryFactory;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
-use ConorSmith\Pokemon\PokedexConfigRepository;
-use ConorSmith\Pokemon\RegionConfigRepository;
-use ConorSmith\Pokemon\SharedKernel\RegionalVictoryQuery;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerConfigRepository;
@@ -25,34 +23,25 @@ use Doctrine\DBAL\Connection;
 final class ControllerFactory
 {
     public function __construct(
+        private readonly RepositoryFactory $repositoryFactory,
         private readonly Connection $db,
         private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
-        private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
-        private readonly BagRepository $bagRepository,
-        private readonly RegionalVictoryQuery $regionalVictoryQuery,
         private readonly SharedViewModelFactory $sharedViewModelFactory,
         private readonly array $pokedex,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function create(string $className): mixed
+    public function create(string $className, InstanceId $instanceId): mixed
     {
         return match ($className) {
             default => null,
             GetMap::class => new GetMap(
                 $this->db,
-                new LocationRepository(
-                    $this->db,
-                    new RegionRepository(
-                        new RegionConfigRepository(),
-                        $this->regionalVictoryQuery,
-                    ),
-                    $this->locationConfigRepository,
-                ),
-                $this->bagRepository,
-                $this->eliteFourChallengeRepository,
+                $this->repositoryFactory->create(LocationRepository::class, $instanceId),
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 $this->locationConfigRepository,
                 $this->encounterConfigRepository,
                 $this->trainerConfigRepository,
@@ -61,24 +50,14 @@ final class ControllerFactory
                 ),
                 $this->sharedViewModelFactory,
                 new TotalRegisteredPokemonQuery(
-                    new PokedexEntryRepository(
-                        $this->db,
-                        new PokedexConfigRepository()
-                    ),
+                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                 ),
                 $this->pokedex,
                 $this->templateEngine,
             ),
             GetTrackPokemon::class => new GetTrackPokemon(
-                new LocationRepository(
-                    $this->db,
-                    new RegionRepository(
-                        new RegionConfigRepository(),
-                        $this->regionalVictoryQuery,
-                    ),
-                    $this->locationConfigRepository,
-                ),
-                $this->bagRepository,
+                $this->repositoryFactory->create(LocationRepository::class, $instanceId),
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 new ViewModelFactory(
                     $this->locationConfigRepository,
                 ),

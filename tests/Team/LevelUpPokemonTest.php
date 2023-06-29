@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Team;
+namespace ConorSmith\PokemonTest\Team;
 
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\Team\LevelUpPokemon;

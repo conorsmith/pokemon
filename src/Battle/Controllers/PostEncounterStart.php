@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\UseCase\StartAnEncounter;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class PostEncounterStart
 {
@@ -11,12 +14,12 @@ final class PostEncounterStart
         private readonly StartAnEncounter $startAnEncounter,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $encounterId = $args['id'];
 
         $this->startAnEncounter->__invoke($encounterId);
 
-        header("Location: /encounter/{$encounterId}");
+        return new RedirectResponse("/{$args['instanceId']}/encounter/{$encounterId}");
     }
 }

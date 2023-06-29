@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Pokedex\Repositories;
 use ConorSmith\Pokemon\Pokedex\Domain\FormEntry;
 use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 
 final class PokedexEntryRepository
@@ -13,12 +14,13 @@ final class PokedexEntryRepository
     public function __construct(
         private readonly Connection $db,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function all(): array
     {
         $rows = $this->db->fetchAllAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $multipleFormRows = [];
@@ -60,7 +62,7 @@ final class PokedexEntryRepository
     public function find(string $pokedexNumber): PokemonEntry
     {
         $rows = $this->db->fetchAllAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :pokedexNumber", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
             'pokedexNumber' => $pokedexNumber,
         ]);
 

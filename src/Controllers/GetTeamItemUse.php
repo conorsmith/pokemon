@@ -8,6 +8,9 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetTeamItemUse
@@ -20,7 +23,7 @@ final class GetTeamItemUse
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $itemId = $args['id'];
 
@@ -32,18 +35,17 @@ final class GetTeamItemUse
 
         if ($bag->count($itemId) < 1) {
             $this->session->getFlashBag()->add("successes", "You have no more {$itemConfig[$itemId]['name']}");
-            header("Location: /bag");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/bag");
         }
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/TeamUse.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/TeamUse.php", [
             'item' => (object) [
                 'id' => $itemId,
                 'name' => $itemConfig[$itemId]['name'],
                 'imageUrl' => $itemConfig[$itemId]['imageUrl'],
             ],
             'team' => $this->createTeamViewModels($player),
-        ]);
+        ]));
     }
 
     private function createTeamViewModels(Player $player): array

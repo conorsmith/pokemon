@@ -4,6 +4,9 @@ namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostTeamSendToTeam
@@ -14,24 +17,22 @@ final class PostTeamSendToTeam
         private readonly FriendshipLog $friendshipLog,
     ) {}
 
-    public function __invoke(): void
+    public function __invoke(Request $request, array $args): Response
     {
-        $pokemonId = $_POST['pokemon'];
+        $pokemonId = $request->request->get('pokemon');
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
         if (is_null($pokemon)) {
             $this->session->getFlashBag()->add("errors", "Pokémon not in box.");
-            header("Location: /team");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/team");
         }
 
         $team = $this->pokemonRepository->getTeam();
 
         if ($team->isFull()) {
             $this->session->getFlashBag()->add("errors", "Team is full.");
-            header("Location: /team");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/team");
         }
 
         $team = $team->add($pokemon);
@@ -40,6 +41,6 @@ final class PostTeamSendToTeam
 
         $this->pokemonRepository->saveTeam($team);
 
-        header("Location: /team");
+        return new RedirectResponse("/{$args['instanceId']}/team");
     }
 }

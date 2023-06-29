@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Battle\Domain;
+namespace ConorSmith\PokemonTest\Battle\Domain;
 
 use Carbon\CarbonImmutable;
 use ConorSmith\Pokemon\Battle\Domain\Area;

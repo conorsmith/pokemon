@@ -10,6 +10,9 @@ use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetHallOfFame
@@ -21,14 +24,13 @@ final class GetHallOfFame
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $region = RegionId::tryFrom(strtoupper($args['region']));
 
         if (is_null($region)) {
             $this->session->getFlashBag()->add("errors", "Unknown region");
-            header("Location: /map");
-            return;
+            return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
         $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($region);
@@ -53,8 +55,8 @@ final class GetHallOfFame
 
         ksort($teamViewModels);
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/HallOfFame.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/HallOfFame.php", [
             'team' => $teamViewModels,
-        ]);
+        ]));
     }
 }

@@ -1,13 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace Battle\Repositories;
+namespace ConorSmith\PokemonTest\Battle\Repositories;
 
 use ConorSmith\Pokemon\Battle\Domain\Area;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
+use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use WeakMap;
+use function PHPUnit\Framework\assertThat;
+use function PHPUnit\Framework\equalTo;
+use function PHPUnit\Framework\identicalTo;
 
 final class AreaRepositoryTest extends TestCase
 {
@@ -23,17 +29,20 @@ final class AreaRepositoryTest extends TestCase
                 "Trainer 2",
             ]);
 
-        $repo = new AreaRepository($trainerRepo, [
+        $locationConfig = new WeakMap();
+        $locationConfig[RegionId::KANTO] = [
             [
                 'id' => "The Location ID",
             ],
-        ]);
+        ];
+
+        $repo = new AreaRepository($trainerRepo, new LocationConfigRepository($locationConfig));
 
         $area = $repo->find("The Location ID");
 
-        self::assertThat(
+        assertThat(
             $area,
-            self::equalTo(new Area(
+            equalTo(new Area(
                 "The Location ID",
                 [
                     "Trainer 1",
@@ -71,7 +80,8 @@ final class AreaRepositoryTest extends TestCase
                 ],
             ]));
 
-        $repo = new AreaRepository($trainerRepo, [
+        $locationConfig = new WeakMap();
+        $locationConfig[RegionId::KANTO] = [
             [
                 'id' => "Location 1",
                 'area' => "The Area ID",
@@ -84,13 +94,15 @@ final class AreaRepositoryTest extends TestCase
                 'id' => "Location 3",
                 'area' => "The Area ID",
             ],
-        ]);
+        ];
+
+        $repo = new AreaRepository($trainerRepo, new LocationConfigRepository($locationConfig));
 
         $area = $repo->find("Location 2");
 
-        self::assertThat(
+        assertThat(
             $area,
-            self::equalTo(new Area(
+            equalTo(new Area(
                 "The Area ID",
                 [
                     "Trainer 1",
@@ -108,13 +120,13 @@ final class AreaRepositoryTest extends TestCase
     {
         $trainerRepo = self::createStub(TrainerRepository::class);
 
-        $repo = new AreaRepository($trainerRepo, []);
+        $repo = new AreaRepository($trainerRepo, new LocationConfigRepository(new WeakMap()));
 
         $area = $repo->find("The Location ID");
 
-        self::assertThat(
+        assertThat(
             $area,
-            self::identicalTo(null)
+            identicalTo(null)
         );
     }
 }

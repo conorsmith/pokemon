@@ -20,7 +20,10 @@ use ConorSmith\Pokemon\Habit\Controllers\PostLogCalorieGoal;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogExercise;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogFoodDiary;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogWeeklyReview;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GameModeMiddleware
 {
@@ -56,54 +59,50 @@ final class GameModeMiddleware
         public readonly Connection $db,
     ) {}
 
-    public function __invoke(string $controllerName): bool
+    public function __invoke(string $controllerName, InstanceId $instanceId): ?Response
     {
-        if ($this->redirectingToActiveEncounter($controllerName)) {
-            return true;
+        if ($response = $this->redirectingToActiveEncounter($controllerName, $instanceId)) {
+            return $response;
         }
 
-        if ($this->redirectingToActiveTrainerBattle($controllerName)) {
-            return true;
+        if ($response = $this->redirectingToActiveTrainerBattle($controllerName, $instanceId)) {
+            return $response;
         }
 
-        return false;
+        return null;
     }
 
-    private function redirectingToActiveEncounter(string $controllerName): bool
+    private function redirectingToActiveEncounter(string $controllerName, InstanceId $instanceId): ?Response
     {
         if (in_array($controllerName, self::LOGGING_CONTROLLERS)
             || in_array($controllerName, self::ENCOUNTER_MODE_CONTROLLERS)
         ) {
-            return false;
+            return null;
         }
 
         $activeEncounter = $this->db->fetchAssociative("SELECT * FROM encounters WHERE has_started = 1 ORDER BY id");
 
         if ($activeEncounter === false) {
-            return false;
+            return null;
         }
 
-        header("Location: /encounter/" . $activeEncounter['id']);
-
-        return true;
+        return new RedirectResponse("/{$instanceId->value}/encounter/" . $activeEncounter['id']);
     }
 
-    private function redirectingToActiveTrainerBattle(string $controllerName): bool
+    private function redirectingToActiveTrainerBattle(string $controllerName, InstanceId $instanceId): ?Response
     {
         if (in_array($controllerName, self::LOGGING_CONTROLLERS)
             || in_array($controllerName, self::BATTLE_MODE_CONTROLLERS)
         ) {
-            return false;
+            return null;
         }
 
         $activeTrainerBattle = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE is_battling = 1 ORDER BY id");
 
         if ($activeTrainerBattle === false) {
-            return false;
+            return null;
         }
 
-        header("Location: /battle/" . $activeTrainerBattle['id']);
-
-        return true;
+        return new RedirectResponse("/{$instanceId->value}/battle/" . $activeTrainerBattle['id']);
     }
 }

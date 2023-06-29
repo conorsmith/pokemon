@@ -21,6 +21,10 @@ use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostBattleFight
@@ -39,10 +43,10 @@ final class PostBattleFight
         private readonly ViewModelFactory                $viewModelFactory,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $trainerBattleId = $args['id'];
-        $playerAttackInput = $_POST['attack'];
+        $playerAttackInput = $request->request->get('attack');
 
         $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
@@ -50,7 +54,7 @@ final class PostBattleFight
 
         if ($player->hasEntireTeamFainted()) {
             $this->session->getFlashBag()->add("errors", "Your team has fainted.");
-            header("Location: /battle/{$trainer->id}");
+            return new RedirectResponse("/{$args['instanceId']}/battle/{$trainer->id}");
         }
 
         $playerPokemon = $player->getLeadPokemon();
@@ -171,7 +175,7 @@ final class PostBattleFight
             $events[] = $this->eventFactory->createMessageEvent("You were defeated by {$name}");
         }
 
-        echo json_encode($events);
+        return new JsonResponse($events);
     }
 
     private function getPrizePool(Trainer $trainer): array

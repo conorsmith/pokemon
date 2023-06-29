@@ -7,7 +7,7 @@ use ConorSmith\Pokemon\Battle\Domain\Player;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\GymBadge;
-use ConorSmith\Pokemon\SharedKernel\TeamPokemon;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\TeamPokemonQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -18,16 +18,17 @@ final class PlayerRepository
         private readonly Connection $db,
         private readonly TeamPokemonQuery $teamPokemonQuery,
         private readonly array $pokedex,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function findPlayer(): Player
     {
         $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $caughtPokemonRows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'team' ORDER BY team_position", [
-            'instanceId' => INSTANCE_ID,
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $team = [];
@@ -92,7 +93,7 @@ final class PlayerRepository
         $this->db->update("instances", [
             'badges' => json_encode($player->gymBadges),
         ], [
-            'id' => INSTANCE_ID,
+            'id' => $this->instanceId->value,
         ]);
 
         /** @var Pokemon $pokemon */

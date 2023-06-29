@@ -144,19 +144,19 @@
         </ul>
     </li>
     <li class="list-group-item d-grid gap-2 js-interaction-container" style="text-align: center;">
-        <form method="POST" action="/encounter/<?=$id?>/run" class="d-grid <?=$isBattleOver ? "" : "d-none"?>">
+        <form method="POST" action="/<?=$instanceId?>/encounter/<?=$id?>/run" class="d-grid <?=$isBattleOver ? "" : "d-none"?>">
             <button type="submit" class="btn btn-outline-dark js-interaction">
                 Finish
             </button>
         </form>
         <?php $mode = "encounter" ?>
         <?php require __DIR__ . "/ButtonsAttack.php" ?>
-        <a href="/team/switch?redirect=<?=urlencode("/encounter/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
+        <a href="/<?=$instanceId?>/team/switch?redirect=<?=urlencode("/{$instanceId}/encounter/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
             Switch
         </a>
         <div class="d-flex w-100 gap-2">
             <?php foreach ($pokeballs as $pokeball) : ?>
-                <form method="POST" action="/encounter/<?=$id?>/catch" class="d-grid flex-grow-1 js-catch <?=$isBattleOver ? "d-none" : ""?>">
+                <form method="POST" action="/<?=$instanceId?>/encounter/<?=$id?>/catch" class="d-grid flex-grow-1 js-catch <?=$isBattleOver ? "d-none" : ""?>">
                     <button type="submit" name="pokeball" value="<?=$pokeball->id?>" class="btn btn-outline-primary d-flex justify-content-center align-items-center js-interaction">
                         <div class="me-1">
                             <img src="<?=$pokeball->imageUrl?>">
@@ -168,7 +168,7 @@
                 </form>
             <?php endforeach ?>
         </div>
-        <form method="POST" action="/encounter/<?=$id?>/run" class="d-grid <?=$isBattleOver ? "d-none" : ""?>">
+        <form method="POST" action="/<?=$instanceId?>/encounter/<?=$id?>/run" class="d-grid <?=$isBattleOver ? "d-none" : ""?>">
             <button type="submit" class="btn btn-outline-secondary js-interaction">Run</button>
         </form>
     </li>

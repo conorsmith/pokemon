@@ -6,6 +6,8 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetSwitch
 {
@@ -15,9 +17,9 @@ final class GetSwitch
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
-        $redirectUrl = $_GET['redirect'];
+        $redirectUrl = $request->query->get('redirect');
 
         $player = $this->playerRepository->findPlayer();
 
@@ -27,9 +29,9 @@ final class GetSwitch
             $teamViewModels[] = $this->viewModelFactory->createPokemonInBattle($pokemon);
         }
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/Switch.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Switch.php", [
             'team' => $teamViewModels,
             'redirectUrl' => $redirectUrl,
-        ]);
+        ]));
     }
 }

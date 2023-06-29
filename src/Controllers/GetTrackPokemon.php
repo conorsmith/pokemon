@@ -8,6 +8,8 @@ use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetTrackPokemon
 {
@@ -18,14 +20,14 @@ final class GetTrackPokemon
         private readonly TemplateEngine $templateEngine,
     ) {}
 
-    public function __invoke(array $args): void
+    public function __invoke(Request $request, array $args): Response
     {
         $encounterType = $args['encounterType'];
 
         $location = $this->locationRepository->findCurrentLocation();
         $bag = $this->bagRepository->find();
 
-        echo $this->templateEngine->render(__DIR__ . "/../Templates/TrackPokemon.php", [
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/TrackPokemon.php", [
             'currentLocation' => $this->viewModelFactory->createLocation($location),
             'pokeballs' => $bag->countAllPokeBalls(),
             'encounterTypeClasses' => match ($encounterType) {
@@ -35,8 +37,9 @@ final class GetTrackPokemon
                 EncounterType::ROCK_SMASH => "fab fa-sith",
             },
             'scriptData' => json_encode([
+                'instanceId' => $args['instanceId'],
                 'encounterType' => $encounterType,
             ]),
-        ]);
+        ]));
     }
 }
