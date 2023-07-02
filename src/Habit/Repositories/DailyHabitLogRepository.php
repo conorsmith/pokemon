@@ -24,6 +24,7 @@ final class DailyHabitLogRepository
             ->from(match ($habit) {
                 Habit::FOOD_DIARY_COMPLETED => "log_food_diary",
                 Habit::CALORIE_GOAL_ATTAINED => "log_calorie_goal",
+                Habit::STRETCHES_COMPLETED => "log_stretches",
             })
             ->where("instance_id = :instanceId")
             ->setParameter('instanceId', $this->instanceId->value)
@@ -52,6 +53,7 @@ final class DailyHabitLogRepository
                 match ($savedHabitLog->habit) {
                     Habit::FOOD_DIARY_COMPLETED => "log_food_diary",
                     Habit::CALORIE_GOAL_ATTAINED => "log_calorie_goal",
+                    Habit::STRETCHES_COMPLETED => "log_stretches",
                 },
                 [
                     'id' => Uuid::uuid4(),

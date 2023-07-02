@@ -30,6 +30,8 @@ use ConorSmith\Pokemon\Battle\UseCase\CreateALegendaryEncounter;
 use ConorSmith\Pokemon\Battle\UseCase\CreateAWildEncounter;
 use ConorSmith\Pokemon\Battle\UseCase\StartAnEncounter;
 use ConorSmith\Pokemon\Controllers\GetBag;
+use ConorSmith\Pokemon\Habit\Controllers\GetLogStretches;
+use ConorSmith\Pokemon\Habit\Controllers\PostLogStretches;
 use ConorSmith\Pokemon\Location\RegionRepositoryRegionIsLockedQuery;
 use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
 use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
@@ -95,6 +97,8 @@ final class ControllerFactory
         $r->post("/log/food-diary", PostLogFoodDiary::class);
         $r->get("/log/weekly-review", GetLogWeeklyReview::class);
         $r->post("/log/weekly-review", PostLogWeeklyReview::class);
+        $r->get("/log/stretches", GetLogStretches::class);
+        $r->post("/log/stretches", PostLogStretches::class);
 
         $r->get("/pokedex", GetPokedex::class);
         $r->get("/pokedex/{number}", GetPokedexEntry::class);
@@ -191,6 +195,16 @@ final class ControllerFactory
                     ),
                     new PokedexConfigRepository(),
                 ),
+            ),
+            GetLogStretches::class => new GetLogStretches(
+                $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
+                $this->templateEngine,
+            ),
+            PostLogStretches::class => new PostLogStretches(
+                $this->db,
+                $this->session,
+                $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
             ),
             GetPokedex::class => new GetPokedex(
                 $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),

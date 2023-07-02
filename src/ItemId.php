@@ -10,6 +10,7 @@ final class ItemId
     public const ULTRA_BALL = "83f7b9c8-b149-4d94-8269-bc694e76a65c";
     public const RARE_CANDY = "bcc445c2-d954-4a7d-bbea-8c119251967c";
     public const CHALLENGE_TOKEN = "63a083ee-0325-4642-9686-36babb610f47";
+    public const OVAL_CHARM = "5fdc519b-b476-46a4-8a41-a34370ccfdf0";
     public const FIRE_STONE = "adc27a70-9455-47d6-88dd-76ec4a03dd23";
     public const WATER_STONE = "70fc1572-3a2d-4ed7-b1c2-897b6e8e7f56";
     public const THUNDER_STONE = "f7a682b5-e482-4573-9ae4-427a6a1f9d9c";

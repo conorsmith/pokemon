@@ -9,4 +9,5 @@ enum Habit
     case CALORIE_GOAL_ATTAINED;
     case EXERCISE;
     case CALORIE_EXCESS;
+    case STRETCHES_COMPLETED;
 }

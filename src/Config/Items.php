@@ -29,6 +29,10 @@ return [
         'name' => "Challenge Token",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png",
     ],
+    ItemId::OVAL_CHARM => [
+        'name' => "Oval Charm",
+        'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/f8/Bag_Oval_Charm_Sprite.png",
+    ],
     ItemId::FIRE_STONE => [
         'name' => "Fire Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/86/Bag_Fire_Stone_Sprite.png",
