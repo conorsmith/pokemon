@@ -77,9 +77,15 @@ use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\LevelUpPokemon;
+use ConorSmith\Pokemon\Team\Repositories\EggRepositoryDb;
 use ConorSmith\Pokemon\Team\Repositories\EvolutionRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
+use ConorSmith\Pokemon\Team\UseCases\ShowBox;
+use ConorSmith\Pokemon\Team\UseCases\ShowDayCare;
+use ConorSmith\Pokemon\Team\UseCases\ShowEggs;
+use ConorSmith\Pokemon\Team\UseCases\ShowTeam;
+use ConorSmith\Pokemon\Team\UseCases\ShowTeamCoverage;
 use ConorSmith\Pokemon\Team\WeeklyUpdateForTeamCommand;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
@@ -181,10 +187,10 @@ final class ControllerFactory
                 $this->repositoryFactory->create(WeeklyHabitLogRepository::class, $instanceId),
                 new WeeklyUpdateForTeamCommand(
                     $this->session,
-                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                     new LevelUpPokemon(
                         $this->db,
-                        $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                        $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                         $this->repositoryFactory->create(EvolutionRepository::class, $instanceId),
                         new FriendshipLog($this->db),
                         new HighestRankedGymBadgeQueryDb(
@@ -268,11 +274,25 @@ final class ControllerFactory
                 ),
             ),
             GetTeam::class => new GetTeam(
-                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                new ShowTeam(
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                ),
+                new ShowEggs(
+                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId)
+                ),
+                new ShowDayCare(
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                ),
+                new ShowBox(
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                ),
+                new ShowTeamCoverage(
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                ),
                 $this->templateEngine,
             ),
             GetTeamCompare::class => new GetTeamCompare(
-                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->templateEngine,
             ),
             GetTeamCombinations::class => new GetTeamCombinations(
@@ -281,7 +301,7 @@ final class ControllerFactory
                 $this->templateEngine,
             ),
             GetPokemon::class => new GetPokemon(
-                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->locationConfigRepository,
                 $this->templateEngine,
             ),
@@ -342,17 +362,17 @@ final class ControllerFactory
             ),
             PostTeamSendToBox::class => new PostTeamSendToBox(
                 $this->session,
-                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->friendshipLog,
             ),
             PostTeamSendToTeam::class => new PostTeamSendToTeam(
                 $this->session,
-                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->friendshipLog,
             ),
             PostTeamSendToDayCare::class => new PostTeamSendToDayCare(
                 $this->session,
-                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->friendshipLog,
             ),
             PostBattleStart::class => new PostBattleStart(
@@ -389,7 +409,7 @@ final class ControllerFactory
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->reportTeamPokemonFaintedCommand,
                 new BoostPokemonEvsCommand(
-                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId)
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
                 ),
                 new EventFactory(
                     $this->viewModelFactory,
@@ -434,10 +454,10 @@ final class ControllerFactory
                 $this->db,
                 $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 new LevelUpPokemon(
                     $this->db,
-                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(EvolutionRepository::class, $instanceId),
                     new FriendshipLog($this->db),
                     new HighestRankedGymBadgeQueryDb(
@@ -464,7 +484,7 @@ final class ControllerFactory
             ),
             GetIndex::class => new GetIndex(
                 $this->db,
-                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 $this->viewModelFactory,

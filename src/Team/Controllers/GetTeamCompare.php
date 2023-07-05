@@ -5,7 +5,7 @@ namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\PokemonType;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use stdClass;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class GetTeamCompare
 {
     public function __construct(
-        private readonly PokemonRepository $pokemonRepository,
+        private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly TemplateEngine $templateEngine,
     ) {}
 

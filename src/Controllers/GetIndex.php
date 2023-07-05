@@ -10,7 +10,7 @@ use ConorSmith\Pokemon\SharedKernel\Domain\Bag;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
@@ -24,7 +24,7 @@ final class GetIndex
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly PokemonRepository $pokemonRepository,
+        private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly BagRepository $bagRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly ViewModelFactory $viewModelFactory,

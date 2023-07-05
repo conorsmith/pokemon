@@ -19,6 +19,11 @@ final class Team
         );
     }
 
+    public function count(): int
+    {
+        return count($this->members);
+    }
+
     public function isFull(): bool
     {
         return count($this->members) === 6;

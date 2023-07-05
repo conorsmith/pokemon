@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Team;
 
 use ConorSmith\Pokemon\SharedKernel\BoostPokemonEvsCommand as CommandInterface;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 
 final class BoostPokemonEvsCommand implements CommandInterface
 {
     public function __construct(
-        private readonly PokemonRepository $pokemonRepository,
+        private readonly PokemonRepositoryDb $pokemonRepository,
     ) {}
 
     public function run(

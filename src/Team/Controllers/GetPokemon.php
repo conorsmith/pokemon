@@ -7,7 +7,7 @@ use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\LocationType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class GetPokemon
 {
     public function __construct(
-        private readonly PokemonRepository $pokemonRepository,
+        private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly TemplateEngine $templateEngine,
     ) {}

@@ -23,15 +23,15 @@ final class StartABattle
 
     public function __invoke(string $trainerId): ResultOfStartingABattle
     {
-        $bag = $this->bagRepository->find();
-
-        if (!$bag->has(ItemId::CHALLENGE_TOKEN)) {
-            return ResultOfStartingABattle::failure();
-        }
-
         $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainerByTrainerId($trainerId);
         $eliteFourChallenge = $this->eliteFourChallengeRepository->findActive();
+
+        $bag = $this->bagRepository->find();
+
+        if (is_null($eliteFourChallenge) && !$bag->has(ItemId::CHALLENGE_TOKEN)) {
+            return ResultOfStartingABattle::failure();
+        }
 
         if ($trainer->isGymLeader() || $trainer->isEliteFourOrEquivalent()) {
             $this->reportBattleWithGymLeaderCommand->run(array_map(

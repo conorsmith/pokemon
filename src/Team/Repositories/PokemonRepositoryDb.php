@@ -10,13 +10,14 @@ use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
 use ConorSmith\Pokemon\Team\Domain\DayCare;
 use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
+use ConorSmith\Pokemon\Team\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Team\Domain\Stat;
 use ConorSmith\Pokemon\Team\Domain\Team;
 use Doctrine\DBAL\Connection;
 use Exception;
 use stdClass;
 
-final class PokemonRepository
+final class PokemonRepositoryDb implements PokemonRepository
 {
     public function __construct(
         private readonly Connection $db,

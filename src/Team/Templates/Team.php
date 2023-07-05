@@ -3,28 +3,29 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div><strong>Team</strong></div>
-            <div><?=count($team)?> / 6</div>
+            <div><?=$team->filled?> / <?=$team->maximum?></div>
         </div>
         <ul class="list-group list-group-flush">
-            <?php foreach ($team as $i => $pokemon) : ?>
+            <?php foreach ($team->slots as $slot) : ?>
+                <?php $pokemon = $slot->pokemon ?>
                 <?php require __DIR__ . "/ListPokemon.php" ?>
                 <li class="list-group-item d-flex justify-content-between w-100" style="background: #fafafa;">
                     <div class="d-flex">
                         <form method="POST" action="/<?=$instanceId?>/team/move-up" style="margin-right: 0.4rem;">
-                            <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                            <button type="submit" class="btn btn-outline-dark btn-sm" <?=$i === 0 ? "disabled" : ""?>>
+                            <input type="hidden" name="pokemon" value="<?=$slot->pokemon->id?>">
+                            <button type="submit" class="btn btn-outline-dark btn-sm" <?=$slot->canMoveUp ? "" : "disabled"?>>
                                 <i class="fas fa-fw fa-chevron-up"></i>
                             </button>
                         </form>
                         <form method="POST" action="/<?=$instanceId?>/team/move-down">
-                            <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                            <button type="submit" class="btn btn-outline-dark btn-sm" <?=$i === count($team) - 1 ? "disabled" : ""?>>
+                            <input type="hidden" name="pokemon" value="<?=$slot->pokemon->id?>">
+                            <button type="submit" class="btn btn-outline-dark btn-sm" <?=$slot->canMoveDown ? "" : "disabled"?>>
                                 <i class="fas fa-fw fa-chevron-down"></i>
                             </button>
                         </form>
                     </div>
                     <div class="d-flex gap-2">
-                        <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/team/member/<?=$pokemon->id?>">
+                        <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/team/member/<?=$slot->pokemon->id?>">
                             Stats
                         </a>
                         <div class="dropdown">
@@ -34,16 +35,16 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <form method="POST" action="/<?=$instanceId?>/team/send-to-box">
-                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                        <button type="submit" class="dropdown-item" <?=$teamHasSingleRemainingMember ? "disabled" : ""?>>
+                                        <input type="hidden" name="pokemon" value="<?=$slot->pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$slot->canSendToBox ? "" : "disabled"?>>
                                             Send to Box
                                         </button>
                                     </form>
                                 </li>
                                 <li>
                                     <form method="POST" action="/<?=$instanceId?>/team/send-to-day-care">
-                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                        <button type="submit" class="dropdown-item" <?=$teamHasSingleRemainingMember || $dayCareIsFull ? "disabled" : ""?>>
+                                        <input type="hidden" name="pokemon" value="<?=$slot->pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$slot->canSendToDayCare ? "" : "disabled"?>>
                                             Send to Day Care
                                         </button>
                                     </form>
@@ -123,17 +124,58 @@
         </div>
     </div>
 
+    <?php if (!$eggs->isEmpty) : ?>
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div><strong>Eggs</strong></div>
+                <div><?=$eggs->filled?></div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <?php foreach ($eggs->slots as $slot) : ?>
+                    <li class="list-group-item d-flex align-items-center">
+                        <div>
+                            <img src="https://archives.bulbagarden.net/media/upload/d/dc/Spr_3r_Egg.png">
+                        </div>
+                        <div>
+                            <div>
+                                <span style="font-weight: bold;"><?=$slot->firstParent->name?></span>
+                                <?php if ($slot->firstParent->sex === \ConorSmith\Pokemon\Sex::FEMALE) : ?>
+                                    <i class="fas fa-venus"></i>
+                                <?php elseif ($slot->firstParent->sex === \ConorSmith\Pokemon\Sex::MALE) : ?>
+                                    <i class="fas fa-mars"></i>
+                                <?php elseif ($slot->firstParent->sex === \ConorSmith\Pokemon\Sex::UNKNOWN) : ?>
+                                    <i class="fas fa-genderless"></i>
+                                <?php endif ?>
+                                and
+                                <span style="font-weight: bold;"><?=$slot->secondParent->name?></span>
+                                <?php if ($slot->secondParent->sex === \ConorSmith\Pokemon\Sex::FEMALE) : ?>
+                                    <i class="fas fa-venus"></i>
+                                <?php elseif ($slot->secondParent->sex === \ConorSmith\Pokemon\Sex::MALE) : ?>
+                                    <i class="fas fa-mars"></i>
+                                <?php elseif ($slot->secondParent->sex === \ConorSmith\Pokemon\Sex::UNKNOWN) : ?>
+                                    <i class="fas fa-genderless"></i>
+                                <?php endif ?>
+                            </div>
+                            <div style="font-size: 0.8rem;"><?=$slot->cycles?> cycles remaining</div>
+                        </div>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+    <?php endif ?>
+
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div><strong>Day Care</strong></div>
-            <div><?=count($dayCare)?> / <?=$dayCareLimit?></div>
+            <div><?=$dayCare->filled?> / <?=$dayCare->maximum?></div>
         </div>
         <ul class="list-group list-group-flush">
-            <?php foreach ($dayCare as $pokemon) : ?>
+            <?php foreach ($dayCare->slots as $slot) : ?>
+                <?php $pokemon = $slot->pokemon ?>
                 <?php require __DIR__ . "/ListPokemon.php" ?>
                 <li class="list-group-item d-flex justify-content-end" style="background: #fafafa;">
                     <div class="d-flex gap-2">
-                        <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/team/member/<?=$pokemon->id?>">
+                        <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/team/member/<?=$slot->pokemon->id?>">
                             Stats
                         </a>
                         <div class="dropdown">
@@ -143,16 +185,16 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <form method="POST" action="/<?=$instanceId?>/team/send-to-team">
-                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                        <button type="submit" class="dropdown-item" <?=$teamIsFull ? "disabled" : ""?>>
+                                        <input type="hidden" name="pokemon" value="<?=$slot->pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$slot->canSendToTeam ? "" : "disabled"?>>
                                             Send to Team
                                         </button>
                                     </form>
                                 </li>
                                 <li>
                                     <form method="POST" action="/<?=$instanceId?>/team/send-to-box">
-                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                        <button type="submit" class="dropdown-item">
+                                        <input type="hidden" name="pokemon" value="<?=$slot->pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$slot->canSendToBox ? "" : "disabled"?>>
                                             Send to Box
                                         </button>
                                     </form>
@@ -162,7 +204,7 @@
                     </div>
                 </li>
             <?php endforeach ?>
-            <?php for ($i = count($dayCare); $i < $dayCareLimit; $i++) : ?>
+            <?php for ($i = $dayCare->filled; $i < $dayCare->maximum; $i++) : ?>
                 <li class="list-group-item d-flex align-items-center">
                     <div class="d-flex align-items-center justify-content-center" style="width: 6rem; height: 5rem; margin-right: 1rem; color: #aaa;">
                         <i class="fas fa-dot-circle"></i>
@@ -178,14 +220,15 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div><strong>Box</strong></div>
-            <div><?=count($box)?></div>
+            <div><?=$box->filled?></div>
         </div>
         <ul class="list-group list-group-flush">
-            <?php foreach ($box as $pokemon) : ?>
+            <?php foreach ($box->slots as $slot) : ?>
+                <?php $pokemon = $slot->pokemon ?>
                 <?php require __DIR__ . "/ListPokemon.php" ?>
                 <li class="list-group-item d-flex justify-content-end" style="background: #fafafa;">
                     <div class="d-flex gap-2">
-                        <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/team/member/<?=$pokemon->id?>">
+                        <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/team/member/<?=$slot->pokemon->id?>">
                             Stats
                         </a>
                         <div class="dropdown">
@@ -195,16 +238,16 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <form method="POST" action="/<?=$instanceId?>/team/send-to-team">
-                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                        <button type="submit" class="dropdown-item" <?=$teamIsFull ? "disabled" : ""?>>
+                                        <input type="hidden" name="pokemon" value="<?=$slot->pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$slot->canSendToTeam ? "" : "disabled"?>>
                                             Send to Team
                                         </button>
                                     </form>
                                 </li>
                                 <li>
                                     <form method="POST" action="/<?=$instanceId?>/team/send-to-day-care">
-                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                        <button type="submit" class="dropdown-item" <?=$dayCareIsFull ? "disabled" : ""?>>
+                                        <input type="hidden" name="pokemon" value="<?=$slot->pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$slot->canSendToDayCare ? "" : "disabled"?>>
                                             Send to Day Care
                                         </button>
                                     </form>

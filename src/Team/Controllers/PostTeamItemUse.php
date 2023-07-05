@@ -10,7 +10,7 @@ use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\ItemType;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\LevelUpPokemon;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -25,7 +25,7 @@ final class PostTeamItemUse
         private readonly Connection $db,
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
-        private readonly PokemonRepository $pokemonRepository,
+        private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly LevelUpPokemon $levelUpPokemon,
         private readonly ItemConfigRepository $itemConfigRepository,
         private readonly array $pokedex,

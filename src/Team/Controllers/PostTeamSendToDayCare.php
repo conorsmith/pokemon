@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\Team\FriendshipLog;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,7 @@ final class PostTeamSendToDayCare
 {
     public function __construct(
         private readonly Session $session,
-        private readonly PokemonRepository $pokemonRepository,
+        private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly FriendshipLog $friendshipLog,
     ) {}
 

@@ -12,6 +12,11 @@ final class DayCare
         public readonly int $availablePlaces,
     ) {}
 
+    public function count(): int
+    {
+        return count($this->attendees);
+    }
+
     public function isFull(): bool
     {
         return count($this->attendees) === $this->availablePlaces;

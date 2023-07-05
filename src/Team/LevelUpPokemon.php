@@ -11,7 +11,7 @@ use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\Team\Domain\Evolution;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Repositories\EvolutionRepository;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -20,7 +20,7 @@ final class LevelUpPokemon
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly PokemonRepository $pokemonRepository,
+        private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly EvolutionRepository $evolutionRepository,
         private readonly FriendshipLog $friendshipLog,
         private readonly HighestRankedGymBadgeQuery $highestRankedGymBadgeQuery,

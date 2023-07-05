@@ -20,9 +20,10 @@ use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\Team\Repositories\EggRepositoryDb;
 use ConorSmith\Pokemon\Team\Repositories\EvolutionRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\Team\TeamPokemonQuery;
 use Doctrine\DBAL\Connection;
 
@@ -46,13 +47,13 @@ final class RepositoryFactory
                 new LocationConfigRepository(),
                 $instanceId,
             ),
-            PlayerRepository::class             => new PlayerRepository(
+            PlayerRepository::class    => new PlayerRepository(
                 $this->db,
-                new TeamPokemonQuery($this->create(PokemonRepository::class, $instanceId)),
+                new TeamPokemonQuery($this->create(PokemonRepositoryDb::class, $instanceId)),
                 require __DIR__ . "/Config/Pokedex.php",
                 $instanceId,
             ),
-            PokemonRepository::class            => new PokemonRepository(
+            PokemonRepositoryDb::class => new PokemonRepositoryDb(
                 $this->db,
                 new EarnedGymBadgesQueryDb($this->db, $instanceId),
                 new PokemonConfigRepository(),
@@ -93,6 +94,7 @@ final class RepositoryFactory
                 $this->create(TrainerRepository::class, $instanceId),
                 new LocationConfigRepository(),
             ),
+            EggRepositoryDb::class => new EggRepositoryDb($this->db, $instanceId),
         };
     }
 }

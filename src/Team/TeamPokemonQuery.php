@@ -5,12 +5,12 @@ namespace ConorSmith\Pokemon\Team;
 
 use ConorSmith\Pokemon\SharedKernel\TeamPokemon;
 use ConorSmith\Pokemon\SharedKernel\TeamPokemonQuery as TeamPokemonQueryInterface;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 
 final class TeamPokemonQuery implements TeamPokemonQueryInterface
 {
     public function __construct(
-        private readonly PokemonRepository $pokemonRepository,
+        private readonly PokemonRepositoryDb $pokemonRepository,
     ) {}
 
     public function run(string $id): TeamPokemon

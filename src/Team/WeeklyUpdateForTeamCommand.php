@@ -5,14 +5,14 @@ namespace ConorSmith\Pokemon\Team;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\WeeklyUpdateForTeamCommand as CommandInterface;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
-use ConorSmith\Pokemon\Team\Repositories\PokemonRepository;
+use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class WeeklyUpdateForTeamCommand implements CommandInterface
 {
     public function __construct(
         private readonly Session $session,
-        private readonly PokemonRepository $pokemonRepository,
+        private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly LevelUpPokemon $levelUpPokemon,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
     ) {}
