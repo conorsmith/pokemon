@@ -99,7 +99,7 @@
                     }
 
                     target.dataset.targetId = event.next.id;
-                    target.querySelector("h5").innerText = event.next.name;
+                    target.querySelector(".js-name").innerText = event.next.name;
 
                     target.querySelector(".pokemon-image img").src = event.next.imageUrl;
                     target.querySelector(".pokemon-image img").addEventListener("load", function (e) {
@@ -130,6 +130,17 @@
                         secondaryTypeEl.innerText = event.next.secondaryType;
                         target.querySelector(".js-types").appendChild(secondaryTypeEl);
                     }
+
+                    let sexIcon;
+                    if (event.next.sex === "F") {
+                        sexIcon = "venus";
+                    } else if (event.next.sex === "M") {
+                        sexIcon = "mars";
+                    } else if (event.next.sex === "U") {
+                        sexIcon = "genderless";
+                    }
+
+                    target.querySelector(".js-sex").innerHTML = `<i class="fas fa-${sexIcon}"></i>`;
 
                     target.querySelector(".js-level").innerHTML = "Lv " + event.next.level;
 

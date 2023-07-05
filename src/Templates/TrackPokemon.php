@@ -161,6 +161,15 @@
             `;
         }
 
+        let sexIcon;
+        if (pokemon.sex === "F") {
+            sexIcon = "venus";
+        } else if (pokemon.sex === "M") {
+            sexIcon = "mars";
+        } else if (pokemon.sex === "U") {
+            sexIcon = "genderless";
+        }
+
         return `
             <form method="POST" action="/${scriptData.instanceId}/encounter/${encounterId}/start" class="d-none tracked-pokemon js-tracked-pokemon">
                 <div class="pokemon-image pokemon-image--encounter ${pokemon.isShiny ? "pokemon-image--shiny" : "" }">
@@ -169,6 +178,9 @@
                 <div style="flex-grow: 1;">
                     <h5>
                         ${pokemon.name}
+                        <span class="pokemon-sex">
+                            <i class="fas fa-${sexIcon}"></i>
+                        </span>
                         ${formElement}
                     </h5>
                     <div class="mb-3 d-flex align-items-center">

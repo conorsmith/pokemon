@@ -34,6 +34,7 @@ final class PostEncounterCatchTest extends TestCase
             'instance_id'                 => Instance::DEFAULT_ID,
             'pokemon_id'                  => 1,
             'level'                       => 0,
+            'sex'                         => "U",
             'is_shiny'                    => 0,
             'is_legendary'                => 0,
             'iv_physical_attack'          => 0,

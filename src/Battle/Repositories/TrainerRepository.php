@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\TrainerClass;
@@ -124,6 +125,7 @@ class TrainerRepository
                 $pokedexEntry['type'][1] ?? null,
                 $level,
                 0,
+                $pokemonConfig['sex'] ?? Sex::UNKNOWN,
                 isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
                 self::createStats($trainerConfig['class'], $level, $pokemonConfig['id']),
                 0,

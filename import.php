@@ -4,14 +4,17 @@ declare(strict_types=1);
 require_once __DIR__ . "/vendor/autoload.php";
 
 use ConorSmith\Pokemon\Import\BulbapediaEvsPage;
+use ConorSmith\Pokemon\Import\BulbapediaSexRatiosPage;
 use ConorSmith\Pokemon\Import\BulbapediaPokedexPage;
 use ConorSmith\Pokemon\Import\BulbapediaPokemonPage;
 use ConorSmith\Pokemon\Import\BulbapediaLocationPage;
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
 use ConorSmith\Pokemon\Import\Domain\PokemonEvYield;
+use ConorSmith\Pokemon\Import\Domain\PokemonSexRatio;
 use ConorSmith\Pokemon\Import\EncountersConfig;
 use ConorSmith\Pokemon\Import\EncounterTableFactory;
 use ConorSmith\Pokemon\Import\EvYieldsConfig;
+use ConorSmith\Pokemon\Import\SexRatiosConfig;
 use ConorSmith\Pokemon\Import\PokemonConfig;
 use ConorSmith\Pokemon\Import\PokedexNoConstants;
 use ConorSmith\Pokemon\Import\PokedexNumberConstantFactory;
@@ -20,10 +23,10 @@ use ConorSmith\Pokemon\Import\TrainerFactory;
 use ConorSmith\Pokemon\Import\TrainersConfig;
 use ConorSmith\Pokemon\PokedexNo;
 
-if ($argc < 2 || !in_array($argv[1], ["encounters", "trainers", "pokemonIds", "pokemon", "evs", "check"])) {
+if ($argc < 2 || !in_array($argv[1], ["encounters", "trainers", "pokemonIds", "pokemon", "evs", "check", "sex"])) {
     echo PHP_EOL;
     echo "[ USAGE ]" . PHP_EOL;
-    echo "php import.php [encounters|trainers|pokemonIds|pokemon|evs|check] (pokemon:lower_bound) (pokemon:upper_bound)" . PHP_EOL . PHP_EOL;
+    echo "php import.php [encounters|trainers|pokemonIds|pokemon|evs|check|sex] (pokemon:lower_bound) (pokemon:upper_bound)" . PHP_EOL . PHP_EOL;
     exit;
 }
 
@@ -145,4 +148,25 @@ if ($argv[1] === "encounters") {
     }
 
     dd($unencounterableJohtoPokemon);
+
+} elseif ($argv[1] === "sex") {
+
+    $bulbapedia = BulbapediaSexRatiosPage::fromFile(__DIR__ . "/.cache/sex.html");
+
+    $sexRatios = [];
+
+    foreach ($bulbapedia->extractSexRatios() as $bulbapediaEntry) {
+        $sexRatios[] = new PokemonSexRatio(
+            new PokedexNumber(strval(intval($bulbapediaEntry['number']))),
+            $bulbapediaEntry['ratio']['female'] ?? 0,
+            $bulbapediaEntry['ratio']['male'] ?? 0,
+            $bulbapediaEntry['ratio']['unknown'] ?? 0,
+        );
+    }
+
+    usort($sexRatios, function (PokemonSexRatio $a, PokemonSexRatio $b) {
+        return $a->pokedexNumber->value > $b->pokedexNumber->value;
+    });
+
+    echo SexRatiosConfig::fromPokemonSexRatios($sexRatios);
 }

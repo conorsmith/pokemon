@@ -23,7 +23,16 @@
         </div>
         <div style="text-align: right; flex-grow: 1;">
             <h5>
-                <?=$opponentPokemon->name?>
+                <span class="js-name"><?=$opponentPokemon->name?></span>
+                <span class="js-sex pokemon-sex">
+                    <?php if ($opponentPokemon->sex === \ConorSmith\Pokemon\Sex::FEMALE) : ?>
+                        <i class="fas fa-venus"></i>
+                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\Sex::MALE) : ?>
+                        <i class="fas fa-mars"></i>
+                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\Sex::UNKNOWN) : ?>
+                        <i class="fas fa-genderless"></i>
+                    <?php endif ?>
+                </span>
                 <?php if ($opponentPokemon->form) : ?>
                     <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$opponentPokemon->form?> Form</span>
                 <?php endif ?>
@@ -57,7 +66,16 @@
         </div>
         <div style="flex-grow: 1">
             <h5>
-                <?=$playerPokemon->name?>
+                <span class="js-name"><?=$playerPokemon->name?></span>
+                <span class="js-sex pokemon-sex">
+                    <?php if ($playerPokemon->sex === \ConorSmith\Pokemon\Sex::FEMALE) : ?>
+                        <i class="fas fa-venus"></i>
+                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\Sex::MALE) : ?>
+                        <i class="fas fa-mars"></i>
+                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\Sex::UNKNOWN) : ?>
+                        <i class="fas fa-genderless"></i>
+                    <?php endif ?>
+                </span>
                 <?php if ($playerPokemon->form) : ?>
                     <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$playerPokemon->form?> Form</span>
                 <?php endif ?>

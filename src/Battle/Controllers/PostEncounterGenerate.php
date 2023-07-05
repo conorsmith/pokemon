@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\UseCase\CreateAWildEncounter;
+use ConorSmith\Pokemon\Battle\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

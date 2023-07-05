@@ -195,6 +195,14 @@
             font-size: 0.8rem;
         }
 
+        .pokemon-sex {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .pokemon-sex + .badge {
+            margin-left: 0.2rem;
+        }
+
         @keyframes flash {
             0%, 100% {
                 opacity: 1;

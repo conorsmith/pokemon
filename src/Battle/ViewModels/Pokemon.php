@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\ViewModels;
 
+use ConorSmith\Pokemon\Sex;
+
 final class Pokemon
 {
     public function __construct(
@@ -13,6 +15,7 @@ final class Pokemon
         public readonly string $primaryType,
         public readonly ?string $secondaryType,
         public readonly string $level,
+        public readonly Sex $sex,
         public readonly bool $isShiny,
         public readonly string $remainingHp,
         public readonly string $totalHp,

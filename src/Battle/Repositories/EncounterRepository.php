@@ -11,6 +11,8 @@ use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
@@ -27,7 +29,7 @@ final class EncounterRepository
         private readonly Connection $db,
         private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
-        private readonly array $pokedex,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly HabitStreakQuery $habitStreakQuery,
         private readonly InstanceId $instanceId,
     ) {}
@@ -65,11 +67,12 @@ final class EncounterRepository
 
     private function generate(EncounterTableEntry $encounterTableEntry, bool $isLegendary): Encounter
     {
+        $sex = $this->generateEncounteredSex($encounterTableEntry->pokedexNumber);
         $isShiny = $this->generateEncounteredShininess();
 
         $encounterId = Uuid::uuid4()->toString();
 
-        $pokedexEntry = $this->pokedex[$encounterTableEntry->pokedexNumber];
+        $pokedexEntry = $this->pokedexConfigRepository->find($encounterTableEntry->pokedexNumber);
 
         $level = $encounterTableEntry->generateLevel();
 
@@ -81,6 +84,7 @@ final class EncounterRepository
             $pokedexEntry['type'][1] ?? null,
             $level,
             0,
+            $sex,
             $isShiny,
             self::generateStats($level, $encounterTableEntry->pokedexNumber),
             0,
@@ -116,7 +120,7 @@ final class EncounterRepository
             return null;
         }
 
-        $pokedexEntry = $this->pokedex[$encounterRow['pokemon_id']];
+        $pokedexEntry = $this->pokedexConfigRepository->find($encounterRow['pokemon_id']);
 
         $pokemon = new Pokemon(
             $id,
@@ -126,6 +130,11 @@ final class EncounterRepository
             $pokedexEntry['type'][1] ?? null,
             $encounterRow['level'],
             0,
+            match ($encounterRow['sex']) {
+                "F" => Sex::FEMALE,
+                "M" => Sex::MALE,
+                "U" => Sex::UNKNOWN,
+            },
             $encounterRow['is_shiny'] === 1,
             self::createStatsFromRow($encounterRow),
             $encounterRow['remaining_hp'],
@@ -162,6 +171,11 @@ final class EncounterRepository
                 'pokemon_id' => $encounter->pokemon->number,
                 'form' => $encounter->pokemon->form,
                 'level' => $encounter->pokemon->level,
+                'sex' => match ($encounter->pokemon->sex) {
+                    Sex::FEMALE => "F",
+                    Sex::MALE => "M",
+                    Sex::UNKNOWN => "U",
+                },
                 'is_shiny' => $encounter->pokemon->isShiny ? 1 : 0,
                 'is_legendary' => $encounter->isLegendary ? 1 : 0,
                 'iv_hp' => $encounter->pokemon->stats->ivHp,
@@ -378,6 +392,40 @@ final class EncounterRepository
             $randomlySelectedValue -= $encounterTableEntry->weight;
             if ($randomlySelectedValue <= 0) {
                 return $encounterTableEntry;
+            }
+        }
+
+        throw new Exception;
+    }
+
+    private function generateEncounteredSex(string $pokedexNumber): Sex
+    {
+        $pokedexConfig = $this->pokedexConfigRepository->find($pokedexNumber);
+
+        if (count($pokedexConfig['sexRatio']) === 1) {
+            return $pokedexConfig['sexRatio'][0]['sex'];
+        }
+
+        return self::randomlySelectSex($pokedexConfig['sexRatio']);
+    }
+
+    private static function randomlySelectSex(array $sexRatioConfig): Sex
+    {
+        $aggregatedWeight = array_reduce(
+            $sexRatioConfig,
+            function ($carry, array $sexRatioEntry) {
+                return $carry + $sexRatioEntry['weight'];
+            },
+            0,
+        );
+
+        $randomlySelectedValue = mt_rand(1, $aggregatedWeight);
+
+        /** @var array $sexRatioEntry */
+        foreach ($sexRatioConfig as $sexRatioEntry) {
+            $randomlySelectedValue -= $sexRatioEntry['weight'];
+            if ($randomlySelectedValue <= 0) {
+                return $sexRatioEntry['sex'];
             }
         }
 

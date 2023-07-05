@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Domain;
 
+use ConorSmith\Pokemon\Sex;
+
 final class Pokemon
 {
     public function __construct(
@@ -13,6 +15,7 @@ final class Pokemon
         public readonly ?int $secondaryType,
         public readonly int $level,
         public readonly int $friendship,
+        public readonly Sex $sex,
         public readonly bool $isShiny,
         public readonly Stats $stats,
         public int $remainingHp,

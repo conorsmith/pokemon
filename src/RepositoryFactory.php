@@ -76,7 +76,7 @@ final class RepositoryFactory
                 $this->db,
                 new EncounterConfigRepository(),
                 new LocationConfigRepository(),
-                require __DIR__ . "/Config/Pokedex.php",
+                new PokedexConfigRepository(),
                 new FoodDiaryHabitStreakQuery(
                     $this->create(DailyHabitLogRepository::class, $instanceId)
                 ),
