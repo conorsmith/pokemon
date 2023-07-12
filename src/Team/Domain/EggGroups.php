@@ -14,9 +14,35 @@ final class EggGroups
 
     public function compatibleWith(self $other): bool
     {
-        return $this->firstEggGroup === $other->firstEggGroup
+        if ($this->isDitto() && $other->isDitto()) {
+            return false;
+        }
+
+        if ($this->isDitto() || $other->isDitto()) {
+            return true;
+        }
+
+        if ($this->firstEggGroup === $other->firstEggGroup
             || $this->firstEggGroup === $other->secondEggGroup
-            || $this->secondEggGroup === $other->firstEggGroup
-            || ($this->secondEggGroup === $other->secondEggGroup && !is_null($this->secondEggGroup));
+        ) {
+            return true;
+        }
+
+        if (is_null($this->secondEggGroup)) {
+            return false;
+        }
+
+        if ($this->secondEggGroup === $other->firstEggGroup
+            || $this->secondEggGroup === $other->secondEggGroup
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function isDitto(): bool
+    {
+        return $this->firstEggGroup === EggGroup::DITTO;
     }
 }

@@ -316,12 +316,13 @@ final class ControllerFactory
             ),
             GetPokemonBreed::class => new GetPokemonBreed(
                 $this->session,
-                $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->templateEngine,
             ),
             PostPokemonBreed::class => new PostPokemonBreed(
                 $this->session,
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
             ),
             GetEncounter::class => new GetEncounter(
                 $this->repositoryFactory->create(PlayerRepository::class, $instanceId),

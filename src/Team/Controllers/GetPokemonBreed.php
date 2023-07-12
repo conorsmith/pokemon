@@ -3,13 +3,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Controllers;
 
-use ConorSmith\Pokemon\PokedexNo;
-use ConorSmith\Pokemon\Sex;
-use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Team\ViewModels\BreedingPokemon;
-use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +16,6 @@ final class GetPokemonBreed
 {
     public function __construct(
         private readonly Session $session,
-        private readonly BagRepository $bagRepository,
         private readonly PokemonRepository $pokemonRepository,
         private readonly TemplateEngine $templateEngine,
     ) {}
