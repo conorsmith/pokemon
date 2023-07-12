@@ -387,7 +387,7 @@
 </div>
 
 <?php if ($successes || $failures) : ?>
-    <div class="position-fixed top-0 w-100 px-3 pt-3">
+    <div class="position-fixed top-0 w-100 px-3" style="padding-top: 4rem;">
         <?php if ($successes) : ?>
             <div class="alert alert-success">
                 <?php if (count($successes) === 1) : ?>
