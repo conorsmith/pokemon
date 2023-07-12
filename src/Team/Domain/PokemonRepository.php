@@ -12,6 +12,7 @@ interface PokemonRepository
     public function getDayCare(): DayCare;
     public function getBox(): array;
     public function getAll(stdClass $query): array;
+    public function findAllInEggGroups(EggGroups $eggGroups): array;
     public function saveTeam(Team $team): void;
     public function saveDayCare(DayCare $dayCare): void;
     public function savePokemon(Pokemon $pokemon): void;

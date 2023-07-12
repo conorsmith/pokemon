@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
-use ConorSmith\Pokemon\Battle\Domain\Player;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\Team\Domain\Pokemon;
+use ConorSmith\Pokemon\Team\Domain\PokemonRepository;
+use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
-use ConorSmith\Pokemon\ViewModelFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,8 +18,7 @@ final class GetTeamItemUse
     public function __construct(
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
-        private readonly PlayerRepository $playerRepository,
-        private readonly ViewModelFactory $viewModelFactory,
+        private readonly PokemonRepository $pokemonRepository,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
@@ -28,8 +27,7 @@ final class GetTeamItemUse
         $itemId = $args['id'];
 
         $bag = $this->bagRepository->find();
-
-        $player = $this->playerRepository->findPlayer();
+        $team = $this->pokemonRepository->getTeam();
 
         $itemConfig = require __DIR__ . "/../Config/Items.php";
 
@@ -44,18 +42,10 @@ final class GetTeamItemUse
                 'name' => $itemConfig[$itemId]['name'],
                 'imageUrl' => $itemConfig[$itemId]['imageUrl'],
             ],
-            'team' => $this->createTeamViewModels($player),
+            'team' => array_map(
+                fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
+                $team->members
+            ),
         ]));
-    }
-
-    private function createTeamViewModels(Player $player): array
-    {
-        $viewModels = [];
-
-        foreach ($player->team as $pokemon) {
-            $viewModels[] = $this->viewModelFactory->createPokemonOnTeam($pokemon);
-        }
-
-        return $viewModels;
     }
 }

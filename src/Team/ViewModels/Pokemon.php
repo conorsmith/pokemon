@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\ViewModels;
 
+use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\Team\Domain\Pokemon as DomainModel;
 use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
@@ -19,6 +20,11 @@ final class Pokemon
             $pokemon->id,
             $pokemonConfig['name'],
             $pokemon->form,
+            match ($pokemon->sex) {
+                Sex::FEMALE => "fa-venus",
+                Sex::MALE => "fa-mars",
+                Sex::UNKNOWN => "fa-genderless",
+            },
             TeamMember::createImageUrl($pokemon->number, $pokemon->form),
             ViewModelFactory::createPokemonTypeName($pokemonConfig['type'][0]),
             isset($pokemonConfig['type'][1]) ? ViewModelFactory::createPokemonTypeName($pokemonConfig['type'][1]) : null,
@@ -42,6 +48,7 @@ final class Pokemon
         public readonly string $id,
         public readonly string $name,
         public readonly ?string $form,
+        public readonly string $sexIcon,
         public readonly string $imageUrl,
         public readonly string $primaryType,
         public readonly ?string $secondaryType,

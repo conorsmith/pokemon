@@ -65,6 +65,88 @@
             background: #EE99AC;
         }
 
+        .badge-eg {
+            text-transform: uppercase;
+            border-radius: 0;
+            border: 1px solid;
+        }
+
+        .bg-eg-amorphous {
+            border-color: #8A8A8A;
+            color: #8A8A8A;
+            background-color: #8A8A8A22;
+        }
+        .bg-eg-bug {
+            border-color: #AAC22A;
+            color: #AAC22A;
+            background-color: #AAC22A22;
+        }
+        .bg-eg-dragon {
+            border-color: #7A42FF;
+            color: #7A42FF;
+            background-color: #7A42FF22;
+        }
+        .bg-eg-fairy {
+            border-color: #FFC8F0;
+            color: #FFC8F0;
+            background-color: #FFC8F022;
+        }
+        .bg-eg-field {
+            border-color: #E0C068;
+            color: #E0C068;
+            background-color: #E0C06822;
+        }
+        .bg-eg-flying {
+            border-color: #B29AFA;
+            color: #B29AFA;
+            background-color: #B29AFA22;
+        }
+        .bg-eg-grass {
+            border-color: #82D25A;
+            color: #82D25A;
+            background-color: #82D25A22;
+        }
+        .bg-eg-human-like {
+            border-color: #D29682;
+            color: #D29682;
+            background-color: #D2968222;
+        }
+        .bg-eg-mineral {
+            border-color: #7A6252;
+            color: #7A6252;
+            background-color: #7A625222;
+        }
+        .bg-eg-monster {
+            border-color: #D25064;
+            color: #D25064;
+            background-color: #D2506422;
+        }
+        .bg-eg-water-1 {
+            border-color: #97B5FD;
+            color: #97B5FD;
+            background-color: #97B5FD22;
+        }
+        .bg-eg-water-2 {
+            border-color: #729AFA;
+            color: #729AFA;
+            background-color: #729AFA22;
+        }
+        .bg-eg-water-3 {
+            border-color: #5876BE;
+            color: #5876BE;
+            background-color: #5876BE22;
+        }
+        .bg-eg-no-eggs-discovered {
+            border-color: #333333;
+            color: #333333;
+            background-color: #33333322;
+        }
+        .bg-eg-ditto {
+            border-color: #A664BF;
+            color: #A664BF;
+            background-color: #A664BF22;
+        }
+
 
         .btn-normal, .btn-normal:hover, .btn-normal:disabled {
             background-color: #A8A878;
@@ -216,6 +298,18 @@
             width: 0;
             height: 0;
             overflow: hidden;
+        }
+
+        .pokemon-stats {
+            font-size: 0.8rem;
+        }
+
+        .pokemon-stats .positive {
+            color: #4AA14D;
+        }
+
+        .pokemon-stats .negative {
+            color: #FF1111;
         }
 
         .stat {

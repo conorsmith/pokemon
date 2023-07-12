@@ -56,7 +56,7 @@ final class RepositoryFactory
             PokemonRepositoryDb::class => new PokemonRepositoryDb(
                 $this->db,
                 new EarnedGymBadgesQueryDb($this->db, $instanceId),
-                new PokemonConfigRepository(),
+                new PokedexConfigRepository(),
                 new LocationConfigRepository(),
                 $instanceId,
             ),

@@ -25,6 +25,7 @@ final class GetPokemonTest extends TestCase
             'id'                  => "the-pokemon-id",
             'instance_id'         => Instance::DEFAULT_ID,
             'pokemon_id'          => 1,
+            'sex'                 => "U",
             'is_shiny'            => 0,
             'iv_physical_attack'  => 0,
             'iv_physical_defence' => 0,

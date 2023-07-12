@@ -32,6 +32,7 @@ return [
     ItemId::OVAL_CHARM => [
         'name' => "Oval Charm",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/f8/Bag_Oval_Charm_Sprite.png",
+        'hasUse' => true,
     ],
     ItemId::FIRE_STONE => [
         'name' => "Fire Stone",

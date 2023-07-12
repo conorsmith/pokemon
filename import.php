@@ -3,30 +3,35 @@ declare(strict_types=1);
 
 require_once __DIR__ . "/vendor/autoload.php";
 
+use ConorSmith\Pokemon\Import\BulbapediaEggCyclesPage;
 use ConorSmith\Pokemon\Import\BulbapediaEvsPage;
 use ConorSmith\Pokemon\Import\BulbapediaSexRatiosPage;
 use ConorSmith\Pokemon\Import\BulbapediaPokedexPage;
 use ConorSmith\Pokemon\Import\BulbapediaPokemonPage;
 use ConorSmith\Pokemon\Import\BulbapediaLocationPage;
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
+use ConorSmith\Pokemon\Import\Domain\PokemonEggCycles;
 use ConorSmith\Pokemon\Import\Domain\PokemonEvYield;
 use ConorSmith\Pokemon\Import\Domain\PokemonSexRatio;
+use ConorSmith\Pokemon\Import\EggCyclesConfig;
+use ConorSmith\Pokemon\Import\EggGroupsConfig;
 use ConorSmith\Pokemon\Import\EncountersConfig;
 use ConorSmith\Pokemon\Import\EncounterTableFactory;
 use ConorSmith\Pokemon\Import\EvYieldsConfig;
 use ConorSmith\Pokemon\Import\SexRatiosConfig;
-use ConorSmith\Pokemon\Import\PokemonConfig;
 use ConorSmith\Pokemon\Import\PokedexNoConstants;
 use ConorSmith\Pokemon\Import\PokedexNumberConstantFactory;
+use ConorSmith\Pokemon\Import\PokemonConfig;
+use ConorSmith\Pokemon\Import\PokemonEggGroupsFactory;
 use ConorSmith\Pokemon\Import\PokemonSpeciesFactory;
 use ConorSmith\Pokemon\Import\TrainerFactory;
 use ConorSmith\Pokemon\Import\TrainersConfig;
 use ConorSmith\Pokemon\PokedexNo;
 
-if ($argc < 2 || !in_array($argv[1], ["encounters", "trainers", "pokemonIds", "pokemon", "evs", "check", "sex"])) {
+if ($argc < 2 || !in_array($argv[1], ["encounters", "trainers", "pokemonIds", "pokemon", "evs", "check", "sex", "eggcycles", "egggroups"])) {
     echo PHP_EOL;
     echo "[ USAGE ]" . PHP_EOL;
-    echo "php import.php [encounters|trainers|pokemonIds|pokemon|evs|check|sex] (pokemon:lower_bound) (pokemon:upper_bound)" . PHP_EOL . PHP_EOL;
+    echo "php import.php [encounters|trainers|pokemonIds|pokemon|evs|check|sex|eggcycles|egggroups] (pokemon:lower_bound) (pokemon:upper_bound)" . PHP_EOL . PHP_EOL;
     exit;
 }
 
@@ -169,4 +174,29 @@ if ($argv[1] === "encounters") {
     });
 
     echo SexRatiosConfig::fromPokemonSexRatios($sexRatios);
+
+} elseif ($argv[1] === "eggcycles") {
+    $bulbapedia = BulbapediaEggCyclesPage::fromFile(__DIR__ . "/.cache/eggcycles.html");
+
+    $eggCycles = [];
+
+    foreach ($bulbapedia->extractEggGroupsAndEggCycles() as $bulbapediaEntry) {
+        $eggCycles[] = new PokemonEggCycles(
+            new PokedexNumber(strval(intval($bulbapediaEntry['pokedexNumber']))),
+            intval($bulbapediaEntry['cycles'])
+        );
+    }
+
+    echo EggCyclesConfig::fromPokemonEggCycles($eggCycles);
+
+} elseif ($argv[1] === "egggroups") {
+    $bulbapedia = BulbapediaEggCyclesPage::fromFile(__DIR__ . "/.cache/eggcycles.html");
+
+    $eggGroups = [];
+
+    foreach ($bulbapedia->extractEggGroupsAndEggCycles() as $bulbapediaEntry) {
+        $eggGroups[] = PokemonEggGroupsFactory::fromBulbapediaEntry($bulbapediaEntry);
+    }
+
+    echo EggGroupsConfig::fromPokemonEggGroups($eggGroups);
 }

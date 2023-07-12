@@ -26,7 +26,7 @@ final class TemplateEngine
         extract($variables);
 
         $successes = $this->session->getFlashBag()->get("successes");
-        $failures = $this->session->getFlashBag()->get("failures");
+        $failures = $this->session->getFlashBag()->get("errors");
 
         $content = self::renderContent($templatePath, $variables);
 

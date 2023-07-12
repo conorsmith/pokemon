@@ -6,15 +6,18 @@ namespace ConorSmith\Pokemon\Team;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand as CommandInterface;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonResult;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\RegisterNewPokemonCommand;
 use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
+use ConorSmith\Pokemon\Team\Domain\EggGroups;
 use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Domain\Stat;
-use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
+use ConorSmith\Pokemon\Team\Domain\Type;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -25,7 +28,7 @@ final class CatchPokemonCommand implements CommandInterface
         private readonly Connection $db,
         private readonly FriendshipLog $friendshipLog,
         private readonly RegisterNewPokemonCommand $registerNewPokemonCommand,
-        private readonly PokemonConfigRepository $pokemonConfigRepository,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly InstanceId $instanceId,
     ) {}
@@ -33,8 +36,9 @@ final class CatchPokemonCommand implements CommandInterface
     public function run(
         string $number,
         ?string $form,
-        bool $isShiny,
         int $level,
+        Sex $sex,
+        bool $isShiny,
         bool $isLegendary,
         int $ivHp,
         int $ivPhysicalAttack,
@@ -59,14 +63,23 @@ final class CatchPokemonCommand implements CommandInterface
 
         $baseStats = self::createBaseStats($number);
         $caughtLocationConfig = $this->locationConfigRepository->findLocation($caughtLocationId);
+        $pokedexConfig = $this->pokedexConfigRepository->find($number);
 
         $pokemon = new Pokemon(
             Uuid::uuid4()->toString(),
             $number,
             $form,
-            $this->pokemonConfigRepository->findType($number),
+            new Type(
+                $pokedexConfig['type'][0],
+                $pokedexConfig['type'][1] ?? null,
+            ),
+            new EggGroups(
+                $pokedexConfig['eggGroups'][0],
+                $pokedexConfig['eggGroups'][1] ?? null,
+            ),
             $level,
             0,
+            $sex,
             $isShiny,
             new Hp($baseStats['hp'], $ivHp, 0),
             new Stat($baseStats['attack'], $ivPhysicalAttack, 0),
@@ -85,6 +98,11 @@ final class CatchPokemonCommand implements CommandInterface
             'instance_id' => $this->instanceId->value,
             'pokemon_id' => $pokemon->number,
             'form' => $form,
+            'sex' => match ($sex) {
+                Sex::FEMALE => "F",
+                Sex::MALE => "M",
+                Sex::UNKNOWN => "U",
+            },
             'is_shiny' => $pokemon->isShiny ? 1 : 0,
             'iv_physical_attack' => $pokemon->physicalAttack->iv,
             'iv_physical_defence' => $pokemon->physicalDefence->iv,

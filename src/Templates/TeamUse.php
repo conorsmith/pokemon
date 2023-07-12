@@ -6,36 +6,9 @@
 </div>
 
 <ul class="list-group" style="margin-top: 2rem;">
-    <form method="POST" action="/<?=$instanceId?>/team/use/<?=$item->id?>">
+    <form method="POST" action="/<?=$instanceId?>/team/use/<?=$item->id?>" class="stretched-link-form">
         <?php foreach ($team as $pokemon) : ?>
-            <button type="submit" name="pokemon" value="<?=$pokemon->id?>" class="list-group-item list-group-item-action d-flex">
-                <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>">
-                    <img src="<?=$pokemon->imageUrl?>">
-                </div>
-                <div>
-                    <h5>
-                        <?=$pokemon->name?>
-                        <?php if ($pokemon->form) : ?>
-                            <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$pokemon->form?> Form</span>
-                        <?php endif ?>
-                     </h5>
-                    <p class="mb-0">
-                        <span>
-                            <span class="badge bg-<?=$pokemon->primaryType?>" style="text-transform: uppercase;">
-                                <?=$pokemon->primaryType?>
-                            </span>
-                            <?php if ($pokemon->secondaryType) : ?>
-                                <span class="badge bg-<?=$pokemon->secondaryType?>" style="text-transform: uppercase;">
-                                    <?=$pokemon->secondaryType?>
-                                </span>
-                            <?php endif ?>
-                        </span>
-                        <span class="pokemon-level">
-                            Lv <?=$pokemon->level?>
-                        </span>
-                    </p>
-                </div>
-            </button>
+            <?php require __DIR__ . "/../Team/Templates/ListPokemon.php" ?>
         <?php endforeach ?>
     </form>
     <div class="d-grid mt-5">
@@ -46,3 +19,21 @@
 <div style="text-align: center; font-size: 0.8rem; padding: 0.6rem; margin-top: 2rem;">
     Powered by <a href="https://sunrisesunset.io/" target="_blank">SunriseSunset.io</a>
 </div>
+
+<script>
+    document.querySelectorAll(".stretched-link-form").forEach(formEl => {
+        formEl.querySelectorAll(".stretched-link").forEach(el => {
+            el.addEventListener("click", e => {
+                e.preventDefault();
+
+                let inputEl = document.createElement("input");
+                inputEl.type = "hidden";
+                inputEl.name = "pokemon";
+                inputEl.value = e.target.dataset.id;
+                formEl.append(inputEl);
+
+                formEl.submit();
+            });
+        });
+    });
+</script>

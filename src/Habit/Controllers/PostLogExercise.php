@@ -9,6 +9,7 @@ use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Domain\UnlimitedHabitLogEntry;
 use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\ReduceEggCyclesCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
@@ -24,6 +25,7 @@ final class PostLogExercise
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
         private readonly UnlimitedHabitLogRepository $habitLogRepository,
+        private readonly ReduceEggCyclesCommand $reduceEggCyclesCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -66,6 +68,12 @@ final class PostLogExercise
 
         $this->habitLogRepository->save($habitLog);
         $this->bagRepository->save($bag);
+
+        $this->reduceEggCyclesCommand->run(match($entryType) {
+            EntryType::SHORT_WALK => 1,
+            EntryType::LONG_WALK => 3,
+            EntryType::RUN => 5,
+        });
 
         $this->db->commit();
 

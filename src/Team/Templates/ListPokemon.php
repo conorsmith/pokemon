@@ -5,6 +5,9 @@
     <div class="flex-grow-1">
         <h5>
             <?=$pokemon->name?>
+            <span class="pokemon-sex">
+                <i class="fas <?=$pokemon->sexIcon?>"></i>
+            </span>
             <?php if ($pokemon->form) : ?>
                 <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$pokemon->form?> Form</span>
             <?php endif ?>
@@ -29,5 +32,5 @@
             <?=$pokemon->friendship?>
         </div>
     </div>
-    <a href="/<?=$instanceId?>/team/member/<?=$pokemon->id?>" class="stretched-link stretched-link--hidden">Go to Stats</a>
+    <a href="/<?=$instanceId?>/team/member/<?=$pokemon->id?>" data-id="<?=$pokemon->id?>" class="stretched-link stretched-link--hidden">Go to Stats</a>
 </li>

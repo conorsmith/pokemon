@@ -17,20 +17,6 @@ final class ViewModelFactory
         private readonly array $pokedex,
     ) {}
 
-    public function createPokemonOnTeam(Pokemon $pokemon): stdClass
-    {
-        return (object) [
-            'id' => $pokemon->id,
-            'name' => $this->pokedex[$pokemon->number]['name'],
-            'form' => $pokemon->form,
-            'imageUrl' => TeamMember::createImageUrl($pokemon->number, $pokemon->form),
-            'primaryType' => self::createPokemonTypeName($pokemon->primaryType),
-            'secondaryType' => is_null($pokemon->secondaryType) ? null : self::createPokemonTypeName($pokemon->secondaryType),
-            'level' => strval($pokemon->level),
-            'isShiny' => $pokemon->isShiny,
-        ];
-    }
-
     public function createPokemonInBattle(Pokemon $pokemon): PokemonVm
     {
         RandomNumberGenerator::setSeed(crc32($pokemon->id));

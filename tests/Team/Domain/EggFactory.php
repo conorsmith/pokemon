@@ -11,6 +11,7 @@ final class EggFactory
     public static function any(): Egg
     {
         return new Egg(
+            "dontcare",
             "1",
             Sex::UNKNOWN,
             "1",

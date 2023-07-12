@@ -41,6 +41,9 @@ final class PostTeamItemUse
         if ($itemId === ItemId::RARE_CANDY) {
             return $this->attemptToLevelUpPokemon($args['instanceId'], $pokemonId);
 
+        } elseif ($itemId === ItemId::OVAL_CHARM) {
+            return $this->redirectToBreedingPage($args['instanceId'], $pokemonId);
+
         } elseif ($itemConfig['type'] === ItemType::STATS) {
             return $this->attemptToAlterPokemonEvs($args['instanceId'], $pokemonId, $itemId, $itemConfig);
 
@@ -50,6 +53,11 @@ final class PostTeamItemUse
         } else {
             throw new Exception("Unhandled item");
         }
+    }
+
+    private function redirectToBreedingPage(string $instanceId, string $pokemonId): RedirectResponse
+    {
+        return new RedirectResponse("/{$instanceId}/team/member/{$pokemonId}/breed");
     }
 
     private function attemptToAlterPokemonEvs(string $instanceId, string $pokemonId, string $itemId, array $itemConfig): Response

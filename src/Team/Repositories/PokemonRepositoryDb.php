@@ -4,15 +4,19 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Team\Repositories;
 
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\EarnedGymBadgesQuery;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
 use ConorSmith\Pokemon\Team\Domain\DayCare;
+use ConorSmith\Pokemon\Team\Domain\EggGroups;
 use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Team\Domain\Stat;
 use ConorSmith\Pokemon\Team\Domain\Team;
+use ConorSmith\Pokemon\Team\Domain\Type;
 use Doctrine\DBAL\Connection;
 use Exception;
 use stdClass;
@@ -22,7 +26,7 @@ final class PokemonRepositoryDb implements PokemonRepository
     public function __construct(
         private readonly Connection $db,
         private readonly EarnedGymBadgesQuery $earnedGymBadgesQuery,
-        private readonly PokemonConfigRepository $pokemonConfigRepository,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly InstanceId $instanceId,
     ) {}
@@ -140,18 +144,48 @@ final class PokemonRepositoryDb implements PokemonRepository
         return $all;
     }
 
+    public function findAllInEggGroups(EggGroups $eggGroups): array
+    {
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId ORDER BY (pokemon_id * 1) ASC, level DESC", [
+            'instanceId' => $this->instanceId->value,
+        ]);
+
+        $allCaughtPokemon = array_map(
+            fn(array $row) => $this->createPokemonFromRow($row),
+            $rows
+        );
+
+        return array_filter(
+            $allCaughtPokemon,
+            fn(Pokemon $pokemon) => $eggGroups->compatibleWith($pokemon->eggGroups)
+        );
+    }
+
     private function createPokemonFromRow(array $row): Pokemon
     {
         $baseStats = self::createBaseStats($row['pokemon_id']);
         $caughtLocationConfig = $this->locationConfigRepository->findLocation($row['location_caught']);
+        $pokedexConfig = $this->pokedexConfigRepository->find($row['pokemon_id']);
 
         return new Pokemon(
             $row['id'],
             $row['pokemon_id'],
             $row['form'],
-            $this->pokemonConfigRepository->findType($row['pokemon_id']),
+            new Type(
+                $pokedexConfig['type'][0],
+                $pokedexConfig['type'][1] ?? null,
+            ),
+            new EggGroups(
+                $pokedexConfig['eggGroups'][0],
+                $pokedexConfig['eggGroups'][1] ?? null,
+            ),
             intval($row['level']),
             $this->calculateFriendship($row),
+            match ($row['sex']) {
+                "F" => Sex::FEMALE,
+                "M" => Sex::MALE,
+                "U" => Sex::UNKNOWN,
+            },
             $row['is_shiny'] === 1,
             new Hp($baseStats['hp'], $row['iv_hp'], $row['ev_hp']),
             new Stat($baseStats['attack'], $row['iv_physical_attack'], $row['ev_physical_attack']),

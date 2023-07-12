@@ -88,8 +88,9 @@ final class PostEncounterCatch
             $result = $this->catchPokemonCommand->run(
                 $encounter->pokemon->number,
                 $encounter->pokemon->form,
-                $encounter->pokemon->isShiny,
                 $encounter->pokemon->level,
+                $encounter->pokemon->sex,
+                $encounter->pokemon->isShiny,
                 $encounter->isLegendary,
                 $encounter->pokemon->stats->ivHp,
                 $encounter->pokemon->stats->ivPhysicalAttack,

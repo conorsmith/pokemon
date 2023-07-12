@@ -45,7 +45,11 @@ final class PlayerRepository
                 $pokedexEntry['type'][1] ?? null,
                 $caughtPokemonRow['level'],
                 $teamPokemon->friendship,
-                Sex::UNKNOWN,
+                match ($caughtPokemonRow['sex']) {
+                    "F" => Sex::FEMALE,
+                    "M" => Sex::MALE,
+                    "U" => Sex::UNKNOWN,
+                },
                 $caughtPokemonRow['is_shiny'] === 1,
                 new Stats(
                     $caughtPokemonRow['level'],

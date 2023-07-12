@@ -1,24 +1,3 @@
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap');
-
-    .pokemon-stats {
-        font-size: 0.8rem;
-    }
-
-    .pokemon-stats .positive {
-        color: #4AA14D;
-    }
-
-    .pokemon-stats .negative {
-        color: #FF1111;
-    }
-
-    .stat {
-        font-family: 'Source Code Pro', monospace;
-        text-align: right;
-    }
-</style>
-
 <div class="card">
     <div class="card-body" style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);">
         <?php require __DIR__ . "/ListPokemon.php" ?>

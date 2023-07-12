@@ -48,6 +48,7 @@ use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\Team\BoostPokemonEvsCommand;
 use ConorSmith\Pokemon\Team\CatchPokemonCommand;
 use ConorSmith\Pokemon\Team\Controllers\GetPokemon;
+use ConorSmith\Pokemon\Team\Controllers\GetPokemonBreed;
 use ConorSmith\Pokemon\Team\Controllers\GetTeam;
 use ConorSmith\Pokemon\Controllers\GetIndex;
 use ConorSmith\Pokemon\Controllers\GetMap;
@@ -56,6 +57,7 @@ use ConorSmith\Pokemon\Controllers\PostItemUse;
 use ConorSmith\Pokemon\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Team\Controllers\GetTeamCombinations;
 use ConorSmith\Pokemon\Team\Controllers\GetTeamCompare;
+use ConorSmith\Pokemon\Team\Controllers\PostPokemonBreed;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamItemUse;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamMoveDown;
 use ConorSmith\Pokemon\Team\Controllers\PostTeamMoveUp;
@@ -75,8 +77,10 @@ use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\Team\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\LevelUpPokemon;
+use ConorSmith\Pokemon\Team\ReduceEggCyclesCommand;
 use ConorSmith\Pokemon\Team\Repositories\EggRepositoryDb;
 use ConorSmith\Pokemon\Team\Repositories\EvolutionRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
@@ -116,7 +120,9 @@ final class ControllerFactory
         $r->get("/team", GetTeam::class);
         $r->get("/team/compare", GetTeamCompare::class);
         $r->get("/team/combinations", GetTeamCombinations::class);
-        $r->Get("/team/member/{id}", GetPokemon::class);
+        $r->get("/team/member/{id}", GetPokemon::class);
+        $r->get("/team/member/{id}/breed", GetPokemonBreed::class);
+        $r->post("/team/member/{id}/breed", PostPokemonBreed::class);
         $r->get("/encounter/{id}", GetEncounter::class);
         $r->post("/encounter/{id}/start", PostEncounterStart::class);
         $r->post("/encounter/{id}/catch", PostEncounterCatch::class);
@@ -251,6 +257,9 @@ final class ControllerFactory
                 $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(UnlimitedHabitLogRepository::class, $instanceId),
+                new ReduceEggCyclesCommand(
+                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId)
+                ),
             ),
             PostEncounterGenerateAndStart::class => new PostEncounterGenerateAndStart(
                 new CreateALegendaryEncounter(
@@ -305,6 +314,15 @@ final class ControllerFactory
                 $this->locationConfigRepository,
                 $this->templateEngine,
             ),
+            GetPokemonBreed::class => new GetPokemonBreed(
+                $this->session,
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->templateEngine,
+            ),
+            PostPokemonBreed::class => new PostPokemonBreed(
+                $this->session,
+            ),
             GetEncounter::class => new GetEncounter(
                 $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
@@ -324,7 +342,7 @@ final class ControllerFactory
                         $this->db,
                         $instanceId,
                     ),
-                    new PokemonConfigRepository(),
+                    new PokedexConfigRepository(),
                     new LocationConfigRepository(),
                     $instanceId,
                 ),
@@ -446,8 +464,7 @@ final class ControllerFactory
             GetTeamItemUse::class => new GetTeamItemUse(
                 $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
-                $this->viewModelFactory,
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->templateEngine,
             ),
             PostTeamItemUse::class => new PostTeamItemUse(

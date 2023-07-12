@@ -26,6 +26,7 @@ final class EggRepositoryDb implements EggRepository
 
         foreach ($rows as $row) {
             $eggs[] = new Egg(
+                $row['id'],
                 $row['first_parent_pokedex_number'],
                 match ($row['first_parent_sex']) {
                     "F" => Sex::FEMALE,
@@ -43,5 +44,14 @@ final class EggRepositoryDb implements EggRepository
         }
 
         return $eggs;
+    }
+
+    public function save(Egg $egg): void
+    {
+        $this->db->update("eggs", [
+            'remaining_cycles' => $egg->remainingCycles,
+        ], [
+            'id' => $egg->id,
+        ]);
     }
 }

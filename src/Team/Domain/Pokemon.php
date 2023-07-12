@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Domain;
 
+use ConorSmith\Pokemon\EggGroup;
+use ConorSmith\Pokemon\PokedexNo;
+use ConorSmith\Pokemon\Sex;
+
 final class Pokemon
 {
     public function __construct(
@@ -10,8 +14,10 @@ final class Pokemon
         public readonly string $number,
         public readonly ?string $form,
         public readonly Type $type,
+        public readonly EggGroups $eggGroups,
         public readonly int $level,
         public readonly int $friendship,
+        public readonly Sex $sex,
         public readonly bool $isShiny,
         public readonly Hp $hp,
         public readonly Stat $physicalAttack,
@@ -40,6 +46,24 @@ final class Pokemon
     public function hasMaxFriendship(): bool
     {
         return $this->friendship === 255;
+    }
+
+    public function canBreed(): bool
+    {
+        return $this->eggGroups->firstEggGroup !== EggGroup::NO_EGGS_DISCOVERED;
+    }
+
+    public function canBreedWith(self $other): bool
+    {
+        return match($this->sex) {
+            Sex::FEMALE => $other->sex === Sex::MALE
+                || $other->number === PokedexNo::DITTO,
+
+            Sex::MALE => $other->sex === Sex::FEMALE
+                || $other->number === PokedexNo::DITTO,
+
+            Sex::UNKNOWN => $other->number === PokedexNo::DITTO,
+        };
     }
 
     public function levelUp(int $newLevel = null): self
@@ -103,8 +127,10 @@ final class Pokemon
         string $number = null,
         ?string $form = null,
         Type $type = null,
+        EggGroups $eggGroups = null,
         int $level = null,
         int $friendship = null,
+        Sex $sex = null,
         bool $isShiny = null,
         Hp $hp = null,
         Stat $physicalAttack = null,
@@ -119,8 +145,10 @@ final class Pokemon
             $number ?? $this->number,
             $form ?? $this->form,
             $type ?? $this->type,
+            $eggGroups ?? $this->eggGroups,
             $level ?? $this->level,
             $friendship ?? $this->friendship,
+            $sex ?? $this->sex,
             $isShiny ?? $this->isShiny,
             $hp ?? $this->hp,
             $physicalAttack ?? $this->physicalAttack,
