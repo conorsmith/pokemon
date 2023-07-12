@@ -12,6 +12,7 @@ final class PokedexConfigRepository
         $primaryConfig = require __DIR__ . "/Config/Pokedex.php";
         $sexRatiosConfig = require __DIR__ . "/Config/SexRatios.php";
         $eggGroupsConfig = require __DIR__ . "/Config/EggGroups.php";
+        $eggCyclesConfig = require __DIR__ . "/Config/EggCycles.php";
 
         $fullConfig = [];
 
@@ -21,6 +22,7 @@ final class PokedexConfigRepository
                 [
                     'sexRatio' => $sexRatiosConfig[$key],
                     'eggGroups' => $eggGroupsConfig[$key],
+                    'eggCycles' => $eggCyclesConfig[$key],
                 ],
             );
         }

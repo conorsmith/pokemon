@@ -77,7 +77,6 @@ use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
-use ConorSmith\Pokemon\Team\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\LevelUpPokemon;
 use ConorSmith\Pokemon\Team\ReduceEggCyclesCommand;
@@ -322,7 +321,9 @@ final class ControllerFactory
             PostPokemonBreed::class => new PostPokemonBreed(
                 $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                new PokedexConfigRepository(),
             ),
             GetEncounter::class => new GetEncounter(
                 $this->repositoryFactory->create(PlayerRepository::class, $instanceId),

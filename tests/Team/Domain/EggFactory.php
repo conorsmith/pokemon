@@ -12,6 +12,14 @@ final class EggFactory
     {
         return new Egg(
             "dontcare",
+            "dontcare",
+            null,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             "1",
             Sex::UNKNOWN,
             "1",

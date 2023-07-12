@@ -41,7 +41,7 @@ final class EggGroups
         return false;
     }
 
-    private function isDitto(): bool
+    public function isDitto(): bool
     {
         return $this->firstEggGroup === EggGroup::DITTO;
     }
