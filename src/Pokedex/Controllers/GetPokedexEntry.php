@@ -21,6 +21,7 @@ use stdClass;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use WeakMap;
 
 final class GetPokedexEntry
 {
@@ -263,6 +264,20 @@ final class GetPokedexEntry
 
     private function createEvolutionViewModel(string $pokedexNumber, array $evolutionConfig): stdClass
     {
+        $region = self::findNativeRegion($pokedexNumber);
+
+        $regionalLevelOffset = match ($region) {
+            RegionId::KANTO => 0,
+            RegionId::JOHTO => 50,
+            RegionId::HOENN => 100,
+            RegionId::SINNOH => 150,
+            RegionId::UNOVA => 200,
+            RegionId::KALOS => 250,
+            RegionId::ALOLA => 300,
+            RegionId::GALAR => 350,
+            RegionId::PALDEA => 400,
+        };
+
         $entry = $this->pokedexEntryRepository->find($pokedexNumber);
 
         if (array_key_exists('level', $evolutionConfig)) {
@@ -270,7 +285,7 @@ final class GetPokedexEntry
             if (array_key_exists('stats', $evolutionConfig)) {
                 $trigger = (object) [
                     'type'  => "level-stats",
-                    'level' => $entry->isRegistered ? $evolutionConfig['level'] : "???",
+                    'level' => $entry->isRegistered ? $evolutionConfig['level'] + $regionalLevelOffset : "???",
                     'stats' => match ($evolutionConfig['stats']) {
                         "Physical Attack > Physical Defence" => "greater-than",
                         "Physical Attack < Physical Defence" => "less-than",
@@ -280,12 +295,12 @@ final class GetPokedexEntry
             } elseif (in_array("randomly", $evolutionConfig)) {
                 $trigger = (object) [
                     'type'  => "level-randomly",
-                    'level' => $entry->isRegistered ? $evolutionConfig['level'] : "???",
+                    'level' => $entry->isRegistered ? $evolutionConfig['level'] + $regionalLevelOffset : "???",
                 ];
             } else {
                 $trigger = (object) [
                     'type'  => "level",
-                    'level' => $entry->isRegistered ? $evolutionConfig['level'] : "???",
+                    'level' => $entry->isRegistered ? $evolutionConfig['level'] + $regionalLevelOffset : "???",
                 ];
             }
 
@@ -362,5 +377,34 @@ final class GetPokedexEntry
         }
 
         return $trigger;
+    }
+
+    private static function findNativeRegion(string $pokedexNumber): RegionId
+    {
+        $pokedexRegionRanges = new WeakMap();
+        $pokedexRegionRanges[RegionId::KANTO]  = [1, 150];
+        $pokedexRegionRanges[RegionId::JOHTO]  = [152, 250];
+        $pokedexRegionRanges[RegionId::HOENN]  = [252, 384];
+        $pokedexRegionRanges[RegionId::SINNOH] = [387, 488];
+        $pokedexRegionRanges[RegionId::UNOVA]  = [495, 646];
+        $pokedexRegionRanges[RegionId::KALOS]  = [650, 718];
+        $pokedexRegionRanges[RegionId::ALOLA]  = [[722, 800], [803, 806]];
+        $pokedexRegionRanges[RegionId::GALAR]  = [[810, 892], [894, 905]];
+        $pokedexRegionRanges[RegionId::PALDEA] = [906, 1010];
+
+        foreach ($pokedexRegionRanges as $region => $ranges) {
+            if (is_int($ranges[0])) {
+                $ranges = [$ranges];
+            }
+            foreach ($ranges as $range) {
+                for ($i = $range[0]; $i <= $range[1]; $i++) {
+                    if ($i == $pokedexNumber) {
+                        return $region;
+                    }
+                }
+            }
+        }
+
+        throw new LogicException;
     }
 }
