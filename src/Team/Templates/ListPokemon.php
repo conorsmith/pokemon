@@ -3,13 +3,18 @@
         <img src="<?=$pokemon->imageUrl?>">
     </div>
     <div class="flex-grow-1">
-        <h5>
-            <?=$pokemon->name?>
-            <span class="pokemon-sex">
-                <i class="fas <?=$pokemon->sexIcon?>"></i>
-            </span>
-            <?php if ($pokemon->form) : ?>
-                <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$pokemon->form?> Form</span>
+        <h5 class="d-flex justify-content-between align-items-center">
+            <div>
+                <?=$pokemon->name?>
+                <span class="pokemon-sex">
+                    <i class="fas <?=$pokemon->sexIcon?>"></i>
+                </span>
+                <?php if ($pokemon->form) : ?>
+                    <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$pokemon->form?> Form</span>
+                <?php endif ?>
+            </div>
+            <?php if ($pokemon->isShiny) : ?>
+                <i class="far fa-star"></i>
             <?php endif ?>
         </h5>
         <p class="mb-0">
