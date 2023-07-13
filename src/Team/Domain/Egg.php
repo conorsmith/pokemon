@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Domain;
 
-use ConorSmith\Pokemon\Sex;
-
 final class Egg
 {
     public function __construct(
@@ -17,12 +15,15 @@ final class Egg
         public readonly int $ivSpecialAttack,
         public readonly int $ivSpecialDefence,
         public readonly int $ivSpeed,
-        public readonly string $firstParentPokedexNumber,
-        public readonly Sex $firstParentSex,
-        public readonly string $secondParentPokedexNumber,
-        public readonly Sex $secondParentSex,
+        public readonly string $firstParentId,
+        public readonly string $secondParentId,
         public readonly int $remainingCycles,
     ) {}
+
+    public function canHatch(): bool
+    {
+        return $this->remainingCycles === 0;
+    }
 
     public function reduceCycles(int $amount): self
     {
@@ -36,10 +37,8 @@ final class Egg
             $this->ivSpecialAttack,
             $this->ivSpecialDefence,
             $this->ivSpeed,
-            $this->firstParentPokedexNumber,
-            $this->firstParentSex,
-            $this->secondParentPokedexNumber,
-            $this->secondParentSex,
+            $this->firstParentId,
+            $this->secondParentId,
             max(0, $this->remainingCycles - $amount),
         );
     }

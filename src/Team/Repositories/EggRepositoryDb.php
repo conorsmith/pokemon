@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Repositories;
 
-use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\Team\Domain\Egg;
 use ConorSmith\Pokemon\Team\Domain\EggRepository;
@@ -35,18 +34,8 @@ final class EggRepositoryDb implements EggRepository
                 intval($row['iv_special_attack']),
                 intval($row['iv_special_defence']),
                 intval($row['iv_speed']),
-                $row['first_parent_pokedex_number'],
-                match ($row['first_parent_sex']) {
-                    "F" => Sex::FEMALE,
-                    "M" => Sex::MALE,
-                    "U" => Sex::UNKNOWN,
-                },
-                $row['second_parent_pokedex_number'],
-                match ($row['second_parent_sex']) {
-                    "F" => Sex::FEMALE,
-                    "M" => Sex::MALE,
-                    "U" => Sex::UNKNOWN,
-                },
+                $row['first_parent_id'],
+                $row['second_parent_id'],
                 intval($row['remaining_cycles']),
             );
         }
@@ -73,18 +62,8 @@ final class EggRepositoryDb implements EggRepository
                 'iv_special_attack' => $egg->ivSpecialAttack,
                 'iv_special_defence' => $egg->ivSpecialDefence,
                 'iv_speed' => $egg->ivSpeed,
-                'first_parent_pokedex_number' => $egg->firstParentPokedexNumber,
-                'first_parent_sex' => match ($egg->firstParentSex) {
-                    Sex::FEMALE => "F",
-                    Sex::MALE => "M",
-                    Sex::UNKNOWN => "U",
-                },
-                'second_parent_pokedex_number' => $egg->secondParentPokedexNumber,
-                'second_parent_sex' => match ($egg->secondParentSex) {
-                    Sex::FEMALE => "F",
-                    Sex::MALE => "M",
-                    Sex::UNKNOWN => "U",
-                },
+                'first_parent_id' => $egg->firstParentId,
+                'second_parent_id' => $egg->secondParentId,
                 'remaining_cycles' => $egg->remainingCycles,
             ]);
         } else {
@@ -94,5 +73,12 @@ final class EggRepositoryDb implements EggRepository
                 'id' => $egg->id,
             ]);
         }
+    }
+
+    public function remove(Egg $egg): void
+    {
+        $this->db->delete("eggs", [
+            'id' => $egg->id,
+        ]);
     }
 }

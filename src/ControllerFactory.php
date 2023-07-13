@@ -32,6 +32,8 @@ use ConorSmith\Pokemon\Battle\UseCase\StartAnEncounter;
 use ConorSmith\Pokemon\Controllers\GetBag;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogStretches;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogStretches;
+use ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery;
+use ConorSmith\Pokemon\Location\LocationRepositoryCurrentLocationQuery;
 use ConorSmith\Pokemon\Location\RegionRepositoryRegionIsLockedQuery;
 use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
 use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
@@ -77,6 +79,7 @@ use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\Team\Domain\GenealogyRepository;
 use ConorSmith\Pokemon\Team\FriendshipLog;
 use ConorSmith\Pokemon\Team\LevelUpPokemon;
 use ConorSmith\Pokemon\Team\ReduceEggCyclesCommand;
@@ -84,6 +87,7 @@ use ConorSmith\Pokemon\Team\Repositories\EggRepositoryDb;
 use ConorSmith\Pokemon\Team\Repositories\EvolutionRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
+use ConorSmith\Pokemon\Team\UseCases\AddNewPokemon;
 use ConorSmith\Pokemon\Team\UseCases\ShowBox;
 use ConorSmith\Pokemon\Team\UseCases\ShowDayCare;
 use ConorSmith\Pokemon\Team\UseCases\ShowEggs;
@@ -228,6 +232,7 @@ final class ControllerFactory
                     $this->repositoryFactory->create(RegionRepository::class, $instanceId),
                 ),
                 new EncounterConfigRepository(),
+                new ItemConfigRepository(),
                 new LocationConfigRepository(),
                 new PokedexConfigRepository(),
                 $this->templateEngine,
@@ -257,7 +262,34 @@ final class ControllerFactory
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(UnlimitedHabitLogRepository::class, $instanceId),
                 new ReduceEggCyclesCommand(
-                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId)
+                    $this->session,
+                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(GenealogyRepository::class, $instanceId),
+                    new AddNewPokemon(
+                        $this->db,
+                        new RegisterNewPokemonCommand(
+                            $this->db,
+                            $instanceId,
+                        ),
+                        new PokedexConfigRepository(),
+                        new LocationConfigRepository(),
+                        $instanceId,
+                    ),
+                    new PokedexConfigRepository(),
+                    new FoodDiaryHabitStreakQuery(
+                        $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
+                    ),
+                    new LocationRepositoryCurrentLocationQuery(
+                        new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
+                            $this->db,
+                            $this->repositoryFactory->create(RegionRepository::class, $instanceId),
+                            new LocationConfigRepository(),
+                            $instanceId,
+                        ),
+                    ),
+                    new TotalRegisteredPokemonQuery(
+                        $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                    ),
                 ),
             ),
             PostEncounterGenerateAndStart::class => new PostEncounterGenerateAndStart(
@@ -286,7 +318,8 @@ final class ControllerFactory
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
                 ),
                 new ShowEggs(
-                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId)
+                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 ),
                 new ShowDayCare(
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
@@ -338,14 +371,18 @@ final class ControllerFactory
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->locationConfigRepository,
                 new CatchPokemonCommand(
-                    $this->db,
-                    new FriendshipLog($this->db),
-                    new RegisterNewPokemonCommand(
+                    new AddNewPokemon(
                         $this->db,
+                        new RegisterNewPokemonCommand(
+                            $this->db,
+                            $instanceId,
+                        ),
+                        new PokedexConfigRepository(),
+                        new LocationConfigRepository(),
                         $instanceId,
                     ),
-                    new PokedexConfigRepository(),
-                    new LocationConfigRepository(),
+                    $this->db,
+                    new FriendshipLog($this->db),
                     $instanceId,
                 ),
                 new TotalRegisteredPokemonQuery(

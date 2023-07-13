@@ -5,15 +5,18 @@ namespace ConorSmith\Pokemon\Pokedex\Controllers;
 
 use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\EncounterType;
+use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Pokedex\Domain\EncounterLocation;
 use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\ViewModelFactory;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\RegionIsLockedQuery;
 use ConorSmith\Pokemon\TemplateEngine;
+use LogicException;
 use stdClass;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +28,7 @@ final class GetPokedexEntry
         private readonly PokedexEntryRepository $pokedexEntryRepository,
         private readonly RegionIsLockedQuery $regionIsLockedQuery,
         private readonly EncounterConfigRepository $encounterConfigRepository,
+        private readonly ItemConfigRepository $itemConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly TemplateEngine $templateEngine,
@@ -44,6 +48,11 @@ final class GetPokedexEntry
 
         $encounterLocations = $this->findEncounterLocations($entry);
 
+        $ancestors = $this->findAncestors($pokedexNumber);
+        $descendants = $this->findDescendants($pokedexNumber);
+
+        $evolutionaryLine = $this->mergeAncestorsAndDescendants($ancestors, $descendants);
+
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Entry.php", [
             'pokemon'            => ViewModelFactory::createPokemonViewModel($entry, $config),
             'encounterLocations' => array_map(
@@ -52,8 +61,130 @@ final class GetPokedexEntry
                     $this->locationConfigRepository->findLocation($encounterLocation->locationId),
                 ),
                 $encounterLocations,
-            )
+            ),
+            'evolutions' => $this->createVmsForEvolutionaryLine($evolutionaryLine),
         ]));
+    }
+
+    private function createVmsForEvolutionaryLine(array $evolutionaryLine): array
+    {
+        $vms = [];
+
+        while (count($evolutionaryLine['descendants']) > 0) {
+            if (count($evolutionaryLine['descendants']) === 1) {
+
+                $entry = $this->pokedexEntryRepository->find($evolutionaryLine['pokedexNumber']);
+                $config = $this->pokedexConfigRepository->find($evolutionaryLine['pokedexNumber']);
+
+                $vms[] = (object) [
+                    'type' => "pokemon",
+                    'pokemon' => ViewModelFactory::createPokemonViewModel($entry, $config),
+                    'isRegistered' => $entry->isRegistered,
+                ];
+
+                $vms[] = (object)[
+                    'type'    => "evolution",
+                    'trigger' => $this->createEvolutionViewModel(
+                        $evolutionaryLine['descendants'][0]['pokedexNumber'],
+                        $config['evolutions'][$evolutionaryLine['descendants'][0]['pokedexNumber']],
+                    ),
+                ];
+
+                $evolutionaryLine = $evolutionaryLine['descendants'][0];
+
+                if (count($evolutionaryLine['descendants']) === 0) {
+                    $entry = $this->pokedexEntryRepository->find($evolutionaryLine['pokedexNumber']);
+                    $config = $this->pokedexConfigRepository->find($evolutionaryLine['pokedexNumber']);
+
+                    $vms[] = (object)[
+                        'type'         => "pokemon",
+                        'pokemon'      => ViewModelFactory::createPokemonViewModel($entry, $config),
+                        'isRegistered' => $entry->isRegistered,
+                    ];
+                }
+            } else {
+                foreach ($evolutionaryLine['descendants'] as $descendantEvolutionaryLine) {
+                    $vms[] = (object) [
+                        'type' => "branch",
+                        'vms' => $this->createVmsForEvolutionaryLine([
+                            'pokedexNumber' => $evolutionaryLine['pokedexNumber'],
+                            'descendants' => [$descendantEvolutionaryLine],
+                        ]),
+                    ];
+                }
+                return $vms;
+            }
+        }
+
+        return $vms;
+    }
+
+    private function mergeAncestorsAndDescendants(array $ancestors, array $descendants): array
+    {
+        $ancestors = array_reverse($ancestors);
+
+        foreach ($ancestors as $ancestorPokedexNumber) {
+            $descendants = [
+                'pokedexNumber' => $ancestorPokedexNumber,
+                'descendants' => [$descendants],
+            ];
+        }
+
+        return $descendants;
+    }
+
+    private function findDescendants(string $pokedexNumber): array
+    {
+        $entry = $this->pokedexConfigRepository->find($pokedexNumber);
+
+        if (!isset($entry['evolutions'])) {
+            return [
+                'pokedexNumber' => $pokedexNumber,
+                'descendants' => [],
+            ];
+        }
+
+        $descendants = [];
+
+        foreach ($entry['evolutions'] as $descendantPokedexNumber => $evolutionConfig) {
+            $descendants[] = $this->findDescendants(strval($descendantPokedexNumber));
+        }
+
+        return [
+            'pokedexNumber' => $pokedexNumber,
+            'descendants' => $descendants,
+        ];
+    }
+
+    private function findAncestors(string $pokedexNumber): array
+    {
+        $candidates = [];
+
+        while (!is_null($pokedexNumber)) {
+            $pokedexNumber = $this->findPreviousStageOfEvolutionaryLine($pokedexNumber);
+            if (!is_null($pokedexNumber)) {
+                $candidates[] = $pokedexNumber;
+            }
+        }
+
+        return array_reverse($candidates);
+    }
+
+    private function findPreviousStageOfEvolutionaryLine(string $pokedexNumber): ?string
+    {
+        foreach ($this->pokedexConfigRepository->all() as $previousStagePokedexNumber => $entry) {
+            if (!isset($entry['evolutions'])) {
+                continue;
+            }
+
+            foreach ($entry['evolutions'] as $evolutionPokedexNumber => $evolutionConfig) {
+                if (strval($evolutionPokedexNumber) === $pokedexNumber) {
+                    return strval($previousStagePokedexNumber);
+                }
+            }
+        }
+
+        return null;
     }
 
     private function findEncounterLocations(PokemonEntry $entry): array
@@ -128,5 +259,108 @@ final class GetPokedexEntry
                 default => 1,
             },
         ];
+    }
+
+    private function createEvolutionViewModel(string $pokedexNumber, array $evolutionConfig): stdClass
+    {
+        $entry = $this->pokedexEntryRepository->find($pokedexNumber);
+
+        if (array_key_exists('level', $evolutionConfig)) {
+
+            if (array_key_exists('stats', $evolutionConfig)) {
+                $trigger = (object) [
+                    'type'  => "level-stats",
+                    'level' => $entry->isRegistered ? $evolutionConfig['level'] : "???",
+                    'stats' => match ($evolutionConfig['stats']) {
+                        "Physical Attack > Physical Defence" => "greater-than",
+                        "Physical Attack < Physical Defence" => "less-than",
+                        "Physical Attack = Physical Defence" => "equals",
+                    },
+                ];
+            } elseif (in_array("randomly", $evolutionConfig)) {
+                $trigger = (object) [
+                    'type'  => "level-randomly",
+                    'level' => $entry->isRegistered ? $evolutionConfig['level'] : "???",
+                ];
+            } else {
+                $trigger = (object) [
+                    'type'  => "level",
+                    'level' => $entry->isRegistered ? $evolutionConfig['level'] : "???",
+                ];
+            }
+
+        } elseif (array_key_exists('item', $evolutionConfig)) {
+            $itemConfig = $this->itemConfigRepository->find($evolutionConfig['item']);
+
+            if (array_key_exists('time', $evolutionConfig)) {
+                $trigger = (object)[
+                    'type' => "item-time",
+                    'item' => $entry->isRegistered ? str_replace(" ", "&nbsp;", $itemConfig['name']) : "???",
+                    'time' => match ($evolutionConfig['time']) {
+                        "Full Moon" => "during&nbsp;a&nbsp;full&nbsp;moon",
+                    },
+                ];
+            } elseif (array_key_exists('sex', $evolutionConfig)) {
+                $trigger = (object) [
+                    'type' => "item-sex",
+                    'item' => $entry->isRegistered ? str_replace(" ", "&nbsp;", $itemConfig['name']) : "???",
+                    'sex' => match ($evolutionConfig['sex']) {
+                        Sex::FEMALE => "female",
+                        Sex::MALE => "male",
+                    },
+                ];
+            } else {
+                $trigger = (object) [
+                    'type' => "item",
+                    'item' => $entry->isRegistered ? str_replace(" ", "&nbsp;", $itemConfig['name']) : "???",
+                ];
+            }
+
+        } elseif ($evolutionConfig === ["friendship"]) {
+            $trigger = (object) [
+                'type' => "friendship",
+            ];
+
+        } elseif (in_array("friendship", $evolutionConfig)) {
+            if (array_key_exists('time', $evolutionConfig)) {
+                $trigger = (object) [
+                    'type' => "friendship-time",
+                    'time' => match ($evolutionConfig['time']) {
+                        "day"   => "during&nbsp;the&nbsp;day",
+                        "night" => "at&nbsp;night",
+                    },
+                ];
+            } elseif (array_key_exists('move', $evolutionConfig)) {
+                $trigger = (object) [
+                    'type' => "friendship-move",
+                ];
+            } else {
+                throw new LogicException;
+            }
+
+        } elseif (array_key_exists('move', $evolutionConfig)) {
+            $trigger = (object) [
+                'type' => "move",
+            ];
+
+        } elseif (array_key_exists('holding', $evolutionConfig)
+            && array_key_exists('time', $evolutionConfig)
+        ) {
+            $itemConfig = $this->itemConfigRepository->find($evolutionConfig['holding']);
+
+            $trigger = (object) [
+                'type' => "holding-time",
+                'item' => $entry->isRegistered ? str_replace(" ", "&nbsp;", $itemConfig['name']) : "???",
+                'time' => match ($evolutionConfig['time']) {
+                    "day"   => "during&nbsp;the&nbsp;day",
+                    "night" => "at&nbsp;night",
+                },
+            ];
+
+        } else {
+            throw new LogicException;
+        }
+
+        return $trigger;
     }
 }

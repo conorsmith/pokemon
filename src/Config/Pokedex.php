@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use ConorSmith\Pokemon\Gender;
+use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\PokemonType;
 use ConorSmith\Pokemon\ItemId;
@@ -2003,7 +2003,7 @@ return [
             ],
             PokedexNo::GALLADE => [
                 'item' => ItemId::DAWN_STONE,
-                'gender' => Gender::MALE,
+                'sex' => Sex::MALE,
             ],
         ],
         'friendship' => 35,
@@ -2522,7 +2522,7 @@ return [
             ],
             PokedexNo::FROSLASS => [
                 'item' => ItemId::DAWN_STONE,
-                'gender' => Gender::FEMALE,
+                'sex' => Sex::FEMALE,
             ],
         ],
     ],

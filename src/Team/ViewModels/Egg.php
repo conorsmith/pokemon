@@ -3,26 +3,27 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\ViewModels;
 
-use ConorSmith\Pokemon\Team\Domain\Egg as DomainModel;
+use ConorSmith\Pokemon\Team\Domain\Egg as EggModel;
+use ConorSmith\Pokemon\Team\Domain\Pokemon as PokemonModel;
 use stdClass;
 
 final class Egg
 {
-    public static function create(DomainModel $egg): self
+    public static function create(EggModel $egg, PokemonModel $firstParent, PokemonModel $secondParent): self
     {
         $config = require __DIR__ . "/../../Config/Pokedex.php";
 
-        $firstParentConfig = $config[$egg->firstParentPokedexNumber];
-        $secondParentConfig = $config[$egg->secondParentPokedexNumber];
+        $firstParentConfig = $config[$firstParent->number];
+        $secondParentConfig = $config[$secondParent->number];
 
         return new self(
             (object) [
                 'name' => $firstParentConfig['name'],
-                'sex' => $egg->firstParentSex,
+                'sex' => $firstParent->sex,
             ],
             (object) [
                 'name' => $secondParentConfig['name'],
-                'sex' => $egg->secondParentSex,
+                'sex' => $secondParent->sex,
             ],
             $egg->remainingCycles,
         );

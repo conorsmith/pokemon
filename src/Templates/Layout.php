@@ -320,6 +320,21 @@
             font-weight: 600;
         }
 
+        .evolution-trigger {
+            text-align: center;
+            background-color: var(--bs-card-cap-bg);
+        }
+        .evolution-trigger .fa-arrow-down {
+            color: #888;
+        }
+
+        .evolution-branch {
+            margin: 1rem 1rem 0;
+        }
+        .evolution-branch:last-child {
+            margin-bottom: 1rem;
+        }
+
         .strength-indicator .progress {
             width: 100%;
             height: 3px;
@@ -387,9 +402,9 @@
 </div>
 
 <?php if ($successes || $failures) : ?>
-    <div class="position-fixed top-0 w-100 px-3" style="padding-top: 4rem;">
+    <div class="position-fixed top-0 w-100 px-3 pt-3">
         <?php if ($successes) : ?>
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-dismissible">
                 <?php if (count($successes) === 1) : ?>
                     <?=$successes[0]?>
                 <?php else : ?>
@@ -399,10 +414,11 @@
                         <?php endforeach ?>
                     </ul>
                 <?php endif ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif ?>
         <?php if ($failures) : ?>
-            <div class="alert alert-danger">
+            <div class="alert alert-danger alert-dismissible">
                 <?php if (count($failures) === 1) : ?>
                     <?=$failures[0]?>
                 <?php else : ?>
@@ -412,6 +428,7 @@
                         <?php endforeach ?>
                     </ul>
                 <?php endif ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif ?>
     </div>

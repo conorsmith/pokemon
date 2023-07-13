@@ -89,11 +89,9 @@ final class PostPokemonBreed
             $ivs['specialAttack'],
             $ivs['specialDefence'],
             $ivs['speed'],
-            $pokemonA->number,
-            $pokemonA->sex,
-            $pokemonB->number,
-            $pokemonB->sex,
-            $this->pokedexConfigRepository->find($eggPokedexNumber)['eggCycles'],
+            $pokemonA->id,
+            $pokemonB->id,
+            $this->findEggCycles($eggPokedexNumber),
         );
 
         $this->bagRepository->save($bag);
@@ -172,5 +170,19 @@ final class PostPokemonBreed
         }
 
         return $stats;
+    }
+
+    private function findEggCycles(string $pokedexNumber): int
+    {
+        return match ($this->pokedexConfigRepository->find($pokedexNumber)['eggCycles']) {
+            5  => 1,
+            10 => 3,
+            15 => 6,
+            20 => 9,
+            25 => 12,
+            30 => 15,
+            35 => 18,
+            40 => 21,
+        };
     }
 }

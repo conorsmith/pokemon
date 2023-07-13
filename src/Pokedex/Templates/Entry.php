@@ -40,4 +40,15 @@
         </ul>
     </div>
 
+    <?php if (count($evolutions) > 0) : ?>
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div><strong>Evolutionary Chart</strong></div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <?php include __DIR__ . "/EvolutionaryLine.php" ?>
+            </ul>
+        </div>
+    <?php endif ?>
+
 </div>

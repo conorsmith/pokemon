@@ -20,8 +20,10 @@ use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\Team\Domain\GenealogyRepository;
 use ConorSmith\Pokemon\Team\Repositories\EggRepositoryDb;
 use ConorSmith\Pokemon\Team\Repositories\EvolutionRepository;
+use ConorSmith\Pokemon\Team\Repositories\GenealogyRepositoryDb;
 use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\Team\TeamPokemonQuery;
@@ -95,6 +97,7 @@ final class RepositoryFactory
                 new LocationConfigRepository(),
             ),
             EggRepositoryDb::class => new EggRepositoryDb($this->db, $instanceId),
+            GenealogyRepository::class => new GenealogyRepositoryDb($this->db, $instanceId),
         };
     }
 }
