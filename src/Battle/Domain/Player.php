@@ -11,6 +11,7 @@ final class Player
     public function __construct(
         public readonly array $team,
         public readonly array $gymBadges,
+        public readonly ?string $activeBattleId,
     ) {}
 
     public function hasGymBadge(GymBadge $gymBadge): bool
@@ -26,7 +27,8 @@ final class Player
 
         return new self(
             $this->team,
-            $gymBadges
+            $gymBadges,
+            $this->activeBattleId,
         );
     }
 
@@ -54,6 +56,24 @@ final class Player
         throw new Exception;
     }
 
+    public function startBattle(Battle $battle): self
+    {
+        return new self(
+            $this->team,
+            $this->gymBadges,
+            $battle->id,
+        );
+    }
+
+    public function endBattle(): self
+    {
+        return new self(
+            $this->team,
+            $this->gymBadges,
+            null,
+        );
+    }
+
     public function reviveTeam(): self
     {
         $revivedTeam = [];
@@ -67,6 +87,7 @@ final class Player
         return new self(
             $revivedTeam,
             $this->gymBadges,
+            $this->activeBattleId,
         );
     }
 
@@ -118,6 +139,7 @@ final class Player
         return new self(
             $team,
             $this->gymBadges,
+            $this->activeBattleId,
         );
     }
 }

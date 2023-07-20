@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
-use ConorSmith\Pokemon\Battle\UseCase\CreateALegendaryEncounter;
-use ConorSmith\Pokemon\Battle\UseCase\StartAnEncounter;
+use ConorSmith\Pokemon\Battle\UseCases\CreateALegendaryEncounter;
+use ConorSmith\Pokemon\Battle\UseCases\StartAnEncounter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

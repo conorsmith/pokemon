@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\PokemonTest\Battle\Repositories;
 
 use ConorSmith\Pokemon\Battle\Domain\Area;
+use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
@@ -20,6 +21,15 @@ final class AreaRepositoryTest extends TestCase
     #[Test]
     function it_finds_an_area_with_a_single_location()
     {
+        $battleRepo = self::createStub(BattleRepository::class);
+
+        $battleRepo->method("findBattlesInLocation")
+            ->with("The Location ID")
+            ->willReturn([
+                "Battle 1",
+                "Battle 2",
+            ]);
+
         $trainerRepo = self::createStub(TrainerRepository::class);
 
         $trainerRepo->method("findTrainersInLocation")
@@ -36,7 +46,7 @@ final class AreaRepositoryTest extends TestCase
             ],
         ];
 
-        $repo = new AreaRepository($trainerRepo, new LocationConfigRepository($locationConfig));
+        $repo = new AreaRepository($battleRepo, $trainerRepo, new LocationConfigRepository($locationConfig));
 
         $area = $repo->find("The Location ID");
 
@@ -48,6 +58,10 @@ final class AreaRepositoryTest extends TestCase
                     "Trainer 1",
                     "Trainer 2",
                 ],
+                [
+                    "Battle 1",
+                    "Battle 2",
+                ],
             ))
         );
     }
@@ -55,6 +69,31 @@ final class AreaRepositoryTest extends TestCase
     #[Test]
     function it_finds_an_area_comprised_of_multiple_locations()
     {
+        $battleRepo = self::createStub(BattleRepository::class);
+
+        $battleRepo->method("findBattlesInLocation")
+            ->will(self::returnValueMap([
+                [
+                    "Location 1",
+                    [
+                        "Battle 1",
+                        "Battle 2",
+                    ],
+                ],
+                [
+                    "Location 2",
+                    [],
+                ],
+                [
+                    "Location 3",
+                    [
+                        "Battle 3",
+                        "Battle 4",
+                        "Battle 5",
+                    ],
+                ],
+            ]));
+
         $trainerRepo = self::createStub(TrainerRepository::class);
 
         $trainerRepo->method("findTrainersInLocation")
@@ -96,7 +135,7 @@ final class AreaRepositoryTest extends TestCase
             ],
         ];
 
-        $repo = new AreaRepository($trainerRepo, new LocationConfigRepository($locationConfig));
+        $repo = new AreaRepository($battleRepo, $trainerRepo, new LocationConfigRepository($locationConfig));
 
         $area = $repo->find("Location 2");
 
@@ -111,6 +150,13 @@ final class AreaRepositoryTest extends TestCase
                     "Trainer 4",
                     "Trainer 5",
                 ],
+                [
+                    "Battle 1",
+                    "Battle 2",
+                    "Battle 3",
+                    "Battle 4",
+                    "Battle 5",
+                ],
             ))
         );
     }
@@ -118,9 +164,11 @@ final class AreaRepositoryTest extends TestCase
     #[Test]
     function it_cannot_find_an_area()
     {
+        $battleRepo = self::createStub(BattleRepository::class);
+
         $trainerRepo = self::createStub(TrainerRepository::class);
 
-        $repo = new AreaRepository($trainerRepo, new LocationConfigRepository(new WeakMap()));
+        $repo = new AreaRepository($battleRepo, $trainerRepo, new LocationConfigRepository(new WeakMap()));
 
         $area = $repo->find("The Location ID");
 

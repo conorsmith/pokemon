@@ -1,36 +1,38 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Battle\UseCase;
+namespace ConorSmith\Pokemon\Battle\UseCases;
 
+use ConorSmith\Pokemon\Battle\Domain\Battle;
+use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
+use ConorSmith\Pokemon\Battle\Domain\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
-use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
-use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use Ramsey\Uuid\Uuid;
 
 final class StartABattle
 {
     public function __construct(
-        private readonly BagRepository $bagRepository,
+        private readonly BattleRepository $battleRepository,
         private readonly PlayerRepository $playerRepository,
         private readonly TrainerRepository $trainerRepository,
-        private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
     ) {}
 
     public function __invoke(string $trainerId): ResultOfStartingABattle
     {
+        $battle = $this->battleRepository->findForTrainer($trainerId);
         $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainerByTrainerId($trainerId);
-        $eliteFourChallenge = $this->eliteFourChallengeRepository->findActive();
 
-        $bag = $this->bagRepository->find();
-
-        if (is_null($eliteFourChallenge) && !$bag->has(ItemId::CHALLENGE_TOKEN)) {
-            return ResultOfStartingABattle::failure();
+        if (is_null($battle)) {
+            $battle = new Battle(
+                Uuid::uuid4()->toString(),
+                $trainerId,
+                null,
+                1,
+            );
         }
 
         if ($trainer->isGymLeader() || $trainer->isEliteFourOrEquivalent()) {
@@ -41,16 +43,13 @@ final class StartABattle
         }
 
         $trainer = $trainer->startBattle();
+        $player = $player->startBattle($battle);
         $player = $player->reviveTeam();
 
-        if (is_null($eliteFourChallenge)) {
-            $bag = $bag->use(ItemId::CHALLENGE_TOKEN);
-        }
-
         $this->playerRepository->savePlayer($player);
+        $this->battleRepository->save($battle);
         $this->trainerRepository->saveTrainer($trainer);
-        $this->bagRepository->save($bag);
 
-        return ResultOfStartingABattle::success($trainer->id);
+        return ResultOfStartingABattle::success($battle->id);
     }
 }

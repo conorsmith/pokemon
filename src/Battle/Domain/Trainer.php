@@ -20,8 +20,6 @@ final class Trainer
         public readonly array $team,
         public readonly string $locationId,
         public readonly bool $isBattling,
-        public readonly ?CarbonImmutable $dateLastBeaten,
-        public readonly int $battleCount,
         public readonly ?GymBadge $gymBadge,
     ) {}
 
@@ -35,24 +33,6 @@ final class Trainer
             $this->team,
             $this->locationId,
             true,
-            $this->dateLastBeaten,
-            $this->battleCount + 1,
-            $this->gymBadge,
-        );
-    }
-
-    public function defeat(): self
-    {
-        return new self(
-            $this->id,
-            $this->name,
-            $this->class,
-            $this->gender,
-            $this->team,
-            $this->locationId,
-            $this->isBattling,
-            CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
-            $this->battleCount,
             $this->gymBadge,
         );
     }
@@ -67,8 +47,6 @@ final class Trainer
             $this->team,
             $this->locationId,
             false,
-            $this->dateLastBeaten,
-            $this->battleCount,
             $this->gymBadge,
         );
     }
@@ -141,10 +119,5 @@ final class Trainer
         return $this->class === TrainerClass::ELITE_FOUR
             || $this->class === TrainerClass::CHAMPION
             || $this->class === TrainerClass::RETIRED_TRAINER;
-    }
-
-    public function hasBeenBeaten(): bool
-    {
-        return !is_null($this->dateLastBeaten);
     }
 }

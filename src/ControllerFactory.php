@@ -18,17 +18,18 @@ use ConorSmith\Pokemon\Battle\Controllers\PostEncounterGenerateAndStart;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterRun;
+use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\Battle\UseCase\StartABattle;
-use ConorSmith\Pokemon\Battle\UseCase\CreateALegendaryEncounter;
-use ConorSmith\Pokemon\Battle\UseCase\CreateAWildEncounter;
-use ConorSmith\Pokemon\Battle\UseCase\StartAnEncounter;
+use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
+use ConorSmith\Pokemon\Battle\UseCases\CreateALegendaryEncounter;
+use ConorSmith\Pokemon\Battle\UseCases\CreateAWildEncounter;
+use ConorSmith\Pokemon\Battle\UseCases\StartAnEncounter;
 use ConorSmith\Pokemon\Controllers\GetBag;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogStretches;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogStretches;
@@ -47,6 +48,7 @@ use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
+use ConorSmith\Pokemon\SharedKernel\UseCases\SpendChallengeTokensUseCase;
 use ConorSmith\Pokemon\Team\BoostPokemonEvsCommand;
 use ConorSmith\Pokemon\Team\CatchPokemonCommand;
 use ConorSmith\Pokemon\Team\Controllers\GetPokemon;
@@ -359,7 +361,7 @@ final class ControllerFactory
                 new PokedexConfigRepository(),
             ),
             GetEncounter::class => new GetEncounter(
-                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->viewModelFactory,
@@ -395,12 +397,12 @@ final class ControllerFactory
             ),
             PostEncounterRun::class => new PostEncounterRun(
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
             ),
             PostEncounterFight::class => new PostEncounterFight(
                 $this->session,
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 new EventFactory(
                     $this->viewModelFactory,
                     new PokedexConfigRepository(),
@@ -435,18 +437,20 @@ final class ControllerFactory
             PostBattleStart::class => new PostBattleStart(
                 $this->session,
                 new StartABattle(
-                    $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                    $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                    $this->repositoryFactory->create(BattleRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                    $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                     $this->reportBattleWithGymLeaderCommand,
+                ),
+                new SpendChallengeTokensUseCase(
+                    $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 ),
             ),
             GetBattle::class => new GetBattle(
                 $this->db,
                 $this->trainerConfigRepository,
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->viewModelFactory,
                 $this->templateEngine,
             ),
@@ -461,9 +465,10 @@ final class ControllerFactory
                 $this->session,
                 new ItemConfigRepository(),
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(AreaRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                 $this->reportTeamPokemonFaintedCommand,
                 new BoostPokemonEvsCommand(
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
@@ -475,21 +480,22 @@ final class ControllerFactory
                 $this->viewModelFactory,
             ),
             GetSwitch::class => new GetSwitch(
-                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->viewModelFactory,
                 $this->templateEngine,
             ),
             PostSwitch::class => new PostSwitch(
-                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
             ),
             PostBattleFinish::class => new PostBattleFinish(
+                $this->repositoryFactory->create(BattleRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 new StartABattle(
-                    $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                    $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                    $this->repositoryFactory->create(BattleRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                    $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                     $this->reportBattleWithGymLeaderCommand,
                 ),
             ),
@@ -528,13 +534,12 @@ final class ControllerFactory
             PostChallengeEliteFour::class => new PostChallengeEliteFour(
                 $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 new StartABattle(
-                    $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                    $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
+                    $this->repositoryFactory->create(BattleRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                    $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                     $this->reportBattleWithGymLeaderCommand,
                 ),
             ),

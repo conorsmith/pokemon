@@ -19,6 +19,7 @@ final class Instance
             'unused_moves'      => 0,
             'unused_encounters' => 0,
             'badges'            => "[]",
+            'active_battle_id'  => null,
         ]);
 
         return self::DEFAULT_ID;

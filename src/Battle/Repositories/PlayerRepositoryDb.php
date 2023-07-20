@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Repositories;
 
 use ConorSmith\Pokemon\Battle\Domain\Player;
+use ConorSmith\Pokemon\Battle\Domain\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\GymBadge;
@@ -13,7 +14,7 @@ use ConorSmith\Pokemon\SharedKernel\TeamPokemonQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
 
-final class PlayerRepository
+final class PlayerRepositoryDb implements PlayerRepository
 {
     public function __construct(
         private readonly Connection $db,
@@ -82,7 +83,7 @@ final class PlayerRepository
             json_decode($instanceRow['badges'])
         );
 
-        return new Player($team, $gymBadges);
+        return new Player($team, $gymBadges, $instanceRow['active_battle_id']);
     }
 
     private function findPokedexEntry(string $number): array
@@ -98,6 +99,7 @@ final class PlayerRepository
     {
         $this->db->update("instances", [
             'badges' => json_encode($player->gymBadges),
+            'active_battle_id' => $player->activeBattleId,
         ], [
             'id' => $this->instanceId->value,
         ]);

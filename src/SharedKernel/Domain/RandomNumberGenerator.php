@@ -22,6 +22,11 @@ final class RandomNumberGenerator
         return mt_rand($min, $max);
     }
 
+    public static function coinToss(): bool
+    {
+        return self::generateInRange(0, 1) === 0;
+    }
+
     public static function generateFromWeightedTable(array $weights): int
     {
         $sumOfWeights = array_reduce($weights, function ($carry, $weight) {

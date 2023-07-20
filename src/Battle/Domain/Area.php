@@ -31,18 +31,22 @@ final class Area
     public function __construct(
         public readonly string $id,
         public readonly array $trainers,
+        public readonly array $battles,
     ) {}
 
-    public function isOnlyUnbeatenTrainer(Trainer $unbeatenTrainer): bool
+    public function isOnlyUnbeatenTrainer(string $trainerId): bool
     {
-        if (count($this->trainers) === 0) {
+        if (count($this->battles) === 0) {
             return false;
         }
 
-        /** @var Trainer $areaTrainer */
-        foreach ($this->trainers as $areaTrainer) {
-            if ($areaTrainer->id !== $unbeatenTrainer->id
-                && $areaTrainer->dateLastBeaten === null
+        /** @var ?Battle $areaBattle */
+        foreach ($this->battles as $areaBattle) {
+            if (is_null($areaBattle)) {
+                return false;
+            }
+            if ($areaBattle->trainerId !== $trainerId
+                && $areaBattle->dateLastBeaten === null
             ) {
                 return false;
             }

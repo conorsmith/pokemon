@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class GetSwitch
 {
     public function __construct(
-        private readonly PlayerRepository $playerRepository,
+        private readonly PlayerRepositoryDb $playerRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly TemplateEngine $templateEngine,
     ) {}

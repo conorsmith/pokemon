@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
 use ConorSmith\Pokemon\Battle\EliteFourChallengeRegionalVictoryQuery;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
+use ConorSmith\Pokemon\Battle\Repositories\BattleRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
@@ -49,7 +51,7 @@ final class RepositoryFactory
                 new LocationConfigRepository(),
                 $instanceId,
             ),
-            PlayerRepository::class    => new PlayerRepository(
+            PlayerRepositoryDb::class => new PlayerRepositoryDb(
                 $this->db,
                 new TeamPokemonQuery($this->create(PokemonRepositoryDb::class, $instanceId)),
                 require __DIR__ . "/Config/Pokedex.php",
@@ -93,11 +95,18 @@ final class RepositoryFactory
                 $instanceId,
             ),
             AreaRepository::class               => new AreaRepository(
+                $this->create(BattleRepository::class, $instanceId),
                 $this->create(TrainerRepository::class, $instanceId),
                 new LocationConfigRepository(),
             ),
             EggRepositoryDb::class => new EggRepositoryDb($this->db, $instanceId),
             GenealogyRepository::class => new GenealogyRepositoryDb($this->db, $instanceId),
+            BattleRepository::class => new BattleRepositoryDb(
+                $this->db,
+                new TrainerConfigRepository(),
+                $this->create(EliteFourChallengeRepository::class, $instanceId),
+                $instanceId,
+            ),
         };
     }
 }

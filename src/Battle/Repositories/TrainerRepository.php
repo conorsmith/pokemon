@@ -38,34 +38,20 @@ class TrainerRepository
             'id' => $id,
         ]);
 
-        return $this->createTrainer($trainerBattleRow);
+        return $this->createTrainer($trainerBattleRow['trainer_id'], $trainerBattleRow['is_battling'] === 1);
     }
 
     public function findTrainerByTrainerId(string $trainerId): Trainer
     {
         $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
             'instanceId' => $this->instanceId->value,
-            'trainerId' => $trainerId,
+            'trainerId'  => $trainerId,
         ]);
 
-        if ($trainerBattleRow === false) {
-            $this->db->insert("trainer_battles", [
-                'id' => Uuid::uuid4(),
-                'instance_id' => $this->instanceId->value,
-                'trainer_id' => $trainerId,
-                'is_battling' => 0,
-                'date_last_beaten' => null,
-                'battle_count' => 0,
-                'active_pokemon' => 0,
-            ]);
-
-            $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
-                'instanceId' => $this->instanceId->value,
-                'trainerId' => $trainerId,
-            ]);
-        }
-
-        return $this->createTrainer($trainerBattleRow);
+        return $this->createTrainer(
+            $trainerId,
+            $trainerBattleRow === false ? false : $trainerBattleRow['is_battling'] === 1
+        );
     }
 
     public function findTrainersInLocation(string $locationId): array
@@ -91,9 +77,9 @@ class TrainerRepository
         return $trainers;
     }
 
-    private function createTrainer(array $trainerBattleRow): Trainer
+    private function createTrainer(string $trainerId, bool $isBattling): Trainer
     {
-        $trainerConfig = $this->trainerConfigRepository->findTrainer($trainerBattleRow['trainer_id']);
+        $trainerConfig = $this->trainerConfigRepository->findTrainer($trainerId);
         
         $locationConfig = $this->locationConfigRepository->findLocation($trainerConfig['locationId']);
         $location = new Location($locationConfig['id'], $locationConfig['region']);
@@ -101,10 +87,10 @@ class TrainerRepository
         $team = [];
 
         $trainerBattlePokemonRows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battle_pokemon WHERE trainer_battle_id = :trainerBattleId ORDER BY team_order", [
-            'trainerBattleId' => $trainerBattleRow['id'],
+            'trainerBattleId' => $trainerId,
         ]);
 
-        RandomNumberGenerator::setSeed(crc32($trainerBattleRow['trainer_id']));
+        RandomNumberGenerator::setSeed(crc32($trainerId));
 
         foreach ($trainerConfig['team'] as $i => $pokemonConfig) {
 
@@ -142,7 +128,7 @@ class TrainerRepository
             if ($trainerBattlePokemonRows === []) {
                 $this->db->insert("trainer_battle_pokemon", [
                     'id' => Uuid::uuid4(),
-                    'trainer_battle_id' => $trainerBattleRow['id'],
+                    'trainer_battle_id' => $trainerId,
                     'team_order' => $i,
                     'pokemon_number' => $pokemon->number,
                     'remaining_hp' => $pokemon->remainingHp,
@@ -155,21 +141,13 @@ class TrainerRepository
         RandomNumberGenerator::unsetSeed();
 
         return new Trainer(
-            $trainerBattleRow['id'],
+            $trainerId,
             $trainerConfig['name'] ?? null,
             $trainerConfig['class'],
             $trainerConfig['gender'] ?? Gender::IMMATERIAL,
             $team,
             $trainerConfig['locationId'],
-            $trainerBattleRow['is_battling'] === 1,
-            is_null($trainerBattleRow['date_last_beaten'])
-                ? null
-                : CarbonImmutable::createFromFormat(
-                "Y-m-d H:i:s",
-                $trainerBattleRow['date_last_beaten'],
-                new CarbonTimeZone("Europe/Dublin")
-            ),
-            $trainerBattleRow['battle_count'],
+            $isBattling,
             array_key_exists('leader', $trainerConfig) ? $trainerConfig['leader']['badge'] : null,
         );
     }
@@ -187,11 +165,9 @@ class TrainerRepository
     {
         $this->db->update("trainer_battles", [
             'is_battling' => $battleTrainer->isBattling ? "1" : "0",
-            'date_last_beaten' => $battleTrainer->dateLastBeaten,
-            'battle_count' => $battleTrainer->battleCount,
             'active_pokemon' => 0,
         ], [
-            'id' => $battleTrainer->id,
+            'trainer_id' => $battleTrainer->id,
         ]);
 
         if ($battleTrainer->isBattling) {

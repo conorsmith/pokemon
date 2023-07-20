@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerClass;
@@ -21,7 +21,7 @@ final class GetBattle
         private readonly Connection $db,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly TrainerRepository $trainerRepository,
-        private readonly PlayerRepository $playerRepository,
+        private readonly PlayerRepositoryDb $playerRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -41,7 +41,7 @@ final class GetBattle
             : $player->getLeadPokemon();
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Battle.php", [
-            'id' => $trainer->id,
+            'id' => $trainerBattleId,
             'opponentPokemon' => $this->viewModelFactory->createPokemonInBattle($trainerLeadPokemon),
             'playerPokemon' => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
             'trainer' => $this->viewModelFactory->createTrainerInBattle($trainer, $this->createImageUrl($args['instanceId'], $trainer)),
@@ -54,7 +54,7 @@ final class GetBattle
         $imageUrl = TrainerClass::getImageUrl($trainer->class, $trainer->gender);
 
         if (is_null($imageUrl)) {
-            $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND id = :id", [
+            $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :id", [
                 'instanceId' => $instanceId,
                 'id' => $trainer->id,
             ]);

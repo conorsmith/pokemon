@@ -5,6 +5,7 @@ namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
@@ -76,7 +77,30 @@ final class PostPokemonBreed
         }
 
         $speciesParent = self::determineSpeciesParent($pokemonA, $pokemonB);
-        $eggPokedexNumber = $this->findFirstStageOfEvolutionaryLine($speciesParent->number);
+
+        if ($speciesParent->number === PokedexNo::NIDORAN_F
+            || $speciesParent->number === PokedexNo::NIDORAN_M
+            || $speciesParent->number === PokedexNo::NIDORINO
+            || $speciesParent->number === PokedexNo::NIDOKING
+        ) {
+            $eggPokedexNumber = RandomNumberGenerator::coinToss()
+                ? PokedexNo::NIDORAN_F
+                : PokedexNo::NIDORAN_M;
+
+        } elseif ($speciesParent->number === PokedexNo::ILLUMISE
+            || $speciesParent->number === PokedexNo::VOLBEAT
+        ) {
+            $eggPokedexNumber = RandomNumberGenerator::coinToss()
+                ? PokedexNo::ILLUMISE
+                : PokedexNo::VOLBEAT;
+
+        } elseif ($speciesParent->number === PokedexNo::MANAPHY) {
+            $eggPokedexNumber = PokedexNo::PHIONE;
+
+        } else {
+            $eggPokedexNumber = $this->findFirstStageOfEvolutionaryLine($speciesParent->number);
+        }
+
         $ivs = self::generateIvs($pokemonA, $pokemonB);
 
         $egg = new Egg(
@@ -161,7 +185,7 @@ final class PostPokemonBreed
 
         foreach ($statKeys as $statKey) {
             if (in_array($statKey, $inheritedStatKeys)) {
-                $stats[$statKey] = RandomNumberGenerator::generateInRange(0, 1) === 0
+                $stats[$statKey] = RandomNumberGenerator::coinToss()
                     ? $pokemonA->{$statKey}->iv
                     : $pokemonB->{$statKey}->iv;
             } else {

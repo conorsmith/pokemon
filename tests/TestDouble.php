@@ -7,6 +7,11 @@ use Prophecy\Prophet;
 
 final class TestDouble
 {
+    public static function dummy(string $classname): mixed
+    {
+        return (new Prophet())->prophesize($classname);
+    }
+
     public static function stub(string $classname): mixed
     {
         return (new Prophet())->prophesize($classname);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\SharedKernel\Domain\Item;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class GetEncounter
 {
     public function __construct(
-        private readonly PlayerRepository $playerRepository,
+        private readonly PlayerRepositoryDb $playerRepository,
         private readonly EncounterRepository $encounterRepository,
         private readonly BagRepository $bagRepository,
         private readonly ViewModelFactory $viewModelFactory,

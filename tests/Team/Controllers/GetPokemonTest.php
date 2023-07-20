@@ -18,6 +18,7 @@ final class GetPokemonTest extends TestCase
     function loads_page()
     {
         Database::setup();
+        Instance::setup();
 
         $db = Database::createDatabaseConnection();
 

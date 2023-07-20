@@ -22,15 +22,14 @@ final class EventFactory
         Pokemon $defender,
         bool $isPlayerDefending,
         ?Pokemon $nextDefender,
-        string $opponentName
+        string $attackerDescriptor,
+        string $defenderDescriptor,
+        string $defenderName,
     ): array {
         $events = [];
 
         $attackerVm = $this->viewModelFactory->createPokemonInBattle($attacker);
-        $attackerDescriptor = $isPlayerDefending ? "Foe" : "Your";
-
         $defenderVm = $this->viewModelFactory->createPokemonInBattle($defender);
-        $defenderDescriptor = $isPlayerDefending ? "Your" : "Foe";
 
         if ($attack->hit) {
 
@@ -64,11 +63,7 @@ final class EventFactory
 
                 if ($nextDefender) {
                     $nextDefenderVm = $this->viewModelFactory->createPokemonInBattle($nextDefender);
-                    if ($isPlayerDefending) {
-                        $events[] = $this->createMessageEvent("Go {$nextDefenderVm->name}!");
-                    } else {
-                        $events[] = $this->createMessageEvent("{$opponentName} sent out {$nextDefenderVm->name}");
-                    }
+                    $events[] = $this->createMessageEvent("{$defenderName} sent out {$nextDefenderVm->name}");
                 }
             }
         } elseif (!$attacker->hasFainted) {

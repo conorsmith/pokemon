@@ -17,6 +17,7 @@ final class PostEncounterStartTest extends TestCase
     function processes_request()
     {
         Database::setup();
+        Instance::setup();
 
         $db = Database::createDatabaseConnection();
 

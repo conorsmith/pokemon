@@ -97,12 +97,14 @@ final class GameModeMiddleware
             return null;
         }
 
-        $activeTrainerBattle = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE is_battling = 1 ORDER BY id");
+        $instance = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
+            'instanceId' => $instanceId->value,
+        ]);
 
-        if ($activeTrainerBattle === false) {
+        if (is_null($instance['active_battle_id'])) {
             return null;
         }
 
-        return new RedirectResponse("/{$instanceId->value}/battle/" . $activeTrainerBattle['id']);
+        return new RedirectResponse("/{$instanceId->value}/battle/" . $instance['active_battle_id']);
     }
 }

@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Domain\Attack;
+use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
+use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\TrainerClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,7 +23,7 @@ final class PostEncounterFight
     public function __construct(
         private readonly Session $session,
         private readonly EncounterRepository $encounterRepository,
-        private readonly PlayerRepository $playerRepository,
+        private readonly PlayerRepositoryDb $playerRepository,
         private readonly EventFactory $eventFactory,
         private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
     ) {}
@@ -52,7 +54,12 @@ final class PostEncounterFight
             explode("-", $playerAttackInput)[1],
         );
 
-        $round = Round::execute($playerPokemon, $opponentPokemon, $playerAttack, $encounter);
+        $round = Round::execute(
+            $playerPokemon,
+            $opponentPokemon,
+            $playerAttack,
+            Attack::strongest($opponentPokemon),
+        );
 
         if ($playerPokemon->hasFainted) {
             $this->reportTeamPokemonFaintedCommand->run(
@@ -62,7 +69,9 @@ final class PostEncounterFight
             );
         }
 
-        if ($round->strengthIndicatorProgresses) {
+        $doesStrengthIndicatorProgress = self::determineIfStrengthIndicatorProgresses($encounter);
+
+        if ($doesStrengthIndicatorProgress) {
             $encounter = $encounter->strengthIndicatorProgresses();
         }
 
@@ -99,10 +108,19 @@ final class PostEncounterFight
             $events[] = $this->eventFactory->createEncounterDefeatEvent($encounter);
         }
 
-        if ($round->strengthIndicatorProgresses && !$opponentPokemon->hasFainted) {
+        if ($doesStrengthIndicatorProgress && !$opponentPokemon->hasFainted) {
             $events[] = $this->eventFactory->createStrengthIndicatorProgressesEvent($encounter);
         }
 
         return new JsonResponse($events);
+    }
+
+    private static function determineIfStrengthIndicatorProgresses(Encounter $encounter): bool
+    {
+        if (!$encounter->canStrengthIndicatorProgress()) {
+            return false;
+        }
+
+        return RandomNumberGenerator::generateInRange(0, 3) === 0;
     }
 }

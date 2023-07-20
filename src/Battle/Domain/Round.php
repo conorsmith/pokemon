@@ -4,53 +4,45 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Domain;
 
 use ConorSmith\Pokemon\PokemonType;
+use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 
 final class Round
 {
     public static function execute(
-        Pokemon $playerPokemon,
-        Pokemon $opponentPokemon,
-        Attack $playerAttack,
-        Encounter $encounter = null
+        Pokemon $pokemonA,
+        Pokemon $pokemonB,
+        Attack $pokemonAAttack,
+        Attack $pokemonBAttack,
     ): self {
-        if ($opponentPokemon->calculateAttack() > $opponentPokemon->calculateSpecialAttack()) {
-            $opponentAttack = Attack::physical();
-        } elseif ($opponentPokemon->calculateAttack() < $opponentPokemon->calculateSpecialAttack()) {
-            $opponentAttack = Attack::special();
+        if ($pokemonA->calculateSpeed() > $pokemonB->calculateSpeed()) {
+            $pokemonAGoesFirst = true;
+        } elseif ($pokemonA->calculateSpeed() < $pokemonB->calculateSpeed()) {
+            $pokemonAGoesFirst = false;
         } else {
-            $opponentAttack = mt_rand(0, 1) === 0 ? Attack::physical() : Attack::special();
+            $pokemonAGoesFirst = RandomNumberGenerator::coinToss();
         }
 
-        if ($playerPokemon->calculateSpeed() > $opponentPokemon->calculateSpeed()) {
-            $playerGoesFirst = true;
-        } elseif ($playerPokemon->calculateSpeed() < $opponentPokemon->calculateSpeed()) {
-            $playerGoesFirst = false;
+        if ($pokemonAGoesFirst) {
+            $firstPokemon = $pokemonA;
+            $secondPokemon = $pokemonB;
+            $firstAttack = $pokemonAAttack;
+            $secondAttack = $pokemonBAttack;
         } else {
-            $playerGoesFirst = mt_rand(0, 1) === 0;
-        }
-
-        if ($playerGoesFirst) {
-            $firstPokemon = $playerPokemon;
-            $secondPokemon = $opponentPokemon;
-            $firstAttack = $playerAttack;
-            $secondAttack = $opponentAttack;
-        } else {
-            $firstPokemon = $opponentPokemon;
-            $secondPokemon = $playerPokemon;
-            $firstAttack = $opponentAttack;
-            $secondAttack = $playerAttack;
+            $firstPokemon = $pokemonB;
+            $secondPokemon = $pokemonA;
+            $firstAttack = $pokemonBAttack;
+            $secondAttack = $pokemonAAttack;
         }
 
         $firstAttackOutcome = self::attack($firstPokemon, $secondPokemon, $firstAttack);
         $secondAttackOutcome = self::attack($secondPokemon, $firstPokemon, $secondAttack);
 
         return new self(
-            $playerGoesFirst,
+            $pokemonAGoesFirst,
             $firstPokemon,
             $secondPokemon,
             $firstAttackOutcome,
             $secondAttackOutcome,
-            self::determineIfStrengthIndicatorProgresses($encounter),
         );
     }
 
@@ -182,25 +174,11 @@ final class Round
         return $multiplier;
     }
 
-    private static function determineIfStrengthIndicatorProgresses(?Encounter $encounter): bool
-    {
-        if (is_null($encounter)) {
-            return false;
-        }
-
-        if (!$encounter->canStrengthIndicatorProgress()) {
-            return false;
-        }
-
-        return mt_rand(0, 3) === 0;
-    }
-
     public function __construct(
         public readonly bool $playerFirst,
         public readonly Pokemon $firstPokemon,
         public readonly Pokemon $secondPokemon,
         public readonly AttackOutcome $firstAttack,
         public readonly AttackOutcome $secondAttack,
-        public readonly bool $strengthIndicatorProgresses,
     ) {}
 }

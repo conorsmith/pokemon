@@ -6,8 +6,8 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
-use ConorSmith\Pokemon\Battle\UseCase\StartABattle;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
+use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
@@ -22,7 +22,7 @@ final class PostChallengeEliteFour
     public function __construct(
         private readonly Session $session,
         private readonly BagRepository $bagRepository,
-        private readonly PlayerRepository $playerRepository,
+        private readonly PlayerRepositoryDb $playerRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly StartABattle $startABattleUseCase,
     ) {}

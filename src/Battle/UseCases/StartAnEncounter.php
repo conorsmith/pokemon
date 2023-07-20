@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon\Battle\UseCase;
+namespace ConorSmith\Pokemon\Battle\UseCases;
 
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 

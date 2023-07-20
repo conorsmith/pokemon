@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Domain\Attack;
+use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
@@ -14,7 +15,7 @@ use ConorSmith\Pokemon\ItemType;
 use ConorSmith\Pokemon\SharedKernel\BoostPokemonEvsCommand;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepository;
+use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\TrainerClass;
@@ -34,9 +35,10 @@ final class PostBattleFight
         private readonly Session                         $session,
         private readonly ItemConfigRepository            $itemConfigRepository,
         private readonly TrainerRepository               $trainerRepository,
-        private readonly PlayerRepository                $playerRepository,
+        private readonly PlayerRepositoryDb                $playerRepository,
         private readonly AreaRepository                  $areaRepository,
         private readonly BagRepository                   $bagRepository,
+        private readonly BattleRepository                $battleRepository,
         private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
         private readonly BoostPokemonEvsCommand          $boostPokemonEvsCommand,
         private readonly EventFactory                    $eventFactory,
@@ -49,12 +51,13 @@ final class PostBattleFight
         $playerAttackInput = $request->request->get('attack');
 
         $player = $this->playerRepository->findPlayer();
+        $battle = $this->battleRepository->find($trainerBattleId);
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
         $bag = $this->bagRepository->find();
 
         if ($player->hasEntireTeamFainted()) {
             $this->session->getFlashBag()->add("errors", "Your team has fainted.");
-            return new RedirectResponse("/{$args['instanceId']}/battle/{$trainer->id}");
+            return new RedirectResponse("/{$args['instanceId']}/battle/{$battle->id}");
         }
 
         $playerPokemon = $player->getLeadPokemon();
@@ -65,7 +68,12 @@ final class PostBattleFight
             explode("-", $playerAttackInput)[1],
         );
 
-        $round = Round::execute($playerPokemon, $opponentPokemon, $playerAttack);
+        $round = Round::execute(
+            $playerPokemon,
+            $opponentPokemon,
+            $playerAttack,
+            Attack::strongest($opponentPokemon),
+        );
 
         if ($playerPokemon->hasFainted) {
             $this->reportTeamPokemonFaintedCommand->run(
@@ -83,12 +91,12 @@ final class PostBattleFight
         $prize = null;
 
         if ($trainer->hasEntireTeamFainted()) {
-            $trainerWasPreviouslyBeaten = $trainer->dateLastBeaten !== null;
+            $trainerWasPreviouslyBeaten = $battle->dateLastBeaten !== null;
 
             $prizeItemId = self::generatePrize($this->getPrizePool($trainer));
             $prize = self::findItem($prizeItemId);
             $bag = $bag->add($prizeItemId);
-            $trainer = $trainer->defeat();
+            $battle = $battle->defeat();
 
             if ($trainer->isGymLeader() && !$player->hasGymBadge($trainer->gymBadge)) {
                 $player = $player->earn($trainer->gymBadge);
@@ -101,7 +109,7 @@ final class PostBattleFight
 
                 $area = $this->areaRepository->find($trainer->locationId);
 
-                $areaJustCleared = $area->isOnlyUnbeatenTrainer($trainer);
+                $areaJustCleared = $area->isOnlyUnbeatenTrainer($battle->trainerId);
 
                 $areaClearedPrizes = [];
 
@@ -124,6 +132,7 @@ final class PostBattleFight
 
         $this->trainerRepository->saveTrainer($trainer);
         $this->playerRepository->savePlayer($player);
+        $this->battleRepository->save($battle);
         $this->bagRepository->save($bag);
 
         $this->db->commit();
@@ -142,7 +151,9 @@ final class PostBattleFight
                 $round->secondPokemon,
                 !$round->playerFirst,
                 $nextSecondPokemon,
-                TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
+                !$round->playerFirst ? "Foe" : "Your",
+                !$round->playerFirst ? "Your" : "Foe",
+                !$round->playerFirst ? "You" : TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
             ),
             $this->eventFactory->createBattleRoundEvents(
                 $round->secondAttack,
@@ -150,7 +161,9 @@ final class PostBattleFight
                 $round->firstPokemon,
                 $round->playerFirst,
                 $nextFirstPokemon,
-                TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
+                $round->playerFirst ? "Foe" : "Your",
+                $round->playerFirst ? "Your" : "Foe",
+                $round->playerFirst ? "You" : TrainerClass::getLabel($trainer->class) . " " . $trainer->name,
             ),
         );
 
