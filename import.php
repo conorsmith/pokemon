@@ -45,7 +45,7 @@ if ($argv[1] === "encounters") {
     $encounterTableFactory = new EncounterTableFactory();
 
     $encounterTables = $encounterTableFactory->createEncounterTablesFromBulbapediaEncounters(
-        $bulbapedia->extractEncounters(),
+        $bulbapedia->extractEncounters($argv[3] ?? null),
     );
 
     echo EncountersConfig::fromEncounterTables($encounterTables);
@@ -60,7 +60,7 @@ if ($argv[1] === "encounters") {
     $trainerFactory = new TrainerFactory();
 
     $trainers = $trainerFactory->createTrainersFromBulbapediaTrainers(
-        $bulbapedia->extractTrainers(),
+        $bulbapedia->extractTrainers($argv[3] ?? null),
     );
 
     echo TrainersConfig::fromTrainers($trainers);

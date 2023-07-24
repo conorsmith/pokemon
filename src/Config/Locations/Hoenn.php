@@ -86,6 +86,15 @@ return [
         'directions' => [
             Direction::E => LocationId::ROUTE_116,
             Direction::S => LocationId::ROUTE_104,
+            LocationId::RUSTBORO_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::RUSTBORO_GYM,
+        'name' => "Rustboro Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::RUSTBORO_CITY,
         ],
     ],
     [
@@ -112,8 +121,8 @@ return [
         'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::ROUTE_104,
-            Direction::W => LocationId::ISLAND_CAVE,
             Direction::S => LocationId::ROUTE_106,
+            LocationId::ISLAND_CAVE,
         ],
     ],
     [
@@ -121,7 +130,7 @@ return [
         'name' => "Island Cave",
         'type' => LocationType::CAVE,
         'directions' => [
-            Direction::E => LocationId::ROUTE_105,
+            LocationId::ROUTE_105,
         ],
     ],
     [
@@ -130,16 +139,51 @@ return [
         'type' => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::ROUTE_105,
-            Direction::W => LocationId::GRANITE_CAVE,
             Direction::S => LocationId::DEWFORD_TOWN,
+            LocationId::GRANITE_CAVE_1F,
         ],
     ],
     [
-        'id' => LocationId::GRANITE_CAVE,
+        'id' => LocationId::GRANITE_CAVE_1F,
         'name' => "Granite Cave",
+        'section' => "1st Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::GRANITE_CAVE,
         'directions' => [
-            Direction::E => LocationId::ROUTE_106,
+            Direction::U => LocationId::ROUTE_106,
+            Direction::D => LocationId::GRANITE_CAVE_B1F,
+        ],
+    ],
+    [
+        'id' => LocationId::GRANITE_CAVE_B1F,
+        'name' => "Granite Cave",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::GRANITE_CAVE,
+        'directions' => [
+            Direction::U => LocationId::GRANITE_CAVE_1F,
+            Direction::D => LocationId::GRANITE_CAVE_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::GRANITE_CAVE_B2F,
+        'name' => "Granite Cave",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::GRANITE_CAVE,
+        'directions' => [
+            Direction::U => LocationId::GRANITE_CAVE_B1F,
+            Direction::D => LocationId::GRANITE_CAVE_STEVENS_ROOM,
+        ],
+    ],
+    [
+        'id' => LocationId::GRANITE_CAVE_STEVENS_ROOM,
+        'name' => "Granite Cave",
+        'section' => "Steven's Room",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::GRANITE_CAVE,
+        'directions' => [
+            Direction::U => LocationId::GRANITE_CAVE_B2F,
         ],
     ],
     [
@@ -149,6 +193,15 @@ return [
         'directions' => [
             Direction::N => LocationId::ROUTE_106,
             Direction::E => LocationId::ROUTE_107,
+            LocationId::DEWFORD_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::DEWFORD_GYM,
+        'name' => "Dewford Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::DEWFORD_TOWN,
         ],
     ],
     [
@@ -165,17 +218,30 @@ return [
         'name' => "Route 108",
         'type' => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::ABANDONED_SHIP,
             Direction::E => LocationId::ROUTE_109,
             Direction::W => LocationId::ROUTE_107,
+            LocationId::ABANDONED_SHIP_1F,
         ],
     ],
     [
-        'id' => LocationId::ABANDONED_SHIP,
+        'id' => LocationId::ABANDONED_SHIP_1F,
         'name' => "Abandoned Ship",
+        'section' => "1st Floor",
         'type' => LocationType::CAVE,
+        'area' => LocationId::ABANDONED_SHIP,
         'directions' => [
-            Direction::S => LocationId::ROUTE_108,
+            Direction::U => LocationId::ROUTE_108,
+            Direction::D => LocationId::ABANDONED_SHIP_B1F,
+        ],
+    ],
+    [
+        'id' => LocationId::ABANDONED_SHIP_B1F,
+        'name' => "Abandoned Ship",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::ABANDONED_SHIP,
+        'directions' => [
+            Direction::U => LocationId::ABANDONED_SHIP_1F,
         ],
     ],
     [
@@ -185,6 +251,14 @@ return [
         'directions' => [
             Direction::N => LocationId::SLATEPORT_CITY,
             Direction::W => LocationId::ROUTE_108,
+            LocationId::SEASHORE_HOUSE,
+        ],
+    ],
+    [
+        'id' => LocationId::SEASHORE_HOUSE,
+        'name' => "Seashore House",
+        'directions' => [
+            LocationId::ROUTE_109,
         ],
     ],
     [
@@ -195,6 +269,7 @@ return [
             Direction::N => LocationId::ROUTE_110,
             Direction::E => LocationId::ROUTE_134,
             Direction::S => LocationId::ROUTE_109,
+            LocationId::OCEANIC_MUSEUM,
             LocationId::SS_TIDAL,
         ],
     ],
@@ -204,6 +279,13 @@ return [
         'directions' => [
             LocationId::SLATEPORT_CITY,
             LocationId::OLIVINE_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::OCEANIC_MUSEUM,
+        'name' => "Oceanic Museum",
+        'directions' => [
+            LocationId::SLATEPORT_CITY,
         ],
     ],
     [
@@ -225,6 +307,15 @@ return [
             Direction::E => LocationId::ROUTE_118,
             Direction::W => LocationId::ROUTE_117,
             Direction::S => LocationId::ROUTE_110,
+            LocationId::MAUVILLE_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::MAUVILLE_GYM,
+        'name' => "Mauville Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::MAUVILLE_CITY,
         ],
     ],
     [

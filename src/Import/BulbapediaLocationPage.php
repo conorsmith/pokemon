@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Import;
 use ConorSmith\Pokemon\Import\Domain\BulbapediaEncounter;
 use DOMDocument;
 use DOMNode;
+use DOMNodeList;
 use Exception;
 
 final class BulbapediaLocationPage
@@ -44,7 +45,7 @@ final class BulbapediaLocationPage
         private readonly DOMDocument $page,
     ) {}
 
-    public function extractEncounters(): array
+    public function extractEncounters(?string $sectionTitle): array
     {
         $titleNode = $this->page->getElementById("Pokémon");
 
@@ -58,10 +59,15 @@ final class BulbapediaLocationPage
 
         while (!is_null($currentNode)) {
             if ($currentNode->nodeName === "table") {
-                $rawEncounterData[$mostRecentSubtitle . $mostRecentSubSubtitle] = array_merge(
-                    $rawEncounterData[$mostRecentSubtitle . $mostRecentSubSubtitle] ?? [],
-                    self::extractEncountersFromTableNode($currentNode),
-                );
+                if (is_null($sectionTitle)
+                    || $mostRecentSubtitle . $mostRecentSubSubtitle === $sectionTitle
+                    || $mostRecentSubtitle . $mostRecentSubSubtitle === "Default" . $sectionTitle
+                ) {
+                    $rawEncounterData[$mostRecentSubtitle . $mostRecentSubSubtitle] = array_merge(
+                        $rawEncounterData[$mostRecentSubtitle . $mostRecentSubSubtitle] ?? [],
+                        self::extractEncountersFromTableNode($currentNode),
+                    );
+                }
             } elseif ($currentNode->nodeName === "h3") {
                 $mostRecentSubtitle = $currentNode->textContent;
             } elseif ($currentNode->nodeName === "h4") {
@@ -83,14 +89,28 @@ final class BulbapediaLocationPage
         foreach ($tableNode->getElementsByTagName("tr") as $rowNode) {
             $row = [];
             /** @var DOMNode $cellNode */
-            foreach ($rowNode->childNodes as $cellNode) {
+            foreach ($rowNode->childNodes as $i => $cellNode) {
                 if ($cellNode->nodeName !== "td") {
                     continue;
                 }
-                $row[] = trim($cellNode->textContent);
+
+                /** @var DOMNodeList $spanNodes */
+                $spanNodes = $cellNode->getElementsByTagName("span");
+
+                if ($i > 1 || $spanNodes->length === 0) {
+                    $row[] = trim($cellNode->textContent);
+                    continue;
+                }
+
+                $row[] = trim($spanNodes->item(0)->textContent);
+                if ($spanNodes->length === 2) {
+                    $row[] = trim($spanNodes->item(1)->textContent);
+                } else {
+                    $row[] = null;
+                }
             }
 
-            if (count($row) !== 4 && count($row) !== 6) {
+            if (count($row) !== 5 && count($row) !== 7) {
                 continue;
             }
 
@@ -102,16 +122,17 @@ final class BulbapediaLocationPage
                 $row[0],
                 $row[1],
                 $row[2],
-                count($row) === 4
-                    ? $row[3]
-                    : [$row[3], $row[4], $row[5]],
+                $row[3],
+                count($row) === 5
+                    ? $row[4]
+                    : [$row[4], $row[5], $row[6]],
             );
         }
 
         return $rawEncounterData;
     }
 
-    public function extractTrainers(): array
+    public function extractTrainers(?string $sectionTitle): array
     {
         $titleNode = $this->page->getElementById("Trainers");
 
@@ -124,11 +145,17 @@ final class BulbapediaLocationPage
 
         while (!is_null($currentNode)) {
             if ($currentNode->nodeName === "table") {
-                $rawTrainerData[$mostRecentSubtitle] = array_merge(
-                    $rawTrainerData[$mostRecentSubtitle] ?? [],
-                    self::extractTrainersFromTableNode($currentNode),
-                );
-            } elseif ($currentNode->nodeName === "h3") {
+                if (is_null($sectionTitle)
+                    || $mostRecentSubtitle === $sectionTitle
+                ) {
+                    $rawTrainerData[$mostRecentSubtitle] = array_merge(
+                        $rawTrainerData[$mostRecentSubtitle] ?? [],
+                        self::extractTrainersFromTableNode($currentNode),
+                    );
+                }
+            } elseif ($currentNode->nodeName === "h3"
+                || $currentNode->nodeName === "h4"
+            ) {
                 if ($currentNode->textContent === "Layout"
                     || $currentNode->textContent === "Items"
                 ) {
@@ -269,9 +296,9 @@ final class BulbapediaLocationPage
 
                             $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
 
-                            preg_match("/FRLG_Swimmer_(\w)/", $imageUrl, $matches);
+                            preg_match("/(FRLG|Spr_RS)_Swimmer_(\w)/", $imageUrl, $matches);
 
-                            $gender = $matches[1];
+                            $gender = $matches[2];
                         } elseif ($className === "Pokémon Ranger") {
                             $imageNode = $cellNode->childNodes->item(1)
                                 ->childNodes->item(1)

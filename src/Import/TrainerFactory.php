@@ -79,6 +79,7 @@ final class TrainerFactory
             "SCHOOLBOY" => TrainerClass::SCHOOL_KID,
             "BLACKBELT" => TrainerClass::BLACK_BELT,
             "MYSTERY_MAN" => TrainerClass::MYSTICALMAN,
+            "POKE_FAN" => TrainerClass::POKEFAN,
             default => $trainerClassReflector->getConstants()[$constantName],
         };
     }

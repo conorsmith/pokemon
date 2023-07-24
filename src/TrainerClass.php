@@ -270,6 +270,11 @@ final class TrainerClass
             self::DOUBLE_TEAM => "https://archives.bulbagarden.net/media/upload/2/28/Spr_HGSS_Double_Team.png",
             self::SKIER => "https://archives.bulbagarden.net/media/upload/4/41/Spr_HGSS_Skier.png",
             self::BOARDER => "https://archives.bulbagarden.net/media/upload/4/42/Spr_HGSS_Boarder.png",
+            self::TEAM_MAGMA_GRUNT => "https://archives.bulbagarden.net/media/upload/a/a0/Spr_RS_Team_Magma_Grunt_M.png",
+            self::TEAM_AQUA_GRUNT => "https://archives.bulbagarden.net/media/upload/7/74/Spr_RS_Team_Aqua_Grunt_M.png",
+            self::RICH_BOY => "https://archives.bulbagarden.net/media/upload/d/d7/Spr_RS_Rich_Boy.png",
+            self::BATTLE_GIRL => "https://archives.bulbagarden.net/media/upload/5/54/Spr_RS_Battle_Girl.png",
+            self::COLLECTOR => "https://archives.bulbagarden.net/media/upload/2/28/Spr_RS_Collector.png",
             default => null,
         };
     }
