@@ -664,4 +664,130 @@ return [
             ],
         ],
     ],
+    LocationId::ROUTE_111 => [
+        EncounterType::WALKING => [
+            PokedexNo::SANDSHREW => [
+                'weight' => 35,
+                'levels' => [19, 21],
+            ],
+            PokedexNo::TRAPINCH => [
+                'weight' => 35,
+                'levels' => [19, 21],
+            ],
+            PokedexNo::CACNEA => [
+                'weight' => 26,
+                'levels' => [19, 22],
+            ],
+            PokedexNo::BALTOY => [
+                'weight' => 34,
+                'levels' => [19, 22],
+            ],
+        ],
+        EncounterType::ROCK_SMASH => [
+            PokedexNo::GEODUDE => [
+                'weight' => 100,
+                'levels' => [5, 20],
+            ],
+        ],
+        EncounterType::SURFING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 1,
+                'levels' => [20, 30],
+            ],
+            PokedexNo::MARILL => [
+                'weight' => 99,
+                'levels' => [5, 35],
+            ],
+            PokedexNo::SURSKIT => [
+                'weight' => 1,
+                'levels' => [20, 30],
+            ],
+        ],
+        EncounterType::FISHING => [
+            PokedexNo::GOLDEEN => [
+                'weight' => 50,
+                'levels' => [5, 30],
+            ],
+            PokedexNo::MAGIKARP => [
+                'weight' => 130,
+                'levels' => [5, 30],
+            ],
+            PokedexNo::BARBOACH => [
+                'weight' => 120,
+                'levels' => [10, 45],
+            ],
+        ],
+    ],
+    LocationId::MIRAGE_TOWER => [
+        EncounterType::WALKING => [
+            PokedexNo::SANDSHREW => [
+                'weight' => 50,
+                'levels' => [20, 24],
+            ],
+            PokedexNo::TRAPINCH => [
+                'weight' => 50,
+                'levels' => [20, 24],
+            ],
+        ],
+    ],
+    LocationId::ROUTE_112 => [
+        EncounterType::WALKING => [
+            PokedexNo::MACHOP => [
+                'weight' => 25,
+                'levels' => [14, 16],
+            ],
+            PokedexNo::MARILL => [
+                'weight' => 25,
+                'levels' => [14, 16],
+            ],
+            PokedexNo::NUMEL => [
+                'weight' => 75,
+                'levels' => [14, 16],
+            ],
+        ],
+    ],
+    LocationId::FIERY_PATH => [
+        EncounterType::WALKING => [
+            PokedexNo::MACHOP => [
+                'weight' => 15,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::GRIMER => [
+                'weight' => 27,
+                'levels' => [14, 16],
+            ],
+            PokedexNo::KOFFING => [
+                'weight' => 27,
+                'levels' => [14, 16],
+            ],
+            PokedexNo::SLUGMA => [
+                'weight' => 10,
+                'levels' => 15,
+            ],
+            PokedexNo::NUMEL => [
+                'weight' => 30,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::TORKOAL => [
+                'weight' => 18,
+                'levels' => [14, 16],
+            ],
+        ],
+    ],
+    LocationId::JAGGED_PASS => [
+        EncounterType::WALKING => [
+            PokedexNo::MACHOP => [
+                'weight' => 50,
+                'levels' => [18, 22],
+            ],
+            PokedexNo::NUMEL => [
+                'weight' => 110,
+                'levels' => [18, 22],
+            ],
+            PokedexNo::SPOINK => [
+                'weight' => 40,
+                'levels' => [18, 22],
+            ],
+        ],
+    ],
 ];

@@ -80,6 +80,8 @@ final class TrainerFactory
             "BLACKBELT" => TrainerClass::BLACK_BELT,
             "MYSTERY_MAN" => TrainerClass::MYSTICALMAN,
             "POKE_FAN" => TrainerClass::POKEFAN,
+            "MAXIE" => TrainerClass::MAGMA_LEADER,
+            "ARCHIE" => TrainerClass::AQUA_LEADER,
             default => $trainerClassReflector->getConstants()[$constantName],
         };
     }

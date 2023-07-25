@@ -326,6 +326,30 @@ return [
             Direction::N => LocationId::ROUTE_113,
             Direction::W => LocationId::ROUTE_112,
             Direction::S => LocationId::MAUVILLE_CITY,
+            LocationId::WINSTRATE_FAMILY_HOME,
+            LocationId::MIRAGE_TOWER,
+            LocationId::DESERT_RUINS,
+        ],
+    ],
+    [
+        'id' => LocationId::WINSTRATE_FAMILY_HOME,
+        'name' => "Winstrate Family Home",
+        'directions' => [
+            LocationId::ROUTE_111,
+        ],
+    ],
+    [
+        'id' => LocationId::DESERT_RUINS,
+        'name' => "Desert Ruins",
+        'directions' => [
+            LocationId::ROUTE_111,
+        ],
+    ],
+    [
+        'id' => LocationId::MIRAGE_TOWER,
+        'name' => "Mirage Tower",
+        'directions' => [
+            LocationId::ROUTE_111,
         ],
     ],
     [
@@ -333,16 +357,18 @@ return [
         'name' => "Route 112",
         'type' => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::JAGGED_PASS,
+            Direction::N => LocationId::FIERY_PATH,
             Direction::E => LocationId::ROUTE_111,
             Direction::W => LocationId::LAVARIDGE_TOWN,
+            LocationId::MT_CHIMNEY,
         ],
     ],
     [
-        'id' => LocationId::JAGGED_PASS,
-        'name' => "Jagged Pass",
+        'id' => LocationId::FIERY_PATH,
+        'name' => "Fiery Path",
+        'type' => LocationType::CAVE,
         'directions' => [
-            Direction::N => LocationId::MT_CHIMNEY,
+            Direction::N => LocationId::ROUTE_113,
             Direction::S => LocationId::ROUTE_112,
         ],
     ],
@@ -352,6 +378,81 @@ return [
         'type' => LocationType::CAVE,
         'directions' => [
             Direction::S => LocationId::JAGGED_PASS,
+            LocationId::ROUTE_112,
+        ],
+    ],
+    [
+        'id' => LocationId::JAGGED_PASS,
+        'name' => "Jagged Pass",
+        'directions' => [
+            Direction::N => LocationId::MT_CHIMNEY,
+            Direction::S => LocationId::LAVARIDGE_TOWN,
+            LocationId::MAGMA_HIDEOUT_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::MAGMA_HIDEOUT_1F,
+        'name' => "Magma Hideout",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MAGMA_HIDEOUT,
+        'directions' => [
+            Direction::U => LocationId::MAGMA_HIDEOUT_2F,
+            Direction::D => LocationId::JAGGED_PASS,
+        ],
+    ],
+    [
+        'id' => LocationId::MAGMA_HIDEOUT_2F,
+        'name' => "Magma Hideout",
+        'section' => "2nd Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MAGMA_HIDEOUT,
+        'directions' => [
+            Direction::U => LocationId::MAGMA_HIDEOUT_3F,
+            Direction::D => LocationId::MAGMA_HIDEOUT_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::MAGMA_HIDEOUT_3F,
+        'name' => "Magma Hideout",
+        'section' => "3rd Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MAGMA_HIDEOUT,
+        'directions' => [
+            Direction::U => LocationId::MAGMA_HIDEOUT_4F,
+            Direction::D => LocationId::MAGMA_HIDEOUT_2F,
+        ],
+    ],
+    [
+        'id' => LocationId::MAGMA_HIDEOUT_4F,
+        'name' => "Magma Hideout",
+        'section' => "4th Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MAGMA_HIDEOUT,
+        'directions' => [
+            Direction::U => LocationId::MAGMA_HIDEOUT_5F,
+            Direction::D => LocationId::MAGMA_HIDEOUT_3F,
+        ],
+    ],
+    [
+        'id' => LocationId::MAGMA_HIDEOUT_5F,
+        'name' => "Magma Hideout",
+        'section' => "5th Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MAGMA_HIDEOUT,
+        'directions' => [
+            Direction::U => LocationId::MAGMA_HIDEOUT_6F,
+            Direction::D => LocationId::MAGMA_HIDEOUT_4F,
+        ],
+    ],
+    [
+        'id' => LocationId::MAGMA_HIDEOUT_6F,
+        'name' => "Magma Hideout",
+        'section' => "6th Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MAGMA_HIDEOUT,
+        'directions' => [
+            Direction::D => LocationId::MAGMA_HIDEOUT_5F,
         ],
     ],
     [
@@ -359,6 +460,7 @@ return [
         'name' => "Lavaridge Town",
         'type' => LocationType::CITY,
         'directions' => [
+            Direction::N => LocationId::JAGGED_PASS,
             Direction::E => LocationId::ROUTE_112,
         ],
     ],
@@ -369,6 +471,7 @@ return [
         'directions' => [
             Direction::W => LocationId::FALLARBOR_TOWN,
             Direction::S => LocationId::ROUTE_111,
+            LocationId::FIERY_PATH,
         ],
     ],
     [
