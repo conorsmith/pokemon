@@ -84,6 +84,7 @@ return [
         'name' => "Rustboro City",
         'type' => LocationType::CITY,
         'directions' => [
+            Direction::N => LocationId::ROUTE_115,
             Direction::E => LocationId::ROUTE_116,
             Direction::S => LocationId::ROUTE_104,
             LocationId::RUSTBORO_GYM,
@@ -462,6 +463,15 @@ return [
         'directions' => [
             Direction::N => LocationId::JAGGED_PASS,
             Direction::E => LocationId::ROUTE_112,
+            LocationId::LAVARIDGE_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::LAVARIDGE_GYM,
+        'name' => "Lavaridge Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::LAVARIDGE_TOWN,
         ],
     ],
     [
@@ -489,16 +499,60 @@ return [
         'type' => LocationType::ROUTE,
         'directions' => [
             Direction::E => LocationId::FALLARBOR_TOWN,
-            Direction::W => LocationId::METEOR_FALLS,
+            Direction::S => LocationId::METEOR_FALLS_1F,
+            LocationId::DESERT_UNDERPASS,
         ],
     ],
     [
-        'id' => LocationId::METEOR_FALLS,
-        'name' => "Meteor Falls",
+        'id' => LocationId::DESERT_UNDERPASS,
+        'name' => "Desert Underpass",
         'type' => LocationType::CAVE,
         'directions' => [
-            Direction::E => LocationId::ROUTE_114,
-            Direction::S => LocationId::ROUTE_115,
+            LocationId::ROUTE_114,
+        ],
+    ],
+    [
+        'id' => LocationId::METEOR_FALLS_1F,
+        'name' => "Meteor Falls",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::METEOR_FALLS,
+        'directions' => [
+            Direction::U => LocationId::ROUTE_114,
+            Direction::D => LocationId::METEOR_FALLS_B1F,
+            LocationId::METEOR_FALLS_STEVENS_CAVE,
+        ],
+    ],
+    [
+        'id' => LocationId::METEOR_FALLS_B1F,
+        'name' => "Meteor Falls",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::METEOR_FALLS,
+        'directions' => [
+            Direction::U => LocationId::METEOR_FALLS_1F,
+            Direction::D => LocationId::METEOR_FALLS_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::METEOR_FALLS_B2F,
+        'name' => "Meteor Falls",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::METEOR_FALLS,
+        'directions' => [
+            Direction::U => LocationId::METEOR_FALLS_B1F,
+            Direction::D => LocationId::ROUTE_115,
+        ],
+    ],
+    [
+        'id' => LocationId::METEOR_FALLS_STEVENS_CAVE,
+        'name' => "Meteor Falls",
+        'section' => "Steven's Cave",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::METEOR_FALLS,
+        'directions' => [
+            LocationId::METEOR_FALLS_1F,
         ],
     ],
     [
@@ -506,7 +560,7 @@ return [
         'name' => "Route 115",
         'type' => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::METEOR_FALLS,
+            Direction::N => LocationId::METEOR_FALLS_B2F,
             Direction::S => LocationId::RUSTBORO_CITY,
         ],
     ],
@@ -535,6 +589,7 @@ return [
         'directions' => [
             Direction::N => LocationId::ROUTE_119,
             Direction::W => LocationId::MAUVILLE_CITY,
+            Direction::E => LocationId::ROUTE_123,
         ],
     ],
     [
@@ -544,6 +599,28 @@ return [
         'directions' => [
             Direction::E => LocationId::FORTREE_CITY,
             Direction::S => LocationId::ROUTE_118,
+            LocationId::WEATHER_INSTITUTE_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::WEATHER_INSTITUTE_1F,
+        'name' => "Weather Institute",
+        'section' => "1st Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::WEATHER_INSTITUTE,
+        'directions' => [
+            Direction::U => LocationId::WEATHER_INSTITUTE_2F,
+            Direction::D => LocationId::ROUTE_119,
+        ],
+    ],
+    [
+        'id' => LocationId::WEATHER_INSTITUTE_2F,
+        'name' => "Weather Institute",
+        'section' => "2nd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::WEATHER_INSTITUTE,
+        'directions' => [
+            Direction::D => LocationId::WEATHER_INSTITUTE_1F,
         ],
     ],
     [
@@ -553,6 +630,15 @@ return [
         'directions' => [
             Direction::E => LocationId::ROUTE_120,
             Direction::W => LocationId::ROUTE_119,
+            LocationId::FORTREE_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::FORTREE_GYM,
+        'name' => "Fortree Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::FORTREE_CITY,
         ],
     ],
     [
@@ -562,6 +648,15 @@ return [
         'directions' => [
             Direction::E => LocationId::ROUTE_121,
             Direction::W => LocationId::FORTREE_CITY,
+            LocationId::ANCIENT_TOMB,
+        ],
+    ],
+    [
+        'id' => LocationId::ANCIENT_TOMB,
+        'name' => "Ancient Tomb",
+        'type' => LocationType::CAVE,
+        'directions' => [
+            LocationId::ROUTE_120,
         ],
     ],
     [
@@ -569,17 +664,73 @@ return [
         'name' => "Route 121",
         'type' => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::HOENN_SAFARI_ZONE,
+            Direction::N => LocationId::HOENN_SAFARI_ZONE_AREA_1,
             Direction::E => LocationId::LILYCOVE_CITY,
             Direction::W => LocationId::ROUTE_120,
             Direction::S => LocationId::ROUTE_122,
         ],
     ],
     [
-        'id' => LocationId::HOENN_SAFARI_ZONE,
+        'id' => LocationId::HOENN_SAFARI_ZONE_AREA_1,
         'name' => "Safari Zone",
+        'section' => "Area 1",
+        'area' => LocationId::HOENN_SAFARI_ZONE,
         'directions' => [
+            Direction::N => LocationId::HOENN_SAFARI_ZONE_AREA_4,
+            Direction::E => LocationId::HOENN_SAFARI_ZONE_AREA_5,
+            Direction::W => LocationId::HOENN_SAFARI_ZONE_AREA_2,
             Direction::S => LocationId::ROUTE_121,
+        ],
+    ],
+    [
+        'id' => LocationId::HOENN_SAFARI_ZONE_AREA_2,
+        'name' => "Safari Zone",
+        'section' => "Area 2",
+        'area' => LocationId::HOENN_SAFARI_ZONE,
+        'directions' => [
+            Direction::N => LocationId::HOENN_SAFARI_ZONE_AREA_3,
+            Direction::E => LocationId::HOENN_SAFARI_ZONE_AREA_1,
+        ],
+    ],
+    [
+        'id' => LocationId::HOENN_SAFARI_ZONE_AREA_3,
+        'name' => "Safari Zone",
+        'section' => "Area 3",
+        'area' => LocationId::HOENN_SAFARI_ZONE,
+        'directions' => [
+            Direction::E => LocationId::HOENN_SAFARI_ZONE_AREA_4,
+            Direction::S => LocationId::HOENN_SAFARI_ZONE_AREA_2,
+        ],
+    ],
+    [
+        'id' => LocationId::HOENN_SAFARI_ZONE_AREA_4,
+        'name' => "Safari Zone",
+        'section' => "Area 4",
+        'area' => LocationId::HOENN_SAFARI_ZONE,
+        'directions' => [
+            Direction::E => LocationId::HOENN_SAFARI_ZONE_AREA_6,
+            Direction::W => LocationId::HOENN_SAFARI_ZONE_AREA_3,
+            Direction::S => LocationId::HOENN_SAFARI_ZONE_AREA_1,
+        ],
+    ],
+    [
+        'id' => LocationId::HOENN_SAFARI_ZONE_AREA_5,
+        'name' => "Safari Zone",
+        'section' => "Area 5",
+        'area' => LocationId::HOENN_SAFARI_ZONE,
+        'directions' => [
+            Direction::N => LocationId::HOENN_SAFARI_ZONE_AREA_6,
+            Direction::W => LocationId::HOENN_SAFARI_ZONE_AREA_1,
+        ],
+    ],
+    [
+        'id' => LocationId::HOENN_SAFARI_ZONE_AREA_6,
+        'name' => "Safari Zone",
+        'section' => "Area 6",
+        'area' => LocationId::HOENN_SAFARI_ZONE,
+        'directions' => [
+            Direction::W => LocationId::HOENN_SAFARI_ZONE_AREA_4,
+            Direction::S => LocationId::HOENN_SAFARI_ZONE_AREA_5,
         ],
     ],
     [
@@ -589,6 +740,94 @@ return [
         'directions' => [
             Direction::N => LocationId::ROUTE_121,
             Direction::S => LocationId::ROUTE_123,
+            LocationId::MT_PYRE_EXTERIOR,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_PYRE_EXTERIOR,
+        'name' => "Mt. Pyre",
+        'section' => "Exterior",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_PYRE,
+        'directions' => [
+            Direction::U => LocationId::MT_PYRE_1F,
+            Direction::D => LocationId::ROUTE_122,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_PYRE_1F,
+        'name' => "Mt. Pyre",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_PYRE,
+        'directions' => [
+            Direction::U => LocationId::MT_PYRE_2F,
+            Direction::D => LocationId::MT_PYRE_EXTERIOR,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_PYRE_2F,
+        'name' => "Mt. Pyre",
+        'section' => "2nd Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_PYRE,
+        'directions' => [
+            Direction::U => LocationId::MT_PYRE_3F,
+            Direction::D => LocationId::MT_PYRE_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_PYRE_3F,
+        'name' => "Mt. Pyre",
+        'section' => "3rd Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_PYRE,
+        'directions' => [
+            Direction::U => LocationId::MT_PYRE_4F,
+            Direction::D => LocationId::MT_PYRE_2F,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_PYRE_4F,
+        'name' => "Mt. Pyre",
+        'section' => "4th Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_PYRE,
+        'directions' => [
+            Direction::U => LocationId::MT_PYRE_5F,
+            Direction::D => LocationId::MT_PYRE_3F,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_PYRE_5F,
+        'name' => "Mt. Pyre",
+        'section' => "5th Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_PYRE,
+        'directions' => [
+            Direction::U => LocationId::MT_PYRE_6F,
+            Direction::D => LocationId::MT_PYRE_4F,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_PYRE_6F,
+        'name' => "Mt. Pyre",
+        'section' => "6th Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_PYRE,
+        'directions' => [
+            Direction::U => LocationId::MT_PYRE_SUMMIT,
+            Direction::D => LocationId::MT_PYRE_5F,
+        ],
+    ],
+    [
+        'id' => LocationId::MT_PYRE_SUMMIT,
+        'name' => "Mt. Pyre",
+        'section' => "Summit",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::MT_PYRE,
+        'directions' => [
+            Direction::D => LocationId::MT_PYRE_6F,
         ],
     ],
     [
@@ -607,6 +846,39 @@ return [
         'directions' => [
             Direction::E => LocationId::ROUTE_124,
             Direction::W => LocationId::ROUTE_121,
+            LocationId::AQUA_HIDEOUT_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::AQUA_HIDEOUT_1F,
+        'name' => "Aqua Hideout",
+        'section' => "1st Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::AQUA_HIDEOUT,
+        'directions' => [
+            Direction::U => LocationId::LILYCOVE_CITY,
+            Direction::D => LocationId::AQUA_HIDEOUT_B1F,
+        ],
+    ],
+    [
+        'id' => LocationId::AQUA_HIDEOUT_B1F,
+        'name' => "Aqua Hideout",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::AQUA_HIDEOUT,
+        'directions' => [
+            Direction::U => LocationId::AQUA_HIDEOUT_1F,
+            Direction::D => LocationId::AQUA_HIDEOUT_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::AQUA_HIDEOUT_B2F,
+        'name' => "Aqua Hideout",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::AQUA_HIDEOUT,
+        'directions' => [
+            Direction::U => LocationId::AQUA_HIDEOUT_B1F,
         ],
     ],
     [
@@ -626,6 +898,25 @@ return [
         'directions' => [
             Direction::N => LocationId::ROUTE_125,
             Direction::W => LocationId::ROUTE_124,
+            Direction::S => LocationId::ROUTE_127,
+            LocationId::MOSSDEEP_SPACE_CENTER,
+            LocationId::MOSSDEEP_GYM,
+        ],
+    ],
+    [
+        'id' => LocationId::MOSSDEEP_SPACE_CENTER,
+        'name' => "Mossdeep Space Center",
+        'type' => LocationType::TOWER,
+        'directions' => [
+            LocationId::MOSSDEEP_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::MOSSDEEP_GYM,
+        'name' => "Mossdeep Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::MOSSDEEP_CITY,
         ],
     ],
     [
@@ -633,16 +924,29 @@ return [
         'name' => "Route 125",
         'type' => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::SHOAL_CAVE,
+            Direction::N => LocationId::SHOAL_CAVE_MAIN_CAVE,
             Direction::S => LocationId::MOSSDEEP_CITY,
         ],
     ],
     [
-        'id' => LocationId::SHOAL_CAVE,
+        'id' => LocationId::SHOAL_CAVE_MAIN_CAVE,
         'name' => "Shoal Cave",
+        'section' => "Main Cave",
         'type' => LocationType::CAVE,
+        'area' => LocationId::SHOAL_CAVE,
         'directions' => [
+            Direction::N => LocationId::SHOAL_CAVE_ICE_ROOM,
             Direction::S => LocationId::ROUTE_125,
+        ],
+    ],
+    [
+        'id' => LocationId::SHOAL_CAVE_ICE_ROOM,
+        'name' => "Shoal Cave",
+        'section' => "Ice Room",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::SHOAL_CAVE,
+        'directions' => [
+            Direction::S => LocationId::SHOAL_CAVE_MAIN_CAVE,
         ],
     ],
     [
@@ -652,6 +956,33 @@ return [
         'directions' => [
             Direction::N => LocationId::ROUTE_124,
             Direction::E => LocationId::ROUTE_127,
+            LocationId::SOOTOPOLIS_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::SOOTOPOLIS_CITY,
+        'name' => "Sootopolis City",
+        'type' => LocationType::CITY,
+        'directions' => [
+            LocationId::CAVE_OF_ORIGIN,
+            LocationId::SOOTOPOLIS_GYM,
+            LocationId::ROUTE_126,
+        ],
+    ],
+    [
+        'id' => LocationId::CAVE_OF_ORIGIN,
+        'name' => "Cave of Origin",
+        'type' => LocationType::CAVE,
+        'directions' => [
+            LocationId::SOOTOPOLIS_CITY,
+        ],
+    ],
+    [
+        'id' => LocationId::SOOTOPOLIS_GYM,
+        'name' => "Sootopolis Gym",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::SOOTOPOLIS_CITY,
         ],
     ],
     [
@@ -659,6 +990,7 @@ return [
         'name' => "Route 127",
         'type' => LocationType::ROUTE,
         'directions' => [
+            Direction::N => LocationId::MOSSDEEP_CITY,
             Direction::W => LocationId::ROUTE_126,
             Direction::S => LocationId::ROUTE_128,
         ],
@@ -671,6 +1003,15 @@ return [
             Direction::N => LocationId::ROUTE_127,
             Direction::E => LocationId::EVER_GRANDE_CITY,
             Direction::S => LocationId::ROUTE_129,
+            LocationId::SEAFLOOR_CAVERN,
+        ],
+    ],
+    [
+        'id' => LocationId::SEAFLOOR_CAVERN,
+        'name' => "Seafloor Cavern",
+        'type' => LocationType::CAVE,
+        'directions' => [
+            LocationId::ROUTE_128,
         ],
     ],
     [
@@ -696,17 +1037,74 @@ return [
         'name' => "Route 131",
         'type' => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::SKY_PILLAR,
+            Direction::N => LocationId::SKY_PILLAR_1F,
             Direction::E => LocationId::ROUTE_130,
             Direction::W => LocationId::PACIFIDLOG_TOWN,
         ],
     ],
     [
-        'id' => LocationId::SKY_PILLAR,
+        'id' => LocationId::SKY_PILLAR_1F,
         'name' => "Sky Pillar",
+        'section' => "1st Floor",
         'type' => LocationType::TOWER,
+        'area' => LocationId::SKY_PILLAR,
         'directions' => [
-            Direction::S => LocationId::ROUTE_131,
+            Direction::U => LocationId::SKY_PILLAR_2F,
+            Direction::D => LocationId::ROUTE_131,
+        ],
+    ],
+    [
+        'id' => LocationId::SKY_PILLAR_2F,
+        'name' => "Sky Pillar",
+        'section' => "2nd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::SKY_PILLAR,
+        'directions' => [
+            Direction::U => LocationId::SKY_PILLAR_3F,
+            Direction::D => LocationId::SKY_PILLAR_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::SKY_PILLAR_3F,
+        'name' => "Sky Pillar",
+        'section' => "3rd Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::SKY_PILLAR,
+        'directions' => [
+            Direction::U => LocationId::SKY_PILLAR_4F,
+            Direction::D => LocationId::SKY_PILLAR_2F,
+        ],
+    ],
+    [
+        'id' => LocationId::SKY_PILLAR_4F,
+        'name' => "Sky Pillar",
+        'section' => "4th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::SKY_PILLAR,
+        'directions' => [
+            Direction::U => LocationId::SKY_PILLAR_5F,
+            Direction::D => LocationId::SKY_PILLAR_3F,
+        ],
+    ],
+    [
+        'id' => LocationId::SKY_PILLAR_5F,
+        'name' => "Sky Pillar",
+        'section' => "5th Floor",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::SKY_PILLAR,
+        'directions' => [
+            Direction::U => LocationId::SKY_PILLAR_APEX,
+            Direction::D => LocationId::SKY_PILLAR_4F,
+        ],
+    ],
+    [
+        'id' => LocationId::SKY_PILLAR_APEX,
+        'name' => "Sky Pillar",
+        'section' => "Apex",
+        'type' => LocationType::TOWER,
+        'area' => LocationId::SKY_PILLAR,
+        'directions' => [
+            Direction::D => LocationId::SKY_PILLAR_5F,
         ],
     ],
     [
@@ -751,6 +1149,48 @@ return [
         'type' => LocationType::CITY,
         'directions' => [
             Direction::W => LocationId::ROUTE_128,
+            LocationId::HOENN_VICTORY_ROAD_1F,
+        ],
+    ],
+    [
+        'id' => LocationId::HOENN_VICTORY_ROAD_1F,
+        'name' => "Victory Road",
+        'section' => "1st Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::HOENN_VICTORY_ROAD,
+        'directions' => [
+            Direction::U => LocationId::EVER_GRANDE_CITY,
+            Direction::D => LocationId::HOENN_VICTORY_ROAD_B1F,
+        ],
+    ],
+    [
+        'id' => LocationId::HOENN_VICTORY_ROAD_B1F,
+        'name' => "Victory Road",
+        'section' => "1st Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::HOENN_VICTORY_ROAD,
+        'directions' => [
+            Direction::U => LocationId::HOENN_VICTORY_ROAD_1F,
+            Direction::D => LocationId::HOENN_VICTORY_ROAD_B2F,
+        ],
+    ],
+    [
+        'id' => LocationId::HOENN_VICTORY_ROAD_B2F,
+        'name' => "Victory Road",
+        'section' => "2nd Basement Floor",
+        'type' => LocationType::CAVE,
+        'area' => LocationId::HOENN_VICTORY_ROAD,
+        'directions' => [
+            Direction::U => LocationId::HOENN_VICTORY_ROAD_B1F,
+            Direction::D => LocationId::HOENN_POKEMON_LEAGUE,
+        ],
+    ],
+    [
+        'id' => LocationId::HOENN_POKEMON_LEAGUE,
+        'name' => "Pokémon League",
+        'type' => LocationType::GYM,
+        'directions' => [
+            LocationId::HOENN_VICTORY_ROAD_B2F,
         ],
     ],
 ];

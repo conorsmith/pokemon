@@ -309,7 +309,7 @@ final class BulbapediaLocationPage
 
                             $imageUrl = $imageNode->attributes->getNamedItem("src")->nodeValue;
 
-                            preg_match("/FRLG_Pok%C3%A9mon_Ranger_(\w)/", $imageUrl, $matches);
+                            preg_match("/_Pok%C3%A9mon_Ranger_(\w)/", $imageUrl, $matches);
 
                             $gender = $matches[1];
                         } elseif ($className === "Cooltrainer") {

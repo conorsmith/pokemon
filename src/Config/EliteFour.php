@@ -360,4 +360,180 @@ return [
             ],
         ],
     ],
+    [
+        'region' => RegionId::HOENN,
+        'location' => LocationId::HOENN_POKEMON_LEAGUE,
+        'members' => [
+            [
+                'id' => "a899f6b4-8f29-4389-981a-c8a81a691eeb",
+                'class' => TrainerClass::ELITE_FOUR,
+                'name' => "Sidney",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/86/Spr_RS_Sidney.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::MIGHTYENA,
+                        'sex' => Sex::MALE,
+                        'level' => 46,
+                    ],
+                    [
+                        'id' => PokedexNo::CACTURNE,
+                        'sex' => Sex::MALE,
+                        'level' => 46,
+                    ],
+                    [
+                        'id' => PokedexNo::SHIFTRY,
+                        'sex' => Sex::MALE,
+                        'level' => 48,
+                    ],
+                    [
+                        'id' => PokedexNo::SHARPEDO,
+                        'sex' => Sex::MALE,
+                        'level' => 48,
+                    ],
+                    [
+                        'id' => PokedexNo::ABSOL,
+                        'sex' => Sex::MALE,
+                        'level' => 49,
+                    ],
+                ],
+            ],
+            [
+                'id' => "e50717e2-6a77-4125-bcda-5c5dfe2a2f5f",
+                'class' => TrainerClass::ELITE_FOUR,
+                'name' => "Phoebe",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/e6/Spr_RS_Phoebe.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::DUSCLOPS,
+                        'sex' => Sex::FEMALE,
+                        'level' => 48,
+                    ],
+                    [
+                        'id' => PokedexNo::BANETTE,
+                        'sex' => Sex::FEMALE,
+                        'level' => 49,
+                    ],
+                    [
+                        'id' => PokedexNo::BANETTE,
+                        'sex' => Sex::FEMALE,
+                        'level' => 49,
+                    ],
+                    [
+                        'id' => PokedexNo::SABLEYE,
+                        'sex' => Sex::FEMALE,
+                        'level' => 50,
+                    ],
+                    [
+                        'id' => PokedexNo::DUSCLOPS,
+                        'sex' => Sex::FEMALE,
+                        'level' => 51,
+                    ],
+                ],
+            ],
+            [
+                'id' => "ddf6ff11-7c78-4514-8f42-f7ed82651d60",
+                'class' => TrainerClass::ELITE_FOUR,
+                'name' => "Glacia",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/7/71/Spr_RS_Glacia.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::GLALIE,
+                        'sex' => Sex::FEMALE,
+                        'level' => 50,
+                    ],
+                    [
+                        'id' => PokedexNo::SEALEO,
+                        'sex' => Sex::FEMALE,
+                        'level' => 50,
+                    ],
+                    [
+                        'id' => PokedexNo::SEALEO,
+                        'sex' => Sex::FEMALE,
+                        'level' => 52,
+                    ],
+                    [
+                        'id' => PokedexNo::GLALIE,
+                        'sex' => Sex::FEMALE,
+                        'level' => 52,
+                    ],
+                    [
+                        'id' => PokedexNo::WALREIN,
+                        'sex' => Sex::FEMALE,
+                        'level' => 53,
+                    ],
+                ],
+            ],
+            [
+                'id' => "09eb123d-5b25-4a82-8be8-c10799fd8154",
+                'class' => TrainerClass::ELITE_FOUR,
+                'name' => "Drake",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/0/04/Spr_RS_Drake.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::SHELGON,
+                        'sex' => Sex::MALE,
+                        'level' => 52,
+                    ],
+                    [
+                        'id' => PokedexNo::ALTARIA,
+                        'sex' => Sex::MALE,
+                        'level' => 54,
+                    ],
+                    [
+                        'id' => PokedexNo::FLYGON,
+                        'sex' => Sex::MALE,
+                        'level' => 53,
+                    ],
+                    [
+                        'id' => PokedexNo::FLYGON,
+                        'sex' => Sex::MALE,
+                        'level' => 53,
+                    ],
+                    [
+                        'id' => PokedexNo::SALAMENCE,
+                        'sex' => Sex::MALE,
+                        'level' => 55,
+                    ],
+                ],
+            ],
+            [
+                'id' => "94298712-f330-466d-9c52-74ec58700082",
+                'class' => TrainerClass::CHAMPION,
+                'name' => "Steven",
+                'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/ad/Spr_RS_Steven.png",
+                'team' => [
+                    [
+                        'id' => PokedexNo::SKARMORY,
+                        'sex' => Sex::MALE,
+                        'level' => 57,
+                    ],
+                    [
+                        'id' => PokedexNo::CLAYDOL,
+                        'sex' => Sex::UNKNOWN,
+                        'level' => 55,
+                    ],
+                    [
+                        'id' => PokedexNo::AGGRON,
+                        'sex' => Sex::MALE,
+                        'level' => 56,
+                    ],
+                    [
+                        'id' => PokedexNo::CRADILY,
+                        'sex' => Sex::MALE,
+                        'level' => 56,
+                    ],
+                    [
+                        'id' => PokedexNo::ARMALDO,
+                        'sex' => Sex::MALE,
+                        'level' => 56,
+                    ],
+                    [
+                        'id' => PokedexNo::METAGROSS,
+                        'sex' => Sex::UNKNOWN,
+                        'level' => 58,
+                    ],
+                ],
+            ],
+        ],
+    ],
 ];

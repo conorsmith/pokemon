@@ -66,6 +66,7 @@ final class TrainerFactory
         $constantName = str_replace("♀", "", $constantName);
         $constantName = str_replace("♂", "", $constantName);
         $constantName = str_replace("é", "E", $constantName);
+        $constantName = str_replace(".", "", $constantName);
 
         return match ($constantName) {
             "EXECUTIVE" => TrainerClass::TEAM_ROCKET_ADMIN,
@@ -82,6 +83,7 @@ final class TrainerFactory
             "POKE_FAN" => TrainerClass::POKEFAN,
             "MAXIE" => TrainerClass::MAGMA_LEADER,
             "ARCHIE" => TrainerClass::AQUA_LEADER,
+            "SR_AND_JR" => TrainerClass::TEAMMATES,
             default => $trainerClassReflector->getConstants()[$constantName],
         };
     }

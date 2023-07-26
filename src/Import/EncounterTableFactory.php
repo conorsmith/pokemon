@@ -65,7 +65,7 @@ final class EncounterTableFactory
 
     private function createEncounterType(string $value): EncounterType
     {
-        if (in_array($value, ["Cave", "Grass", "2F-3F", "1F", "B1F", "2F-9F", "2F-10F", "Deep sand", "1F-4F"])) {
+        if (in_array($value, ["Cave", "Grass", "2F-3F", "1F", "B1F", "2F-9F", "2F-10F", "Deep sand", "1F-4F", "Long grass", "1F-3F", "4F-6F", "Seaweed", "3F", "5F", "1F-5F"])) {
             return new EncounterType(EncounterTypeConstants::WALKING);
         }
 

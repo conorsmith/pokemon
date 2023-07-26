@@ -91,6 +91,9 @@ final class TrainerClass
     public const ELDER = "69624863-15ca-44b1-839c-0591f03ee7f6";
     public const RIVAL = "7e87dafe-b95e-4ca7-9f30-d37aa1bb51f8";
     public const DOUBLE_TEAM = "8f741e23-4115-491d-b526-5ef4966183f6";
+    public const FAIRY_TALE_GIRL = "22f343d7-dd1a-4d1b-b634-4ddb0292753b";
+    public const MYSTERIOUS_SISTERS = "22f343d7-dd1a-4d1b-b634-4ddb0292753b";
+    public const BACKPACKER = "b05a7721-a380-4fd7-a3dc-0c4045acd835";
 
     public static function getLabel(string $id): string
     {
@@ -236,7 +239,11 @@ final class TrainerClass
             self::BEAUTY => "https://archives.bulbagarden.net/media/upload/3/39/Spr_FRLG_Beauty.png",
             self::CRUSH_KIN => "https://archives.bulbagarden.net/media/upload/c/cc/Spr_FRLG_Crush_Kin.png",
             self::JUGGLER => "https://archives.bulbagarden.net/media/upload/5/50/Spr_FRLG_Juggler.png",
-            self::PSYCHIC => "https://archives.bulbagarden.net/media/upload/e/ea/Spr_FRLG_Psychic_M.png",
+            self::PSYCHIC => match ($gender) {
+                Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/6/6b/Spr_RS_Psychic_F.png",
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/e/ea/Spr_FRLG_Psychic_M.png",
+                default => null,
+            },
             self::SCIENTIST => "https://archives.bulbagarden.net/media/upload/f/f9/Spr_FRLG_Scientist.png",
             self::SIS_AND_BRO => "https://archives.bulbagarden.net/media/upload/9/94/Spr_FRLG_Sis_and_Bro.png",
             self::BURGLAR => "https://archives.bulbagarden.net/media/upload/7/78/Spr_FRLG_Burglar.png",
@@ -249,7 +256,11 @@ final class TrainerClass
             },
             self::AROMA_LADY => "https://archives.bulbagarden.net/media/upload/f/f9/Spr_FRLG_Aroma_Lady.png",
             self::TUBER => "https://archives.bulbagarden.net/media/upload/8/89/Spr_FRLG_Tuber.png",
-            self::POKEMON_BREEDER => "https://archives.bulbagarden.net/media/upload/3/3e/Spr_FRLG_Pok%C3%A9mon_Breeder.png",
+            self::POKEMON_BREEDER => match ($gender) {
+                Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/a/a8/Spr_RS_Pok%C3%A9mon_Breeder_F.png",
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/5/55/Spr_RS_Pok%C3%A9mon_Breeder_M.png",
+                default => null,
+            },
             self::PAINTER => "https://archives.bulbagarden.net/media/upload/b/bd/Spr_FRLG_Painter.png",
             self::LADY => "https://archives.bulbagarden.net/media/upload/9/91/Spr_FRLG_Lady.png",
             self::RUIN_MANIAC => "https://archives.bulbagarden.net/media/upload/8/81/Spr_FRLG_Ruin_Maniac.png",
@@ -285,6 +296,19 @@ final class TrainerClass
             self::AQUA_ADMIN => "https://archives.bulbagarden.net/media/upload/d/d0/Spr_RS_Matt.png",
             self::AQUA_LEADER => "https://archives.bulbagarden.net/media/upload/f/fe/Spr_RS_Archie.png",
             self::EXPERT => "https://archives.bulbagarden.net/media/upload/6/66/Spr_RS_Expert_F.png",
+            self::KINDLER => "https://archives.bulbagarden.net/media/upload/0/07/Spr_RS_Kindler.png",
+            self::NINJA_BOY => "https://archives.bulbagarden.net/media/upload/b/bc/Spr_RS_Ninja_Boy.png",
+            self::PARASOL_LADY => "https://archives.bulbagarden.net/media/upload/e/ea/Spr_RS_Parasol_Lady.png",
+            self::TEAMMATES => "https://archives.bulbagarden.net/media/upload/7/70/Spr_RS_Sr_and_Jr.png",
+            self::OLD_COUPLE => "https://archives.bulbagarden.net/media/upload/0/06/Spr_RS_Old_Couple.png",
+            self::DRAGON_TAMER => "https://archives.bulbagarden.net/media/upload/1/12/Spr_RS_Dragon_Tamer.png",
+            self::TRIATHLETE => match ($gender) {
+                Gender::FEMALE => "https://archives.bulbagarden.net/media/upload/2/21/Spr_RS_Triathlete_Runner_F.png",
+                Gender::MALE => "https://archives.bulbagarden.net/media/upload/8/8d/Spr_RS_Triathlete_Runner_M.png",
+                default => null,
+            },
+            self::BUG_MANIAC => "https://archives.bulbagarden.net/media/upload/4/4f/Spr_RS_Bug_Maniac.png",
+            self::HEX_MANIAC => "https://archives.bulbagarden.net/media/upload/3/3d/Spr_RS_Hex_Maniac.png",
             default => null,
         };
     }
