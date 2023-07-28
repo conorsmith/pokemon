@@ -7,6 +7,8 @@ use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\ViewModelFactory;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use ConorSmith\Pokemon\SharedKernel\RegionIsLockedQuery;
 use ConorSmith\Pokemon\TemplateEngine;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +18,7 @@ final class GetPokedex
     public function __construct(
         private readonly PokedexEntryRepository $pokedexEntryRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
+        private readonly RegionIsLockedQuery $regionIsLockedQuery,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
@@ -87,9 +90,18 @@ final class GetPokedex
             }
         }
 
+        $regionMenu = [];
+
+        foreach (include __DIR__ . "/../../Config/Regions.php" as $regionConfig) {
+            if (!$this->regionIsLockedQuery->run($regionConfig['id'])) {
+                $regionMenu[$regionConfig['id']->value] = $regionConfig['name'];
+            }
+        }
+
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/List.php", [
             'count' => $count,
             'pokedex' => $viewModels,
+            'regionMenu' => $regionMenu,
         ]));
     }
 }

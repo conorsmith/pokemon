@@ -19,4 +19,34 @@ return [
         'name'   => "Hoenn",
         'unlock' => RegionId::JOHTO,
     ],
+    [
+        'id'     => RegionId::SINNOH,
+        'name'   => "Sinnoh",
+        'unlock' => RegionId::HOENN,
+    ],
+    [
+        'id'     => RegionId::UNOVA,
+        'name'   => "Unova",
+        'unlock' => RegionId::SINNOH,
+    ],
+    [
+        'id'     => RegionId::KALOS,
+        'name'   => "Kalos",
+        'unlock' => RegionId::UNOVA,
+    ],
+    [
+        'id'     => RegionId::ALOLA,
+        'name'   => "Alola",
+        'unlock' => RegionId::KALOS,
+    ],
+    [
+        'id'     => RegionId::GALAR,
+        'name'   => "Galar",
+        'unlock' => RegionId::ALOLA,
+    ],
+    [
+        'id'     => RegionId::PALDEA,
+        'name'   => "Paldea",
+        'unlock' => RegionId::GALAR,
+    ],
 ];

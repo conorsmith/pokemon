@@ -6,8 +6,11 @@ namespace ConorSmith\Pokemon\Pokedex\Repositories;
 use ConorSmith\Pokemon\Pokedex\Domain\FormEntry;
 use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
+use LogicException;
+use WeakMap;
 
 final class PokedexEntryRepository
 {
@@ -49,10 +52,11 @@ final class PokedexEntryRepository
             if (array_key_exists($number, $rowsByNumber)) {
                 $entries[] = PokemonEntry::createRegistered(
                     strval($number),
+                    self::findNativeRegion(strval($number)),
                     self::createFormEntries($config, $multipleFormRows[$number] ?? []),
                 );
             } else {
-                $entries[] = PokemonEntry::createUnknown(strval($number));
+                $entries[] = PokemonEntry::createUnknown(strval($number), self::findNativeRegion(strval($number)));
             }
         }
 
@@ -67,7 +71,7 @@ final class PokedexEntryRepository
         ]);
 
         if (count($rows) === 0) {
-            return PokemonEntry::createUnknown($pokedexNumber);
+            return PokemonEntry::createUnknown($pokedexNumber, self::findNativeRegion($pokedexNumber));
         }
 
         $multipleFormRows = [];
@@ -105,6 +109,7 @@ final class PokedexEntryRepository
     {
         return PokemonEntry::createRegistered(
             strval($row['number']),
+            self::findNativeRegion(strval($row['number'])),
             self::createFormEntries($config, $multipleFormRows[$row['number']] ?? []),
         );
     }
@@ -126,5 +131,29 @@ final class PokedexEntryRepository
         }
 
         return $entries;
+    }
+
+    private static function findNativeRegion(string $pokedexNumber): RegionId
+    {
+        $pokedexRegionRanges = new WeakMap();
+        $pokedexRegionRanges[RegionId::KANTO]  = [1, 151];
+        $pokedexRegionRanges[RegionId::JOHTO]  = [152, 251];
+        $pokedexRegionRanges[RegionId::HOENN]  = [252, 386];
+        $pokedexRegionRanges[RegionId::SINNOH] = [387, 493];
+        $pokedexRegionRanges[RegionId::UNOVA]  = [494, 649];
+        $pokedexRegionRanges[RegionId::KALOS]  = [650, 721];
+        $pokedexRegionRanges[RegionId::ALOLA]  = [722, 809];
+        $pokedexRegionRanges[RegionId::GALAR]  = [810, 905];
+        $pokedexRegionRanges[RegionId::PALDEA] = [906, 1010];
+
+        foreach ($pokedexRegionRanges as $region => $range) {
+            for ($i = $range[0]; $i <= $range[1]; $i++) {
+                if ($i == $pokedexNumber) {
+                    return $region;
+                }
+            }
+        }
+
+        throw new LogicException;
     }
 }

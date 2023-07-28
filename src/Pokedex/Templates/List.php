@@ -16,7 +16,7 @@
                     <i class="fas fa-ellipsis-v"></i>
                 </li>
             <?php endif ?>
-            <li class="list-group-item d-flex">
+            <li class="list-group-item d-flex js-entry" <?=$pokemon ? "data-region-id=\"" . $pokemon->regionId . "\"" : ""?>>
                 <?php if ($pokemon) : ?>
                     <?php include __DIR__ . "/PokemonListItem.php" ?>
                     <a href="/<?=$instanceId?>/pokedex/<?=$number?>" class="stretched-link stretched-link--hidden">Go to Pokédex Entry</a>
@@ -96,6 +96,25 @@
 
 </div>
 
+<nav class="navbar fixed-bottom bg-light">
+    <div class="container-fluid">
+        <div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#regionMenu">
+                <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle; line-height: 1.5em;"><i class="fas fa-globe-europe"></i></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="regionMenu">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <?php foreach ($regionMenu as $regionId => $label) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link js-region-link" href="#" data-region-id="<?=$regionId?>"><?=$label?></a>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <script>
     document.querySelectorAll(".js-pokedex-forms-show").forEach(function (el) {
         el.querySelector(".btn").addEventListener("click", function (e) {
@@ -135,5 +154,15 @@
 
             e.preventDefault();
         });
+    });
+
+    document.querySelectorAll(".js-region-link").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+            e.preventDefault();
+            const firstEntryEl = document.querySelector(`.js-entry[data-region-id='${el.dataset.regionId}']`);
+            firstEntryEl.scrollIntoView({
+                block: 'center'
+            });
+        })
     });
 </script>

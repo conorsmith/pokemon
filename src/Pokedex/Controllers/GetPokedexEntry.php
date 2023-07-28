@@ -382,25 +382,20 @@ final class GetPokedexEntry
     private static function findNativeRegion(string $pokedexNumber): RegionId
     {
         $pokedexRegionRanges = new WeakMap();
-        $pokedexRegionRanges[RegionId::KANTO]  = [1, 150];
-        $pokedexRegionRanges[RegionId::JOHTO]  = [152, 250];
-        $pokedexRegionRanges[RegionId::HOENN]  = [252, 384];
-        $pokedexRegionRanges[RegionId::SINNOH] = [387, 488];
-        $pokedexRegionRanges[RegionId::UNOVA]  = [495, 646];
-        $pokedexRegionRanges[RegionId::KALOS]  = [650, 718];
-        $pokedexRegionRanges[RegionId::ALOLA]  = [[722, 800], [803, 806]];
-        $pokedexRegionRanges[RegionId::GALAR]  = [[810, 892], [894, 905]];
+        $pokedexRegionRanges[RegionId::KANTO]  = [1, 151];
+        $pokedexRegionRanges[RegionId::JOHTO]  = [152, 251];
+        $pokedexRegionRanges[RegionId::HOENN]  = [252, 386];
+        $pokedexRegionRanges[RegionId::SINNOH] = [387, 493];
+        $pokedexRegionRanges[RegionId::UNOVA]  = [494, 649];
+        $pokedexRegionRanges[RegionId::KALOS]  = [650, 721];
+        $pokedexRegionRanges[RegionId::ALOLA]  = [722, 809];
+        $pokedexRegionRanges[RegionId::GALAR]  = [810, 905];
         $pokedexRegionRanges[RegionId::PALDEA] = [906, 1010];
 
-        foreach ($pokedexRegionRanges as $region => $ranges) {
-            if (is_int($ranges[0])) {
-                $ranges = [$ranges];
-            }
-            foreach ($ranges as $range) {
-                for ($i = $range[0]; $i <= $range[1]; $i++) {
-                    if ($i == $pokedexNumber) {
-                        return $region;
-                    }
+        foreach ($pokedexRegionRanges as $region => $range) {
+            for ($i = $range[0]; $i <= $range[1]; $i++) {
+                if ($i == $pokedexNumber) {
+                    return $region;
                 }
             }
         }

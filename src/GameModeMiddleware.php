@@ -15,10 +15,12 @@ use ConorSmith\Pokemon\Battle\Controllers\PostSwitch;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogCalorieGoal;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogExercise;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogFoodDiary;
+use ConorSmith\Pokemon\Habit\Controllers\GetLogStretches;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogWeeklyReview;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogCalorieGoal;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogExercise;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogFoodDiary;
+use ConorSmith\Pokemon\Habit\Controllers\PostLogStretches;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogWeeklyReview;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
@@ -34,6 +36,8 @@ final class GameModeMiddleware
         PostLogExercise::class,
         GetLogFoodDiary::class,
         PostLogFoodDiary::class,
+        GetLogStretches::class,
+        PostLogStretches::class,
         GetLogWeeklyReview::class,
         PostLogWeeklyReview::class,
     ];

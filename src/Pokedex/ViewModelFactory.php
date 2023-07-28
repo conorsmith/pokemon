@@ -15,6 +15,7 @@ final class ViewModelFactory
     {
         return (object) [
             'pokedexNumber'    => $entry->pokedexNumber,
+            'regionId'         => $entry->regionId->value,
             'name'             => $config['name'],
             'imageUrl'         => TeamMember::createImageUrl($entry->pokedexNumber),
             'primaryType'      => SharedViewModelFactory::createPokemonTypeName($config['type'][0]),

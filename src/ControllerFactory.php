@@ -226,6 +226,9 @@ final class ControllerFactory
             GetPokedex::class => new GetPokedex(
                 $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                 new PokedexConfigRepository(),
+                new RegionRepositoryRegionIsLockedQuery(
+                    $this->repositoryFactory->create(RegionRepository::class, $instanceId),
+                ),
                 $this->templateEngine,
             ),
             GetPokedexEntry::class => new GetPokedexEntry(
