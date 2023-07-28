@@ -17,6 +17,14 @@
                 flex-direction: row;
             }
         }
+
+        .map--kanto-victory-road {
+            height: 145px;
+            width: 192px;
+            object-fit: cover;
+            object-position: 100% 0;
+            border-left: 1px solid #000;
+        }
     </style>
 
     <div class="card" style="text-align: center;">
@@ -25,7 +33,7 @@
 
             <?php if ($map) : ?>
                 <div style="min-height: 145px;">
-                    <img src="<?=$map?>">
+                    <img src="<?=$map?>" <?=$map === "https://archives.bulbagarden.net/media/upload/a/a9/Kanto_Victory_Road_Map.png" ? "class=\"map--kanto-victory-road\"": "" ?>>
                 </div>
             <?php endif ?>
 
