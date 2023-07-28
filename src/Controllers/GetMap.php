@@ -138,6 +138,7 @@ final class GetMap
             'hallOfFame' => $this->createHallOfFameViewModel(
                 self::findEliteFourConfig($instanceRow['current_location']),
             ),
+            'map' => self::findMapImage($instanceRow['current_location']),
         ]));
     }
 
@@ -407,5 +408,16 @@ final class GetMap
                 'rockSmash' => isset($encounterTables[EncounterType::ROCK_SMASH]),
             ],
         ];
+    }
+
+    private static function findMapImage(string $locationId): ?string
+    {
+        $mapImages = include __DIR__ . "/../Config/Maps/Kanto.php";
+
+        if (!array_key_exists($locationId, $mapImages)) {
+            return null;
+        }
+
+        return $mapImages[$locationId];
     }
 }

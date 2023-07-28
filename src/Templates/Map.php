@@ -21,104 +21,112 @@
 
     <div class="card" style="text-align: center;">
 
-        <?php if ($currentLocation->hasCardinalDirections) : ?>
+        <div class="card-body d-grid gap-2">
 
-            <div class="card-body d-grid gap-2 directions-cardinal" style="grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; align-items: stretch;">
+            <?php if ($map) : ?>
+                <div style="min-height: 145px;">
+                    <img src="<?=$map?>">
+                </div>
+            <?php endif ?>
 
-                <div></div>
-                <div>
-                    <?php if (isset($currentLocation->north)) : ?>
-                        <?php $location = $currentLocation->north ?>
+            <?php if ($currentLocation->hasCardinalDirections) : ?>
+
+                <div class="d-grid gap-2 directions-cardinal" style="grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; align-items: stretch;">
+
+                    <div></div>
+                    <div>
+                        <?php if (isset($currentLocation->north)) : ?>
+                            <?php $location = $currentLocation->north ?>
+                            <?php require __DIR__ . "/MapMoveButton.php" ?>
+                        <?php else : ?>
+                            <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
+                        <?php endif ?>
+                    </div>
+                    <div></div>
+
+                    <div>
+                        <?php if (isset($currentLocation->west)) : ?>
+                            <?php $location = $currentLocation->west ?>
+                            <?php require __DIR__ . "/MapMoveButton.php" ?>
+                        <?php else : ?>
+                            <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
+                        <?php endif ?>
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center; min-height: 37.6px;">
+                        <?=$currentLocation->name?>
+                    </div>
+                    <div>
+                        <?php if (isset($currentLocation->east)) : ?>
+                            <?php $location = $currentLocation->east ?>
+                            <?php require __DIR__ . "/MapMoveButton.php" ?>
+                        <?php else : ?>
+                            <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
+                        <?php endif ?>
+                    </div>
+
+                    <div></div>
+                    <div>
+                        <?php if (isset($currentLocation->south)) : ?>
+                            <?php $location = $currentLocation->south ?>
+                            <?php require __DIR__ . "/MapMoveButton.php" ?>
+                        <?php else : ?>
+                            <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
+                        <?php endif ?>
+                    </div>
+                    <div></div>
+                </div>
+
+            <?php elseif ($currentLocation->hasVerticalDirections) : ?>
+
+                <div class="d-grid gap-2" style="grid-template-columns: repeat(1, 1fr); grid-auto-rows: 1fr; align-items: stretch;">
+
+                    <div>
+                        <?php if (isset($currentLocation->up)) : ?>
+                            <?php $location = $currentLocation->up ?>
+                            <?php require __DIR__ . "/MapMoveButton.php" ?>
+                        <?php else : ?>
+                            <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
+                        <?php endif ?>
+                    </div>
+
+                    <div style="display: flex; justify-content: center; align-items: center; min-height: 37.6px; gap: 4px;">
+                        <?=$currentLocation->name?>
+                        <?php if ($currentLocation->section) : ?>
+                            <span class="badge text-bg-light"><?=$currentLocation->section?></span>
+                        <?php endif ?>
+                    </div>
+
+                    <div>
+                        <?php if (isset($currentLocation->down)) : ?>
+                            <?php $location = $currentLocation->down ?>
+                            <?php require __DIR__ . "/MapMoveButton.php" ?>
+                        <?php else : ?>
+                            <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
+                        <?php endif ?>
+                    </div>
+                </div>
+
+            <?php endif ?>
+
+            <?php if ($currentLocation->directions && ($currentLocation->hasCardinalDirections || $currentLocation->hasVerticalDirections)) : ?>
+
+            <?php endif ?>
+
+            <?php if ($currentLocation->directions) : ?>
+
+                <div class="d-grid gap-2">
+
+                    <?php foreach ($currentLocation->directions as $location) : ?>
+
                         <?php require __DIR__ . "/MapMoveButton.php" ?>
-                    <?php else : ?>
-                        <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
-                    <?php endif ?>
-                </div>
-                <div></div>
 
-                <div>
-                    <?php if (isset($currentLocation->west)) : ?>
-                        <?php $location = $currentLocation->west ?>
-                        <?php require __DIR__ . "/MapMoveButton.php" ?>
-                    <?php else : ?>
-                        <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
-                    <?php endif ?>
-                </div>
-                <div style="display: flex; justify-content: center; align-items: center; min-height: 37.6px;">
-                    <?=$currentLocation->name?>
-                </div>
-                <div>
-                    <?php if (isset($currentLocation->east)) : ?>
-                        <?php $location = $currentLocation->east ?>
-                        <?php require __DIR__ . "/MapMoveButton.php" ?>
-                    <?php else : ?>
-                        <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
-                    <?php endif ?>
+                    <?php endforeach ?>
+
                 </div>
 
-                <div></div>
-                <div>
-                    <?php if (isset($currentLocation->south)) : ?>
-                        <?php $location = $currentLocation->south ?>
-                        <?php require __DIR__ . "/MapMoveButton.php" ?>
-                    <?php else : ?>
-                        <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
-                    <?php endif ?>
-                </div>
-                <div></div>
-            </div>
+            <?php endif ?>
 
-        <?php elseif ($currentLocation->hasVerticalDirections) : ?>
-
-            <div class="card-body d-grid gap-2" style="grid-template-columns: repeat(1, 1fr); grid-auto-rows: 1fr; align-items: stretch;">
-
-                <div>
-                    <?php if (isset($currentLocation->up)) : ?>
-                        <?php $location = $currentLocation->up ?>
-                        <?php require __DIR__ . "/MapMoveButton.php" ?>
-                    <?php else : ?>
-                        <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
-                    <?php endif ?>
-                </div>
-
-                <div style="display: flex; justify-content: center; align-items: center; min-height: 37.6px; gap: 4px;">
-                    <?=$currentLocation->name?>
-                    <?php if ($currentLocation->section) : ?>
-                        <span class="badge text-bg-light"><?=$currentLocation->section?></span>
-                    <?php endif ?>
-                </div>
-
-                <div>
-                    <?php if (isset($currentLocation->down)) : ?>
-                        <?php $location = $currentLocation->down ?>
-                        <?php require __DIR__ . "/MapMoveButton.php" ?>
-                    <?php else : ?>
-                        <div style="width: 100%; height: 100%; border-radius: 6px; background-color: rgba(0, 0, 0, 0.03);"></div>
-                    <?php endif ?>
-                </div>
-            </div>
-
-        <?php endif ?>
-
-        <?php if ($currentLocation->directions && ($currentLocation->hasCardinalDirections || $currentLocation->hasVerticalDirections)) : ?>
-
-            <hr class="m-0">
-
-        <?php endif ?>
-
-        <?php if ($currentLocation->directions) : ?>
-
-            <div class="card-body d-grid gap-2 p-2">
-
-                <?php foreach ($currentLocation->directions as $location) : ?>
-
-                    <?php require __DIR__ . "/MapMoveButton.php" ?>
-
-                <?php endforeach ?>
-
-            </div>
-
-        <?php endif ?>
+        </div>
 
     </div>
 
