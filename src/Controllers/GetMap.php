@@ -414,10 +414,22 @@ final class GetMap
     {
         $mapImages = include __DIR__ . "/../Config/Maps/Kanto.php";
 
-        if (!array_key_exists($locationId, $mapImages)) {
-            return null;
+        if (array_key_exists($locationId, $mapImages)) {
+            return $mapImages[$locationId];
         }
 
-        return $mapImages[$locationId];
+        $mapImages = include __DIR__ . "/../Config/Maps/Johto.php";
+
+        if (array_key_exists($locationId, $mapImages)) {
+            return $mapImages[$locationId];
+        }
+
+        $mapImages = include __DIR__ . "/../Config/Maps/Hoenn.php";
+
+        if (array_key_exists($locationId, $mapImages)) {
+            return $mapImages[$locationId];
+        }
+
+        return null;
     }
 }

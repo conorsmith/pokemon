@@ -18,6 +18,11 @@
             }
         }
 
+        .map {
+            max-width: 100%;
+            object-fit: contain;
+        }
+
         .map--kanto-victory-road {
             height: 145px;
             width: 192px;
@@ -33,7 +38,7 @@
 
             <?php if ($map) : ?>
                 <div style="min-height: 145px;">
-                    <img src="<?=$map?>" <?=$map === "https://archives.bulbagarden.net/media/upload/a/a9/Kanto_Victory_Road_Map.png" ? "class=\"map--kanto-victory-road\"": "" ?>>
+                    <img src="<?=$map?>" class="map <?=$map === "https://archives.bulbagarden.net/media/upload/a/a9/Kanto_Victory_Road_Map.png" ? "map--kanto-victory-road": "" ?>">
                 </div>
             <?php endif ?>
 

@@ -23,6 +23,7 @@ return [
     LocationId::ROUTE_5 => "https://archives.bulbagarden.net/media/upload/a/ae/Kanto_Route_5_Map.png",
     LocationId::SAFFRON_CITY => "https://archives.bulbagarden.net/media/upload/6/6a/Kanto_Saffron_City_Map.png",
     LocationId::SAFFRON_GYM => "https://archives.bulbagarden.net/media/upload/6/6a/Kanto_Saffron_City_Map.png",
+    LocationId::SAFFRON_MAGNET_TRAIN_STATION => "https://archives.bulbagarden.net/media/upload/6/6a/Kanto_Saffron_City_Map.png",
     LocationId::ROUTE_6 => "https://archives.bulbagarden.net/media/upload/7/76/Kanto_Route_6_Map.png",
     LocationId::VERMILLION_CITY => "https://archives.bulbagarden.net/media/upload/5/54/Kanto_Vermilion_City_Map.png",
     LocationId::VERMILLION_GYM => "https://archives.bulbagarden.net/media/upload/5/54/Kanto_Vermilion_City_Map.png",
@@ -103,6 +104,6 @@ return [
     LocationId::CERULEAN_CAVE_B1F => "https://archives.bulbagarden.net/media/upload/0/0b/Kanto_Cerulean_Cave_Map.png",
     LocationId::CERULEAN_CAVE_1F => "https://archives.bulbagarden.net/media/upload/0/0b/Kanto_Cerulean_Cave_Map.png",
     LocationId::CERULEAN_CAVE_2F => "https://archives.bulbagarden.net/media/upload/0/0b/Kanto_Cerulean_Cave_Map.png",
-    LocationId::SEAGALLOP_FERRY => "https://archives.bulbagarden.net/media/upload/7/78/Kanto.png",
+    LocationId::SEAGALLOP_FERRY => "https://archives.bulbagarden.net/media/upload/8/82/SS_Anne_FRLG.png",
     LocationId::KNOT_ISLAND => "https://archives.bulbagarden.net/media/upload/4/41/Sevii_Islands_One_Island_Map.png",
 ];
