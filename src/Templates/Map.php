@@ -30,15 +30,24 @@
             object-position: 100% 0;
             border-left: 1px solid #000;
         }
+
+        .map--kanto-johto-border {
+            height: 145px;
+            width: 192px;
+            object-fit: cover;
+            object-position: 60% 0;
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
+        }
     </style>
 
     <div class="card" style="text-align: center;">
 
         <div class="card-body d-grid gap-2">
 
-            <?php if ($map) : ?>
+            <?php if ($map->imageUrl) : ?>
                 <div style="min-height: 145px;">
-                    <img src="<?=$map?>" class="map <?=$map === "https://archives.bulbagarden.net/media/upload/a/a9/Kanto_Victory_Road_Map.png" ? "map--kanto-victory-road": "" ?>">
+                    <img src="<?=$map->imageUrl?>" class="map <?=$map->class?>">
                 </div>
             <?php endif ?>
 
