@@ -359,6 +359,10 @@
             75% { transform: scale(0.9, 1); }
             100% { transform: scale(1.1, 1); }
         }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
     </style>
 </head>
 <body>

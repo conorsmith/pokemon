@@ -1,3 +1,38 @@
+<nav class="navbar fixed-bottom bg-light">
+    <div class="container-fluid">
+        <div class="d-flex w-100 gap-4 justify-content-center" style="min-height: 40px;">
+            <?php if ($wildPokemon->hasEncounters) : ?>
+                <button class="navbar-toggler js-encounter-link" type="button">
+                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
+                        <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
+                    </span>
+                </button>
+            <?php endif ?>
+            <?php if (count($trainers) > 0) : ?>
+                <button class="navbar-toggler js-trainers-link" type="button">
+                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
+                        <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                    </span>
+                </button>
+            <?php endif ?>
+            <?php if ($legendary) : ?>
+                <button class="navbar-toggler js-legendary-link" type="button">
+                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
+                        <img src="https://archives.bulbagarden.net/media/upload/7/7b/Bag_Star_Piece_Sprite.png">
+                    </span>
+                </button>
+            <?php endif ?>
+            <?php if ($eliteFour) : ?>
+                <button class="navbar-toggler js-elite-four-link" type="button">
+                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
+                        <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                    </span>
+                </button>
+            <?php endif ?>
+        </div>
+    </div>
+</nav>
+
 <div class="d-grid gap-4">
 
     <div class="d-flex justify-content-between align-items-end">
@@ -166,7 +201,7 @@
     <?php endif ?>
 
     <?php if ($wildPokemon->hasEncounters) : ?>
-        <div class="card">
+        <div class="card js-encounter-block">
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Wild Pokémon</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
@@ -203,7 +238,7 @@
 
     <?php if (count($trainers) > 0) : ?>
 
-        <div class="card">
+        <div class="card js-trainers-block">
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Trainers</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
@@ -250,7 +285,7 @@
 
     <?php if ($legendary) : ?>
 
-        <div class="card">
+        <div class="card js-legendary-block">
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Legendary Encounter</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
@@ -288,7 +323,7 @@
 
     <?php if ($eliteFour) : ?>
 
-        <div class="card">
+        <div class="card js-elite-four-block">
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Elite Four</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
@@ -319,3 +354,41 @@
     <?php endif ?>
 
 </div>
+
+<script>
+    document.querySelectorAll(".js-encounter-link").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(".js-encounter-block").scrollIntoView({
+                block: 'center'
+            });
+        })
+    });
+
+    document.querySelectorAll(".js-trainers-link").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(".js-trainers-block").scrollIntoView({
+                block: 'center'
+            });
+        })
+    });
+
+    document.querySelectorAll(".js-legendary-link").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(".js-legendary-block").scrollIntoView({
+                block: 'center'
+            });
+        })
+    });
+
+    document.querySelectorAll(".js-elite-four-link").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(".js-elite-four-block").scrollIntoView({
+                block: 'center'
+            });
+        })
+    });
+</script>

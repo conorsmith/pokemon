@@ -1,3 +1,22 @@
+<nav class="navbar fixed-bottom bg-light">
+    <div class="container-fluid">
+        <div class="d-flex w-100 gap-2 justify-content-center">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#regionMenu">
+                <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle; line-height: 1.5em;"><i class="fas fa-globe-europe"></i></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="regionMenu">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <?php foreach ($regionMenu as $regionId => $label) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link js-region-link" href="#" data-region-id="<?=$regionId?>"><?=$label?></a>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <div class="d-grid gap-4">
 
     <div class="d-flex justify-content-between align-items-end">
@@ -95,25 +114,6 @@
     </ul>
 
 </div>
-
-<nav class="navbar fixed-bottom bg-light">
-    <div class="container-fluid">
-        <div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#regionMenu">
-                <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle; line-height: 1.5em;"><i class="fas fa-globe-europe"></i></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse" id="regionMenu">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <?php foreach ($regionMenu as $regionId => $label) : ?>
-                    <li class="nav-item">
-                        <a class="nav-link js-region-link" href="#" data-region-id="<?=$regionId?>"><?=$label?></a>
-                    </li>
-                <?php endforeach ?>
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <script>
     document.querySelectorAll(".js-pokedex-forms-show").forEach(function (el) {
