@@ -97,7 +97,7 @@ final class ViewModelFactory
             default             => null,
         };
 
-        if ($adjacentLocation->isInAVerticalDirection()) {
+        if ($adjacentLocation->isInAVerticalDirection() || $adjacentLocation->isInACardinalDirection()) {
             $icon = null;
         }
 
