@@ -13,6 +13,7 @@ final class Evolution
         private readonly ?int $minimumLevel,
         private readonly bool $minimumFriendship,
         private readonly ?string $specificTime,
+        private readonly ?string $stats,
     ) {}
 
     public function isTriggered(Pokemon $pokemon, int $level): bool
@@ -40,6 +41,14 @@ final class Evolution
             $requirements[] = match ($this->specificTime) {
                 "day"   => $clock->isDay(),
                 "night" => $clock->isNight(),
+            };
+        }
+
+        if (!is_null($this->stats)) {
+            $requirements[] = match ($this->stats) {
+                "Physical Attack > Physical Defence" => $pokemon->physicalAttack->calculate($pokemon->level) > $pokemon->physicalDefence->calculate($pokemon->level),
+                "Physical Attack < Physical Defence" => $pokemon->physicalAttack->calculate($pokemon->level) < $pokemon->physicalDefence->calculate($pokemon->level),
+                "Physical Attack = Physical Defence" => $pokemon->physicalAttack->calculate($pokemon->level) === $pokemon->physicalDefence->calculate($pokemon->level),
             };
         }
 

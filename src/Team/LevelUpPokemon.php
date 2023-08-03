@@ -45,9 +45,6 @@ final class LevelUpPokemon
             return ResultOfLevellingUp::beyondLevelLimit($highestRankedGymBadge->levelLimit());
         }
 
-        $pokemon = $pokemon->levelUp($newLevel);
-        $this->friendshipLog->levelUp($pokemon);
-
         $pokemonEvolves = false;
         $evolutions = $this->evolutionRepository->findAllForPokemon($pokemon);
 
@@ -59,6 +56,9 @@ final class LevelUpPokemon
                 break; // Break loop once an evolution is triggered
             }
         }
+
+        $pokemon = $pokemon->levelUp($newLevel);
+        $this->friendshipLog->levelUp($pokemon);
 
         $team = $team->replace($pokemon);
 
