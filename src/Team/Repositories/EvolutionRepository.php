@@ -23,7 +23,7 @@ final class EvolutionRepository
                 $evolutions[] = new Evolution(
                     strval($number),
                     array_key_exists('level', $evolution) ? $evolution['level'] : null,
-                    array_key_exists('friendship', $evolution),
+                    in_array('friendship', $evolution),
                     array_key_exists('time', $evolution) ? $evolution['time'] : null,
                 );
             }
