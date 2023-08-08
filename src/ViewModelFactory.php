@@ -151,6 +151,14 @@ final class ViewModelFactory
             GymBadge::MINERAL => "/assets/badges/75px-Mineral_Badge.png",
             GymBadge::GLACIER => "/assets/badges/75px-Glacier_Badge.png",
             GymBadge::RISING => "/assets/badges/75px-Rising_Badge.png",
+            GymBadge::STONE => "/assets/badges/75px-Stone_Badge.png",
+            GymBadge::KNUCKLE => "/assets/badges/75px-Knuckle_Badge.png",
+            GymBadge::DYNAMO => "/assets/badges/75px-Dynamo_Badge.png",
+            GymBadge::HEAT => "/assets/badges/75px-Heat_Badge.png",
+            GymBadge::BALANCE => "/assets/badges/75px-Balance_Badge.png",
+            GymBadge::FEATHER => "/assets/badges/75px-Feather_Badge.png",
+            GymBadge::MIND => "/assets/badges/75px-Mind_Badge.png",
+            GymBadge::RAIN => "/assets/badges/75px-Rain_Badge.png",
         };
     }
 }
