@@ -127,7 +127,7 @@ if ($argv[1] === "encounters") {
 } elseif ($argv[1] === "check") {
 
     $pokedex = require __DIR__ . "/src/Config/Pokedex.php";
-    $encounters = require __DIR__ . "/src/Config/Encounters/Johto.php";
+    $encounters = require __DIR__ . "/src/Config/Encounters/Hoenn.php";
 
     $encounterablePokedexNumbers = [];
 
@@ -144,15 +144,15 @@ if ($argv[1] === "encounters") {
 
     $pokemonByIds = array_flip((new ReflectionClass(PokedexNo::class))->getConstants());
 
-    $unencounterableJohtoPokemon = [];
+    $unencounterablePokemon = [];
 
-    for ($i = 152; $i <= 251; $i++) {
+    for ($i = 252; $i <= 386; $i++) {
         if (!in_array($i, $encounterablePokedexNumbers)) {
-            $unencounterableJohtoPokemon[] = $pokemonByIds[$i];
+            $unencounterablePokemon[] = $pokemonByIds[$i];
         }
     }
 
-    dd($unencounterableJohtoPokemon);
+    dd($unencounterablePokemon);
 
 } elseif ($argv[1] === "sex") {
 

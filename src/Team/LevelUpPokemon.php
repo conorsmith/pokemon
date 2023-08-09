@@ -102,13 +102,12 @@ final class LevelUpPokemon
         );
 
         $distinctLevelLimits = array_unique($allLevelLimits);
+        sort($distinctLevelLimits);
 
         $previousLevelLimits = array_filter(
             $distinctLevelLimits,
             fn(int $possibleLevelLimit) => $possibleLevelLimit < $levelLimit,
         );
-
-        sort($distinctLevelLimits);
 
         $mostRecentLevelLimit = array_pop($previousLevelLimits);
         $secondMostRecentLevelLimit = array_pop($previousLevelLimits);
