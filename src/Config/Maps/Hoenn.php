@@ -12,6 +12,7 @@ return [
     LocationId::PETALBURG_CITY => "Hoenn_Petalburg_City_Map.png",
     LocationId::PETALBURG_GYM => "Hoenn_Petalburg_City_Map.png",
     LocationId::ROUTE_104 => "Hoenn_Route_104_Map.png",
+    LocationId::PETALBURG_WOODS => "Hoenn_Petalburg_Woods_Map.png",
     LocationId::RUSTBORO_CITY => "Hoenn_Rustboro_City_Map.png",
     LocationId::RUSTBORO_GYM => "Hoenn_Rustboro_City_Map.png",
     LocationId::ROUTE_116 => "Hoenn_Route_116_Map.png",

@@ -77,6 +77,14 @@ return [
             Direction::N => LocationId::RUSTBORO_CITY,
             Direction::E => LocationId::PETALBURG_CITY,
             Direction::S => LocationId::ROUTE_105,
+            LocationId::PETALBURG_WOODS,
+        ],
+    ],
+    [
+        'id' => LocationId::PETALBURG_WOODS,
+        'name' => "Petalburg Woods",
+        'directions' => [
+            LocationId::ROUTE_104,
         ],
     ],
     [

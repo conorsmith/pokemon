@@ -196,6 +196,42 @@ return [
             ],
         ],
     ],
+    LocationId::PETALBURG_WOODS => [
+        EncounterType::WALKING => [
+            PokedexNo::POOCHYENA => [
+                'weight' => 30,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::ZIGZAGOON => [
+                'weight' => 30,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::WURMPLE => [
+                'weight' => 25,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::SILCOON => [
+                'weight' => 10,
+                'levels' => 5,
+            ],
+            PokedexNo::CASCOON => [
+                'weight' => 10,
+                'levels' => 5,
+            ],
+            PokedexNo::TAILLOW => [
+                'weight' => 5,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::SHROOMISH => [
+                'weight' => 15,
+                'levels' => [5, 6],
+            ],
+            PokedexNo::SLAKOTH => [
+                'weight' => 5,
+                'levels' => [5, 6],
+            ],
+        ],
+    ],
     LocationId::ROUTE_116 => [
         EncounterType::WALKING => [
             PokedexNo::ABRA => [
@@ -554,6 +590,10 @@ return [
                 'weight' => 5,
                 'levels' => [25, 30],
             ],
+            PokedexNo::MUDKIP => [
+                'weight' => 5,
+                'levels' => [5, 10],
+            ],
         ],
         EncounterType::FISHING => [
             PokedexNo::TENTACOOL => [
@@ -788,6 +828,10 @@ return [
                 'weight' => 40,
                 'levels' => [18, 22],
             ],
+            PokedexNo::TORCHIC => [
+                'weight' => 5,
+                'levels' => [5, 10],
+            ],
         ],
     ],
     LocationId::ROUTE_113 => [
@@ -893,6 +937,14 @@ return [
             PokedexNo::LOUDRED => [
                 'weight' => 16,
                 'levels' => [38, 44],
+            ],
+            PokedexNo::LILEEP => [
+                'weight' => 1,
+                'levels' => [20, 30],
+            ],
+            PokedexNo::ANORITH => [
+                'weight' => 1,
+                'levels' => [20, 30],
             ],
         ],
     ],
@@ -1254,6 +1306,10 @@ return [
                 'weight' => 9,
                 'levels' => [25, 27],
             ],
+            PokedexNo::TREECKO => [
+                'weight' => 5,
+                'levels' => [5, 10],
+            ],
         ],
         EncounterType::SURFING => [
             PokedexNo::TENTACOOL => [
@@ -1285,6 +1341,14 @@ return [
             PokedexNo::FEEBAS => [
                 'weight' => 15,
                 'levels' => [20, 25],
+            ],
+        ],
+    ],
+    LocationId::WEATHER_INSTITUTE_2F => [
+        EncounterType::WALKING => [
+            PokedexNo::CASTFORM => [
+                'weight' => 1,
+                'levels' => [25, 30],
             ],
         ],
     ],
@@ -2762,6 +2826,10 @@ return [
                 'weight' => 10,
                 'levels' => 40,
             ],
+            PokedexNo::BELDUM => [
+                'weight' => 5,
+                'levels' => 36,
+            ],
         ],
     ],
     LocationId::HOENN_VICTORY_ROAD_B1F => [
@@ -2789,6 +2857,10 @@ return [
             PokedexNo::MEDICHAM => [
                 'weight' => 10,
                 'levels' => 40,
+            ],
+            PokedexNo::BELDUM => [
+                'weight' => 5,
+                'levels' => 38,
             ],
         ],
         EncounterType::ROCK_SMASH => [
@@ -2823,6 +2895,10 @@ return [
             PokedexNo::MEDICHAM => [
                 'weight' => 15,
                 'levels' => [40, 44],
+            ],
+            PokedexNo::BELDUM => [
+                'weight' => 5,
+                'levels' => 38,
             ],
         ],
         EncounterType::SURFING => [

@@ -339,6 +339,7 @@ final class LocationId
     public const PETALBURG_CITY = "e402a6a5-1cfe-41c8-98b2-0f45ea14b2e2";
     public const PETALBURG_GYM = "0b78b00b-6cd8-499e-b2f4-e25a592c9c43";
     public const ROUTE_104 = "d89f9bce-18c0-4aca-b47a-a04d7de91567";
+    public const PETALBURG_WOODS = "182fae9d-388e-4ab7-a74a-3a207150b6f1";
     public const RUSTBORO_CITY = "94647e89-6030-4d0c-9811-4b757503631b";
     public const RUSTBORO_GYM = "b07148d3-6100-4b05-9041-e1bfd240f9e6";
     public const ROUTE_116 = "04bf6816-3ef2-4cec-85a8-8677be2a60e6";

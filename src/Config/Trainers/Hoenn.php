@@ -409,6 +409,81 @@ return [
             ],
         ],
     ],
+    LocationId::PETALBURG_WOODS => [
+        [
+            'id' => "d5b2f648-60b7-476c-9197-acea380c4394",
+            'class' => TrainerClass::BUG_CATCHER,
+            'name' => "Lyle",
+            'team' => [
+                [
+                    'id' => PokedexNo::WURMPLE,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::WURMPLE,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::WURMPLE,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::WURMPLE,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::WURMPLE,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+                [
+                    'id' => PokedexNo::WURMPLE,
+                    'sex' => Sex::MALE,
+                    'level' => 3,
+                ],
+            ],
+        ],
+        [
+            'id' => "3935b090-48f8-4c18-9c36-ae6b531eccbd",
+            'class' => TrainerClass::TEAM_MAGMA_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::POOCHYENA,
+                    'sex' => Sex::MALE,
+                    'level' => 9,
+                ],
+            ],
+        ],
+        [
+            'id' => "c83603ef-b875-41ac-bd9a-a8797ef0e590",
+            'class' => TrainerClass::TEAM_AQUA_GRUNT,
+            'gender' => Gender::MALE,
+            'team' => [
+                [
+                    'id' => PokedexNo::POOCHYENA,
+                    'sex' => Sex::MALE,
+                    'level' => 9,
+                ],
+            ],
+        ],
+        [
+            'id' => "b4cb0378-4134-4a0f-b478-37d520f2e7b0",
+            'class' => TrainerClass::BUG_CATCHER,
+            'name' => "James",
+            'team' => [
+                [
+                    'id' => PokedexNo::NINCADA,
+                    'sex' => Sex::MALE,
+                    'level' => 8,
+                ],
+            ],
+        ],
+    ],
     LocationId::RUSTBORO_GYM => [
         [
             'id' => "240430ae-f2b3-424d-be4d-fca9d20fa35a",
