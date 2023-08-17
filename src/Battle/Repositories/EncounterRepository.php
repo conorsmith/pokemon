@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Repositories;
@@ -15,12 +16,10 @@ use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
-use ConorSmith\Pokemon\SharedKernel\Domain\StatCalculator;
 use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 use Exception;
-use GuzzleHttp\Psr7\InflateStream;
 use Ramsey\Uuid\Uuid;
 
 final class EncounterRepository

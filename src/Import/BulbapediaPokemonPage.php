@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Import;
@@ -7,7 +8,6 @@ use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\PokedexNo as PokedexNumberConstants;
 use ConorSmith\Pokemon\PokemonType;
-use ConorSmith\Pokemon\SharedKernel\Domain\Item;
 use Exception;
 use ReflectionClass;
 use Symfony\Component\DomCrawler\Crawler;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
@@ -9,7 +10,6 @@ use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
-use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery;

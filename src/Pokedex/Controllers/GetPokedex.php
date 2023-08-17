@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Pokedex\Controllers;
@@ -7,7 +8,6 @@ use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\ViewModelFactory;
 use ConorSmith\Pokemon\PokedexConfigRepository;
-use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\RegionIsLockedQuery;
 use ConorSmith\Pokemon\TemplateEngine;
 use Symfony\Component\HttpFoundation\Request;

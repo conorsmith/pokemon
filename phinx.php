@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 (Dotenv\Dotenv::createImmutable(__DIR__))->load();

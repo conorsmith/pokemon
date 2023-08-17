@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use ConorSmith\Pokemon\LocationId;

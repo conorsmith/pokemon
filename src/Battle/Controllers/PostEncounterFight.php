@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
@@ -11,7 +12,6 @@ use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
-use ConorSmith\Pokemon\TrainerClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,10 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Repositories;
 
-use Carbon\CarbonImmutable;
-use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;

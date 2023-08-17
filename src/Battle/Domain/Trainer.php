@@ -1,10 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Domain;
 
-use Carbon\CarbonImmutable;
-use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\TrainerClass;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Repositories;
@@ -10,7 +11,6 @@ use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use Doctrine\DBAL\Connection;
 use Exception;
-use Ramsey\Uuid\Uuid;
 
 final class EliteFourChallengeRepository
 {
