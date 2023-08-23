@@ -10,6 +10,7 @@ use ConorSmith\Pokemon\Team\Domain\Type;
 use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Team\ViewModelFactory;
 use ConorSmith\Pokemon\TemplateEngine;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

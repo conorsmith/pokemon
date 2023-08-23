@@ -23,7 +23,6 @@ return function (ECSConfig $ecsConfig): void {
     // this way you add a single rule
     $ecsConfig->rules([
         NoUnusedImportsFixer::class,
-        \PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer::class,
     ]);
 
     // this way you can add sets - group of rules
@@ -37,8 +36,9 @@ return function (ECSConfig $ecsConfig): void {
         // SetList::PSR_12,
     ]);
 
-    $ecsConfig->skip([
-        \PhpCsFixer\Fixer\Whitespace\LineEndingFixer::class => ["*"],
-        \PhpCsFixer\Fixer\Whitespace\SingleBlankLineAtEofFixer::class => ["*"],
+    $ecsConfig->ruleWithConfiguration(\PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class, [
+        'operators' => [
+            '=>' => 'align_single_space_minimal_by_scope',
+        ],
     ]);
 };
