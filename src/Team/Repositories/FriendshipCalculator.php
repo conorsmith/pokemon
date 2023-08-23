@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Team\Repositories;
 
 use Carbon\CarbonImmutable;
+use LogicException;
 
 final class FriendshipCalculator
 {
@@ -60,6 +61,8 @@ final class FriendshipCalculator
                     $preliminaryValue = self::calculateTimeInDayCare($value, $event['date'], $previousMovementEvent['date']);
                 } elseif ($previousMovementEvent['type'] === "sentToBox") {
                     $preliminaryValue = self::calculateTimeInBox($value, $event['date'], $previousMovementEvent['date']);
+                } else {
+                    throw new LogicException;
                 }
 
                 if ($event['type'] === "levelUp") {

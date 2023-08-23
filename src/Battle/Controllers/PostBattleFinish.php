@@ -10,6 +10,7 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
 use Exception;
+use LogicException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,6 +64,9 @@ final class PostBattleFinish
         }
 
         if ($eliteFourChallenge && $eliteFourChallenge->isInProgress()) {
+            if (!isset($result)) {
+                throw new LogicException();
+            }
             return new RedirectResponse("/{$args['instanceId']}/battle/{$result->id}");
         } else {
             return new RedirectResponse("/{$args['instanceId']}/map");

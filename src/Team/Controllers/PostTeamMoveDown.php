@@ -41,6 +41,11 @@ final class PostTeamMoveDown
             return new RedirectResponse("/{$args['instanceId']}/team");
         }
 
+        if (!isset($affectedPokemon)) {
+            $this->session->getFlashBag()->add("errors", "Affected Pokémon not found");
+            return new RedirectResponse("/{$args['instanceId']}/team");
+        }
+
         $this->db->beginTransaction();
 
         $this->db->update("caught_pokemon", [

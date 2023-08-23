@@ -30,7 +30,7 @@ final class BulbapediaEggCyclesPage
 
             $entry = [];
 
-            $row->children("td")->each(function (Crawler $cell, int $index) use (&$entry, &$isValidEntry) {
+            $row->children("td")->each(function (Crawler $cell, int $index) use (&$entry) {
 
                 $entryKey = match ($index) {
                     0 => 'pokedexNumber',

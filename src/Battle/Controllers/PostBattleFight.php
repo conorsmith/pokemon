@@ -91,6 +91,9 @@ final class PostBattleFight
         $playerEarnedGymBadge = false;
         $prize = null;
 
+        $areaJustCleared = false;
+        $areaClearedPrizes = [];
+
         if ($trainer->hasEntireTeamFainted()) {
             $trainerWasPreviouslyBeaten = $battle->dateLastBeaten !== null;
 
@@ -104,15 +107,11 @@ final class PostBattleFight
                 $playerEarnedGymBadge = true;
             }
 
-            $areaJustCleared = false;
-
             if (!$trainerWasPreviouslyBeaten && !$trainer->isGymLeader()) {
 
                 $area = $this->areaRepository->find($trainer->locationId);
 
                 $areaJustCleared = $area->isOnlyUnbeatenTrainer($battle->trainerId);
-
-                $areaClearedPrizes = [];
 
                 if ($areaJustCleared) {
                     foreach ($area->trainers as $areaTrainer) {

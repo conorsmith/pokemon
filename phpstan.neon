@@ -1,5 +1,5 @@
 parameters:
-    level: 0
+    level: 1
     paths:
         - public
         - src
@@ -10,3 +10,12 @@ parameters:
         - import.php
         - phinx.php
         - simulate.php
+    ignoreErrors:
+        -
+            message: '#Variable \$[a-zA-Z0-9\\_]+ might not be defined.#'
+            paths:
+                - src/Battle/Templates
+                - src/Habit/Templates
+                - src/Pokedex/Templates
+                - src/Team/Templates
+                - src/Templates
