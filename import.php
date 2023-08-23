@@ -171,7 +171,7 @@ if ($argv[1] === "encounters") {
     }
 
     usort($sexRatios, function (PokemonSexRatio $a, PokemonSexRatio $b) {
-        return $a->pokedexNumber->value > $b->pokedexNumber->value;
+        return $a->pokedexNumber->value > $b->pokedexNumber->value ? 1 : -1;
     });
 
     echo SexRatiosConfig::fromPokemonSexRatios($sexRatios);

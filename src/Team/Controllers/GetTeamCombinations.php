@@ -79,9 +79,9 @@ final class GetTeamCombinations
         foreach ($bestStatsByType as $statKey => $bestStats) {
             uasort($bestStatsByType[$statKey], function ($a, $b) use ($statKey) {
                 if ($statKey === "total") {
-                    return array_sum($a['stats']) < array_sum($b['stats']);
+                    return array_sum($a['stats']) < array_sum($b['stats']) ? 1 : -1;
                 } else {
-                    return $a['stats'][$statKey] < $b['stats'][$statKey];
+                    return $a['stats'][$statKey] < $b['stats'][$statKey] ? 1 : -1;
                 }
             });
         }

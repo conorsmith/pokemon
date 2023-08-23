@@ -25,7 +25,7 @@ final class DailyHabitLog
 
         usort(
             $dates,
-            fn (CarbonImmutable $a, CarbonImmutable $b) => $a->isBefore($b),
+            fn (CarbonImmutable $a, CarbonImmutable $b) => $a->isBefore($b) ? 1 : -1,
         );
 
         return new self(
