@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Import;
 
 use ConorSmith\Pokemon\Import\Domain\BulbapediaEncounter;
 use DOMDocument;
+use DOMElement;
 use DOMNode;
 use DOMNodeList;
 use Exception;
@@ -59,6 +60,10 @@ final class BulbapediaLocationPage
         $currentNode = $possibleTableNode;
 
         while (!is_null($currentNode)) {
+            if (!$currentNode instanceof DOMElement) {
+                $currentNode = $currentNode->nextSibling;
+                continue;
+            }
             if ($currentNode->nodeName === "table") {
                 if (is_null($sectionTitle)
                     || $mostRecentSubtitle . $mostRecentSubSubtitle === $sectionTitle
@@ -82,7 +87,7 @@ final class BulbapediaLocationPage
         return $rawEncounterData;
     }
 
-    private static function extractEncountersFromTableNode(DOMNode $tableNode): array
+    private static function extractEncountersFromTableNode(DOMElement $tableNode): array
     {
         $rawEncounterData = [];
 
@@ -92,6 +97,10 @@ final class BulbapediaLocationPage
             /** @var DOMNode $cellNode */
             foreach ($rowNode->childNodes as $i => $cellNode) {
                 if ($cellNode->nodeName !== "td") {
+                    continue;
+                }
+
+                if (!$cellNode instanceof DOMElement) {
                     continue;
                 }
 

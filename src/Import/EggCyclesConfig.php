@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Import;
 
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
-use ConorSmith\Pokemon\Import\Domain\PokemonEggGroups;
+use ConorSmith\Pokemon\Import\Domain\PokemonEggCycles;
 use ConorSmith\Pokemon\PokedexNo as PokedexNumberConstants;
 use ReflectionClass;
 
@@ -20,7 +20,7 @@ final class EggCyclesConfig
         $config .= PHP_EOL;
         $config .= "return [" . PHP_EOL;
 
-        /** @var PokemonEggGroups $eggCycle */
+        /** @var PokemonEggCycles $eggCycle */
         foreach ($eggCycles as $eggCycle) {
             $config .= "    " . self::encodePokedexNumber($eggCycle->pokedexNumber) . " => " . $eggCycle->value . "," . PHP_EOL;
         }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Import;
 
 use DOMDocument;
+use DOMElement;
 use DOMNode;
 
 final class BulbapediaPokedexPage
@@ -35,6 +36,10 @@ final class BulbapediaPokedexPage
 
         for ($i = 0; $i < 9; $i++) {
             $tableNode = $tableNode->nextSibling->nextSibling->nextSibling->nextSibling;
+
+            if (!$tableNode instanceof DOMElement) {
+                continue;
+            }
 
             /** @var DOMNode $rowNode */
             foreach ($tableNode->getElementsByTagName("tr") as $rowNode) {
