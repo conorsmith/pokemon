@@ -248,12 +248,14 @@ final class GetPokedexEntry
                 RegionId::KANTO => "Kanto",
                 RegionId::JOHTO => "Johto",
                 RegionId::HOENN => "Hoenn",
+                default => throw new LogicException(),
             },
             'encounterTypeIcon' => match ($encounterLocation->encounterType) {
                 EncounterType::WALKING => "fas fa-shoe-prints",
                 EncounterType::SURFING => "fas fa-water",
                 EncounterType::FISHING => "fas fa-fish",
                 EncounterType::ROCK_SMASH => "fab fa-sith",
+                default => throw new LogicException(),
             },
             'rarityIcons' => match (true) {
                 $encounterLocation->rarity > 0.15 => 3,
@@ -291,6 +293,7 @@ final class GetPokedexEntry
                         "Physical Attack > Physical Defence" => "greater-than",
                         "Physical Attack < Physical Defence" => "less-than",
                         "Physical Attack = Physical Defence" => "equals",
+                        default => throw new LogicException(),
                     },
                 ];
             } elseif (in_array("randomly", $evolutionConfig)) {
@@ -314,6 +317,7 @@ final class GetPokedexEntry
                     'item' => $entry->isRegistered ? str_replace(" ", "&nbsp;", $itemConfig['name']) : "???",
                     'time' => match ($evolutionConfig['time']) {
                         "Full Moon" => "during&nbsp;a&nbsp;full&nbsp;moon",
+                        default => throw new LogicException(),
                     },
                 ];
             } elseif (array_key_exists('sex', $evolutionConfig)) {
@@ -323,6 +327,7 @@ final class GetPokedexEntry
                     'sex' => match ($evolutionConfig['sex']) {
                         Sex::FEMALE => "female",
                         Sex::MALE => "male",
+                        default => throw new LogicException(),
                     },
                 ];
             } else {
@@ -344,6 +349,7 @@ final class GetPokedexEntry
                     'time' => match ($evolutionConfig['time']) {
                         "day"   => "during&nbsp;the&nbsp;day",
                         "night" => "at&nbsp;night",
+                        default => throw new LogicException(),
                     },
                 ];
             } elseif (array_key_exists('move', $evolutionConfig)) {
@@ -370,6 +376,7 @@ final class GetPokedexEntry
                 'time' => match ($evolutionConfig['time']) {
                     "day"   => "during&nbsp;the&nbsp;day",
                     "night" => "at&nbsp;night",
+                    default => throw new LogicException(),
                 },
             ];
 

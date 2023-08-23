@@ -9,6 +9,7 @@ use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Domain\DailyHabitLog;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
+use LogicException;
 use Ramsey\Uuid\Uuid;
 
 final class DailyHabitLogRepository
@@ -26,6 +27,7 @@ final class DailyHabitLogRepository
                 Habit::FOOD_DIARY_COMPLETED => "log_food_diary",
                 Habit::CALORIE_GOAL_ATTAINED => "log_calorie_goal",
                 Habit::STRETCHES_COMPLETED => "log_stretches",
+                default => throw new LogicException(),
             })
             ->where("instance_id = :instanceId")
             ->setParameter('instanceId', $this->instanceId->value)
@@ -55,6 +57,7 @@ final class DailyHabitLogRepository
                     Habit::FOOD_DIARY_COMPLETED => "log_food_diary",
                     Habit::CALORIE_GOAL_ATTAINED => "log_calorie_goal",
                     Habit::STRETCHES_COMPLETED => "log_stretches",
+                    default => throw new LogicException(),
                 },
                 [
                     'id' => Uuid::uuid4(),

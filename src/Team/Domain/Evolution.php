@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Team\Domain;
 
 use ConorSmith\Pokemon\SharedKernel\Clock;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use LogicException;
 
 final class Evolution
 {
@@ -26,6 +27,7 @@ final class Evolution
                 RegionId::KANTO => 0,
                 RegionId::JOHTO => 50,
                 RegionId::HOENN => 100,
+                default => throw new LogicException(),
             };
 
             $requirements[] = $this->minimumLevel + $regionalLevelOffset <= $level;
@@ -42,6 +44,7 @@ final class Evolution
             $requirements[] = match ($this->specificTime) {
                 "day"   => $clock->isDay(),
                 "night" => $clock->isNight(),
+                default => throw new LogicException(),
             };
         }
 
@@ -50,6 +53,7 @@ final class Evolution
                 "Physical Attack > Physical Defence" => $pokemon->physicalAttack->calculate($pokemon->level) > $pokemon->physicalDefence->calculate($pokemon->level),
                 "Physical Attack < Physical Defence" => $pokemon->physicalAttack->calculate($pokemon->level) < $pokemon->physicalDefence->calculate($pokemon->level),
                 "Physical Attack = Physical Defence" => $pokemon->physicalAttack->calculate($pokemon->level) === $pokemon->physicalDefence->calculate($pokemon->level),
+                default => throw new LogicException(),
             };
         }
 

@@ -12,6 +12,7 @@ use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\PokedexNo as PokedexNumberConstants;
 use ConorSmith\Pokemon\PokemonType as PokemonTypeConstants;
 use ConorSmith\Pokemon\PokemonType as SharedKernelPokemonType;
+use LogicException;
 use ReflectionClass;
 
 final class PokemonConfig
@@ -149,6 +150,7 @@ final class PokemonConfig
         return match ($gender) {
             'male' => "Gender::MALE",
             'female' => "Gender::FEMALE",
+            default => throw new LogicException(),
         };
     }
 }

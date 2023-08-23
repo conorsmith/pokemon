@@ -20,6 +20,7 @@ use ConorSmith\Pokemon\Team\Domain\Team;
 use ConorSmith\Pokemon\Team\Domain\Type;
 use Doctrine\DBAL\Connection;
 use Exception;
+use LogicException;
 use stdClass;
 
 final class PokemonRepositoryDb implements PokemonRepository
@@ -97,10 +98,6 @@ final class PokemonRepositoryDb implements PokemonRepository
         );
 
         $all = array_filter($all, function(Pokemon $pokemon) use ($query) {
-            if (is_null($query)) {
-                return true;
-            }
-
             return $pokemon->type->primaryType == $query->filter
                 || $pokemon->type->secondaryType == $query->filter;
         });
@@ -113,32 +110,39 @@ final class PokemonRepositoryDb implements PokemonRepository
                     "effective-stats" => $a->hp->calculate($a->level) > $b->hp->calculate($b->level) ? -1 : 1,
                     "base-stats" => $a->hp->baseValue > $b->hp->baseValue ? -1 : 1,
                     "genetic-stats" => $a->hp->iv > $b->hp->iv ? -1 : 1,
+                    default => throw new LogicException(),
                 },
                 "pa" => match($query->show) {
                     "effective-stats" => $a->physicalAttack->calculate($a->level) > $b->physicalAttack->calculate($b->level) ? -1 : 1,
                     "base-stats" => $a->physicalAttack->baseValue > $b->physicalAttack->baseValue ? -1 : 1,
                     "genetic-stats" => $a->physicalAttack->iv > $b->physicalAttack->iv ? -1 : 1,
+                    default => throw new LogicException(),
                 },
                 "sa" => match($query->show) {
                     "effective-stats" => $a->specialAttack->calculate($a->level) > $b->specialAttack->calculate($b->level) ? -1 : 1,
                     "base-stats" => $a->specialAttack->baseValue > $b->specialAttack->baseValue ? -1 : 1,
                     "genetic-stats" => $a->specialAttack->iv > $b->specialAttack->iv ? -1 : 1,
+                    default => throw new LogicException(),
                 },
                 "pd" => match($query->show) {
                     "effective-stats" => $a->physicalDefence->calculate($a->level) > $b->physicalDefence->calculate($b->level) ? -1 : 1,
                     "base-stats" => $a->physicalDefence->baseValue > $b->physicalDefence->baseValue ? -1 : 1,
                     "genetic-stats" => $a->physicalDefence->iv > $b->physicalDefence->iv ? -1 : 1,
+                    default => throw new LogicException(),
                 },
                 "sd" => match($query->show) {
                     "effective-stats" => $a->specialDefence->calculate($a->level) > $b->specialDefence->calculate($b->level) ? -1 : 1,
                     "base-stats" => $a->specialDefence->baseValue > $b->specialDefence->baseValue ? -1 : 1,
                     "genetic-stats" => $a->specialDefence->iv > $b->specialDefence->iv ? -1 : 1,
+                    default => throw new LogicException(),
                 },
                 "sp" => match($query->show) {
                     "effective-stats" => $a->speed->calculate($a->level) > $b->speed->calculate($b->level) ? -1 : 1,
                     "base-stats" => $a->speed->baseValue > $b->speed->baseValue ? -1 : 1,
                     "genetic-stats" => $a->speed->iv > $b->speed->iv ? -1 : 1,
+                    default => throw new LogicException(),
                 },
+                default => throw new LogicException(),
             };
         });
 
@@ -186,6 +190,7 @@ final class PokemonRepositoryDb implements PokemonRepository
                 "F" => Sex::FEMALE,
                 "M" => Sex::MALE,
                 "U" => Sex::UNKNOWN,
+                default => throw new LogicException(),
             },
             $row['is_shiny'] === 1,
             new Hp($baseStats['hp'], $row['iv_hp'], $row['ev_hp']),

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\ViewModels;
 
 use ConorSmith\Pokemon\PokedexNo;
+use LogicException;
 
 final class TeamMember
 {
@@ -72,6 +73,7 @@ final class TeamMember
             "Z" => "HOME0201Z.png",
             "!" => "HOME0201EX.png",
             "?" => "HOME0201QU.png",
+            default => throw new LogicException(),
         };
     }
 }

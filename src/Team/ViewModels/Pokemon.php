@@ -8,6 +8,7 @@ use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\Team\Domain\Pokemon as DomainModel;
 use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
+use LogicException;
 
 final class Pokemon
 {
@@ -40,6 +41,7 @@ final class Pokemon
                 $pokemon->friendship >= 50   => "fa-meh",
                 $pokemon->friendship > 0     => "fa-frown",
                 $pokemon->friendship === 0   => "fa-angry",
+                default => throw new LogicException(),
             },
             $pokemon->isShiny,
         );

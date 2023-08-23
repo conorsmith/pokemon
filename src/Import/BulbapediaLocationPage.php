@@ -365,10 +365,10 @@ final class BulbapediaLocationPage
                         ];
                     } elseif ($cellNode->childNodes->item(1)->nodeName !== "#text") {
 
-                        if (is_null($cellNode
+                        if ($cellNode
                             ->childNodes->item(1)
                             ->childNodes->item(1)
-                            ->childNodes)
+                            ->childNodes->length === 0
                         ) {
                             continue;
                         }
@@ -378,9 +378,9 @@ final class BulbapediaLocationPage
                             ->childNodes->item(1)
                             ->childNodes->item(0);
 
-                        if (is_null($pokemonRow
+                        if ($pokemonRow
                             ->childNodes->item(5)
-                            ->childNodes)
+                            ->childNodes->length === 0
                         ) {
                             continue;
                         }

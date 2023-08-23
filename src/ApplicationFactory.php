@@ -15,11 +15,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 final class ApplicationFactory
 {
-    /** @var Connection */
-    private static $databaseConnection;
-
-    /** @var Session */
-    private static $sessionManager;
+    private static Connection $databaseConnection;
+    private static Session $sessionManager;
 
     public static function createHttpKernel(): HttpKernel
     {
@@ -61,7 +58,7 @@ final class ApplicationFactory
 
     private static function createDatabaseConnection(): Connection
     {
-        if (is_null(self::$databaseConnection)) {
+        if (!isset(self::$databaseConnection)) {
             self::$databaseConnection = DriverManager::getConnection([
                 'dbname'   => $_ENV['DB_NAME'],
                 'user'     => $_ENV['DB_USER'],
@@ -76,7 +73,7 @@ final class ApplicationFactory
 
     private static function createSessionManager(): Session
     {
-        if (is_null(self::$sessionManager)) {
+        if (!isset(self::$sessionManager)) {
             self::$sessionManager = new Session();
             self::$sessionManager->start();
         }

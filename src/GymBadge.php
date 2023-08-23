@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon;
 
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use LogicException;
 
 enum GymBadge: int
 {
@@ -145,6 +146,7 @@ enum GymBadge: int
                 self::MIND,
                 self::RAIN,
             ],
+            default => throw new LogicException(),
         };
     }
 }

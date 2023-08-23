@@ -14,6 +14,7 @@ use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\TeamPokemonQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
+use RuntimeException;
 
 final class PlayerRepositoryDb implements PlayerRepository
 {
@@ -51,6 +52,7 @@ final class PlayerRepositoryDb implements PlayerRepository
                     "F" => Sex::FEMALE,
                     "M" => Sex::MALE,
                     "U" => Sex::UNKNOWN,
+                    default => new RuntimeException(),
                 },
                 $caughtPokemonRow['is_shiny'] === 1,
                 new Stats(

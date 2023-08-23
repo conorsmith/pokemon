@@ -20,7 +20,9 @@ use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 use Exception;
+use LogicException;
 use Ramsey\Uuid\Uuid;
+use RuntimeException;
 
 final class EncounterRepository
 {
@@ -133,6 +135,7 @@ final class EncounterRepository
                 "F" => Sex::FEMALE,
                 "M" => Sex::MALE,
                 "U" => Sex::UNKNOWN,
+                default => throw new RuntimeException(),
             },
             $encounterRow['is_shiny'] === 1,
             self::createStatsFromRow($encounterRow),
@@ -311,6 +314,7 @@ final class EncounterRepository
             RegionId::KANTO => 0,
             RegionId::JOHTO => 50,
             RegionId::HOENN => 100,
+            default => throw new LogicException(),
         };
 
         return $legendaryConfig['level'] + $regionalLevelOffset;

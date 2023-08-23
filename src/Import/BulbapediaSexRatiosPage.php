@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Import;
 
+use RuntimeException;
 use Symfony\Component\DomCrawler\Crawler;
 
 final class BulbapediaSexRatiosPage
@@ -73,6 +74,7 @@ final class BulbapediaSexRatiosPage
                 "Gender unknown" => [
                     'unknown' => 1,
                 ],
+                default => throw new RuntimeException(),
             };
 
             foreach ($section['tables'] as $table) {

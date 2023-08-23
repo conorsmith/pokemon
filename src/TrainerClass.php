@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use LogicException;
+
 final class TrainerClass
 {
     public const BUG_CATCHER = "eeab339c-5159-451b-bc65-4b4ada50fcad";
@@ -184,6 +186,7 @@ final class TrainerClass
             self::RETIRED_TRAINER => "Retired Trainer",
             self::ELDER => "Elder",
             self::DOUBLE_TEAM => "Double Team",
+            default => throw new LogicException(),
         };
     }
 

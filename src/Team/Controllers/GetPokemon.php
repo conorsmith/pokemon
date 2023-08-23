@@ -12,6 +12,7 @@ use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
+use LogicException;
 use stdClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +49,7 @@ final class GetPokemon
                 RegionId::KANTO => "Kanto",
                 RegionId::JOHTO => "Johto",
                 RegionId::HOENN => "Hoenn",
+                default => throw new LogicException(),
             },
             'preposition' => match ($locationConfig['type']) {
                 LocationType::ROUTE => "on",
@@ -140,12 +142,14 @@ final class GetPokemon
                 $vm->increase[ViewModelFactory::createPokemonTypeName($type)] = match ($multiplier) {
                     4.0 => "4",
                     2.0 => "2",
+                    default => throw new LogicException(),
                 };
             } elseif ($multiplier < 1.0) {
                 $vm->decrease[ViewModelFactory::createPokemonTypeName($type)] = match ($multiplier) {
                     0.5 => "½",
                     0.25 => "¼",
                     0.0 => "0",
+                    default => throw new LogicException(),
                 };
             }
         }

@@ -31,6 +31,7 @@ use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\Team\TeamPokemonQuery;
 use Doctrine\DBAL\Connection;
+use LogicException;
 
 final class RepositoryFactory
 {
@@ -108,6 +109,7 @@ final class RepositoryFactory
                 $this->create(EliteFourChallengeRepository::class, $instanceId),
                 $instanceId,
             ),
+            default => throw new LogicException(),
         };
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use LogicException;
+
 final class Direction
 {
     public const N = "n";
@@ -36,6 +38,7 @@ final class Direction
             self::S => "south",
             self::U => "up",
             self::D => "down",
+            default => throw new LogicException(),
         };
     }
 }

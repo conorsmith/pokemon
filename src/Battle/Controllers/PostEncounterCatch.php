@@ -14,6 +14,7 @@ use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery;
 use Doctrine\DBAL\Connection;
+use LogicException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -149,6 +150,7 @@ final class PostEncounterCatch
             ItemId::POKE_BALL  => 1,
             ItemId::GREAT_BALL => 1.5,
             ItemId::ULTRA_BALL => 2,
+            default => throw new LogicException(),
         };
 
         $catchRatesConfig = require __DIR__ . "/../../Config/CatchRates.php";

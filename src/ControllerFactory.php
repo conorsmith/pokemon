@@ -99,6 +99,7 @@ use ConorSmith\Pokemon\Team\UseCases\ShowTeamCoverage;
 use ConorSmith\Pokemon\Team\WeeklyUpdateForTeamCommand;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
+use LogicException;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class ControllerFactory
@@ -555,6 +556,7 @@ final class ControllerFactory
                 $this->viewModelFactory,
                 $this->templateEngine,
             ),
+            default => throw new LogicException(),
         };
     }
 }

@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\Team\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Team\ViewModelFactory;
 use ConorSmith\Pokemon\TemplateEngine;
 use Exception;
+use LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -106,6 +107,7 @@ final class GetTeamCombinations
                 'sa' => "spAttack",
                 'sd' => "spDefence",
                 'sp' => "speed",
+                default => throw new LogicException(),
             }]),
         ]));
     }

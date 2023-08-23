@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\Import\Domain\Trainer;
 use ConorSmith\Pokemon\Import\Domain\TrainerPokemon;
 use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\TrainerClass;
+use LogicException;
 use Ramsey\Uuid\Uuid;
 use ReflectionClass;
 
@@ -103,6 +104,7 @@ final class TrainerFactory
         return match($value) {
             "F" => Gender::female(),
             "M" => Gender::male(),
+            default => throw new LogicException(),
         };
     }
 

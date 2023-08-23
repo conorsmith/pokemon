@@ -14,6 +14,7 @@ use ConorSmith\Pokemon\Team\LevelUpPokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use Doctrine\DBAL\Connection;
 use Exception;
+use LogicException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,6 +85,7 @@ final class PostTeamItemUse
             ItemId::CALCIUM => $pokemon->boostSpecialAttackEv(10),
             ItemId::ZINC    => $pokemon->boostSpecialDefenceEv(10),
             ItemId::CARBOS  => $pokemon->boostSpeedEv(10),
+            default         => throw new LogicException(),
         };
 
         $bag = $bag->use($itemId);

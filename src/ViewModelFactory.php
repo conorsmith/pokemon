@@ -10,6 +10,7 @@ use ConorSmith\Pokemon\Battle\ViewModels\IvStrength;
 use ConorSmith\Pokemon\Battle\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
+use LogicException;
 use stdClass;
 
 final class ViewModelFactory
@@ -78,6 +79,7 @@ final class ViewModelFactory
             PokemonType::DRAGON => "dragon",
             PokemonType::DARK => "dark",
             PokemonType::FAIRY => "fairy",
+            default => throw new LogicException(),
         };
     }
 

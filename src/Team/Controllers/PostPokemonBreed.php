@@ -208,6 +208,7 @@ final class PostPokemonBreed
             30 => 15,
             35 => 18,
             40 => 21,
+            default => throw new LogicException(),
         };
     }
 }

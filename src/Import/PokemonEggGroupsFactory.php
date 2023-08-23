@@ -7,6 +7,7 @@ namespace ConorSmith\Pokemon\Import;
 use ConorSmith\Pokemon\Import\Domain\EggGroup;
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
 use ConorSmith\Pokemon\Import\Domain\PokemonEggGroups;
+use RuntimeException;
 
 final class PokemonEggGroupsFactory
 {
@@ -42,6 +43,7 @@ final class PokemonEggGroupsFactory
             "Flying*" => "FLYING",
             "Mineral*" => "MINERAL",
             "—" => null,
+            default => throw new RuntimeException(),
         };
 
         if (is_null($value)) {

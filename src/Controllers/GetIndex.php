@@ -16,6 +16,7 @@ use ConorSmith\Pokemon\Team\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
+use LogicException;
 use stdClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,6 +47,7 @@ final class GetIndex
             RegionId::KANTO => 0,
             RegionId::JOHTO => 8,
             RegionId::HOENN => 16,
+            default => throw new LogicException(),
         };
 
         $earnedBadgeIds = json_decode($instanceRow['badges']);
@@ -71,6 +73,7 @@ final class GetIndex
                 RegionId::KANTO => "Kanto",
                 RegionId::JOHTO => "Johto",
                 RegionId::HOENN => "Hoenn",
+                default => throw new LogicException(),
             },
             'badges' => $badgeViewModels,
         ]));

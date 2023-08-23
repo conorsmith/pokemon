@@ -25,6 +25,7 @@ use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory as SharedViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Doctrine\DBAL\Connection;
+use LogicException;
 use stdClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -245,6 +246,7 @@ final class GetMap
             RegionId::KANTO => 0,
             RegionId::JOHTO => 50,
             RegionId::HOENN => 100,
+            default => throw new LogicException(),
         };
 
         return (object) [

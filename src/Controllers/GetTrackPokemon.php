@@ -9,6 +9,7 @@ use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,6 +37,7 @@ final class GetTrackPokemon
                 EncounterType::SURFING    => "fas fa-water",
                 EncounterType::FISHING    => "fas fa-fish",
                 EncounterType::ROCK_SMASH => "fab fa-sith",
+                default => throw new RuntimeException(),
             },
             'scriptData' => json_encode([
                 'instanceId' => $args['instanceId'],
