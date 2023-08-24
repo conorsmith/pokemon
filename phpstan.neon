@@ -5,9 +5,9 @@ parameters:
         - src
         - tests
         - convert.php
+        - console.php
         - download.php
         - generate.php
-        - import.php
         - phinx.php
         - simulate.php
     ignoreErrors:

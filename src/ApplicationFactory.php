@@ -26,6 +26,11 @@ final class ApplicationFactory
         );
     }
 
+    public static function createConsoleKernel(): ConsoleKernel
+    {
+        return new ConsoleKernel();
+    }
+
     private static function createControllerFactory(): ControllerFactory
     {
         return new ControllerFactory(
