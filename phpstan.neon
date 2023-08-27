@@ -4,12 +4,8 @@ parameters:
         - public
         - src
         - tests
-        - convert.php
         - console.php
-        - download.php
-        - generate.php
         - phinx.php
-        - simulate.php
     ignoreErrors:
         -
             message: '#Variable \$[a-zA-Z0-9\\_]+ might not be defined.#'

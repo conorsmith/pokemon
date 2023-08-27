@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\Battle\ConsoleCommands\Simulate;
+use ConorSmith\Pokemon\Import\ConsoleCommands\Convert;
+use ConorSmith\Pokemon\Import\ConsoleCommands\Download;
+use ConorSmith\Pokemon\Import\ConsoleCommands\Generate;
 use ConorSmith\Pokemon\Import\ConsoleCommands\Import;
 
 final class ConsoleKernel
@@ -18,7 +22,11 @@ final class ConsoleKernel
         $command = $argv[1];
 
         match ($command) {
+            "convert" => (new Convert())(array_slice($argv, 2)),
+            "download" => (new Download())(array_slice($argv, 2)),
+            "generate" => (new Generate())(array_slice($argv, 2)),
             "import" => (new Import())(array_slice($argv, 2)),
+            "simulate" => (new Simulate())(array_slice($argv, 2)),
             default  => self::handleUnknownCommand($command),
         };
     }
