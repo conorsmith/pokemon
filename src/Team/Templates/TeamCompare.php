@@ -22,13 +22,14 @@
 
     <div class="btn-group">
         <a href="?show=<?=$query->show?>&sort=number&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "number" ? "active" : ""?>">#</a>
-        <a href="?show=<?=$query->show?>&sort=lv&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "lv" ? "active" : ""?>">LV</a>
-        <a href="?show=<?=$query->show?>&sort=hp&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "hp" ? "active" : ""?>">HP</a>
-        <a href="?show=<?=$query->show?>&sort=pa&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "pa" ? "active" : ""?>">PA</a>
-        <a href="?show=<?=$query->show?>&sort=sa&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "sa" ? "active" : ""?>">SA</a>
-        <a href="?show=<?=$query->show?>&sort=pd&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "pd" ? "active" : ""?>">PD</a>
-        <a href="?show=<?=$query->show?>&sort=sd&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "sd" ? "active" : ""?>">SD</a>
-        <a href="?show=<?=$query->show?>&sort=sp&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "sp" ? "active" : ""?>">SP</a>
+        <a href="?show=<?=$query->show?>&sort=time&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "time" ? "active" : ""?>"><i class="fa-fw fas fa-clock"></i></a>
+        <a href="?show=<?=$query->show?>&sort=lv&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "lv" ? "active" : ""?>"><i class="fa-fw fas fa-arrow-alt-circle-up"></i></a>
+        <a href="?show=<?=$query->show?>&sort=hp&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "hp" ? "active" : ""?>"><i class="fa-fw fas fa-heartbeat"></i></a>
+        <a href="?show=<?=$query->show?>&sort=pa&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "pa" ? "active" : ""?>"><i class="fa-fw fas fa-paw"></i></a>
+        <a href="?show=<?=$query->show?>&sort=sa&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "sa" ? "active" : ""?>"><i class="fa-fw fas fa-wifi"></i></a>
+        <a href="?show=<?=$query->show?>&sort=pd&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "pd" ? "active" : ""?>"><i class="fa-fw fas fa-shield-alt"></i></a>
+        <a href="?show=<?=$query->show?>&sort=sd&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "sd" ? "active" : ""?>"><i class="fa-fw fas fa-expand"></i></a>
+        <a href="?show=<?=$query->show?>&sort=sp&filter=<?=$query->filter?>" class="btn btn-sm btn-outline-dark <?=$query->sort === "sp" ? "active" : ""?>"><i class="fa-fw fas fa-wind"></i></a>
     </div>
 
     <div>

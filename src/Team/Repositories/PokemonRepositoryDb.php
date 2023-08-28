@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Repositories;
 
+use Carbon\Carbon;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\Sex;
@@ -97,14 +98,22 @@ final class PokemonRepositoryDb implements PokemonRepository
             $rows
         );
 
+        /** @var Carbon[] $caughtAtMap */
+        $caughtAtMap = [];
+
+        foreach ($rows as $row) {
+            $caughtAtMap[$row['id']] = new Carbon($row['date_caught']);
+        }
+
         $all = array_filter($all, function(Pokemon $pokemon) use ($query) {
             return $pokemon->type->primaryType == $query->filter
                 || $pokemon->type->secondaryType == $query->filter;
         });
 
-        usort($all, function(Pokemon $a, Pokemon $b) use ($query) {
+        usort($all, function(Pokemon $a, Pokemon $b) use ($query, $caughtAtMap) {
             return match($query->sort) {
                 "number" => 0,
+                "time" => $caughtAtMap[$a->id]->isBefore($caughtAtMap[$b->id]),
                 "lv" => $a->level > $b->level ? -1 : 1,
                 "hp" => match($query->show) {
                     "effective-stats" => $a->hp->calculate($a->level) > $b->hp->calculate($b->level) ? -1 : 1,
