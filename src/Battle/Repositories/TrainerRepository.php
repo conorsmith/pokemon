@@ -12,12 +12,14 @@ use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use Doctrine\DBAL\Connection;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use RuntimeException;
 
 class TrainerRepository
 {
@@ -57,6 +59,10 @@ class TrainerRepository
     {
         $config = $this->trainerConfigRepository->findTrainersInLocation($locationId);
 
+        if (is_null($config)) {
+            return [];
+        }
+
         $trainers = [];
 
         foreach ($config as $entry) {
@@ -76,6 +82,31 @@ class TrainerRepository
         return $trainers;
     }
 
+    public function findTrainersInRegion(RegionId $regionId): array
+    {
+        $config = $this->trainerConfigRepository->findTrainersInRegion($regionId);
+
+        $trainers = [];
+
+        foreach ($config as $locationEntries) {
+            foreach ($locationEntries as $entry) {
+
+                if (array_key_exists('prerequisite', $entry)
+                    && array_key_exists('champion', $entry['prerequisite'])
+                ) {
+                    $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($entry['prerequisite']['champion']);
+                    if (is_null($eliteFourChallenge)) {
+                        continue;
+                    }
+                }
+
+                $trainers[] = $this->findTrainerByTrainerId($entry['id']);
+            }
+        }
+
+        return $trainers;
+    }
+
     private function createTrainer(string $trainerId, bool $isBattling): Trainer
     {
         $trainerConfig = $this->trainerConfigRepository->findTrainer($trainerId);
@@ -88,6 +119,12 @@ class TrainerRepository
         $trainerBattlePokemonRows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battle_pokemon WHERE trainer_battle_id = :trainerBattleId ORDER BY team_order", [
             'trainerBattleId' => $trainerId,
         ]);
+
+        if (count($trainerBattlePokemonRows) > 0
+            && count($trainerBattlePokemonRows) !== count($trainerConfig['team'])
+        ) {
+            throw new RuntimeException("Persisted Pokémon doesn't match configuration for Battle ID '{$trainerId}'");
+        }
 
         RandomNumberGenerator::setSeed(crc32($trainerId));
 
@@ -154,7 +191,7 @@ class TrainerRepository
     private function findPokedexEntry(string $number): array
     {
         if (!array_key_exists($number, $this->pokedex)) {
-            throw new Exception;
+            throw new Exception("Given Pokémon Number '{$number}' does not exist in Pokédex");
         }
 
         return $this->pokedex[$number];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\Battle\ConsoleCommands\Challenge;
 use ConorSmith\Pokemon\Battle\ConsoleCommands\Simulate;
 use ConorSmith\Pokemon\Import\ConsoleCommands\Convert;
 use ConorSmith\Pokemon\Import\ConsoleCommands\Download;
@@ -22,6 +23,7 @@ final class ConsoleKernel
         $command = $argv[1];
 
         match ($command) {
+            "challenge" => (new Challenge())(array_slice($argv, 2)),
             "convert" => (new Convert())(array_slice($argv, 2)),
             "download" => (new Download())(array_slice($argv, 2)),
             "generate" => (new Generate())(array_slice($argv, 2)),

@@ -24,6 +24,7 @@ use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
+use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
@@ -497,6 +498,7 @@ final class ControllerFactory
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
+                $this->repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
                 new StartABattle(
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                     $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),

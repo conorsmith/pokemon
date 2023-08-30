@@ -17,6 +17,8 @@ use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use ConorSmith\Pokemon\SharedKernel\PlayerIsLeagueChampionQuery;
+use ConorSmith\Pokemon\SharedKernel\RegionalVictoryQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -36,13 +38,14 @@ final class GetMap
         private readonly Connection $db,
         private readonly LocationRepository $locationRepository,
         private readonly BagRepository $bagRepository,
-        private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly SharedViewModelFactory $sharedViewModelFactory,
         private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
+        private readonly PlayerIsLeagueChampionQuery $playerIsLeagueChampionQuery,
+        private readonly RegionalVictoryQuery $regionalVictoryQuery,
         private readonly array $pokedex,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -94,10 +97,17 @@ final class GetMap
                 }
 
                 if (array_key_exists('prerequisite', $trainer)
+                    && array_key_exists('victory', $trainer['prerequisite'])
+                ) {
+                    if (!$this->regionalVictoryQuery->run($trainer['prerequisite']['victory'])) {
+                        continue;
+                    }
+                }
+
+                if (array_key_exists('prerequisite', $trainer)
                     && array_key_exists('champion', $trainer['prerequisite'])
                 ) {
-                    $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($trainer['prerequisite']['champion']);
-                    if (is_null($eliteFourChallenge)) {
+                    if (!$this->playerIsLeagueChampionQuery->run($trainer['prerequisite']['champion'])) {
                         continue;
                     }
                 }
@@ -303,9 +313,9 @@ final class GetMap
             return null;
         }
 
-        $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($eliteFourConfig['region']);
+        $playerIsChampion = $this->playerIsLeagueChampionQuery->run($eliteFourConfig['region']);
 
-        if (!is_null($eliteFourChallenge)) {
+        if ($playerIsChampion) {
             return null;
         }
 
@@ -330,9 +340,7 @@ final class GetMap
             return null;
         }
 
-        $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($eliteFourConfig['region']);
-
-        if (is_null($eliteFourChallenge)) {
+        if (!$this->regionalVictoryQuery->run($eliteFourConfig['region'])) {
             return null;
         }
 

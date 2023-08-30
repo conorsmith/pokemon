@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\Controllers;
 
+use ConorSmith\Pokemon\Battle\EliteFourChallengeRegionalVictoryQuery;
+use ConorSmith\Pokemon\Battle\LeagueChampionRepositoryPlayerIsLeagueChampionQuery;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
+use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Controllers\GetMap;
 use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
 use ConorSmith\Pokemon\EncounterConfigRepository;
@@ -42,7 +45,6 @@ final class ControllerFactory
                 $this->db,
                 $this->repositoryFactory->create(LocationRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 $this->locationConfigRepository,
                 $this->encounterConfigRepository,
                 $this->trainerConfigRepository,
@@ -52,6 +54,12 @@ final class ControllerFactory
                 $this->sharedViewModelFactory,
                 new TotalRegisteredPokemonQuery(
                     $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                ),
+                new LeagueChampionRepositoryPlayerIsLeagueChampionQuery(
+                    $this->repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
+                ),
+                new EliteFourChallengeRegionalVictoryQuery(
+                    $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId)
                 ),
                 $this->pokedex,
                 $this->templateEngine,

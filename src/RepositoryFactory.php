@@ -10,6 +10,7 @@ use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
 use ConorSmith\Pokemon\Battle\Repositories\BattleRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
+use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
@@ -45,7 +46,10 @@ final class RepositoryFactory
             DailyHabitLogRepository::class      => new DailyHabitLogRepository($this->db, $instanceId),
             UnlimitedHabitLogRepository::class  => new UnlimitedHabitLogRepository($this->db, $instanceId),
             WeeklyHabitLogRepository::class     => new WeeklyHabitLogRepository($this->db, $instanceId),
-            EliteFourChallengeRepository::class => new EliteFourChallengeRepository($this->db),
+            EliteFourChallengeRepository::class => new EliteFourChallengeRepository(
+                $this->db,
+                $this->create(LeagueChampionRepository::class, $instanceId),
+            ),
             BagRepository::class                => new BagRepository($this->db, $instanceId),
             CaughtPokemonRepository::class      => new CaughtPokemonRepository($this->db, $instanceId),
             LocationRepository::class           => new LocationRepository(
@@ -107,6 +111,11 @@ final class RepositoryFactory
                 $this->db,
                 new TrainerConfigRepository(),
                 $this->create(EliteFourChallengeRepository::class, $instanceId),
+                $this->create(LeagueChampionRepository::class, $instanceId),
+                $instanceId,
+            ),
+            LeagueChampionRepository::class => new LeagueChampionRepository(
+                $this->db,
                 $instanceId,
             ),
             default => throw new LogicException(),

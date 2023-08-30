@@ -19,6 +19,11 @@ final class TrainerConfigRepository
         $this->trainerConfigRepository[RegionId::HOENN] = require __DIR__ . "/Config/Trainers/Hoenn.php";
     }
 
+    public function findTrainersInRegion(RegionId $regionId): array
+    {
+        return $this->trainerConfigRepository[$regionId];
+    }
+
     public function findTrainersInLocation(string $locationId): ?array
     {
         foreach ($this->trainerConfigRepository as $region => $config) {

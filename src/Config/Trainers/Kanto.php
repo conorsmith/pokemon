@@ -18,7 +18,7 @@ return [
             'name' => "Blue",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/10/Spr_FRLG_Blue_3.png",
             'prerequisite' => [
-                'champion' => RegionId::KANTO,
+                'victory' => RegionId::KANTO,
             ],
             'team' => [
                 [

@@ -16,6 +16,7 @@ final class EliteFourChallengeRepository
 {
     public function __construct(
         private readonly Connection $db,
+        private readonly LeagueChampionRepository $leagueChampionRepository,
     ) {}
 
     public function findActive(): ?EliteFourChallenge
@@ -26,7 +27,7 @@ final class EliteFourChallengeRepository
             return null;
         }
 
-        return self::createFromRow($row);
+        return $this->createFromRow($row);
     }
 
     public function findVictoryInRegion(RegionId $region): ?EliteFourChallenge
@@ -39,7 +40,7 @@ final class EliteFourChallengeRepository
             return null;
         }
 
-        return self::createFromRow($row);
+        return $this->createFromRow($row);
     }
 
     public function findCurrentPokemonLeagueRegion(): RegionId
@@ -60,7 +61,7 @@ final class EliteFourChallengeRepository
         throw new Exception("Victory in all Pokemon Leagues");
     }
 
-    private static function createFromRow(array $row): EliteFourChallenge
+    private function createFromRow(array $row): EliteFourChallenge
     {
         if ($row['team'] === "null") {
             throw new Exception("Outdated data, 'team' value is missing");
@@ -78,7 +79,7 @@ final class EliteFourChallengeRepository
             json_decode($row['team'], true),
         );
 
-        return self::createEliteFourChallenge(
+        return $this->createEliteFourChallenge(
             $row['id'],
             $region,
             $team,
@@ -123,24 +124,29 @@ final class EliteFourChallengeRepository
         }
     }
 
-    public static function createEliteFourChallenge(
+    public function createEliteFourChallenge(
         string $id,
-        RegionId $region,
+        RegionId $regionId,
         array $team,
         int $stage,
         bool $victory,
         ?CarbonImmutable $dateCompleted,
     ): EliteFourChallenge {
-        $eliteFourConfig = self::findEliteFourConfig($region);
+        $eliteFourConfig = self::findEliteFourConfig($regionId);
 
         $memberIds = array_map(
             fn (array $config) => $config['id'],
             $eliteFourConfig['members'],
         );
 
+        $regionalChampion = $this->leagueChampionRepository->find($regionId);
+
+        $memberIds = array_slice($memberIds, 0, -1);
+        $memberIds[] = $regionalChampion->trainerId;
+
         return new EliteFourChallenge(
             $id,
-            $region,
+            $regionId,
             $memberIds,
             $team,
             $stage,

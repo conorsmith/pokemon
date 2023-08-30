@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
+use ConorSmith\Pokemon\Battle\Domain\LeagueChampion;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
+use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
@@ -22,6 +24,7 @@ final class PostBattleFinish
         private readonly PlayerRepositoryDb $playerRepository,
         private readonly TrainerRepository $trainerRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
+        private readonly LeagueChampionRepository $leagueChampionRepository,
         private readonly StartABattle $startABattleUseCase,
     ) {}
 
@@ -33,6 +36,7 @@ final class PostBattleFinish
         $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
         $eliteFourChallenge = $this->eliteFourChallengeRepository->findActive();
+        $leagueChampion = null;
 
         $player = $player->endBattle();
         $trainer = $trainer->endBattle();
@@ -44,6 +48,7 @@ final class PostBattleFinish
             if ($battle->playerHasWon()) {
                 if ($eliteFourChallenge->isInFinalStage()) {
                     $eliteFourChallenge = $eliteFourChallenge->win();
+                    $leagueChampion = LeagueChampion::player($eliteFourChallenge->region);
                 } else {
                     $eliteFourChallenge = $eliteFourChallenge->proceedToNextStage();
 
@@ -61,6 +66,9 @@ final class PostBattleFinish
         $this->trainerRepository->saveTrainer($trainer);
         if ($eliteFourChallenge) {
             $this->eliteFourChallengeRepository->save($eliteFourChallenge);
+        }
+        if (!is_null($leagueChampion)) {
+            $this->leagueChampionRepository->save($leagueChampion);
         }
 
         if ($eliteFourChallenge && $eliteFourChallenge->isInProgress()) {

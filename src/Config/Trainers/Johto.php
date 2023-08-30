@@ -256,7 +256,7 @@ return [
             'name' => "Red",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/e8/Spr_HGSS_Red.png",
             'prerequisite' => [
-                'champion' => RegionId::JOHTO,
+                'victory' => RegionId::JOHTO,
             ],
             'team' => [
                 [
@@ -4463,7 +4463,7 @@ return [
             'name' => "Lance",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/1f/Spr_HGSS_Lance.png",
             'prerequisite' => [
-                'champion' => RegionId::JOHTO,
+                'victory' => RegionId::JOHTO,
             ],
             'team' => [
                 [

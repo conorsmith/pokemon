@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Battle\ConsoleCommands;
 
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
+use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Battle\UseCases\SimulateABattle;
 use ConorSmith\Pokemon\LocationConfigRepository;
@@ -39,7 +40,13 @@ final class Simulate
             new TrainerRepository(
                 $db,
                 require __DIR__ . "/../../../src/Config/Pokedex.php",
-                new EliteFourChallengeRepository($db),
+                new EliteFourChallengeRepository(
+                    $db,
+                    new LeagueChampionRepository(
+                        $db,
+                        new InstanceId(Instance::DEFAULT_ID),
+                    ),
+                ),
                 new TrainerConfigRepository(),
                 new LocationConfigRepository(),
                 new InstanceId(Instance::DEFAULT_ID),

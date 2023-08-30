@@ -2857,7 +2857,7 @@ return [
             'name' => "Steven",
             'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/ad/Spr_RS_Steven.png",
             'prerequisite' => [
-                'champion' => RegionId::HOENN,
+                'victory' => RegionId::HOENN,
             ],
             'team' => [
                 [

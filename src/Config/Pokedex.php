@@ -2700,9 +2700,53 @@ return [
         'type' => [PokemonType::DARK, PokemonType::FLYING],
         'friendship' => 35,
     ],
+    PokedexNo::CHINGLING => [
+        'name' => "Chingling",
+        'type' => [PokemonType::PSYCHIC],
+        'evolutions' => [
+            PokedexNo::CHIMECHO => [
+                'friendship',
+                'time' => "night",
+            ],
+        ],
+    ],
+    PokedexNo::SKUNTANK => [
+        'name' => "Skuntank",
+        'type' => [PokemonType::POISON, PokemonType::DARK],
+    ],
+    PokedexNo::BRONZOR => [
+        'name' => "Bronzor",
+        'type' => [PokemonType::STEEL, PokemonType::PSYCHIC],
+        'evolutions' => [
+            PokedexNo::BRONZONG => [
+                'level' => 33,
+            ],
+        ],
+    ],
+    PokedexNo::BRONZONG => [
+        'name' => "Bronzong",
+        'type' => [PokemonType::STEEL, PokemonType::PSYCHIC],
+    ],
+    PokedexNo::CHATOT => [
+        'name' => "Chatot",
+        'type' => [PokemonType::NORMAL, PokemonType::FLYING],
+        'friendship' => 35,
+    ],
+    PokedexNo::SPIRITOMB => [
+        'name' => "Spiritomb",
+        'type' => [PokemonType::GHOST, PokemonType::DARK],
+    ],
     PokedexNo::GARCHOMP => [
         'name' => "Garchomp",
         'type' => [PokemonType::DRAGON, PokemonType::GROUND],
+    ],
+    PokedexNo::LUCARIO => [
+        'name' => "Lucario",
+        'type' => [PokemonType::FIGHTING, PokemonType::STEEL],
+    ],
+    PokedexNo::TOXICROAK => [
+        'name' => "Toxicroak",
+        'type' => [PokemonType::POISON, PokemonType::FIGHTING],
     ],
     PokedexNo::WEAVILE => [
         'name' => "Weavile",

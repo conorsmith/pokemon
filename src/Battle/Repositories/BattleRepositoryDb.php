@@ -18,6 +18,7 @@ final class BattleRepositoryDb implements BattleRepository
         private readonly Connection $db,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
+        private readonly LeagueChampionRepository $leagueChampionRepository,
         private readonly InstanceId $instanceId,
     ) {}
 
@@ -74,6 +75,10 @@ final class BattleRepositoryDb implements BattleRepository
     public function findBattlesInLocation(string $locationId): array
     {
         $config = $this->trainerConfigRepository->findTrainersInLocation($locationId);
+
+        if (is_null($config)) {
+            return [];
+        }
 
         $battles = [];
 

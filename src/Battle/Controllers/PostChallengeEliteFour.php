@@ -47,7 +47,7 @@ final class PostChallengeEliteFour
 
         $bag = $bag->use(ItemId::CHALLENGE_TOKEN, 5);
 
-        $eliteFourChallenge = EliteFourChallengeRepository::createEliteFourChallenge(
+        $eliteFourChallenge = $this->eliteFourChallengeRepository->createEliteFourChallenge(
             Uuid::uuid4()->toString(),
             $region,
             array_map(
