@@ -423,7 +423,7 @@
 </div>
 
 <?php if ($successes || $failures) : ?>
-    <div class="position-fixed w-100 px-3 pt-3" style="top: 56px;">
+    <div class="position-fixed w-100 px-3 pt-3" style="top: 56px; z-index: 10;">
         <?php if ($successes) : ?>
             <div class="alert alert-success alert-dismissible">
                 <?php if (count($successes) === 1) : ?>

@@ -9,6 +9,7 @@ use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\EarnedGymBadgesQuery;
+use ConorSmith\Pokemon\SharedKernel\EvolutionaryLineQuery;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
 use ConorSmith\Pokemon\Team\Domain\DayCare;
@@ -29,6 +30,7 @@ final class PokemonRepositoryDb implements PokemonRepository
     public function __construct(
         private readonly Connection $db,
         private readonly EarnedGymBadgesQuery $earnedGymBadgesQuery,
+        private readonly EvolutionaryLineQuery $evolutionaryLineQuery,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly InstanceId $instanceId,
@@ -105,10 +107,21 @@ final class PokemonRepositoryDb implements PokemonRepository
             $caughtAtMap[$row['id']] = new Carbon($row['date_caught']);
         }
 
-        $all = array_filter($all, function(Pokemon $pokemon) use ($query) {
-            return $pokemon->type->primaryType == $query->filter
-                || $pokemon->type->secondaryType == $query->filter;
-        });
+        if (array_key_exists('type', $query->filter)) {
+            $all = array_filter($all, function (Pokemon $pokemon) use ($query) {
+                return $pokemon->type->primaryType == $query->filter['type']
+                    || $pokemon->type->secondaryType == $query->filter['type'];
+            });
+        }
+
+        if (array_key_exists('family', $query->filter)) {
+            $all = array_filter($all, function (Pokemon $pokemon) use ($query) {
+                return in_array(
+                    $query->filter['family'],
+                    $this->evolutionaryLineQuery->run($pokemon->number),
+                );
+            });
+        }
 
         usort($all, function(Pokemon $a, Pokemon $b) use ($query, $caughtAtMap) {
             return match($query->sort) {

@@ -45,6 +45,7 @@ use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\Pokedex\Controllers\GetPokedexEntry;
 use ConorSmith\Pokemon\Pokedex\RegisterNewPokemonCommand;
+use ConorSmith\Pokemon\Pokedex\Repositories\EvolutionaryLineRepository;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
@@ -236,6 +237,9 @@ final class ControllerFactory
             ),
             GetPokedexEntry::class => new GetPokedexEntry(
                 $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                new EvolutionaryLineRepository(
+                    new PokedexConfigRepository(),
+                ),
                 new RegionRepositoryRegionIsLockedQuery(
                     $this->repositoryFactory->create(RegionRepository::class, $instanceId),
                 ),

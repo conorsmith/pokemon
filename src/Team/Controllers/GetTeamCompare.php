@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Team\Controllers;
 
 use ConorSmith\Pokemon\PokemonType;
+use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;
 use ConorSmith\Pokemon\Team\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -25,12 +26,22 @@ final class GetTeamCompare
         $query = (object) [
             'show' => $request->query->get('show') ?? "effective-stats",
             'sort' => $request->query->get('sort') ?? "number",
-            'filter' => $request->query->get('filter') ?? null,
+            'filter' => $request->query->all('filter') ?? [],
         ];
 
         $allPokemon = $this->pokemonRepository->getAll($query);
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/TeamCompare.php", [
+            'buildQuery' => function (string $key, string $value) use ($query) {
+                $query = (array) $query;
+                $query[$key] = $value;
+                return http_build_query($query);
+            },
+            'clearFilter' => function (string $key) use ($query) {
+                $query = (array) $query;
+                unset($query['filter'][$key]);
+                return http_build_query($query);
+            },
             'query' => $query,
             'allPokemon' => array_map(
                 fn(Pokemon $pokemon) => self::createPokemonVm($pokemon),
@@ -64,7 +75,8 @@ final class GetTeamCompare
         return (object) [
             'id' => $typeId,
             'name' => ViewModelFactory::createPokemonTypeName($typeId),
-            'isActive' => $query->filter == $typeId,
+            'isActive' => array_key_exists('type', $query->filter)
+                && $query->filter['type'] == $typeId,
         ];
     }
 
@@ -76,8 +88,14 @@ final class GetTeamCompare
 
         return (object) [
             'id' => $pokemon->id,
+            'pokedexNumber' => $pokemon->number,
             'name' => $pokemonConfig['name'],
             'level' => $pokemon->level,
+            'sex' => match ($pokemon->sex) {
+                Sex::FEMALE => "fa-venus",
+                Sex::MALE => "fa-mars",
+                Sex::UNKNOWN => "fa-genderless",
+            },
             'effectiveStats' => (object) [
                 'hp' => $pokemon->hp->calculate($pokemon->level),
                 'physicalAttack' => $pokemon->physicalAttack->calculate($pokemon->level),

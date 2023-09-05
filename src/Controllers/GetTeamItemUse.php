@@ -29,6 +29,8 @@ final class GetTeamItemUse
 
         $bag = $this->bagRepository->find();
         $team = $this->pokemonRepository->getTeam();
+        $dayCare = $this->pokemonRepository->getDayCare();
+        $box = $this->pokemonRepository->getBox();
 
         $itemConfig = require __DIR__ . "/../Config/Items.php";
 
@@ -46,6 +48,14 @@ final class GetTeamItemUse
             'team' => array_map(
                 fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
                 $team->members
+            ),
+            'dayCare' => array_map(
+                fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
+                $dayCare->attendees
+            ),
+            'box' => array_map(
+                fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
+                $box
             ),
         ]));
     }

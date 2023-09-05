@@ -20,6 +20,8 @@ use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
 use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
 use ConorSmith\Pokemon\Player\EarnedGymBadgesQueryDb;
+use ConorSmith\Pokemon\Pokedex\EvolutionaryLineQuery;
+use ConorSmith\Pokemon\Pokedex\Repositories\EvolutionaryLineRepository;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
@@ -66,6 +68,11 @@ final class RepositoryFactory
             PokemonRepositoryDb::class => new PokemonRepositoryDb(
                 $this->db,
                 new EarnedGymBadgesQueryDb($this->db, $instanceId),
+                new EvolutionaryLineQuery(
+                    new EvolutionaryLineRepository(
+                        new PokedexConfigRepository(),
+                    ),
+                ),
                 new PokedexConfigRepository(),
                 new LocationConfigRepository(),
                 $instanceId,

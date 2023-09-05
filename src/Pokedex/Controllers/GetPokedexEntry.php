@@ -9,7 +9,9 @@ use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Pokedex\Domain\EncounterLocation;
+use ConorSmith\Pokemon\Pokedex\Domain\EvolutionaryBranch;
 use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
+use ConorSmith\Pokemon\Pokedex\Repositories\EvolutionaryLineRepository;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\ViewModelFactory;
 use ConorSmith\Pokemon\PokedexConfigRepository;
@@ -28,6 +30,7 @@ final class GetPokedexEntry
 {
     public function __construct(
         private readonly PokedexEntryRepository $pokedexEntryRepository,
+        private readonly EvolutionaryLineRepository $evolutionaryLineRepository,
         private readonly RegionIsLockedQuery $regionIsLockedQuery,
         private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly ItemConfigRepository $itemConfigRepository,
@@ -50,10 +53,7 @@ final class GetPokedexEntry
 
         $encounterLocations = $this->findEncounterLocations($entry);
 
-        $ancestors = $this->findAncestors($pokedexNumber);
-        $descendants = $this->findDescendants($pokedexNumber);
-
-        $evolutionaryLine = $this->mergeAncestorsAndDescendants($ancestors, $descendants);
+        $evolutionaryLine = $this->evolutionaryLineRepository->find($pokedexNumber);
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Entry.php", [
             'pokemon'            => ViewModelFactory::createPokemonViewModel($entry, $config),
@@ -64,19 +64,19 @@ final class GetPokedexEntry
                 ),
                 $encounterLocations,
             ),
-            'evolutions' => $this->createVmsForEvolutionaryLine($evolutionaryLine),
+            'evolutions' => $this->createVmsForEvolutionaryLine($evolutionaryLine->getRootBranch()),
         ]));
     }
 
-    private function createVmsForEvolutionaryLine(array $evolutionaryLine): array
+    private function createVmsForEvolutionaryLine(EvolutionaryBranch $evolutionaryBranch): array
     {
         $vms = [];
 
-        while (count($evolutionaryLine['descendants']) > 0) {
-            if (count($evolutionaryLine['descendants']) === 1) {
+        while ($evolutionaryBranch->hasDescendants()) {
+            if ($evolutionaryBranch->hasASingleDescendant()) {
 
-                $entry = $this->pokedexEntryRepository->find($evolutionaryLine['pokedexNumber']);
-                $config = $this->pokedexConfigRepository->find($evolutionaryLine['pokedexNumber']);
+                $entry = $this->pokedexEntryRepository->find($evolutionaryBranch->getPokedexNumber());
+                $config = $this->pokedexConfigRepository->find($evolutionaryBranch->getPokedexNumber());
 
                 $vms[] = (object) [
                     'type' => "pokemon",
@@ -87,16 +87,16 @@ final class GetPokedexEntry
                 $vms[] = (object)[
                     'type'    => "evolution",
                     'trigger' => $this->createEvolutionViewModel(
-                        $evolutionaryLine['descendants'][0]['pokedexNumber'],
-                        $config['evolutions'][$evolutionaryLine['descendants'][0]['pokedexNumber']],
+                        $evolutionaryBranch->getFirstBranch()->getPokedexNumber(),
+                        $config['evolutions'][$evolutionaryBranch->getFirstBranch()->getPokedexNumber()],
                     ),
                 ];
 
-                $evolutionaryLine = $evolutionaryLine['descendants'][0];
+                $evolutionaryBranch = $evolutionaryBranch->getFirstBranch();
 
-                if (count($evolutionaryLine['descendants']) === 0) {
-                    $entry = $this->pokedexEntryRepository->find($evolutionaryLine['pokedexNumber']);
-                    $config = $this->pokedexConfigRepository->find($evolutionaryLine['pokedexNumber']);
+                if (!$evolutionaryBranch->hasDescendants()) {
+                    $entry = $this->pokedexEntryRepository->find($evolutionaryBranch->getPokedexNumber());
+                    $config = $this->pokedexConfigRepository->find($evolutionaryBranch->getPokedexNumber());
 
                     $vms[] = (object)[
                         'type'         => "pokemon",
@@ -105,13 +105,14 @@ final class GetPokedexEntry
                     ];
                 }
             } else {
-                foreach ($evolutionaryLine['descendants'] as $descendantEvolutionaryLine) {
+                /** @var EvolutionaryBranch $descendantEvolutionaryBranch */
+                foreach ($evolutionaryBranch->getAllBranches() as $descendantEvolutionaryBranch) {
                     $vms[] = (object) [
                         'type' => "branch",
-                        'vms' => $this->createVmsForEvolutionaryLine([
-                            'pokedexNumber' => $evolutionaryLine['pokedexNumber'],
-                            'descendants' => [$descendantEvolutionaryLine],
-                        ]),
+                        'vms' => $this->createVmsForEvolutionaryLine(new EvolutionaryBranch([
+                            'pokedexNumber' => $evolutionaryBranch->getPokedexNumber(),
+                            'descendants' => [$descendantEvolutionaryBranch->data],
+                        ])),
                     ];
                 }
                 return $vms;
@@ -119,74 +120,6 @@ final class GetPokedexEntry
         }
 
         return $vms;
-    }
-
-    private function mergeAncestorsAndDescendants(array $ancestors, array $descendants): array
-    {
-        $ancestors = array_reverse($ancestors);
-
-        foreach ($ancestors as $ancestorPokedexNumber) {
-            $descendants = [
-                'pokedexNumber' => $ancestorPokedexNumber,
-                'descendants' => [$descendants],
-            ];
-        }
-
-        return $descendants;
-    }
-
-    private function findDescendants(string $pokedexNumber): array
-    {
-        $entry = $this->pokedexConfigRepository->find($pokedexNumber);
-
-        if (!isset($entry['evolutions'])) {
-            return [
-                'pokedexNumber' => $pokedexNumber,
-                'descendants' => [],
-            ];
-        }
-
-        $descendants = [];
-
-        foreach ($entry['evolutions'] as $descendantPokedexNumber => $evolutionConfig) {
-            $descendants[] = $this->findDescendants(strval($descendantPokedexNumber));
-        }
-
-        return [
-            'pokedexNumber' => $pokedexNumber,
-            'descendants' => $descendants,
-        ];
-    }
-
-    private function findAncestors(string $pokedexNumber): array
-    {
-        $candidates = [];
-
-        while (!is_null($pokedexNumber)) {
-            $pokedexNumber = $this->findPreviousStageOfEvolutionaryLine($pokedexNumber);
-            if (!is_null($pokedexNumber)) {
-                $candidates[] = $pokedexNumber;
-            }
-        }
-
-        return array_reverse($candidates);
-    }
-
-    private function findPreviousStageOfEvolutionaryLine(string $pokedexNumber): ?string
-    {
-        foreach ($this->pokedexConfigRepository->all() as $previousStagePokedexNumber => $entry) {
-            if (!isset($entry['evolutions'])) {
-                continue;
-            }
-
-            foreach ($entry['evolutions'] as $evolutionPokedexNumber => $evolutionConfig) {
-                if (strval($evolutionPokedexNumber) === $pokedexNumber) {
-                    return strval($previousStagePokedexNumber);
-                }
-            }
-        }
-
-        return null;
     }
 
     private function findEncounterLocations(PokemonEntry $entry): array
@@ -210,7 +143,7 @@ final class GetPokedexEntry
                                 0,
                             )
                             : $carry + $config['weight'],
-                        0
+                        0,
                     );
                     foreach ($encountersConfig as $encounterPokedexNumber => $config) {
                         if ($encounterPokedexNumber === $entryPokedexNumber) {

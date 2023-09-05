@@ -18,7 +18,7 @@ final class EggRepositoryDb implements EggRepository
 
     public function all(): array
     {
-        $rows = $this->db->fetchAllAssociative("SELECT * FROM eggs WHERE instance_id = :instanceId", [
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM eggs WHERE instance_id = :instanceId ORDER BY pokedex_number", [
             'instanceId' => $this->instanceId->value,
         ]);
 

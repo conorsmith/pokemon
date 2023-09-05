@@ -30,13 +30,11 @@ final class LevelUpPokemon
 
     public function run(string $pokemonId): ResultOfLevellingUp
     {
-        $team = $this->pokemonRepository->getTeam();
+        $pokemon = $this->pokemonRepository->find($pokemonId);
 
-        if (!$team->contains($pokemonId)) {
+        if (is_null($pokemon)) {
             throw new Exception("Pokémon not found");
         }
-
-        $pokemon = $team->find($pokemonId);
 
         $highestRankedGymBadge = $this->highestRankedGymBadgeQuery->run();
 
@@ -61,11 +59,9 @@ final class LevelUpPokemon
         $pokemon = $pokemon->levelUp($newLevel);
         $this->friendshipLog->levelUp($pokemon);
 
-        $team = $team->replace($pokemon);
-
         $this->db->beginTransaction();
 
-        $this->pokemonRepository->saveTeam($team);
+        $this->pokemonRepository->save($pokemon);
 
         if ($pokemonEvolves) {
             $this->addPokedexEntryIfNecessary($pokemon);
