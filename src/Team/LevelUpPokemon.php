@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\Team;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
-use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\HighestRankedGymBadgeQuery;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\Team\Domain\Evolution;

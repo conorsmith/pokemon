@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
+use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
 
 return [
     LocationId::PALLET_TOWN => [

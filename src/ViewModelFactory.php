@@ -8,6 +8,7 @@ use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\ViewModels\IvStrength;
 use ConorSmith\Pokemon\Battle\ViewModels\Pokemon as PokemonVm;
+use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\ViewModels\TeamMember;
 use LogicException;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon;
+namespace ConorSmith\Pokemon\Location\Domain;
 
 use LogicException;
 

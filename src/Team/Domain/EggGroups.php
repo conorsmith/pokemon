@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\Domain;
 
-use ConorSmith\Pokemon\EggGroup;
+use ConorSmith\Pokemon\Team\Domain\EggGroup;
 
 final class EggGroups
 {

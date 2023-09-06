@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use ConorSmith\Pokemon\Direction;
+use ConorSmith\Pokemon\Location\Domain\Direction;
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\LocationType;
 

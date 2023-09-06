@@ -30,9 +30,9 @@ final class EliteFourChallengeRepository
         return $this->createFromRow($row);
     }
 
-    public function findVictoryInRegion(RegionId $region): ?EliteFourChallenge
+    public function findPlayerVictoryInRegion(RegionId $region): ?EliteFourChallenge
     {
-        $row = $this->db->fetchAssociative("SELECT * FROM elite_four_challenges WHERE date_completed IS NOT NULL AND victory = 1 AND region = :region", [
+        $row = $this->db->fetchAssociative("SELECT * FROM elite_four_challenges WHERE trainer_id IS NULL AND date_completed IS NOT NULL AND victory = 1 AND region = :region", [
             'region' => $region->value,
         ]);
 
@@ -43,9 +43,21 @@ final class EliteFourChallengeRepository
         return $this->createFromRow($row);
     }
 
-    public function findCurrentPokemonLeagueRegion(): RegionId
+    public function findAllVictoriesInRegion(RegionId $region): array
     {
-        $rows = $this->db->fetchAllAssociative("SELECT * FROM elite_four_challenges WHERE date_completed IS NOT NULL AND victory = 1");
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM elite_four_challenges WHERE date_completed IS NOT NULL AND victory = 1 AND region = :region ORDER BY date_completed DESC", [
+            'region' => $region->value,
+        ]);
+
+        return array_map(
+            fn($row) => $this->createFromRow($row),
+            $rows,
+        );
+    }
+
+    public function findCurrentPokemonLeagueRegionForPlayer(): RegionId
+    {
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM elite_four_challenges WHERE trainer_id IS NULL AND date_completed IS NOT NULL AND victory = 1");
 
         $regionsWithVictory = array_map(
             fn(array $row) => RegionId::from($row['region']),
@@ -82,10 +94,11 @@ final class EliteFourChallengeRepository
         return $this->createEliteFourChallenge(
             $row['id'],
             $region,
+            $row['trainer_id'],
             $team,
             $row['stage'],
             $row['victory'] === 1,
-            null
+            is_null($row['date_completed']) ? null : new CarbonImmutable($row['date_completed'], "Europe/Dublin"),
         );
     }
 
@@ -98,6 +111,8 @@ final class EliteFourChallengeRepository
         if ($row === false) {
             $this->db->insert("elite_four_challenges", [
                 'id'           => $eliteFourChallenge->id,
+                'region'       => $eliteFourChallenge->region->value,
+                'trainer_id'   => $eliteFourChallenge->trainerId,
                 'team'         => json_encode(array_map(
                     fn(EliteFourChallengeTeamMember $member) => [
                         'id'            => $member->id,
@@ -107,7 +122,6 @@ final class EliteFourChallengeRepository
                     ],
                     $eliteFourChallenge->team,
                 )),
-                'region'       => $eliteFourChallenge->region->value,
                 'stage'        => $eliteFourChallenge->stage,
                 'victory'      => 0,
                 'date_started' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin"))->format("Y-m-d H:i:s"),
@@ -115,6 +129,7 @@ final class EliteFourChallengeRepository
         } else {
             $this->db->update("elite_four_challenges", [
                 'region'       => $eliteFourChallenge->region->value,
+                'trainer_id'   => $eliteFourChallenge->trainerId,
                 'stage'        => $eliteFourChallenge->stage,
                 'victory'      => $eliteFourChallenge->victory ? 1 : 0,
                 'date_completed' => $eliteFourChallenge->dateCompleted ? $eliteFourChallenge->dateCompleted->format("Y-m-d H:i:s") : null,
@@ -127,6 +142,7 @@ final class EliteFourChallengeRepository
     public function createEliteFourChallenge(
         string $id,
         RegionId $regionId,
+        ?string $trainerId,
         array $team,
         int $stage,
         bool $victory,
@@ -147,6 +163,7 @@ final class EliteFourChallengeRepository
         return new EliteFourChallenge(
             $id,
             $regionId,
+            $trainerId,
             $memberIds,
             $team,
             $stage,

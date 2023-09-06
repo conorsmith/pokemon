@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Import\ConsoleCommands;
 
-use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
+use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
 use ReflectionClass;
 
 final class Convert

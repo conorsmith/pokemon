@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Team\ViewModels;
 
-use ConorSmith\Pokemon\EggGroup;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\Sex;
+use ConorSmith\Pokemon\Team\Domain\EggGroup;
 use ConorSmith\Pokemon\Team\Domain\Pokemon as DomainModel;
 use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\Pokemon\ViewModels\TeamMember;

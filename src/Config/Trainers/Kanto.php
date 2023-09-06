@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use ConorSmith\Pokemon\Gender;
-use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\LocationId;
 use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\Sex;
+use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 
 return [

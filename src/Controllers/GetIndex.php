@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Controllers;
 
-use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
-use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\CurrentPokemonLeagueQuery;
 use ConorSmith\Pokemon\SharedKernel\Domain\Bag;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
@@ -27,7 +27,7 @@ final class GetIndex
         private readonly Connection $db,
         private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly BagRepository $bagRepository,
-        private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
+        private readonly CurrentPokemonLeagueQuery $currentPokemonLeagueQuery,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -41,7 +41,7 @@ final class GetIndex
         $bag = $this->bagRepository->find();
         $team = $this->pokemonRepository->getTeam();
 
-        $currentPokemonLeague = $this->eliteFourChallengeRepository->findCurrentPokemonLeagueRegion();
+        $currentPokemonLeague = $this->currentPokemonLeagueQuery->run();
 
         $regionalBadgeIdOffset = match($currentPokemonLeague) {
             RegionId::KANTO => 0,

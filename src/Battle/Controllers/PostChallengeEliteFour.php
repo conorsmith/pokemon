@@ -50,6 +50,7 @@ final class PostChallengeEliteFour
         $eliteFourChallenge = $this->eliteFourChallengeRepository->createEliteFourChallenge(
             Uuid::uuid4()->toString(),
             $region,
+            null,
             array_map(
                 fn(Pokemon $pokemon) => new EliteFourChallengeTeamMember(
                     $pokemon->id,

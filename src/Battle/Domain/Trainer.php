@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Domain;
 
-use ConorSmith\Pokemon\Gender;
-use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
 use ConorSmith\Pokemon\TrainerClass;
 use Exception;
 

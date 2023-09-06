@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace ConorSmith\PokemonTest\Team\Domain;
 
-use ConorSmith\Pokemon\EggGroup;
 use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\Team\Domain\CaughtLocation;
+use ConorSmith\Pokemon\Team\Domain\EggGroup;
 use ConorSmith\Pokemon\Team\Domain\EggGroups;
 use ConorSmith\Pokemon\Team\Domain\Hp;
 use ConorSmith\Pokemon\Team\Domain\Pokemon;

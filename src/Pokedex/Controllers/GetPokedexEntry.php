@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Pokedex\Controllers;
 
 use ConorSmith\Pokemon\EncounterConfigRepository;
-use ConorSmith\Pokemon\EncounterType;
 use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Pokedex\Domain\EncounterLocation;
@@ -16,6 +15,7 @@ use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\ViewModelFactory;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\Sex;
+use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\RegionIsLockedQuery;
 use ConorSmith\Pokemon\TemplateEngine;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon;
+namespace ConorSmith\Pokemon\Team\Domain;
 
 enum EggGroup
 {

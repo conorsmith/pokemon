@@ -47,6 +47,10 @@ final class Simulate
                         new InstanceId(Instance::DEFAULT_ID),
                     ),
                 ),
+                new LeagueChampionRepository(
+                    $db,
+                    new InstanceId(Instance::DEFAULT_ID),
+                ),
                 new TrainerConfigRepository(),
                 new LocationConfigRepository(),
                 new InstanceId(Instance::DEFAULT_ID),

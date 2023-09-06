@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\ViewModels;
 
-use ConorSmith\Pokemon\Direction;
 use ConorSmith\Pokemon\Location\Domain\AdjacentLocation;
+use ConorSmith\Pokemon\Location\Domain\Direction;
 use ConorSmith\Pokemon\Location\Domain\Location;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\LocationType;

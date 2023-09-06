@@ -14,6 +14,7 @@ final class EliteFourChallenge
     public function __construct(
         public readonly string $id,
         public readonly RegionId $region,
+        public readonly ?string $trainerId,
         public readonly array $memberIds,
         public readonly array $team,
         public readonly int $stage,
@@ -36,11 +37,17 @@ final class EliteFourChallenge
         return $this->stage === count($this->memberIds) - 1;
     }
 
+    public function isPlayerTheChallenger(): bool
+    {
+        return is_null($this->trainerId);
+    }
+
     public function win(): self
     {
         return new self(
             $this->id,
             $this->region,
+            $this->trainerId,
             $this->memberIds,
             $this->team,
             $this->stage,
@@ -54,6 +61,7 @@ final class EliteFourChallenge
         return new self(
             $this->id,
             $this->region,
+            $this->trainerId,
             $this->memberIds,
             $this->team,
             $this->stage,
@@ -71,6 +79,7 @@ final class EliteFourChallenge
         return new self(
             $this->id,
             $this->region,
+            $this->trainerId,
             $this->memberIds,
             $this->team,
             $this->stage + 1,

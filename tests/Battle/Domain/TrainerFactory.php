@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace ConorSmith\PokemonTest\Battle\Domain;
 
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
-use ConorSmith\Pokemon\Gender;
-use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
 
 final class TrainerFactory
 {

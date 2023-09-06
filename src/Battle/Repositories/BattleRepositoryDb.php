@@ -85,10 +85,19 @@ final class BattleRepositoryDb implements BattleRepository
         foreach ($config as $entry) {
 
             if (array_key_exists('prerequisite', $entry)
+                && array_key_exists('victory', $entry['prerequisite'])
+            ) {
+                $eliteFourChallenge = $this->eliteFourChallengeRepository->findPlayerVictoryInRegion($entry['prerequisite']['victory']);
+                if (is_null($eliteFourChallenge)) {
+                    continue;
+                }
+            }
+
+            if (array_key_exists('prerequisite', $entry)
                 && array_key_exists('champion', $entry['prerequisite'])
             ) {
-                $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($entry['prerequisite']['champion']);
-                if (is_null($eliteFourChallenge)) {
+                $leagueChampion = $this->leagueChampionRepository->find($entry['prerequisite']['champion']);
+                if (!$leagueChampion->isPlayer()) {
                     continue;
                 }
             }

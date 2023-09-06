@@ -20,6 +20,7 @@ use ConorSmith\Pokemon\Battle\Controllers\PostEncounterCatch;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterFight;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterRun;
 use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
+use ConorSmith\Pokemon\Battle\EliteFourChallengeCurrentPokemonLeagueQuery;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
@@ -498,7 +499,6 @@ final class ControllerFactory
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
             ),
             PostBattleFinish::class => new PostBattleFinish(
-                $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
@@ -558,7 +558,9 @@ final class ControllerFactory
                 $this->db,
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
+                new EliteFourChallengeCurrentPokemonLeagueQuery(
+                    $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
+                ),
                 $this->viewModelFactory,
                 $this->templateEngine,
             ),

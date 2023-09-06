@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ConorSmith\Pokemon;
+namespace ConorSmith\Pokemon\SharedKernel\Domain;
 
 final class EncounterType
 {

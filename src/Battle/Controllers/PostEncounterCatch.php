@@ -11,7 +11,7 @@ use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
-use ConorSmith\Pokemon\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery;
 use Doctrine\DBAL\Connection;
 use LogicException;

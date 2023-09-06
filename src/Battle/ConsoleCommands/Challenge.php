@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Battle\ConsoleCommands;
 
 use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
+use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Battle\UseCases\GenerateAChallenge;
@@ -44,6 +45,7 @@ final class Challenge
             $generateAChallenge = new GenerateAChallenge(
                 $repositoryFactory->create(TrainerRepository::class, $instanceId),
                 $repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
+                $repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
             );
 
             $startABattle = new StartABattle(

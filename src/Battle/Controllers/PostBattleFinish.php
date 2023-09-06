@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 final class PostBattleFinish
 {
     public function __construct(
-        private readonly BattleRepository $battleRepository,
         private readonly PlayerRepositoryDb $playerRepository,
         private readonly TrainerRepository $trainerRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
@@ -32,7 +31,6 @@ final class PostBattleFinish
     {
         $trainerBattleId = $args['id'];
 
-        $battle = $this->battleRepository->find($trainerBattleId);
         $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
         $eliteFourChallenge = $this->eliteFourChallengeRepository->findActive();
@@ -44,22 +42,37 @@ final class PostBattleFinish
         $this->playerRepository->savePlayer($player);
 
         if ($eliteFourChallenge) {
-            // This only works if the trainer has never been beaten...
-            if ($battle->playerHasWon()) {
-                if ($eliteFourChallenge->isInFinalStage()) {
-                    $eliteFourChallenge = $eliteFourChallenge->win();
-                    $leagueChampion = LeagueChampion::player($eliteFourChallenge->region);
-                } else {
-                    $eliteFourChallenge = $eliteFourChallenge->proceedToNextStage();
+            if ($eliteFourChallenge->isPlayerTheChallenger()) {
+                if ($trainer->hasEntireTeamFainted()) {
+                    if ($eliteFourChallenge->isInFinalStage()) {
+                        $eliteFourChallenge = $eliteFourChallenge->win();
+                        $leagueChampion = LeagueChampion::player($eliteFourChallenge->region);
+                    } else {
+                        $eliteFourChallenge = $eliteFourChallenge->proceedToNextStage();
 
-                    $result = $this->startABattleUseCase->__invoke($eliteFourChallenge->getMemberIdForCurrentStage());
+                        $result = $this->startABattleUseCase->__invoke($eliteFourChallenge->getMemberIdForCurrentStage());
 
-                    if (!$result->succeeded()) {
-                        throw new Exception;
+                        if (!$result->succeeded()) {
+                            throw new Exception;
+                        }
                     }
+                } else {
+                    $eliteFourChallenge = $eliteFourChallenge->lose();
                 }
             } else {
-                $eliteFourChallenge = $eliteFourChallenge->lose();
+                if ($trainer->hasEntireTeamFainted()) {
+                    $eliteFourChallenge = $eliteFourChallenge->lose();
+                } else {
+                    if ($eliteFourChallenge->isInFinalStage()) {
+                        $eliteFourChallenge = $eliteFourChallenge->win();
+                        $leagueChampion = new LeagueChampion(
+                            $eliteFourChallenge->region,
+                            $trainer->id,
+                        );
+                    } else {
+                        throw new Exception("Player should only face a challenger in the final stage");
+                    }
+                }
             }
         }
 

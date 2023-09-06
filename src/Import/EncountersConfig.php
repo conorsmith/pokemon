@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Import;
 
-use ConorSmith\Pokemon\EncounterType as EncounterTypeConstants;
 use ConorSmith\Pokemon\Import\Domain\EncounterTable;
 use ConorSmith\Pokemon\Import\Domain\EncounterTableEntry;
 use ConorSmith\Pokemon\Import\Domain\EncounterType;
 use ConorSmith\Pokemon\Import\Domain\LevelRange;
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
 use ConorSmith\Pokemon\PokedexNo as PokedexNumberConstants;
+use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType as EncounterTypeConstants;
 use ReflectionClass;
 
 final class EncountersConfig

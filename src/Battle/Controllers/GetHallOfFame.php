@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
+use ConorSmith\Pokemon\Battle\Domain\EliteFourChallenge;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
@@ -34,30 +35,43 @@ final class GetHallOfFame
             return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
-        $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($region);
+        $eliteFourChallenges = $this->eliteFourChallengeRepository->findAllVictoriesInRegion($region);
 
-        $teamViewModels = [];
+        $hallOfFameEntries = [];
 
-        /** @var EliteFourChallengeTeamMember $member */
-        foreach ($eliteFourChallenge->team as $member) {
-            $pokedexConfig = $this->pokedexConfigRepository->find($member->pokedexNumber);
-            $teamViewModels[$member->pokedexNumber] = (object) [
-                'name'     => $pokedexConfig['name'],
-                'imageUrl' => TeamMember::createImageUrl($member->pokedexNumber, $member->form),
-                'primaryType' => ViewModelFactory::createPokemonTypeName($pokedexConfig['type'][0]),
-                'secondaryType' => isset($pokedexConfig['type'][1])
-                    ? ViewModelFactory::createPokemonTypeName($pokedexConfig['type'][1])
-                    : null,
-                'level'    => $member->level,
-                // TODO - Check caught pokemon to see if this one is shiny
-                'isShiny'  => false,
+        /** @var EliteFourChallenge $eliteFourChallenge */
+        foreach ($eliteFourChallenges as $eliteFourChallenge) {
+
+            $teamViewModels = [];
+
+            /** @var EliteFourChallengeTeamMember $member */
+            foreach ($eliteFourChallenge->team as $member) {
+                $pokedexConfig = $this->pokedexConfigRepository->find($member->pokedexNumber);
+                $teamViewModels[$member->pokedexNumber] = (object) [
+                    'name'     => $pokedexConfig['name'],
+                    'imageUrl' => TeamMember::createImageUrl($member->pokedexNumber, $member->form),
+                    'primaryType' => ViewModelFactory::createPokemonTypeName($pokedexConfig['type'][0]),
+                    'secondaryType' => isset($pokedexConfig['type'][1])
+                        ? ViewModelFactory::createPokemonTypeName($pokedexConfig['type'][1])
+                        : null,
+                    'level'    => $member->level,
+                    // TODO - Check caught pokemon to see if this one is shiny
+                    'isShiny'  => false,
+                ];
+            }
+
+            ksort($teamViewModels);
+
+            $hallOfFameEntries[] = (object) [
+                // TODO - Get the trainer name and more info from config
+                'name' => $eliteFourChallenge->isPlayerTheChallenger() ? "Player" : "Trainer",
+                'date' => $eliteFourChallenge->dateCompleted->format("F jS, Y"),
+                'team' => $teamViewModels,
             ];
         }
 
-        ksort($teamViewModels);
-
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/HallOfFame.php", [
-            'team' => $teamViewModels,
+            'hallOfFameEntries' => $hallOfFameEntries,
         ]));
     }
 }

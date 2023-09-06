@@ -8,9 +8,9 @@ use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
-use ConorSmith\Pokemon\Gender;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Sex;
+use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
@@ -27,6 +27,7 @@ class TrainerRepository
         private readonly Connection $db,
         private readonly array $pokedex,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
+        private readonly LeagueChampionRepository $leagueChampionRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly InstanceId $instanceId,
@@ -68,10 +69,19 @@ class TrainerRepository
         foreach ($config as $entry) {
 
             if (array_key_exists('prerequisite', $entry)
+                && array_key_exists('victory', $entry['prerequisite'])
+            ) {
+                $eliteFourChallenge = $this->eliteFourChallengeRepository->findPlayerVictoryInRegion($entry['prerequisite']['victory']);
+                if (is_null($eliteFourChallenge)) {
+                    continue;
+                }
+            }
+
+            if (array_key_exists('prerequisite', $entry)
                 && array_key_exists('champion', $entry['prerequisite'])
             ) {
-                $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($entry['prerequisite']['champion']);
-                if (is_null($eliteFourChallenge)) {
+                $leagueChampion = $this->leagueChampionRepository->find($entry['prerequisite']['champion']);
+                if (!$leagueChampion->isPlayer()) {
                     continue;
                 }
             }
@@ -92,10 +102,19 @@ class TrainerRepository
             foreach ($locationEntries as $entry) {
 
                 if (array_key_exists('prerequisite', $entry)
+                    && array_key_exists('victory', $entry['prerequisite'])
+                ) {
+                    $eliteFourChallenge = $this->eliteFourChallengeRepository->findPlayerVictoryInRegion($entry['prerequisite']['victory']);
+                    if (is_null($eliteFourChallenge)) {
+                        continue;
+                    }
+                }
+
+                if (array_key_exists('prerequisite', $entry)
                     && array_key_exists('champion', $entry['prerequisite'])
                 ) {
-                    $eliteFourChallenge = $this->eliteFourChallengeRepository->findVictoryInRegion($entry['prerequisite']['champion']);
-                    if (is_null($eliteFourChallenge)) {
+                    $leagueChampion = $this->leagueChampionRepository->find($entry['prerequisite']['champion']);
+                    if (!$leagueChampion->isPlayer()) {
                         continue;
                     }
                 }
