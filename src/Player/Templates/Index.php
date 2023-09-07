@@ -1,29 +1,55 @@
 <style>
     .bagSummary img {
         width: 24px;
-        filter: grayscale(1);
+    }
+
+    .bagSummary {
+        font-size: 0.8rem;
     }
 </style>
 
-<div class="card bagSummary">
-    <div class="card-body d-flex justify-content-evenly">
-        <div class="d-flex flex-column align-items-center">
-            <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png">
-            <?=$bagSummary->pokeBalls?>
-        </div>
-        <div class="d-flex flex-column align-items-center">
-            <img src="https://archives.bulbagarden.net/media/upload/8/8d/Bag_Rare_Candy_Sprite.png">
-            <?=$bagSummary->rareCandy?>
-        </div>
-        <div class="d-flex flex-column align-items-center">
-            <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
-            <?=$bagSummary->challengeTokens?>
-        </div>
+<div class="d-flex gap-3 justify-content-between">
+    <div>
+        <img src="https://archives.bulbagarden.net/media/upload/d/d0/FRLG_Red_Intro.png">
     </div>
-    <a href="/<?=$instanceId?>/bag" class="stretched-link stretched-link--hidden">Go to Bag</a>
+    <div class="card flex-grow-1 bagSummary">
+        <div class="card-body d-flex justify-content-between px-4">
+            <div class="d-flex gap-1 flex-column align-items-center">
+                <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png">
+                <?=$bagSummary->pokeBalls?>
+            </div>
+            <div class="d-flex gap-1 flex-column align-items-center">
+                <img src="https://archives.bulbagarden.net/media/upload/8/8d/Bag_Rare_Candy_Sprite.png">
+                <?=$bagSummary->rareCandy?>
+            </div>
+            <div class="d-flex gap-1 flex-column align-items-center">
+                <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                <?=$bagSummary->challengeTokens?>
+            </div>
+            <div class="d-flex gap-1 flex-column align-items-center">
+                <img src="https://archives.bulbagarden.net/media/upload/f/f8/Bag_Oval_Charm_Sprite.png">
+                <?=$bagSummary->ovalCharms?>
+            </div>
+        </div>
+        <a href="/<?=$instanceId?>/bag" class="stretched-link stretched-link--hidden">Go to Bag</a>
+    </div>
 </div>
 
-<ul class="list-group" style="margin-top: 2rem;">
+<div class="card mt-3" style="font-size: 0.875rem;">
+    <div class="card-body d-flex gap-2 align-items-center py-2">
+        <div>
+            <img src="https://archives.bulbagarden.net/media/upload/c/c7/Bag_Town_Map_Sprite.png">
+        </div>
+        <div class="flex-grow-1">
+            <div><?=$location->name?></div>
+            <div style="font-weight: lighter;"><?=$location->section?></div>
+        </div>
+        <div><?=$location->region?></div>
+    </div>
+    <a href="/<?=$instanceId?>/map" class="stretched-link stretched-link--hidden">Go to Map</a>
+</div>
+
+<ul class="list-group mt-3">
     <?php foreach ($party as $pokemon) : ?>
         <li class="list-group-item d-flex">
             <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>" style="width: 3rem; height: 3rem;">
@@ -51,13 +77,6 @@
         </li>
     <?php endforeach ?>
 </ul>
-
-<div class="d-flex justify-content-between align-items-end mt-4">
-    <h2 class="mb-0">Pokémon League</h2>
-    <div>
-        <span class="badge bg-secondary"><?=$currentPokemonLeague?></span>
-    </div>
-</div>
 
 <div style="margin-top: 1rem; display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; align-items: stretch; grid-column-gap: 0.4rem; grid-row-gap: 0.4rem;">
     <?php foreach ($badges as $badge) : ?>

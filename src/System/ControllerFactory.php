@@ -570,7 +570,16 @@ final class ControllerFactory
                 new CapturedPokemonQuery(
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 ),
+                new LocationRepositoryCurrentLocationQuery(
+                    new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
+                        $this->db,
+                        $this->repositoryFactory->create(RegionRepository::class, $instanceId),
+                        new LocationConfigRepository(),
+                        $instanceId,
+                    ),
+                ),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->locationConfigRepository,
                 new EliteFourChallengeCurrentPokemonLeagueQuery(
                     $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 ),
