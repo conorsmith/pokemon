@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
-use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
 use ConorSmith\Pokemon\Battle\Domain\LeagueChampion;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
@@ -43,7 +42,7 @@ final class PostBattleFinish
 
         if ($eliteFourChallenge) {
             if ($eliteFourChallenge->isPlayerTheChallenger()) {
-                if ($trainer->hasEntireTeamFainted()) {
+                if ($trainer->hasEntirePartyFainted()) {
                     if ($eliteFourChallenge->isInFinalStage()) {
                         $eliteFourChallenge = $eliteFourChallenge->win();
                         $leagueChampion = LeagueChampion::player($eliteFourChallenge->region);
@@ -60,7 +59,7 @@ final class PostBattleFinish
                     $eliteFourChallenge = $eliteFourChallenge->lose();
                 }
             } else {
-                if ($trainer->hasEntireTeamFainted()) {
+                if ($trainer->hasEntirePartyFainted()) {
                     $eliteFourChallenge = $eliteFourChallenge->lose();
                 } else {
                     if ($eliteFourChallenge->isInFinalStage()) {

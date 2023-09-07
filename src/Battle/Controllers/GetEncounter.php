@@ -39,19 +39,19 @@ final class GetEncounter
         }
 
         $player = $this->playerRepository->findPlayer();
-        $playerLeadPokemon = $player->hasEntireTeamFainted()
+        $playerLeadPokemon = $player->hasEntirePartyFainted()
             ? $player->getLastFaintedPokemon()
             : $player->getLeadPokemon();
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Encounter.php", [
-            'id' => $encounter->id,
-            'encounteredPokemonIsRegistered' => $encounter->isRegistered,
+            'id'                                          => $encounter->id,
+            'encounteredPokemonIsRegistered'              => $encounter->isRegistered,
             'encounteredPokemonStrengthIndicatorProgress' => $encounter->strengthIndicatorProgress,
-            'opponentPokemon' => $this->viewModelFactory->createPokemonInBattle($encounter->pokemon),
-            'playerPokemon' => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
-            'pokeballs' => $pokeballs,
-            'isLegendary' => $encounter->isLegendary,
-            'isBattleOver' => $encounter->pokemon->hasFainted || $encounter->wasCaught,
+            'opponentPokemon'                             => $this->viewModelFactory->createPokemonInBattle($encounter->pokemon),
+            'playerPokemon'                               => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
+            'pokeballs'                                   => $pokeballs,
+            'isLegendary'                                 => $encounter->isLegendary,
+            'isBattleOver'                                => $encounter->pokemon->hasFainted || $encounter->wasCaught,
         ]));
     }
 
@@ -60,10 +60,10 @@ final class GetEncounter
         $itemConfig = require __DIR__ . "/../../Config/Items.php";
 
         return (object) [
-            'id' => $pokeBall->id,
-            'name' => $itemConfig[$pokeBall->id]['name'],
+            'id'       => $pokeBall->id,
+            'name'     => $itemConfig[$pokeBall->id]['name'],
             'imageUrl' => $itemConfig[$pokeBall->id]['imageUrl'],
-            'amount' => $pokeBall->quantity,
+            'amount'   => $pokeBall->quantity,
         ];
     }
 }

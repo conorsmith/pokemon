@@ -26,7 +26,7 @@ final class BattleRepositoryDb implements BattleRepository
     {
         $battleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND id = :id", [
             'instanceId' => $this->instanceId->value,
-            'id' => $id,
+            'id'         => $id,
         ]);
 
         if ($battleRow === false) {
@@ -51,7 +51,7 @@ final class BattleRepositoryDb implements BattleRepository
     {
         $battleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :trainerId", [
             'instanceId' => $this->instanceId->value,
-            'trainerId' => $trainerId,
+            'trainerId'  => $trainerId,
         ]);
 
         if ($battleRow === false) {
@@ -112,26 +112,26 @@ final class BattleRepositoryDb implements BattleRepository
     {
         if (is_null($this->find($battle->id))) {
             $this->db->insert("trainer_battles", [
-                'id' => $battle->id,
-                'instance_id' => $this->instanceId->value,
-                'trainer_id' => $battle->trainerId,
+                'id'               => $battle->id,
+                'instance_id'      => $this->instanceId->value,
+                'trainer_id'       => $battle->trainerId,
                 'date_last_beaten' => is_null($battle->dateLastBeaten)
                     ? null
                     : $battle->dateLastBeaten->format("Y-m-d H:i:s"),
-                'battle_count' => $battle->battleCount,
+                'battle_count'     => $battle->battleCount,
 
-                'is_battling' => 0,
-                'active_pokemon' => 0,
+                'is_battling'      => 0,
+                'active_pokemon'   => 0,
             ]);
         } else {
             $this->db->update("trainer_battles", [
-                'trainer_id' => $battle->trainerId,
+                'trainer_id'       => $battle->trainerId,
                 'date_last_beaten' => is_null($battle->dateLastBeaten)
                     ? null
                     : $battle->dateLastBeaten->format("Y-m-d H:i:s"),
-                'battle_count' => $battle->battleCount,
+                'battle_count'     => $battle->battleCount,
             ], [
-                'id' => $battle->id,
+                'id'          => $battle->id,
                 'instance_id' => $this->instanceId->value,
             ]);
         }

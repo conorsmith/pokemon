@@ -78,7 +78,7 @@
                     console.log(event.next);
 
                     if (!event.isPlayerPokemon) {
-                        const firstFilledIcon = document.querySelector(".js-trainer-team .fas");
+                        const firstFilledIcon = document.querySelector(".js-trainer-party .fas");
                         if (firstFilledIcon !== null) {
                             firstFilledIcon.classList.add("far");
                             firstFilledIcon.classList.remove("fas");

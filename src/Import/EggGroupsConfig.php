@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\Import;
 
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
 use ConorSmith\Pokemon\Import\Domain\PokemonEggGroups;
-use ConorSmith\Pokemon\PokedexNo as PokedexNumberConstants;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo as PokedexNumberConstants;
 use ReflectionClass;
 
 final class EggGroupsConfig

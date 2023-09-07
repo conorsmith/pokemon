@@ -67,7 +67,7 @@ final class PokedexEntryRepository
     public function find(string $pokedexNumber): PokemonEntry
     {
         $rows = $this->db->fetchAllAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :pokedexNumber", [
-            'instanceId' => $this->instanceId->value,
+            'instanceId'    => $this->instanceId->value,
             'pokedexNumber' => $pokedexNumber,
         ]);
 
@@ -137,14 +137,14 @@ final class PokedexEntryRepository
     private static function findNativeRegion(string $pokedexNumber): RegionId
     {
         $pokedexRegionRanges = new WeakMap();
-        $pokedexRegionRanges[RegionId::KANTO]  = [1, 151];
-        $pokedexRegionRanges[RegionId::JOHTO]  = [152, 251];
-        $pokedexRegionRanges[RegionId::HOENN]  = [252, 386];
+        $pokedexRegionRanges[RegionId::KANTO] = [1, 151];
+        $pokedexRegionRanges[RegionId::JOHTO] = [152, 251];
+        $pokedexRegionRanges[RegionId::HOENN] = [252, 386];
         $pokedexRegionRanges[RegionId::SINNOH] = [387, 493];
-        $pokedexRegionRanges[RegionId::UNOVA]  = [494, 649];
-        $pokedexRegionRanges[RegionId::KALOS]  = [650, 721];
-        $pokedexRegionRanges[RegionId::ALOLA]  = [722, 809];
-        $pokedexRegionRanges[RegionId::GALAR]  = [810, 905];
+        $pokedexRegionRanges[RegionId::UNOVA] = [494, 649];
+        $pokedexRegionRanges[RegionId::KALOS] = [650, 721];
+        $pokedexRegionRanges[RegionId::ALOLA] = [722, 809];
+        $pokedexRegionRanges[RegionId::GALAR] = [810, 905];
         $pokedexRegionRanges[RegionId::PALDEA] = [906, 1010];
 
         foreach ($pokedexRegionRanges as $region => $range) {

@@ -9,12 +9,12 @@ use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
-use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -37,7 +37,7 @@ class TrainerRepository
     {
         $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND id = :id", [
             'instanceId' => $this->instanceId->value,
-            'id' => $id,
+            'id'         => $id,
         ]);
 
         return $this->createTrainer($trainerBattleRow['trainer_id'], $trainerBattleRow['is_battling'] === 1);
@@ -133,21 +133,21 @@ class TrainerRepository
         $locationConfig = $this->locationConfigRepository->findLocation($trainerConfig['locationId']);
         $location = new Location($locationConfig['id'], $locationConfig['region']);
 
-        $team = [];
+        $party = [];
 
-        $trainerBattlePokemonRows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battle_pokemon WHERE trainer_battle_id = :trainerBattleId ORDER BY team_order", [
+        $trainerBattlePokemonRows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battle_pokemon WHERE trainer_battle_id = :trainerBattleId ORDER BY party_order", [
             'trainerBattleId' => $trainerId,
         ]);
 
         if (count($trainerBattlePokemonRows) > 0
-            && count($trainerBattlePokemonRows) !== count($trainerConfig['team'])
+            && count($trainerBattlePokemonRows) !== count($trainerConfig['party'])
         ) {
             throw new RuntimeException("Persisted Pokémon doesn't match configuration for Battle ID '{$trainerId}'");
         }
 
         RandomNumberGenerator::setSeed(crc32($trainerId));
 
-        foreach ($trainerConfig['team'] as $i => $pokemonConfig) {
+        foreach ($trainerConfig['party'] as $i => $pokemonConfig) {
 
             if ($trainerBattlePokemonRows === []) {
                 $trainerBattlePokemonId = Uuid::uuid4()->toString();
@@ -182,15 +182,15 @@ class TrainerRepository
 
             if ($trainerBattlePokemonRows === []) {
                 $this->db->insert("trainer_battle_pokemon", [
-                    'id' => Uuid::uuid4(),
+                    'id'                => Uuid::uuid4(),
                     'trainer_battle_id' => $trainerId,
-                    'team_order' => $i,
-                    'pokemon_number' => $pokemon->number,
-                    'remaining_hp' => $pokemon->remainingHp,
+                    'party_order'       => $i,
+                    'pokemon_number'    => $pokemon->number,
+                    'remaining_hp'      => $pokemon->remainingHp,
                 ]);
             }
 
-            $team[] = $pokemon;
+            $party[] = $pokemon;
         }
 
         RandomNumberGenerator::unsetSeed();
@@ -200,7 +200,7 @@ class TrainerRepository
             $trainerConfig['name'] ?? null,
             $trainerConfig['class'],
             $trainerConfig['gender'] ?? Gender::IMMATERIAL,
-            $team,
+            $party,
             $trainerConfig['locationId'],
             $isBattling,
             array_key_exists('leader', $trainerConfig) ? $trainerConfig['leader']['badge'] : null,
@@ -219,7 +219,7 @@ class TrainerRepository
     public function saveTrainer(Trainer $battleTrainer): void
     {
         $this->db->update("trainer_battles", [
-            'is_battling' => $battleTrainer->isBattling ? "1" : "0",
+            'is_battling'    => $battleTrainer->isBattling ? "1" : "0",
             'active_pokemon' => 0,
         ], [
             'trainer_id' => $battleTrainer->id,
@@ -227,7 +227,7 @@ class TrainerRepository
 
         if ($battleTrainer->isBattling) {
             /** @var Pokemon $pokemon */
-            foreach ($battleTrainer->team as $pokemon) {
+            foreach ($battleTrainer->party as $pokemon) {
                 $this->db->update("trainer_battle_pokemon", [
                     'remaining_hp' => $pokemon->remainingHp,
                 ], [

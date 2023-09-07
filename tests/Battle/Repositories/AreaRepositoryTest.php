@@ -108,15 +108,15 @@ final class AreaRepositoryTest extends TestCase
         $locationConfig = new WeakMap();
         $locationConfig[RegionId::KANTO] = [
             [
-                'id' => "Location 1",
+                'id'   => "Location 1",
                 'area' => "The Area ID",
             ],
             [
-                'id' => "Location 2",
+                'id'   => "Location 2",
                 'area' => "The Area ID",
             ],
             [
-                'id' => "Location 3",
+                'id'   => "Location 3",
                 'area' => "The Area ID",
             ],
         ];

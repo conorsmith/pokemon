@@ -10,7 +10,7 @@
             <div><?=$hallOfFameEntry->date?></div>
         </div>
         <ul class="list-group list-group-flush">
-            <?php foreach ($hallOfFameEntry->team as $pokemon) : ?>
+            <?php foreach ($hallOfFameEntry->party as $pokemon) : ?>
                 <li class="list-group-item d-flex">
                     <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>">
                         <img src="<?=$pokemon->imageUrl?>">

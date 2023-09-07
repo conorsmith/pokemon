@@ -10,7 +10,7 @@ use Exception;
 final class Player
 {
     public function __construct(
-        public readonly array $team,
+        public readonly array $party,
         public readonly array $gymBadges,
         public readonly ?string $activeBattleId,
     ) {}
@@ -27,7 +27,7 @@ final class Player
         $gymBadges[] = $gymBadge;
 
         return new self(
-            $this->team,
+            $this->party,
             $gymBadges,
             $this->activeBattleId,
         );
@@ -36,7 +36,7 @@ final class Player
     public function getLeadPokemon(): Pokemon
     {
         /** @var Pokemon $pokemon */
-        foreach ($this->team as $pokemon) {
+        foreach ($this->party as $pokemon) {
             if (!$pokemon->hasFainted) {
                 return $pokemon;
             }
@@ -48,7 +48,7 @@ final class Player
     public function getLastFaintedPokemon(): Pokemon
     {
         /** @var Pokemon $pokemon */
-        foreach (array_reverse($this->team) as $pokemon) {
+        foreach (array_reverse($this->party) as $pokemon) {
             if ($pokemon->hasFainted) {
                 return $pokemon;
             }
@@ -60,7 +60,7 @@ final class Player
     public function startBattle(Battle $battle): self
     {
         return new self(
-            $this->team,
+            $this->party,
             $this->gymBadges,
             $battle->id,
         );
@@ -69,35 +69,35 @@ final class Player
     public function endBattle(): self
     {
         return new self(
-            $this->team,
+            $this->party,
             $this->gymBadges,
             null,
         );
     }
 
-    public function reviveTeam(): self
+    public function reviveParty(): self
     {
-        $revivedTeam = [];
+        $revivedParty = [];
 
         /** @var Pokemon $pokemon */
-        foreach ($this->team as $pokemon) {
+        foreach ($this->party as $pokemon) {
             $pokemon->revive();
-            $revivedTeam[] = $pokemon;
+            $revivedParty[] = $pokemon;
         }
 
         return new self(
-            $revivedTeam,
+            $revivedParty,
             $this->gymBadges,
             $this->activeBattleId,
         );
     }
 
-    private function countActiveTeamMembers(): int
+    private function countActivePartyMembers(): int
     {
         $count = 0;
 
         /** @var Pokemon $pokemon */
-        foreach ($this->team as $pokemon) {
+        foreach ($this->party as $pokemon) {
             if (!$pokemon->hasFainted) {
                 $count++;
             }
@@ -106,15 +106,15 @@ final class Player
         return $count;
     }
 
-    public function hasEntireTeamFainted(): bool
+    public function hasEntirePartyFainted(): bool
     {
-        return $this->countActiveTeamMembers() === 0;
+        return $this->countActivePartyMembers() === 0;
     }
 
-    public function findTeamMember(string $id): Pokemon
+    public function findPartyMember(string $id): Pokemon
     {
         /** @var Pokemon $pokemon */
-        foreach ($this->team as $pokemon) {
+        foreach ($this->party as $pokemon) {
             if ($pokemon->id === $id) {
                 return $pokemon;
             }
@@ -123,22 +123,22 @@ final class Player
         throw new Exception;
     }
 
-    public function switchTeamMembers(Pokemon $pokemonA, Pokemon $pokemonB): self
+    public function switchPartyMembers(Pokemon $pokemonA, Pokemon $pokemonB): self
     {
-        $team = [];
+        $party = [];
 
-        foreach ($this->team as $pokemon) {
+        foreach ($this->party as $pokemon) {
             if ($pokemon->id === $pokemonA->id) {
-                $team[] = $pokemonB;
+                $party[] = $pokemonB;
             } elseif ($pokemon->id === $pokemonB->id) {
-                $team[] = $pokemonA;
+                $party[] = $pokemonA;
             } else {
-                $team[] = $pokemon;
+                $party[] = $pokemon;
             }
         }
 
         return new self(
-            $team,
+            $party,
             $this->gymBadges,
             $this->activeBattleId,
         );

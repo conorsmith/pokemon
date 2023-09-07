@@ -12,11 +12,12 @@ use ConorSmith\Pokemon\Battle\UseCases\SimulateABattle;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
-use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\PokemonTest\Support\Instance;
 use Doctrine\DBAL\DriverManager;
+
 final class Simulate
 {
     public function __invoke(array $args): void

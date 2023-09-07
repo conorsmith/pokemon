@@ -6,8 +6,8 @@ namespace ConorSmith\Pokemon\Pokedex;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\SharedKernel\Commands\RegisterNewPokemonCommand as CommandInterface;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
-use ConorSmith\Pokemon\SharedKernel\RegisterNewPokemonCommand as CommandInterface;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 

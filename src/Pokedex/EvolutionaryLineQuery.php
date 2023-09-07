@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Pokedex;
 
 use ConorSmith\Pokemon\Pokedex\Repositories\EvolutionaryLineRepository;
-use ConorSmith\Pokemon\SharedKernel\EvolutionaryLineQuery as QueryInterface;
+use ConorSmith\Pokemon\SharedKernel\Queries\EvolutionaryLineQuery as QueryInterface;
 
 final class EvolutionaryLineQuery implements QueryInterface
 {

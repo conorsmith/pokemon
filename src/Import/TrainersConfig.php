@@ -9,8 +9,8 @@ use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
 use ConorSmith\Pokemon\Import\Domain\Sex;
 use ConorSmith\Pokemon\Import\Domain\Trainer;
 use ConorSmith\Pokemon\Import\Domain\TrainerPokemon;
-use ConorSmith\Pokemon\PokedexNo as PokedexNumberConstants;
-use ConorSmith\Pokemon\TrainerClass as TrainerClassConstants;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo as PokedexNumberConstants;
+use ConorSmith\Pokemon\SharedKernel\TrainerClass as TrainerClassConstants;
 use Exception;
 use ReflectionClass;
 
@@ -54,9 +54,9 @@ final class TrainersConfig
         if ($trainer->name !== "") {
             $config .= "        'name' => \"{$trainer->name}\"," . PHP_EOL;
         }
-        $config .= "        'team' => [" . PHP_EOL;
+        $config .= "        'party' => [" . PHP_EOL;
         /** @var TrainerPokemon $pokemon */
-        foreach ($trainer->team as $pokemon) {
+        foreach ($trainer->party as $pokemon) {
             $config .= self::encodeTrainerPokemon($pokemon);
         }
         $config .= "        ]," . PHP_EOL;

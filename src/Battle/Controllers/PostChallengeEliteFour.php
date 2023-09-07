@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
-use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
+use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengePartyMember;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
-use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Ramsey\Uuid\Uuid;
@@ -52,13 +52,13 @@ final class PostChallengeEliteFour
             $region,
             null,
             array_map(
-                fn(Pokemon $pokemon) => new EliteFourChallengeTeamMember(
+                fn(Pokemon $pokemon) => new EliteFourChallengePartyMember(
                     $pokemon->id,
                     $pokemon->number,
                     $pokemon->form,
                     $pokemon->level,
                 ),
-                $player->team,
+                $player->party,
             ),
             0,
             false,

@@ -10,9 +10,9 @@ use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Domain\WeeklyHabitLogEntry;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
-use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Commands\WeeklyUpdateForPartyCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
-use ConorSmith\Pokemon\SharedKernel\WeeklyUpdateForTeamCommand;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,7 +28,7 @@ final class PostLogWeeklyReview
         private readonly BagRepository $bagRepository,
         private readonly DailyHabitLogRepository $dailyHabitLogRepository,
         private readonly WeeklyHabitLogRepository $weeklyHabitLogRepository,
-        private readonly WeeklyUpdateForTeamCommand $weeklyUpdateForTeamCommand,
+        private readonly WeeklyUpdateForPartyCommand $weeklyUpdateForPartyCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -73,7 +73,7 @@ final class PostLogWeeklyReview
         $bag = $bag->add(ItemId::RARE_CANDY, $rareCandy);
         $bag = $bag->add(ItemId::CHALLENGE_TOKEN, $challengeTokens);
 
-        $this->weeklyUpdateForTeamCommand->run();
+        $this->weeklyUpdateForPartyCommand->run();
 
         $this->db->beginTransaction();
 

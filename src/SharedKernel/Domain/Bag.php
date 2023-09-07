@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\SharedKernel\Domain;
 
-use ConorSmith\Pokemon\ItemId;
-
 final class Bag
 {
     public function __construct(

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
+
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,7 +24,7 @@ final class PostEncounterRun
         $encounter = $this->encounterRepository->find($encounterId);
         $player = $this->playerRepository->findPlayer();
 
-        $player = $player->reviveTeam();
+        $player = $player->reviveParty();
 
         $this->encounterRepository->delete($encounter);
         $this->playerRepository->savePlayer($player);

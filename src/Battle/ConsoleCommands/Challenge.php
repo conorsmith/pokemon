@@ -11,10 +11,10 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Battle\UseCases\GenerateAChallenge;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
-use ConorSmith\Pokemon\RepositoryFactory;
+use ConorSmith\Pokemon\Party\FriendshipLog;
+use ConorSmith\Pokemon\Party\FriendshipLogReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
-use ConorSmith\Pokemon\Team\FriendshipLog;
-use ConorSmith\Pokemon\Team\FriendshipLogReportBattleWithGymLeaderCommand;
+use ConorSmith\Pokemon\System\RepositoryFactory;
 use ConorSmith\PokemonTest\Support\Instance;
 use Doctrine\DBAL\DriverManager;
 

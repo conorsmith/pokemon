@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\Domain;
 
-use ConorSmith\Pokemon\Location\Domain\Direction;
 
 final class AdjacentLocation
 {

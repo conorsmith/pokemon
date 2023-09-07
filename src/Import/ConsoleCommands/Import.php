@@ -27,7 +27,7 @@ use ConorSmith\Pokemon\Import\PokemonSpeciesFactory;
 use ConorSmith\Pokemon\Import\SexRatiosConfig;
 use ConorSmith\Pokemon\Import\TrainerFactory;
 use ConorSmith\Pokemon\Import\TrainersConfig;
-use ConorSmith\Pokemon\PokedexNo;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 use ReflectionClass;
 
 final class Import
@@ -86,7 +86,7 @@ final class Import
             $lowerBound = $args[1] ?? null;
             $upperBound = $args[2] ?? null;
 
-            $reflector = new ReflectionClass(\ConorSmith\Pokemon\PokedexNo::class);
+            $reflector = new ReflectionClass(\ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo::class);
             $constants = $reflector->getConstants();
 
             if ($lowerBound) {

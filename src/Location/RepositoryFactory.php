@@ -7,8 +7,8 @@ namespace ConorSmith\Pokemon\Location;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\RepositoryFactory as SharedRepositoryFactory;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
+use ConorSmith\Pokemon\System\RepositoryFactory as SharedRepositoryFactory;
 use Doctrine\DBAL\Connection;
 
 final class RepositoryFactory
@@ -27,7 +27,7 @@ final class RepositoryFactory
                 new LocationConfigRepository(),
                 $instanceId,
             ),
-            default => $this->sharedRepositoryFactory->create($className, $instanceId),
+            default                   => $this->sharedRepositoryFactory->create($className, $instanceId),
         };
     }
 }

@@ -30,7 +30,7 @@ final class BulbapediaSexRatiosPage
                 $sectionIndex++;
                 $sections[$sectionIndex] = [
                     'heading' => $node->text(),
-                    'tables' => [],
+                    'tables'  => [],
                 ];
             } elseif ($node->matches("table table.sortable > tbody")) {
                 $sections[$sectionIndex]['tables'][] = $node->filter("table table.sortable > tbody");
@@ -45,36 +45,36 @@ final class BulbapediaSexRatiosPage
             }
 
             $ratio = match ($section['heading']) {
-                "Male only" => [
+                "Male only"      => [
                     'male' => 1,
                 ],
-                "1 ♀ : 7 ♂" => [
+                "1 ♀ : 7 ♂"      => [
                     'female' => 1,
                     'male'   => 7,
                 ],
-                "1 ♀ : 3 ♂" => [
+                "1 ♀ : 3 ♂"      => [
                     'female' => 1,
                     'male'   => 3,
                 ],
-                "1 ♀ : 1 ♂" => [
+                "1 ♀ : 1 ♂"      => [
                     'female' => 1,
                     'male'   => 1,
                 ],
-                "3 ♀ : 1 ♂" => [
+                "3 ♀ : 1 ♂"      => [
                     'female' => 3,
                     'male'   => 1,
                 ],
-                "7 ♀ : 1 ♂" => [
+                "7 ♀ : 1 ♂"      => [
                     'female' => 7,
                     'male'   => 1,
                 ],
-                "Female only" => [
+                "Female only"    => [
                     'female' => 1,
                 ],
                 "Gender unknown" => [
                     'unknown' => 1,
                 ],
-                default => throw new RuntimeException(),
+                default          => throw new RuntimeException(),
             };
 
             foreach ($section['tables'] as $table) {
@@ -101,7 +101,7 @@ final class BulbapediaSexRatiosPage
 
                         $entries[] = [
                             'number' => $number,
-                            'ratio' => $ratio,
+                            'ratio'  => $ratio,
                         ];
                     }
                 });

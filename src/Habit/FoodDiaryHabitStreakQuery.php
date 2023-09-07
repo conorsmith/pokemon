@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\Habit;
 
 use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
-use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
+use ConorSmith\Pokemon\SharedKernel\Queries\HabitStreakQuery;
 
 final class FoodDiaryHabitStreakQuery implements HabitStreakQuery
 {

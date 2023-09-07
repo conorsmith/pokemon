@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Habit\Repositories;
 
 use Carbon\CarbonImmutable;
-use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Domain\DailyHabitLog;
+use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 use LogicException;
@@ -24,10 +24,10 @@ final class DailyHabitLogRepository
         $rows = $this->db->createQueryBuilder()
             ->select("*")
             ->from(match ($habit) {
-                Habit::FOOD_DIARY_COMPLETED => "log_food_diary",
+                Habit::FOOD_DIARY_COMPLETED  => "log_food_diary",
                 Habit::CALORIE_GOAL_ATTAINED => "log_calorie_goal",
-                Habit::STRETCHES_COMPLETED => "log_stretches",
-                default => throw new LogicException(),
+                Habit::STRETCHES_COMPLETED   => "log_stretches",
+                default                      => throw new LogicException(),
             })
             ->where("instance_id = :instanceId")
             ->setParameter('instanceId', $this->instanceId->value)
@@ -54,13 +54,13 @@ final class DailyHabitLogRepository
         foreach ($newDates as $newDate) {
             $this->db->insert(
                 match ($savedHabitLog->habit) {
-                    Habit::FOOD_DIARY_COMPLETED => "log_food_diary",
+                    Habit::FOOD_DIARY_COMPLETED  => "log_food_diary",
                     Habit::CALORIE_GOAL_ATTAINED => "log_calorie_goal",
-                    Habit::STRETCHES_COMPLETED => "log_stretches",
-                    default => throw new LogicException(),
+                    Habit::STRETCHES_COMPLETED   => "log_stretches",
+                    default                      => throw new LogicException(),
                 },
                 [
-                    'id' => Uuid::uuid4(),
+                    'id'          => Uuid::uuid4(),
                     'instance_id' => $this->instanceId->value,
                     'date_logged' => $newDate->format("Y-m-d") . " 12:00:00",
                 ]

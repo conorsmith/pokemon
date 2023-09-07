@@ -58,7 +58,7 @@ final class EventFactory
                 $events[] = $this->createMessageEvent("{$defenderDescriptor} {$defenderVm->name} endured through the power of friendship!");
 
             } elseif ($defender->hasFainted) {
-                $events[] =  $this->createMessageEvent("{$defenderDescriptor} {$defenderVm->name} fainted");
+                $events[] = $this->createMessageEvent("{$defenderDescriptor} {$defenderVm->name} fainted");
 
                 $events[] = $this->createFaintingEvent($defender->id, $isPlayerDefending, $nextDefender);
 
@@ -116,7 +116,7 @@ final class EventFactory
                 $events[] = $this->createMessageEvent("{$defenderDescriptor} {$defenderVm->name} endured through the power of friendship!");
 
             } elseif ($defender->hasFainted) {
-                $events[] =  $this->createMessageEvent("{$defenderDescriptor} {$defenderVm->name} fainted");
+                $events[] = $this->createMessageEvent("{$defenderDescriptor} {$defenderVm->name} fainted");
 
                 $events[] = $this->createFaintingEvent($defender->id, $isPlayerDefending, $nextDefender);
 
@@ -137,7 +137,7 @@ final class EventFactory
     public function createMessageEvent(string $message): array
     {
         return [
-            'type' => "message",
+            'type'  => "message",
             'value' => $message,
         ];
     }
@@ -145,12 +145,12 @@ final class EventFactory
     private function createDamageEvent(string $id, int $damage, int $remaining, int $total): array
     {
         return [
-            'type' => "damage",
+            'type'   => "damage",
             'target' => $id,
-            'value' => [
-                'damage' => $damage,
+            'value'  => [
+                'damage'    => $damage,
                 'remaining' => $remaining,
-                'total' => $total,
+                'total'     => $total,
             ],
         ];
     }
@@ -158,10 +158,10 @@ final class EventFactory
     private function createFaintingEvent(string $id, bool $isPlayerPokemon, ?Pokemon $nextPokemon): array
     {
         return [
-            'type' => "fainting",
-            'target' => $id,
+            'type'            => "fainting",
+            'target'          => $id,
             'isPlayerPokemon' => $isPlayerPokemon,
-            'next' => $nextPokemon ? $this->viewModelFactory->createPokemonInBattle($nextPokemon) : null,
+            'next'            => $nextPokemon ? $this->viewModelFactory->createPokemonInBattle($nextPokemon) : null,
         ];
     }
 
@@ -181,9 +181,9 @@ final class EventFactory
             ? "the legendary Pokémon {$pokemonVm->name}"
             : "the wild {$pokemonVm->name}";
         return [
-            'type' => "caught",
+            'type'  => "caught",
             'value' => "You caught {$name}!",
-            'rate' => $catchRate,
+            'rate'  => $catchRate,
         ];
     }
 
@@ -205,10 +205,10 @@ final class EventFactory
     public function createShakeEvent(float $catchRate, float $shakeProbability, int $shakeRoll): array
     {
         return [
-            'type' => "shake",
-            'rate' => $catchRate,
+            'type'  => "shake",
+            'rate'  => $catchRate,
             'shake' => $shakeProbability,
-            'roll' => $shakeRoll,
+            'roll'  => $shakeRoll,
         ];
     }
 
@@ -229,8 +229,8 @@ final class EventFactory
         $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
 
         return [
-            'type' => "strengthIndicatorProgresses",
-            'value' => "You learn more about the strengths of the wild {$pokemonVm->name}",
+            'type'     => "strengthIndicatorProgresses",
+            'value'    => "You learn more about the strengths of the wild {$pokemonVm->name}",
             'progress' => $encounter->strengthIndicatorProgress,
         ];
     }

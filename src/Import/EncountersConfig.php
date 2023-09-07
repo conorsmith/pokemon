@@ -9,8 +9,8 @@ use ConorSmith\Pokemon\Import\Domain\EncounterTableEntry;
 use ConorSmith\Pokemon\Import\Domain\EncounterType;
 use ConorSmith\Pokemon\Import\Domain\LevelRange;
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
-use ConorSmith\Pokemon\PokedexNo as PokedexNumberConstants;
 use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType as EncounterTypeConstants;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo as PokedexNumberConstants;
 use ReflectionClass;
 
 final class EncountersConfig

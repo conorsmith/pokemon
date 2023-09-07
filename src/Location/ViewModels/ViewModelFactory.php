@@ -8,7 +8,7 @@ use ConorSmith\Pokemon\Location\Domain\AdjacentLocation;
 use ConorSmith\Pokemon\Location\Domain\Direction;
 use ConorSmith\Pokemon\Location\Domain\Location;
 use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\LocationType;
+use ConorSmith\Pokemon\SharedKernel\Domain\LocationType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use LogicException;
 
@@ -62,7 +62,7 @@ final class ViewModelFactory
                 RegionId::KANTO => "Kanto",
                 RegionId::JOHTO => "Johto",
                 RegionId::HOENN => "Hoenn",
-                default => throw new LogicException(),
+                default         => throw new LogicException(),
             },
             $locationConfig['section'] ?? null,
             $hasCardinalDirections,

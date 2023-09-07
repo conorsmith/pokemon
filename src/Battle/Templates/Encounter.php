@@ -21,11 +21,11 @@
                 <?php endif ?>
                 <?=$opponentPokemon->name?>
                 <span class="js-sex pokemon-sex">
-                    <?php if ($opponentPokemon->sex === \ConorSmith\Pokemon\Sex::FEMALE) : ?>
+                    <?php if ($opponentPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::FEMALE) : ?>
                         <i class="fas fa-venus"></i>
-                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\Sex::MALE) : ?>
+                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::MALE) : ?>
                         <i class="fas fa-mars"></i>
-                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\Sex::UNKNOWN) : ?>
+                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::UNKNOWN) : ?>
                         <i class="fas fa-genderless"></i>
                     <?php endif ?>
                 </span>
@@ -122,11 +122,11 @@
             <h5>
                 <?=$playerPokemon->name?>
                 <span class="js-sex pokemon-sex">
-                    <?php if ($playerPokemon->sex === \ConorSmith\Pokemon\Sex::FEMALE) : ?>
+                    <?php if ($playerPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::FEMALE) : ?>
                         <i class="fas fa-venus"></i>
-                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\Sex::MALE) : ?>
+                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::MALE) : ?>
                         <i class="fas fa-mars"></i>
-                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\Sex::UNKNOWN) : ?>
+                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::UNKNOWN) : ?>
                         <i class="fas fa-genderless"></i>
                     <?php endif ?>
                 </span>
@@ -169,7 +169,7 @@
         </form>
         <?php $mode = "encounter" ?>
         <?php require __DIR__ . "/ButtonsAttack.php" ?>
-        <a href="/<?=$instanceId?>/team/switch?redirect=<?=urlencode("/{$instanceId}/encounter/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
+        <a href="/<?=$instanceId?>/party/switch?redirect=<?=urlencode("/{$instanceId}/encounter/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
             Switch
         </a>
         <div class="d-flex w-100 gap-2">

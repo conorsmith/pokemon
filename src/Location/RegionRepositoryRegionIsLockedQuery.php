@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\Location;
 
 use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
-use ConorSmith\Pokemon\SharedKernel\RegionIsLockedQuery;
+use ConorSmith\Pokemon\SharedKernel\Queries\RegionIsLockedQuery;
 
 final class RegionRepositoryRegionIsLockedQuery implements RegionIsLockedQuery
 {

@@ -7,7 +7,7 @@ namespace ConorSmith\Pokemon\Battle\Repositories;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallenge;
-use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
+use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengePartyMember;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -75,27 +75,27 @@ final class EliteFourChallengeRepository
 
     private function createFromRow(array $row): EliteFourChallenge
     {
-        if ($row['team'] === "null") {
-            throw new Exception("Outdated data, 'team' value is missing");
+        if ($row['party'] === "null") {
+            throw new Exception("Outdated data, 'party' value is missing");
         }
 
         $region = RegionId::from($row['region']);
 
-        $team = array_map(
-            fn(array $member) => new EliteFourChallengeTeamMember(
+        $party = array_map(
+            fn(array $member) => new EliteFourChallengePartyMember(
                 $member['id'],
                 $member['pokedexNumber'],
                 $member['form'],
                 $member['level'],
             ),
-            json_decode($row['team'], true),
+            json_decode($row['party'], true),
         );
 
         return $this->createEliteFourChallenge(
             $row['id'],
             $region,
             $row['trainer_id'],
-            $team,
+            $party,
             $row['stage'],
             $row['victory'] === 1,
             is_null($row['date_completed']) ? null : new CarbonImmutable($row['date_completed'], "Europe/Dublin"),
@@ -113,14 +113,14 @@ final class EliteFourChallengeRepository
                 'id'           => $eliteFourChallenge->id,
                 'region'       => $eliteFourChallenge->region->value,
                 'trainer_id'   => $eliteFourChallenge->trainerId,
-                'team'         => json_encode(array_map(
-                    fn(EliteFourChallengeTeamMember $member) => [
+                'party'        => json_encode(array_map(
+                    fn(EliteFourChallengePartyMember $member) => [
                         'id'            => $member->id,
                         'pokedexNumber' => $member->pokedexNumber,
                         'form'          => $member->form,
                         'level'         => $member->level,
                     ],
-                    $eliteFourChallenge->team,
+                    $eliteFourChallenge->party,
                 )),
                 'stage'        => $eliteFourChallenge->stage,
                 'victory'      => 0,
@@ -128,10 +128,10 @@ final class EliteFourChallengeRepository
             ]);
         } else {
             $this->db->update("elite_four_challenges", [
-                'region'       => $eliteFourChallenge->region->value,
-                'trainer_id'   => $eliteFourChallenge->trainerId,
-                'stage'        => $eliteFourChallenge->stage,
-                'victory'      => $eliteFourChallenge->victory ? 1 : 0,
+                'region'         => $eliteFourChallenge->region->value,
+                'trainer_id'     => $eliteFourChallenge->trainerId,
+                'stage'          => $eliteFourChallenge->stage,
+                'victory'        => $eliteFourChallenge->victory ? 1 : 0,
                 'date_completed' => $eliteFourChallenge->dateCompleted ? $eliteFourChallenge->dateCompleted->format("Y-m-d H:i:s") : null,
             ], [
                 'id' => $eliteFourChallenge->id,
@@ -143,7 +143,7 @@ final class EliteFourChallengeRepository
         string $id,
         RegionId $regionId,
         ?string $trainerId,
-        array $team,
+        array $party,
         int $stage,
         bool $victory,
         ?CarbonImmutable $dateCompleted,
@@ -165,7 +165,7 @@ final class EliteFourChallengeRepository
             $regionId,
             $trainerId,
             $memberIds,
-            $team,
+            $party,
             $stage,
             $victory,
             $dateCompleted,

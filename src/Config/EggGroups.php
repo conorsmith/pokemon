@@ -2,3234 +2,3234 @@
 
 declare(strict_types=1);
 
-use ConorSmith\Pokemon\PokedexNo;
-use ConorSmith\Pokemon\Team\Domain\EggGroup;
+use ConorSmith\Pokemon\Party\Domain\EggGroup;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 
 return [
-    PokedexNo::BULBASAUR => [
+    PokedexNo::BULBASAUR    => [
         EggGroup::MONSTER,
         EggGroup::GRASS,
     ],
-    PokedexNo::IVYSAUR => [
+    PokedexNo::IVYSAUR      => [
         EggGroup::MONSTER,
         EggGroup::GRASS,
     ],
-    PokedexNo::VENUSAUR => [
+    PokedexNo::VENUSAUR     => [
         EggGroup::MONSTER,
         EggGroup::GRASS,
     ],
-    PokedexNo::CHARMANDER => [
+    PokedexNo::CHARMANDER   => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::CHARMELEON => [
+    PokedexNo::CHARMELEON   => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::CHARIZARD => [
+    PokedexNo::CHARIZARD    => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::SQUIRTLE => [
+    PokedexNo::SQUIRTLE     => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::WARTORTLE => [
+    PokedexNo::WARTORTLE    => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::BLASTOISE => [
+    PokedexNo::BLASTOISE    => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::CATERPIE => [
+    PokedexNo::CATERPIE     => [
         EggGroup::BUG,
     ],
-    PokedexNo::METAPOD => [
+    PokedexNo::METAPOD      => [
         EggGroup::BUG,
     ],
-    PokedexNo::BUTTERFREE => [
+    PokedexNo::BUTTERFREE   => [
         EggGroup::BUG,
     ],
-    PokedexNo::WEEDLE => [
+    PokedexNo::WEEDLE       => [
         EggGroup::BUG,
     ],
-    PokedexNo::KAKUNA => [
+    PokedexNo::KAKUNA       => [
         EggGroup::BUG,
     ],
-    PokedexNo::BEEDRILL => [
+    PokedexNo::BEEDRILL     => [
         EggGroup::BUG,
     ],
-    PokedexNo::PIDGEY => [
+    PokedexNo::PIDGEY       => [
         EggGroup::FLYING,
     ],
-    PokedexNo::PIDGEOTTO => [
+    PokedexNo::PIDGEOTTO    => [
         EggGroup::FLYING,
     ],
-    PokedexNo::PIDGEOT => [
+    PokedexNo::PIDGEOT      => [
         EggGroup::FLYING,
     ],
-    PokedexNo::RATTATA => [
+    PokedexNo::RATTATA      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::RATICATE => [
+    PokedexNo::RATICATE     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::SPEAROW => [
+    PokedexNo::SPEAROW      => [
         EggGroup::FLYING,
     ],
-    PokedexNo::FEAROW => [
+    PokedexNo::FEAROW       => [
         EggGroup::FLYING,
     ],
-    PokedexNo::EKANS => [
+    PokedexNo::EKANS        => [
         EggGroup::FIELD,
         EggGroup::DRAGON,
     ],
-    PokedexNo::ARBOK => [
+    PokedexNo::ARBOK        => [
         EggGroup::FIELD,
         EggGroup::DRAGON,
     ],
-    PokedexNo::PICHU => [
+    PokedexNo::PICHU        => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::PIKACHU => [
+    PokedexNo::PIKACHU      => [
         EggGroup::FIELD,
         EggGroup::FAIRY,
     ],
-    PokedexNo::RAICHU => [
+    PokedexNo::RAICHU       => [
         EggGroup::FIELD,
         EggGroup::FAIRY,
     ],
-    PokedexNo::SANDSHREW => [
+    PokedexNo::SANDSHREW    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::SANDSLASH => [
+    PokedexNo::SANDSLASH    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::NIDORAN_F => [
+    PokedexNo::NIDORAN_F    => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::NIDORINA => [
+    PokedexNo::NIDORINA     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::NIDOQUEEN => [
+    PokedexNo::NIDOQUEEN    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::NIDORAN_M => [
+    PokedexNo::NIDORAN_M    => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::NIDORINO => [
+    PokedexNo::NIDORINO     => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::NIDOKING => [
+    PokedexNo::NIDOKING     => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::CLEFFA => [
+    PokedexNo::CLEFFA       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::CLEFAIRY => [
+    PokedexNo::CLEFAIRY     => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::CLEFABLE => [
+    PokedexNo::CLEFABLE     => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::VULPIX => [
+    PokedexNo::VULPIX       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::NINETALES => [
+    PokedexNo::NINETALES    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::IGGLYBUFF => [
+    PokedexNo::IGGLYBUFF    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::JIGGLYPUFF => [
+    PokedexNo::JIGGLYPUFF   => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::WIGGLYTUFF => [
+    PokedexNo::WIGGLYTUFF   => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::ZUBAT => [
+    PokedexNo::ZUBAT        => [
         EggGroup::FLYING,
     ],
-    PokedexNo::GOLBAT => [
+    PokedexNo::GOLBAT       => [
         EggGroup::FLYING,
     ],
-    PokedexNo::CROBAT => [
+    PokedexNo::CROBAT       => [
         EggGroup::FLYING,
     ],
-    PokedexNo::ODDISH => [
+    PokedexNo::ODDISH       => [
         EggGroup::GRASS,
     ],
-    PokedexNo::GLOOM => [
+    PokedexNo::GLOOM        => [
         EggGroup::GRASS,
     ],
-    PokedexNo::VILEPLUME => [
+    PokedexNo::VILEPLUME    => [
         EggGroup::GRASS,
     ],
-    PokedexNo::BELLOSSOM => [
+    PokedexNo::BELLOSSOM    => [
         EggGroup::GRASS,
     ],
-    PokedexNo::PARAS => [
+    PokedexNo::PARAS        => [
         EggGroup::BUG,
         EggGroup::GRASS,
     ],
-    PokedexNo::PARASECT => [
+    PokedexNo::PARASECT     => [
         EggGroup::BUG,
         EggGroup::GRASS,
     ],
-    PokedexNo::VENONAT => [
+    PokedexNo::VENONAT      => [
         EggGroup::BUG,
     ],
-    PokedexNo::VENOMOTH => [
+    PokedexNo::VENOMOTH     => [
         EggGroup::BUG,
     ],
-    PokedexNo::DIGLETT => [
+    PokedexNo::DIGLETT      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::DUGTRIO => [
+    PokedexNo::DUGTRIO      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::MEOWTH => [
+    PokedexNo::MEOWTH       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PERSIAN => [
+    PokedexNo::PERSIAN      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PERRSERKER => [
+    PokedexNo::PERRSERKER   => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PSYDUCK => [
+    PokedexNo::PSYDUCK      => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::GOLDUCK => [
+    PokedexNo::GOLDUCK      => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::MANKEY => [
+    PokedexNo::MANKEY       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PRIMEAPE => [
+    PokedexNo::PRIMEAPE     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::GROWLITHE => [
+    PokedexNo::GROWLITHE    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::ARCANINE => [
+    PokedexNo::ARCANINE     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::POLIWAG => [
+    PokedexNo::POLIWAG      => [
         EggGroup::WATER_1,
     ],
-    PokedexNo::POLIWHIRL => [
+    PokedexNo::POLIWHIRL    => [
         EggGroup::WATER_1,
     ],
-    PokedexNo::POLIWRATH => [
+    PokedexNo::POLIWRATH    => [
         EggGroup::WATER_1,
     ],
-    PokedexNo::POLITOED => [
+    PokedexNo::POLITOED     => [
         EggGroup::WATER_1,
     ],
-    PokedexNo::ABRA => [
+    PokedexNo::ABRA         => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::KADABRA => [
+    PokedexNo::KADABRA      => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::ALAKAZAM => [
+    PokedexNo::ALAKAZAM     => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::MACHOP => [
+    PokedexNo::MACHOP       => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::MACHOKE => [
+    PokedexNo::MACHOKE      => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::MACHAMP => [
+    PokedexNo::MACHAMP      => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::BELLSPROUT => [
+    PokedexNo::BELLSPROUT   => [
         EggGroup::GRASS,
     ],
-    PokedexNo::WEEPINBELL => [
+    PokedexNo::WEEPINBELL   => [
         EggGroup::GRASS,
     ],
-    PokedexNo::VICTREEBEL => [
+    PokedexNo::VICTREEBEL   => [
         EggGroup::GRASS,
     ],
-    PokedexNo::TENTACOOL => [
+    PokedexNo::TENTACOOL    => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::TENTACRUEL => [
+    PokedexNo::TENTACRUEL   => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::GEODUDE => [
+    PokedexNo::GEODUDE      => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::GRAVELER => [
+    PokedexNo::GRAVELER     => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::GOLEM => [
+    PokedexNo::GOLEM        => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::PONYTA => [
+    PokedexNo::PONYTA       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::RAPIDASH => [
+    PokedexNo::RAPIDASH     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::SLOWPOKE => [
+    PokedexNo::SLOWPOKE     => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::SLOWBRO => [
+    PokedexNo::SLOWBRO      => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::SLOWKING => [
+    PokedexNo::SLOWKING     => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::MAGNEMITE => [
+    PokedexNo::MAGNEMITE    => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::MAGNETON => [
+    PokedexNo::MAGNETON     => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::MAGNEZONE => [
+    PokedexNo::MAGNEZONE    => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::FARFETCH_D => [
+    PokedexNo::FARFETCH_D   => [
         EggGroup::FLYING,
         EggGroup::FIELD,
     ],
-    PokedexNo::SIRFETCH_D => [
+    PokedexNo::SIRFETCH_D   => [
         EggGroup::FLYING,
         EggGroup::FIELD,
     ],
-    PokedexNo::DODUO => [
+    PokedexNo::DODUO        => [
         EggGroup::FLYING,
     ],
-    PokedexNo::DODRIO => [
+    PokedexNo::DODRIO       => [
         EggGroup::FLYING,
     ],
-    PokedexNo::SEEL => [
+    PokedexNo::SEEL         => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::DEWGONG => [
+    PokedexNo::DEWGONG      => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::GRIMER => [
+    PokedexNo::GRIMER       => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::MUK => [
+    PokedexNo::MUK          => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::SHELLDER => [
+    PokedexNo::SHELLDER     => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::CLOYSTER => [
+    PokedexNo::CLOYSTER     => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::GASTLY => [
+    PokedexNo::GASTLY       => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::HAUNTER => [
+    PokedexNo::HAUNTER      => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::GENGAR => [
+    PokedexNo::GENGAR       => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::ONIX => [
+    PokedexNo::ONIX         => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::STEELIX => [
+    PokedexNo::STEELIX      => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::DROWZEE => [
+    PokedexNo::DROWZEE      => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::HYPNO => [
+    PokedexNo::HYPNO        => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::KRABBY => [
+    PokedexNo::KRABBY       => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::KINGLER => [
+    PokedexNo::KINGLER      => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::VOLTORB => [
+    PokedexNo::VOLTORB      => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::ELECTRODE => [
+    PokedexNo::ELECTRODE    => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::EXEGGCUTE => [
+    PokedexNo::EXEGGCUTE    => [
         EggGroup::GRASS,
     ],
-    PokedexNo::EXEGGUTOR => [
+    PokedexNo::EXEGGUTOR    => [
         EggGroup::GRASS,
     ],
-    PokedexNo::CUBONE => [
+    PokedexNo::CUBONE       => [
         EggGroup::MONSTER,
     ],
-    PokedexNo::MAROWAK => [
+    PokedexNo::MAROWAK      => [
         EggGroup::MONSTER,
     ],
-    PokedexNo::TYROGUE => [
+    PokedexNo::TYROGUE      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::HITMONLEE => [
+    PokedexNo::HITMONLEE    => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::HITMONCHAN => [
+    PokedexNo::HITMONCHAN   => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::HITMONTOP => [
+    PokedexNo::HITMONTOP    => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::LICKITUNG => [
+    PokedexNo::LICKITUNG    => [
         EggGroup::MONSTER,
     ],
-    PokedexNo::LICKILICKY => [
+    PokedexNo::LICKILICKY   => [
         EggGroup::MONSTER,
     ],
-    PokedexNo::KOFFING => [
+    PokedexNo::KOFFING      => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::WEEZING => [
+    PokedexNo::WEEZING      => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::RHYHORN => [
+    PokedexNo::RHYHORN      => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::RHYDON => [
+    PokedexNo::RHYDON       => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::RHYPERIOR => [
+    PokedexNo::RHYPERIOR    => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::HAPPINY => [
+    PokedexNo::HAPPINY      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::CHANSEY => [
+    PokedexNo::CHANSEY      => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::BLISSEY => [
+    PokedexNo::BLISSEY      => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::TANGELA => [
+    PokedexNo::TANGELA      => [
         EggGroup::GRASS,
     ],
-    PokedexNo::TANGROWTH => [
+    PokedexNo::TANGROWTH    => [
         EggGroup::GRASS,
     ],
-    PokedexNo::KANGASKHAN => [
+    PokedexNo::KANGASKHAN   => [
         EggGroup::MONSTER,
     ],
-    PokedexNo::HORSEA => [
+    PokedexNo::HORSEA       => [
         EggGroup::WATER_1,
         EggGroup::DRAGON,
     ],
-    PokedexNo::SEADRA => [
+    PokedexNo::SEADRA       => [
         EggGroup::WATER_1,
         EggGroup::DRAGON,
     ],
-    PokedexNo::KINGDRA => [
+    PokedexNo::KINGDRA      => [
         EggGroup::WATER_1,
         EggGroup::DRAGON,
     ],
-    PokedexNo::GOLDEEN => [
+    PokedexNo::GOLDEEN      => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::SEAKING => [
+    PokedexNo::SEAKING      => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::STARYU => [
+    PokedexNo::STARYU       => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::STARMIE => [
+    PokedexNo::STARMIE      => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::MIME_JR => [
+    PokedexNo::MIME_JR      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MR_MIME => [
+    PokedexNo::MR_MIME      => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::MR_RIME => [
+    PokedexNo::MR_RIME      => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::SCYTHER => [
+    PokedexNo::SCYTHER      => [
         EggGroup::BUG,
     ],
-    PokedexNo::SCIZOR => [
+    PokedexNo::SCIZOR       => [
         EggGroup::BUG,
     ],
-    PokedexNo::SMOOCHUM => [
+    PokedexNo::SMOOCHUM     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::JYNX => [
+    PokedexNo::JYNX         => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::ELEKID => [
+    PokedexNo::ELEKID       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ELECTABUZZ => [
+    PokedexNo::ELECTABUZZ   => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::ELECTIVIRE => [
+    PokedexNo::ELECTIVIRE   => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::MAGBY => [
+    PokedexNo::MAGBY        => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MAGMAR => [
+    PokedexNo::MAGMAR       => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::MAGMORTAR => [
+    PokedexNo::MAGMORTAR    => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::PINSIR => [
+    PokedexNo::PINSIR       => [
         EggGroup::BUG,
     ],
-    PokedexNo::TAUROS => [
+    PokedexNo::TAUROS       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::MAGIKARP => [
-        EggGroup::WATER_2,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::GYARADOS => [
+    PokedexNo::MAGIKARP     => [
         EggGroup::WATER_2,
         EggGroup::DRAGON,
     ],
-    PokedexNo::LAPRAS => [
+    PokedexNo::GYARADOS     => [
+        EggGroup::WATER_2,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::LAPRAS       => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::DITTO => [
+    PokedexNo::DITTO        => [
         EggGroup::DITTO,
     ],
-    PokedexNo::EEVEE => [
+    PokedexNo::EEVEE        => [
         EggGroup::FIELD,
     ],
-    PokedexNo::VAPOREON => [
+    PokedexNo::VAPOREON     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::JOLTEON => [
+    PokedexNo::JOLTEON      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::FLAREON => [
+    PokedexNo::FLAREON      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::ESPEON => [
+    PokedexNo::ESPEON       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::UMBREON => [
+    PokedexNo::UMBREON      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::LEAFEON => [
+    PokedexNo::LEAFEON      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::GLACEON => [
+    PokedexNo::GLACEON      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::SYLVEON => [
+    PokedexNo::SYLVEON      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PORYGON => [
+    PokedexNo::PORYGON      => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::PORYGON2 => [
+    PokedexNo::PORYGON2     => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::PORYGON_Z => [
+    PokedexNo::PORYGON_Z    => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::OMANYTE => [
+    PokedexNo::OMANYTE      => [
         EggGroup::WATER_1,
         EggGroup::WATER_3,
     ],
-    PokedexNo::OMASTAR => [
+    PokedexNo::OMASTAR      => [
         EggGroup::WATER_1,
         EggGroup::WATER_3,
     ],
-    PokedexNo::KABUTO => [
+    PokedexNo::KABUTO       => [
         EggGroup::WATER_1,
         EggGroup::WATER_3,
     ],
-    PokedexNo::KABUTOPS => [
+    PokedexNo::KABUTOPS     => [
         EggGroup::WATER_1,
         EggGroup::WATER_3,
     ],
-    PokedexNo::AERODACTYL => [
+    PokedexNo::AERODACTYL   => [
         EggGroup::FLYING,
     ],
-    PokedexNo::MUNCHLAX => [
+    PokedexNo::MUNCHLAX     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::SNORLAX => [
+    PokedexNo::SNORLAX      => [
         EggGroup::MONSTER,
     ],
-    PokedexNo::ARTICUNO => [
+    PokedexNo::ARTICUNO     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ZAPDOS => [
+    PokedexNo::ZAPDOS       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MOLTRES => [
+    PokedexNo::MOLTRES      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::DRATINI => [
+    PokedexNo::DRATINI      => [
         EggGroup::WATER_1,
         EggGroup::DRAGON,
     ],
-    PokedexNo::DRAGONAIR => [
+    PokedexNo::DRAGONAIR    => [
         EggGroup::WATER_1,
         EggGroup::DRAGON,
     ],
-    PokedexNo::DRAGONITE => [
+    PokedexNo::DRAGONITE    => [
         EggGroup::WATER_1,
         EggGroup::DRAGON,
     ],
-    PokedexNo::MEWTWO => [
+    PokedexNo::MEWTWO       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MEW => [
+    PokedexNo::MEW          => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::CHIKORITA => [
+    PokedexNo::CHIKORITA    => [
         EggGroup::MONSTER,
         EggGroup::GRASS,
     ],
-    PokedexNo::BAYLEEF => [
+    PokedexNo::BAYLEEF      => [
         EggGroup::MONSTER,
         EggGroup::GRASS,
     ],
-    PokedexNo::MEGANIUM => [
+    PokedexNo::MEGANIUM     => [
         EggGroup::MONSTER,
         EggGroup::GRASS,
     ],
-    PokedexNo::CYNDAQUIL => [
+    PokedexNo::CYNDAQUIL    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::QUILAVA => [
+    PokedexNo::QUILAVA      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::TYPHLOSION => [
+    PokedexNo::TYPHLOSION   => [
         EggGroup::FIELD,
     ],
-    PokedexNo::TOTODILE => [
+    PokedexNo::TOTODILE     => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::CROCONAW => [
+    PokedexNo::CROCONAW     => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::FERALIGATR => [
+    PokedexNo::FERALIGATR   => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::SENTRET => [
+    PokedexNo::SENTRET      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::FURRET => [
+    PokedexNo::FURRET       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::HOOTHOOT => [
+    PokedexNo::HOOTHOOT     => [
         EggGroup::FLYING,
     ],
-    PokedexNo::NOCTOWL => [
+    PokedexNo::NOCTOWL      => [
         EggGroup::FLYING,
     ],
-    PokedexNo::LEDYBA => [
+    PokedexNo::LEDYBA       => [
         EggGroup::BUG,
     ],
-    PokedexNo::LEDIAN => [
+    PokedexNo::LEDIAN       => [
         EggGroup::BUG,
     ],
-    PokedexNo::SPINARAK => [
+    PokedexNo::SPINARAK     => [
         EggGroup::BUG,
     ],
-    PokedexNo::ARIADOS => [
+    PokedexNo::ARIADOS      => [
         EggGroup::BUG,
     ],
-    PokedexNo::CHINCHOU => [
+    PokedexNo::CHINCHOU     => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::LANTURN => [
+    PokedexNo::LANTURN      => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::TOGEPI => [
+    PokedexNo::TOGEPI       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::TOGETIC => [
+    PokedexNo::TOGETIC      => [
         EggGroup::FLYING,
         EggGroup::FAIRY,
     ],
-    PokedexNo::TOGEKISS => [
+    PokedexNo::TOGEKISS     => [
         EggGroup::FLYING,
         EggGroup::FAIRY,
     ],
-    PokedexNo::NATU => [
+    PokedexNo::NATU         => [
         EggGroup::FLYING,
     ],
-    PokedexNo::XATU => [
+    PokedexNo::XATU         => [
         EggGroup::FLYING,
     ],
-    PokedexNo::MAREEP => [
+    PokedexNo::MAREEP       => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::FLAAFFY => [
+    PokedexNo::FLAAFFY      => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::AMPHAROS => [
+    PokedexNo::AMPHAROS     => [
         EggGroup::MONSTER,
         EggGroup::FIELD,
     ],
-    PokedexNo::AZURILL => [
+    PokedexNo::AZURILL      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MARILL => [
+    PokedexNo::MARILL       => [
         EggGroup::WATER_1,
         EggGroup::FAIRY,
     ],
-    PokedexNo::AZUMARILL => [
+    PokedexNo::AZUMARILL    => [
         EggGroup::WATER_1,
         EggGroup::FAIRY,
     ],
-    PokedexNo::BONSLY => [
+    PokedexNo::BONSLY       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::SUDOWOODO => [
+    PokedexNo::SUDOWOODO    => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::HOPPIP => [
+    PokedexNo::HOPPIP       => [
         EggGroup::FAIRY,
         EggGroup::GRASS,
     ],
-    PokedexNo::SKIPLOOM => [
+    PokedexNo::SKIPLOOM     => [
         EggGroup::FAIRY,
         EggGroup::GRASS,
     ],
-    PokedexNo::JUMPLUFF => [
+    PokedexNo::JUMPLUFF     => [
         EggGroup::FAIRY,
         EggGroup::GRASS,
     ],
-    PokedexNo::AIPOM => [
+    PokedexNo::AIPOM        => [
         EggGroup::FIELD,
     ],
-    PokedexNo::AMBIPOM => [
+    PokedexNo::AMBIPOM      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::SUNKERN => [
+    PokedexNo::SUNKERN      => [
         EggGroup::GRASS,
     ],
-    PokedexNo::SUNFLORA => [
+    PokedexNo::SUNFLORA     => [
         EggGroup::GRASS,
     ],
-    PokedexNo::YANMA => [
+    PokedexNo::YANMA        => [
         EggGroup::BUG,
     ],
-    PokedexNo::YANMEGA => [
+    PokedexNo::YANMEGA      => [
         EggGroup::BUG,
     ],
-    PokedexNo::WOOPER => [
+    PokedexNo::WOOPER       => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::QUAGSIRE => [
+    PokedexNo::QUAGSIRE     => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::MURKROW => [
+    PokedexNo::MURKROW      => [
         EggGroup::FLYING,
     ],
-    PokedexNo::HONCHKROW => [
+    PokedexNo::HONCHKROW    => [
         EggGroup::FLYING,
     ],
-    PokedexNo::MISDREAVUS => [
+    PokedexNo::MISDREAVUS   => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::MISMAGIUS => [
+    PokedexNo::MISMAGIUS    => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::UNOWN => [
+    PokedexNo::UNOWN        => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::WYNAUT => [
+    PokedexNo::WYNAUT       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::WOBBUFFET => [
+    PokedexNo::WOBBUFFET    => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::GIRAFARIG => [
+    PokedexNo::GIRAFARIG    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PINECO => [
+    PokedexNo::PINECO       => [
         EggGroup::BUG,
     ],
-    PokedexNo::FORRETRESS => [
+    PokedexNo::FORRETRESS   => [
         EggGroup::BUG,
     ],
-    PokedexNo::DUNSPARCE => [
+    PokedexNo::DUNSPARCE    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::GLIGAR => [
+    PokedexNo::GLIGAR       => [
         EggGroup::BUG,
     ],
-    PokedexNo::GLISCOR => [
+    PokedexNo::GLISCOR      => [
         EggGroup::BUG,
     ],
-    PokedexNo::SNUBBULL => [
+    PokedexNo::SNUBBULL     => [
         EggGroup::FIELD,
         EggGroup::FAIRY,
     ],
-    PokedexNo::GRANBULL => [
+    PokedexNo::GRANBULL     => [
         EggGroup::FIELD,
         EggGroup::FAIRY,
     ],
-    PokedexNo::QWILFISH => [
+    PokedexNo::QWILFISH     => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::SHUCKLE => [
+    PokedexNo::SHUCKLE      => [
         EggGroup::BUG,
     ],
-    PokedexNo::HERACROSS => [
+    PokedexNo::HERACROSS    => [
         EggGroup::BUG,
     ],
-    PokedexNo::SNEASEL => [
+    PokedexNo::SNEASEL      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::WEAVILE => [
+    PokedexNo::WEAVILE      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::TEDDIURSA => [
+    PokedexNo::TEDDIURSA    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::URSARING => [
+    PokedexNo::URSARING     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::SLUGMA => [
+    PokedexNo::SLUGMA       => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::MAGCARGO => [
+    PokedexNo::MAGCARGO     => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::SWINUB => [
+    PokedexNo::SWINUB       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PILOSWINE => [
+    PokedexNo::PILOSWINE    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::MAMOSWINE => [
+    PokedexNo::MAMOSWINE    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::CORSOLA => [
+    PokedexNo::CORSOLA      => [
         EggGroup::WATER_1,
         EggGroup::WATER_3,
     ],
-    PokedexNo::CURSOLA => [
+    PokedexNo::CURSOLA      => [
         EggGroup::WATER_1,
         EggGroup::WATER_3,
     ],
-    PokedexNo::REMORAID => [
-        EggGroup::WATER_1,
-        EggGroup::WATER_2,
-    ],
-    PokedexNo::OCTILLERY => [
+    PokedexNo::REMORAID     => [
         EggGroup::WATER_1,
         EggGroup::WATER_2,
     ],
-    PokedexNo::DELIBIRD => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::MANTYKE => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::MANTINE => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::SKARMORY => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::HOUNDOUR => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::HOUNDOOM => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PHANPY => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::DONPHAN => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::STANTLER => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SMEARGLE => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::MILTANK => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::RAIKOU => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::ENTEI => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::SUICUNE => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::LARVITAR => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::PUPITAR => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::TYRANITAR => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::LUGIA => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::HO_OH => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::CELEBI => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::TREECKO => [
-        EggGroup::MONSTER,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::GROVYLE => [
-        EggGroup::MONSTER,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::SCEPTILE => [
-        EggGroup::MONSTER,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::TORCHIC => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::COMBUSKEN => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::BLAZIKEN => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::MUDKIP => [
-        EggGroup::MONSTER,
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::MARSHTOMP => [
-        EggGroup::MONSTER,
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::SWAMPERT => [
-        EggGroup::MONSTER,
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::POOCHYENA => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::MIGHTYENA => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::ZIGZAGOON => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::LINOONE => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::OBSTAGOON => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::WURMPLE => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::SILCOON => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::BEAUTIFLY => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::CASCOON => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::DUSTOX => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::LOTAD => [
-        EggGroup::WATER_1,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::LOMBRE => [
-        EggGroup::WATER_1,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::LUDICOLO => [
-        EggGroup::WATER_1,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::SEEDOT => [
-        EggGroup::FIELD,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::NUZLEAF => [
-        EggGroup::FIELD,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::SHIFTRY => [
-        EggGroup::FIELD,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::TAILLOW => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::SWELLOW => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::WINGULL => [
-        EggGroup::WATER_1,
-        EggGroup::FLYING,
-    ],
-    PokedexNo::PELIPPER => [
-        EggGroup::WATER_1,
-        EggGroup::FLYING,
-    ],
-    PokedexNo::RALTS => [
-        EggGroup::HUMAN_LIKE,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::KIRLIA => [
-        EggGroup::HUMAN_LIKE,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::GARDEVOIR => [
-        EggGroup::HUMAN_LIKE,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::GALLADE => [
-        EggGroup::HUMAN_LIKE,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::SURSKIT => [
-        EggGroup::WATER_1,
-        EggGroup::BUG,
-    ],
-    PokedexNo::MASQUERAIN => [
-        EggGroup::WATER_1,
-        EggGroup::BUG,
-    ],
-    PokedexNo::SHROOMISH => [
-        EggGroup::FAIRY,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::BRELOOM => [
-        EggGroup::FAIRY,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::SLAKOTH => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::VIGOROTH => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SLAKING => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::NINCADA => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::NINJASK => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::SHEDINJA => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::WHISMUR => [
-        EggGroup::MONSTER,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::LOUDRED => [
-        EggGroup::MONSTER,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::EXPLOUD => [
-        EggGroup::MONSTER,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::MAKUHITA => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::HARIYAMA => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::NOSEPASS => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::PROBOPASS => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::SKITTY => [
-        EggGroup::FIELD,
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::DELCATTY => [
-        EggGroup::FIELD,
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::SABLEYE => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::MAWILE => [
-        EggGroup::FIELD,
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::ARON => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::LAIRON => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::AGGRON => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::MEDITITE => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::MEDICHAM => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::ELECTRIKE => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::MANECTRIC => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PLUSLE => [
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::MINUN => [
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::VOLBEAT => [
-        EggGroup::BUG,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::ILLUMISE => [
-        EggGroup::BUG,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::BUDEW => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::ROSELIA => [
-        EggGroup::FAIRY,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::ROSERADE => [
-        EggGroup::FAIRY,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::GULPIN => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::SWALOT => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::CARVANHA => [
-        EggGroup::WATER_2,
-    ],
-    PokedexNo::SHARPEDO => [
-        EggGroup::WATER_2,
-    ],
-    PokedexNo::WAILMER => [
-        EggGroup::FIELD,
-        EggGroup::WATER_2,
-    ],
-    PokedexNo::WAILORD => [
-        EggGroup::FIELD,
-        EggGroup::WATER_2,
-    ],
-    PokedexNo::NUMEL => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::CAMERUPT => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::TORKOAL => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SPOINK => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::GRUMPIG => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SPINDA => [
-        EggGroup::FIELD,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::TRAPINCH => [
-        EggGroup::BUG,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::VIBRAVA => [
-        EggGroup::BUG,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::FLYGON => [
-        EggGroup::BUG,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::CACNEA => [
-        EggGroup::GRASS,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::CACTURNE => [
-        EggGroup::GRASS,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::SWABLU => [
-        EggGroup::FLYING,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::ALTARIA => [
-        EggGroup::FLYING,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::ZANGOOSE => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SEVIPER => [
-        EggGroup::FIELD,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::LUNATONE => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::SOLROCK => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::BARBOACH => [
-        EggGroup::WATER_2,
-    ],
-    PokedexNo::WHISCASH => [
-        EggGroup::WATER_2,
-    ],
-    PokedexNo::CORPHISH => [
-        EggGroup::WATER_1,
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::CRAWDAUNT => [
-        EggGroup::WATER_1,
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::BALTOY => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::CLAYDOL => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::LILEEP => [
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::CRADILY => [
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::ANORITH => [
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::ARMALDO => [
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::FEEBAS => [
-        EggGroup::WATER_1,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::MILOTIC => [
-        EggGroup::WATER_1,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::CASTFORM => [
-        EggGroup::FAIRY,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::KECLEON => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SHUPPET => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::BANETTE => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::DUSKULL => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::DUSCLOPS => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::DUSKNOIR => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::TROPIUS => [
-        EggGroup::MONSTER,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::CHINGLING => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::CHIMECHO => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::ABSOL => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SNORUNT => [
-        EggGroup::FAIRY,
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::GLALIE => [
-        EggGroup::FAIRY,
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::FROSLASS => [
-        EggGroup::FAIRY,
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::SPHEAL => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SEALEO => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::WALREIN => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::CLAMPERL => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::HUNTAIL => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::GOREBYSS => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::RELICANTH => [
+    PokedexNo::OCTILLERY    => [
         EggGroup::WATER_1,
         EggGroup::WATER_2,
     ],
-    PokedexNo::LUVDISC => [
+    PokedexNo::DELIBIRD     => [
+        EggGroup::WATER_1,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MANTYKE      => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::MANTINE      => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::SKARMORY     => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::HOUNDOUR     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::HOUNDOOM     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PHANPY       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::DONPHAN      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::STANTLER     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SMEARGLE     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MILTANK      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::RAIKOU       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::ENTEI        => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::SUICUNE      => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::LARVITAR     => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::PUPITAR      => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::TYRANITAR    => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::LUGIA        => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::HO_OH        => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::CELEBI       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::TREECKO      => [
+        EggGroup::MONSTER,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::GROVYLE      => [
+        EggGroup::MONSTER,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::SCEPTILE     => [
+        EggGroup::MONSTER,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::TORCHIC      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::COMBUSKEN    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::BLAZIKEN     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MUDKIP       => [
+        EggGroup::MONSTER,
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::MARSHTOMP    => [
+        EggGroup::MONSTER,
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::SWAMPERT     => [
+        EggGroup::MONSTER,
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::POOCHYENA    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MIGHTYENA    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::ZIGZAGOON    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::LINOONE      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::OBSTAGOON    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::WURMPLE      => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::SILCOON      => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::BEAUTIFLY    => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::CASCOON      => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::DUSTOX       => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::LOTAD        => [
+        EggGroup::WATER_1,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::LOMBRE       => [
+        EggGroup::WATER_1,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::LUDICOLO     => [
+        EggGroup::WATER_1,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::SEEDOT       => [
+        EggGroup::FIELD,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::NUZLEAF      => [
+        EggGroup::FIELD,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::SHIFTRY      => [
+        EggGroup::FIELD,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::TAILLOW      => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::SWELLOW      => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::WINGULL      => [
+        EggGroup::WATER_1,
+        EggGroup::FLYING,
+    ],
+    PokedexNo::PELIPPER     => [
+        EggGroup::WATER_1,
+        EggGroup::FLYING,
+    ],
+    PokedexNo::RALTS        => [
+        EggGroup::HUMAN_LIKE,
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::KIRLIA       => [
+        EggGroup::HUMAN_LIKE,
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::GARDEVOIR    => [
+        EggGroup::HUMAN_LIKE,
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::GALLADE      => [
+        EggGroup::HUMAN_LIKE,
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::SURSKIT      => [
+        EggGroup::WATER_1,
+        EggGroup::BUG,
+    ],
+    PokedexNo::MASQUERAIN   => [
+        EggGroup::WATER_1,
+        EggGroup::BUG,
+    ],
+    PokedexNo::SHROOMISH    => [
+        EggGroup::FAIRY,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::BRELOOM      => [
+        EggGroup::FAIRY,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::SLAKOTH      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::VIGOROTH     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SLAKING      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::NINCADA      => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::NINJASK      => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::SHEDINJA     => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::WHISMUR      => [
+        EggGroup::MONSTER,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::LOUDRED      => [
+        EggGroup::MONSTER,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::EXPLOUD      => [
+        EggGroup::MONSTER,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MAKUHITA     => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::HARIYAMA     => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::NOSEPASS     => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::PROBOPASS    => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::SKITTY       => [
+        EggGroup::FIELD,
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::DELCATTY     => [
+        EggGroup::FIELD,
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::SABLEYE      => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::MAWILE       => [
+        EggGroup::FIELD,
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::ARON         => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::LAIRON       => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::AGGRON       => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::MEDITITE     => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::MEDICHAM     => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::ELECTRIKE    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MANECTRIC    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PLUSLE       => [
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::MINUN        => [
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::VOLBEAT      => [
+        EggGroup::BUG,
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::ILLUMISE     => [
+        EggGroup::BUG,
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::BUDEW        => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::ROSELIA      => [
+        EggGroup::FAIRY,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::ROSERADE     => [
+        EggGroup::FAIRY,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::GULPIN       => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::SWALOT       => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::CARVANHA     => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::BAGON => [
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::SHELGON => [
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::SALAMENCE => [
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::BELDUM => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::METANG => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::METAGROSS => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::REGIROCK => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::REGICE => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::REGISTEEL => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::LATIAS => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::LATIOS => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::KYOGRE => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::GROUDON => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::RAYQUAZA => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::JIRACHI => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::DEOXYS => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::TURTWIG => [
-        EggGroup::MONSTER,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::GROTLE => [
-        EggGroup::MONSTER,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::TORTERRA => [
-        EggGroup::MONSTER,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::CHIMCHAR => [
-        EggGroup::FIELD,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::MONFERNO => [
-        EggGroup::FIELD,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::INFERNAPE => [
-        EggGroup::FIELD,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::PIPLUP => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PRINPLUP => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::EMPOLEON => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::STARLY => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::STARAVIA => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::STARAPTOR => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::BIDOOF => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::BIBAREL => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::KRICKETOT => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::KRICKETUNE => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::SHINX => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::LUXIO => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::LUXRAY => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::CRANIDOS => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::RAMPARDOS => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::SHIELDON => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::BASTIODON => [
-        EggGroup::MONSTER,
-    ],
-    PokedexNo::BURMY => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::WORMADAM => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::MOTHIM => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::COMBEE => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::VESPIQUEN => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::PACHIRISU => [
-        EggGroup::FIELD,
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::BUIZEL => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::FLOATZEL => [
-        EggGroup::WATER_1,
-        EggGroup::FIELD,
-    ],
-    PokedexNo::CHERUBI => [
-        EggGroup::FAIRY,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::CHERRIM => [
-        EggGroup::FAIRY,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::SHELLOS => [
-        EggGroup::WATER_1,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::GASTRODON => [
-        EggGroup::WATER_1,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::DRIFLOON => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::DRIFBLIM => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::BUNEARY => [
-        EggGroup::FIELD,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::LOPUNNY => [
-        EggGroup::FIELD,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::GLAMEOW => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PURUGLY => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::STUNKY => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SKUNTANK => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::BRONZOR => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::BRONZONG => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::CHATOT => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::SPIRITOMB => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::GIBLE => [
-        EggGroup::MONSTER,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::GABITE => [
-        EggGroup::MONSTER,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::GARCHOMP => [
-        EggGroup::MONSTER,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::RIOLU => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::LUCARIO => [
-        EggGroup::FIELD,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::HIPPOPOTAS => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::HIPPOWDON => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SKORUPI => [
-        EggGroup::BUG,
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::DRAPION => [
-        EggGroup::BUG,
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::CROAGUNK => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::TOXICROAK => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::CARNIVINE => [
-        EggGroup::GRASS,
-    ],
-    PokedexNo::FINNEON => [
+    PokedexNo::SHARPEDO     => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::LUMINEON => [
+    PokedexNo::WAILMER      => [
+        EggGroup::FIELD,
         EggGroup::WATER_2,
     ],
-    PokedexNo::SNOVER => [
-        EggGroup::MONSTER,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::ABOMASNOW => [
-        EggGroup::MONSTER,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::ROTOM => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::UXIE => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::MESPRIT => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::AZELF => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::DIALGA => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::PALKIA => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::HEATRAN => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::REGIGIGAS => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::GIRATINA => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::CRESSELIA => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::PHIONE => [
-        EggGroup::WATER_1,
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::MANAPHY => [
-        EggGroup::WATER_1,
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::DARKRAI => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::SHAYMIN => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::ARCEUS => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::VICTINI => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::SNIVY => [
+    PokedexNo::WAILORD      => [
         EggGroup::FIELD,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::SERVINE => [
-        EggGroup::FIELD,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::SERPERIOR => [
-        EggGroup::FIELD,
-        EggGroup::GRASS,
-    ],
-    PokedexNo::TEPIG => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PIGNITE => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::EMBOAR => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::OSHAWOTT => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::DEWOTT => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SAMUROTT => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PATRAT => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::WATCHOG => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::LILLIPUP => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::HERDIER => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::STOUTLAND => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PURRLOIN => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::LIEPARD => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PANSAGE => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SIMISAGE => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PANSEAR => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SIMISEAR => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PANPOUR => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SIMIPOUR => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::MUNNA => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::MUSHARNA => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PIDOVE => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::TRANQUILL => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::UNFEZANT => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::BLITZLE => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::ZEBSTRIKA => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::ROGGENROLA => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::BOLDORE => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::GIGALITH => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::WOOBAT => [
-        EggGroup::FIELD,
-        EggGroup::FLYING,
-    ],
-    PokedexNo::SWOOBAT => [
-        EggGroup::FIELD,
-        EggGroup::FLYING,
-    ],
-    PokedexNo::DRILBUR => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::EXCADRILL => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::AUDINO => [
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::TIMBURR => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::GURDURR => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::CONKELDURR => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::TYMPOLE => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::PALPITOAD => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::SEISMITOAD => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::THROH => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::SAWK => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::SEWADDLE => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::SWADLOON => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::LEAVANNY => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::VENIPEDE => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::WHIRLIPEDE => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::SCOLIPEDE => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::COTTONEE => [
-        EggGroup::GRASS,
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::WHIMSICOTT => [
-        EggGroup::GRASS,
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::PETILIL => [
-        EggGroup::GRASS,
-    ],
-    PokedexNo::LILLIGANT => [
-        EggGroup::GRASS,
-    ],
-    PokedexNo::BASCULIN => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::SANDILE => [
+    PokedexNo::NUMEL        => [
         EggGroup::FIELD,
     ],
-    PokedexNo::KROKOROK => [
+    PokedexNo::CAMERUPT     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::KROOKODILE => [
+    PokedexNo::TORKOAL      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::DARUMAKA => [
+    PokedexNo::SPOINK       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::DARMANITAN => [
+    PokedexNo::GRUMPIG      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::MARACTUS => [
+    PokedexNo::SPINDA       => [
+        EggGroup::FIELD,
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::TRAPINCH     => [
+        EggGroup::BUG,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::VIBRAVA      => [
+        EggGroup::BUG,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::FLYGON       => [
+        EggGroup::BUG,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::CACNEA       => [
         EggGroup::GRASS,
+        EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::DWEBBLE => [
-        EggGroup::BUG,
-        EggGroup::MINERAL,
+    PokedexNo::CACTURNE     => [
+        EggGroup::GRASS,
+        EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::CRUSTLE => [
-        EggGroup::BUG,
-        EggGroup::MINERAL,
+    PokedexNo::SWABLU       => [
+        EggGroup::FLYING,
+        EggGroup::DRAGON,
     ],
-    PokedexNo::SCRAGGY => [
+    PokedexNo::ALTARIA      => [
+        EggGroup::FLYING,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::ZANGOOSE     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SEVIPER      => [
         EggGroup::FIELD,
         EggGroup::DRAGON,
     ],
-    PokedexNo::SCRAFTY => [
-        EggGroup::FIELD,
+    PokedexNo::LUNATONE     => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::SOLROCK      => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::BARBOACH     => [
+        EggGroup::WATER_2,
+    ],
+    PokedexNo::WHISCASH     => [
+        EggGroup::WATER_2,
+    ],
+    PokedexNo::CORPHISH     => [
+        EggGroup::WATER_1,
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::CRAWDAUNT    => [
+        EggGroup::WATER_1,
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::BALTOY       => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::CLAYDOL      => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::LILEEP       => [
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::CRADILY      => [
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::ANORITH      => [
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::ARMALDO      => [
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::FEEBAS       => [
+        EggGroup::WATER_1,
         EggGroup::DRAGON,
     ],
-    PokedexNo::SIGILYPH => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::YAMASK => [
-        EggGroup::MINERAL,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::COFAGRIGUS => [
-        EggGroup::MINERAL,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::RUNERIGUS => [
-        EggGroup::MINERAL,
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::TIRTOUGA => [
+    PokedexNo::MILOTIC      => [
         EggGroup::WATER_1,
-        EggGroup::WATER_3,
+        EggGroup::DRAGON,
     ],
-    PokedexNo::CARRACOSTA => [
-        EggGroup::WATER_1,
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::ARCHEN => [
-        EggGroup::FLYING,
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::ARCHEOPS => [
-        EggGroup::FLYING,
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::TRUBBISH => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::GARBODOR => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::ZORUA => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::ZOROARK => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::MINCCINO => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::CINCCINO => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::GOTHITA => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::GOTHORITA => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::GOTHITELLE => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::SOLOSIS => [
+    PokedexNo::CASTFORM     => [
+        EggGroup::FAIRY,
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::DUOSION => [
+    PokedexNo::KECLEON      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SHUPPET      => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::REUNICLUS => [
+    PokedexNo::BANETTE      => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::DUCKLETT => [
-        EggGroup::WATER_1,
-        EggGroup::FLYING,
+    PokedexNo::DUSKULL      => [
+        EggGroup::AMORPHOUS,
     ],
-    PokedexNo::SWANNA => [
-        EggGroup::WATER_1,
-        EggGroup::FLYING,
+    PokedexNo::DUSCLOPS     => [
+        EggGroup::AMORPHOUS,
     ],
-    PokedexNo::VANILLITE => [
-        EggGroup::MINERAL,
+    PokedexNo::DUSKNOIR     => [
+        EggGroup::AMORPHOUS,
     ],
-    PokedexNo::VANILLISH => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::VANILLUXE => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::DEERLING => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::SAWSBUCK => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::EMOLGA => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::KARRABLAST => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::ESCAVALIER => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::FOONGUS => [
+    PokedexNo::TROPIUS      => [
+        EggGroup::MONSTER,
         EggGroup::GRASS,
     ],
-    PokedexNo::AMOONGUSS => [
-        EggGroup::GRASS,
+    PokedexNo::CHINGLING    => [
+        EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::FRILLISH => [
+    PokedexNo::CHIMECHO     => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::JELLICENT => [
-        EggGroup::AMORPHOUS,
+    PokedexNo::ABSOL        => [
+        EggGroup::FIELD,
     ],
-    PokedexNo::ALOMOMOLA => [
+    PokedexNo::SNORUNT      => [
+        EggGroup::FAIRY,
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::GLALIE       => [
+        EggGroup::FAIRY,
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::FROSLASS     => [
+        EggGroup::FAIRY,
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::SPHEAL       => [
+        EggGroup::WATER_1,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SEALEO       => [
+        EggGroup::WATER_1,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::WALREIN      => [
+        EggGroup::WATER_1,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::CLAMPERL     => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::HUNTAIL      => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::GOREBYSS     => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::RELICANTH    => [
         EggGroup::WATER_1,
         EggGroup::WATER_2,
     ],
-    PokedexNo::JOLTIK => [
-        EggGroup::BUG,
+    PokedexNo::LUVDISC      => [
+        EggGroup::WATER_2,
     ],
-    PokedexNo::GALVANTULA => [
-        EggGroup::BUG,
+    PokedexNo::BAGON        => [
+        EggGroup::DRAGON,
     ],
-    PokedexNo::FERROSEED => [
+    PokedexNo::SHELGON      => [
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::SALAMENCE    => [
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::BELDUM       => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::METANG       => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::METAGROSS    => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::REGIROCK     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::REGICE       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::REGISTEEL    => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::LATIAS       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::LATIOS       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::KYOGRE       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::GROUDON      => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::RAYQUAZA     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::JIRACHI      => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::DEOXYS       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::TURTWIG      => [
+        EggGroup::MONSTER,
         EggGroup::GRASS,
-        EggGroup::MINERAL,
     ],
-    PokedexNo::FERROTHORN => [
+    PokedexNo::GROTLE       => [
+        EggGroup::MONSTER,
         EggGroup::GRASS,
-        EggGroup::MINERAL,
     ],
-    PokedexNo::KLINK => [
-        EggGroup::MINERAL,
+    PokedexNo::TORTERRA     => [
+        EggGroup::MONSTER,
+        EggGroup::GRASS,
     ],
-    PokedexNo::KLANG => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::KLINKLANG => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::TYNAMO => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::EELEKTRIK => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::EELEKTROSS => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::ELGYEM => [
+    PokedexNo::CHIMCHAR     => [
+        EggGroup::FIELD,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::BEHEEYEM => [
+    PokedexNo::MONFERNO     => [
+        EggGroup::FIELD,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::LITWICK => [
-        EggGroup::AMORPHOUS,
+    PokedexNo::INFERNAPE    => [
+        EggGroup::FIELD,
+        EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::LAMPENT => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::CHANDELURE => [
-        EggGroup::AMORPHOUS,
-    ],
-    PokedexNo::AXEW => [
-        EggGroup::MONSTER,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::FRAXURE => [
-        EggGroup::MONSTER,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::HAXORUS => [
-        EggGroup::MONSTER,
-        EggGroup::DRAGON,
-    ],
-    PokedexNo::CUBCHOO => [
+    PokedexNo::PIPLUP       => [
+        EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::BEARTIC => [
+    PokedexNo::PRINPLUP     => [
+        EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::CRYOGONAL => [
-        EggGroup::MINERAL,
+    PokedexNo::EMPOLEON     => [
+        EggGroup::WATER_1,
+        EggGroup::FIELD,
     ],
-    PokedexNo::SHELMET => [
+    PokedexNo::STARLY       => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::STARAVIA     => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::STARAPTOR    => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::BIDOOF       => [
+        EggGroup::WATER_1,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::BIBAREL      => [
+        EggGroup::WATER_1,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::KRICKETOT    => [
         EggGroup::BUG,
     ],
-    PokedexNo::ACCELGOR => [
+    PokedexNo::KRICKETUNE   => [
         EggGroup::BUG,
     ],
-    PokedexNo::STUNFISK => [
+    PokedexNo::SHINX        => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::LUXIO        => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::LUXRAY       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::CRANIDOS     => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::RAMPARDOS    => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::SHIELDON     => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::BASTIODON    => [
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::BURMY        => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::WORMADAM     => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::MOTHIM       => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::COMBEE       => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::VESPIQUEN    => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::PACHIRISU    => [
+        EggGroup::FIELD,
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::BUIZEL       => [
+        EggGroup::WATER_1,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::FLOATZEL     => [
+        EggGroup::WATER_1,
+        EggGroup::FIELD,
+    ],
+    PokedexNo::CHERUBI      => [
+        EggGroup::FAIRY,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::CHERRIM      => [
+        EggGroup::FAIRY,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::SHELLOS      => [
         EggGroup::WATER_1,
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::MIENFOO => [
+    PokedexNo::GASTRODON    => [
+        EggGroup::WATER_1,
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::DRIFLOON     => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::DRIFBLIM     => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::BUNEARY      => [
         EggGroup::FIELD,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::MIENSHAO => [
+    PokedexNo::LOPUNNY      => [
         EggGroup::FIELD,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::DRUDDIGON => [
-        EggGroup::DRAGON,
+    PokedexNo::GLAMEOW      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PURUGLY      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::STUNKY       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SKUNTANK     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::BRONZOR      => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::BRONZONG     => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::CHATOT       => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::SPIRITOMB    => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::GIBLE        => [
         EggGroup::MONSTER,
-    ],
-    PokedexNo::GOLETT => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::GOLURK => [
-        EggGroup::MINERAL,
-    ],
-    PokedexNo::PAWNIARD => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::BISHARP => [
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::BOUFFALANT => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::RUFFLET => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::BRAVIARY => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::VULLABY => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::MANDIBUZZ => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::HEATMOR => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::DURANT => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::DEINO => [
         EggGroup::DRAGON,
     ],
-    PokedexNo::ZWEILOUS => [
+    PokedexNo::GABITE       => [
+        EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::HYDREIGON => [
+    PokedexNo::GARCHOMP     => [
+        EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::LARVESTA => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::VOLCARONA => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::COBALION => [
+    PokedexNo::RIOLU        => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::TERRAKION => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::VIRIZION => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::TORNADUS => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::THUNDURUS => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::RESHIRAM => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::ZEKROM => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::LANDORUS => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::KYUREM => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::KELDEO => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::MELOETTA => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::GENESECT => [
-        EggGroup::NO_EGGS_DISCOVERED,
-    ],
-    PokedexNo::CHESPIN => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::QUILLADIN => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::CHESNAUGHT => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::FENNEKIN => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::BRAIXEN => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::DELPHOX => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::FROAKIE => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::FROGADIER => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::GRENINJA => [
-        EggGroup::WATER_1,
-    ],
-    PokedexNo::BUNNELBY => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::DIGGERSBY => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::FLETCHLING => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::FLETCHINDER => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::TALONFLAME => [
-        EggGroup::FLYING,
-    ],
-    PokedexNo::SCATTERBUG => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::SPEWPA => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::VIVILLON => [
-        EggGroup::BUG,
-    ],
-    PokedexNo::LITLEO => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PYROAR => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::FLABEBE => [
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::FLOETTE => [
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::FLORGES => [
-        EggGroup::FAIRY,
-    ],
-    PokedexNo::SKIDDO => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::GOGOAT => [
-        EggGroup::FIELD,
-    ],
-    PokedexNo::PANCHAM => [
+    PokedexNo::LUCARIO      => [
         EggGroup::FIELD,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::PANGORO => [
+    PokedexNo::HIPPOPOTAS   => [
         EggGroup::FIELD,
+    ],
+    PokedexNo::HIPPOWDON    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SKORUPI      => [
+        EggGroup::BUG,
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::DRAPION      => [
+        EggGroup::BUG,
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::CROAGUNK     => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::FURFROU => [
+    PokedexNo::TOXICROAK    => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::CARNIVINE    => [
+        EggGroup::GRASS,
+    ],
+    PokedexNo::FINNEON      => [
+        EggGroup::WATER_2,
+    ],
+    PokedexNo::LUMINEON     => [
+        EggGroup::WATER_2,
+    ],
+    PokedexNo::SNOVER       => [
+        EggGroup::MONSTER,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::ABOMASNOW    => [
+        EggGroup::MONSTER,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::ROTOM        => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::UXIE         => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::MESPRIT      => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::AZELF        => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::DIALGA       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::PALKIA       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::HEATRAN      => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::REGIGIGAS    => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::GIRATINA     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::CRESSELIA    => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::PHIONE       => [
+        EggGroup::WATER_1,
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::MANAPHY      => [
+        EggGroup::WATER_1,
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::DARKRAI      => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::SHAYMIN      => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::ARCEUS       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::VICTINI      => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::SNIVY        => [
+        EggGroup::FIELD,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::SERVINE      => [
+        EggGroup::FIELD,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::SERPERIOR    => [
+        EggGroup::FIELD,
+        EggGroup::GRASS,
+    ],
+    PokedexNo::TEPIG        => [
         EggGroup::FIELD,
     ],
-    PokedexNo::ESPURR => [
+    PokedexNo::PIGNITE      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::MEOWSTIC => [
+    PokedexNo::EMBOAR       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::HONEDGE => [
+    PokedexNo::OSHAWOTT     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::DEWOTT       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SAMUROTT     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PATRAT       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::WATCHOG      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::LILLIPUP     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::HERDIER      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::STOUTLAND    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PURRLOIN     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::LIEPARD      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PANSAGE      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SIMISAGE     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PANSEAR      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SIMISEAR     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PANPOUR      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SIMIPOUR     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MUNNA        => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MUSHARNA     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PIDOVE       => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::TRANQUILL    => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::UNFEZANT     => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::BLITZLE      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::ZEBSTRIKA    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::ROGGENROLA   => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::DOUBLADE => [
+    PokedexNo::BOLDORE      => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::AEGISLASH => [
+    PokedexNo::GIGALITH     => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::SPRITZEE => [
+    PokedexNo::WOOBAT       => [
+        EggGroup::FIELD,
+        EggGroup::FLYING,
+    ],
+    PokedexNo::SWOOBAT      => [
+        EggGroup::FIELD,
+        EggGroup::FLYING,
+    ],
+    PokedexNo::DRILBUR      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::EXCADRILL    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::AUDINO       => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::AROMATISSE => [
+    PokedexNo::TIMBURR      => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::GURDURR      => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::CONKELDURR   => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::TYMPOLE      => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::PALPITOAD    => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::SEISMITOAD   => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::THROH        => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::SAWK         => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::SEWADDLE     => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::SWADLOON     => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::LEAVANNY     => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::VENIPEDE     => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::WHIRLIPEDE   => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::SCOLIPEDE    => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::COTTONEE     => [
+        EggGroup::GRASS,
         EggGroup::FAIRY,
     ],
-    PokedexNo::SWIRLIX => [
+    PokedexNo::WHIMSICOTT   => [
+        EggGroup::GRASS,
         EggGroup::FAIRY,
     ],
-    PokedexNo::SLURPUFF => [
-        EggGroup::FAIRY,
+    PokedexNo::PETILIL      => [
+        EggGroup::GRASS,
     ],
-    PokedexNo::INKAY => [
+    PokedexNo::LILLIGANT    => [
+        EggGroup::GRASS,
+    ],
+    PokedexNo::BASCULIN     => [
+        EggGroup::WATER_2,
+    ],
+    PokedexNo::SANDILE      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::KROKOROK     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::KROOKODILE   => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::DARUMAKA     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::DARMANITAN   => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MARACTUS     => [
+        EggGroup::GRASS,
+    ],
+    PokedexNo::DWEBBLE      => [
+        EggGroup::BUG,
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::CRUSTLE      => [
+        EggGroup::BUG,
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::SCRAGGY      => [
+        EggGroup::FIELD,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::SCRAFTY      => [
+        EggGroup::FIELD,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::SIGILYPH     => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::YAMASK       => [
+        EggGroup::MINERAL,
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::COFAGRIGUS   => [
+        EggGroup::MINERAL,
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::RUNERIGUS    => [
+        EggGroup::MINERAL,
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::TIRTOUGA     => [
+        EggGroup::WATER_1,
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::CARRACOSTA   => [
+        EggGroup::WATER_1,
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::ARCHEN       => [
+        EggGroup::FLYING,
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::ARCHEOPS     => [
+        EggGroup::FLYING,
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::TRUBBISH     => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::GARBODOR     => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::ZORUA        => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::ZOROARK      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MINCCINO     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::CINCCINO     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::GOTHITA      => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::GOTHORITA    => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::GOTHITELLE   => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::SOLOSIS      => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::DUOSION      => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::REUNICLUS    => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::DUCKLETT     => [
+        EggGroup::WATER_1,
+        EggGroup::FLYING,
+    ],
+    PokedexNo::SWANNA       => [
+        EggGroup::WATER_1,
+        EggGroup::FLYING,
+    ],
+    PokedexNo::VANILLITE    => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::VANILLISH    => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::VANILLUXE    => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::DEERLING     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::SAWSBUCK     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::EMOLGA       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::KARRABLAST   => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::ESCAVALIER   => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::FOONGUS      => [
+        EggGroup::GRASS,
+    ],
+    PokedexNo::AMOONGUSS    => [
+        EggGroup::GRASS,
+    ],
+    PokedexNo::FRILLISH     => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::JELLICENT    => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::ALOMOMOLA    => [
         EggGroup::WATER_1,
         EggGroup::WATER_2,
     ],
-    PokedexNo::MALAMAR => [
+    PokedexNo::JOLTIK       => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::GALVANTULA   => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::FERROSEED    => [
+        EggGroup::GRASS,
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::FERROTHORN   => [
+        EggGroup::GRASS,
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::KLINK        => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::KLANG        => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::KLINKLANG    => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::TYNAMO       => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::EELEKTRIK    => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::EELEKTROSS   => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::ELGYEM       => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::BEHEEYEM     => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::LITWICK      => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::LAMPENT      => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::CHANDELURE   => [
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::AXEW         => [
+        EggGroup::MONSTER,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::FRAXURE      => [
+        EggGroup::MONSTER,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::HAXORUS      => [
+        EggGroup::MONSTER,
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::CUBCHOO      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::BEARTIC      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::CRYOGONAL    => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::SHELMET      => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::ACCELGOR     => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::STUNFISK     => [
+        EggGroup::WATER_1,
+        EggGroup::AMORPHOUS,
+    ],
+    PokedexNo::MIENFOO      => [
+        EggGroup::FIELD,
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::MIENSHAO     => [
+        EggGroup::FIELD,
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::DRUDDIGON    => [
+        EggGroup::DRAGON,
+        EggGroup::MONSTER,
+    ],
+    PokedexNo::GOLETT       => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::GOLURK       => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::PAWNIARD     => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::BISHARP      => [
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::BOUFFALANT   => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::RUFFLET      => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::BRAVIARY     => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::VULLABY      => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::MANDIBUZZ    => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::HEATMOR      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::DURANT       => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::DEINO        => [
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::ZWEILOUS     => [
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::HYDREIGON    => [
+        EggGroup::DRAGON,
+    ],
+    PokedexNo::LARVESTA     => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::VOLCARONA    => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::COBALION     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::TERRAKION    => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::VIRIZION     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::TORNADUS     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::THUNDURUS    => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::RESHIRAM     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::ZEKROM       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::LANDORUS     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::KYUREM       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::KELDEO       => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::MELOETTA     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::GENESECT     => [
+        EggGroup::NO_EGGS_DISCOVERED,
+    ],
+    PokedexNo::CHESPIN      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::QUILLADIN    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::CHESNAUGHT   => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::FENNEKIN     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::BRAIXEN      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::DELPHOX      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::FROAKIE      => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::FROGADIER    => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::GRENINJA     => [
+        EggGroup::WATER_1,
+    ],
+    PokedexNo::BUNNELBY     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::DIGGERSBY    => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::FLETCHLING   => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::FLETCHINDER  => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::TALONFLAME   => [
+        EggGroup::FLYING,
+    ],
+    PokedexNo::SCATTERBUG   => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::SPEWPA       => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::VIVILLON     => [
+        EggGroup::BUG,
+    ],
+    PokedexNo::LITLEO       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PYROAR       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::FLABEBE      => [
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::FLOETTE      => [
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::FLORGES      => [
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::SKIDDO       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::GOGOAT       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::PANCHAM      => [
+        EggGroup::FIELD,
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::PANGORO      => [
+        EggGroup::FIELD,
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::FURFROU      => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::ESPURR       => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::MEOWSTIC     => [
+        EggGroup::FIELD,
+    ],
+    PokedexNo::HONEDGE      => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::DOUBLADE     => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::AEGISLASH    => [
+        EggGroup::MINERAL,
+    ],
+    PokedexNo::SPRITZEE     => [
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::AROMATISSE   => [
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::SWIRLIX      => [
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::SLURPUFF     => [
+        EggGroup::FAIRY,
+    ],
+    PokedexNo::INKAY        => [
         EggGroup::WATER_1,
         EggGroup::WATER_2,
     ],
-    PokedexNo::BINACLE => [
+    PokedexNo::MALAMAR      => [
+        EggGroup::WATER_1,
+        EggGroup::WATER_2,
+    ],
+    PokedexNo::BINACLE      => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::BARBARACLE => [
+    PokedexNo::BARBARACLE   => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::SKRELP => [
+    PokedexNo::SKRELP       => [
         EggGroup::WATER_1,
         EggGroup::DRAGON,
     ],
-    PokedexNo::DRAGALGE => [
+    PokedexNo::DRAGALGE     => [
         EggGroup::WATER_1,
         EggGroup::DRAGON,
     ],
-    PokedexNo::CLAUNCHER => [
-        EggGroup::WATER_1,
-        EggGroup::WATER_3,
-    ],
-    PokedexNo::CLAWITZER => [
+    PokedexNo::CLAUNCHER    => [
         EggGroup::WATER_1,
         EggGroup::WATER_3,
     ],
-    PokedexNo::HELIOPTILE => [
+    PokedexNo::CLAWITZER    => [
+        EggGroup::WATER_1,
+        EggGroup::WATER_3,
+    ],
+    PokedexNo::HELIOPTILE   => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::HELIOLISK => [
+    PokedexNo::HELIOLISK    => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::TYRUNT => [
+    PokedexNo::TYRUNT       => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::TYRANTRUM => [
+    PokedexNo::TYRANTRUM    => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::AMAURA => [
+    PokedexNo::AMAURA       => [
         EggGroup::MONSTER,
     ],
-    PokedexNo::AURORUS => [
+    PokedexNo::AURORUS      => [
         EggGroup::MONSTER,
     ],
-    PokedexNo::HAWLUCHA => [
+    PokedexNo::HAWLUCHA     => [
         EggGroup::FLYING,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::DEDENNE => [
+    PokedexNo::DEDENNE      => [
         EggGroup::FIELD,
         EggGroup::FAIRY,
     ],
-    PokedexNo::CARBINK => [
+    PokedexNo::CARBINK      => [
         EggGroup::FAIRY,
         EggGroup::MINERAL,
     ],
-    PokedexNo::GOOMY => [
+    PokedexNo::GOOMY        => [
         EggGroup::DRAGON,
     ],
-    PokedexNo::SLIGGOO => [
+    PokedexNo::SLIGGOO      => [
         EggGroup::DRAGON,
     ],
-    PokedexNo::GOODRA => [
+    PokedexNo::GOODRA       => [
         EggGroup::DRAGON,
     ],
-    PokedexNo::KLEFKI => [
+    PokedexNo::KLEFKI       => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::PHANTUMP => [
+    PokedexNo::PHANTUMP     => [
         EggGroup::GRASS,
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::TREVENANT => [
+    PokedexNo::TREVENANT    => [
         EggGroup::GRASS,
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::PUMPKABOO => [
+    PokedexNo::PUMPKABOO    => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::GOURGEIST => [
+    PokedexNo::GOURGEIST    => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::BERGMITE => [
+    PokedexNo::BERGMITE     => [
         EggGroup::MONSTER,
         EggGroup::MINERAL,
     ],
-    PokedexNo::AVALUGG => [
+    PokedexNo::AVALUGG      => [
         EggGroup::MONSTER,
         EggGroup::MINERAL,
     ],
-    PokedexNo::NOIBAT => [
+    PokedexNo::NOIBAT       => [
         EggGroup::FLYING,
         EggGroup::DRAGON,
     ],
-    PokedexNo::NOIVERN => [
+    PokedexNo::NOIVERN      => [
         EggGroup::FLYING,
         EggGroup::DRAGON,
     ],
-    PokedexNo::XERNEAS => [
+    PokedexNo::XERNEAS      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::YVELTAL => [
+    PokedexNo::YVELTAL      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ZYGARDE => [
+    PokedexNo::ZYGARDE      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::DIANCIE => [
+    PokedexNo::DIANCIE      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::HOOPA => [
+    PokedexNo::HOOPA        => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::VOLCANION => [
+    PokedexNo::VOLCANION    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ROWLET => [
+    PokedexNo::ROWLET       => [
         EggGroup::FLYING,
     ],
-    PokedexNo::DARTRIX => [
+    PokedexNo::DARTRIX      => [
         EggGroup::FLYING,
     ],
-    PokedexNo::DECIDUEYE => [
+    PokedexNo::DECIDUEYE    => [
         EggGroup::FLYING,
     ],
-    PokedexNo::LITTEN => [
+    PokedexNo::LITTEN       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::TORRACAT => [
+    PokedexNo::TORRACAT     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::INCINEROAR => [
+    PokedexNo::INCINEROAR   => [
         EggGroup::FIELD,
     ],
-    PokedexNo::POPPLIO => [
+    PokedexNo::POPPLIO      => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::BRIONNE => [
+    PokedexNo::BRIONNE      => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::PRIMARINA => [
+    PokedexNo::PRIMARINA    => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::PIKIPEK => [
+    PokedexNo::PIKIPEK      => [
         EggGroup::FLYING,
     ],
-    PokedexNo::TRUMBEAK => [
+    PokedexNo::TRUMBEAK     => [
         EggGroup::FLYING,
     ],
-    PokedexNo::TOUCANNON => [
+    PokedexNo::TOUCANNON    => [
         EggGroup::FLYING,
     ],
-    PokedexNo::YUNGOOS => [
+    PokedexNo::YUNGOOS      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::GUMSHOOS => [
+    PokedexNo::GUMSHOOS     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::GRUBBIN => [
+    PokedexNo::GRUBBIN      => [
         EggGroup::BUG,
     ],
-    PokedexNo::CHARJABUG => [
+    PokedexNo::CHARJABUG    => [
         EggGroup::BUG,
     ],
-    PokedexNo::VIKAVOLT => [
+    PokedexNo::VIKAVOLT     => [
         EggGroup::BUG,
     ],
-    PokedexNo::CRABRAWLER => [
+    PokedexNo::CRABRAWLER   => [
         EggGroup::WATER_3,
     ],
     PokedexNo::CRABOMINABLE => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::ORICORIO => [
+    PokedexNo::ORICORIO     => [
         EggGroup::FLYING,
     ],
-    PokedexNo::CUTIEFLY => [
+    PokedexNo::CUTIEFLY     => [
         EggGroup::BUG,
         EggGroup::FAIRY,
     ],
-    PokedexNo::RIBOMBEE => [
+    PokedexNo::RIBOMBEE     => [
         EggGroup::BUG,
         EggGroup::FAIRY,
     ],
-    PokedexNo::ROCKRUFF => [
+    PokedexNo::ROCKRUFF     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::LYCANROC => [
+    PokedexNo::LYCANROC     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::WISHIWASHI => [
+    PokedexNo::WISHIWASHI   => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::MAREANIE => [
+    PokedexNo::MAREANIE     => [
         EggGroup::WATER_1,
     ],
-    PokedexNo::TOXAPEX => [
+    PokedexNo::TOXAPEX      => [
         EggGroup::WATER_1,
     ],
-    PokedexNo::MUDBRAY => [
+    PokedexNo::MUDBRAY      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::MUDSDALE => [
+    PokedexNo::MUDSDALE     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::DEWPIDER => [
-        EggGroup::WATER_1,
-        EggGroup::BUG,
-    ],
-    PokedexNo::ARAQUANID => [
+    PokedexNo::DEWPIDER     => [
         EggGroup::WATER_1,
         EggGroup::BUG,
     ],
-    PokedexNo::FOMANTIS => [
+    PokedexNo::ARAQUANID    => [
+        EggGroup::WATER_1,
+        EggGroup::BUG,
+    ],
+    PokedexNo::FOMANTIS     => [
         EggGroup::GRASS,
     ],
-    PokedexNo::LURANTIS => [
+    PokedexNo::LURANTIS     => [
         EggGroup::GRASS,
     ],
-    PokedexNo::MORELULL => [
+    PokedexNo::MORELULL     => [
         EggGroup::GRASS,
     ],
-    PokedexNo::SHIINOTIC => [
+    PokedexNo::SHIINOTIC    => [
         EggGroup::GRASS,
     ],
-    PokedexNo::SALANDIT => [
+    PokedexNo::SALANDIT     => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::SALAZZLE => [
+    PokedexNo::SALAZZLE     => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::STUFFUL => [
+    PokedexNo::STUFFUL      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::BEWEAR => [
+    PokedexNo::BEWEAR       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::BOUNSWEET => [
+    PokedexNo::BOUNSWEET    => [
         EggGroup::GRASS,
     ],
-    PokedexNo::STEENEE => [
+    PokedexNo::STEENEE      => [
         EggGroup::GRASS,
     ],
-    PokedexNo::TSAREENA => [
+    PokedexNo::TSAREENA     => [
         EggGroup::GRASS,
     ],
-    PokedexNo::COMFEY => [
+    PokedexNo::COMFEY       => [
         EggGroup::GRASS,
     ],
-    PokedexNo::ORANGURU => [
+    PokedexNo::ORANGURU     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PASSIMIAN => [
+    PokedexNo::PASSIMIAN    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::WIMPOD => [
+    PokedexNo::WIMPOD       => [
         EggGroup::BUG,
         EggGroup::WATER_3,
     ],
-    PokedexNo::GOLISOPOD => [
+    PokedexNo::GOLISOPOD    => [
         EggGroup::BUG,
         EggGroup::WATER_3,
     ],
-    PokedexNo::SANDYGAST => [
+    PokedexNo::SANDYGAST    => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::PALOSSAND => [
+    PokedexNo::PALOSSAND    => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::PYUKUMUKU => [
+    PokedexNo::PYUKUMUKU    => [
         EggGroup::WATER_1,
     ],
-    PokedexNo::TYPE_NULL => [
+    PokedexNo::TYPE_NULL    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::SILVALLY => [
+    PokedexNo::SILVALLY     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MINIOR => [
+    PokedexNo::MINIOR       => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::KOMALA => [
+    PokedexNo::KOMALA       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::TURTONATOR => [
+    PokedexNo::TURTONATOR   => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::TOGEDEMARU => [
+    PokedexNo::TOGEDEMARU   => [
         EggGroup::FIELD,
         EggGroup::FAIRY,
     ],
-    PokedexNo::MIMIKYU => [
+    PokedexNo::MIMIKYU      => [
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::BRUXISH => [
+    PokedexNo::BRUXISH      => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::DRAMPA => [
+    PokedexNo::DRAMPA       => [
         EggGroup::MONSTER,
         EggGroup::DRAGON,
     ],
-    PokedexNo::DHELMISE => [
+    PokedexNo::DHELMISE     => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::JANGMO_O => [
+    PokedexNo::JANGMO_O     => [
         EggGroup::DRAGON,
     ],
-    PokedexNo::HAKAMO_O => [
+    PokedexNo::HAKAMO_O     => [
         EggGroup::DRAGON,
     ],
-    PokedexNo::KOMMO_O => [
+    PokedexNo::KOMMO_O      => [
         EggGroup::DRAGON,
     ],
-    PokedexNo::TAPU_KOKO => [
+    PokedexNo::TAPU_KOKO    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::TAPU_LELE => [
+    PokedexNo::TAPU_LELE    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::TAPU_BULU => [
+    PokedexNo::TAPU_BULU    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::TAPU_FINI => [
+    PokedexNo::TAPU_FINI    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::COSMOG => [
+    PokedexNo::COSMOG       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::COSMOEM => [
+    PokedexNo::COSMOEM      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::SOLGALEO => [
+    PokedexNo::SOLGALEO     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::LUNALA => [
+    PokedexNo::LUNALA       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::NIHILEGO => [
+    PokedexNo::NIHILEGO     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::BUZZWOLE => [
+    PokedexNo::BUZZWOLE     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::PHEROMOSA => [
+    PokedexNo::PHEROMOSA    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::XURKITREE => [
+    PokedexNo::XURKITREE    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::CELESTEELA => [
+    PokedexNo::CELESTEELA   => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::KARTANA => [
+    PokedexNo::KARTANA      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::GUZZLORD => [
+    PokedexNo::GUZZLORD     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::NECROZMA => [
+    PokedexNo::NECROZMA     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MAGEARNA => [
+    PokedexNo::MAGEARNA     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MARSHADOW => [
+    PokedexNo::MARSHADOW    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::POIPOLE => [
+    PokedexNo::POIPOLE      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::NAGANADEL => [
+    PokedexNo::NAGANADEL    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::STAKATAKA => [
+    PokedexNo::STAKATAKA    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::BLACEPHALON => [
+    PokedexNo::BLACEPHALON  => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ZERAORA => [
+    PokedexNo::ZERAORA      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MELTAN => [
+    PokedexNo::MELTAN       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MELMETAL => [
+    PokedexNo::MELMETAL     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::GROOKEY => [
+    PokedexNo::GROOKEY      => [
         EggGroup::FIELD,
         EggGroup::GRASS,
     ],
-    PokedexNo::THWACKEY => [
+    PokedexNo::THWACKEY     => [
         EggGroup::FIELD,
         EggGroup::GRASS,
     ],
-    PokedexNo::RILLABOOM => [
+    PokedexNo::RILLABOOM    => [
         EggGroup::FIELD,
         EggGroup::GRASS,
     ],
-    PokedexNo::SCORBUNNY => [
+    PokedexNo::SCORBUNNY    => [
         EggGroup::FIELD,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::RABOOT => [
+    PokedexNo::RABOOT       => [
         EggGroup::FIELD,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::CINDERACE => [
+    PokedexNo::CINDERACE    => [
         EggGroup::FIELD,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::SOBBLE => [
+    PokedexNo::SOBBLE       => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::DRIZZILE => [
+    PokedexNo::DRIZZILE     => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::INTELEON => [
+    PokedexNo::INTELEON     => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::SKWOVET => [
+    PokedexNo::SKWOVET      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::GREEDENT => [
+    PokedexNo::GREEDENT     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::ROOKIDEE => [
+    PokedexNo::ROOKIDEE     => [
         EggGroup::FLYING,
     ],
-    PokedexNo::CORVISQUIRE => [
+    PokedexNo::CORVISQUIRE  => [
         EggGroup::FLYING,
     ],
-    PokedexNo::CORVIKNIGHT => [
+    PokedexNo::CORVIKNIGHT  => [
         EggGroup::FLYING,
     ],
-    PokedexNo::BLIPBUG => [
+    PokedexNo::BLIPBUG      => [
         EggGroup::BUG,
     ],
-    PokedexNo::DOTTLER => [
+    PokedexNo::DOTTLER      => [
         EggGroup::BUG,
     ],
-    PokedexNo::ORBEETLE => [
+    PokedexNo::ORBEETLE     => [
         EggGroup::BUG,
     ],
-    PokedexNo::NICKIT => [
+    PokedexNo::NICKIT       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::THIEVUL => [
+    PokedexNo::THIEVUL      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::GOSSIFLEUR => [
+    PokedexNo::GOSSIFLEUR   => [
         EggGroup::GRASS,
     ],
-    PokedexNo::ELDEGOSS => [
+    PokedexNo::ELDEGOSS     => [
         EggGroup::GRASS,
     ],
-    PokedexNo::WOOLOO => [
+    PokedexNo::WOOLOO       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::DUBWOOL => [
+    PokedexNo::DUBWOOL      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::CHEWTLE => [
+    PokedexNo::CHEWTLE      => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::DREDNAW => [
+    PokedexNo::DREDNAW      => [
         EggGroup::MONSTER,
         EggGroup::WATER_1,
     ],
-    PokedexNo::YAMPER => [
+    PokedexNo::YAMPER       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::BOLTUND => [
+    PokedexNo::BOLTUND      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::ROLYCOLY => [
+    PokedexNo::ROLYCOLY     => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::CARKOL => [
+    PokedexNo::CARKOL       => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::COALOSSAL => [
+    PokedexNo::COALOSSAL    => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::APPLIN => [
+    PokedexNo::APPLIN       => [
         EggGroup::GRASS,
         EggGroup::DRAGON,
     ],
-    PokedexNo::FLAPPLE => [
+    PokedexNo::FLAPPLE      => [
         EggGroup::GRASS,
         EggGroup::DRAGON,
     ],
-    PokedexNo::APPLETUN => [
+    PokedexNo::APPLETUN     => [
         EggGroup::GRASS,
         EggGroup::DRAGON,
     ],
-    PokedexNo::SILICOBRA => [
+    PokedexNo::SILICOBRA    => [
         EggGroup::FIELD,
         EggGroup::DRAGON,
     ],
-    PokedexNo::SANDACONDA => [
+    PokedexNo::SANDACONDA   => [
         EggGroup::FIELD,
         EggGroup::DRAGON,
     ],
-    PokedexNo::CRAMORANT => [
+    PokedexNo::CRAMORANT    => [
         EggGroup::WATER_1,
         EggGroup::FLYING,
     ],
-    PokedexNo::ARROKUDA => [
+    PokedexNo::ARROKUDA     => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::BARRASKEWDA => [
+    PokedexNo::BARRASKEWDA  => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::TOXEL => [
+    PokedexNo::TOXEL        => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::TOXTRICITY => [
+    PokedexNo::TOXTRICITY   => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::SIZZLIPEDE => [
+    PokedexNo::SIZZLIPEDE   => [
         EggGroup::BUG,
     ],
-    PokedexNo::CENTISKORCH => [
+    PokedexNo::CENTISKORCH  => [
         EggGroup::BUG,
     ],
-    PokedexNo::CLOBBOPUS => [
+    PokedexNo::CLOBBOPUS    => [
         EggGroup::WATER_1,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::GRAPPLOCT => [
+    PokedexNo::GRAPPLOCT    => [
         EggGroup::WATER_1,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::SINISTEA => [
+    PokedexNo::SINISTEA     => [
         EggGroup::MINERAL,
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::POLTEAGEIST => [
+    PokedexNo::POLTEAGEIST  => [
         EggGroup::MINERAL,
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::HATENNA => [
+    PokedexNo::HATENNA      => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::HATTREM => [
+    PokedexNo::HATTREM      => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::HATTERENE => [
+    PokedexNo::HATTERENE    => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::IMPIDIMP => [
-        EggGroup::FAIRY,
-        EggGroup::HUMAN_LIKE,
-    ],
-    PokedexNo::MORGREM => [
+    PokedexNo::IMPIDIMP     => [
         EggGroup::FAIRY,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::GRIMMSNARL => [
+    PokedexNo::MORGREM      => [
         EggGroup::FAIRY,
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::MILCERY => [
+    PokedexNo::GRIMMSNARL   => [
+        EggGroup::FAIRY,
+        EggGroup::HUMAN_LIKE,
+    ],
+    PokedexNo::MILCERY      => [
         EggGroup::FAIRY,
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::ALCREMIE => [
+    PokedexNo::ALCREMIE     => [
         EggGroup::FAIRY,
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::FALINKS => [
+    PokedexNo::FALINKS      => [
         EggGroup::FAIRY,
         EggGroup::MINERAL,
     ],
-    PokedexNo::PINCURCHIN => [
+    PokedexNo::PINCURCHIN   => [
         EggGroup::WATER_1,
         EggGroup::AMORPHOUS,
     ],
-    PokedexNo::SNOM => [
+    PokedexNo::SNOM         => [
         EggGroup::BUG,
     ],
-    PokedexNo::FROSMOTH => [
+    PokedexNo::FROSMOTH     => [
         EggGroup::BUG,
     ],
-    PokedexNo::STONJOURNER => [
+    PokedexNo::STONJOURNER  => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::EISCUE => [
+    PokedexNo::EISCUE       => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::INDEEDEE => [
+    PokedexNo::INDEEDEE     => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::MORPEKO => [
+    PokedexNo::MORPEKO      => [
         EggGroup::FIELD,
         EggGroup::FAIRY,
     ],
-    PokedexNo::CUFANT => [
+    PokedexNo::CUFANT       => [
         EggGroup::FIELD,
         EggGroup::MINERAL,
     ],
-    PokedexNo::COPPERAJAH => [
+    PokedexNo::COPPERAJAH   => [
         EggGroup::FIELD,
         EggGroup::MINERAL,
     ],
-    PokedexNo::DRACOZOLT => [
+    PokedexNo::DRACOZOLT    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ARCTOZOLT => [
+    PokedexNo::ARCTOZOLT    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::DRACOVISH => [
+    PokedexNo::DRACOVISH    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ARCTOVISH => [
+    PokedexNo::ARCTOVISH    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::DURALUDON => [
+    PokedexNo::DURALUDON    => [
         EggGroup::MINERAL,
         EggGroup::DRAGON,
     ],
-    PokedexNo::DREEPY => [
+    PokedexNo::DREEPY       => [
         EggGroup::AMORPHOUS,
         EggGroup::DRAGON,
     ],
-    PokedexNo::DRAKLOAK => [
+    PokedexNo::DRAKLOAK     => [
         EggGroup::AMORPHOUS,
         EggGroup::DRAGON,
     ],
-    PokedexNo::DRAGAPULT => [
+    PokedexNo::DRAGAPULT    => [
         EggGroup::AMORPHOUS,
         EggGroup::DRAGON,
     ],
-    PokedexNo::ZACIAN => [
+    PokedexNo::ZACIAN       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ZAMAZENTA => [
+    PokedexNo::ZAMAZENTA    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ETERNATUS => [
+    PokedexNo::ETERNATUS    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::KUBFU => [
+    PokedexNo::KUBFU        => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::URSHIFU => [
+    PokedexNo::URSHIFU      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::ZARUDE => [
+    PokedexNo::ZARUDE       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::REGIELEKI => [
+    PokedexNo::REGIELEKI    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::REGIDRAGO => [
+    PokedexNo::REGIDRAGO    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::GLASTRIER => [
+    PokedexNo::GLASTRIER    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::SPECTRIER => [
+    PokedexNo::SPECTRIER    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::CALYREX => [
+    PokedexNo::CALYREX      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::WYRDEER => [
+    PokedexNo::WYRDEER      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::KLEAVOR => [
+    PokedexNo::KLEAVOR      => [
         EggGroup::BUG,
     ],
-    PokedexNo::URSALUNA => [
+    PokedexNo::URSALUNA     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::BASCULEGION => [
+    PokedexNo::BASCULEGION  => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::SNEASLER => [
+    PokedexNo::SNEASLER     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::OVERQWIL => [
+    PokedexNo::OVERQWIL     => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::ENAMORUS => [
+    PokedexNo::ENAMORUS     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::SPRIGATITO => [
+    PokedexNo::SPRIGATITO   => [
         EggGroup::FIELD,
         EggGroup::GRASS,
     ],
-    PokedexNo::FLORAGATO => [
+    PokedexNo::FLORAGATO    => [
         EggGroup::FIELD,
         EggGroup::GRASS,
     ],
-    PokedexNo::MEOWSCARADA => [
+    PokedexNo::MEOWSCARADA  => [
         EggGroup::FIELD,
         EggGroup::GRASS,
     ],
-    PokedexNo::FUECOCO => [
+    PokedexNo::FUECOCO      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::CROCALOR => [
+    PokedexNo::CROCALOR     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::SKELEDIRGE => [
+    PokedexNo::SKELEDIRGE   => [
         EggGroup::FIELD,
     ],
-    PokedexNo::QUAXLY => [
+    PokedexNo::QUAXLY       => [
         EggGroup::FLYING,
         EggGroup::WATER_1,
     ],
-    PokedexNo::QUAXWELL => [
+    PokedexNo::QUAXWELL     => [
         EggGroup::FLYING,
         EggGroup::WATER_1,
     ],
-    PokedexNo::QUAQUAVAL => [
+    PokedexNo::QUAQUAVAL    => [
         EggGroup::FLYING,
         EggGroup::WATER_1,
     ],
-    PokedexNo::LECHONK => [
+    PokedexNo::LECHONK      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::OINKOLOGNE => [
+    PokedexNo::OINKOLOGNE   => [
         EggGroup::FIELD,
     ],
-    PokedexNo::TAROUNTULA => [
+    PokedexNo::TAROUNTULA   => [
         EggGroup::BUG,
     ],
-    PokedexNo::SPIDOPS => [
+    PokedexNo::SPIDOPS      => [
         EggGroup::BUG,
     ],
-    PokedexNo::NYMBLE => [
+    PokedexNo::NYMBLE       => [
         EggGroup::BUG,
     ],
-    PokedexNo::LOKIX => [
+    PokedexNo::LOKIX        => [
         EggGroup::BUG,
     ],
-    PokedexNo::PAWMI => [
+    PokedexNo::PAWMI        => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PAWMO => [
+    PokedexNo::PAWMO        => [
         EggGroup::FIELD,
     ],
-    PokedexNo::PAWMOT => [
+    PokedexNo::PAWMOT       => [
         EggGroup::FIELD,
     ],
-    PokedexNo::TANDEMAUS => [
+    PokedexNo::TANDEMAUS    => [
         EggGroup::FIELD,
         EggGroup::FAIRY,
     ],
-    PokedexNo::MAUSHOLD => [
+    PokedexNo::MAUSHOLD     => [
         EggGroup::FIELD,
         EggGroup::FAIRY,
     ],
-    PokedexNo::FIDOUGH => [
+    PokedexNo::FIDOUGH      => [
         EggGroup::FIELD,
         EggGroup::MINERAL,
     ],
-    PokedexNo::DACHSBUN => [
+    PokedexNo::DACHSBUN     => [
         EggGroup::FIELD,
         EggGroup::MINERAL,
     ],
-    PokedexNo::SMOLIV => [
+    PokedexNo::SMOLIV       => [
         EggGroup::GRASS,
     ],
-    PokedexNo::DOLLIV => [
+    PokedexNo::DOLLIV       => [
         EggGroup::GRASS,
     ],
-    PokedexNo::ARBOLIVA => [
+    PokedexNo::ARBOLIVA     => [
         EggGroup::GRASS,
     ],
     PokedexNo::SQUAWKABILLY => [
         EggGroup::FLYING,
     ],
-    PokedexNo::NACLI => [
+    PokedexNo::NACLI        => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::NACLSTACK => [
+    PokedexNo::NACLSTACK    => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::GARGANACL => [
+    PokedexNo::GARGANACL    => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::CHARCADET => [
+    PokedexNo::CHARCADET    => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::ARMAROUGE => [
+    PokedexNo::ARMAROUGE    => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::CERULEDGE => [
+    PokedexNo::CERULEDGE    => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::TADBULB => [
+    PokedexNo::TADBULB      => [
         EggGroup::WATER_1,
     ],
-    PokedexNo::BELLIBOLT => [
+    PokedexNo::BELLIBOLT    => [
         EggGroup::WATER_1,
     ],
-    PokedexNo::WATTREL => [
+    PokedexNo::WATTREL      => [
         EggGroup::WATER_1,
         EggGroup::FLYING,
     ],
-    PokedexNo::KILOWATTREL => [
+    PokedexNo::KILOWATTREL  => [
         EggGroup::WATER_1,
         EggGroup::FLYING,
     ],
-    PokedexNo::MASCHIFF => [
+    PokedexNo::MASCHIFF     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::MABOSSTIFF => [
+    PokedexNo::MABOSSTIFF   => [
         EggGroup::FIELD,
     ],
-    PokedexNo::SHROODLE => [
+    PokedexNo::SHROODLE     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::GRAFAIAI => [
+    PokedexNo::GRAFAIAI     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::BRAMBLIN => [
+    PokedexNo::BRAMBLIN     => [
         EggGroup::GRASS,
     ],
     PokedexNo::BRAMBLEGHAST => [
         EggGroup::GRASS,
     ],
-    PokedexNo::TOEDSCOOL => [
+    PokedexNo::TOEDSCOOL    => [
         EggGroup::GRASS,
     ],
-    PokedexNo::TOEDSCRUEL => [
+    PokedexNo::TOEDSCRUEL   => [
         EggGroup::GRASS,
     ],
-    PokedexNo::KLAWF => [
+    PokedexNo::KLAWF        => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::CAPSAKID => [
+    PokedexNo::CAPSAKID     => [
         EggGroup::GRASS,
     ],
-    PokedexNo::SCOVILLAIN => [
+    PokedexNo::SCOVILLAIN   => [
         EggGroup::GRASS,
     ],
-    PokedexNo::RELLOR => [
+    PokedexNo::RELLOR       => [
         EggGroup::BUG,
     ],
-    PokedexNo::RABSCA => [
+    PokedexNo::RABSCA       => [
         EggGroup::BUG,
     ],
-    PokedexNo::FLITTLE => [
+    PokedexNo::FLITTLE      => [
         EggGroup::FLYING,
     ],
-    PokedexNo::ESPATHRA => [
+    PokedexNo::ESPATHRA     => [
         EggGroup::FLYING,
     ],
-    PokedexNo::TINKATINK => [
+    PokedexNo::TINKATINK    => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::TINKATUFF => [
+    PokedexNo::TINKATUFF    => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::TINKATON => [
+    PokedexNo::TINKATON     => [
         EggGroup::FAIRY,
     ],
-    PokedexNo::WIGLETT => [
+    PokedexNo::WIGLETT      => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::WUGTRIO => [
+    PokedexNo::WUGTRIO      => [
         EggGroup::WATER_3,
     ],
-    PokedexNo::BOMBIRDIER => [
+    PokedexNo::BOMBIRDIER   => [
         EggGroup::FLYING,
     ],
-    PokedexNo::FINIZEN => [
+    PokedexNo::FINIZEN      => [
         EggGroup::FIELD,
         EggGroup::WATER_2,
     ],
-    PokedexNo::PALAFIN => [
+    PokedexNo::PALAFIN      => [
         EggGroup::FIELD,
         EggGroup::WATER_2,
     ],
-    PokedexNo::VAROOM => [
+    PokedexNo::VAROOM       => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::REVAVROOM => [
+    PokedexNo::REVAVROOM    => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::CYCLIZAR => [
+    PokedexNo::CYCLIZAR     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::ORTHWORM => [
+    PokedexNo::ORTHWORM     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::GLIMMET => [
+    PokedexNo::GLIMMET      => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::GLIMMORA => [
+    PokedexNo::GLIMMORA     => [
         EggGroup::MINERAL,
     ],
-    PokedexNo::GREAVARD => [
+    PokedexNo::GREAVARD     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::HOUNDSTONE => [
+    PokedexNo::HOUNDSTONE   => [
         EggGroup::FIELD,
     ],
-    PokedexNo::FLAMIGO => [
+    PokedexNo::FLAMIGO      => [
         EggGroup::FLYING,
     ],
-    PokedexNo::CETODDLE => [
+    PokedexNo::CETODDLE     => [
         EggGroup::FIELD,
     ],
-    PokedexNo::CETITAN => [
+    PokedexNo::CETITAN      => [
         EggGroup::FIELD,
     ],
-    PokedexNo::VELUZA => [
+    PokedexNo::VELUZA       => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::DONDOZO => [
+    PokedexNo::DONDOZO      => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::TATSUGIRI => [
+    PokedexNo::TATSUGIRI    => [
         EggGroup::WATER_2,
     ],
-    PokedexNo::ANNIHILAPE => [
+    PokedexNo::ANNIHILAPE   => [
         EggGroup::FIELD,
     ],
-    PokedexNo::CLODSIRE => [
+    PokedexNo::CLODSIRE     => [
         EggGroup::WATER_1,
         EggGroup::FIELD,
     ],
-    PokedexNo::FARIGIRAF => [
+    PokedexNo::FARIGIRAF    => [
         EggGroup::FIELD,
     ],
-    PokedexNo::DUDUNSPARCE => [
+    PokedexNo::DUDUNSPARCE  => [
         EggGroup::FIELD,
     ],
-    PokedexNo::KINGAMBIT => [
+    PokedexNo::KINGAMBIT    => [
         EggGroup::HUMAN_LIKE,
     ],
-    PokedexNo::GREAT_TUSK => [
+    PokedexNo::GREAT_TUSK   => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::SCREAM_TAIL => [
+    PokedexNo::SCREAM_TAIL  => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
     PokedexNo::BRUTE_BONNET => [
@@ -3244,52 +3244,52 @@ return [
     PokedexNo::SANDY_SHOCKS => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::IRON_TREADS => [
+    PokedexNo::IRON_TREADS  => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::IRON_BUNDLE => [
+    PokedexNo::IRON_BUNDLE  => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::IRON_HANDS => [
+    PokedexNo::IRON_HANDS   => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
     PokedexNo::IRON_JUGULIS => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::IRON_MOTH => [
+    PokedexNo::IRON_MOTH    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::IRON_THORNS => [
+    PokedexNo::IRON_THORNS  => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::FRIGIBAX => [
+    PokedexNo::FRIGIBAX     => [
         EggGroup::DRAGON,
         EggGroup::MINERAL,
     ],
-    PokedexNo::ARCTIBAX => [
+    PokedexNo::ARCTIBAX     => [
         EggGroup::DRAGON,
         EggGroup::MINERAL,
     ],
-    PokedexNo::BAXCALIBUR => [
+    PokedexNo::BAXCALIBUR   => [
         EggGroup::DRAGON,
         EggGroup::MINERAL,
     ],
-    PokedexNo::GIMMIGHOUL => [
+    PokedexNo::GIMMIGHOUL   => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::GHOLDENGO => [
+    PokedexNo::GHOLDENGO    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::WO_CHIEN => [
+    PokedexNo::WO_CHIEN     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::CHIEN_PAO => [
+    PokedexNo::CHIEN_PAO    => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::TING_LU => [
+    PokedexNo::TING_LU      => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::CHI_YU => [
+    PokedexNo::CHI_YU       => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
     PokedexNo::ROARING_MOON => [
@@ -3298,16 +3298,16 @@ return [
     PokedexNo::IRON_VALIANT => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::KORAIDON => [
+    PokedexNo::KORAIDON     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::MIRAIDON => [
+    PokedexNo::MIRAIDON     => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
     PokedexNo::WALKING_WAKE => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
-    PokedexNo::IRON_LEAVES => [
+    PokedexNo::IRON_LEAVES  => [
         EggGroup::NO_EGGS_DISCOVERED,
     ],
 ];

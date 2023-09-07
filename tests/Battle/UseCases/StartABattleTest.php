@@ -11,9 +11,9 @@ use ConorSmith\Pokemon\Battle\Domain\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
+use ConorSmith\Pokemon\SharedKernel\Commands\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
-use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
-use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\PokemonTest\Battle\Domain\BattleFactory;
 use ConorSmith\PokemonTest\Battle\Domain\PokemonFactory;
 use ConorSmith\PokemonTest\Battle\Domain\TrainerFactory;
@@ -65,7 +65,7 @@ final class StartABattleTest extends TestCase
         $playerRepository->savePlayer(
             Argument::that(function (Player $player) {
                 return $player->activeBattleId === "the battle id"
-                    && $player->team[0]->hasFainted === false;
+                    && $player->party[0]->hasFainted === false;
             })
         )
             ->shouldHaveBeenCalled();
@@ -122,7 +122,7 @@ final class StartABattleTest extends TestCase
         $playerRepository->savePlayer(
             Argument::that(function (Player $player) {
                 return $player->activeBattleId !== null
-                    && $player->team[0]->hasFainted === false;
+                    && $player->party[0]->hasFainted === false;
             })
         )
             ->shouldHaveBeenCalled();

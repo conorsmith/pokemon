@@ -2,347 +2,347 @@
 
 declare(strict_types=1);
 
-use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\ItemType;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
 
 return [
-    ItemId::POKE_BALL => [
-        'name' => "Poké Ball",
+    ItemId::POKE_BALL       => [
+        'name'     => "Poké Ball",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png",
-        'type' => ItemType::POKE_BALL,
+        'type'     => ItemType::POKE_BALL,
     ],
-    ItemId::GREAT_BALL => [
-        'name' => "Great Ball",
+    ItemId::GREAT_BALL      => [
+        'name'     => "Great Ball",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/ca/Bag_Great_Ball_Sprite.png",
-        'type' => ItemType::POKE_BALL,
+        'type'     => ItemType::POKE_BALL,
     ],
-    ItemId::ULTRA_BALL => [
-        'name' => "Ultra Ball",
+    ItemId::ULTRA_BALL      => [
+        'name'     => "Ultra Ball",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/0/03/Bag_Ultra_Ball_Sprite.png",
-        'type' => ItemType::POKE_BALL,
+        'type'     => ItemType::POKE_BALL,
     ],
-    ItemId::RARE_CANDY => [
-        'name' => "Rare Candy",
+    ItemId::RARE_CANDY      => [
+        'name'     => "Rare Candy",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/8d/Bag_Rare_Candy_Sprite.png",
-        'hasUse' => true,
+        'hasUse'   => true,
     ],
     ItemId::CHALLENGE_TOKEN => [
-        'name' => "Challenge Token",
+        'name'     => "Challenge Token",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png",
     ],
-    ItemId::OVAL_CHARM => [
-        'name' => "Oval Charm",
+    ItemId::OVAL_CHARM      => [
+        'name'     => "Oval Charm",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/f8/Bag_Oval_Charm_Sprite.png",
-        'hasUse' => true,
+        'hasUse'   => true,
     ],
-    ItemId::FIRE_STONE => [
-        'name' => "Fire Stone",
+    ItemId::FIRE_STONE      => [
+        'name'     => "Fire Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/86/Bag_Fire_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 6,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 6,
     ],
-    ItemId::WATER_STONE => [
-        'name' => "Water Stone",
+    ItemId::WATER_STONE     => [
+        'name'     => "Water Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/3/3f/Bag_Water_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 6,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 6,
     ],
-    ItemId::THUNDER_STONE => [
-        'name' => "Thunder Stone",
+    ItemId::THUNDER_STONE   => [
+        'name'     => "Thunder Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/7/79/Bag_Thunder_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 7,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 7,
     ],
-    ItemId::LEAF_STONE => [
-        'name' => "Leaf Stone",
+    ItemId::LEAF_STONE      => [
+        'name'     => "Leaf Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/eb/Bag_Leaf_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 7,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 7,
     ],
-    ItemId::MOON_STONE => [
-        'name' => "Moon Stone",
+    ItemId::MOON_STONE      => [
+        'name'     => "Moon Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/ae/Bag_Moon_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 6,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 6,
     ],
-    ItemId::SUN_STONE => [
-        'name' => "Sun Stone",
+    ItemId::SUN_STONE       => [
+        'name'     => "Sun Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/ad/Bag_Sun_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 5,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 5,
     ],
-    ItemId::ICE_STONE => [
-        'name' => "Ice Stone",
+    ItemId::ICE_STONE       => [
+        'name'     => "Ice Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/51/Bag_Ice_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 6,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 6,
     ],
-    ItemId::DUSK_STONE => [
-        'name' => "Dusk Stone",
+    ItemId::DUSK_STONE      => [
+        'name'     => "Dusk Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/b2/Bag_Dusk_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 4,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 4,
     ],
-    ItemId::SHINY_STONE => [
-        'name' => "Shiny Stone",
+    ItemId::SHINY_STONE     => [
+        'name'     => "Shiny Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/45/Bag_Shiny_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 4,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 4,
     ],
-    ItemId::DAWN_STONE => [
-        'name' => "Dawn Stone",
+    ItemId::DAWN_STONE      => [
+        'name'     => "Dawn Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/7/70/Bag_Dawn_Stone_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 2,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 2,
     ],
-    ItemId::DRAGON_SCALE => [
-        'name' => "Dragon Scale",
+    ItemId::DRAGON_SCALE    => [
+        'name'     => "Dragon Scale",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/49/Bag_Dragon_Scale_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::KINGS_ROCK => [
-        'name' => "King's Rock",
+    ItemId::KINGS_ROCK      => [
+        'name'     => "King's Rock",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/ba/Bag_King%27s_Rock_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 2,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 2,
     ],
-    ItemId::METAL_COAT => [
-        'name' => "Metal Coat",
+    ItemId::METAL_COAT      => [
+        'name'     => "Metal Coat",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/ee/Bag_Metal_Coat_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 2,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 2,
     ],
-    ItemId::UPGRADE => [
-        'name' => "Upgrade",
+    ItemId::UPGRADE         => [
+        'name'     => "Upgrade",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/b4/Bag_Up-Grade_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::DUBIOUS_DISC => [
-        'name' => "Dubious Disc",
+    ItemId::DUBIOUS_DISC    => [
+        'name'     => "Dubious Disc",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/1b/Bag_Dubious_Disc_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::ELECTIRIZER => [
-        'name' => "Electirizer",
+    ItemId::ELECTIRIZER     => [
+        'name'     => "Electirizer",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/9/96/Bag_Electirizer_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::MAGMARIZER => [
-        'name' => "Magmarizer",
+    ItemId::MAGMARIZER      => [
+        'name'     => "Magmarizer",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/80/Bag_Magmarizer_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::PROTECTOR => [
-        'name' => "Protector",
+    ItemId::PROTECTOR       => [
+        'name'     => "Protector",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/b2/Bag_Protector_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::BLACK_AUGURITE => [
-        'name' => "Black Augurite",
+    ItemId::BLACK_AUGURITE  => [
+        'name'     => "Black Augurite",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/b5/Bag_Charcoal_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::PEAT_BLOCK => [
-        'name' => "Peat Block",
+    ItemId::PEAT_BLOCK      => [
+        'name'     => "Peat Block",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/e3/Bag_Peat_Block_SV_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::LINKING_CORD => [
-        'name' => "Linking Cord",
+    ItemId::LINKING_CORD    => [
+        'name'     => "Linking Cord",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/0/0d/Bag_Escape_Rope_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 4,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 4,
     ],
-    ItemId::RAZOR_FANG => [
-        'name' => "Razor Fang",
+    ItemId::RAZOR_FANG      => [
+        'name'     => "Razor Fang",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/41/Bag_Razor_Fang_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::RAZOR_CLAW => [
-        'name' => "Razor Claw",
+    ItemId::RAZOR_CLAW      => [
+        'name'     => "Razor Claw",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/ea/Bag_Razor_Claw_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 2,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 2,
     ],
-    ItemId::PRISM_SCALE => [
-        'name' => "Prism Scale",
+    ItemId::PRISM_SCALE     => [
+        'name'     => "Prism Scale",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/5e/Bag_Prism_Scale_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::REAPER_CLOTH => [
-        'name' => "Reaper Cloth",
+    ItemId::REAPER_CLOTH    => [
+        'name'     => "Reaper Cloth",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/11/Bag_Reaper_Cloth_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::DEEP_SEA_TOOTH => [
-        'name' => "Deep Sea Tooth",
+    ItemId::DEEP_SEA_TOOTH  => [
+        'name'     => "Deep Sea Tooth",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/28/Bag_Deep_Sea_Tooth_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::DEEP_SEA_SCALE => [
-        'name' => "Deep Sea Scale",
+    ItemId::DEEP_SEA_SCALE  => [
+        'name'     => "Deep Sea Scale",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/a9/Bag_Deep_Sea_Scale_Sprite.png",
-        'hasUse' => true,
-        'type' => ItemType::EVOLUTION,
-        'targets' => 1,
+        'hasUse'   => true,
+        'type'     => ItemType::EVOLUTION,
+        'targets'  => 1,
     ],
-    ItemId::BLACK_BELT => [
-        'name' => "Black Belt",
+    ItemId::BLACK_BELT      => [
+        'name'     => "Black Belt",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/88/Bag_Black_Belt_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::BLACK_GLASSES => [
-        'name' => "Black Glasses",
+    ItemId::BLACK_GLASSES   => [
+        'name'     => "Black Glasses",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/3/3f/Bag_Black_Glasses_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::CHARCOAL => [
-        'name' => "Charcoal",
+    ItemId::CHARCOAL        => [
+        'name'     => "Charcoal",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/b5/Bag_Charcoal_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::DRAGON_FANG => [
-        'name' => "Dragon Fang",
+    ItemId::DRAGON_FANG     => [
+        'name'     => "Dragon Fang",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/ea/Bag_Dragon_Fang_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::HARD_STONE => [
-        'name' => "Hard Stone",
+    ItemId::HARD_STONE      => [
+        'name'     => "Hard Stone",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/82/Bag_Hard_Stone_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::MAGNET => [
-        'name' => "Magnet",
+    ItemId::MAGNET          => [
+        'name'     => "Magnet",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/6/69/Bag_Magnet_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::MIRACLE_SEED => [
-        'name' => "Miracle Seed",
+    ItemId::MIRACLE_SEED    => [
+        'name'     => "Miracle Seed",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/ed/Bag_Miracle_Seed_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::MYSTIC_WATER => [
-        'name' => "Mystic Water",
+    ItemId::MYSTIC_WATER    => [
+        'name'     => "Mystic Water",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/4e/Bag_Mystic_Water_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::NEVER_MELT_ICE => [
-        'name' => "Never-Melt Ice",
+    ItemId::NEVER_MELT_ICE  => [
+        'name'     => "Never-Melt Ice",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/d6/Bag_Never-Melt_Ice_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::POISON_BARB => [
-        'name' => "Poison Barb",
+    ItemId::POISON_BARB     => [
+        'name'     => "Poison Barb",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/d2/Bag_Poison_Barb_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::SHARP_BEAK => [
-        'name' => "Sharp Beak",
+    ItemId::SHARP_BEAK      => [
+        'name'     => "Sharp Beak",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/4b/Bag_Sharp_Beak_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::SILK_SCARF => [
-        'name' => "Silk Scarf",
+    ItemId::SILK_SCARF      => [
+        'name'     => "Silk Scarf",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/2c/Bag_Silk_Scarf_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::SILVER_POWDER => [
-        'name' => "Silver Powder",
+    ItemId::SILVER_POWDER   => [
+        'name'     => "Silver Powder",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/e0/Bag_Silver_Powder_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::SOFT_SAND => [
-        'name' => "Soft Sand",
+    ItemId::SOFT_SAND       => [
+        'name'     => "Soft Sand",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/c5/Bag_Soft_Sand_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::SPELL_TAG => [
-        'name' => "Spell Tag",
+    ItemId::SPELL_TAG       => [
+        'name'     => "Spell Tag",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/51/Bag_Spell_Tag_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::TWISTED_SPOON => [
-        'name' => "Twisted Spoon",
+    ItemId::TWISTED_SPOON   => [
+        'name'     => "Twisted Spoon",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/7/75/Bag_Twisted_Spoon_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::FAIRY_DUST => [
-        'name' => "Fairy Dust",
+    ItemId::FAIRY_DUST      => [
+        'name'     => "Fairy Dust",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/c5/Bag_Soft_Sand_Sprite.png",
-        'type' => ItemType::HELD,
+        'type'     => ItemType::HELD,
     ],
-    ItemId::HP_UP => [
-        'name' => "HP Up",
+    ItemId::HP_UP           => [
+        'name'     => "HP Up",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/5e/Bag_HP_Up_Sprite.png",
-        'type' => ItemType::STATS,
-        'hasUse' => true,
+        'type'     => ItemType::STATS,
+        'hasUse'   => true,
     ],
-    ItemId::PROTEIN => [
-        'name' => "Protein",
+    ItemId::PROTEIN         => [
+        'name'     => "Protein",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/aa/Bag_Protein_Sprite.png",
-        'type' => ItemType::STATS,
-        'hasUse' => true,
+        'type'     => ItemType::STATS,
+        'hasUse'   => true,
     ],
-    ItemId::IRON => [
-        'name' => "Iron",
+    ItemId::IRON            => [
+        'name'     => "Iron",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/a5/Bag_Iron_Sprite.png",
-        'type' => ItemType::STATS,
-        'hasUse' => true,
+        'type'     => ItemType::STATS,
+        'hasUse'   => true,
     ],
-    ItemId::CALCIUM => [
-        'name' => "Calcium",
+    ItemId::CALCIUM         => [
+        'name'     => "Calcium",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/d8/Bag_Calcium_Sprite.png",
-        'type' => ItemType::STATS,
-        'hasUse' => true,
+        'type'     => ItemType::STATS,
+        'hasUse'   => true,
     ],
-    ItemId::ZINC => [
-        'name' => "Zinc",
+    ItemId::ZINC            => [
+        'name'     => "Zinc",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/25/Bag_Zinc_Sprite.png",
-        'type' => ItemType::STATS,
-        'hasUse' => true,
+        'type'     => ItemType::STATS,
+        'hasUse'   => true,
     ],
-    ItemId::CARBOS => [
-        'name' => "Carbos",
+    ItemId::CARBOS          => [
+        'name'     => "Carbos",
         'imageUrl' => "https://archives.bulbagarden.net/media/upload/9/9e/Bag_Carbos_Sprite.png",
-        'type' => ItemType::STATS,
-        'hasUse' => true,
+        'type'     => ItemType::STATS,
+        'hasUse'   => true,
     ],
 ];

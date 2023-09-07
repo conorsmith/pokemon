@@ -23,9 +23,9 @@ final class PostSwitch
         $player = $this->playerRepository->findPlayer();
 
         $leadPokemon = $player->getLeadPokemon();
-        $targetPokemon = $player->findTeamMember($pokemonId);
+        $targetPokemon = $player->findPartyMember($pokemonId);
 
-        $player = $player->switchTeamMembers($leadPokemon, $targetPokemon);
+        $player = $player->switchPartyMembers($leadPokemon, $targetPokemon);
 
         $this->playerRepository->savePlayer($player);
 

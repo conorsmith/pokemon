@@ -11,15 +11,15 @@ use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
-use ConorSmith\Pokemon\ItemConfigRepository;
-use ConorSmith\Pokemon\ItemType;
-use ConorSmith\Pokemon\SharedKernel\BoostPokemonEvsCommand;
-use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
-use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\ItemConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\BoostPokemonEvsCommand;
+use ConorSmith\Pokemon\SharedKernel\Commands\ReportPartyPokemonFaintedCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -40,7 +40,7 @@ final class PostBattleFight
         private readonly AreaRepository                  $areaRepository,
         private readonly BagRepository                   $bagRepository,
         private readonly BattleRepository                $battleRepository,
-        private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
+        private readonly ReportPartyPokemonFaintedCommand $reportPartyPokemonFaintedCommand,
         private readonly BoostPokemonEvsCommand          $boostPokemonEvsCommand,
         private readonly EventFactory                    $eventFactory,
         private readonly ViewModelFactory                $viewModelFactory,
@@ -56,8 +56,8 @@ final class PostBattleFight
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
         $bag = $this->bagRepository->find();
 
-        if ($player->hasEntireTeamFainted()) {
-            $this->session->getFlashBag()->add("errors", "Your team has fainted.");
+        if ($player->hasEntirePartyFainted()) {
+            $this->session->getFlashBag()->add("errors", "Your party has fainted.");
             return new RedirectResponse("/{$args['instanceId']}/battle/{$battle->id}");
         }
 
@@ -77,7 +77,7 @@ final class PostBattleFight
         );
 
         if ($playerPokemon->hasFainted) {
-            $this->reportTeamPokemonFaintedCommand->run(
+            $this->reportPartyPokemonFaintedCommand->run(
                 $playerPokemon->id,
                 $playerPokemon->level,
                 $opponentPokemon->level,
@@ -94,7 +94,7 @@ final class PostBattleFight
         $areaJustCleared = false;
         $areaClearedPrizes = [];
 
-        if ($trainer->hasEntireTeamFainted()) {
+        if ($trainer->hasEntirePartyFainted()) {
             $trainerWasPreviouslyBeaten = $battle->dateLastBeaten !== null;
 
             $prizeItemId = self::generatePrize($this->getPrizePool($trainer));
@@ -138,11 +138,11 @@ final class PostBattleFight
         $this->db->commit();
 
         $nextFirstPokemon = $round->playerFirst
-            ? ($player->hasEntireTeamFainted() ? null : $player->getLeadPokemon())
-            : ($trainer->hasEntireTeamFainted() ? null : $trainer->getLeadPokemon());
+            ? ($player->hasEntirePartyFainted() ? null : $player->getLeadPokemon())
+            : ($trainer->hasEntirePartyFainted() ? null : $trainer->getLeadPokemon());
         $nextSecondPokemon = $round->playerFirst
-            ? ($trainer->hasEntireTeamFainted() ? null : $trainer->getLeadPokemon())
-            : ($player->hasEntireTeamFainted() ? null : $player->getLeadPokemon());
+            ? ($trainer->hasEntirePartyFainted() ? null : $trainer->getLeadPokemon())
+            : ($player->hasEntirePartyFainted() ? null : $player->getLeadPokemon());
 
         $events = array_merge(
             $this->eventFactory->createBattleRoundEvents(
@@ -167,7 +167,7 @@ final class PostBattleFight
             ),
         );
 
-        if ($trainer->hasEntireTeamFainted()) {
+        if ($trainer->hasEntirePartyFainted()) {
             $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
             $events[] = $this->eventFactory->createMessageEvent("You defeated {$name}");
 
@@ -183,7 +183,7 @@ final class PostBattleFight
                 }
             }
 
-        } elseif ($player->hasEntireTeamFainted()) {
+        } elseif ($player->hasEntirePartyFainted()) {
             $name = TrainerClass::getLabel($trainer->class) . " " . $trainer->name;
             $events[] = $this->eventFactory->createMessageEvent("You were defeated by {$name}");
         }
@@ -197,34 +197,34 @@ final class PostBattleFight
             || $trainer->class === TrainerClass::CHAMPION
         ) {
             return [
-                ItemId::ULTRA_BALL => 1,
+                ItemId::ULTRA_BALL      => 1,
                 ItemId::CHALLENGE_TOKEN => 1,
-                ItemId::FIRE_STONE => 1,
-                ItemId::WATER_STONE => 1,
-                ItemId::THUNDER_STONE => 1,
-                ItemId::LEAF_STONE => 1,
-                ItemId::MOON_STONE => 1,
-                ItemId::SUN_STONE => 1,
-                ItemId::ICE_STONE => 1,
-                ItemId::DUSK_STONE => 1,
-                ItemId::SHINY_STONE => 1,
-                ItemId::DAWN_STONE => 1,
+                ItemId::FIRE_STONE      => 1,
+                ItemId::WATER_STONE     => 1,
+                ItemId::THUNDER_STONE   => 1,
+                ItemId::LEAF_STONE      => 1,
+                ItemId::MOON_STONE      => 1,
+                ItemId::SUN_STONE       => 1,
+                ItemId::ICE_STONE       => 1,
+                ItemId::DUSK_STONE      => 1,
+                ItemId::SHINY_STONE     => 1,
+                ItemId::DAWN_STONE      => 1,
             ];
         }
 
         if (TrainerClass::hasUltraBallInPrizePool($trainer->class)) {
             $pool = [
-                ItemId::POKE_BALL => 1,
-                ItemId::GREAT_BALL => 2,
-                ItemId::ULTRA_BALL => 1,
-                ItemId::RARE_CANDY => 2,
+                ItemId::POKE_BALL       => 1,
+                ItemId::GREAT_BALL      => 2,
+                ItemId::ULTRA_BALL      => 1,
+                ItemId::RARE_CANDY      => 2,
                 ItemId::CHALLENGE_TOKEN => 2,
             ];
         } else {
             $pool = [
-                ItemId::POKE_BALL => 3,
-                ItemId::GREAT_BALL => 1,
-                ItemId::RARE_CANDY => 2,
+                ItemId::POKE_BALL       => 3,
+                ItemId::GREAT_BALL      => 1,
+                ItemId::RARE_CANDY      => 2,
                 ItemId::CHALLENGE_TOKEN => 2,
             ];
         }

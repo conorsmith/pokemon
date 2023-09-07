@@ -7,7 +7,7 @@ namespace ConorSmith\Pokemon\Location\Repositories;
 use ConorSmith\Pokemon\Location\Domain\Region;
 use ConorSmith\Pokemon\RegionConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
-use ConorSmith\Pokemon\SharedKernel\RegionalVictoryQuery;
+use ConorSmith\Pokemon\SharedKernel\Queries\RegionalVictoryQuery;
 
 final class RegionRepository
 {

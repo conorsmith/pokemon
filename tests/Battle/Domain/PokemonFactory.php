@@ -6,8 +6,8 @@ namespace ConorSmith\PokemonTest\Battle\Domain;
 
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
-use ConorSmith\Pokemon\PokemonType;
-use ConorSmith\Pokemon\Sex;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
+use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 
 final class PokemonFactory
 {

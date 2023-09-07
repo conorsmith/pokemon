@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Import;
 
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
-use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\PokedexNo as PokedexNumberConstants;
-use ConorSmith\Pokemon\PokemonType;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo as PokedexNumberConstants;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
 use Exception;
 use ReflectionClass;
 use Symfony\Component\DomCrawler\Crawler;
@@ -25,12 +25,12 @@ final class BulbapediaPokemonPage
             $name = $constants[$pokedexNumber->value];
 
             $name = match ($name) {
-                default => ucfirst(strtolower($name)),
-                "NIDORAN_F" => "Nidoran♀",
-                "NIDORAN_M" => "Nidoran♂",
+                default      => ucfirst(strtolower($name)),
+                "NIDORAN_F"  => "Nidoran♀",
+                "NIDORAN_M"  => "Nidoran♂",
                 "FARFETCH_D" => "Farfetch'd",
-                "MR_MIME" => "Mr._Mime",
-                "HO_OH" => "Ho-Oh",
+                "MR_MIME"    => "Mr._Mime",
+                "HO_OH"      => "Ho-Oh",
             };
 
             $url = "https://bulbapedia.bulbagarden.net/wiki/{$name}_(Pok%C3%A9mon)";
@@ -72,10 +72,10 @@ final class BulbapediaPokemonPage
 
         return [
             'pokedexNumber' => strval(intval(substr($summaryTable->filter("big > big > a > span")->text(), 1))),
-            'name' => $name,
-            'types' => $types,
-            'evolutions' => $this->extractEvolutions(),
-            'friendship' => $baseFriendshipCell->text(),
+            'name'          => $name,
+            'types'         => $types,
+            'evolutions'    => $this->extractEvolutions(),
+            'friendship'    => $baseFriendshipCell->text(),
         ];
     }
 
@@ -161,8 +161,8 @@ final class BulbapediaPokemonPage
 
                     if (str_contains($evolutionMethodCell->text(), "with a certainpersonality value")) {
                         $evolutions[] = [
-                            'name'  => $name,
-                            'level' => $level,
+                            'name'     => $name,
+                            'level'    => $level,
                             'randomly' => true,
                         ];
                         continue;
@@ -218,7 +218,7 @@ final class BulbapediaPokemonPage
                         continue;
                     }
                     $evolutions[] = [
-                        'name' => $name,
+                        'name'    => $name,
                         'holding' => $evolutionMethodCell->filter("a[title='Level']")->nextAll()->nextAll()->text(),
                     ];
                     continue;
@@ -278,8 +278,8 @@ final class BulbapediaPokemonPage
                             $matches,
                         );
                         $evolutions[] = [
-                            'name' => $name,
-                            'item' => $itemId,
+                            'name'   => $name,
+                            'item'   => $itemId,
                             'gender' => strtolower($matches[0]),
                         ];
                     } else {
@@ -329,14 +329,14 @@ final class BulbapediaPokemonPage
                 'item' => ItemId::FIRE_STONE,
             ],
             [
-                'name' => "Espeon",
+                'name'       => "Espeon",
                 'friendship' => true,
-                'time' => "day",
+                'time'       => "day",
             ],
             [
-                'name' => "Umbreon",
+                'name'       => "Umbreon",
                 'friendship' => true,
-                'time' => "night",
+                'time'       => "night",
             ],
             [
                 'name' => "Leafeon",
@@ -347,9 +347,9 @@ final class BulbapediaPokemonPage
                 'item' => ItemId::ICE_STONE,
             ],
             [
-                'name' => "Sylveon",
+                'name'       => "Sylveon",
                 'friendship' => true,
-                'move' => PokemonType::FAIRY,
+                'move'       => PokemonType::FAIRY,
             ],
         ];
     }

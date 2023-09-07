@@ -8,8 +8,6 @@ use ConorSmith\Pokemon\Battle\EliteFourChallengeRegionalVictoryQuery;
 use ConorSmith\Pokemon\Battle\LeagueChampionRepositoryPlayerIsLeagueChampionQuery;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
-use ConorSmith\Pokemon\Controllers\GetMap;
-use ConorSmith\Pokemon\Controllers\GetTrackPokemon;
 use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\RepositoryFactory;
@@ -40,8 +38,8 @@ final class ControllerFactory
     public function create(string $className, InstanceId $instanceId): mixed
     {
         return match ($className) {
-            default => null,
-            GetMap::class => new GetMap(
+            default                => null,
+            GetMap::class          => new GetMap(
                 $this->db,
                 $this->repositoryFactory->create(LocationRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),

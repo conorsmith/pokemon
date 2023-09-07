@@ -33,10 +33,10 @@ final class BulbapediaEggCyclesPage
             $row->children("td")->each(function (Crawler $cell, int $index) use (&$entry) {
 
                 $entryKey = match ($index) {
-                    0 => 'pokedexNumber',
-                    3 => 'group1',
-                    4 => 'group2',
-                    5 => 'cycles',
+                    0       => 'pokedexNumber',
+                    3       => 'group1',
+                    4       => 'group2',
+                    5       => 'cycles',
                     default => null,
                 };
 

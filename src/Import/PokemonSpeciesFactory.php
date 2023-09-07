@@ -8,9 +8,9 @@ use ConorSmith\Pokemon\Import\Domain\Evolution;
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
 use ConorSmith\Pokemon\Import\Domain\PokemonSpecies;
 use ConorSmith\Pokemon\Import\Domain\PokemonType;
-use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\PokedexNo;
-use ConorSmith\Pokemon\PokemonType as SharedKernelPokemonType;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType as SharedKernelPokemonType;
 use Exception;
 use ReflectionClass;
 

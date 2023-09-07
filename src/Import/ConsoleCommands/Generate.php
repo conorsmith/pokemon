@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Import\ConsoleCommands;
 
-use ConorSmith\Pokemon\Sex;
+use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use Doctrine\DBAL\DriverManager;
 use Exception;
 
@@ -35,8 +35,8 @@ final class Generate
                 $sex = self::generateEncounteredSex($row['pokemon_id']);
                 $db->update("caught_pokemon", [
                     'sex' => match ($sex) {
-                        Sex::FEMALE => "F",
-                        Sex::MALE => "M",
+                        Sex::FEMALE  => "F",
+                        Sex::MALE    => "M",
                         Sex::UNKNOWN => "U",
                     },
                 ], [

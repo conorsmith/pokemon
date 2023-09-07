@@ -14,10 +14,10 @@ use ConorSmith\Pokemon\Pokedex\Repositories\EvolutionaryLineRepository;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\ViewModelFactory;
 use ConorSmith\Pokemon\PokedexConfigRepository;
-use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
-use ConorSmith\Pokemon\SharedKernel\RegionIsLockedQuery;
+use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
+use ConorSmith\Pokemon\SharedKernel\Queries\RegionIsLockedQuery;
 use ConorSmith\Pokemon\TemplateEngine;
 use LogicException;
 use stdClass;
@@ -64,7 +64,7 @@ final class GetPokedexEntry
                 ),
                 $encounterLocations,
             ),
-            'evolutions' => $this->createVmsForEvolutionaryLine($evolutionaryLine->getRootBranch()),
+            'evolutions'         => $this->createVmsForEvolutionaryLine($evolutionaryLine->getRootBranch()),
         ]));
     }
 
@@ -79,8 +79,8 @@ final class GetPokedexEntry
                 $config = $this->pokedexConfigRepository->find($evolutionaryBranch->getPokedexNumber());
 
                 $vms[] = (object) [
-                    'type' => "pokemon",
-                    'pokemon' => ViewModelFactory::createPokemonViewModel($entry, $config),
+                    'type'         => "pokemon",
+                    'pokemon'      => ViewModelFactory::createPokemonViewModel($entry, $config),
                     'isRegistered' => $entry->isRegistered,
                 ];
 
@@ -109,9 +109,9 @@ final class GetPokedexEntry
                 foreach ($evolutionaryBranch->getAllBranches() as $descendantEvolutionaryBranch) {
                     $vms[] = (object) [
                         'type' => "branch",
-                        'vms' => $this->createVmsForEvolutionaryLine(new EvolutionaryBranch([
+                        'vms'  => $this->createVmsForEvolutionaryLine(new EvolutionaryBranch([
                             'pokedexNumber' => $evolutionaryBranch->getPokedexNumber(),
-                            'descendants' => [$descendantEvolutionaryBranch->data],
+                            'descendants'   => [$descendantEvolutionaryBranch->data],
                         ])),
                     ];
                 }
@@ -175,25 +175,25 @@ final class GetPokedexEntry
         array $locationConfig,
     ): stdClass {
         return (object) [
-            'name' => $locationConfig['name'],
-            'section' => $locationConfig['section'] ?? "",
-            'region' => match ($encounterLocation->region) {
+            'name'              => $locationConfig['name'],
+            'section'           => $locationConfig['section'] ?? "",
+            'region'            => match ($encounterLocation->region) {
                 RegionId::KANTO => "Kanto",
                 RegionId::JOHTO => "Johto",
                 RegionId::HOENN => "Hoenn",
-                default => throw new LogicException(),
+                default         => throw new LogicException(),
             },
             'encounterTypeIcon' => match ($encounterLocation->encounterType) {
-                EncounterType::WALKING => "fas fa-shoe-prints",
-                EncounterType::SURFING => "fas fa-water",
-                EncounterType::FISHING => "fas fa-fish",
+                EncounterType::WALKING    => "fas fa-shoe-prints",
+                EncounterType::SURFING    => "fas fa-water",
+                EncounterType::FISHING    => "fas fa-fish",
                 EncounterType::ROCK_SMASH => "fab fa-sith",
-                default => throw new LogicException(),
+                default                   => throw new LogicException(),
             },
-            'rarityIcons' => match (true) {
+            'rarityIcons'       => match (true) {
                 $encounterLocation->rarity > 0.15 => 3,
                 $encounterLocation->rarity > 0.05 => 2,
-                default => 1,
+                default                           => 1,
             },
         ];
     }
@@ -203,14 +203,14 @@ final class GetPokedexEntry
         $region = self::findNativeRegion($pokedexNumber);
 
         $regionalLevelOffset = match ($region) {
-            RegionId::KANTO => 0,
-            RegionId::JOHTO => 50,
-            RegionId::HOENN => 100,
+            RegionId::KANTO  => 0,
+            RegionId::JOHTO  => 50,
+            RegionId::HOENN  => 100,
             RegionId::SINNOH => 150,
-            RegionId::UNOVA => 200,
-            RegionId::KALOS => 250,
-            RegionId::ALOLA => 300,
-            RegionId::GALAR => 350,
+            RegionId::UNOVA  => 200,
+            RegionId::KALOS  => 250,
+            RegionId::ALOLA  => 300,
+            RegionId::GALAR  => 350,
             RegionId::PALDEA => 400,
         };
 
@@ -226,7 +226,7 @@ final class GetPokedexEntry
                         "Physical Attack > Physical Defence" => "greater-than",
                         "Physical Attack < Physical Defence" => "less-than",
                         "Physical Attack = Physical Defence" => "equals",
-                        default => throw new LogicException(),
+                        default                              => throw new LogicException(),
                     },
                 ];
             } elseif (in_array("randomly", $evolutionConfig)) {
@@ -250,17 +250,17 @@ final class GetPokedexEntry
                     'item' => $entry->isRegistered ? str_replace(" ", "&nbsp;", $itemConfig['name']) : "???",
                     'time' => match ($evolutionConfig['time']) {
                         "Full Moon" => "during&nbsp;a&nbsp;full&nbsp;moon",
-                        default => throw new LogicException(),
+                        default     => throw new LogicException(),
                     },
                 ];
             } elseif (array_key_exists('sex', $evolutionConfig)) {
                 $trigger = (object) [
                     'type' => "item-sex",
                     'item' => $entry->isRegistered ? str_replace(" ", "&nbsp;", $itemConfig['name']) : "???",
-                    'sex' => match ($evolutionConfig['sex']) {
+                    'sex'  => match ($evolutionConfig['sex']) {
                         Sex::FEMALE => "female",
-                        Sex::MALE => "male",
-                        default => throw new LogicException(),
+                        Sex::MALE   => "male",
+                        default     => throw new LogicException(),
                     },
                 ];
             } else {
@@ -323,14 +323,14 @@ final class GetPokedexEntry
     private static function findNativeRegion(string $pokedexNumber): RegionId
     {
         $pokedexRegionRanges = new WeakMap();
-        $pokedexRegionRanges[RegionId::KANTO]  = [1, 151];
-        $pokedexRegionRanges[RegionId::JOHTO]  = [152, 251];
-        $pokedexRegionRanges[RegionId::HOENN]  = [252, 386];
+        $pokedexRegionRanges[RegionId::KANTO] = [1, 151];
+        $pokedexRegionRanges[RegionId::JOHTO] = [152, 251];
+        $pokedexRegionRanges[RegionId::HOENN] = [252, 386];
         $pokedexRegionRanges[RegionId::SINNOH] = [387, 493];
-        $pokedexRegionRanges[RegionId::UNOVA]  = [494, 649];
-        $pokedexRegionRanges[RegionId::KALOS]  = [650, 721];
-        $pokedexRegionRanges[RegionId::ALOLA]  = [722, 809];
-        $pokedexRegionRanges[RegionId::GALAR]  = [810, 905];
+        $pokedexRegionRanges[RegionId::UNOVA] = [494, 649];
+        $pokedexRegionRanges[RegionId::KALOS] = [650, 721];
+        $pokedexRegionRanges[RegionId::ALOLA] = [722, 809];
+        $pokedexRegionRanges[RegionId::GALAR] = [810, 905];
         $pokedexRegionRanges[RegionId::PALDEA] = [906, 1010];
 
         foreach ($pokedexRegionRanges as $region => $range) {

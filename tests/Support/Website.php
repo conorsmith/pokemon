@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\PokemonTest\Support;
 
-use ConorSmith\Pokemon\ApplicationFactory;
+use ConorSmith\Pokemon\System\ApplicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

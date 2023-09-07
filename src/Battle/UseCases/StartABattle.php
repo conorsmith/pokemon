@@ -9,7 +9,7 @@ use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
 use ConorSmith\Pokemon\Battle\Domain\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\SharedKernel\ReportBattleWithGymLeaderCommand;
+use ConorSmith\Pokemon\SharedKernel\Commands\ReportBattleWithGymLeaderCommand;
 use Ramsey\Uuid\Uuid;
 
 final class StartABattle
@@ -39,13 +39,13 @@ final class StartABattle
         if ($trainer->isGymLeader() || $trainer->isEliteFourOrEquivalent()) {
             $this->reportBattleWithGymLeaderCommand->run(array_map(
                 fn(Pokemon $pokemon) => $pokemon->id,
-                $player->team,
+                $player->party,
             ));
         }
 
         $trainer = $trainer->startBattle();
         $player = $player->startBattle($battle);
-        $player = $player->reviveTeam();
+        $player = $player->reviveParty();
 
         $this->playerRepository->savePlayer($player);
         $this->battleRepository->save($battle);

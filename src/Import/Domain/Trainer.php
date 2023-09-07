@@ -10,6 +10,6 @@ final class Trainer
         public readonly string $class,
         public readonly Gender $gender,
         public readonly ?string $name,
-        public readonly array $team,
+        public readonly array $party,
     ) {}
 }

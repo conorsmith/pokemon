@@ -59,9 +59,9 @@ final class UnlimitedHabitLogRepository
             $this->db->insert(
                 "log_exercise",
                 [
-                    'id' => $newEntry->id->toString(),
+                    'id'          => $newEntry->id->toString(),
                     'instance_id' => $this->instanceId->value,
-                    'type' => $newEntry->entryType->value,
+                    'type'        => $newEntry->entryType->value,
                     'date_logged' => $newEntry->date->format("Y-m-d") . " 12:00:00",
                 ]
             );

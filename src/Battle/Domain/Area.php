@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Domain;
 
-use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 
 final class Area
 {

@@ -8,7 +8,7 @@ use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\ViewModelFactory;
 use ConorSmith\Pokemon\PokedexConfigRepository;
-use ConorSmith\Pokemon\SharedKernel\RegionIsLockedQuery;
+use ConorSmith\Pokemon\SharedKernel\Queries\RegionIsLockedQuery;
 use ConorSmith\Pokemon\TemplateEngine;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,8 +99,8 @@ final class GetPokedex
         }
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/List.php", [
-            'count' => $count,
-            'pokedex' => $viewModels,
+            'count'      => $count,
+            'pokedex'    => $viewModels,
             'regionMenu' => $regionMenu,
         ]));
     }

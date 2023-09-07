@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\UseCases;
 
-use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
+use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengePartyMember;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
@@ -36,7 +36,7 @@ final class GenerateAChallenge
             RegionId::KANTO => true,
             RegionId::JOHTO => true,
             RegionId::HOENN => true,
-            default => false,
+            default         => false,
         });
 
         foreach ($regionIds as $regionId) {
@@ -66,13 +66,13 @@ final class GenerateAChallenge
                 $regionId,
                 $randomTrainer->id,
                 array_map(
-                    fn(Pokemon $pokemon) => new EliteFourChallengeTeamMember(
+                    fn(Pokemon $pokemon) => new EliteFourChallengePartyMember(
                         $pokemon->id,
                         $pokemon->number,
                         $pokemon->form,
                         $pokemon->level,
                     ),
-                    $randomTrainer->team,
+                    $randomTrainer->party,
                 ),
                 4,
                 false,

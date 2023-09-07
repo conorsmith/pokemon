@@ -27,9 +27,9 @@ final class GetLogStretches
         $yesterday = CarbonImmutable::yesterday(new CarbonTimeZone("Europe/Dublin"))->format("Y-m-d");
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Stretches.php", [
-            'today' => $today,
-            'yesterday' => $yesterday,
-            'isTodayLogged' => $habitLog->isTodayLogged(),
+            'today'             => $today,
+            'yesterday'         => $yesterday,
+            'isTodayLogged'     => $habitLog->isTodayLogged(),
             'isYesterdayLogged' => $habitLog->isYesterdayLogged(),
         ]));
     }

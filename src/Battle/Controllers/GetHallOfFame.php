@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallenge;
-use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengeTeamMember;
+use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengePartyMember;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
-use ConorSmith\Pokemon\ViewModels\TeamMember;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,31 +41,31 @@ final class GetHallOfFame
         /** @var EliteFourChallenge $eliteFourChallenge */
         foreach ($eliteFourChallenges as $eliteFourChallenge) {
 
-            $teamViewModels = [];
+            $partyViewModels = [];
 
-            /** @var EliteFourChallengeTeamMember $member */
-            foreach ($eliteFourChallenge->team as $member) {
+            /** @var EliteFourChallengePartyMember $member */
+            foreach ($eliteFourChallenge->party as $member) {
                 $pokedexConfig = $this->pokedexConfigRepository->find($member->pokedexNumber);
-                $teamViewModels[$member->pokedexNumber] = (object) [
-                    'name'     => $pokedexConfig['name'],
-                    'imageUrl' => TeamMember::createImageUrl($member->pokedexNumber, $member->form),
-                    'primaryType' => ViewModelFactory::createPokemonTypeName($pokedexConfig['type'][0]),
+                $partyViewModels[$member->pokedexNumber] = (object) [
+                    'name'          => $pokedexConfig['name'],
+                    'imageUrl'      => ViewModelFactory::createPokemonImageUrl($member->pokedexNumber, $member->form),
+                    'primaryType'   => ViewModelFactory::createPokemonTypeName($pokedexConfig['type'][0]),
                     'secondaryType' => isset($pokedexConfig['type'][1])
                         ? ViewModelFactory::createPokemonTypeName($pokedexConfig['type'][1])
                         : null,
-                    'level'    => $member->level,
+                    'level'         => $member->level,
                     // TODO - Check caught pokemon to see if this one is shiny
-                    'isShiny'  => false,
+                    'isShiny'       => false,
                 ];
             }
 
-            ksort($teamViewModels);
+            ksort($partyViewModels);
 
             $hallOfFameEntries[] = (object) [
                 // TODO - Get the trainer name and more info from config
-                'name' => $eliteFourChallenge->isPlayerTheChallenger() ? "Player" : "Trainer",
-                'date' => $eliteFourChallenge->dateCompleted->format("F jS, Y"),
-                'team' => $teamViewModels,
+                'name'  => $eliteFourChallenge->isPlayerTheChallenger() ? "Player" : "Trainer",
+                'date'  => $eliteFourChallenge->dateCompleted->format("F jS, Y"),
+                'party' => $partyViewModels,
             ];
         }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\ViewModels;
 
-use ConorSmith\Pokemon\Sex;
+use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 
 final class Pokemon
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\PokemonTest\Battle\Controllers;
 
-use ConorSmith\Pokemon\PokedexNo;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 use ConorSmith\PokemonTest\Support\Database;
 use ConorSmith\PokemonTest\Support\Instance;
 use ConorSmith\PokemonTest\Support\Website;

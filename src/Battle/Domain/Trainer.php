@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Domain;
 
-use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
-use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use Exception;
 
 final class Trainer
@@ -16,7 +16,7 @@ final class Trainer
         public readonly ?string $name,
         public readonly string $class,
         public readonly Gender $gender,
-        public readonly array $team,
+        public readonly array $party,
         public readonly string $locationId,
         public readonly bool $isBattling,
         public readonly ?GymBadge $gymBadge,
@@ -29,7 +29,7 @@ final class Trainer
             $this->name,
             $this->class,
             $this->gender,
-            $this->team,
+            $this->party,
             $this->locationId,
             true,
             $this->gymBadge,
@@ -43,7 +43,7 @@ final class Trainer
             $this->name,
             $this->class,
             $this->gender,
-            $this->team,
+            $this->party,
             $this->locationId,
             false,
             $this->gymBadge,
@@ -53,7 +53,7 @@ final class Trainer
     public function getLeadPokemon(): Pokemon
     {
         /** @var Pokemon $pokemon */
-        foreach ($this->team as $pokemon) {
+        foreach ($this->party as $pokemon) {
             if (!$pokemon->hasFainted) {
                 return $pokemon;
             }
@@ -65,7 +65,7 @@ final class Trainer
     public function getLastFaintedPokemon(): Pokemon
     {
         /** @var Pokemon $pokemon */
-        foreach (array_reverse($this->team) as $pokemon) {
+        foreach (array_reverse($this->party) as $pokemon) {
             if ($pokemon->hasFainted) {
                 $pokemon->remainingHp = 0;
                 return $pokemon;
@@ -75,12 +75,12 @@ final class Trainer
         throw new Exception;
     }
 
-    public function countActiveTeamMembers(): int
+    public function countActivePartyMembers(): int
     {
         $count = 0;
 
         /** @var Pokemon $pokemon */
-        foreach ($this->team as $pokemon) {
+        foreach ($this->party as $pokemon) {
             if (!$pokemon->hasFainted) {
                 $count++;
             }
@@ -89,12 +89,12 @@ final class Trainer
         return $count;
     }
 
-    public function countFaintedTeamMembers(): int
+    public function countFaintedPartyMembers(): int
     {
         $count = 0;
 
         /** @var Pokemon $pokemon */
-        foreach ($this->team as $pokemon) {
+        foreach ($this->party as $pokemon) {
             if ($pokemon->hasFainted) {
                 $count++;
             }
@@ -103,9 +103,9 @@ final class Trainer
         return $count;
     }
 
-    public function hasEntireTeamFainted(): bool
+    public function hasEntirePartyFainted(): bool
     {
-        return $this->countActiveTeamMembers() === 0;
+        return $this->countActivePartyMembers() === 0;
     }
 
     public function isGymLeader(): bool

@@ -7,8 +7,8 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
+use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\Pokemon\TemplateEngine;
-use ConorSmith\Pokemon\TrainerClass;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
@@ -32,21 +32,21 @@ final class GetBattle
         $trainerBattleId = $args['id'];
 
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
-        $trainerLeadPokemon = $trainer->hasEntireTeamFainted()
+        $trainerLeadPokemon = $trainer->hasEntirePartyFainted()
             ? $trainer->getLastFaintedPokemon()
             : $trainer->getLeadPokemon();
 
         $player = $this->playerRepository->findPlayer();
-        $playerLeadPokemon = $player->hasEntireTeamFainted()
+        $playerLeadPokemon = $player->hasEntirePartyFainted()
             ? $player->getLastFaintedPokemon()
             : $player->getLeadPokemon();
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Battle.php", [
-            'id' => $trainerBattleId,
+            'id'              => $trainerBattleId,
             'opponentPokemon' => $this->viewModelFactory->createPokemonInBattle($trainerLeadPokemon),
-            'playerPokemon' => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
-            'trainer' => $this->viewModelFactory->createTrainerInBattle($trainer, $this->createImageUrl($args['instanceId'], $trainer)),
-            'isBattleOver' => $trainer->hasEntireTeamFainted() || $player->hasEntireTeamFainted(),
+            'playerPokemon'   => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
+            'trainer'         => $this->viewModelFactory->createTrainerInBattle($trainer, $this->createImageUrl($args['instanceId'], $trainer)),
+            'isBattleOver'    => $trainer->hasEntirePartyFainted() || $player->hasEntirePartyFainted(),
         ]));
     }
 
@@ -57,7 +57,7 @@ final class GetBattle
         if (is_null($imageUrl)) {
             $trainerBattleRow = $this->db->fetchAssociative("SELECT * FROM trainer_battles WHERE instance_id = :instanceId AND trainer_id = :id", [
                 'instanceId' => $instanceId,
-                'id' => $trainer->id,
+                'id'         => $trainer->id,
             ]);
 
             if ($trainerBattleRow !== false) {

@@ -7,7 +7,6 @@ namespace ConorSmith\Pokemon\Pokedex;
 use ConorSmith\Pokemon\Pokedex\Domain\FormEntry;
 use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
 use ConorSmith\Pokemon\ViewModelFactory as SharedViewModelFactory;
-use ConorSmith\Pokemon\ViewModels\TeamMember;
 use stdClass;
 
 final class ViewModelFactory
@@ -18,7 +17,7 @@ final class ViewModelFactory
             'pokedexNumber'    => $entry->pokedexNumber,
             'regionId'         => $entry->regionId->value,
             'name'             => $config['name'],
-            'imageUrl'         => TeamMember::createImageUrl($entry->pokedexNumber),
+            'imageUrl'         => SharedViewModelFactory::createPokemonImageUrl($entry->pokedexNumber),
             'primaryType'      => SharedViewModelFactory::createPokemonTypeName($config['type'][0]),
             'secondaryType'    => isset($config['type'][1])
                 ? SharedViewModelFactory::createPokemonTypeName($config['type'][1])
@@ -38,7 +37,7 @@ final class ViewModelFactory
                 $formVms[] = (object) [
                     'name'          => $config['name'],
                     'form'          => $form->id,
-                    'imageUrl'      => TeamMember::createImageUrl($entry->pokedexNumber, $form->id),
+                    'imageUrl'      => SharedViewModelFactory::createPokemonImageUrl($entry->pokedexNumber, $form->id),
                     'primaryType'   => SharedViewModelFactory::createPokemonTypeName($config['type'][0]),
                     'secondaryType' => isset($config['type'][1])
                         ? SharedViewModelFactory::createPokemonTypeName($config['type'][1])

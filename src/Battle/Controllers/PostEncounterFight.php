@@ -10,8 +10,8 @@ use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
+use ConorSmith\Pokemon\SharedKernel\Commands\ReportPartyPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
-use ConorSmith\Pokemon\SharedKernel\ReportTeamPokemonFaintedCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ final class PostEncounterFight
         private readonly EncounterRepository $encounterRepository,
         private readonly PlayerRepositoryDb $playerRepository,
         private readonly EventFactory $eventFactory,
-        private readonly ReportTeamPokemonFaintedCommand $reportTeamPokemonFaintedCommand,
+        private readonly ReportPartyPokemonFaintedCommand $reportPartyPokemonFaintedCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -41,8 +41,8 @@ final class PostEncounterFight
             return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
-        if ($player->hasEntireTeamFainted()) {
-            $this->session->getFlashBag()->add("errors", "Your team has fainted.");
+        if ($player->hasEntirePartyFainted()) {
+            $this->session->getFlashBag()->add("errors", "Your party has fainted.");
             return new RedirectResponse("/{$args['instanceId']}/encounter/{$encounter->id}");
         }
 
@@ -62,7 +62,7 @@ final class PostEncounterFight
         );
 
         if ($playerPokemon->hasFainted) {
-            $this->reportTeamPokemonFaintedCommand->run(
+            $this->reportPartyPokemonFaintedCommand->run(
                 $playerPokemon->id,
                 $playerPokemon->level,
                 $opponentPokemon->level,
@@ -79,11 +79,11 @@ final class PostEncounterFight
         $this->encounterRepository->save($encounter);
 
         $nextFirstPokemon = $round->playerFirst
-            ? ($player->hasEntireTeamFainted() ? null : $player->getLeadPokemon())
+            ? ($player->hasEntirePartyFainted() ? null : $player->getLeadPokemon())
             : null;
         $nextSecondPokemon = $round->playerFirst
             ? null
-            : ($player->hasEntireTeamFainted() ? null : $player->getLeadPokemon());
+            : ($player->hasEntirePartyFainted() ? null : $player->getLeadPokemon());
 
         $events = array_merge(
             $this->eventFactory->createEncounterRoundEvents(
@@ -104,7 +104,7 @@ final class PostEncounterFight
             ),
         );
 
-        if ($player->hasEntireTeamFainted()) {
+        if ($player->hasEntirePartyFainted()) {
             $events[] = $this->eventFactory->createEncounterDefeatEvent($encounter);
         }
 

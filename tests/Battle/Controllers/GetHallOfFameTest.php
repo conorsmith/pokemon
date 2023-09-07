@@ -25,7 +25,7 @@ final class GetHallOfFameTest extends TestCase
         $db->insert("elite_four_challenges", [
             'id'             => "dontcare",
             'region'         => "KANTO",
-            'team'           => json_encode([
+            'party'          => json_encode([
                 [
                     'id'            => "dontcare",
                     'pokedexNumber' => "1",

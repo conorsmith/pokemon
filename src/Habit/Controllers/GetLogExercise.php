@@ -27,9 +27,9 @@ final class GetLogExercise
         $yesterday = CarbonImmutable::yesterday(new CarbonTimeZone("Europe/Dublin"))->format("Y-m-d");
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Exercise.php", [
-            'today' => $today,
-            'yesterday' => $yesterday,
-            'loggedToday' => $habitLog->countLoggedToday(),
+            'today'           => $today,
+            'yesterday'       => $yesterday,
+            'loggedToday'     => $habitLog->countLoggedToday(),
             'loggedYesterday' => $habitLog->countLoggedYesterday(),
         ]));
     }

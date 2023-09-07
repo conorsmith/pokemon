@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Player;
 
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
-use ConorSmith\Pokemon\SharedKernel\HighestRankedGymBadgeQuery;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
+use ConorSmith\Pokemon\SharedKernel\Queries\HighestRankedGymBadgeQuery;
 use Doctrine\DBAL\Connection;
 
 final class HighestRankedGymBadgeQueryDb implements HighestRankedGymBadgeQuery

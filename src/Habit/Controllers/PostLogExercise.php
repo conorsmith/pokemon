@@ -9,8 +9,8 @@ use ConorSmith\Pokemon\Habit\Domain\EntryType;
 use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Domain\UnlimitedHabitLogEntry;
 use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
-use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\SharedKernel\ReduceEggCyclesCommand;
+use ConorSmith\Pokemon\SharedKernel\Commands\ReduceEggCyclesCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
@@ -54,8 +54,8 @@ final class PostLogExercise
 
         $earnedItemId = match($entryType) {
             EntryType::SHORT_WALK => ItemId::POKE_BALL,
-            EntryType::LONG_WALK => ItemId::GREAT_BALL,
-            EntryType::RUN => ItemId::ULTRA_BALL,
+            EntryType::LONG_WALK  => ItemId::GREAT_BALL,
+            EntryType::RUN        => ItemId::ULTRA_BALL,
         };
 
         $habitLog = $habitLog->record(new UnlimitedHabitLogEntry(
@@ -72,8 +72,8 @@ final class PostLogExercise
 
         $this->reduceEggCyclesCommand->run(match($entryType) {
             EntryType::SHORT_WALK => 1,
-            EntryType::LONG_WALK => 3,
-            EntryType::RUN => 5,
+            EntryType::LONG_WALK  => 3,
+            EntryType::RUN        => 5,
         });
 
         $this->db->commit();

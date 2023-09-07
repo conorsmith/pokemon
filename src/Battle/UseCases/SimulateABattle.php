@@ -9,7 +9,7 @@ use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 
 final class SimulateABattle
 {
@@ -26,7 +26,7 @@ final class SimulateABattle
         $trainerA = $trainerA->startBattle();
         $trainerB = $trainerB->startBattle();
 
-        while (!$trainerA->hasEntireTeamFainted() && !$trainerB->hasEntireTeamFainted()) {
+        while (!$trainerA->hasEntirePartyFainted() && !$trainerB->hasEntirePartyFainted()) {
 
             $trainerAPokemon = $trainerA->getLeadPokemon();
             $trainerBPokemon = $trainerB->getLeadPokemon();
@@ -47,10 +47,10 @@ final class SimulateABattle
         $this->trainerRepository->saveTrainer($trainerA);
         $this->trainerRepository->saveTrainer($trainerB);
 
-        if ($trainerB->hasEntireTeamFainted()) {
+        if ($trainerB->hasEntirePartyFainted()) {
             return $trainerA;
 
-        } elseif ($trainerA->hasEntireTeamFainted()) {
+        } elseif ($trainerA->hasEntirePartyFainted()) {
             return $trainerB;
 
         } else {
@@ -61,11 +61,11 @@ final class SimulateABattle
     private function outputRoundEvents(Round $round, Trainer $trainerA, Trainer $trainerB): void
     {
         $nextFirstPokemon = $round->playerFirst
-            ? ($trainerA->hasEntireTeamFainted() ? null : $trainerA->getLeadPokemon())
-            : ($trainerB->hasEntireTeamFainted() ? null : $trainerB->getLeadPokemon());
+            ? ($trainerA->hasEntirePartyFainted() ? null : $trainerA->getLeadPokemon())
+            : ($trainerB->hasEntirePartyFainted() ? null : $trainerB->getLeadPokemon());
         $nextSecondPokemon = $round->playerFirst
-            ? ($trainerB->hasEntireTeamFainted() ? null : $trainerB->getLeadPokemon())
-            : ($trainerA->hasEntireTeamFainted() ? null : $trainerA->getLeadPokemon());
+            ? ($trainerB->hasEntirePartyFainted() ? null : $trainerB->getLeadPokemon())
+            : ($trainerA->hasEntirePartyFainted() ? null : $trainerA->getLeadPokemon());
 
         $events = array_merge(
             $this->eventFactory->createBattleRoundEvents(

@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\Battle;
 
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
-use ConorSmith\Pokemon\SharedKernel\PlayerIsLeagueChampionQuery;
+use ConorSmith\Pokemon\SharedKernel\Queries\PlayerIsLeagueChampionQuery;
 
 final class LeagueChampionRepositoryPlayerIsLeagueChampionQuery implements PlayerIsLeagueChampionQuery
 {

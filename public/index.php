@@ -6,7 +6,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 (Dotenv\Dotenv::createImmutable(__DIR__ . "/.."))->load();
 
-$httpKernel = \ConorSmith\Pokemon\ApplicationFactory::createHttpKernel();
+$httpKernel = \ConorSmith\Pokemon\System\ApplicationFactory::createHttpKernel();
 $response = $httpKernel(\Symfony\Component\HttpFoundation\Request::createFromGlobals());
 
 $response->send();

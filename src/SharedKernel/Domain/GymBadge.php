@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\SharedKernel\Domain;
 
-use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use LogicException;
 
 enum GymBadge: int
@@ -46,26 +45,26 @@ enum GymBadge: int
             self::CASCADE => 30,
             self::THUNDER => 30,
             self::RAINBOW => 50,
-            self::SOUL => 50,
-            self::MARSH => 70,
+            self::SOUL    => 50,
+            self::MARSH   => 70,
             self::VOLCANO => 70,
-            self::EARTH => 90,
-            self::ZEPHYR => 90,
-            self::HIVE => 90,
-            self::PLAIN => 90,
-            self::FOG => 100,
-            self::STORM => 120,
+            self::EARTH   => 90,
+            self::ZEPHYR  => 90,
+            self::HIVE    => 90,
+            self::PLAIN   => 90,
+            self::FOG     => 100,
+            self::STORM   => 120,
             self::MINERAL => 120,
             self::GLACIER => 120,
-            self::RISING => 140,
-            self::STONE => 140,
+            self::RISING  => 140,
+            self::STONE   => 140,
             self::KNUCKLE => 140,
-            self::DYNAMO => 140,
-            self::HEAT => 150,
+            self::DYNAMO  => 140,
+            self::HEAT    => 150,
             self::BALANCE => 160,
             self::FEATHER => 170,
-            self::MIND => 180,
-            self::RAIN => 200,
+            self::MIND    => 180,
+            self::RAIN    => 200,
         };
     }
 
@@ -146,7 +145,7 @@ enum GymBadge: int
                 self::MIND,
                 self::RAIN,
             ],
-            default => throw new LogicException(),
+            default         => throw new LogicException(),
         };
     }
 }

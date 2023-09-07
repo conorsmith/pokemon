@@ -72,14 +72,14 @@ final class BulbapediaEvsPage
                 }
 
                 $entryKey = match ($index) {
-                    0 => 'pokedexNumber',
-                    3 => 'exp',
-                    4 => 'hp',
-                    5 => 'physicalAttack',
-                    6 => 'physicalDefence',
-                    7 => 'specialAttack',
-                    8 => 'specialDefence',
-                    9 => 'speed',
+                    0       => 'pokedexNumber',
+                    3       => 'exp',
+                    4       => 'hp',
+                    5       => 'physicalAttack',
+                    6       => 'physicalDefence',
+                    7       => 'specialAttack',
+                    8       => 'specialDefence',
+                    9       => 'speed',
                     default => null,
                 };
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Domain;
 
-use ConorSmith\Pokemon\PokemonType;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use LogicException;
 
@@ -97,7 +97,7 @@ final class Round
             $defender->friendship < 220   => mt_rand(1, 100) <= 10,
             $defender->friendship < 255   => mt_rand(1, 100) <= 15,
             $defender->friendship === 255 => mt_rand(1, 100) <= 20,
-            default => new LogicException(),
+            default                       => new LogicException(),
         };
     }
 

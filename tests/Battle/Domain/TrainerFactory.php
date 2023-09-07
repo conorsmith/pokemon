@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace ConorSmith\PokemonTest\Battle\Domain;
 
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
-use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
+use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 
 final class TrainerFactory
 {
@@ -15,7 +15,7 @@ final class TrainerFactory
         ?string $name = null,
         string $class = "dontcare",
         Gender $gender = Gender::IMMATERIAL,
-        array $team = [],
+        array $party = [],
         string $locationId = "dontcare",
         bool $isBattling = false,
         ?GymBadge $gymBadge = null,
@@ -25,7 +25,7 @@ final class TrainerFactory
             $name,
             $class,
             $gender,
-            $team,
+            $party,
             $locationId,
             $isBattling,
             $gymBadge,

@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\Pokedex;
 
 use ConorSmith\Pokemon\Pokedex\Domain\PokemonEntry;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
-use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery as TotalRegisteredPokemonQueryInterface;
+use ConorSmith\Pokemon\SharedKernel\Queries\TotalRegisteredPokemonQuery as TotalRegisteredPokemonQueryInterface;
 
 final class TotalRegisteredPokemonQuery implements TotalRegisteredPokemonQueryInterface
 {

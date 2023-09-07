@@ -6,5 +6,5 @@ require_once __DIR__ . "/vendor/autoload.php";
 
 (Dotenv\Dotenv::createImmutable(__DIR__))->load();
 
-$consoleKernel = \ConorSmith\Pokemon\ApplicationFactory::createConsoleKernel();
+$consoleKernel = \ConorSmith\Pokemon\System\ApplicationFactory::createConsoleKernel();
 $consoleKernel($argv);

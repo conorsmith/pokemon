@@ -7,12 +7,12 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
-use ConorSmith\Pokemon\ItemId;
 use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\SharedKernel\CatchPokemonCommand;
-use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
-use ConorSmith\Pokemon\SharedKernel\TotalRegisteredPokemonQuery;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Queries\TotalRegisteredPokemonQuery;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use LogicException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -150,7 +150,7 @@ final class PostEncounterCatch
             ItemId::POKE_BALL  => 1,
             ItemId::GREAT_BALL => 1.5,
             ItemId::ULTRA_BALL => 2,
-            default => throw new LogicException(),
+            default            => throw new LogicException(),
         };
 
         $catchRatesConfig = require __DIR__ . "/../../Config/CatchRates.php";

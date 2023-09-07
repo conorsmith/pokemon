@@ -9,8 +9,8 @@ use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
 use ConorSmith\Pokemon\Import\Domain\Sex;
 use ConorSmith\Pokemon\Import\Domain\Trainer;
 use ConorSmith\Pokemon\Import\Domain\TrainerPokemon;
-use ConorSmith\Pokemon\PokedexNo;
-use ConorSmith\Pokemon\TrainerClass;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
+use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use LogicException;
 use Ramsey\Uuid\Uuid;
 use ReflectionClass;
@@ -28,10 +28,10 @@ final class TrainerFactory
                     continue;
                 }
 
-                $team = [];
+                $party = [];
 
                 foreach ($bulbapediaTrainer['pokemon'] as $pokemon) {
-                    $team[] = new TrainerPokemon(
+                    $party[] = new TrainerPokemon(
                         self::createPokedexNumberFromPokemonName($pokemon['name']),
                         self::createSexFromSymbol($pokemon['sex']),
                         intval($pokemon['level']),
@@ -51,7 +51,7 @@ final class TrainerFactory
                         ? self::createGenderFromClassName($bulbapediaTrainer['trainer']['class'])
                         : self::createGenderFromValue($bulbapediaTrainer['trainer']['gender']),
                     $bulbapediaTrainer['trainer']['name'],
-                    $team,
+                    $party,
                 );
             }
         }
@@ -71,30 +71,30 @@ final class TrainerFactory
         $constantName = str_replace(".", "", $constantName);
 
         return match ($constantName) {
-            "EXECUTIVE" => TrainerClass::TEAM_ROCKET_ADMIN,
-            "FISHER" => TrainerClass::FISHERMAN,
-            "ACE_TRAINER" => TrainerClass::COOLTRAINER,
-            "LI" => TrainerClass::ELDER,
-            "POKE_MANIAC" => TrainerClass::POKEMANIAC,
-            "ROCKET_GRUNT" => TrainerClass::TEAM_ROCKET_GRUNT,
-            "POLICEMAN" => TrainerClass::OFFICER,
+            "EXECUTIVE"     => TrainerClass::TEAM_ROCKET_ADMIN,
+            "FISHER"        => TrainerClass::FISHERMAN,
+            "ACE_TRAINER"   => TrainerClass::COOLTRAINER,
+            "LI"            => TrainerClass::ELDER,
+            "POKE_MANIAC"   => TrainerClass::POKEMANIAC,
+            "ROCKET_GRUNT"  => TrainerClass::TEAM_ROCKET_GRUNT,
+            "POLICEMAN"     => TrainerClass::OFFICER,
             "SILVER_(GAME)" => TrainerClass::RIVAL,
-            "SCHOOLBOY" => TrainerClass::SCHOOL_KID,
-            "BLACKBELT" => TrainerClass::BLACK_BELT,
-            "MYSTERY_MAN" => TrainerClass::MYSTICALMAN,
-            "POKE_FAN" => TrainerClass::POKEFAN,
-            "MAXIE" => TrainerClass::MAGMA_LEADER,
-            "ARCHIE" => TrainerClass::AQUA_LEADER,
-            "SR_AND_JR" => TrainerClass::TEAMMATES,
-            default => $trainerClassReflector->getConstants()[$constantName],
+            "SCHOOLBOY"     => TrainerClass::SCHOOL_KID,
+            "BLACKBELT"     => TrainerClass::BLACK_BELT,
+            "MYSTERY_MAN"   => TrainerClass::MYSTICALMAN,
+            "POKE_FAN"      => TrainerClass::POKEFAN,
+            "MAXIE"         => TrainerClass::MAGMA_LEADER,
+            "ARCHIE"        => TrainerClass::AQUA_LEADER,
+            "SR_AND_JR"     => TrainerClass::TEAMMATES,
+            default         => $trainerClassReflector->getConstants()[$constantName],
         };
     }
 
     public function createGenderFromClassName(string $class): Gender
     {
         return match (mb_substr($class, -1)) {
-            "♀" => Gender::female(),
-            "♂" => Gender::male(),
+            "♀"     => Gender::female(),
+            "♂"     => Gender::male(),
             default => Gender::irrelevant(),
         };
     }
@@ -102,8 +102,8 @@ final class TrainerFactory
     public function createGenderFromValue(string $value): Gender
     {
         return match($value) {
-            "F" => Gender::female(),
-            "M" => Gender::male(),
+            "F"     => Gender::female(),
+            "M"     => Gender::male(),
             default => throw new LogicException(),
         };
     }
@@ -126,8 +126,8 @@ final class TrainerFactory
     public function createSexFromSymbol(string $gender): Sex
     {
         return match ($gender) {
-            "♀" => Sex::female(),
-            "♂" => Sex::male(),
+            "♀"     => Sex::female(),
+            "♂"     => Sex::male(),
             default => Sex::unknown(),
         };
     }

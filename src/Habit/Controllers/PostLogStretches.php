@@ -7,7 +7,7 @@ namespace ConorSmith\Pokemon\Habit\Controllers;
 use Carbon\CarbonImmutable;
 use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
-use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;

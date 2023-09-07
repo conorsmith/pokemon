@@ -8,10 +8,10 @@ use ConorSmith\Pokemon\Import\Domain\Evolution;
 use ConorSmith\Pokemon\Import\Domain\PokedexNumber;
 use ConorSmith\Pokemon\Import\Domain\PokemonSpecies;
 use ConorSmith\Pokemon\Import\Domain\PokemonType;
-use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\PokedexNo as PokedexNumberConstants;
-use ConorSmith\Pokemon\PokemonType as PokemonTypeConstants;
-use ConorSmith\Pokemon\PokemonType as SharedKernelPokemonType;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo as PokedexNumberConstants;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType as PokemonTypeConstants;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType as SharedKernelPokemonType;
 use LogicException;
 use ReflectionClass;
 
@@ -148,9 +148,9 @@ final class PokemonConfig
     private static function encodeGender(string $gender): string
     {
         return match ($gender) {
-            'male' => "Gender::MALE",
+            'male'   => "Gender::MALE",
             'female' => "Gender::FEMALE",
-            default => throw new LogicException(),
+            default  => throw new LogicException(),
         };
     }
 }

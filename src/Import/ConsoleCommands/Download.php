@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Import\ConsoleCommands;
 
-use ConorSmith\Pokemon\LocationId;
+use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ReflectionClass;
 
 final class Download
@@ -20,7 +20,7 @@ final class Download
 
         foreach ($config as $locationId => $url) {
             $data[$locationId] = [
-                'url' => $url,
+                'url'      => $url,
                 'filename' => explode("/", $url)[count(explode("/", $url)) - 1],
             ];
         }

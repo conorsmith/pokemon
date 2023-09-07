@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\UseCases;
 
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
-use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 
 final class CreateALegendaryEncounter

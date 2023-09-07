@@ -9,9 +9,12 @@ use ConorSmith\Pokemon\Battle\Domain\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
-use ConorSmith\Pokemon\Sex;
+use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
-use ConorSmith\Pokemon\SharedKernel\TeamPokemonQuery;
+use ConorSmith\Pokemon\SharedKernel\Queries\CapturedPokemonQuery;
+use ConorSmith\Pokemon\SharedKernel\Queries\CapturedPokemonQueryParameters;
+use ConorSmith\Pokemon\SharedKernel\Queries\CapturedPokemonQueryProperty;
+use ConorSmith\Pokemon\SharedKernel\Queries\CapturedPokemonQueryResult;
 use Doctrine\DBAL\Connection;
 use Exception;
 use RuntimeException;
@@ -20,7 +23,7 @@ final class PlayerRepositoryDb implements PlayerRepository
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly TeamPokemonQuery $teamPokemonQuery,
+        private readonly CapturedPokemonQuery $capturedPokemonQuery,
         private readonly array $pokedex,
         private readonly InstanceId $instanceId,
     ) {}
@@ -31,50 +34,65 @@ final class PlayerRepositoryDb implements PlayerRepository
             'instanceId' => $this->instanceId->value,
         ]);
 
-        $caughtPokemonRows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'team' ORDER BY team_position", [
+        $caughtPokemonRows = $this->db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId AND location = 'team' ORDER BY party_position", [
             'instanceId' => $this->instanceId->value,
         ]);
 
-        $team = [];
+        $party = [];
+
+        $queryResults = $this->capturedPokemonQuery->run(CapturedPokemonQueryParameters::partyMembers([
+            CapturedPokemonQueryProperty::FRIENDSHIP,
+            CapturedPokemonQueryProperty::BASE_STATS,
+            CapturedPokemonQueryProperty::IV_STATS,
+            CapturedPokemonQueryProperty::EV_STATS,
+        ]));
+
+        $queryResultsByPokemonId = [];
+
+        /** @var CapturedPokemonQueryResult $queryResult */
+        foreach ($queryResults as $queryResult) {
+            $queryResultsByPokemonId[$queryResult->id] = $queryResult;
+        }
 
         foreach ($caughtPokemonRows as $caughtPokemonRow) {
-            $teamPokemon = $this->teamPokemonQuery->run($caughtPokemonRow['id']);
+            $queryResult = $queryResultsByPokemonId[$caughtPokemonRow['id']];
+
             $pokedexEntry = $this->findPokedexEntry($caughtPokemonRow['pokemon_id']);
-            $team[] = new Pokemon(
+            $party[] = new Pokemon(
                 $caughtPokemonRow['id'],
                 $caughtPokemonRow['pokemon_id'],
                 $caughtPokemonRow['form'],
                 $pokedexEntry['type'][0],
                 $pokedexEntry['type'][1] ?? null,
                 $caughtPokemonRow['level'],
-                $teamPokemon->friendship,
+                $queryResult->get(CapturedPokemonQueryProperty::FRIENDSHIP),
                 match ($caughtPokemonRow['sex']) {
-                    "F" => Sex::FEMALE,
-                    "M" => Sex::MALE,
-                    "U" => Sex::UNKNOWN,
+                    "F"     => Sex::FEMALE,
+                    "M"     => Sex::MALE,
+                    "U"     => Sex::UNKNOWN,
                     default => new RuntimeException(),
                 },
                 $caughtPokemonRow['is_shiny'] === 1,
                 new Stats(
                     $caughtPokemonRow['level'],
-                    $teamPokemon->baseHp,
-                    $teamPokemon->basePhysicalAttack,
-                    $teamPokemon->basePhysicalDefence,
-                    $teamPokemon->baseSpecialAttack,
-                    $teamPokemon->baseSpecialDefence,
-                    $teamPokemon->baseSpeed,
-                    $teamPokemon->ivHp,
-                    $teamPokemon->ivPhysicalAttack,
-                    $teamPokemon->ivPhysicalDefence,
-                    $teamPokemon->ivSpecialAttack,
-                    $teamPokemon->ivSpecialDefence,
-                    $teamPokemon->ivSpeed,
-                    $teamPokemon->evHp,
-                    $teamPokemon->evPhysicalAttack,
-                    $teamPokemon->evPhysicalDefence,
-                    $teamPokemon->evSpecialAttack,
-                    $teamPokemon->evSpecialDefence,
-                    $teamPokemon->evSpeed,
+                    $queryResult->get(CapturedPokemonQueryProperty::BASE_STATS)->hp,
+                    $queryResult->get(CapturedPokemonQueryProperty::BASE_STATS)->physicalAttack,
+                    $queryResult->get(CapturedPokemonQueryProperty::BASE_STATS)->physicalDefence,
+                    $queryResult->get(CapturedPokemonQueryProperty::BASE_STATS)->specialAttack,
+                    $queryResult->get(CapturedPokemonQueryProperty::BASE_STATS)->specialDefence,
+                    $queryResult->get(CapturedPokemonQueryProperty::BASE_STATS)->speed,
+                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->hp,
+                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->physicalAttack,
+                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->physicalDefence,
+                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->specialAttack,
+                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->specialDefence,
+                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->speed,
+                    $queryResult->get(CapturedPokemonQueryProperty::EV_STATS)->hp,
+                    $queryResult->get(CapturedPokemonQueryProperty::EV_STATS)->physicalAttack,
+                    $queryResult->get(CapturedPokemonQueryProperty::EV_STATS)->physicalDefence,
+                    $queryResult->get(CapturedPokemonQueryProperty::EV_STATS)->specialAttack,
+                    $queryResult->get(CapturedPokemonQueryProperty::EV_STATS)->specialDefence,
+                    $queryResult->get(CapturedPokemonQueryProperty::EV_STATS)->speed,
                 ),
                 $caughtPokemonRow['remaining_hp'] ?? 0,
                 $caughtPokemonRow['has_fainted'] === 1,
@@ -83,10 +101,10 @@ final class PlayerRepositoryDb implements PlayerRepository
 
         $gymBadges = array_map(
             fn(int $value) => GymBadge::from($value),
-            json_decode($instanceRow['badges'])
+            json_decode($instanceRow['badges']),
         );
 
-        return new Player($team, $gymBadges, $instanceRow['active_battle_id']);
+        return new Player($party, $gymBadges, $instanceRow['active_battle_id']);
     }
 
     private function findPokedexEntry(string $number): array
@@ -101,18 +119,18 @@ final class PlayerRepositoryDb implements PlayerRepository
     public function savePlayer(Player $player): void
     {
         $this->db->update("instances", [
-            'badges' => json_encode($player->gymBadges),
+            'badges'           => json_encode($player->gymBadges),
             'active_battle_id' => $player->activeBattleId,
         ], [
             'id' => $this->instanceId->value,
         ]);
 
         /** @var Pokemon $pokemon */
-        foreach ($player->team as $i => $pokemon) {
+        foreach ($player->party as $i => $pokemon) {
             $this->db->update("caught_pokemon", [
-                'team_position' => $i + 1,
-                'remaining_hp' => $pokemon->remainingHp,
-                'has_fainted' => $pokemon->hasFainted ? "1" : "0",
+                'party_position' => $i + 1,
+                'remaining_hp'   => $pokemon->remainingHp,
+                'has_fainted'    => $pokemon->hasFainted ? "1" : "0",
             ], [
                 'id' => $pokemon->id,
             ]);

@@ -231,9 +231,9 @@ final class BulbapediaLocationPage
             $trainerCount++;
             $rawTrainerData[$trainerCount] = [
                 'trainer' => [
-                    'class' => $class,
+                    'class'  => $class,
                     'gender' => null,
-                    'name'  => is_null($nameNode) ? "" : trim($nameNode->textContent),
+                    'name'   => is_null($nameNode) ? "" : trim($nameNode->textContent),
                 ],
                 'pokemon' => [],
             ];
@@ -357,9 +357,9 @@ final class BulbapediaLocationPage
                         $trainerCount++;
                         $rawTrainerData[$trainerCount] = [
                             'trainer' => [
-                                'class' => $trainerCell->childNodes->item(0)->textContent,
+                                'class'  => $trainerCell->childNodes->item(0)->textContent,
                                 'gender' => $gender,
-                                'name'  => trim($trainerCell->childNodes->item(1)->textContent),
+                                'name'   => trim($trainerCell->childNodes->item(1)->textContent),
                             ],
                             'pokemon' => [],
                         ];

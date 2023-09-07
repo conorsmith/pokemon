@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\PokemonTest\Battle\Controllers;
 
-use ConorSmith\Pokemon\LocationId;
+use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ConorSmith\PokemonTest\Support\Database;
 use ConorSmith\PokemonTest\Support\Instance;
 use ConorSmith\PokemonTest\Support\Website;
@@ -48,8 +48,8 @@ final class PostSwitchTest extends TestCase
             'date_caught'         => "2023-01-01 00:00:00",
         ]);
 
-        $response = Website::post("/team/switch", [
-            'pokemon' => "the-pokemon-id",
+        $response = Website::post("/party/switch", [
+            'pokemon'     => "the-pokemon-id",
             'redirectUrl' => "the-redirect-url",
         ]);
 

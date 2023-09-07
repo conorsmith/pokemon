@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\PokemonTest\Controllers;
 
-use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\PokemonTest\Support\Database;
 use ConorSmith\PokemonTest\Support\Instance;
 use ConorSmith\PokemonTest\Support\Website;
@@ -24,7 +24,7 @@ final class PostItemUseTest extends TestCase
         $response = Website::post("/item/" . ItemId::POKE_BALL . "/use");
 
         assertThat(
-            $response->isRedirect(Website::url("/team/use/" . ItemId::POKE_BALL)),
+            $response->isRedirect(Website::url("/party/use/" . ItemId::POKE_BALL)),
             isTrue(),
         );
     }

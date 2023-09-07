@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
+
 final class ItemConfigRepository
 {
     private array $config;

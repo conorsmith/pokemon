@@ -1,7 +1,7 @@
 <h1 style="text-align: center;">Switch Pokémon</h1>
 
 <ul class="list-group" style="margin-top: 2rem; margin-bottom: 2rem;">
-    <?php foreach ($team as $pokemon) : ?>
+    <?php foreach ($party as $pokemon) : ?>
         <li class="list-group-item d-flex" data-target-id="<?=$pokemon->id?>">
             <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$pokemon->hasFainted ? "slid-down" : ""?>">
                 <img src="<?=$pokemon->imageUrl?>">

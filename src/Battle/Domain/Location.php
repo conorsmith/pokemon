@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Domain;
 
-use ConorSmith\Pokemon\LocationId;
+use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use LogicException;
 
@@ -25,7 +25,7 @@ final class Location
             RegionId::KANTO => 0,
             RegionId::JOHTO => 50,
             RegionId::HOENN => 100,
-            default => throw new LogicException(),
+            default         => throw new LogicException(),
         };
     }
 }

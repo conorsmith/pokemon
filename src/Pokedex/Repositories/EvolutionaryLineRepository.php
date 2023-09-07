@@ -28,7 +28,7 @@ final class EvolutionaryLineRepository
         foreach ($ancestors as $ancestorPokedexNumber) {
             $descendants = [
                 'pokedexNumber' => $ancestorPokedexNumber,
-                'descendants' => [$descendants],
+                'descendants'   => [$descendants],
             ];
         }
 
@@ -73,7 +73,7 @@ final class EvolutionaryLineRepository
         if (!isset($entry['evolutions'])) {
             return [
                 'pokedexNumber' => $pokedexNumber,
-                'descendants' => [],
+                'descendants'   => [],
             ];
         }
 
@@ -85,7 +85,7 @@ final class EvolutionaryLineRepository
 
         return [
             'pokedexNumber' => $pokedexNumber,
-            'descendants' => $descendants,
+            'descendants'   => $descendants,
         ];
     }
 }

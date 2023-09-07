@@ -4,11 +4,11 @@
     <li class="list-group-item d-flex justify-content-between">
         <div>
             <div><strong><?=$trainer->name?></strong></div>
-            <div class="js-trainer-team">
-                <?php for ($i = 0; $i < $trainer->team->fainted; $i++) : ?>
+            <div class="js-trainer-party">
+                <?php for ($i = 0; $i < $trainer->party->fainted; $i++) : ?>
                     <i class="far fa-circle"></i>
                 <?php endfor ?>
-                <?php for ($i = 0; $i < $trainer->team->active; $i++) : ?>
+                <?php for ($i = 0; $i < $trainer->party->active; $i++) : ?>
                     <i class="fas fa-circle"></i>
                 <?php endfor ?>
             </div>
@@ -25,11 +25,11 @@
             <h5>
                 <span class="js-name"><?=$opponentPokemon->name?></span>
                 <span class="js-sex pokemon-sex">
-                    <?php if ($opponentPokemon->sex === \ConorSmith\Pokemon\Sex::FEMALE) : ?>
+                    <?php if ($opponentPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::FEMALE) : ?>
                         <i class="fas fa-venus"></i>
-                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\Sex::MALE) : ?>
+                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::MALE) : ?>
                         <i class="fas fa-mars"></i>
-                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\Sex::UNKNOWN) : ?>
+                    <?php elseif ($opponentPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::UNKNOWN) : ?>
                         <i class="fas fa-genderless"></i>
                     <?php endif ?>
                 </span>
@@ -68,11 +68,11 @@
             <h5>
                 <span class="js-name"><?=$playerPokemon->name?></span>
                 <span class="js-sex pokemon-sex">
-                    <?php if ($playerPokemon->sex === \ConorSmith\Pokemon\Sex::FEMALE) : ?>
+                    <?php if ($playerPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::FEMALE) : ?>
                         <i class="fas fa-venus"></i>
-                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\Sex::MALE) : ?>
+                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::MALE) : ?>
                         <i class="fas fa-mars"></i>
-                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\Sex::UNKNOWN) : ?>
+                    <?php elseif ($playerPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::UNKNOWN) : ?>
                         <i class="fas fa-genderless"></i>
                     <?php endif ?>
                 </span>
@@ -115,7 +115,7 @@
         </form>
         <?php $mode = "battle" ?>
         <?php require __DIR__ . "/ButtonsAttack.php" ?>
-        <a href="/<?=$instanceId?>/team/switch?redirect=<?=urlencode("/{$instanceId}/battle/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
+        <a href="/<?=$instanceId?>/party/switch?redirect=<?=urlencode("/{$instanceId}/battle/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
             Switch
         </a>
     </li>

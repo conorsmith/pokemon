@@ -21,7 +21,7 @@ final class PokedexConfigRepository
             $fullConfig[$key] = array_merge(
                 $primaryEentry,
                 [
-                    'sexRatio' => $sexRatiosConfig[$key],
+                    'sexRatio'  => $sexRatiosConfig[$key],
                     'eggGroups' => $eggGroupsConfig[$key],
                     'eggCycles' => $eggCyclesConfig[$key],
                 ],

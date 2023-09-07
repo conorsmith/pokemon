@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\PokemonTest\Battle\Controllers;
 
-use ConorSmith\Pokemon\ItemId;
-use ConorSmith\Pokemon\LocationId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ConorSmith\PokemonTest\Support\Database;
 use ConorSmith\PokemonTest\Support\Instance;
 use ConorSmith\PokemonTest\Support\Website;
@@ -25,9 +25,9 @@ final class PostEncounterCatchTest extends TestCase
         $db = Database::createDatabaseConnection();
 
         $db->insert("items", [
-            'item_id' => ItemId::POKE_BALL,
+            'item_id'     => ItemId::POKE_BALL,
             'instance_id' => Instance::DEFAULT_ID,
-            'quantity' => 1,
+            'quantity'    => 1,
         ]);
 
         $db->insert("encounters", [

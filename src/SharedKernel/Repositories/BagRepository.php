@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\SharedKernel\Repositories;
 
 use ConorSmith\Pokemon\SharedKernel\Domain\Bag;
 use ConorSmith\Pokemon\SharedKernel\Domain\Item;
-use ConorSmith\Pokemon\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 
@@ -28,19 +28,19 @@ final class BagRepository
         ]);
 
         $items = [
-            ItemId::POKE_BALL => new Item(
+            ItemId::POKE_BALL       => new Item(
                 ItemId::POKE_BALL,
                 0,
             ),
-            ItemId::GREAT_BALL => new Item(
+            ItemId::GREAT_BALL      => new Item(
                 ItemId::GREAT_BALL,
                 0,
             ),
-            ItemId::ULTRA_BALL => new Item(
+            ItemId::ULTRA_BALL      => new Item(
                 ItemId::ULTRA_BALL,
                 0,
             ),
-            ItemId::RARE_CANDY => new Item(
+            ItemId::RARE_CANDY      => new Item(
                 ItemId::RARE_CANDY,
                 $instanceRow['unused_level_ups'],
             ),

@@ -12,6 +12,8 @@ parameters:
             paths:
                 - src/Battle/Templates
                 - src/Habit/Templates
+                - src/Location/Templates
+                - src/Party/Templates
+                - src/Player/Templates
                 - src/Pokedex/Templates
-                - src/Team/Templates
                 - src/Templates

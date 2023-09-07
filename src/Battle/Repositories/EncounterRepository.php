@@ -13,11 +13,11 @@ use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
-use ConorSmith\Pokemon\Sex;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
-use ConorSmith\Pokemon\SharedKernel\HabitStreakQuery;
+use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
+use ConorSmith\Pokemon\SharedKernel\Queries\HabitStreakQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
 use LogicException;
@@ -96,7 +96,7 @@ final class EncounterRepository
 
         $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
             'instanceId' => $this->instanceId->value,
-            'number' => $pokemon->number,
+            'number'     => $pokemon->number,
         ]);
 
         return new Encounter(
@@ -114,7 +114,7 @@ final class EncounterRepository
     {
         $encounterRow = $this->db->fetchAssociative("SELECT * FROM encounters WHERE instance_id = :instanceId AND id = :id", [
             'instanceId' => $this->instanceId->value,
-            'id' => $id,
+            'id'         => $id,
         ]);
 
         if ($encounterRow === false) {
@@ -132,9 +132,9 @@ final class EncounterRepository
             $encounterRow['level'],
             0,
             match ($encounterRow['sex']) {
-                "F" => Sex::FEMALE,
-                "M" => Sex::MALE,
-                "U" => Sex::UNKNOWN,
+                "F"     => Sex::FEMALE,
+                "M"     => Sex::MALE,
+                "U"     => Sex::UNKNOWN,
                 default => throw new RuntimeException(),
             },
             $encounterRow['is_shiny'] === 1,
@@ -145,7 +145,7 @@ final class EncounterRepository
 
         $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
             'instanceId' => $this->instanceId->value,
-            'number' => $pokemon->number,
+            'number'     => $pokemon->number,
         ]);
 
         return new Encounter(
@@ -162,41 +162,41 @@ final class EncounterRepository
     public function save(Encounter $encounter): void
     {
         $row = $this->db->fetchAssociative("SELECT * FROM encounters WHERE instance_id = :instanceId AND id = :encounterId", [
-            'instanceId' => $this->instanceId->value,
+            'instanceId'  => $this->instanceId->value,
             'encounterId' => $encounter->id,
         ]);
 
         if ($row === false) {
             $this->db->insert("encounters", [
-                'id' => $encounter->id,
-                'instance_id' => $this->instanceId->value,
-                'pokemon_id' => $encounter->pokemon->number,
-                'form' => $encounter->pokemon->form,
-                'level' => $encounter->pokemon->level,
-                'sex' => match ($encounter->pokemon->sex) {
-                    Sex::FEMALE => "F",
-                    Sex::MALE => "M",
+                'id'                          => $encounter->id,
+                'instance_id'                 => $this->instanceId->value,
+                'pokemon_id'                  => $encounter->pokemon->number,
+                'form'                        => $encounter->pokemon->form,
+                'level'                       => $encounter->pokemon->level,
+                'sex'                         => match ($encounter->pokemon->sex) {
+                    Sex::FEMALE  => "F",
+                    Sex::MALE    => "M",
                     Sex::UNKNOWN => "U",
                 },
-                'is_shiny' => $encounter->pokemon->isShiny ? 1 : 0,
-                'is_legendary' => $encounter->isLegendary ? 1 : 0,
-                'iv_hp' => $encounter->pokemon->stats->ivHp,
-                'iv_physical_attack' => $encounter->pokemon->stats->ivPhysicalAttack,
-                'iv_physical_defence' => $encounter->pokemon->stats->ivPhysicalDefence,
-                'iv_special_attack' => $encounter->pokemon->stats->ivSpecialAttack,
-                'iv_special_defence' => $encounter->pokemon->stats->ivSpecialDefence,
-                'iv_speed' => $encounter->pokemon->stats->ivSpeed,
-                'remaining_hp' => $encounter->pokemon->remainingHp,
-                'has_started' => $encounter->hasStarted ? 1 : 0,
-                'was_caught' => 0,
+                'is_shiny'                    => $encounter->pokemon->isShiny ? 1 : 0,
+                'is_legendary'                => $encounter->isLegendary ? 1 : 0,
+                'iv_hp'                       => $encounter->pokemon->stats->ivHp,
+                'iv_physical_attack'          => $encounter->pokemon->stats->ivPhysicalAttack,
+                'iv_physical_defence'         => $encounter->pokemon->stats->ivPhysicalDefence,
+                'iv_special_attack'           => $encounter->pokemon->stats->ivSpecialAttack,
+                'iv_special_defence'          => $encounter->pokemon->stats->ivSpecialDefence,
+                'iv_speed'                    => $encounter->pokemon->stats->ivSpeed,
+                'remaining_hp'                => $encounter->pokemon->remainingHp,
+                'has_started'                 => $encounter->hasStarted ? 1 : 0,
+                'was_caught'                  => 0,
                 'strength_indicator_progress' => $encounter->strengthIndicatorProgress,
-                'generated_at' => CarbonImmutable::now("Europe/Dublin")->format("Y-m-d H:i:s"),
+                'generated_at'                => CarbonImmutable::now("Europe/Dublin")->format("Y-m-d H:i:s"),
             ]);
         } else {
             $this->db->update("encounters", [
-                'remaining_hp' => $encounter->pokemon->remainingHp,
-                'has_started' => $encounter->hasStarted ? 1 : 0,
-                'was_caught' => $encounter->wasCaught ? 1 : 0,
+                'remaining_hp'                => $encounter->pokemon->remainingHp,
+                'has_started'                 => $encounter->hasStarted ? 1 : 0,
+                'was_caught'                  => $encounter->wasCaught ? 1 : 0,
                 'strength_indicator_progress' => $encounter->strengthIndicatorProgress,
             ], [
                 'id' => $encounter->id,
@@ -208,7 +208,7 @@ final class EncounterRepository
     {
         $this->db->delete("encounters", [
             'instance_id' => $this->instanceId->value,
-            'id' => $encounter->id,
+            'id'          => $encounter->id,
         ]);
     }
 
@@ -225,7 +225,7 @@ final class EncounterRepository
         foreach ($rowsToDelete as $row) {
             $this->db->delete("encounters", [
                 'instance_id' => $this->instanceId->value,
-                'id' => $row['id'],
+                'id'          => $row['id'],
             ]);
         }
     }
@@ -314,7 +314,7 @@ final class EncounterRepository
             RegionId::KANTO => 0,
             RegionId::JOHTO => 50,
             RegionId::HOENN => 100,
-            default => throw new LogicException(),
+            default         => throw new LogicException(),
         };
 
         return $legendaryConfig['level'] + $regionalLevelOffset;

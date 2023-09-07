@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use ConorSmith\Pokemon\LocationId;
-use ConorSmith\Pokemon\PokedexNo;
 use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
+use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 
 return [
-    LocationId::PALLET_TOWN => [
+    LocationId::PALLET_TOWN            => [
         EncounterType::SURFING => [
             PokedexNo::TENTACOOL => [
                 'weight' => 1,
@@ -19,15 +19,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -39,15 +39,15 @@ return [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
-            PokedexNo::STARYU => [
+            PokedexNo::STARYU   => [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
@@ -57,9 +57,9 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_1 => [
+    LocationId::ROUTE_1                => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY  => [
                 'weight' => 1,
                 'levels' => [2, 5],
             ],
@@ -69,9 +69,9 @@ return [
             ],
         ],
     ],
-    LocationId::VIRIDIAN_CITY => [
+    LocationId::VIRIDIAN_CITY          => [
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -81,19 +81,19 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
@@ -101,61 +101,61 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
         ],
     ],
-    LocationId::ROUTE_2 => [
+    LocationId::ROUTE_2                => [
         EncounterType::WALKING => [
             PokedexNo::CATERPIE => [
                 'weight' => 5,
                 'levels' => [4, 5],
             ],
-            PokedexNo::WEEDLE => [
+            PokedexNo::WEEDLE   => [
                 'weight' => 5,
                 'levels' => [4, 5],
             ],
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY   => [
                 'weight' => 45,
                 'levels' => [2, 5],
             ],
-            PokedexNo::RATTATA => [
+            PokedexNo::RATTATA  => [
                 'weight' => 45,
                 'levels' => [2, 5],
             ],
         ],
     ],
-    LocationId::VIRIDIAN_FOREST => [
+    LocationId::VIRIDIAN_FOREST        => [
         EncounterType::WALKING => [
             PokedexNo::CATERPIE => [
                 'weight' => 45,
                 'levels' => [3, 5],
             ],
-            PokedexNo::METAPOD => [
+            PokedexNo::METAPOD  => [
                 'weight' => 5,
                 'levels' => [4, 6],
             ],
-            PokedexNo::WEEDLE => [
+            PokedexNo::WEEDLE   => [
                 'weight' => 45,
                 'levels' => [3, 5],
             ],
-            PokedexNo::KAKUNA => [
+            PokedexNo::KAKUNA   => [
                 'weight' => 5,
                 'levels' => [4, 6],
             ],
-            PokedexNo::PIKACHU => [
+            PokedexNo::PIKACHU  => [
                 'weight' => 5,
                 'levels' => [3, 5],
             ],
         ],
     ],
-    LocationId::DIGLETTS_CAVE => [
+    LocationId::DIGLETTS_CAVE          => [
         EncounterType::WALKING => [
             PokedexNo::DIGLETT => [
                 'weight' => 95,
@@ -167,21 +167,21 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_3 => [
+    LocationId::ROUTE_3                => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 30,
                 'levels' => [6, 7],
             ],
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW    => [
                 'weight' => 35,
                 'levels' => [6, 8],
             ],
-            PokedexNo::NIDORAN_M => [
+            PokedexNo::NIDORAN_M  => [
                 'weight' => 15,
                 'levels' => [6, 7],
             ],
-            PokedexNo::NIDORAN_F => [
+            PokedexNo::NIDORAN_F  => [
                 'weight' => 15,
                 'levels' => [6, 7],
             ],
@@ -189,23 +189,23 @@ return [
                 'weight' => 10,
                 'levels' => [3, 7],
             ],
-            PokedexNo::MANKEY => [
+            PokedexNo::MANKEY     => [
                 'weight' => 10,
                 'levels' => 7,
             ],
         ],
     ],
-    LocationId::MT_MOON_F1 => [
+    LocationId::MT_MOON_F1             => [
         EncounterType::WALKING => [
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT    => [
                 'weight' => 69,
                 'levels' => [7, 10],
             ],
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 25,
                 'levels' => [7, 9],
             ],
-            PokedexNo::PARAS => [
+            PokedexNo::PARAS    => [
                 'weight' => 5,
                 'levels' => 8,
             ],
@@ -215,7 +215,7 @@ return [
             ],
         ],
     ],
-    LocationId::MT_MOON_BF1 => [
+    LocationId::MT_MOON_BF1            => [
         EncounterType::WALKING => [
             PokedexNo::PARAS => [
                 'weight' => 100,
@@ -223,21 +223,21 @@ return [
             ],
         ],
     ],
-    LocationId::MT_MOON_BF2 => [
+    LocationId::MT_MOON_BF2            => [
         EncounterType::WALKING => [
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 49,
                 'levels' => [8, 11],
             ],
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE    => [
                 'weight' => 30,
                 'levels' => [9, 10],
             ],
-            PokedexNo::PARAS => [
+            PokedexNo::PARAS      => [
                 'weight' => 15,
                 'levels' => [10, 12],
             ],
-            PokedexNo::CLEFAIRY => [
+            PokedexNo::CLEFAIRY   => [
                 'weight' => 6,
                 'levels' => [10, 12],
             ],
@@ -247,17 +247,17 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_4 => [
+    LocationId::ROUTE_4                => [
         EncounterType::WALKING => [
-            PokedexNo::RATTATA => [
+            PokedexNo::RATTATA   => [
                 'weight' => 35,
                 'levels' => [8, 12],
             ],
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW   => [
                 'weight' => 35,
                 'levels' => [8, 12],
             ],
-            PokedexNo::EKANS => [
+            PokedexNo::EKANS     => [
                 'weight' => 25,
                 'levels' => [6, 12],
             ],
@@ -265,7 +265,7 @@ return [
                 'weight' => 25,
                 'levels' => [6, 12],
             ],
-            PokedexNo::MANKEY => [
+            PokedexNo::MANKEY    => [
                 'weight' => 5,
                 'levels' => [10, 12],
             ],
@@ -281,15 +281,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -303,7 +303,7 @@ return [
             ],
         ],
     ],
-    LocationId::CERULEAN_CITY => [
+    LocationId::CERULEAN_CITY          => [
         EncounterType::SURFING => [
             PokedexNo::TENTACOOL => [
                 'weight' => 100,
@@ -315,15 +315,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -337,17 +337,17 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_5 => [
+    LocationId::ROUTE_5                => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 40,
                 'levels' => [13, 16],
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH     => [
                 'weight' => 35,
                 'levels' => [10, 16],
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 25,
                 'levels' => [13, 16],
             ],
@@ -357,17 +357,17 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_6 => [
+    LocationId::ROUTE_6                => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 40,
                 'levels' => [13, 16],
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH     => [
                 'weight' => 35,
                 'levels' => [10, 16],
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 25,
                 'levels' => [13, 16],
             ],
@@ -377,7 +377,7 @@ return [
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -387,23 +387,23 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
@@ -411,13 +411,13 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
         ],
     ],
-    LocationId::VERMILLION_CITY => [
+    LocationId::VERMILLION_CITY        => [
         EncounterType::SURFING => [
             PokedexNo::TENTACOOL => [
                 'weight' => 100,
@@ -429,15 +429,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 100,
                 'levels' => [5, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -449,7 +449,7 @@ return [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
-            PokedexNo::STARYU => [
+            PokedexNo::STARYU   => [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
@@ -459,7 +459,7 @@ return [
             ],
         ],
     ],
-    LocationId::VERMILLION_HARBOUR => [
+    LocationId::VERMILLION_HARBOUR     => [
         EncounterType::SURFING => [
             PokedexNo::TENTACOOL => [
                 'weight' => 100,
@@ -475,15 +475,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 104,
                 'levels' => [5, 35],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 104,
                 'levels' => [5, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -495,7 +495,7 @@ return [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
-            PokedexNo::STARYU => [
+            PokedexNo::STARYU   => [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
@@ -505,25 +505,25 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_7 => [
+    LocationId::ROUTE_7                => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 30,
                 'levels' => [19, 22],
             ],
-            PokedexNo::VULPIX => [
+            PokedexNo::VULPIX     => [
                 'weight' => 10,
                 'levels' => [18, 20],
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 20,
                 'levels' => [19, 22],
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH     => [
                 'weight' => 40,
                 'levels' => [17, 20],
             ],
-            PokedexNo::GROWLITHE => [
+            PokedexNo::GROWLITHE  => [
                 'weight' => 10,
                 'levels' => [18, 20],
             ],
@@ -533,9 +533,9 @@ return [
             ],
         ],
     ],
-    LocationId::CELADON_CITY => [
+    LocationId::CELADON_CITY           => [
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 99,
                 'levels' => [5, 40],
             ],
@@ -543,7 +543,7 @@ return [
                 'weight' => 99,
                 'levels' => [5, 40],
             ],
-            PokedexNo::KOFFING => [
+            PokedexNo::KOFFING  => [
                 'weight' => 2,
                 'levels' => [30, 40],
             ],
@@ -553,19 +553,19 @@ return [
                 'weight' => 299,
                 'levels' => [5, 35],
             ],
-            PokedexNo::GRIMER => [
+            PokedexNo::GRIMER   => [
                 'weight' => 1,
                 'levels' => [30, 40],
             ],
         ],
     ],
-    LocationId::ROUTE_8 => [
+    LocationId::ROUTE_8                => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY    => [
                 'weight' => 30,
                 'levels' => [18, 20],
             ],
-            PokedexNo::EKANS => [
+            PokedexNo::EKANS     => [
                 'weight' => 20,
                 'levels' => [17, 19],
             ],
@@ -573,11 +573,11 @@ return [
                 'weight' => 20,
                 'levels' => [17, 19],
             ],
-            PokedexNo::VULPIX => [
+            PokedexNo::VULPIX    => [
                 'weight' => 20,
                 'levels' => [15, 18],
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH    => [
                 'weight' => 30,
                 'levels' => [18, 20],
             ],
@@ -587,9 +587,9 @@ return [
             ],
         ],
     ],
-    LocationId::POKEMON_TOWER_3F => [
+    LocationId::POKEMON_TOWER_3F       => [
         EncounterType::WALKING => [
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY  => [
                 'weight' => 90,
                 'levels' => [13, 19],
             ],
@@ -597,15 +597,15 @@ return [
                 'weight' => 1,
                 'levels' => 20,
             ],
-            PokedexNo::CUBONE => [
+            PokedexNo::CUBONE  => [
                 'weight' => 9,
                 'levels' => [15, 17],
             ],
         ],
     ],
-    LocationId::POKEMON_TOWER_4F => [
+    LocationId::POKEMON_TOWER_4F       => [
         EncounterType::WALKING => [
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY  => [
                 'weight' => 86,
                 'levels' => [13, 19],
             ],
@@ -613,15 +613,15 @@ return [
                 'weight' => 5,
                 'levels' => 20,
             ],
-            PokedexNo::CUBONE => [
+            PokedexNo::CUBONE  => [
                 'weight' => 9,
                 'levels' => [15, 17],
             ],
         ],
     ],
-    LocationId::POKEMON_TOWER_5F => [
+    LocationId::POKEMON_TOWER_5F       => [
         EncounterType::WALKING => [
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY  => [
                 'weight' => 86,
                 'levels' => [13, 19],
             ],
@@ -629,15 +629,15 @@ return [
                 'weight' => 5,
                 'levels' => 20,
             ],
-            PokedexNo::CUBONE => [
+            PokedexNo::CUBONE  => [
                 'weight' => 9,
                 'levels' => [15, 17],
             ],
         ],
     ],
-    LocationId::POKEMON_TOWER_6F => [
+    LocationId::POKEMON_TOWER_6F       => [
         EncounterType::WALKING => [
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY  => [
                 'weight' => 85,
                 'levels' => [14, 19],
             ],
@@ -645,15 +645,15 @@ return [
                 'weight' => 6,
                 'levels' => [21, 23],
             ],
-            PokedexNo::CUBONE => [
+            PokedexNo::CUBONE  => [
                 'weight' => 9,
                 'levels' => [17, 19],
             ],
         ],
     ],
-    LocationId::POKEMON_TOWER_7F => [
+    LocationId::POKEMON_TOWER_7F       => [
         EncounterType::WALKING => [
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY  => [
                 'weight' => 75,
                 'levels' => [15, 19],
             ],
@@ -661,23 +661,23 @@ return [
                 'weight' => 15,
                 'levels' => [23, 25],
             ],
-            PokedexNo::CUBONE => [
+            PokedexNo::CUBONE  => [
                 'weight' => 10,
                 'levels' => [17, 19],
             ],
         ],
     ],
-    LocationId::ROUTE_9 => [
+    LocationId::ROUTE_9                => [
         EncounterType::WALKING => [
-            PokedexNo::RATTATA => [
+            PokedexNo::RATTATA   => [
                 'weight' => 40,
                 'levels' => [14, 17],
             ],
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW   => [
                 'weight' => 35,
                 'levels' => [13, 17],
             ],
-            PokedexNo::EKANS => [
+            PokedexNo::EKANS     => [
                 'weight' => 25,
                 'levels' => [11, 17],
             ],
@@ -697,15 +697,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -719,21 +719,21 @@ return [
             ],
         ],
     ],
-    LocationId::POWER_PLANT => [
+    LocationId::POWER_PLANT            => [
         EncounterType::WALKING => [
-            PokedexNo::PIKACHU => [
+            PokedexNo::PIKACHU    => [
                 'weight' => 25,
                 'levels' => [22, 26],
             ],
-            PokedexNo::MAGNEMITE => [
+            PokedexNo::MAGNEMITE  => [
                 'weight' => 30,
                 'levels' => [22, 25],
             ],
-            PokedexNo::MAGNETON => [
+            PokedexNo::MAGNETON   => [
                 'weight' => 15,
                 'levels' => [31, 34],
             ],
-            PokedexNo::VOLTORB => [
+            PokedexNo::VOLTORB    => [
                 'weight' => 30,
                 'levels' => [22, 25],
             ],
@@ -741,31 +741,31 @@ return [
                 'weight' => 5,
                 'levels' => [32, 35],
             ],
-            PokedexNo::PORYGON => [
+            PokedexNo::PORYGON    => [
                 'weight' => 5,
                 'levels' => [30, 32],
             ],
         ],
     ],
-    LocationId::ROCK_TUNNEL_1F => [
+    LocationId::ROCK_TUNNEL_1F         => [
         EncounterType::WALKING => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE    => [
                 'weight' => 35,
                 'levels' => [15, 17],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 30,
                 'levels' => [15, 16],
             ],
-            PokedexNo::MANKEY => [
+            PokedexNo::MANKEY     => [
                 'weight' => 15,
                 'levels' => [16, 17],
             ],
-            PokedexNo::MACHOP => [
+            PokedexNo::MACHOP     => [
                 'weight' => 15,
                 'levels' => [16, 17],
             ],
-            PokedexNo::ONIX => [
+            PokedexNo::ONIX       => [
                 'weight' => 5,
                 'levels' => [13, 15],
             ],
@@ -775,25 +775,25 @@ return [
             ],
         ],
     ],
-    LocationId::ROCK_TUNNEL_B1F => [
-        EncounterType::WALKING => [
-            PokedexNo::GEODUDE => [
+    LocationId::ROCK_TUNNEL_B1F        => [
+        EncounterType::WALKING    => [
+            PokedexNo::GEODUDE   => [
                 'weight' => 35,
                 'levels' => [15, 17],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT     => [
                 'weight' => 30,
                 'levels' => [15, 16],
             ],
-            PokedexNo::MANKEY => [
+            PokedexNo::MANKEY    => [
                 'weight' => 15,
                 'levels' => [16, 17],
             ],
-            PokedexNo::MACHOP => [
+            PokedexNo::MACHOP    => [
                 'weight' => 10,
                 'levels' => 17,
             ],
-            PokedexNo::ONIX => [
+            PokedexNo::ONIX      => [
                 'weight' => 10,
                 'levels' => [13, 17],
             ],
@@ -803,7 +803,7 @@ return [
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 90,
                 'levels' => [5, 30],
             ],
@@ -813,13 +813,13 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_10 => [
+    LocationId::ROUTE_10               => [
         EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW   => [
                 'weight' => 35,
                 'levels' => [13, 17],
             ],
-            PokedexNo::EKANS => [
+            PokedexNo::EKANS     => [
                 'weight' => 25,
                 'levels' => [11, 17],
             ],
@@ -827,19 +827,19 @@ return [
                 'weight' => 25,
                 'levels' => [11, 17],
             ],
-            PokedexNo::VOLTORB => [
+            PokedexNo::VOLTORB   => [
                 'weight' => 40,
                 'levels' => [14, 17],
             ],
         ],
     ],
-    LocationId::ROUTE_11 => [
+    LocationId::ROUTE_11               => [
         EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW   => [
                 'weight' => 35,
                 'levels' => [13, 17],
             ],
-            PokedexNo::EKANS => [
+            PokedexNo::EKANS     => [
                 'weight' => 40,
                 'levels' => [12, 15],
             ],
@@ -847,7 +847,7 @@ return [
                 'weight' => 40,
                 'levels' => [12, 15],
             ],
-            PokedexNo::DROWZEE => [
+            PokedexNo::DROWZEE   => [
                 'weight' => 25,
                 'levels' => [11, 15],
             ],
@@ -863,15 +863,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -885,21 +885,21 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_12 => [
+    LocationId::ROUTE_12               => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 30,
                 'levels' => [23, 27],
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 35,
                 'levels' => [22, 26],
             ],
-            PokedexNo::GLOOM => [
+            PokedexNo::GLOOM      => [
                 'weight' => 5,
                 'levels' => [28, 30],
             ],
-            PokedexNo::VENONAT => [
+            PokedexNo::VENONAT    => [
                 'weight' => 30,
                 'levels' => [24, 26],
             ],
@@ -923,15 +923,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -945,25 +945,25 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_13 => [
+    LocationId::ROUTE_13               => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 20,
                 'levels' => [25, 27],
             ],
-            PokedexNo::PIDGEOTTO => [
+            PokedexNo::PIDGEOTTO  => [
                 'weight' => 5,
                 'levels' => 29,
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 35,
                 'levels' => [22, 26],
             ],
-            PokedexNo::GLOOM => [
+            PokedexNo::GLOOM      => [
                 'weight' => 5,
                 'levels' => [28, 30],
             ],
-            PokedexNo::VENONAT => [
+            PokedexNo::VENONAT    => [
                 'weight' => 30,
                 'levels' => [24, 26],
             ],
@@ -975,7 +975,7 @@ return [
                 'weight' => 5,
                 'levels' => [28, 30],
             ],
-            PokedexNo::DITTO => [
+            PokedexNo::DITTO      => [
                 'weight' => 5,
                 'levels' => 25,
             ],
@@ -991,15 +991,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -1013,25 +1013,25 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_14 => [
+    LocationId::ROUTE_14               => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 10,
                 'levels' => 27,
             ],
-            PokedexNo::PIDGEOTTO => [
+            PokedexNo::PIDGEOTTO  => [
                 'weight' => 5,
                 'levels' => 29,
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 35,
                 'levels' => [22, 26],
             ],
-            PokedexNo::GLOOM => [
+            PokedexNo::GLOOM      => [
                 'weight' => 5,
                 'levels' => 30,
             ],
-            PokedexNo::VENONAT => [
+            PokedexNo::VENONAT    => [
                 'weight' => 30,
                 'levels' => [24, 26],
             ],
@@ -1043,31 +1043,31 @@ return [
                 'weight' => 5,
                 'levels' => 30,
             ],
-            PokedexNo::DITTO => [
+            PokedexNo::DITTO      => [
                 'weight' => 15,
                 'levels' => 23,
             ],
         ],
     ],
-    LocationId::ROUTE_15 => [
+    LocationId::ROUTE_15               => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 20,
                 'levels' => [25, 27],
             ],
-            PokedexNo::PIDGEOTTO => [
+            PokedexNo::PIDGEOTTO  => [
                 'weight' => 5,
                 'levels' => 29,
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 35,
                 'levels' => [22, 26],
             ],
-            PokedexNo::GLOOM => [
+            PokedexNo::GLOOM      => [
                 'weight' => 5,
                 'levels' => [28, 30],
             ],
-            PokedexNo::VENONAT => [
+            PokedexNo::VENONAT    => [
                 'weight' => 30,
                 'levels' => [24, 26],
             ],
@@ -1079,7 +1079,7 @@ return [
                 'weight' => 5,
                 'levels' => [28, 30],
             ],
-            PokedexNo::DITTO => [
+            PokedexNo::DITTO      => [
                 'weight' => 5,
                 'levels' => 25,
             ],
@@ -1089,9 +1089,9 @@ return [
             ],
         ],
     ],
-    LocationId::FUCHSIA_CITY => [
+    LocationId::FUCHSIA_CITY           => [
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -1105,15 +1105,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG  => [
                 'weight' => 60,
                 'levels' => [5, 15],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN  => [
                 'weight' => 60,
                 'levels' => [5, 25],
             ],
-            PokedexNo::SEAKING => [
+            PokedexNo::SEAKING  => [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
@@ -1121,7 +1121,7 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
@@ -1131,13 +1131,13 @@ return [
             ],
         ],
     ],
-    LocationId::KANTO_SAFARI_ZONE_S => [
+    LocationId::KANTO_SAFARI_ZONE_S    => [
         EncounterType::WALKING => [
             PokedexNo::NIDORAN_F => [
                 'weight' => 20,
                 'levels' => 22,
             ],
-            PokedexNo::NIDORINA => [
+            PokedexNo::NIDORINA  => [
                 'weight' => 20,
                 'levels' => 31,
             ],
@@ -1145,15 +1145,15 @@ return [
                 'weight' => 20,
                 'levels' => 22,
             ],
-            PokedexNo::NIDORINO => [
+            PokedexNo::NIDORINO  => [
                 'weight' => 20,
                 'levels' => 31,
             ],
-            PokedexNo::PARASECT => [
+            PokedexNo::PARASECT  => [
                 'weight' => 5,
                 'levels' => 30,
             ],
-            PokedexNo::VENONAT => [
+            PokedexNo::VENONAT   => [
                 'weight' => 15,
                 'levels' => 22,
             ],
@@ -1161,25 +1161,25 @@ return [
                 'weight' => 20,
                 'levels' => [24, 25],
             ],
-            PokedexNo::RHYHORN => [
+            PokedexNo::RHYHORN   => [
                 'weight' => 20,
                 'levels' => 25,
             ],
-            PokedexNo::CHANSEY => [
+            PokedexNo::CHANSEY   => [
                 'weight' => 1,
                 'levels' => 23,
             ],
-            PokedexNo::SCYTHER => [
+            PokedexNo::SCYTHER   => [
                 'weight' => 4,
                 'levels' => 23,
             ],
-            PokedexNo::PINSIR => [
+            PokedexNo::PINSIR    => [
                 'weight' => 4,
                 'levels' => 23,
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -1189,31 +1189,31 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SEAKING => [
+            PokedexNo::SEAKING   => [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::DRATINI => [
+            PokedexNo::DRATINI   => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
@@ -1221,23 +1221,23 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KABUTO => [
+            PokedexNo::KABUTO    => [
                 'weight' => 1,
                 'levels' => 30,
             ],
-            PokedexNo::OMANYTE => [
+            PokedexNo::OMANYTE   => [
                 'weight' => 1,
                 'levels' => 30,
             ],
         ],
     ],
-    LocationId::KANTO_SAFARI_ZONE_N => [
+    LocationId::KANTO_SAFARI_ZONE_N    => [
         EncounterType::WALKING => [
             PokedexNo::NIDORAN_F => [
                 'weight' => 20,
                 'levels' => 30,
             ],
-            PokedexNo::NIDORINA => [
+            PokedexNo::NIDORINA  => [
                 'weight' => 10,
                 'levels' => 30,
             ],
@@ -1245,15 +1245,15 @@ return [
                 'weight' => 20,
                 'levels' => 30,
             ],
-            PokedexNo::NIDORINO => [
+            PokedexNo::NIDORINO  => [
                 'weight' => 10,
                 'levels' => 30,
             ],
-            PokedexNo::PARAS => [
+            PokedexNo::PARAS     => [
                 'weight' => 15,
                 'levels' => 23,
             ],
-            PokedexNo::VENOMOTH => [
+            PokedexNo::VENOMOTH  => [
                 'weight' => 5,
                 'levels' => 32,
             ],
@@ -1261,15 +1261,15 @@ return [
                 'weight' => 20,
                 'levels' => [25, 27],
             ],
-            PokedexNo::RHYHORN => [
+            PokedexNo::RHYHORN   => [
                 'weight' => 20,
                 'levels' => 26,
             ],
-            PokedexNo::CHANSEY => [
+            PokedexNo::CHANSEY   => [
                 'weight' => 4,
                 'levels' => 26,
             ],
-            PokedexNo::TAUROS => [
+            PokedexNo::TAUROS    => [
                 'weight' => 1,
                 'levels' => 28,
             ],
@@ -1279,7 +1279,7 @@ return [
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -1289,31 +1289,31 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SEAKING => [
+            PokedexNo::SEAKING   => [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::DRATINI => [
+            PokedexNo::DRATINI   => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
@@ -1321,43 +1321,43 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::OMANYTE => [
+            PokedexNo::OMANYTE   => [
                 'weight' => 5,
                 'levels' => 30,
             ],
         ],
     ],
-    LocationId::KANTO_SAFARI_ZONE_E => [
+    LocationId::KANTO_SAFARI_ZONE_E    => [
         EncounterType::WALKING => [
-            PokedexNo::NIDORAN_F => [
+            PokedexNo::NIDORAN_F  => [
                 'weight' => 20,
                 'levels' => 24,
             ],
-            PokedexNo::NIDORINA => [
+            PokedexNo::NIDORINA   => [
                 'weight' => 10,
                 'levels' => 33,
             ],
-            PokedexNo::NIDORAN_M => [
+            PokedexNo::NIDORAN_M  => [
                 'weight' => 20,
                 'levels' => 24,
             ],
-            PokedexNo::NIDORINO => [
+            PokedexNo::NIDORINO   => [
                 'weight' => 10,
                 'levels' => 33,
             ],
-            PokedexNo::PARAS => [
+            PokedexNo::PARAS      => [
                 'weight' => 15,
                 'levels' => 22,
             ],
-            PokedexNo::PARASECT => [
+            PokedexNo::PARASECT   => [
                 'weight' => 5,
                 'levels' => 25,
             ],
-            PokedexNo::DODUO => [
+            PokedexNo::DODUO      => [
                 'weight' => 20,
                 'levels' => 26,
             ],
-            PokedexNo::EXEGGCUTE => [
+            PokedexNo::EXEGGCUTE  => [
                 'weight' => 20,
                 'levels' => [23, 25],
             ],
@@ -1365,21 +1365,21 @@ return [
                 'weight' => 4,
                 'levels' => 25,
             ],
-            PokedexNo::SCYTHER => [
+            PokedexNo::SCYTHER    => [
                 'weight' => 1,
                 'levels' => 28,
             ],
-            PokedexNo::PINSIR => [
+            PokedexNo::PINSIR     => [
                 'weight' => 1,
                 'levels' => 28,
             ],
-            PokedexNo::LICKITUNG => [
+            PokedexNo::LICKITUNG  => [
                 'weight' => 4,
                 'levels' => [25, 28],
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -1389,31 +1389,31 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SEAKING => [
+            PokedexNo::SEAKING   => [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::DRATINI => [
+            PokedexNo::DRATINI   => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
@@ -1421,43 +1421,43 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KABUTO => [
+            PokedexNo::KABUTO    => [
                 'weight' => 5,
                 'levels' => 30,
             ],
         ],
     ],
-    LocationId::KANTO_SAFARI_ZONE_W => [
+    LocationId::KANTO_SAFARI_ZONE_W    => [
         EncounterType::WALKING => [
-            PokedexNo::NIDORAN_F => [
+            PokedexNo::NIDORAN_F  => [
                 'weight' => 20,
                 'levels' => 22,
             ],
-            PokedexNo::NIDORINA => [
+            PokedexNo::NIDORINA   => [
                 'weight' => 10,
                 'levels' => 30,
             ],
-            PokedexNo::NIDORAN_M => [
+            PokedexNo::NIDORAN_M  => [
                 'weight' => 20,
                 'levels' => 22,
             ],
-            PokedexNo::NIDORINO => [
+            PokedexNo::NIDORINO   => [
                 'weight' => 10,
                 'levels' => 30,
             ],
-            PokedexNo::VENONAT => [
+            PokedexNo::VENONAT    => [
                 'weight' => 15,
                 'levels' => 23,
             ],
-            PokedexNo::VENOMOTH => [
+            PokedexNo::VENOMOTH   => [
                 'weight' => 5,
                 'levels' => 32,
             ],
-            PokedexNo::DODUO => [
+            PokedexNo::DODUO      => [
                 'weight' => 20,
                 'levels' => 26,
             ],
-            PokedexNo::EXEGGCUTE => [
+            PokedexNo::EXEGGCUTE  => [
                 'weight' => 20,
                 'levels' => [25, 27],
             ],
@@ -1465,7 +1465,7 @@ return [
                 'weight' => 1,
                 'levels' => 28,
             ],
-            PokedexNo::TAUROS => [
+            PokedexNo::TAUROS     => [
                 'weight' => 4,
                 'levels' => 25,
             ],
@@ -1473,13 +1473,13 @@ return [
                 'weight' => 1,
                 'levels' => 30,
             ],
-            PokedexNo::LICKITUNG => [
+            PokedexNo::LICKITUNG  => [
                 'weight' => 1,
                 'levels' => [25, 28],
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -1489,31 +1489,31 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SEAKING => [
+            PokedexNo::SEAKING   => [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::DRATINI => [
+            PokedexNo::DRATINI   => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
@@ -1523,9 +1523,9 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_16 => [
+    LocationId::ROUTE_16               => [
         EncounterType::WALKING => [
-            PokedexNo::RATTATA => [
+            PokedexNo::RATTATA  => [
                 'weight' => 30,
                 'levels' => [18, 22],
             ],
@@ -1533,19 +1533,19 @@ return [
                 'weight' => 5,
                 'levels' => [23, 25],
             ],
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW  => [
                 'weight' => 30,
                 'levels' => [20, 22],
             ],
-            PokedexNo::DODUO => [
+            PokedexNo::DODUO    => [
                 'weight' => 35,
                 'levels' => [18, 22],
             ],
         ],
     ],
-    LocationId::ROUTE_17 => [
+    LocationId::ROUTE_17               => [
         EncounterType::WALKING => [
-            PokedexNo::RATTATA => [
+            PokedexNo::RATTATA  => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -1553,27 +1553,27 @@ return [
                 'weight' => 25,
                 'levels' => [25, 29],
             ],
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW  => [
                 'weight' => 30,
                 'levels' => [20, 22],
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW   => [
                 'weight' => 5,
                 'levels' => [25, 27],
             ],
-            PokedexNo::DODUO => [
+            PokedexNo::DODUO    => [
                 'weight' => 35,
                 'levels' => [24, 28],
             ],
-            PokedexNo::EEVEE => [
+            PokedexNo::EEVEE    => [
                 'weight' => 5,
                 'levels' => [22, 25],
             ],
         ],
     ],
-    LocationId::ROUTE_18 => [
+    LocationId::ROUTE_18               => [
         EncounterType::WALKING => [
-            PokedexNo::RATTATA => [
+            PokedexNo::RATTATA  => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -1581,21 +1581,21 @@ return [
                 'weight' => 15,
                 'levels' => [25, 29],
             ],
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW  => [
                 'weight' => 30,
                 'levels' => [20, 22],
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW   => [
                 'weight' => 15,
                 'levels' => [25, 29],
             ],
-            PokedexNo::DODUO => [
+            PokedexNo::DODUO    => [
                 'weight' => 35,
                 'levels' => [24, 28],
             ],
         ],
     ],
-    LocationId::ROUTE_19 => [
+    LocationId::ROUTE_19               => [
         EncounterType::SURFING => [
             PokedexNo::TENTACOOL => [
                 'weight' => 100,
@@ -1607,15 +1607,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 140,
                 'levels' => [5, 25],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 140,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -1623,11 +1623,11 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
@@ -1637,7 +1637,7 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_20 => [
+    LocationId::ROUTE_20               => [
         EncounterType::SURFING => [
             PokedexNo::TENTACOOL => [
                 'weight' => 100,
@@ -1649,15 +1649,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 140,
                 'levels' => [5, 25],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 140,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -1665,11 +1665,11 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
@@ -1679,9 +1679,9 @@ return [
             ],
         ],
     ],
-    LocationId::SEAFOAM_ISLANDS_1F => [
+    LocationId::SEAFOAM_ISLANDS_1F     => [
         EncounterType::WALKING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 55,
                 'levels' => [26, 33],
             ],
@@ -1689,19 +1689,19 @@ return [
                 'weight' => 55,
                 'levels' => [26, 33],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT    => [
                 'weight' => 34,
                 'levels' => [22, 26],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT   => [
                 'weight' => 11,
                 'levels' => [26, 30],
             ],
         ],
     ],
-    LocationId::SEAFOAM_ISLANDS_B1F => [
+    LocationId::SEAFOAM_ISLANDS_B1F    => [
         EncounterType::WALKING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 40,
                 'levels' => [29, 31],
             ],
@@ -1709,31 +1709,31 @@ return [
                 'weight' => 40,
                 'levels' => [29, 31],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT    => [
                 'weight' => 34,
                 'levels' => [22, 26],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT   => [
                 'weight' => 11,
                 'levels' => [26, 30],
             ],
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 10,
                 'levels' => 28,
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 5,
                 'levels' => [33, 35],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 5,
                 'levels' => [33, 35],
             ],
         ],
     ],
-    LocationId::SEAFOAM_ISLANDS_B2F => [
+    LocationId::SEAFOAM_ISLANDS_B2F    => [
         EncounterType::WALKING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 40,
                 'levels' => [30, 32],
             ],
@@ -1741,35 +1741,35 @@ return [
                 'weight' => 40,
                 'levels' => [30, 32],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT    => [
                 'weight' => 20,
                 'levels' => [22, 24],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT   => [
                 'weight' => 10,
                 'levels' => [26, 30],
             ],
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 20,
                 'levels' => [30, 32],
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 10,
                 'levels' => [32, 34],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 10,
                 'levels' => [32, 34],
             ],
-            PokedexNo::JYNX => [
+            PokedexNo::JYNX     => [
                 'weight' => 1,
                 'levels' => [32, 34],
             ],
         ],
     ],
-    LocationId::SEAFOAM_ISLANDS_B3F => [
+    LocationId::SEAFOAM_ISLANDS_B3F    => [
         EncounterType::WALKING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 20,
                 'levels' => [30, 32],
             ],
@@ -1777,53 +1777,53 @@ return [
                 'weight' => 20,
                 'levels' => [30, 32],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT    => [
                 'weight' => 10,
                 'levels' => 24,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT   => [
                 'weight' => 10,
                 'levels' => [26, 30],
             ],
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 40,
                 'levels' => [30, 32],
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 15,
                 'levels' => [32, 34],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 15,
                 'levels' => [32, 34],
             ],
-            PokedexNo::DEWGONG => [
+            PokedexNo::DEWGONG  => [
                 'weight' => 5,
                 'levels' => [32, 34],
             ],
-            PokedexNo::JYNX => [
+            PokedexNo::JYNX     => [
                 'weight' => 5,
                 'levels' => [32, 34],
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 60,
                 'levels' => [25, 35],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 30,
                 'levels' => [25, 30],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 30,
                 'levels' => [25, 30],
             ],
-            PokedexNo::DEWGONG => [
+            PokedexNo::DEWGONG  => [
                 'weight' => 5,
                 'levels' => [35, 40],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 4,
                 'levels' => [30, 40],
             ],
@@ -1831,11 +1831,11 @@ return [
                 'weight' => 4,
                 'levels' => [30, 40],
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 1,
                 'levels' => [35, 40],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 1,
                 'levels' => [35, 40],
             ],
@@ -1845,11 +1845,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 140,
                 'levels' => [5, 30],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 140,
                 'levels' => [5, 30],
             ],
@@ -1857,7 +1857,7 @@ return [
                 'weight' => 16,
                 'levels' => [15, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 4,
                 'levels' => [15, 25],
             ],
@@ -1867,9 +1867,9 @@ return [
             ],
         ],
     ],
-    LocationId::SEAFOAM_ISLANDS_B4F => [
+    LocationId::SEAFOAM_ISLANDS_B4F    => [
         EncounterType::WALKING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 10,
                 'levels' => 32,
             ],
@@ -1877,49 +1877,49 @@ return [
                 'weight' => 10,
                 'levels' => 32,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT   => [
                 'weight' => 15,
                 'levels' => [26, 30],
             ],
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 50,
                 'levels' => [30, 34],
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 15,
                 'levels' => [32, 34],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 15,
                 'levels' => [32, 34],
             ],
-            PokedexNo::DEWGONG => [
+            PokedexNo::DEWGONG  => [
                 'weight' => 10,
                 'levels' => [34, 36],
             ],
-            PokedexNo::JYNX => [
+            PokedexNo::JYNX     => [
                 'weight' => 5,
                 'levels' => [32, 34],
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 60,
                 'levels' => [25, 35],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 30,
                 'levels' => [25, 30],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 30,
                 'levels' => [25, 30],
             ],
-            PokedexNo::DEWGONG => [
+            PokedexNo::DEWGONG  => [
                 'weight' => 5,
                 'levels' => [35, 40],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 4,
                 'levels' => [30, 40],
             ],
@@ -1927,11 +1927,11 @@ return [
                 'weight' => 4,
                 'levels' => [30, 40],
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 1,
                 'levels' => [35, 40],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 1,
                 'levels' => [35, 40],
             ],
@@ -1941,11 +1941,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 140,
                 'levels' => [5, 30],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 140,
                 'levels' => [5, 30],
             ],
@@ -1953,7 +1953,7 @@ return [
                 'weight' => 16,
                 'levels' => [15, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 4,
                 'levels' => [15, 25],
             ],
@@ -1963,7 +1963,7 @@ return [
             ],
         ],
     ],
-    LocationId::CINNABAR_ISLAND => [
+    LocationId::CINNABAR_ISLAND        => [
         EncounterType::SURFING => [
             PokedexNo::TENTACOOL => [
                 'weight' => 100,
@@ -1975,11 +1975,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
@@ -1987,7 +1987,7 @@ return [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
-            PokedexNo::STARYU => [
+            PokedexNo::STARYU   => [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
@@ -1995,15 +1995,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -2013,17 +2013,17 @@ return [
             ],
         ],
     ],
-    LocationId::POKEMON_MANSION => [
+    LocationId::POKEMON_MANSION        => [
         EncounterType::WALKING => [
-            PokedexNo::RATTATA => [
+            PokedexNo::RATTATA   => [
                 'weight' => 15,
                 'levels' => [26, 28],
             ],
-            PokedexNo::RATICATE => [
+            PokedexNo::RATICATE  => [
                 'weight' => 30,
                 'levels' => [32, 36],
             ],
-            PokedexNo::VULPIX => [
+            PokedexNo::VULPIX    => [
                 'weight' => 15,
                 'levels' => [30, 32],
             ],
@@ -2031,25 +2031,25 @@ return [
                 'weight' => 15,
                 'levels' => [30, 32],
             ],
-            PokedexNo::GRIMER => [
+            PokedexNo::GRIMER    => [
                 'weight' => 30,
                 'levels' => [28, 30],
             ],
-            PokedexNo::MUK => [
+            PokedexNo::MUK       => [
                 'weight' => 5,
                 'levels' => 32,
             ],
-            PokedexNo::KOFFING => [
+            PokedexNo::KOFFING   => [
                 'weight' => 30,
                 'levels' => [28, 30],
             ],
-            PokedexNo::WEEZING => [
+            PokedexNo::WEEZING   => [
                 'weight' => 5,
                 'levels' => 32,
             ],
         ],
     ],
-    LocationId::ROUTE_21 => [
+    LocationId::ROUTE_21               => [
         EncounterType::WALKING => [
             PokedexNo::TANGELA => [
                 'weight' => 90,
@@ -2071,15 +2071,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 140,
                 'levels' => [5, 25],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 140,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -2087,11 +2087,11 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
@@ -2101,7 +2101,7 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_22 => [
+    LocationId::ROUTE_22               => [
         EncounterType::WALKING => [
             PokedexNo::RATTATA => [
                 'weight' => 45,
@@ -2111,13 +2111,13 @@ return [
                 'weight' => 10,
                 'levels' => [3, 5],
             ],
-            PokedexNo::MANKEY => [
+            PokedexNo::MANKEY  => [
                 'weight' => 45,
                 'levels' => [2, 5],
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -2127,23 +2127,23 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
@@ -2151,15 +2151,15 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
         ],
     ],
-    LocationId::VICTORY_ROAD_1F => [
+    LocationId::VICTORY_ROAD_1F        => [
         EncounterType::WALKING => [
-            PokedexNo::ARBOK => [
+            PokedexNo::ARBOK     => [
                 'weight' => 5,
                 'levels' => 44,
             ],
@@ -2167,39 +2167,39 @@ return [
                 'weight' => 5,
                 'levels' => 44,
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT     => [
                 'weight' => 10,
                 'levels' => 32,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT    => [
                 'weight' => 5,
                 'levels' => 44,
             ],
-            PokedexNo::MACHOP => [
+            PokedexNo::MACHOP    => [
                 'weight' => 20,
                 'levels' => 32,
             ],
-            PokedexNo::MACHOKE => [
+            PokedexNo::MACHOKE   => [
                 'weight' => 5,
                 'levels' => [44, 46],
             ],
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE   => [
                 'weight' => 20,
                 'levels' => 32,
             ],
-            PokedexNo::ONIX => [
+            PokedexNo::ONIX      => [
                 'weight' => 30,
                 'levels' => [40, 46],
             ],
-            PokedexNo::MAROWAK => [
+            PokedexNo::MAROWAK   => [
                 'weight' => 5,
                 'levels' => [44, 46],
             ],
         ],
     ],
-    LocationId::VICTORY_ROAD_2F => [
+    LocationId::VICTORY_ROAD_2F        => [
         EncounterType::WALKING => [
-            PokedexNo::ARBOK => [
+            PokedexNo::ARBOK     => [
                 'weight' => 5,
                 'levels' => 46,
             ],
@@ -2207,43 +2207,43 @@ return [
                 'weight' => 5,
                 'levels' => 46,
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT     => [
                 'weight' => 10,
                 'levels' => 34,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT    => [
                 'weight' => 5,
                 'levels' => 46,
             ],
-            PokedexNo::PRIMEAPE => [
+            PokedexNo::PRIMEAPE  => [
                 'weight' => 10,
                 'levels' => 42,
             ],
-            PokedexNo::MACHOP => [
+            PokedexNo::MACHOP    => [
                 'weight' => 20,
                 'levels' => 34,
             ],
-            PokedexNo::MACHOKE => [
+            PokedexNo::MACHOKE   => [
                 'weight' => 5,
                 'levels' => [46, 48],
             ],
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE   => [
                 'weight' => 20,
                 'levels' => 34,
             ],
-            PokedexNo::ONIX => [
+            PokedexNo::ONIX      => [
                 'weight' => 20,
                 'levels' => [45, 48],
             ],
-            PokedexNo::MAROWAK => [
+            PokedexNo::MAROWAK   => [
                 'weight' => 5,
                 'levels' => [46, 48],
             ],
         ],
     ],
-    LocationId::VICTORY_ROAD_3F => [
+    LocationId::VICTORY_ROAD_3F        => [
         EncounterType::WALKING => [
-            PokedexNo::ARBOK => [
+            PokedexNo::ARBOK     => [
                 'weight' => 5,
                 'levels' => 44,
             ],
@@ -2251,51 +2251,51 @@ return [
                 'weight' => 5,
                 'levels' => 44,
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT     => [
                 'weight' => 10,
                 'levels' => 32,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT    => [
                 'weight' => 5,
                 'levels' => 44,
             ],
-            PokedexNo::MACHOP => [
+            PokedexNo::MACHOP    => [
                 'weight' => 20,
                 'levels' => 32,
             ],
-            PokedexNo::MACHOKE => [
+            PokedexNo::MACHOKE   => [
                 'weight' => 5,
                 'levels' => [44, 46],
             ],
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE   => [
                 'weight' => 20,
                 'levels' => 32,
             ],
-            PokedexNo::ONIX => [
+            PokedexNo::ONIX      => [
                 'weight' => 30,
                 'levels' => [40, 46],
             ],
-            PokedexNo::MAROWAK => [
+            PokedexNo::MAROWAK   => [
                 'weight' => 5,
                 'levels' => [44, 46],
             ],
         ],
     ],
-    LocationId::ROUTE_23 => [
+    LocationId::ROUTE_23               => [
         EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW   => [
                 'weight' => 15,
                 'levels' => [32, 34],
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW    => [
                 'weight' => 25,
                 'levels' => [40, 44],
             ],
-            PokedexNo::EKANS => [
+            PokedexNo::EKANS     => [
                 'weight' => 20,
                 'levels' => [32, 34],
             ],
-            PokedexNo::ARBOK => [
+            PokedexNo::ARBOK     => [
                 'weight' => 5,
                 'levels' => 44,
             ],
@@ -2307,17 +2307,17 @@ return [
                 'weight' => 5,
                 'levels' => 44,
             ],
-            PokedexNo::MANKEY => [
+            PokedexNo::MANKEY    => [
                 'weight' => 30,
                 'levels' => [32, 34],
             ],
-            PokedexNo::PRIMEAPE => [
+            PokedexNo::PRIMEAPE  => [
                 'weight' => 5,
                 'levels' => 42,
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -2327,23 +2327,23 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
@@ -2351,35 +2351,35 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
         ],
     ],
-    LocationId::ROUTE_24 => [
+    LocationId::ROUTE_24               => [
         EncounterType::WALKING => [
-            PokedexNo::CATERPIE => [
+            PokedexNo::CATERPIE   => [
                 'weight' => 20,
                 'levels' => 7,
             ],
-            PokedexNo::METAPOD => [
+            PokedexNo::METAPOD    => [
                 'weight' => 5,
                 'levels' => 8,
             ],
-            PokedexNo::WEEDLE => [
+            PokedexNo::WEEDLE     => [
                 'weight' => 20,
                 'levels' => 7,
             ],
-            PokedexNo::KAKUNA => [
+            PokedexNo::KAKUNA     => [
                 'weight' => 5,
                 'levels' => 8,
             ],
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 15,
                 'levels' => [11, 13],
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 25,
                 'levels' => [12, 14],
             ],
@@ -2387,11 +2387,11 @@ return [
                 'weight' => 25,
                 'levels' => [12, 14],
             ],
-            PokedexNo::ABRA => [
+            PokedexNo::ABRA       => [
                 'weight' => 15,
                 'levels' => [8, 12],
             ],
-            PokedexNo::BULBASAUR => [
+            PokedexNo::BULBASAUR  => [
                 'weight' => 5,
                 'levels' => [7, 11],
             ],
@@ -2407,11 +2407,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 144,
                 'levels' => [5, 35],
             ],
@@ -2419,7 +2419,7 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -2429,29 +2429,29 @@ return [
             ],
         ],
     ],
-    LocationId::ROUTE_25 => [
+    LocationId::ROUTE_25               => [
         EncounterType::WALKING => [
-            PokedexNo::CATERPIE => [
+            PokedexNo::CATERPIE   => [
                 'weight' => 20,
                 'levels' => 8,
             ],
-            PokedexNo::METAPOD => [
+            PokedexNo::METAPOD    => [
                 'weight' => 5,
                 'levels' => 9,
             ],
-            PokedexNo::WEEDLE => [
+            PokedexNo::WEEDLE     => [
                 'weight' => 20,
                 'levels' => 8,
             ],
-            PokedexNo::KAKUNA => [
+            PokedexNo::KAKUNA     => [
                 'weight' => 5,
                 'levels' => 9,
             ],
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 15,
                 'levels' => [11, 13],
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 25,
                 'levels' => [12, 14],
             ],
@@ -2459,17 +2459,17 @@ return [
                 'weight' => 25,
                 'levels' => [12, 14],
             ],
-            PokedexNo::ABRA => [
+            PokedexNo::ABRA       => [
                 'weight' => 15,
                 'levels' => [9, 13],
             ],
-            PokedexNo::BULBASAUR => [
+            PokedexNo::BULBASAUR  => [
                 'weight' => 5,
                 'levels' => [7, 11],
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 100,
                 'levels' => [20, 40],
             ],
@@ -2479,15 +2479,15 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
@@ -2495,43 +2495,43 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
         ],
     ],
-    LocationId::CERULEAN_CAVE_1F => [
-        EncounterType::WALKING => [
-            PokedexNo::PARASECT => [
+    LocationId::CERULEAN_CAVE_1F       => [
+        EncounterType::WALKING    => [
+            PokedexNo::PARASECT  => [
                 'weight' => 25,
                 'levels' => [49, 58],
             ],
-            PokedexNo::MAGNETON => [
+            PokedexNo::MAGNETON  => [
                 'weight' => 20,
                 'levels' => 49,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT    => [
                 'weight' => 14,
                 'levels' => [46, 55],
             ],
-            PokedexNo::PRIMEAPE => [
+            PokedexNo::PRIMEAPE  => [
                 'weight' => 11,
                 'levels' => [52, 61],
             ],
-            PokedexNo::DITTO => [
+            PokedexNo::DITTO     => [
                 'weight' => 11,
                 'levels' => [52, 61],
             ],
-            PokedexNo::MACHOKE => [
+            PokedexNo::MACHOKE   => [
                 'weight' => 10,
                 'levels' => 46,
             ],
@@ -2539,13 +2539,13 @@ return [
                 'weight' => 5,
                 'levels' => 58,
             ],
-            PokedexNo::SNORLAX => [
+            PokedexNo::SNORLAX   => [
                 'weight' => 4,
                 'levels' => 55,
             ],
         ],
-        EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+        EncounterType::SURFING    => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 65,
                 'levels' => [30, 50],
             ],
@@ -2553,25 +2553,25 @@ return [
                 'weight' => 65,
                 'levels' => [30, 50],
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 35,
                 'levels' => [40, 55],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 35,
                 'levels' => [40, 55],
             ],
         ],
-        EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+        EncounterType::FISHING    => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
@@ -2579,21 +2579,21 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 65,
                 'levels' => [30, 50],
             ],
@@ -2603,25 +2603,25 @@ return [
             ],
         ],
     ],
-    LocationId::CERULEAN_CAVE_2F => [
-        EncounterType::WALKING => [
-            PokedexNo::PARASECT => [
+    LocationId::CERULEAN_CAVE_2F       => [
+        EncounterType::WALKING    => [
+            PokedexNo::PARASECT  => [
                 'weight' => 14,
                 'levels' => [52, 61],
             ],
-            PokedexNo::MAGNETON => [
+            PokedexNo::MAGNETON  => [
                 'weight' => 10,
                 'levels' => 52,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT    => [
                 'weight' => 25,
                 'levels' => [49, 58],
             ],
-            PokedexNo::DITTO => [
+            PokedexNo::DITTO     => [
                 'weight' => 11,
                 'levels' => [55, 64],
             ],
-            PokedexNo::MACHOKE => [
+            PokedexNo::MACHOKE   => [
                 'weight' => 20,
                 'levels' => 49,
             ],
@@ -2629,17 +2629,17 @@ return [
                 'weight' => 4,
                 'levels' => 61,
             ],
-            PokedexNo::SNORLAX => [
+            PokedexNo::SNORLAX   => [
                 'weight' => 5,
                 'levels' => 58,
             ],
-            PokedexNo::KADABRA => [
+            PokedexNo::KADABRA   => [
                 'weight' => 11,
                 'levels' => [55, 64],
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 65,
                 'levels' => [30, 50],
             ],
@@ -2649,25 +2649,25 @@ return [
             ],
         ],
     ],
-    LocationId::CERULEAN_CAVE_B1F => [
-        EncounterType::WALKING => [
-            PokedexNo::PARASECT => [
+    LocationId::CERULEAN_CAVE_B1F      => [
+        EncounterType::WALKING    => [
+            PokedexNo::PARASECT  => [
                 'weight' => 14,
                 'levels' => [55, 64],
             ],
-            PokedexNo::MAGNETON => [
+            PokedexNo::MAGNETON  => [
                 'weight' => 10,
                 'levels' => 55,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT    => [
                 'weight' => 11,
                 'levels' => [52, 61],
             ],
-            PokedexNo::DITTO => [
+            PokedexNo::DITTO     => [
                 'weight' => 25,
                 'levels' => [58, 67],
             ],
-            PokedexNo::MACHOKE => [
+            PokedexNo::MACHOKE   => [
                 'weight' => 10,
                 'levels' => 52,
             ],
@@ -2675,17 +2675,17 @@ return [
                 'weight' => 4,
                 'levels' => 64,
             ],
-            PokedexNo::SNORLAX => [
+            PokedexNo::SNORLAX   => [
                 'weight' => 1,
                 'levels' => 61,
             ],
-            PokedexNo::KADABRA => [
+            PokedexNo::KADABRA   => [
                 'weight' => 25,
                 'levels' => [58, 67],
             ],
         ],
-        EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+        EncounterType::SURFING    => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 65,
                 'levels' => [30, 50],
             ],
@@ -2693,25 +2693,25 @@ return [
                 'weight' => 65,
                 'levels' => [30, 50],
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 35,
                 'levels' => [40, 55],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 35,
                 'levels' => [40, 55],
             ],
         ],
-        EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+        EncounterType::FISHING    => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
@@ -2719,21 +2719,21 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 16,
                 'levels' => [15, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 4,
                 'levels' => [15, 35],
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 65,
                 'levels' => [30, 50],
             ],
@@ -2743,9 +2743,9 @@ return [
             ],
         ],
     ],
-    LocationId::KNOT_ISLAND => [
+    LocationId::KNOT_ISLAND            => [
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
@@ -2759,11 +2759,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -2771,7 +2771,7 @@ return [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
-            PokedexNo::STARYU => [
+            PokedexNo::STARYU   => [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
@@ -2779,15 +2779,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -2797,25 +2797,25 @@ return [
             ],
         ],
     ],
-    LocationId::TREASURE_BEACH => [
+    LocationId::TREASURE_BEACH         => [
         EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW  => [
                 'weight' => 30,
                 'levels' => [31, 32],
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW   => [
                 'weight' => 20,
                 'levels' => [36, 40],
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH   => [
                 'weight' => 10,
                 'levels' => 31,
             ],
-            PokedexNo::PERSIAN => [
+            PokedexNo::PERSIAN  => [
                 'weight' => 5,
                 'levels' => [37, 40],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 5,
                 'levels' => 31,
             ],
@@ -2823,13 +2823,13 @@ return [
                 'weight' => 5,
                 'levels' => 31,
             ],
-            PokedexNo::TANGELA => [
+            PokedexNo::TANGELA  => [
                 'weight' => 30,
                 'levels' => [33, 35],
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
@@ -2843,15 +2843,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 160,
                 'levels' => [5, 25],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 160,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -2859,11 +2859,11 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
@@ -2873,33 +2873,33 @@ return [
             ],
         ],
     ],
-    LocationId::KINDLE_ROAD => [
-        EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+    LocationId::KINDLE_ROAD            => [
+        EncounterType::WALKING    => [
+            PokedexNo::SPEAROW  => [
                 'weight' => 25,
                 'levels' => [30, 32],
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW   => [
                 'weight' => 10,
                 'levels' => 36,
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH   => [
                 'weight' => 10,
                 'levels' => 31,
             ],
-            PokedexNo::PERSIAN => [
+            PokedexNo::PERSIAN  => [
                 'weight' => 5,
                 'levels' => [37, 40],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 5,
                 'levels' => 34,
             ],
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 10,
                 'levels' => 31,
             ],
-            PokedexNo::PONYTA => [
+            PokedexNo::PONYTA   => [
                 'weight' => 30,
                 'levels' => [31, 34],
             ],
@@ -2912,8 +2912,8 @@ return [
                 'levels' => 34,
             ],
         ],
-        EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+        EncounterType::SURFING    => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
@@ -2922,20 +2922,20 @@ return [
                 'levels' => [35, 40],
             ],
         ],
-        EncounterType::FISHING => [
+        EncounterType::FISHING    => [
             PokedexNo::MAGIKARP => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 160,
                 'levels' => [5, 25],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 160,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -2943,11 +2943,11 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
@@ -2957,7 +2957,7 @@ return [
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 95,
                 'levels' => [5, 30],
             ],
@@ -2967,25 +2967,25 @@ return [
             ],
         ],
     ],
-    LocationId::MT_EMBER_BASE => [
-        EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+    LocationId::MT_EMBER_BASE          => [
+        EncounterType::WALKING    => [
+            PokedexNo::SPEAROW  => [
                 'weight' => 25,
                 'levels' => [30, 32],
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW   => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::MACHOP => [
+            PokedexNo::MACHOP   => [
                 'weight' => 10,
                 'levels' => 35,
             ],
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 10,
                 'levels' => 33,
             ],
-            PokedexNo::PONYTA => [
+            PokedexNo::PONYTA   => [
                 'weight' => 35,
                 'levels' => [30, 36],
             ],
@@ -2993,13 +2993,13 @@ return [
                 'weight' => 5,
                 'levels' => [39, 42],
             ],
-            PokedexNo::MAGMAR => [
+            PokedexNo::MAGMAR   => [
                 'weight' => 5,
                 'levels' => [38, 40],
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 95,
                 'levels' => [5, 30],
             ],
@@ -3011,7 +3011,7 @@ return [
     ],
     LocationId::MT_EMBER_SUMMIT_PATH_1 => [
         EncounterType::WALKING => [
-            PokedexNo::MACHOP => [
+            PokedexNo::MACHOP  => [
                 'weight' => 50,
                 'levels' => [31, 39],
             ],
@@ -3022,8 +3022,8 @@ return [
         ],
     ],
     LocationId::MT_EMBER_SUMMIT_PATH_2 => [
-        EncounterType::WALKING => [
-            PokedexNo::MACHOP => [
+        EncounterType::WALKING    => [
+            PokedexNo::MACHOP  => [
                 'weight' => 40,
                 'levels' => [32, 36],
             ],
@@ -3037,7 +3037,7 @@ return [
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 95,
                 'levels' => [5, 30],
             ],
@@ -3049,7 +3049,7 @@ return [
     ],
     LocationId::MT_EMBER_SUMMIT_PATH_3 => [
         EncounterType::WALKING => [
-            PokedexNo::MACHOP => [
+            PokedexNo::MACHOP  => [
                 'weight' => 50,
                 'levels' => [31, 39],
             ],
@@ -3059,9 +3059,9 @@ return [
             ],
         ],
     ],
-    LocationId::MT_EMBER_SUMMIT => [
+    LocationId::MT_EMBER_SUMMIT        => [
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 95,
                 'levels' => [5, 30],
             ],
@@ -3071,13 +3071,13 @@ return [
             ],
         ],
     ],
-    LocationId::MT_EMBER_1F => [
-        EncounterType::WALKING => [
+    LocationId::MT_EMBER_1F            => [
+        EncounterType::WALKING    => [
             PokedexNo::GEODUDE => [
                 'weight' => 50,
                 'levels' => [32, 40],
             ],
-            PokedexNo::MACHOP => [
+            PokedexNo::MACHOP  => [
                 'weight' => 40,
                 'levels' => [34, 38],
             ],
@@ -3087,7 +3087,7 @@ return [
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 65,
                 'levels' => [25, 40],
             ],
@@ -3097,19 +3097,19 @@ return [
             ],
         ],
     ],
-    LocationId::MT_EMBER_B1F => [
-        EncounterType::WALKING => [
+    LocationId::MT_EMBER_B1F           => [
+        EncounterType::WALKING    => [
             PokedexNo::GEODUDE => [
                 'weight' => 70,
                 'levels' => [34, 42],
             ],
-            PokedexNo::SLUGMA => [
+            PokedexNo::SLUGMA  => [
                 'weight' => 30,
                 'levels' => [24, 30],
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 65,
                 'levels' => [25, 40],
             ],
@@ -3119,9 +3119,9 @@ return [
             ],
         ],
     ],
-    LocationId::MT_EMBER_B2F => [
-        EncounterType::WALKING => [
-            PokedexNo::SLUGMA => [
+    LocationId::MT_EMBER_B2F           => [
+        EncounterType::WALKING    => [
+            PokedexNo::SLUGMA  => [
                 'weight' => 60,
                 'levels' => [22, 32],
             ],
@@ -3131,7 +3131,7 @@ return [
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 65,
                 'levels' => [25, 40],
             ],
@@ -3141,15 +3141,15 @@ return [
             ],
         ],
     ],
-    LocationId::MT_EMBER_B3F => [
-        EncounterType::WALKING => [
+    LocationId::MT_EMBER_B3F           => [
+        EncounterType::WALKING    => [
             PokedexNo::SLUGMA => [
                 'weight' => 100,
                 'levels' => [18, 36],
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::SLUGMA => [
+            PokedexNo::SLUGMA   => [
                 'weight' => 90,
                 'levels' => [15, 35],
             ],
@@ -3159,9 +3159,9 @@ return [
             ],
         ],
     ],
-    LocationId::MT_EMBER_B4F => [
-        EncounterType::WALKING => [
-            PokedexNo::SLUGMA => [
+    LocationId::MT_EMBER_B4F           => [
+        EncounterType::WALKING    => [
+            PokedexNo::SLUGMA  => [
                 'weight' => 60,
                 'levels' => [22, 32],
             ],
@@ -3171,7 +3171,7 @@ return [
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 65,
                 'levels' => [25, 40],
             ],
@@ -3181,19 +3181,19 @@ return [
             ],
         ],
     ],
-    LocationId::MT_EMBER_B5F => [
-        EncounterType::WALKING => [
+    LocationId::MT_EMBER_B5F           => [
+        EncounterType::WALKING    => [
             PokedexNo::GEODUDE => [
                 'weight' => 70,
                 'levels' => [34, 42],
             ],
-            PokedexNo::SLUGMA => [
+            PokedexNo::SLUGMA  => [
                 'weight' => 30,
                 'levels' => [24, 30],
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 65,
                 'levels' => [25, 40],
             ],
@@ -3203,37 +3203,37 @@ return [
             ],
         ],
     ],
-    LocationId::CAPE_BRINK => [
+    LocationId::CAPE_BRINK             => [
         EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW    => [
                 'weight' => 20,
                 'levels' => 31,
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW     => [
                 'weight' => 10,
                 'levels' => 36,
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 30,
                 'levels' => [30, 32],
             ],
-            PokedexNo::GLOOM => [
+            PokedexNo::GLOOM      => [
                 'weight' => 15,
                 'levels' => [36, 38],
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH     => [
                 'weight' => 10,
                 'levels' => 31,
             ],
-            PokedexNo::PERSIAN => [
+            PokedexNo::PERSIAN    => [
                 'weight' => 5,
                 'levels' => [37, 40],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK    => [
                 'weight' => 5,
                 'levels' => 31,
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK    => [
                 'weight' => 5,
                 'levels' => [37, 40],
             ],
@@ -3245,21 +3245,21 @@ return [
                 'weight' => 15,
                 'levels' => [36, 38],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE   => [
                 'weight' => 5,
                 'levels' => 31,
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO    => [
                 'weight' => 5,
                 'levels' => [37, 40],
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 5,
                 'levels' => [35, 40],
             ],
@@ -3267,25 +3267,25 @@ return [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 5,
                 'levels' => [35, 40],
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
@@ -3293,17 +3293,17 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
         ],
     ],
-    LocationId::KIN_ISLAND_PORT => [
+    LocationId::KIN_ISLAND_PORT        => [
         EncounterType::WALKING => [
             PokedexNo::DUNSPARCE => [
                 'weight' => 100,
@@ -3311,37 +3311,37 @@ return [
             ],
         ],
     ],
-    LocationId::BOND_BRIDGE => [
+    LocationId::BOND_BRIDGE            => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 30,
                 'levels' => [29, 32],
             ],
-            PokedexNo::PIDGEOTTO => [
+            PokedexNo::PIDGEOTTO  => [
                 'weight' => 15,
                 'levels' => [34, 40],
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 20,
                 'levels' => 31,
             ],
-            PokedexNo::GLOOM => [
+            PokedexNo::GLOOM      => [
                 'weight' => 10,
                 'levels' => 36,
             ],
-            PokedexNo::VENONAT => [
+            PokedexNo::VENONAT    => [
                 'weight' => 5,
                 'levels' => 34,
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH     => [
                 'weight' => 10,
                 'levels' => 31,
             ],
-            PokedexNo::PERSIAN => [
+            PokedexNo::PERSIAN    => [
                 'weight' => 5,
                 'levels' => [37, 40],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK    => [
                 'weight' => 5,
                 'levels' => 31,
             ],
@@ -3353,13 +3353,13 @@ return [
                 'weight' => 10,
                 'levels' => 36,
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE   => [
                 'weight' => 5,
                 'levels' => 31,
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
@@ -3373,15 +3373,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 160,
                 'levels' => [5, 25],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 160,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -3389,11 +3389,11 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
@@ -3403,33 +3403,33 @@ return [
             ],
         ],
     ],
-    LocationId::BERRY_FOREST => [
+    LocationId::BERRY_FOREST           => [
         EncounterType::WALKING => [
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY     => [
                 'weight' => 10,
                 'levels' => 32,
             ],
-            PokedexNo::PIDGEOTTO => [
+            PokedexNo::PIDGEOTTO  => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 10,
                 'levels' => 30,
             ],
-            PokedexNo::GLOOM => [
+            PokedexNo::GLOOM      => [
                 'weight' => 20,
                 'levels' => 35,
             ],
-            PokedexNo::VENONAT => [
+            PokedexNo::VENONAT    => [
                 'weight' => 10,
                 'levels' => 34,
             ],
-            PokedexNo::VENOMOTH => [
+            PokedexNo::VENOMOTH   => [
                 'weight' => 5,
                 'levels' => [37, 40],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK    => [
                 'weight' => 5,
                 'levels' => 31,
             ],
@@ -3441,29 +3441,29 @@ return [
                 'weight' => 20,
                 'levels' => 35,
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE   => [
                 'weight' => 5,
                 'levels' => 31,
             ],
-            PokedexNo::DROWZEE => [
+            PokedexNo::DROWZEE    => [
                 'weight' => 10,
                 'levels' => 34,
             ],
-            PokedexNo::HYPNO => [
+            PokedexNo::HYPNO      => [
                 'weight' => 5,
                 'levels' => [37, 40],
             ],
-            PokedexNo::EXEGGCUTE => [
+            PokedexNo::EXEGGCUTE  => [
                 'weight' => 5,
                 'levels' => 35,
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
-            PokedexNo::GOLDUCK => [
+            PokedexNo::GOLDUCK  => [
                 'weight' => 5,
                 'levels' => [35, 40],
             ],
@@ -3471,7 +3471,7 @@ return [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
-            PokedexNo::SLOWBRO => [
+            PokedexNo::SLOWBRO  => [
                 'weight' => 5,
                 'levels' => [35, 40],
             ],
@@ -3481,15 +3481,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG  => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN  => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
@@ -3497,7 +3497,7 @@ return [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SEAKING => [
+            PokedexNo::SEAKING  => [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
@@ -3507,25 +3507,25 @@ return [
             ],
         ],
     ],
-    LocationId::ICEFALL_CAVE_ENTRANCE => [
+    LocationId::ICEFALL_CAVE_ENTRANCE  => [
         EncounterType::WALKING => [
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 40,
                 'levels' => [43, 47],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT   => [
                 'weight' => 25,
                 'levels' => [45, 48],
             ],
-            PokedexNo::DEWGONG => [
+            PokedexNo::DEWGONG  => [
                 'weight' => 20,
                 'levels' => [49, 53],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT    => [
                 'weight' => 10,
                 'levels' => 40,
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 5,
                 'levels' => 41,
             ],
@@ -3535,11 +3535,11 @@ return [
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 60,
                 'levels' => [5, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 30,
                 'levels' => [5, 35],
             ],
@@ -3547,29 +3547,29 @@ return [
                 'weight' => 30,
                 'levels' => [5, 35],
             ],
-            PokedexNo::DEWGONG => [
+            PokedexNo::DEWGONG  => [
                 'weight' => 5,
                 'levels' => [35, 40],
             ],
-            PokedexNo::WOOPER => [
+            PokedexNo::WOOPER   => [
                 'weight' => 5,
                 'levels' => [5, 15],
             ],
-            PokedexNo::MARILL => [
+            PokedexNo::MARILL   => [
                 'weight' => 5,
                 'levels' => [5, 15],
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
@@ -3577,35 +3577,35 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
         ],
     ],
-    LocationId::ICEFALL_CAVE_1F => [
+    LocationId::ICEFALL_CAVE_1F        => [
         EncounterType::WALKING => [
-            PokedexNo::SWINUB => [
+            PokedexNo::SWINUB   => [
                 'weight' => 50,
                 'levels' => [23, 31],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT   => [
                 'weight' => 25,
                 'levels' => [45, 48],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT    => [
                 'weight' => 10,
                 'levels' => 40,
             ],
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 10,
                 'levels' => 45,
             ],
@@ -3613,27 +3613,27 @@ return [
                 'weight' => 5,
                 'levels' => 30,
             ],
-            PokedexNo::SNEASEL => [
+            PokedexNo::SNEASEL  => [
                 'weight' => 5,
                 'levels' => 30,
             ],
         ],
     ],
-    LocationId::ICEFALL_CAVE_B1F => [
+    LocationId::ICEFALL_CAVE_B1F       => [
         EncounterType::WALKING => [
-            PokedexNo::SWINUB => [
+            PokedexNo::SWINUB   => [
                 'weight' => 50,
                 'levels' => [23, 31],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT   => [
                 'weight' => 25,
                 'levels' => [45, 48],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT    => [
                 'weight' => 10,
                 'levels' => 40,
             ],
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 10,
                 'levels' => 45,
             ],
@@ -3641,7 +3641,7 @@ return [
                 'weight' => 5,
                 'levels' => 30,
             ],
-            PokedexNo::SNEASEL => [
+            PokedexNo::SNEASEL  => [
                 'weight' => 5,
                 'levels' => 30,
             ],
@@ -3649,23 +3649,23 @@ return [
     ],
     LocationId::ICEFALL_CAVE_BACK_CAVE => [
         EncounterType::WALKING => [
-            PokedexNo::SEEL => [
+            PokedexNo::SEEL     => [
                 'weight' => 40,
                 'levels' => [43, 47],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT   => [
                 'weight' => 25,
                 'levels' => [45, 48],
             ],
-            PokedexNo::DEWGONG => [
+            PokedexNo::DEWGONG  => [
                 'weight' => 20,
                 'levels' => [49, 53],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT    => [
                 'weight' => 10,
                 'levels' => 40,
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 5,
                 'levels' => 41,
             ],
@@ -3675,7 +3675,7 @@ return [
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 95,
                 'levels' => [5, 45],
             ],
@@ -3683,7 +3683,7 @@ return [
                 'weight' => 4,
                 'levels' => [35, 45],
             ],
-            PokedexNo::LAPRAS => [
+            PokedexNo::LAPRAS     => [
                 'weight' => 1,
                 'levels' => [30, 45],
             ],
@@ -3693,11 +3693,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -3705,7 +3705,7 @@ return [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
-            PokedexNo::STARYU => [
+            PokedexNo::STARYU   => [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
@@ -3713,15 +3713,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -3731,13 +3731,13 @@ return [
             ],
         ],
     ],
-    LocationId::CHRONO_ISLAND => [
+    LocationId::CHRONO_ISLAND          => [
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 65,
                 'levels' => [5, 40],
             ],
-            PokedexNo::HOPPIP => [
+            PokedexNo::HOPPIP     => [
                 'weight' => 30,
                 'levels' => [5, 15],
             ],
@@ -3751,11 +3751,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -3763,7 +3763,7 @@ return [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
-            PokedexNo::STARYU => [
+            PokedexNo::STARYU   => [
                 'weight' => 40,
                 'levels' => [15, 25],
             ],
@@ -3771,15 +3771,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -3789,13 +3789,13 @@ return [
             ],
         ],
     ],
-    LocationId::CHRONO_ISLE_MEADOW => [
+    LocationId::CHRONO_ISLE_MEADOW     => [
         EncounterType::WALKING => [
-            PokedexNo::SENTRET => [
+            PokedexNo::SENTRET   => [
                 'weight' => 30,
                 'levels' => [10, 15],
             ],
-            PokedexNo::PIDGEY => [
+            PokedexNo::PIDGEY    => [
                 'weight' => 20,
                 'levels' => 44,
             ],
@@ -3803,33 +3803,33 @@ return [
                 'weight' => 15,
                 'levels' => [48, 50],
             ],
-            PokedexNo::HOPPIP => [
+            PokedexNo::HOPPIP    => [
                 'weight' => 15,
                 'levels' => [10, 15],
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH    => [
                 'weight' => 10,
                 'levels' => 41,
             ],
-            PokedexNo::PERSIAN => [
+            PokedexNo::PERSIAN   => [
                 'weight' => 5,
                 'levels' => [47, 50],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => 41,
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => 41,
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 65,
                 'levels' => [5, 40],
             ],
-            PokedexNo::HOPPIP => [
+            PokedexNo::HOPPIP     => [
                 'weight' => 30,
                 'levels' => [5, 15],
             ],
@@ -3843,11 +3843,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -3863,15 +3863,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -3881,7 +3881,7 @@ return [
             ],
         ],
     ],
-    LocationId::MEMORIAL_PILLAR => [
+    LocationId::MEMORIAL_PILLAR        => [
         EncounterType::WALKING => [
             PokedexNo::HOPPIP => [
                 'weight' => 100,
@@ -3889,11 +3889,11 @@ return [
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 65,
                 'levels' => [5, 40],
             ],
-            PokedexNo::HOPPIP => [
+            PokedexNo::HOPPIP     => [
                 'weight' => 30,
                 'levels' => [5, 15],
             ],
@@ -3907,11 +3907,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -3927,15 +3927,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -3945,13 +3945,13 @@ return [
             ],
         ],
     ],
-    LocationId::WATER_LABYRINTH => [
+    LocationId::WATER_LABYRINTH        => [
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 65,
                 'levels' => [5, 40],
             ],
-            PokedexNo::HOPPIP => [
+            PokedexNo::HOPPIP     => [
                 'weight' => 30,
                 'levels' => [5, 15],
             ],
@@ -3965,11 +3965,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -3985,15 +3985,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -4003,13 +4003,13 @@ return [
             ],
         ],
     ],
-    LocationId::RESORT_GORGEOUS => [
+    LocationId::RESORT_GORGEOUS        => [
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 65,
                 'levels' => [5, 40],
             ],
-            PokedexNo::HOPPIP => [
+            PokedexNo::HOPPIP     => [
                 'weight' => 30,
                 'levels' => [5, 15],
             ],
@@ -4023,11 +4023,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -4043,15 +4043,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -4061,25 +4061,25 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_1F => [
+    LocationId::LOST_CAVE_1F           => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4089,25 +4089,25 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_1 => [
+    LocationId::LOST_CAVE_B1F_1        => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4117,25 +4117,25 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_2 => [
+    LocationId::LOST_CAVE_B1F_2        => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4145,25 +4145,25 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_3 => [
+    LocationId::LOST_CAVE_B1F_3        => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4173,21 +4173,21 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_4 => [
+    LocationId::LOST_CAVE_B1F_4        => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 20,
                 'levels' => 40,
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
@@ -4195,32 +4195,32 @@ return [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 10,
                 'levels' => 41,
             ],
         ],
     ],
 
-    LocationId::LOST_CAVE_B1F_5 => [
+    LocationId::LOST_CAVE_B1F_5        => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4230,21 +4230,21 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_6 => [
+    LocationId::LOST_CAVE_B1F_6        => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 20,
                 'levels' => 40,
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
@@ -4252,32 +4252,32 @@ return [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 10,
                 'levels' => 41,
             ],
         ],
     ],
 
-    LocationId::LOST_CAVE_B1F_7 => [
+    LocationId::LOST_CAVE_B1F_7        => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4287,25 +4287,25 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_8 => [
+    LocationId::LOST_CAVE_B1F_8        => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4315,21 +4315,21 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_9 => [
+    LocationId::LOST_CAVE_B1F_9        => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 20,
                 'levels' => 40,
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
@@ -4337,32 +4337,32 @@ return [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 10,
                 'levels' => 41,
             ],
         ],
     ],
 
-    LocationId::LOST_CAVE_B1F_10 => [
+    LocationId::LOST_CAVE_B1F_10       => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4372,25 +4372,25 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_11 => [
+    LocationId::LOST_CAVE_B1F_11       => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4400,25 +4400,25 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_12 => [
+    LocationId::LOST_CAVE_B1F_12       => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 25,
                 'levels' => [38, 40],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 20,
                 'levels' => [41, 43],
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 5,
                 'levels' => 22,
             ],
@@ -4428,21 +4428,21 @@ return [
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_13 => [
+    LocationId::LOST_CAVE_B1F_13       => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 20,
                 'levels' => 40,
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
@@ -4450,27 +4450,27 @@ return [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 10,
                 'levels' => 41,
             ],
         ],
     ],
-    LocationId::LOST_CAVE_B1F_14 => [
+    LocationId::LOST_CAVE_B1F_14       => [
         EncounterType::WALKING => [
-            PokedexNo::HAUNTER => [
+            PokedexNo::HAUNTER    => [
                 'weight' => 30,
                 'levels' => [44, 52],
             ],
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT      => [
                 'weight' => 20,
                 'levels' => 37,
             ],
-            PokedexNo::GASTLY => [
+            PokedexNo::GASTLY     => [
                 'weight' => 20,
                 'levels' => 40,
             ],
-            PokedexNo::MURKROW => [
+            PokedexNo::MURKROW    => [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
@@ -4478,39 +4478,39 @@ return [
                 'weight' => 20,
                 'levels' => [15, 22],
             ],
-            PokedexNo::GOLBAT => [
+            PokedexNo::GOLBAT     => [
                 'weight' => 10,
                 'levels' => 41,
             ],
         ],
     ],
-    LocationId::WATER_PATH => [
+    LocationId::WATER_PATH             => [
         EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW    => [
                 'weight' => 20,
                 'levels' => 44,
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW     => [
                 'weight' => 15,
                 'levels' => [48, 50],
             ],
-            PokedexNo::ODDISH => [
+            PokedexNo::ODDISH     => [
                 'weight' => 10,
                 'levels' => 44,
             ],
-            PokedexNo::GLOOM => [
+            PokedexNo::GLOOM      => [
                 'weight' => 5,
                 'levels' => 48,
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH     => [
                 'weight' => 10,
                 'levels' => 41,
             ],
-            PokedexNo::PERSIAN => [
+            PokedexNo::PERSIAN    => [
                 'weight' => 5,
                 'levels' => [47, 50],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK    => [
                 'weight' => 5,
                 'levels' => 41,
             ],
@@ -4522,17 +4522,17 @@ return [
                 'weight' => 5,
                 'levels' => 48,
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE   => [
                 'weight' => 5,
                 'levels' => 41,
             ],
-            PokedexNo::SENTRET => [
+            PokedexNo::SENTRET    => [
                 'weight' => 30,
                 'levels' => [10, 15],
             ],
         ],
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
@@ -4546,15 +4546,15 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -4562,11 +4562,11 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
@@ -4584,9 +4584,9 @@ return [
             ],
         ],
     ],
-    LocationId::GREEN_PATH => [
+    LocationId::GREEN_PATH             => [
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
@@ -4600,11 +4600,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -4620,15 +4620,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -4638,9 +4638,9 @@ return [
             ],
         ],
     ],
-    LocationId::OUTCAST_ISLAND => [
+    LocationId::OUTCAST_ISLAND         => [
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 95,
                 'levels' => [5, 40],
             ],
@@ -4654,11 +4654,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -4674,15 +4674,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -4692,25 +4692,25 @@ return [
             ],
         ],
     ],
-    LocationId::ALTERING_CAVE => [
+    LocationId::ALTERING_CAVE          => [
         EncounterType::WALKING => [
-            PokedexNo::ZUBAT => [
+            PokedexNo::ZUBAT     => [
                 'weight' => 100,
                 'levels' => [6, 16],
             ],
-            PokedexNo::MAREEP => [
+            PokedexNo::MAREEP    => [
                 'weight' => 100,
                 'levels' => [3, 13],
             ],
-            PokedexNo::AIPOM => [
+            PokedexNo::AIPOM     => [
                 'weight' => 100,
                 'levels' => [18, 28],
             ],
-            PokedexNo::PINECO => [
+            PokedexNo::PINECO    => [
                 'weight' => 100,
                 'levels' => [19, 29],
             ],
-            PokedexNo::SHUCKLE => [
+            PokedexNo::SHUCKLE   => [
                 'weight' => 100,
                 'levels' => [18, 28],
             ],
@@ -4718,59 +4718,59 @@ return [
                 'weight' => 100,
                 'levels' => [18, 28],
             ],
-            PokedexNo::HOUNDOUR => [
+            PokedexNo::HOUNDOUR  => [
                 'weight' => 100,
                 'levels' => [12, 20],
             ],
-            PokedexNo::STANTLER => [
+            PokedexNo::STANTLER  => [
                 'weight' => 100,
                 'levels' => [18, 28],
             ],
-            PokedexNo::SMEARGLE => [
+            PokedexNo::SMEARGLE  => [
                 'weight' => 100,
                 'levels' => [18, 28],
             ],
         ],
     ],
-    LocationId::RUIN_VALLEY => [
+    LocationId::RUIN_VALLEY            => [
         EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW   => [
                 'weight' => 20,
                 'levels' => 44,
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW    => [
                 'weight' => 10,
                 'levels' => 49,
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH    => [
                 'weight' => 10,
                 'levels' => 43,
             ],
-            PokedexNo::PERSIAN => [
+            PokedexNo::PERSIAN   => [
                 'weight' => 5,
                 'levels' => [49, 52],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => 41,
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => 41,
             ],
-            PokedexNo::NATU => [
+            PokedexNo::NATU      => [
                 'weight' => 25,
                 'levels' => [15, 20],
             ],
-            PokedexNo::MARILL => [
+            PokedexNo::MARILL    => [
                 'weight' => 10,
                 'levels' => 15,
             ],
-            PokedexNo::YANMA => [
+            PokedexNo::YANMA     => [
                 'weight' => 10,
                 'levels' => 18,
             ],
-            PokedexNo::WOOPER => [
+            PokedexNo::WOOPER    => [
                 'weight' => 10,
                 'levels' => 15,
             ],
@@ -4790,19 +4790,19 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::MAGIKARP => [
+            PokedexNo::MAGIKARP  => [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::POLIWAG => [
+            PokedexNo::POLIWAG   => [
                 'weight' => 100,
                 'levels' => [5, 25],
             ],
-            PokedexNo::GOLDEEN => [
+            PokedexNo::GOLDEEN   => [
                 'weight' => 20,
                 'levels' => [5, 15],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK   => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
@@ -4810,39 +4810,39 @@ return [
                 'weight' => 40,
                 'levels' => [20, 30],
             ],
-            PokedexNo::SLOWPOKE => [
+            PokedexNo::SLOWPOKE  => [
                 'weight' => 5,
                 'levels' => [15, 35],
             ],
-            PokedexNo::GYARADOS => [
+            PokedexNo::GYARADOS  => [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
         ],
     ],
-    LocationId::PATTERN_BUSH => [
+    LocationId::PATTERN_BUSH           => [
         EncounterType::WALKING => [
-            PokedexNo::CATERPIE => [
+            PokedexNo::CATERPIE  => [
                 'weight' => 10,
                 'levels' => 6,
             ],
-            PokedexNo::METAPOD => [
+            PokedexNo::METAPOD   => [
                 'weight' => 25,
                 'levels' => 9,
             ],
-            PokedexNo::WEEDLE => [
+            PokedexNo::WEEDLE    => [
                 'weight' => 10,
                 'levels' => 6,
             ],
-            PokedexNo::KAKUNA => [
+            PokedexNo::KAKUNA    => [
                 'weight' => 25,
                 'levels' => 9,
             ],
-            PokedexNo::LEDYBA => [
+            PokedexNo::LEDYBA    => [
                 'weight' => 35,
                 'levels' => [9, 14],
             ],
-            PokedexNo::SPINARAK => [
+            PokedexNo::SPINARAK  => [
                 'weight' => 35,
                 'levels' => [9, 14],
             ],
@@ -4852,25 +4852,25 @@ return [
             ],
         ],
     ],
-    LocationId::CANYON_ENTRANCE => [
+    LocationId::CANYON_ENTRANCE        => [
         EncounterType::WALKING => [
-            PokedexNo::SPEAROW => [
+            PokedexNo::SPEAROW  => [
                 'weight' => 20,
                 'levels' => 44,
             ],
-            PokedexNo::FEAROW => [
+            PokedexNo::FEAROW   => [
                 'weight' => 15,
                 'levels' => [48, 50],
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH   => [
                 'weight' => 10,
                 'levels' => 41,
             ],
-            PokedexNo::PERSIAN => [
+            PokedexNo::PERSIAN  => [
                 'weight' => 5,
                 'levels' => [47, 50],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 5,
                 'levels' => 41,
             ],
@@ -4878,43 +4878,43 @@ return [
                 'weight' => 5,
                 'levels' => 41,
             ],
-            PokedexNo::SENTRET => [
+            PokedexNo::SENTRET  => [
                 'weight' => 30,
                 'levels' => [10, 15],
             ],
-            PokedexNo::PHANPY => [
+            PokedexNo::PHANPY   => [
                 'weight' => 15,
                 'levels' => [10, 15],
             ],
         ],
     ],
-    LocationId::SEVAULT_CANYON => [
-        EncounterType::WALKING => [
-            PokedexNo::FEAROW => [
+    LocationId::SEVAULT_CANYON         => [
+        EncounterType::WALKING    => [
+            PokedexNo::FEAROW   => [
                 'weight' => 25,
                 'levels' => 50,
             ],
-            PokedexNo::MEOWTH => [
+            PokedexNo::MEOWTH   => [
                 'weight' => 10,
                 'levels' => 43,
             ],
-            PokedexNo::PERSIAN => [
+            PokedexNo::PERSIAN  => [
                 'weight' => 5,
                 'levels' => [49, 52],
             ],
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 20,
                 'levels' => 46,
             ],
-            PokedexNo::ONIX => [
+            PokedexNo::ONIX     => [
                 'weight' => 5,
                 'levels' => 54,
             ],
-            PokedexNo::CUBONE => [
+            PokedexNo::CUBONE   => [
                 'weight' => 10,
                 'levels' => 46,
             ],
-            PokedexNo::MAROWAK => [
+            PokedexNo::MAROWAK  => [
                 'weight' => 10,
                 'levels' => 52,
             ],
@@ -4922,7 +4922,7 @@ return [
                 'weight' => 5,
                 'levels' => 30,
             ],
-            PokedexNo::PHANPY => [
+            PokedexNo::PHANPY   => [
                 'weight' => 20,
                 'levels' => 15,
             ],
@@ -4932,7 +4932,7 @@ return [
             ],
         ],
         EncounterType::ROCK_SMASH => [
-            PokedexNo::GEODUDE => [
+            PokedexNo::GEODUDE  => [
                 'weight' => 65,
                 'levels' => [25, 40],
             ],
@@ -4942,9 +4942,9 @@ return [
             ],
         ],
     ],
-    LocationId::TANOBY_RUINS => [
+    LocationId::TANOBY_RUINS           => [
         EncounterType::SURFING => [
-            PokedexNo::TENTACOOL => [
+            PokedexNo::TENTACOOL  => [
                 'weight' => 185,
                 'levels' => [5, 40],
             ],
@@ -4952,7 +4952,7 @@ return [
                 'weight' => 5,
                 'levels' => [35, 40],
             ],
-            PokedexNo::MANTINE => [
+            PokedexNo::MANTINE    => [
                 'weight' => 5,
                 'levels' => [35, 40],
             ],
@@ -4962,11 +4962,11 @@ return [
                 'weight' => 120,
                 'levels' => [5, 15],
             ],
-            PokedexNo::HORSEA => [
+            PokedexNo::HORSEA   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
-            PokedexNo::KRABBY => [
+            PokedexNo::KRABBY   => [
                 'weight' => 120,
                 'levels' => [5, 25],
             ],
@@ -4982,15 +4982,15 @@ return [
                 'weight' => 15,
                 'levels' => [15, 25],
             ],
-            PokedexNo::SEADRA => [
+            PokedexNo::SEADRA   => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KINGLER => [
+            PokedexNo::KINGLER  => [
                 'weight' => 4,
                 'levels' => [25, 35],
             ],
-            PokedexNo::PSYDUCK => [
+            PokedexNo::PSYDUCK  => [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
@@ -5000,73 +5000,73 @@ return [
             ],
         ],
     ],
-    LocationId::TANOBY_MONEAN_CHAMBER => [
+    LocationId::TANOBY_MONEAN_CHAMBER  => [
         EncounterType::WALKING => [
             PokedexNo::UNOWN => [
                 [
-                    'form' => "A",
+                    'form'   => "A",
                     'weight' => 99,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "?",
+                    'form'   => "?",
                     'weight' => 1,
                     'levels' => 25,
                 ],
             ],
         ],
     ],
-    LocationId::TANOBY_LIPTOO_CHAMBER => [
+    LocationId::TANOBY_LIPTOO_CHAMBER  => [
         EncounterType::WALKING => [
             PokedexNo::UNOWN => [
                 [
-                    'form' => "C",
+                    'form'   => "C",
                     'weight' => 50,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "D",
+                    'form'   => "D",
                     'weight' => 30,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "H",
+                    'form'   => "H",
                     'weight' => 14,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "U",
+                    'form'   => "U",
                     'weight' => 5,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "O",
+                    'form'   => "O",
                     'weight' => 1,
                     'levels' => 25,
                 ],
             ],
         ],
     ],
-    LocationId::TANOBY_WEEPTH_CHAMBER => [
+    LocationId::TANOBY_WEEPTH_CHAMBER  => [
         EncounterType::WALKING => [
             PokedexNo::UNOWN => [
                 [
-                    'form' => "N",
+                    'form'   => "N",
                     'weight' => 60,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "S",
+                    'form'   => "S",
                     'weight' => 30,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "I",
+                    'form'   => "I",
                     'weight' => 8,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "E",
+                    'form'   => "E",
                     'weight' => 2,
                     'levels' => 25,
                 ],
@@ -5077,89 +5077,89 @@ return [
         EncounterType::WALKING => [
             PokedexNo::UNOWN => [
                 [
-                    'form' => "P",
+                    'form'   => "P",
                     'weight' => 40,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "J",
+                    'form'   => "J",
                     'weight' => 20,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "L",
+                    'form'   => "L",
                     'weight' => 20,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "R",
+                    'form'   => "R",
                     'weight' => 14,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "Q",
+                    'form'   => "Q",
                     'weight' => 6,
                     'levels' => 25,
                 ],
             ],
         ],
     ],
-    LocationId::TANOBY_SCUFIB_CHAMBER => [
+    LocationId::TANOBY_SCUFIB_CHAMBER  => [
         EncounterType::WALKING => [
             PokedexNo::UNOWN => [
                 [
-                    'form' => "Y",
+                    'form'   => "Y",
                     'weight' => 40,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "G",
+                    'form'   => "G",
                     'weight' => 25,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "T",
+                    'form'   => "T",
                     'weight' => 20,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "F",
+                    'form'   => "F",
                     'weight' => 13,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "K",
+                    'form'   => "K",
                     'weight' => 2,
                     'levels' => 25,
                 ],
             ],
         ],
     ],
-    LocationId::TANOBY_RIXY_CHAMBER => [
+    LocationId::TANOBY_RIXY_CHAMBER    => [
         EncounterType::WALKING => [
             PokedexNo::UNOWN => [
                 [
-                    'form' => "V",
+                    'form'   => "V",
                     'weight' => 50,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "W",
+                    'form'   => "W",
                     'weight' => 30,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "X",
+                    'form'   => "X",
                     'weight' => 10,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "M",
+                    'form'   => "M",
                     'weight' => 8,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "B",
+                    'form'   => "B",
                     'weight' => 2,
                     'levels' => 25,
                 ],
@@ -5170,12 +5170,12 @@ return [
         EncounterType::WALKING => [
             PokedexNo::UNOWN => [
                 [
-                    'form' => "Z",
+                    'form'   => "Z",
                     'weight' => 99,
                     'levels' => 25,
                 ],
                 [
-                    'form' => "!",
+                    'form'   => "!",
                     'weight' => 1,
                     'levels' => 25,
                 ],

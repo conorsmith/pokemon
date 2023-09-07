@@ -62,10 +62,10 @@ final class WeeklyHabitLogRepository
             $this->db->insert(
                 "log_weekly_review",
                 [
-                    'id' => $newEntry->id->toString(),
+                    'id'          => $newEntry->id->toString(),
                     'instance_id' => $this->instanceId->value,
                     'date_logged' => $newEntry->week->first()->format("Y-m-d") . " 12:00:00",
-                    'total' => $newEntry->value,
+                    'total'       => $newEntry->value,
                 ]
             );
         }

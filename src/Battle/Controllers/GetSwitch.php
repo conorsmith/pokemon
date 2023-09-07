@@ -24,14 +24,14 @@ final class GetSwitch
 
         $player = $this->playerRepository->findPlayer();
 
-        $teamViewModels = [];
+        $partyViewModels = [];
 
-        foreach ($player->team as $i => $pokemon) {
-            $teamViewModels[] = $this->viewModelFactory->createPokemonInBattle($pokemon);
+        foreach ($player->party as $i => $pokemon) {
+            $partyViewModels[] = $this->viewModelFactory->createPokemonInBattle($pokemon);
         }
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Switch.php", [
-            'team' => $teamViewModels,
+            'party'       => $partyViewModels,
             'redirectUrl' => $redirectUrl,
         ]));
     }
