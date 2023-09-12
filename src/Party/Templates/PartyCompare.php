@@ -91,9 +91,14 @@
         <?php endif ?>
     </table>
 </div>
+
 <script type="application/json" id="script-data"><?=$scriptData?></script>
 <script>
     const scriptData = JSON.parse(document.getElementById("script-data").innerText);
+
+    window.addEventListener("contextmenu", e => e.preventDefault());
+
+    window.addEventListener("click", e => document.querySelectorAll(".js-menu").forEach(el => el.remove()));
 
     const longPress = {
         start: function (component) {
