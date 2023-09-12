@@ -1,3 +1,5 @@
+<?php include __DIR__ . "/BottomNav.php" ?>
+
 <div class="d-grid gap-4">
 
     <style>
@@ -53,7 +55,7 @@
         </tr>
         <?php foreach ($allPokemon as $pokemon) : ?>
             <tr>
-                <td><a href="?<?=$buildQuery('filter[family]', $pokemon->pokedexNumber)?>"><?=$pokemon->name?></a></td>
+                <td><a href="?<?=$buildQuery('filter[family]', $pokemon->pokedexNumber)?>" class="js-pokemon-name" data-id="<?=$pokemon->id?>"><?=$pokemon->name?></a></td>
                 <td class="stat"><i class="fa-fw fas <?=$pokemon->sex?>"></i></td>
                 <td class="stat"><?=$pokemon->level?></td>
                 <?php if ($query->show === "effective-stats") : ?>
@@ -89,3 +91,59 @@
         <?php endif ?>
     </table>
 </div>
+<script type="application/json" id="script-data"><?=$scriptData?></script>
+<script>
+    const scriptData = JSON.parse(document.getElementById("script-data").innerText);
+
+    const longPress = {
+        start: function (component) {
+            component.isPressed = true;
+            component.timer = setTimeout(() => {
+                component.isPressed = false;
+
+                let menu = document.createElement("div");
+
+                const menuTop = component.el.getBoundingClientRect().top + window.scrollY;
+
+                menu.innerHTML = `
+                    <ul class="js-menu dropdown-menu show" style="position: absolute; top: ${menuTop}px; left: 1rem; right: 1rem;">
+                        <li><a class="dropdown-item" href="/${scriptData.instanceId}/party/member/${component.el.dataset.id}">Go to Pokémon</a></li>
+                        <li><a class="dropdown-item" href="${component.el.href}">Filter by Evolutionary Line</a></li>
+                        <li><a class="dropdown-item js-menu-cancel" href="#">Cancel</a></li>
+                    </ul>
+                `.trim();
+
+                menu.firstChild.querySelector(".js-menu-cancel").addEventListener("click", function (e) {
+                    e.preventDefault();
+                    document.querySelectorAll(".js-menu").forEach(el => el.remove());
+                });
+
+                document.querySelectorAll(".js-menu").forEach(el => el.remove());
+
+                document.body.prepend(menu.firstChild);
+            }, 1000);
+        },
+        stop: function (component) {
+            if (component.isPressed === false) {
+                return;
+            }
+
+            clearTimeout(component.timer);
+        }
+    };
+
+    document.querySelectorAll(".js-pokemon-name").forEach(function (el) {
+        const component = {
+            isPressed: false,
+            el: el
+        };
+
+        el.addEventListener("mousedown", e => longPress.start(component));
+        el.addEventListener("touchstart", e => longPress.start(component));
+
+        el.addEventListener("mouseout", e => longPress.stop(component));
+        el.addEventListener("touchend", e => longPress.stop(component));
+        el.addEventListener("touchleave", e => longPress.stop(component));
+        el.addEventListener("touchcancel", e => longPress.stop(component));
+    });
+</script>

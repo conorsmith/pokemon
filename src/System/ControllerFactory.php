@@ -61,8 +61,11 @@ use ConorSmith\Pokemon\Party\BoostPokemonEvsCommand;
 use ConorSmith\Pokemon\Party\CapturedPokemonQuery;
 use ConorSmith\Pokemon\Party\CatchPokemonCommand;
 use ConorSmith\Pokemon\Party\Controllers\GetParty;
+use ConorSmith\Pokemon\Party\Controllers\GetPartyBox;
 use ConorSmith\Pokemon\Party\Controllers\GetPartyCombinations;
 use ConorSmith\Pokemon\Party\Controllers\GetPartyCompare;
+use ConorSmith\Pokemon\Party\Controllers\GetPartyDayCare;
+use ConorSmith\Pokemon\Party\Controllers\GetPartyEggs;
 use ConorSmith\Pokemon\Party\Controllers\GetPartyItemUse;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemon;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemonBreed;
@@ -137,6 +140,9 @@ final class ControllerFactory
         $r->post("/encounter", PostEncounterGenerateAndStart::class);
         $r->post("/encounter/generate", PostEncounterGenerate::class);
         $r->get("/party", GetParty::class);
+        $r->get("/party/eggs", GetPartyEggs::class);
+        $r->get("/party/day-care", GetPartyDayCare::class);
+        $r->get("/party/box", GetPartyBox::class);
         $r->get("/party/compare", GetPartyCompare::class);
         $r->get("/party/combinations", GetPartyCombinations::class);
         $r->get("/party/member/{id}", GetPokemon::class);
@@ -354,6 +360,9 @@ final class ControllerFactory
                 ),
                 $this->templateEngine,
             ),
+            GetPartyEggs::class                  => new GetPartyEggs(),
+            GetPartyDayCare::class               => new GetPartyDayCare(),
+            GetPartyBox::class                   => new GetPartyBox(),
             GetPartyCompare::class               => new GetPartyCompare(
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->templateEngine,

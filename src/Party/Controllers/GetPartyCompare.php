@@ -66,7 +66,10 @@ final class GetPartyCompare
                 PokemonType::DRAGON,
                 PokemonType::DARK,
                 PokemonType::FAIRY,
-            ])
+            ]),
+            'scriptData'  => json_encode([
+                'instanceId' => $args['instanceId'],
+            ]),
         ]));
     }
 

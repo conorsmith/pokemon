@@ -5,6 +5,9 @@
             <div>Joined the party <?=$capture->preposition?></div>
             <div><strong><?=$capture->location?></strong> <span class="badge bg-secondary"><?=$capture->region?></span></div>
         </div>
+        <div class="d-grid mt-2">
+            <a href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/breed" class="btn btn-outline-dark ">Breed</a>
+        </div>
     </div>
     <div class="card-body" style="border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);">
         <table class="table pokemon-stats">
