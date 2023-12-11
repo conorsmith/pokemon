@@ -38,7 +38,7 @@ final class DailyHabitLogRepository
         return new DailyHabitLog(
             $habit,
             array_map(
-                fn(array $row) => CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged']),
+                fn(array $row) => CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], "Europe/Dublin"),
                 $rows
             )
         );
