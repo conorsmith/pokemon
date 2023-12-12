@@ -36,7 +36,7 @@ final class UnlimitedHabitLogRepository
             array_map(
                 fn(array $row) => new UnlimitedHabitLogEntry(
                     Uuid::fromString($row['id']),
-                    CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged']),
+                    CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], "Europe/Dublin"),
                     EntryType::from($row['type']),
                 ),
                 $rows
