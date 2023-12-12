@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Habit\Domain;
 
+use Carbon\CarbonImmutable;
+
 final class UnlimitedHabitLog
 {
     public function __construct(
@@ -75,5 +77,35 @@ final class UnlimitedHabitLog
         }
 
         return $count;
+    }
+
+
+    public function countLoggedOnDate(CarbonImmutable $givenDate): int
+    {
+        $count = 0;
+
+        /** @var UnlimitedHabitLogEntry $entry */
+        foreach ($this->entries as $entry) {
+            if ($entry->date->midDay()->equalTo($givenDate->midDay())) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
+
+    public function getEntriesOnDate(CarbonImmutable $givenDate): array
+    {
+        $entries = [];
+
+        /** @var UnlimitedHabitLogEntry $entry */
+        foreach ($this->entries as $entry) {
+            if ($entry->date->midDay()->equalTo($givenDate->midDay())) {
+                $entries[] = $entry;
+            }
+        }
+
+        return $entries;
     }
 }

@@ -8,6 +8,7 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
+use ConorSmith\Pokemon\Habit\ViewModels\Calendar;
 use ConorSmith\Pokemon\TemplateEngine;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +32,7 @@ final class GetLogExercise
             'yesterday'       => $yesterday,
             'loggedToday'     => $habitLog->countLoggedToday(),
             'loggedYesterday' => $habitLog->countLoggedYesterday(),
+            'calendar'        => Calendar::generateForUnlimitedHabitLog($habitLog),
         ]));
     }
 }

@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\Habit\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
-use ConorSmith\Pokemon\Habit\Domain\Calendar;
+use ConorSmith\Pokemon\Habit\ViewModels\Calendar;
 use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -33,7 +33,7 @@ final class GetLogFoodDiary
             'isTodayLogged'     => $habitLog->isTodayLogged(),
             'isYesterdayLogged' => $habitLog->isYesterdayLogged(),
             'streak'            => $habitLog->getStreak(),
-            'calendar'          => Calendar::generate($habitLog),
+            'calendar'          => Calendar::generateForDailyHabitLog($habitLog),
         ]));
     }
 }
