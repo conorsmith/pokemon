@@ -42,14 +42,10 @@
                                    <?=$square->isHighlighted ? "date-cell--is-highlighted" : ""?>
                                    <?=$square->isFuture ? "date-cell--is-future" : ""?>
                                   ">
-                            <?php if ($square->contents->isDateOnly) : ?>
+                            <div class="corner-date">
                                 <?=$square->contents->date?>
-                            <?php else : ?>
-                                <div class="corner-date">
-                                    <?=$square->contents->date?>
-                                </div>
-                                <?=$square->contents->additionalContent?>
-                            <?php endif ?>
+                            </div>
+                            <?=$square->contents->content?>
                         </td>
                     <?php endif ?>
                 <?php endforeach ?>

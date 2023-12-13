@@ -36,9 +36,8 @@ final class Calendar
 
                 $calendarSquare = new CalendarSquare(
                     new CalendarSquareContents(
-                        true,
                         (string) $runningDay->day,
-                        null,
+                        "&nbsp;",
                     ),
                     false,
                     $habitLog->isDateLogged($runningDay),
@@ -99,7 +98,6 @@ final class Calendar
 
                 $calendarSquare = new CalendarSquare(
                     new CalendarSquareContents(
-                        false,
                         (string) $runningDay->day,
                         match ($logCount) {
                             0 => "&nbsp;",
