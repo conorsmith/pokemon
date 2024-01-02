@@ -175,7 +175,7 @@ final class ViewModelFactory
         }
 
         $paddedPokemonId = str_pad($id, 3, "0", STR_PAD_LEFT);
-        return "https://assets.pokemon.com/assets/cms2/img/pokedex/full/{$paddedPokemonId}.png";
+        return "/assets/pokemon/{$paddedPokemonId}.png";
     }
 
     private static function createUnownImageUrl(string $form): string
