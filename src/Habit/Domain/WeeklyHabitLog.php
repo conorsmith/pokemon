@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Habit\Domain;
 
+use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
 
 final class WeeklyHabitLog
@@ -61,5 +62,17 @@ final class WeeklyHabitLog
         }
 
         return false;
+    }
+
+    public function getEntryForWeek(CarbonPeriod $givenWeek): ?WeeklyHabitLogEntry
+    {
+        /** @var WeeklyHabitLogEntry $entry */
+        foreach ($this->entries as $entry) {
+            if ($entry->week->equalTo($givenWeek)) {
+                return $entry;
+            }
+        }
+
+        return null;
     }
 }

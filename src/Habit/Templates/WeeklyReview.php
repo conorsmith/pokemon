@@ -13,4 +13,13 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
+    <table class="table">
+        <?php foreach ($listOfWeeks->weeks as $week) : ?>
+            <tr>
+                <td><?=$week->date?></td>
+                <td style="text-align: right;"><?=$week->entry?></td>
+            </tr>
+        <?php endforeach ?>
+    </table>
+
 </div>

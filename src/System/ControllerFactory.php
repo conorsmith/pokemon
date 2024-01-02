@@ -208,6 +208,7 @@ final class ControllerFactory
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
             ),
             GetLogWeeklyReview::class            => new GetLogWeeklyReview(
+                $this->repositoryFactory->create(WeeklyHabitLogRepository::class, $instanceId),
                 $this->templateEngine,
             ),
             PostLogWeeklyReview::class           => new PostLogWeeklyReview(
