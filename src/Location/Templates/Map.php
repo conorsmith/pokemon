@@ -289,8 +289,8 @@
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Legendary Encounter</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
-                    <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
-                    <span><?=$challengeTokens?></span>
+                    <img src="https://archives.bulbagarden.net/media/upload/f/f8/Bag_Oval_Charm_Sprite.png">
+                    <span><?=$ovalCharms?></span>
                 </div>
             </div>
             <ul class="list-group list-group-flush">

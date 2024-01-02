@@ -131,6 +131,7 @@ final class GetMap
             'canEncounter'    => true,
             'pokeballs'       => $bag->countAllPokeBalls(),
             'challengeTokens' => $challengeTokens,
+            'ovalCharms'      => $bag->count(ItemId::OVAL_CHARM),
             'currentLocation' => $currentLocationViewModel,
             'wildPokemon'     => $this->createWildPokemonViewModel(
                 $this->encounterConfigRepository->findEncounters($instanceRow['current_location']),
@@ -236,7 +237,7 @@ final class GetMap
             $canBattle = false;
         }
 
-        if (!$bag->has(ItemId::CHALLENGE_TOKEN)) {
+        if (!$bag->has(ItemId::OVAL_CHARM)) {
             $canBattle = false;
         }
 

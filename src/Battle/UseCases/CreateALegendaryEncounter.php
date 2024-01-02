@@ -20,7 +20,7 @@ final class CreateALegendaryEncounter
         $bag = $this->bagRepository->find();
 
         $encounter = $this->encounterRepository->generateLegendaryEncounter($legendaryPokemonNumber);
-        $bag = $bag->use(ItemId::CHALLENGE_TOKEN);
+        $bag = $bag->use(ItemId::OVAL_CHARM);
 
         $this->encounterRepository->save($encounter);
         $this->bagRepository->save($bag);
