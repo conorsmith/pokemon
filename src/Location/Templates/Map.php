@@ -4,28 +4,28 @@
             <?php if ($wildPokemon->hasEncounters) : ?>
                 <button class="navbar-toggler js-encounter-link" type="button">
                     <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
+                        <img src="/assets/items/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
                     </span>
                 </button>
             <?php endif ?>
             <?php if (count($trainers) > 0) : ?>
                 <button class="navbar-toggler js-trainers-link" type="button">
                     <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                        <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
                     </span>
                 </button>
             <?php endif ?>
             <?php if ($legendary) : ?>
                 <button class="navbar-toggler js-legendary-link" type="button">
                     <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="https://archives.bulbagarden.net/media/upload/7/7b/Bag_Star_Piece_Sprite.png">
+                        <img src="/assets/items/Bag_Star_Piece_Sprite.png">
                     </span>
                 </button>
             <?php endif ?>
             <?php if ($eliteFour) : ?>
                 <button class="navbar-toggler js-elite-four-link" type="button">
                     <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                        <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
                     </span>
                 </button>
             <?php endif ?>
@@ -205,7 +205,7 @@
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Wild Pokémon</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
-                    <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
+                    <img src="/assets/items/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
                     <span><?=$pokeballs?></span>
                 </div>
             </div>
@@ -242,7 +242,7 @@
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Trainers</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
-                    <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                    <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
                     <span><?=$challengeTokens?></span>
                 </div>
             </div>
@@ -289,7 +289,7 @@
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Legendary Encounter</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
-                    <img src="https://archives.bulbagarden.net/media/upload/f/f8/Bag_Oval_Charm_Sprite.png">
+                    <img src="/assets/items/Bag_Oval_Charm_Sprite.png">
                     <span><?=$ovalCharms?></span>
                 </div>
             </div>
@@ -327,7 +327,7 @@
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Elite Four</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
-                    <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                    <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
                     <span><?=$challengeTokens?></span>
                 </div>
             </div>

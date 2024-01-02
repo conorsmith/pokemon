@@ -10,24 +10,24 @@
 
 <div class="d-flex gap-3 justify-content-between">
     <div>
-        <img src="https://archives.bulbagarden.net/media/upload/d/d0/FRLG_Red_Intro.png">
+        <img src="/assets/FRLG_Red_Intro.png">
     </div>
     <div class="card flex-grow-1 bagSummary">
         <div class="card-body d-flex justify-content-between px-4">
             <div class="d-flex gap-1 flex-column align-items-center">
-                <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png">
+                <img src="/assets/items/Bag_Pok%C3%A9_Ball_Sprite.png">
                 <?=$bagSummary->pokeBalls?>
             </div>
             <div class="d-flex gap-1 flex-column align-items-center">
-                <img src="https://archives.bulbagarden.net/media/upload/8/8d/Bag_Rare_Candy_Sprite.png">
+                <img src="/assets/items/Bag_Rare_Candy_Sprite.png">
                 <?=$bagSummary->rareCandy?>
             </div>
             <div class="d-flex gap-1 flex-column align-items-center">
-                <img src="https://archives.bulbagarden.net/media/upload/c/c4/Bag_Contest_Pass_Sprite.png">
+                <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
                 <?=$bagSummary->challengeTokens?>
             </div>
             <div class="d-flex gap-1 flex-column align-items-center">
-                <img src="https://archives.bulbagarden.net/media/upload/f/f8/Bag_Oval_Charm_Sprite.png">
+                <img src="/assets/items/Bag_Oval_Charm_Sprite.png">
                 <?=$bagSummary->ovalCharms?>
             </div>
         </div>
@@ -38,7 +38,7 @@
 <div class="card mt-3" style="font-size: 0.875rem;">
     <div class="card-body d-flex gap-2 align-items-center py-2">
         <div>
-            <img src="https://archives.bulbagarden.net/media/upload/c/c7/Bag_Town_Map_Sprite.png">
+            <img src="/assets/items/Bag_Town_Map_Sprite.png">
         </div>
         <div class="flex-grow-1">
             <div><?=$location->name?></div>

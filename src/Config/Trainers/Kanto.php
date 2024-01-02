@@ -16,7 +16,7 @@ return [
             'id'           => "5f56e328-457b-4327-8100-1a452d9dc013",
             'class'        => TrainerClass::RETIRED_TRAINER,
             'name'         => "Blue",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/1/10/Spr_FRLG_Blue_3.png",
+            'imageUrl'     => "/assets/trainers/Spr_FRLG_Blue_3.png",
             'prerequisite' => [
                 'victory' => RegionId::KANTO,
             ],
@@ -216,7 +216,7 @@ return [
             'name'   => "Giovanni",
             'leader' => [
                 'badge'    => GymBadge::EARTH,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/41/Spr_FRLG_Giovanni.png",
+                'imageUrl' => "/assets/trainers/Spr_FRLG_Giovanni.png",
             ],
             'party'  => [
                 [
@@ -345,7 +345,7 @@ return [
             'name'   => "Brock",
             'leader' => [
                 'badge'    => GymBadge::BOULDER,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/7/7c/Spr_FRLG_Brock.png",
+                'imageUrl' => "/assets/trainers/Spr_FRLG_Brock.png",
             ],
             'party'  => [
                 [
@@ -744,7 +744,7 @@ return [
             'name'   => "Misty",
             'leader' => [
                 'badge'    => GymBadge::CASCADE,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/2c/Spr_FRLG_Misty.png",
+                'imageUrl' => "/assets/trainers/Spr_FRLG_Misty.png",
             ],
             'party'  => [
                 [
@@ -1153,7 +1153,7 @@ return [
             'name'   => "Lt. Surge",
             'leader' => [
                 'badge'    => GymBadge::THUNDER,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/5/5c/Spr_FRLG_Lt_Surge.png",
+                'imageUrl' => "/assets/trainers/Spr_FRLG_Lt_Surge.png",
             ],
             'party'  => [
                 [
@@ -2648,7 +2648,7 @@ return [
             'name'   => "Erika",
             'leader' => [
                 'badge'    => GymBadge::RAINBOW,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/c9/Spr_FRLG_Erika.png",
+                'imageUrl' => "/assets/trainers/Spr_FRLG_Erika.png",
             ],
             'party'  => [
                 [
@@ -4062,7 +4062,7 @@ return [
             'name'   => "Koga",
             'leader' => [
                 'badge'    => GymBadge::SOUL,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/0/02/Spr_FRLG_Koga.png",
+                'imageUrl' => "/assets/trainers/Spr_FRLG_Koga.png",
             ],
             'party'  => [
                 [
@@ -4208,7 +4208,7 @@ return [
             'name'   => "Sabrina",
             'leader' => [
                 'badge'    => GymBadge::MARSH,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/dd/Spr_FRLG_Sabrina.png",
+                'imageUrl' => "/assets/trainers/Spr_FRLG_Sabrina.png",
             ],
             'party'  => [
                 [
@@ -5338,7 +5338,7 @@ return [
             'name'   => "Blaine",
             'leader' => [
                 'badge'    => GymBadge::VOLCANO,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/6/6d/Spr_FRLG_Blaine.png",
+                'imageUrl' => "/assets/trainers/Spr_FRLG_Blaine.png",
             ],
             'party'  => [
                 [
@@ -5921,7 +5921,7 @@ return [
             'id'           => "3be7e165-f553-41c7-87ee-37389aaeea82",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Lorelei",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/d/db/Spr_FRLG_Lorelei.png",
+            'imageUrl'     => "/assets/trainers/Spr_FRLG_Lorelei.png",
             'prerequisite' => [
                 'champion' => RegionId::KANTO,
             ],
@@ -5957,7 +5957,7 @@ return [
             'id'           => "b09db16b-eba5-4821-abe1-b287646f7ed3",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Bruno",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/f/f7/Spr_FRLG_Bruno.png",
+            'imageUrl'     => "/assets/trainers/Spr_FRLG_Bruno.png",
             'prerequisite' => [
                 'champion' => RegionId::KANTO,
             ],
@@ -5993,7 +5993,7 @@ return [
             'id'           => "bdefb7de-7234-4f42-bd0f-8d7254ae7f08",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Agatha",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/5/56/Spr_FRLG_Agatha.png",
+            'imageUrl'     => "/assets/trainers/Spr_FRLG_Agatha.png",
             'prerequisite' => [
                 'champion' => RegionId::KANTO,
             ],
@@ -6029,7 +6029,7 @@ return [
             'id'           => "2e3067a1-dcf6-4e39-8a3f-9fd12af58683",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Lance",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/f/fb/Spr_FRLG_Lance.png",
+            'imageUrl'     => "/assets/trainers/Spr_FRLG_Lance.png",
             'prerequisite' => [
                 'champion' => RegionId::KANTO,
             ],
@@ -6067,7 +6067,7 @@ return [
             'id'           => "5daee68c-acf7-469b-8f55-5588b23817eb",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Will",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/f/fd/Spr_HGSS_Will.png",
+            'imageUrl'     => "/assets/trainers/Spr_HGSS_Will.png",
             'prerequisite' => [
                 'champion' => RegionId::JOHTO,
             ],
@@ -6108,7 +6108,7 @@ return [
             'id'           => "2284432e-1259-44c6-8547-db5814fe4a42",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Koga",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/1/18/Spr_HGSS_Koga.png",
+            'imageUrl'     => "/assets/trainers/Spr_HGSS_Koga.png",
             'prerequisite' => [
                 'champion' => RegionId::JOHTO,
             ],
@@ -6149,7 +6149,7 @@ return [
             'id'           => "47f575f1-5941-481a-afc5-ca30416c0998",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Bruno",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/e/ee/Spr_HGSS_Bruno.png",
+            'imageUrl'     => "/assets/trainers/Spr_HGSS_Bruno.png",
             'prerequisite' => [
                 'champion' => RegionId::JOHTO,
             ],
@@ -6190,7 +6190,7 @@ return [
             'id'           => "5a2d94f2-4a50-4c24-8e8d-d7ea571fef91",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Karen",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/a/a2/Spr_HGSS_Karen.png",
+            'imageUrl'     => "/assets/trainers/Spr_HGSS_Karen.png",
             'prerequisite' => [
                 'champion' => RegionId::JOHTO,
             ],

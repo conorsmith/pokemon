@@ -136,7 +136,7 @@
                 <?php foreach ($eggs->slots as $slot) : ?>
                     <li class="list-group-item d-flex align-items-center">
                         <div>
-                            <img src="https://archives.bulbagarden.net/media/upload/d/dc/Spr_3r_Egg.png">
+                            <img src="/assets/Spr_3r_Egg.png">
                         </div>
                         <div>
                             <div>

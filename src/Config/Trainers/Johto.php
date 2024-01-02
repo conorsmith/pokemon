@@ -254,7 +254,7 @@ return [
             'id'           => "112a90fc-9f7e-43b4-a7f8-5cc6f451b2f1",
             'class'        => TrainerClass::RETIRED_TRAINER,
             'name'         => "Red",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/e/e8/Spr_HGSS_Red.png",
+            'imageUrl'     => "/assets/trainers/Spr_HGSS_Red.png",
             'prerequisite' => [
                 'victory' => RegionId::JOHTO,
             ],
@@ -405,7 +405,7 @@ return [
             'name'   => "Falkner",
             'leader' => [
                 'badge'    => GymBadge::ZEPHYR,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/2b/Spr_HGSS_Falkner.png",
+                'imageUrl' => "/assets/trainers/Spr_HGSS_Falkner.png",
             ],
             'party'  => [
                 [
@@ -537,7 +537,7 @@ return [
             'id'       => "aa4adde3-4885-4470-9834-1f30bc2d9351",
             'class'    => TrainerClass::ELDER,
             'name'     => "Li",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/f3/Spr_HGSS_Li.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Li.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::BELLSPROUT,
@@ -993,7 +993,7 @@ return [
             'id'       => "7224e587-d77c-4fcc-98b0-b66fe0237b5e",
             'class'    => TrainerClass::TEAM_ROCKET_ADMIN,
             'name'     => "Proton",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/8f/Spr_HGSS_Proton.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Proton.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::ZUBAT,
@@ -1083,7 +1083,7 @@ return [
             'name'   => "Bugsy",
             'leader' => [
                 'badge'    => GymBadge::HIVE,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/b6/Spr_HGSS_Bugsy.png",
+                'imageUrl' => "/assets/trainers/Spr_HGSS_Bugsy.png",
             ],
             'party'  => [
                 [
@@ -1755,7 +1755,7 @@ return [
             'id'       => "4266e83a-ec9a-4adc-8599-e770f7ccbf7c",
             'class'    => TrainerClass::TEAM_ROCKET_ADMIN,
             'name'     => "Proton",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/8f/Spr_HGSS_Proton.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Proton.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::GOLBAT,
@@ -1775,7 +1775,7 @@ return [
             'id'       => "30a87326-a481-485e-94df-c72a0b27c8c2",
             'class'    => TrainerClass::TEAM_ROCKET_ADMIN,
             'name'     => "Petrel",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/9/96/Spr_HGSS_Petrel.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Petrel.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::KOFFING,
@@ -1813,7 +1813,7 @@ return [
             'id'       => "c0b3092f-813b-48e0-91dc-64119491879c",
             'class'    => TrainerClass::TEAM_ROCKET_ADMIN,
             'name'     => "Ariana",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/20/Spr_HGSS_Ariana.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Ariana.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::ARBOK,
@@ -1838,7 +1838,7 @@ return [
             'id'       => "a059bd40-8526-4004-a851-b5358940f42e",
             'class'    => TrainerClass::TEAM_ROCKET_ADMIN,
             'name'     => "Archer",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/3/3b/Spr_HGSS_Archer.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Archer.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::HOUNDOUR,
@@ -1938,7 +1938,7 @@ return [
             'name'   => "Whitney",
             'leader' => [
                 'badge'    => GymBadge::PLAIN,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/fc/Spr_HGSS_Whitney.png",
+                'imageUrl' => "/assets/trainers/Spr_HGSS_Whitney.png",
             ],
             'party'  => [
                 [
@@ -2394,7 +2394,7 @@ return [
             'name'   => "Morty",
             'leader' => [
                 'badge'    => GymBadge::FOG,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/c/ca/Spr_HGSS_Morty.png",
+                'imageUrl' => "/assets/trainers/Spr_HGSS_Morty.png",
             ],
             'party'  => [
                 [
@@ -2690,7 +2690,7 @@ return [
             'name'   => "Jasmine",
             'leader' => [
                 'badge'    => GymBadge::MINERAL,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/44/Spr_HGSS_Jasmine.png",
+                'imageUrl' => "/assets/trainers/Spr_HGSS_Jasmine.png",
             ],
             'party'  => [
                 [
@@ -3777,7 +3777,7 @@ return [
             'name'   => "Chuck",
             'leader' => [
                 'badge'    => GymBadge::STORM,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/f/fd/Spr_HGSS_Chuck.png",
+                'imageUrl' => "/assets/trainers/Spr_HGSS_Chuck.png",
             ],
             'party'  => [
                 [
@@ -4077,7 +4077,7 @@ return [
             'name'   => "Pryce",
             'leader' => [
                 'badge'    => GymBadge::GLACIER,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/4/43/Spr_HGSS_Pryce.png",
+                'imageUrl' => "/assets/trainers/Spr_HGSS_Pryce.png",
             ],
             'party'  => [
                 [
@@ -4244,7 +4244,7 @@ return [
             'id'       => "cc5a37ca-d0e7-434b-90b3-24b947a6cb47",
             'class'    => TrainerClass::TEAM_ROCKET_ADMIN,
             'name'     => "Ariana",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/2/20/Spr_HGSS_Ariana.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Ariana.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::ARBOK,
@@ -4337,7 +4337,7 @@ return [
             'id'       => "beca3a8f-dfa6-450f-a609-467f19c18b72",
             'class'    => TrainerClass::TEAM_ROCKET_ADMIN,
             'name'     => "Petrel",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/9/96/Spr_HGSS_Petrel.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Petrel.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::ZUBAT,
@@ -4461,7 +4461,7 @@ return [
             'id'           => "f584b3d5-99b1-45db-acce-82a07db2368c",
             'class'        => TrainerClass::RETIRED_TRAINER,
             'name'         => "Lance",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/1/1f/Spr_HGSS_Lance.png",
+            'imageUrl'     => "/assets/trainers/Spr_HGSS_Lance.png",
             'prerequisite' => [
                 'victory' => RegionId::JOHTO,
             ],
@@ -4794,7 +4794,7 @@ return [
             'name'   => "Clair",
             'leader' => [
                 'badge'    => GymBadge::RISING,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/d7/Spr_HGSS_Clair.png",
+                'imageUrl' => "/assets/trainers/Spr_HGSS_Clair.png",
             ],
             'party'  => [
                 [
@@ -4868,7 +4868,7 @@ return [
             'id'       => "f697ceaf-4de9-4b07-bbb9-9178fbbfef1d",
             'class'    => TrainerClass::GYM_LEADER,
             'name'     => "Clair",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/d/d7/Spr_HGSS_Clair.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Clair.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::DRAGONAIR,
@@ -4891,7 +4891,7 @@ return [
             'id'       => "1bc9ef4a-321d-43f4-8664-954c2c3f4e9a",
             'class'    => TrainerClass::POKEMON_TRAINER,
             'name'     => "Lance",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/1f/Spr_HGSS_Lance.png",
+            'imageUrl' => "/assets/trainers/Spr_HGSS_Lance.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::GYARADOS,

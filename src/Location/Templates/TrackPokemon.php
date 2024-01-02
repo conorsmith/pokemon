@@ -30,7 +30,7 @@
                 <strong>Tracking Wild Pokémon</strong>
             </div>
             <div class="d-flex" style="text-align: center; gap: 4px;">
-                <img src="https://archives.bulbagarden.net/media/upload/9/93/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
+                <img src="/assets/items/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
                 <span><?=$pokeballs?></span>
             </div>
         </div>

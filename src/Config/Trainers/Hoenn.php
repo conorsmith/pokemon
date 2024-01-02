@@ -290,7 +290,7 @@ return [
             'name'   => "Norman",
             'leader' => [
                 'badge'    => GymBadge::BALANCE,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/7/75/Spr_RS_Norman.png",
+                'imageUrl' => "/assets/trainers/Spr_RS_Norman.png",
             ],
             'party'  => [
                 [
@@ -526,7 +526,7 @@ return [
             'name'   => "Roxanne",
             'leader' => [
                 'badge'    => GymBadge::STONE,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/e/ef/Spr_RS_Roxanne.png",
+                'imageUrl' => "/assets/trainers/Spr_RS_Roxanne.png",
             ],
             'party'  => [
                 [
@@ -901,7 +901,7 @@ return [
             'name'   => "Brawly",
             'leader' => [
                 'badge'    => GymBadge::KNUCKLE,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/9/92/Spr_RS_Brawly.png",
+                'imageUrl' => "/assets/trainers/Spr_RS_Brawly.png",
             ],
             'party'  => [
                 [
@@ -1589,7 +1589,7 @@ return [
             'name'   => "Wattson",
             'leader' => [
                 'badge'    => GymBadge::DYNAMO,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/b2/Spr_RS_Wattson.png",
+                'imageUrl' => "/assets/trainers/Spr_RS_Wattson.png",
             ],
             'party'  => [
                 [
@@ -1796,7 +1796,7 @@ return [
             'id'       => "c68def86-3458-443b-9935-8833fa3502ba",
             'class'    => TrainerClass::WINSTRATE,
             'name'     => "Victor",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/a/a3/Spr_RS_Pok%C3%A9fan_M.png",
+            'imageUrl' => "/assets/trainers/Spr_RS_Pok%C3%A9fan_M.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::TAILLOW,
@@ -1814,7 +1814,7 @@ return [
             'id'       => "838fdbfd-f781-4bc2-8f74-f83dc1e737ca",
             'class'    => TrainerClass::WINSTRATE,
             'name'     => "Victoria",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/6/63/Spr_RS_Pok%C3%A9fan_F.png",
+            'imageUrl' => "/assets/trainers/Spr_RS_Pok%C3%A9fan_F.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::ROSELIA,
@@ -1827,7 +1827,7 @@ return [
             'id'       => "42d89575-299a-41a0-a736-f3628d75f4f8",
             'class'    => TrainerClass::WINSTRATE,
             'name'     => "Vivi",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/1/16/Spr_RS_Lass.png",
+            'imageUrl' => "/assets/trainers/Spr_RS_Lass.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::MARILL,
@@ -1850,7 +1850,7 @@ return [
             'id'       => "4753554e-0ed7-4791-8a60-f4fad0ae6112",
             'class'    => TrainerClass::WINSTRATE,
             'name'     => "Vicky",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/6/66/Spr_RS_Expert_F.png",
+            'imageUrl' => "/assets/trainers/Spr_RS_Expert_F.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::MEDITITE,
@@ -2529,7 +2529,7 @@ return [
             'name'   => "Flannery",
             'leader' => [
                 'badge'    => GymBadge::HEAT,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/be/Spr_RS_Flannery.png",
+                'imageUrl' => "/assets/trainers/Spr_RS_Flannery.png",
             ],
             'party'  => [
                 [
@@ -2855,7 +2855,7 @@ return [
             'id'           => "2616e52a-60a0-4545-89dd-e8e7fe09fa23",
             'class'        => TrainerClass::RETIRED_TRAINER,
             'name'         => "Steven",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/a/ad/Spr_RS_Steven.png",
+            'imageUrl'     => "/assets/trainers/Spr_RS_Steven.png",
             'prerequisite' => [
                 'victory' => RegionId::HOENN,
             ],
@@ -3727,7 +3727,7 @@ return [
             'name'   => "Winona",
             'leader' => [
                 'badge'    => GymBadge::FEATHER,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/0/0e/Spr_RS_Winona.png",
+                'imageUrl' => "/assets/trainers/Spr_RS_Winona.png",
             ],
             'party'  => [
                 [
@@ -4917,7 +4917,7 @@ return [
             'name'   => "Tate & Liza",
             'leader' => [
                 'badge'    => GymBadge::MIND,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/3/38/Spr_RS_Tate_and_Liza.png",
+                'imageUrl' => "/assets/trainers/Spr_RS_Tate_and_Liza.png",
             ],
             'party'  => [
                 [
@@ -5244,7 +5244,7 @@ return [
             'name'   => "Wallace",
             'leader' => [
                 'badge'    => GymBadge::RAIN,
-                'imageUrl' => "https://archives.bulbagarden.net/media/upload/b/b1/Spr_RS_Wallace.png",
+                'imageUrl' => "/assets/trainers/Spr_RS_Wallace.png",
             ],
             'party'  => [
                 [
@@ -6430,7 +6430,7 @@ return [
             'id'       => "d42e3fb1-6bdf-4197-9eec-b1a3fc91a33d",
             'class'    => TrainerClass::POKEMON_TRAINER,
             'name'     => "Wally",
-            'imageUrl' => "https://archives.bulbagarden.net/media/upload/8/87/Spr_RS_Wally.png",
+            'imageUrl' => "/assets/trainers/Spr_RS_Wally.png",
             'party'    => [
                 [
                     'id'    => PokedexNo::ALTARIA,
@@ -6455,7 +6455,7 @@ return [
             'id'           => "7845d843-b393-4e84-9168-4bf21ad9e749",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Sidney",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/8/86/Spr_RS_Sidney.png",
+            'imageUrl'     => "/assets/trainers/Spr_RS_Sidney.png",
             'prerequisite' => [
                 'champion' => RegionId::HOENN,
             ],
@@ -6491,7 +6491,7 @@ return [
             'id'           => "c87a71ed-f63d-4a77-bb2a-5880766d05a9",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Phoebe",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/e/e6/Spr_RS_Phoebe.png",
+            'imageUrl'     => "/assets/trainers/Spr_RS_Phoebe.png",
             'prerequisite' => [
                 'champion' => RegionId::HOENN,
             ],
@@ -6527,7 +6527,7 @@ return [
             'id'           => "396cff05-6033-455e-bf6a-b64fb3a2dbf9",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Glacia",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/7/71/Spr_RS_Glacia.png",
+            'imageUrl'     => "/assets/trainers/Spr_RS_Glacia.png",
             'prerequisite' => [
                 'champion' => RegionId::HOENN,
             ],
@@ -6563,7 +6563,7 @@ return [
             'id'           => "72f47c8b-af0b-4434-9413-e4de5a6cb76e",
             'class'        => TrainerClass::ELITE_FOUR,
             'name'         => "Drake",
-            'imageUrl'     => "https://archives.bulbagarden.net/media/upload/0/04/Spr_RS_Drake.png",
+            'imageUrl'     => "/assets/trainers/Spr_RS_Drake.png",
             'prerequisite' => [
                 'champion' => RegionId::HOENN,
             ],

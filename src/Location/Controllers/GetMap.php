@@ -160,12 +160,12 @@ final class GetMap
         return (object) [
             'imageUrl' => $mapImageUrl,
             'class'    => match ($mapImageUrl) {
-                "https://archives.bulbagarden.net/media/upload/a/a9/Kanto_Victory_Road_Map.png" => "map--kanto-victory-road",
-                "https://archives.bulbagarden.net/media/upload/5/5b/Kanto_Route_28_Map.png"     => "map--kanto-johto-border",
-                "https://archives.bulbagarden.net/media/upload/9/95/Johto_Mt_Silver_Map.png"    => "map--kanto-johto-border",
-                "https://archives.bulbagarden.net/media/upload/4/46/Kanto_Route_27_Map.png"     => "map--kanto-johto-border",
-                "https://archives.bulbagarden.net/media/upload/7/77/Kanto_Tohjo_Falls_Map.png"  => "map--kanto-johto-border",
-                default                                                                         => "",
+                "/assets/maps/Kanto_Victory_Road_Map.png" => "map--kanto-victory-road",
+                "/assets/maps/Kanto_Route_28_Map.png"     => "map--kanto-johto-border",
+                "/assets/maps/Johto_Mt_Silver_Map.png"    => "map--kanto-johto-border",
+                "/assets/maps/Kanto_Route_27_Map.png"     => "map--kanto-johto-border",
+                "/assets/maps/Kanto_Tohjo_Falls_Map.png"  => "map--kanto-johto-border",
+                default                                   => "",
             },
         ];
     }
