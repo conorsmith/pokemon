@@ -4,12 +4,16 @@
 
     <form method="POST" class="d-grid gap-2">
 
-        <div class="mb-3">
+        <div class="mb-3 form-floating">
+            <input type="number" class="form-control" name="total" placeholder="0">
             <label for="exampleFormControlInput1" class="form-label">Aggregate Calorie Goal Misses</label>
-            <input type="number" class="form-control" name="total">
         </div>
 
-        <input type="date" name="date" class="form-control" value="<?=$lastMonday?>">
+        <div class="mb-3 form-floating">
+            <input type="date" name="date" class="form-control" value="<?=$lastMonday?>">
+            <label for="exampleFormControlInput1" class="form-label">Week starting</label>
+        </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 

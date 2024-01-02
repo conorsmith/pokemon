@@ -20,6 +20,7 @@ final class ListOfWeeks
 
         $runningMonday = $today->isMonday() ? $today : $today->previous("Monday");
         $runningMonday = $runningMonday->midDay();
+        $runningMonday = $runningMonday->subWeek();
 
         $weeks = [];
 
@@ -30,7 +31,7 @@ final class ListOfWeeks
             );
 
             $weeks[] = new ListWeek(
-                $runningMonday->format("Y-m-d"),
+                $runningMonday->format("Y-m-d") . " - " . $runningMonday->addDays(6)->format("Y-m-d"),
                 is_null($entry) ? "&mdash;" : number_format($entry->value),
             );
 
