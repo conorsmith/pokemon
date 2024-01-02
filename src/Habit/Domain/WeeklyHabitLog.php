@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Habit\Domain;
 
-use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
 
 final class WeeklyHabitLog

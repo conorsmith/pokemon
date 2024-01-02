@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Habit\Repositories;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
+use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Domain\WeeklyHabitLog;
 use ConorSmith\Pokemon\Habit\Domain\WeeklyHabitLogEntry;
@@ -37,8 +38,8 @@ final class WeeklyHabitLogRepository
                 fn(array $row) => new WeeklyHabitLogEntry(
                     Uuid::fromString($row['id']),
                     CarbonPeriod::between(
-                        CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged']),
-                        CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'])->addDays(6),
+                        CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], new CarbonTimeZone("Europe/Dublin")),
+                        CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], new CarbonTimeZone("Europe/Dublin"))->addDays(6),
                     ),
                     intval($row['total']),
                 ),
