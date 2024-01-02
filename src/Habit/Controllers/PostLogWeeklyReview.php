@@ -55,7 +55,7 @@ final class PostLogWeeklyReview
 
         if ($weeklyHabitLog->isWeekLogged($submittedWeek)) {
             $formattedDate = $mondayOfSubmittedWeek->format("Y-m-d");
-            $this->session->getFlashBag()->add("errors", "Week of '{$formattedDate}' has already been logged");
+            $this->session->getFlashBag()->add("errors", "Week starting '{$formattedDate}' has already been logged");
             return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
         }
 

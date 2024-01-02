@@ -19,7 +19,7 @@
                 <?php else : ?>
                     <i class="far fa-fw fa-circle" style="color: #aaa; font-size: 1rem;"></i>
                 <?php endif ?>
-                <?=$opponentPokemon->name?>
+                <span class="js-name"><?=$opponentPokemon->name?></span>
                 <span class="js-sex pokemon-sex">
                     <?php if ($opponentPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::FEMALE) : ?>
                         <i class="fas fa-venus"></i>
@@ -120,7 +120,7 @@
         </div>
         <div style="flex-grow: 1">
             <h5>
-                <?=$playerPokemon->name?>
+                <span class="js-name"><?=$playerPokemon->name?></span>
                 <span class="js-sex pokemon-sex">
                     <?php if ($playerPokemon->sex === \ConorSmith\Pokemon\SharedKernel\Domain\Sex::FEMALE) : ?>
                         <i class="fas fa-venus"></i>

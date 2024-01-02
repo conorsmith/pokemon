@@ -64,11 +64,11 @@ final class Simulate
 
         $result = $useCase->run($args[0], $args[1]);
 
-        if (is_null($result)) {
+        if ($result->wasDraw) {
             echo "It's a draw!" . PHP_EOL;
 
         } else {
-            echo "The winner is " . TrainerClass::getLabel($result->class) . " " . $result->name . PHP_EOL;
+            echo "The winner is " . TrainerClass::getLabel($result->getWinningTrainer()->class) . " " . $result->getWinningTrainer()->name . PHP_EOL;
         }
     }
 }

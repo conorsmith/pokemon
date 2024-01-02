@@ -28,7 +28,7 @@ final class ResultOfGeneratingAChallenge
     public function getRegionId(): RegionId
     {
         if (!$this->wasGenerated) {
-            throw new LogicException;
+            throw new LogicException();
         }
 
         return $this->regionId;
@@ -37,7 +37,7 @@ final class ResultOfGeneratingAChallenge
     public function getTrainerId(): string
     {
         if (!$this->wasGenerated) {
-            throw new LogicException;
+            throw new LogicException();
         }
 
         return $this->trainerId;

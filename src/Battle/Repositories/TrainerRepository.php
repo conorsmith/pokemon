@@ -92,38 +92,40 @@ class TrainerRepository
         return $trainers;
     }
 
-    public function findTrainersInRegion(RegionId $regionId): array
+    public function findRandomTrainerFromRegion(RegionId $regionId): Trainer
     {
-        $config = $this->trainerConfigRepository->findTrainersInRegion($regionId);
+        $config = array_values($this->trainerConfigRepository->findTrainersInRegion($regionId));
 
-        $trainers = [];
+        for ($i = 0; $i < 100; $i++) {
 
-        foreach ($config as $locationEntries) {
-            foreach ($locationEntries as $entry) {
+            $randomLocationKey = RandomNumberGenerator::generateInRange(
+                array_keys($config)[0],
+                array_keys($config)[count($config) - 1],
+            );
 
-                if (array_key_exists('prerequisite', $entry)
-                    && array_key_exists('victory', $entry['prerequisite'])
-                ) {
-                    $eliteFourChallenge = $this->eliteFourChallengeRepository->findPlayerVictoryInRegion($entry['prerequisite']['victory']);
-                    if (is_null($eliteFourChallenge)) {
-                        continue;
-                    }
-                }
+            $randomTrainerKey = RandomNumberGenerator::generateInRange(
+                array_keys($config[$randomLocationKey])[0],
+                array_keys($config[$randomLocationKey])[count($config[$randomLocationKey]) - 1],
+            );
 
-                if (array_key_exists('prerequisite', $entry)
-                    && array_key_exists('champion', $entry['prerequisite'])
-                ) {
-                    $leagueChampion = $this->leagueChampionRepository->find($entry['prerequisite']['champion']);
-                    if (!$leagueChampion->isPlayer()) {
-                        continue;
-                    }
-                }
+            $entry = $config[$randomLocationKey][$randomTrainerKey];
 
-                $trainers[] = $this->findTrainerByTrainerId($entry['id']);
+            if (array_key_exists('prerequisite', $entry)
+                && array_key_exists('victory', $entry['prerequisite'])
+            ) {
+                continue;
             }
+
+            if (array_key_exists('prerequisite', $entry)
+                && array_key_exists('champion', $entry['prerequisite'])
+            ) {
+                continue;
+            }
+
+            return $this->findTrainerByTrainerId($entry['id']);
         }
 
-        return $trainers;
+        throw new RuntimeException("100 attempts to find a valid trainer failed");
     }
 
     private function createTrainer(string $trainerId, bool $isBattling): Trainer

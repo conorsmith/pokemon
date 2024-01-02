@@ -18,7 +18,7 @@ final class SimulateABattle
         private readonly EventFactory $eventFactory,
     ) {}
 
-    public function run(string $trainerAId, string $trainerBId): ?Trainer
+    public function run(string $trainerAId, string $trainerBId): ResultOfSimulatingABattle
     {
         $trainerA = $this->trainerRepository->findTrainerByTrainerId($trainerAId);
         $trainerB = $this->trainerRepository->findTrainerByTrainerId($trainerBId);
@@ -48,13 +48,13 @@ final class SimulateABattle
         $this->trainerRepository->saveTrainer($trainerB);
 
         if ($trainerB->hasEntirePartyFainted()) {
-            return $trainerA;
+            return ResultOfSimulatingABattle::victor($trainerA, $trainerB);
 
         } elseif ($trainerA->hasEntirePartyFainted()) {
-            return $trainerB;
+            return ResultOfSimulatingABattle::victor($trainerB, $trainerA);
 
         } else {
-            return null;
+            return ResultOfSimulatingABattle::draw();
         }
     }
 
