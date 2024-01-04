@@ -33,12 +33,16 @@ final class SimulateABattle
     public function run(?string $trainerAId, ?string $trainerBId): ResultOfSimulatingABattle
     {
         if (is_null($trainerAId)) {
-            $trainerA = $this->randomlyGenerateTrainer();
+            $trainerA = $this->randomlyGenerateTrainer(
+                RandomNumberGenerator::generateInRange(10, 100),
+            );
         } else {
             $trainerA = $this->trainerRepository->findTrainerByTrainerId($trainerAId);
         }
         if (is_null($trainerBId)) {
-            $trainerB = $this->randomlyGenerateTrainer();
+            $trainerB = $this->randomlyGenerateTrainer(
+                self::findHighestLevelOfPartyMembers($trainerA),
+            );
         } else {
             $trainerB = $this->trainerRepository->findTrainerByTrainerId($trainerBId);
         }
@@ -149,7 +153,7 @@ final class SimulateABattle
         echo PHP_EOL;
     }
 
-    private function randomlyGenerateTrainer(): Trainer
+    private function randomlyGenerateTrainer(int $opponentHighestLevel): Trainer
     {
         $faker = Factory::create();
 
@@ -157,13 +161,16 @@ final class SimulateABattle
         $randomTrainerClassKey = RandomNumberGenerator::generateInRange(0, count($trainerClasses) - 1);
         $trainerClass = $trainerClasses[$randomTrainerClassKey];
 
-        $playerMaxLevel = 100;
-
-        $anchorLevel = RandomNumberGenerator::generateInRange(10, $playerMaxLevel + 5);
+        $anchorLevel = RandomNumberGenerator::generateInRange(
+            $opponentHighestLevel - 10,
+            $opponentHighestLevel + 10,
+        );
 
         $party = [];
 
-        for ($i = 0; $i < RandomNumberGenerator::generateInRange(1, 6); $i++) {
+        $partySize = 6;
+
+        for ($i = 0; $i < $partySize; $i++) {
             $party[] = $this->randomlyGeneratePokemon($trainerClass, $anchorLevel);
         }
 
@@ -284,5 +291,19 @@ final class SimulateABattle
         }
 
         throw new Exception;
+    }
+
+    private static function findHighestLevelOfPartyMembers(Trainer $trainer): int
+    {
+        $max = 0;
+
+        /** @var Pokemon $partyMember */
+        foreach ($trainer->party as $partyMember) {
+            if ($partyMember->level > $max) {
+                $max = $partyMember->level;
+            }
+        }
+
+        return $max;
     }
 }

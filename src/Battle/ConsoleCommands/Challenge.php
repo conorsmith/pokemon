@@ -66,7 +66,8 @@ final class Challenge
                     new EventFactory(
                         new ViewModelFactory(require __DIR__ . "/../../../src/Config/Pokedex.php"),
                         new PokedexConfigRepository(),
-                    )
+                    ),
+                    require __DIR__ . "/../../../src/Config/Pokedex.php",
                 )
             );
 
