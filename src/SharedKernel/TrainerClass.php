@@ -7,6 +7,7 @@ namespace ConorSmith\Pokemon\SharedKernel;
 use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use LogicException;
+use ReflectionClass;
 
 final class TrainerClass
 {
@@ -96,9 +97,12 @@ final class TrainerClass
     public const ELDER = "69624863-15ca-44b1-839c-0591f03ee7f6";
     public const RIVAL = "7e87dafe-b95e-4ca7-9f30-d37aa1bb51f8";
     public const DOUBLE_TEAM = "8f741e23-4115-491d-b526-5ef4966183f6";
-    public const FAIRY_TALE_GIRL = "22f343d7-dd1a-4d1b-b634-4ddb0292753b";
-    public const MYSTERIOUS_SISTERS = "22f343d7-dd1a-4d1b-b634-4ddb0292753b";
-    public const BACKPACKER = "b05a7721-a380-4fd7-a3dc-0c4045acd835";
+
+    public static function all(): array
+    {
+        $reflector = new ReflectionClass(TrainerClass::class);
+        return array_values($reflector->getConstants());
+    }
 
     public static function getLabel(string $id): string
     {
@@ -188,7 +192,8 @@ final class TrainerClass
             self::RETIRED_TRAINER   => "Retired Trainer",
             self::ELDER             => "Elder",
             self::DOUBLE_TEAM       => "Double Team",
-            default                 => throw new LogicException(),
+            self::RIVAL             => "Rival",
+            default                 => throw new LogicException("Label not found for '{$id}'"),
         };
     }
 

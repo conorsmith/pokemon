@@ -70,24 +70,36 @@ final class GetIndex
 
         $currentPokemonLeague = $this->currentPokemonLeagueQuery->run();
 
-        $regionalBadgeIdOffset = match($currentPokemonLeague) {
-            RegionId::KANTO => 0,
-            RegionId::JOHTO => 8,
-            RegionId::HOENN => 16,
-            default         => throw new LogicException(),
+        $displayBadges = match($currentPokemonLeague) {
+            RegionId::KANTO => true,
+            RegionId::JOHTO => true,
+            RegionId::HOENN => true,
+            default         => false,
         };
 
-        $earnedBadgeIds = json_decode($instanceRow['badges']);
+        if ($displayBadges) {
 
-        $badgeViewModels = [];
+            $regionalBadgeIdOffset = match ($currentPokemonLeague) {
+                RegionId::KANTO => 0,
+                RegionId::JOHTO => 8,
+                RegionId::HOENN => 16,
+                default         => throw new LogicException(),
+            };
 
-        for ($i = 1; $i <= 8; $i++) {
-            $badgeId = $i + $regionalBadgeIdOffset;
-            if (in_array($badgeId, $earnedBadgeIds)) {
-                $badgeViewModels[] = $this->viewModelFactory->createGymBadge(GymBadge::from($badgeId));
-            } else {
-                $badgeViewModels[] = null;
+            $earnedBadgeIds = json_decode($instanceRow['badges']);
+
+            $badgeViewModels = [];
+
+            for ($i = 1; $i <= 8; $i++) {
+                $badgeId = $i + $regionalBadgeIdOffset;
+                if (in_array($badgeId, $earnedBadgeIds)) {
+                    $badgeViewModels[] = $this->viewModelFactory->createGymBadge(GymBadge::from($badgeId));
+                } else {
+                    $badgeViewModels[] = null;
+                }
             }
+        } else {
+            $badgeViewModels = [];
         }
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Index.php", [

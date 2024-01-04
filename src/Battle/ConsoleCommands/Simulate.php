@@ -22,13 +22,6 @@ final class Simulate
 {
     public function __invoke(array $args): void
     {
-        if (count($args) < 2) {
-            echo PHP_EOL;
-            echo "[ USAGE ]" . PHP_EOL;
-            echo "php console.php simulate (trainerAId) (trainerBId)" . PHP_EOL . PHP_EOL;
-            exit;
-        }
-
         $db = DriverManager::getConnection([
             'dbname'   => $_ENV['DB_NAME'],
             'user'     => $_ENV['DB_USER'],
@@ -59,10 +52,11 @@ final class Simulate
             new EventFactory(
                 new ViewModelFactory(require __DIR__ . "/../../../src/Config/Pokedex.php"),
                 new PokedexConfigRepository(),
-            )
+            ),
+            require __DIR__ . "/../../../src/Config/Pokedex.php",
         );
 
-        $result = $useCase->run($args[0], $args[1]);
+        $result = $useCase->run($args[0] ?? null, $args[1] ?? null);
 
         if ($result->wasDraw) {
             echo "It's a draw!" . PHP_EOL;

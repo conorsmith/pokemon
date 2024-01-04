@@ -16,7 +16,8 @@
         "robmorgan/phinx": "^0.13.4",
         "phpspec/prophecy": "dev-master",
         "symplify/easy-coding-standard": "^12.0",
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^1.10",
+        "fakerphp/faker": "^1.23"
     },
     "autoload": {
         "psr-4": {
