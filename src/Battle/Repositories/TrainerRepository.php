@@ -92,110 +92,156 @@ class TrainerRepository
         return $trainers;
     }
 
-    public function findRandomTrainerFromRegion(RegionId $regionId): Trainer
-    {
-        $config = array_values($this->trainerConfigRepository->findTrainersInRegion($regionId));
-
-        for ($i = 0; $i < 100; $i++) {
-
-            $randomLocationKey = RandomNumberGenerator::generateInRange(
-                array_keys($config)[0],
-                array_keys($config)[count($config) - 1],
-            );
-
-            $randomTrainerKey = RandomNumberGenerator::generateInRange(
-                array_keys($config[$randomLocationKey])[0],
-                array_keys($config[$randomLocationKey])[count($config[$randomLocationKey]) - 1],
-            );
-
-            $entry = $config[$randomLocationKey][$randomTrainerKey];
-
-            if (array_key_exists('prerequisite', $entry)
-                && array_key_exists('victory', $entry['prerequisite'])
-            ) {
-                continue;
-            }
-
-            if (array_key_exists('prerequisite', $entry)
-                && array_key_exists('champion', $entry['prerequisite'])
-            ) {
-                continue;
-            }
-
-            return $this->findTrainerByTrainerId($entry['id']);
-        }
-
-        throw new RuntimeException("100 attempts to find a valid trainer failed");
-    }
-
     private function createTrainer(string $trainerId, bool $isBattling): Trainer
     {
         $trainerConfig = $this->trainerConfigRepository->findTrainer($trainerId);
-        
-        $locationConfig = $this->locationConfigRepository->findLocation($trainerConfig['locationId']);
-        $location = new Location($locationConfig['id'], $locationConfig['region']);
 
-        $party = [];
+        if (is_null($trainerConfig)) {
 
-        $trainerBattlePokemonRows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battle_pokemon WHERE trainer_battle_id = :trainerBattleId ORDER BY party_order", [
-            'trainerBattleId' => $trainerId,
-        ]);
+            $row = $this->db->fetchAssociative("SELECT * FROM generated_trainers WHERE id = :id", [
+                'id' => $trainerId,
+            ]);
 
-        if (count($trainerBattlePokemonRows) > 0
-            && count($trainerBattlePokemonRows) !== count($trainerConfig['party'])
-        ) {
-            throw new RuntimeException("Persisted Pokémon doesn't match configuration for Battle ID '{$trainerId}'");
-        }
-
-        RandomNumberGenerator::setSeed(crc32($trainerId));
-
-        foreach ($trainerConfig['party'] as $i => $pokemonConfig) {
-
-            if ($trainerBattlePokemonRows === []) {
-                $trainerBattlePokemonId = Uuid::uuid4()->toString();
-            } else {
-                $trainerBattlePokemonId = $trainerBattlePokemonRows[$i]['id'];
+            if ($row === false) {
+                throw new Exception("Trainer not found for ID '{$trainerId}'");
             }
 
-            $level = $pokemonConfig['level'] + $location->calculateRegionalLevelOffset();
+            $decodedParty = json_decode($row['party'], true);
+            $party = [];
 
-            $pokedexEntry = $this->findPokedexEntry($pokemonConfig['id']);
-            $pokemon = new Pokemon(
-                $trainerBattlePokemonId,
-                $pokemonConfig['id'],
-                $pokemonConfig['form'] ?? null,
-                $pokedexEntry['type'][0],
-                $pokedexEntry['type'][1] ?? null,
-                $level,
-                0,
-                $pokemonConfig['sex'] ?? Sex::UNKNOWN,
-                isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
-                self::createStats($trainerConfig['class'], $level, $pokemonConfig['id']),
-                0,
-                false,
+            RandomNumberGenerator::setSeed(crc32($trainerId));
+
+            foreach ($decodedParty as $i => $decodedPokemon) {
+                $battlePokemonRow = $this->db->fetchAssociative("SELECT * FROM trainer_battle_pokemon WHERE id = :id", [
+                    'id' => $decodedPokemon['id'],
+                ]);
+
+                $pokedexEntry = $this->findPokedexEntry($decodedPokemon['pokedexNumber']);
+
+                $pokemon = new Pokemon(
+                    $decodedPokemon['id'],
+                    $decodedPokemon['pokedexNumber'],
+                    $decodedPokemon['form'],
+                    $pokedexEntry['type'][0],
+                    $pokedexEntry['type'][1] ?? null,
+                    $decodedPokemon['level'],
+                    $decodedPokemon['friendship'],
+                    match($decodedPokemon['sex']) {
+                        "F" => Sex::FEMALE,
+                        "M" => Sex::MALE,
+                        "U" => Sex::UNKNOWN,
+                    },
+                    $decodedPokemon['isShiny'],
+                    self::createStats($row['class'], $decodedPokemon['level'], $decodedPokemon['pokedexNumber']),
+                    0,
+                    false,
+                );
+
+                if ($battlePokemonRow === false) {
+                    $pokemon->remainingHp = $pokemon->calculateHp();
+                } else {
+                    $pokemon->remainingHp = $battlePokemonRow['remaining_hp'];
+                    $pokemon->hasFainted = $pokemon->remainingHp === 0;
+                }
+
+                if ($battlePokemonRow === false) {
+                    $this->db->insert("trainer_battle_pokemon", [
+                        'id'                => $decodedPokemon['id'],
+                        'trainer_battle_id' => $trainerId,
+                        'party_order'       => $i,
+                        'pokemon_number'    => $pokemon->number,
+                        'remaining_hp'      => $pokemon->remainingHp,
+                    ]);
+                }
+
+                $party[] = $pokemon;
+            }
+
+            RandomNumberGenerator::unsetSeed();
+
+            return new Trainer(
+                $trainerId,
+                $row['name'],
+                $row['class'],
+                match ($row['gender']) {
+                    "F" => Gender::FEMALE,
+                    "I" => Gender::IMMATERIAL,
+                    "M" => Gender::MALE,
+                },
+                $party,
+                $row['location_id'],
+                $isBattling,
+                null,
             );
 
-            if ($trainerBattlePokemonRows === []) {
-                $pokemon->remainingHp = $pokemon->calculateHp();
-            } else {
-                $pokemon->remainingHp = $trainerBattlePokemonRows[$i]['remaining_hp'];
-                $pokemon->hasFainted = $pokemon->remainingHp === 0;
+        } else {
+
+            $locationConfig = $this->locationConfigRepository->findLocation($trainerConfig['locationId']);
+            $location = new Location($locationConfig['id'], $locationConfig['region']);
+
+            $party = [];
+
+            $trainerBattlePokemonRows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battle_pokemon WHERE trainer_battle_id = :trainerBattleId ORDER BY party_order", [
+                'trainerBattleId' => $trainerId,
+            ]);
+
+            if (count($trainerBattlePokemonRows) > 0
+                && count($trainerBattlePokemonRows) !== count($trainerConfig['party'])
+            ) {
+                throw new RuntimeException("Persisted Pokémon doesn't match configuration for Battle ID '{$trainerId}'");
             }
 
-            if ($trainerBattlePokemonRows === []) {
-                $this->db->insert("trainer_battle_pokemon", [
-                    'id'                => Uuid::uuid4(),
-                    'trainer_battle_id' => $trainerId,
-                    'party_order'       => $i,
-                    'pokemon_number'    => $pokemon->number,
-                    'remaining_hp'      => $pokemon->remainingHp,
-                ]);
+            RandomNumberGenerator::setSeed(crc32($trainerId));
+
+            foreach ($trainerConfig['party'] as $i => $pokemonConfig) {
+
+                if ($trainerBattlePokemonRows === []) {
+                    $trainerBattlePokemonId = Uuid::uuid4()->toString();
+                } else {
+                    $trainerBattlePokemonId = $trainerBattlePokemonRows[$i]['id'];
+                }
+
+                $level = $pokemonConfig['level'] + $location->calculateRegionalLevelOffset();
+
+                $pokedexEntry = $this->findPokedexEntry($pokemonConfig['id']);
+                $pokemon = new Pokemon(
+                    $trainerBattlePokemonId,
+                    $pokemonConfig['id'],
+                    $pokemonConfig['form'] ?? null,
+                    $pokedexEntry['type'][0],
+                    $pokedexEntry['type'][1] ?? null,
+                    $level,
+                    0,
+                    $pokemonConfig['sex'] ?? Sex::UNKNOWN,
+                    isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
+                    self::createStats($trainerConfig['class'], $level, $pokemonConfig['id']),
+                    0,
+                    false,
+                );
+
+                if ($trainerBattlePokemonRows === []) {
+                    $pokemon->remainingHp = $pokemon->calculateHp();
+                } else {
+                    $pokemon->remainingHp = $trainerBattlePokemonRows[$i]['remaining_hp'];
+                    $pokemon->hasFainted = $pokemon->remainingHp === 0;
+                }
+
+                if ($trainerBattlePokemonRows === []) {
+                    $this->db->insert("trainer_battle_pokemon", [
+                        'id'                => Uuid::uuid4(),
+                        'trainer_battle_id' => $trainerId,
+                        'party_order'       => $i,
+                        'pokemon_number'    => $pokemon->number,
+                        'remaining_hp'      => $pokemon->remainingHp,
+                    ]);
+                }
+
+                $party[] = $pokemon;
             }
 
-            $party[] = $pokemon;
+            RandomNumberGenerator::unsetSeed();
+
         }
-
-        RandomNumberGenerator::unsetSeed();
 
         return new Trainer(
             $trainerId,
@@ -220,6 +266,12 @@ class TrainerRepository
 
     public function saveTrainer(Trainer $battleTrainer): void
     {
+        $trainerConfig = $this->trainerConfigRepository->findTrainer($battleTrainer->id);
+
+        if (is_null($trainerConfig)) {
+            $this->saveGeneratedTrainer($battleTrainer);
+        }
+
         $this->db->update("trainer_battles", [
             'is_battling'    => $battleTrainer->isBattling ? "1" : "0",
             'active_pokemon' => 0,
@@ -239,6 +291,76 @@ class TrainerRepository
         } else {
             $this->db->delete("trainer_battle_pokemon", [
                 'trainer_battle_id' => $battleTrainer->id,
+            ]);
+        }
+    }
+
+    private function saveGeneratedTrainer(Trainer $trainer): void
+    {
+        $row = $this->db->fetchAssociative("SELECT * FROM generated_trainers WHERE id = :id", [
+            'id' => $trainer->id,
+        ]);
+
+        if ($row === false) {
+            $this->db->insert("generated_trainers", [
+                'id'          => $trainer->id,
+                'name'        => $trainer->name,
+                'class'       => $trainer->class,
+                'gender'      => match ($trainer->gender) {
+                    Gender::FEMALE     => "F",
+                    Gender::IMMATERIAL => "I",
+                    Gender::MALE       => "M",
+                },
+                'location_id' => $trainer->locationId,
+                'party' => json_encode(array_map(
+                    function (Pokemon $pokemon) {
+                        return [
+                            'id'            => $pokemon->id,
+                            'pokedexNumber' => $pokemon->number,
+                            'form'          => $pokemon->form,
+                            'level'         => $pokemon->level,
+                            'friendship'    => $pokemon->friendship,
+                            'sex'           => match ($pokemon->sex) {
+                                Sex::FEMALE  => "F",
+                                Sex::MALE    => "M",
+                                Sex::UNKNOWN => "U",
+                            },
+                            'isShiny'       => $pokemon->isShiny,
+                        ];
+                    },
+                    $trainer->party,
+                )),
+            ]);
+        } else {
+            $this->db->update("generated_trainers", [
+                'name'        => $trainer->name,
+                'class'       => $trainer->class,
+                'gender'      => match ($trainer->gender) {
+                    Gender::FEMALE     => "F",
+                    Gender::IMMATERIAL => "I",
+                    Gender::MALE       => "M",
+                },
+                'location_id' => $trainer->locationId,
+                'party' => json_encode(array_map(
+                    function (Pokemon $pokemon) {
+                        return [
+                            'id'            => $pokemon->id,
+                            'pokedexNumber' => $pokemon->number,
+                            'form'          => $pokemon->form,
+                            'level'         => $pokemon->level,
+                            'friendship'    => $pokemon->friendship,
+                            'sex'           => match ($pokemon->sex) {
+                                Sex::FEMALE  => "F",
+                                Sex::MALE    => "M",
+                                Sex::UNKNOWN => "U",
+                            },
+                            'isShiny'       => $pokemon->isShiny,
+                        ];
+                    },
+                    $trainer->party,
+                )),
+            ], [
+                'id' => $trainer->id,
             ]);
         }
     }

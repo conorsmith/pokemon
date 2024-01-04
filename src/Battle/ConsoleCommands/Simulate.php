@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\ConsoleCommands;
 
+use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\EventFactory;
+use ConorSmith\Pokemon\Battle\RandomTrainerGenerator;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\Battle\UseCases\SimulateABattle;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
+use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\Pokemon\TrainerConfigRepository;
@@ -30,33 +35,55 @@ final class Simulate
             'driver'   => "pdo_mysql",
         ]);
 
-        $useCase = new SimulateABattle(
-            new TrainerRepository(
+        $trainerRepository = new TrainerRepository(
+            $db,
+            require __DIR__ . "/../../../src/Config/Pokedex.php",
+            new EliteFourChallengeRepository(
                 $db,
-                require __DIR__ . "/../../../src/Config/Pokedex.php",
-                new EliteFourChallengeRepository(
-                    $db,
-                    new LeagueChampionRepository(
-                        $db,
-                        new InstanceId(Instance::DEFAULT_ID),
-                    ),
-                ),
                 new LeagueChampionRepository(
                     $db,
                     new InstanceId(Instance::DEFAULT_ID),
                 ),
-                new TrainerConfigRepository(),
-                new LocationConfigRepository(),
+            ),
+            new LeagueChampionRepository(
+                $db,
                 new InstanceId(Instance::DEFAULT_ID),
             ),
+            new TrainerConfigRepository(),
+            new LocationConfigRepository(),
+            new InstanceId(Instance::DEFAULT_ID),
+        );
+
+        $randomTrainerGenerator = new RandomTrainerGenerator(
+            require __DIR__ . "/../../../src/Config/Pokedex.php",
+        );
+
+        $useCase = new SimulateABattle(
             new EventFactory(
                 new ViewModelFactory(require __DIR__ . "/../../../src/Config/Pokedex.php"),
                 new PokedexConfigRepository(),
             ),
-            require __DIR__ . "/../../../src/Config/Pokedex.php",
         );
 
-        $result = $useCase->run($args[0] ?? null, $args[1] ?? null);
+        if (isset($args[0])) {
+            $trainerA = $trainerRepository->findTrainerByTrainerId($args[0]);
+        } else {
+            $trainerA = $randomTrainerGenerator->generate(
+                RandomNumberGenerator::generateInRange(10, 100),
+                LocationId::PALLET_TOWN,
+            );
+        }
+
+        if (isset($args[1])) {
+            $trainerB = $trainerRepository->findTrainerByTrainerId($args[1]);
+        } else {
+            $trainerB = $randomTrainerGenerator->generate(
+                self::findHighestLevelOfPartyMembers($trainerA),
+                LocationId::PALLET_TOWN,
+            );
+        }
+
+        $result = $useCase->run($trainerA, $trainerB);
 
         if ($result->wasDraw) {
             echo "It's a draw!" . PHP_EOL;
@@ -64,5 +91,19 @@ final class Simulate
         } else {
             echo "The winner is " . TrainerClass::getLabel($result->getWinningTrainer()->class) . " " . $result->getWinningTrainer()->name . PHP_EOL;
         }
+    }
+
+    private static function findHighestLevelOfPartyMembers(Trainer $trainer): int
+    {
+        $max = 0;
+
+        /** @var Pokemon $partyMember */
+        foreach ($trainer->party as $partyMember) {
+            if ($partyMember->level > $max) {
+                $max = $partyMember->level;
+            }
+        }
+
+        return $max;
     }
 }

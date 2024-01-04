@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Battle\ConsoleCommands;
 
 use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
 use ConorSmith\Pokemon\Battle\EventFactory;
+use ConorSmith\Pokemon\Battle\RandomTrainerGenerator;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
@@ -54,21 +55,15 @@ final class Challenge
                 $repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 $repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
                 new SimulateABattle(
-                    new TrainerRepository(
-                        $db,
-                        require __DIR__ . "/../../../src/Config/Pokedex.php",
-                        $repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
-                        $repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
-                        new TrainerConfigRepository(),
-                        new LocationConfigRepository(),
-                        new InstanceId(Instance::DEFAULT_ID),
-                    ),
                     new EventFactory(
                         new ViewModelFactory(require __DIR__ . "/../../../src/Config/Pokedex.php"),
                         new PokedexConfigRepository(),
                     ),
-                    require __DIR__ . "/../../../src/Config/Pokedex.php",
-                )
+                ),
+                new RandomTrainerGenerator(
+                    require __DIR__ . "/../../../src/Config/Pokedex.php"
+                ),
+                new ViewModelFactory(require __DIR__ . "/../../../src/Config/Pokedex.php"),
             );
 
             $startABattle = new StartABattle(

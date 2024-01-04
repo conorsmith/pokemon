@@ -7,12 +7,15 @@ namespace ConorSmith\Pokemon\Battle\UseCases;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengePartyMember;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
+use ConorSmith\Pokemon\Battle\RandomTrainerGenerator;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
+use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
+use ConorSmith\Pokemon\ViewModelFactory;
+use LogicException;
 use Ramsey\Uuid\Uuid;
 
 final class GenerateAChallenge
@@ -22,6 +25,8 @@ final class GenerateAChallenge
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly LeagueChampionRepository $leagueChampionRepository,
         private readonly SimulateABattle $simulateABattle,
+        private readonly RandomTrainerGenerator $randomTrainerGenerator,
+        private readonly ViewModelFactory $viewModelFactory,
     ) {}
 
     public function __invoke(): ResultOfGeneratingAChallenge
@@ -56,11 +61,29 @@ final class GenerateAChallenge
                 continue;
             }
 
-            echo "Randomly selecting a trainer from the region" . PHP_EOL;
+            $eliteFourLeader = $this->trainerRepository->findTrainerByTrainerId(
+                self::findEliteFourConfig($regionId)['members'][3]['id'],
+            );
 
-            $randomTrainer = $this->trainerRepository->findRandomTrainerFromRegion($regionId);
+            $randomTrainer = $this->randomTrainerGenerator->generate(
+                self::findHighestLevelOfPartyMembers($eliteFourLeader),
+                match ($regionId) {
+                    RegionId::KANTO => LocationId::KANTO_LEAGUE_CHAMBER,
+                    RegionId::JOHTO => LocationId::JOHTO_LEAGUE_CHAMBER,
+                    RegionId::HOENN => LocationId::HOENN_POKEMON_LEAGUE,
+                    default => throw new LogicException(),
+                }
+            );
 
-            echo TrainerClass::getLabel($randomTrainer->class) . " {$randomTrainer->name} challenges the Elite Four" . PHP_EOL;
+            echo TrainerClass::getLabel($randomTrainer->class) . " {$randomTrainer->name} challenges the Elite Four [{$randomTrainer->id}]" . PHP_EOL;
+            echo PHP_EOL;
+
+            /** @var Pokemon $pokemon */
+            foreach ($randomTrainer->party as $pokemon) {
+                $pokemonVm = $this->viewModelFactory->createPokemonInBattle($pokemon);
+                echo "* {$pokemonVm->name} [Lv {$pokemonVm->level}]" . PHP_EOL;
+            }
+
             echo PHP_EOL;
 
             $eliteFourChallenge = $this->eliteFourChallengeRepository->createEliteFourChallenge(
@@ -83,7 +106,14 @@ final class GenerateAChallenge
 
             while ($eliteFourChallenge->isInProgress() && !$eliteFourChallenge->isInFinalStage()) {
 
-                $result = $this->simulateABattle->run($randomTrainer->id, $eliteFourChallenge->getMemberIdForCurrentStage());
+                $eliteFourMember = $this->trainerRepository->findTrainerByTrainerId(
+                    $eliteFourChallenge->getMemberIdForCurrentStage(),
+                );
+
+                echo "### {$eliteFourMember->name}" . PHP_EOL;
+                echo PHP_EOL;
+
+                $result = $this->simulateABattle->run($randomTrainer, $eliteFourMember);
 
                 if ($result->wasDraw) {
                     echo "It's a draw!" . PHP_EOL;
@@ -100,12 +130,14 @@ final class GenerateAChallenge
                     break;
 
                 } else {
+                    $randomTrainer = $randomTrainer->reviveParty();
                     $eliteFourChallenge = $eliteFourChallenge->proceedToNextStage();
                 }
             }
 
             if ($eliteFourChallenge->isInFinalStage()) {
 
+                $this->trainerRepository->saveTrainer($randomTrainer);
                 $this->eliteFourChallengeRepository->save($eliteFourChallenge);
 
                 return ResultOfGeneratingAChallenge::generated(
@@ -116,5 +148,32 @@ final class GenerateAChallenge
         }
 
         return ResultOfGeneratingAChallenge::notGenerated();
+    }
+
+    private static function findEliteFourConfig(RegionId $region): ?array
+    {
+        $eliteFourConfig = require __DIR__ . "/../../Config/EliteFour.php";
+
+        foreach ($eliteFourConfig as $config) {
+            if ($config['region'] === $region) {
+                return $config;
+            }
+        }
+
+        return null;
+    }
+
+    private static function findHighestLevelOfPartyMembers(Trainer $trainer): int
+    {
+        $max = 0;
+
+        /** @var Pokemon $partyMember */
+        foreach ($trainer->party as $partyMember) {
+            if ($partyMember->level > $max) {
+                $max = $partyMember->level;
+            }
+        }
+
+        return $max;
     }
 }

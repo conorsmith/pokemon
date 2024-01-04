@@ -315,6 +315,20 @@ final class PostBattleFight
             }
         }
 
-        throw new Exception("Could not find EV yield for given Pokemon");
+        $config = [
+            'pokedexNumber'   => $pokedexNumber,
+            'hp'              => 0,
+            'physicalAttack'  => 0,
+            'physicalDefence' => 0,
+            'specialAttack'   => 0,
+            'specialDefence'  => 0,
+            'speed'           => 0,
+        ];
+
+        if (!is_null($form)) {
+            $config['form'] = $form;
+        }
+
+        return $config;
     }
 }

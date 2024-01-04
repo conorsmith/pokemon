@@ -119,4 +119,27 @@ final class Trainer
             || $this->class === TrainerClass::CHAMPION
             || $this->class === TrainerClass::RETIRED_TRAINER;
     }
+
+    public function reviveParty(): self
+    {
+        $revivedParty = [];
+
+        /** @var Pokemon $pokemon */
+        foreach ($this->party as $pokemon) {
+            $revivedPokemon = clone $pokemon;
+            $revivedPokemon->revive();
+            $revivedParty[] = $revivedPokemon;
+        }
+
+        return new self(
+            $this->id,
+            $this->name,
+            $this->class,
+            $this->gender,
+            $revivedParty,
+            $this->locationId,
+            $this->isBattling,
+            $this->gymBadge,
+        );
+    }
 }
