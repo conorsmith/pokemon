@@ -8,17 +8,18 @@ use ConorSmith\Pokemon\Party\Domain\DayCare;
 use ConorSmith\Pokemon\Party\Domain\Party;
 use ConorSmith\Pokemon\Party\FriendshipLog;
 use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostPartySendToBox
 {
     public function __construct(
-        private readonly Session $session,
         private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly FriendshipLog $friendshipLog,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -33,7 +34,9 @@ final class PostPartySendToBox
         } elseif ($dayCare->hasAttendee($pokemonId)) {
             $this->moveFromDayCareToBox($pokemonId, $dayCare);
         } else {
-            $this->session->getFlashBag()->add("errors", "Pokémon not found.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Pokémon not found.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/party");
         }
 

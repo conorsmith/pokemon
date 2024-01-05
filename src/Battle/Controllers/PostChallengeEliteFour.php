@@ -9,23 +9,24 @@ use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostChallengeEliteFour
 {
     public function __construct(
-        private readonly Session $session,
         private readonly BagRepository $bagRepository,
         private readonly PlayerRepositoryDb $playerRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly StartABattle $startABattleUseCase,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -33,7 +34,9 @@ final class PostChallengeEliteFour
         $region = RegionId::tryFrom($args['region']);
 
         if (is_null($region)) {
-            $this->session->getFlashBag()->add("errors", "Unknown region");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Unknown region")
+            );
             return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
@@ -41,7 +44,9 @@ final class PostChallengeEliteFour
         $player = $this->playerRepository->findPlayer();
 
         if ($bag->count(ItemId::CHALLENGE_TOKEN) < 5) {
-            $this->session->getFlashBag()->add("errors", "Not enough unused challenge tokens.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Not enough unused challenge tokens.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
@@ -71,7 +76,9 @@ final class PostChallengeEliteFour
         $result = $this->startABattleUseCase->__invoke($eliteFourChallenge->getMemberIdForCurrentStage());
 
         if (!$result->succeeded()) {
-            $this->session->getFlashBag()->add("errors", "No unused challenge tokens remaining.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("No unused challenge tokens remaining.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/map");
         }
 

@@ -10,7 +10,9 @@ use ConorSmith\Pokemon\Party\Domain\Pokemon;
 use ConorSmith\Pokemon\Party\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Party\ViewModels\BreedingPokemon;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
@@ -20,16 +22,15 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostPokemonBreed
 {
     public function __construct(
-        private readonly Session $session,
         private readonly BagRepository $bagRepository,
         private readonly EggRepository $eggRepository,
         private readonly PokemonRepository $pokemonRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -41,7 +42,9 @@ final class PostPokemonBreed
         $bag = $this->bagRepository->find();
 
         if (!$bag->has(ItemId::OVAL_CHARM)) {
-            $this->session->getFlashBag()->add("errors", "No oval charms remaining");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("No oval charms remaining")
+            );
             return new RedirectResponse("/{$instanceId}/bag");
         }
 
@@ -49,12 +52,16 @@ final class PostPokemonBreed
         $pokemonB = $this->pokemonRepository->find($pokemonBId);
 
         if (is_null($pokemonA) || is_null($pokemonB)) {
-            $this->session->getFlashBag()->add("errors", "Pokémon not found");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Pokémon not found")
+            );
             return new RedirectResponse("/{$instanceId}/bag");
         }
 
         if (!$pokemonA->canBreedWith($pokemonB)) {
-            $this->session->getFlashBag()->add("errors", "Attempt to breed incompatible pokémon");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Attempt to breed incompatible pokémon")
+            );
             return new RedirectResponse("/{$instanceId}/bag");
         }
 
@@ -73,7 +80,9 @@ final class PostPokemonBreed
             $pokemonAVm = BreedingPokemon::create($pokemonA);
             $pokemonBVm = BreedingPokemon::create($pokemonB);
 
-            $this->session->getFlashBag()->add("errors", "{$pokemonAVm->name} and {$pokemonBVm->name} did not bear any eggs");
+            $this->notifyPlayerCommand->run(
+                Notification::persistent("{$pokemonAVm->name} and {$pokemonBVm->name} did not bear any eggs")
+            );
             return new RedirectResponse("/{$instanceId}/bag");
         }
 
@@ -125,7 +134,9 @@ final class PostPokemonBreed
         $pokemonAVm = BreedingPokemon::create($pokemonA);
         $pokemonBVm = BreedingPokemon::create($pokemonB);
 
-        $this->session->getFlashBag()->add("successes", "{$pokemonAVm->name} and {$pokemonBVm->name} bore an egg!");
+        $this->notifyPlayerCommand->run(
+            Notification::persistent("{$pokemonAVm->name} and {$pokemonBVm->name} bore an egg!")
+        );
         return new RedirectResponse("/{$instanceId}/bag");
     }
 

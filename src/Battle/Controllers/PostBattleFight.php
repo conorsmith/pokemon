@@ -15,35 +15,35 @@ use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Commands\BoostPokemonEvsCommand;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Commands\ReportPartyPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
-use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostBattleFight
 {
     public function __construct(
-        private readonly Connection                      $db,
-        private readonly Session                         $session,
-        private readonly ItemConfigRepository            $itemConfigRepository,
-        private readonly TrainerRepository               $trainerRepository,
-        private readonly PlayerRepositoryDb                $playerRepository,
-        private readonly AreaRepository                  $areaRepository,
-        private readonly BagRepository                   $bagRepository,
-        private readonly BattleRepository                $battleRepository,
+        private readonly Connection $db,
+        private readonly ItemConfigRepository $itemConfigRepository,
+        private readonly TrainerRepository $trainerRepository,
+        private readonly PlayerRepositoryDb $playerRepository,
+        private readonly AreaRepository $areaRepository,
+        private readonly BagRepository $bagRepository,
+        private readonly BattleRepository $battleRepository,
         private readonly ReportPartyPokemonFaintedCommand $reportPartyPokemonFaintedCommand,
-        private readonly BoostPokemonEvsCommand          $boostPokemonEvsCommand,
-        private readonly EventFactory                    $eventFactory,
-        private readonly ViewModelFactory                $viewModelFactory,
+        private readonly BoostPokemonEvsCommand $boostPokemonEvsCommand,
+        private readonly EventFactory $eventFactory,
+        private readonly ViewModelFactory $viewModelFactory,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -57,7 +57,9 @@ final class PostBattleFight
         $bag = $this->bagRepository->find();
 
         if ($player->hasEntirePartyFainted()) {
-            $this->session->getFlashBag()->add("errors", "Your party has fainted.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Your party has fainted.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/battle/{$battle->id}");
         }
 

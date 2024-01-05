@@ -10,22 +10,23 @@ use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Commands\ReportPartyPokemonFaintedCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostEncounterFight
 {
     public function __construct(
-        private readonly Session $session,
         private readonly EncounterRepository $encounterRepository,
         private readonly PlayerRepositoryDb $playerRepository,
         private readonly EventFactory $eventFactory,
         private readonly ReportPartyPokemonFaintedCommand $reportPartyPokemonFaintedCommand,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -37,12 +38,16 @@ final class PostEncounterFight
         $player = $this->playerRepository->findPlayer();
 
         if (is_null($encounter)) {
-            $this->session->getFlashBag()->add("errors", "Encounter not found");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Encounter not found")
+            );
             return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
         if ($player->hasEntirePartyFainted()) {
-            $this->session->getFlashBag()->add("errors", "Your party has fainted.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Your party has fainted.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/encounter/{$encounter->id}");
         }
 

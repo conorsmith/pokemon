@@ -7,19 +7,20 @@ namespace ConorSmith\Pokemon\Party\Controllers;
 use ConorSmith\Pokemon\Party\Domain\Pokemon;
 use ConorSmith\Pokemon\Party\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Party\ViewModels\Pokemon as PokemonVm;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetPartyItemUse
 {
     public function __construct(
-        private readonly Session $session,
         private readonly BagRepository $bagRepository,
         private readonly PokemonRepository $pokemonRepository,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
@@ -35,7 +36,9 @@ final class GetPartyItemUse
         $itemConfig = require __DIR__ . "/../../Config/Items.php";
 
         if ($bag->count($itemId) < 1) {
-            $this->session->getFlashBag()->add("successes", "You have no more {$itemConfig[$itemId]['name']}");
+            $this->notifyPlayerCommand->run(
+                Notification::persistent("You have no more {$itemConfig[$itemId]['name']}")
+            );
             return new RedirectResponse("/{$args['instanceId']}/bag");
         }
 

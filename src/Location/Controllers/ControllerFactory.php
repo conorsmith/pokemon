@@ -13,6 +13,7 @@ use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\RepositoryFactory;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\Player\Repositories\NotificationRepositoryDbAndSession;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
@@ -21,6 +22,7 @@ use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory as SharedViewModelFactory;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 final class ControllerFactory
 {
@@ -32,7 +34,7 @@ final class ControllerFactory
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly SharedViewModelFactory $sharedViewModelFactory,
         private readonly array $pokedex,
-        private readonly TemplateEngine $templateEngine,
+        private readonly Session $session,
     ) {}
 
     public function create(string $className, InstanceId $instanceId): mixed
@@ -60,7 +62,13 @@ final class ControllerFactory
                     $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId)
                 ),
                 $this->pokedex,
-                $this->templateEngine,
+                new TemplateEngine(
+                    new NotificationRepositoryDbAndSession(
+                        $this->db,
+                        $this->session,
+                        $instanceId,
+                    )
+                ),
             ),
             GetTrackPokemon::class => new GetTrackPokemon(
                 $this->repositoryFactory->create(LocationRepository::class, $instanceId),
@@ -68,7 +76,13 @@ final class ControllerFactory
                 new ViewModelFactory(
                     $this->locationConfigRepository,
                 ),
-                $this->templateEngine,
+                new TemplateEngine(
+                    new NotificationRepositoryDbAndSession(
+                        $this->db,
+                        $this->session,
+                        $instanceId,
+                    )
+                ),
             ),
         };
     }

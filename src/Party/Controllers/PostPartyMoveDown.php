@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Party\Controllers;
 
 use ConorSmith\Pokemon\Party\Repositories\CaughtPokemonRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostPartyMoveDown
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly Session $session,
-        private readonly CaughtPokemonRepository $caughtPokemonRepository
+        private readonly CaughtPokemonRepository $caughtPokemonRepository,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -28,7 +29,9 @@ final class PostPartyMoveDown
         foreach ($rows as $i => $pokemonRow) {
             if ($pokemonRow['id'] === $pokemonId) {
                 if ($pokemonRow['party_position'] === count($rows)) {
-                    $this->session->getFlashBag()->add("errors", "Target Pokémon cannot be moved down");
+                    $this->notifyPlayerCommand->run(
+                        Notification::transient("Target Pokémon cannot be moved down")
+                    );
                     return new RedirectResponse("/{$args['instanceId']}/party");
                 }
                 $targetPokemon = $rows[$i];
@@ -37,12 +40,16 @@ final class PostPartyMoveDown
         }
 
         if (!isset($targetPokemon)) {
-            $this->session->getFlashBag()->add("errors", "Target Pokémon not found");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Target Pokémon not found")
+            );
             return new RedirectResponse("/{$args['instanceId']}/party");
         }
 
         if (!isset($affectedPokemon)) {
-            $this->session->getFlashBag()->add("errors", "Affected Pokémon not found");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Affected Pokémon not found")
+            );
             return new RedirectResponse("/{$args['instanceId']}/party");
         }
 

@@ -7,18 +7,19 @@ namespace ConorSmith\Pokemon\Party\Controllers;
 use ConorSmith\Pokemon\Party\Domain\Pokemon;
 use ConorSmith\Pokemon\Party\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Party\ViewModels\BreedingPokemon;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\TemplateEngine;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetPokemonBreed
 {
     public function __construct(
-        private readonly Session $session,
         private readonly PokemonRepository $pokemonRepository,
         private readonly TemplateEngine $templateEngine,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -30,7 +31,9 @@ final class GetPokemonBreed
 
         if (!$pokemon->canBreed()) {
             $vm = BreedingPokemon::create($pokemon);
-            $this->session->getFlashBag()->add("errors", "{$vm->name} cannot breed!");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("{$vm->name} cannot breed!")
+            );
             return new RedirectResponse("/{$instanceId}/bag");
         }
 
@@ -43,7 +46,9 @@ final class GetPokemonBreed
 
         if (count($potentialPartners) === 0) {
             $vm = BreedingPokemon::create($pokemon);
-            $this->session->getFlashBag()->add("errors", "There are no compatible partners for {$vm->name}");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("There are no compatible partners for {$vm->name}")
+            );
             return new RedirectResponse("/{$instanceId}/bag");
         }
 

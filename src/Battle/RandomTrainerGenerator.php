@@ -8,7 +8,6 @@ use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
-use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
@@ -28,9 +27,7 @@ final class RandomTrainerGenerator
 
         $trainerId = Uuid::uuid4()->toString();
 
-        $trainerClasses = TrainerClass::all();
-        $randomTrainerClassKey = RandomNumberGenerator::generateInRange(0, count($trainerClasses) - 1);
-        $trainerClass = $trainerClasses[$randomTrainerClassKey];
+        $trainerClass = RandomTrainerGenerator::randomlyGenerateTrainerClass();
 
         $anchorLevel = RandomNumberGenerator::generateInRange(
             $opponentHighestLevel - 10,
@@ -166,5 +163,46 @@ final class RandomTrainerGenerator
         }
 
         throw new Exception;
+    }
+
+    public static function randomlyGenerateTrainerClass(): string
+    {
+        $trainerClasses = TrainerClass::all();
+
+        foreach ($trainerClasses as $i => $trainerClass) {
+            if (in_array($trainerClass, [
+                TrainerClass::GYM_LEADER,
+                TrainerClass::TEAM_ROCKET_GRUNT,
+                TrainerClass::CHAMPION,
+                TrainerClass::ROCKET,
+                TrainerClass::ROCKET_EXECUTIVE,
+                TrainerClass::AQUA_ADMIN,
+                TrainerClass::AQUA_LEADER,
+                TrainerClass::MAGMA_ADMIN,
+                TrainerClass::MAGMA_LEADER,
+                TrainerClass::OLD_COUPLE,
+                TrainerClass::SIS_AND_BRO,
+                TrainerClass::TEAMMATES,
+                TrainerClass::TEAM_AQUA_GRUNT,
+                TrainerClass::TEAM_MAGMA_GRUNT,
+                TrainerClass::WINSTRATE,
+                TrainerClass::YOUNG_COUPLE,
+                TrainerClass::COOL_COUPLE,
+                TrainerClass::TEAM_ROCKET_ADMIN,
+                TrainerClass::BOSS,
+                TrainerClass::ELITE_FOUR,
+                TrainerClass::RETIRED_TRAINER,
+                TrainerClass::RIVAL,
+                TrainerClass::DOUBLE_TEAM,
+            ])) {
+                unset($trainerClasses[$i]);
+            }
+        }
+
+        $trainerClasses = array_values($trainerClasses);
+
+        $randomTrainerClassKey = RandomNumberGenerator::generateInRange(0, count($trainerClasses) - 1);
+
+        return $trainerClasses[$randomTrainerClassKey];
     }
 }

@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\Player\Repositories\NotificationRepositoryDbAndSession;
 use Exception;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class TemplateEngine
 {
     public function __construct(
-        private readonly Session $session,
+        private readonly NotificationRepositoryDbAndSession $notificationRepository,
     ) {}
 
     public function render(string $templatePath, array $variables): string
     {
-        if (array_key_exists('successes', $variables)
-            || array_key_exists('failures', $variables)
+        if (array_key_exists('notifications', $variables)
             || array_key_exists('instanceId', $variables)
         ) {
             throw new Exception("Reserved template variable given");
@@ -26,8 +25,7 @@ final class TemplateEngine
 
         extract($variables);
 
-        $successes = $this->session->getFlashBag()->get("successes");
-        $failures = $this->session->getFlashBag()->get("errors");
+        $notifications = $this->notificationRepository->findLatest();
 
         $content = self::renderContent($templatePath, $variables);
 

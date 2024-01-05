@@ -11,7 +11,6 @@ use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Party\FriendshipLog;
 use ConorSmith\Pokemon\Party\FriendshipLogReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\Party\FriendshipLogReportPartyPokemonFaintedCommand;
-use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
@@ -51,10 +50,9 @@ final class ApplicationFactory
                 new TrainerConfigRepository(),
                 new ViewModelFactory(self::createPokedexConfigArray()),
                 self::createPokedexConfigArray(),
-                new TemplateEngine(self::createSessionManager()),
+                self::createSessionManager(),
             ),
             self::createDatabaseConnection(),
-            self::createSessionManager(),
             new LocationConfigRepository(),
             new TrainerConfigRepository(),
             new FriendshipLog(self::createDatabaseConnection()),
@@ -62,7 +60,7 @@ final class ApplicationFactory
             new FriendshipLogReportPartyPokemonFaintedCommand(new FriendshipLog(self::createDatabaseConnection())),
             new FriendshipLogReportBattleWithGymLeaderCommand(new FriendshipLog(self::createDatabaseConnection())),
             self::createPokedexConfigArray(),
-            new TemplateEngine(self::createSessionManager()),
+            self::createSessionManager(),
         );
     }
 

@@ -11,18 +11,18 @@ use ConorSmith\Pokemon\Party\Domain\ParentalRelationship;
 use ConorSmith\Pokemon\Party\UseCases\AddNewPokemon;
 use ConorSmith\Pokemon\Party\ViewModels\BreedingPokemon;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Commands\ReduceEggCyclesCommand as CommandInterface;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\Queries\CurrentLocationQuery;
 use ConorSmith\Pokemon\SharedKernel\Queries\HabitStreakQuery;
 use ConorSmith\Pokemon\SharedKernel\Queries\TotalRegisteredPokemonQuery;
 use Exception;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class ReduceEggCyclesCommand implements CommandInterface
 {
     public function __construct(
-        private readonly Session $session,
         private readonly EggRepository $eggRepository,
         private readonly GenealogyRepository $genealogyRepository,
         private readonly AddNewPokemon $addNewPokemon,
@@ -30,6 +30,7 @@ final class ReduceEggCyclesCommand implements CommandInterface
         private readonly HabitStreakQuery $habitStreakQuery,
         private readonly CurrentLocationQuery $currentLocationQuery,
         private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function run(int $amount): void
@@ -80,10 +81,14 @@ final class ReduceEggCyclesCommand implements CommandInterface
         $totalRegisteredPokemonAfterHatching = $this->totalRegisteredPokemonQuery->run();
 
         $pokemonVm = BreedingPokemon::create($pokemon);
-        $this->session->getFlashBag()->add("successes", "{$pokemonVm->name} hatched from an egg!");
+        $this->notifyPlayerCommand->run(
+            Notification::persistent("{$pokemonVm->name} hatched from an egg!")
+        );
 
         if ($totalRegisteredPokemonAfterHatching > $totalRegisteredPokemonBeforeHatching) {
-            $this->session->getFlashBag()->add("successes", "{$pokemonVm->name} has been registered in your Pokédex");
+            $this->notifyPlayerCommand->run(
+                Notification::persistent("{$pokemonVm->name} has been registered in your Pokédex")
+            );
         }
     }
 

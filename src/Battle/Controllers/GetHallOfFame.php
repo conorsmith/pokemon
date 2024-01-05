@@ -8,20 +8,21 @@ use ConorSmith\Pokemon\Battle\Domain\EliteFourChallenge;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengePartyMember;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class GetHallOfFame
 {
     public function __construct(
-        private readonly Session $session,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
@@ -30,7 +31,9 @@ final class GetHallOfFame
         $region = RegionId::tryFrom(strtoupper($args['region']));
 
         if (is_null($region)) {
-            $this->session->getFlashBag()->add("errors", "Unknown region");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Unknown region")
+            );
             return new RedirectResponse("/{$args['instanceId']}/map");
         }
 

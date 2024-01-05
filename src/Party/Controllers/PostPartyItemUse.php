@@ -9,8 +9,10 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\Party\LevelUpPokemon;
 use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -19,17 +21,16 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostPartyItemUse
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly Session $session,
         private readonly BagRepository $bagRepository,
         private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly LevelUpPokemon $levelUpPokemon,
         private readonly ItemConfigRepository $itemConfigRepository,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
         private readonly array $pokedex,
     ) {}
 
@@ -67,14 +68,18 @@ final class PostPartyItemUse
         $bag = $this->bagRepository->find();
 
         if (!$bag->has($itemId)) {
-            $this->session->getFlashBag()->add("errors", "No {$itemConfig['name']} remaining.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("No {$itemConfig['name']} remaining.")
+            );
             return new RedirectResponse("/{$instanceId}/party/use/" . $itemId);
         }
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
         if (is_null($pokemon)) {
-            $this->session->getFlashBag()->add("errors", "Pokémon not found.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Pokémon not found.")
+            );
             return new RedirectResponse("/{$instanceId}/party/use/" . $itemId);
         }
 
@@ -101,21 +106,27 @@ final class PostPartyItemUse
         $bag = $this->bagRepository->find();
 
         if (!$bag->has(ItemId::RARE_CANDY)) {
-            $this->session->getFlashBag()->add("errors", "No rare candies remaining.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("No rare candies remaining.")
+            );
             return new RedirectResponse("/{$instanceId}/party/use/" . ItemId::RARE_CANDY);
         }
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
         if (is_null($pokemon)) {
-            $this->session->getFlashBag()->add("errors", "Pokémon not found.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Pokémon not found.")
+            );
             return new RedirectResponse("/{$instanceId}/party/use/" . ItemId::RARE_CANDY);
         }
 
         $result = $this->levelUpPokemon->run($pokemonId);
 
         if ($result->beyondLevelLimit) {
-            $this->session->getFlashBag()->add("errors", "You can't level up Pokémon beyond level {$result->levelLimit}");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("You can't level up Pokémon beyond level {$result->levelLimit}")
+            );
             return new RedirectResponse("/{$instanceId}/party/use/" . ItemId::RARE_CANDY);
         }
 
@@ -124,12 +135,16 @@ final class PostPartyItemUse
 
         $pokemonConfig = $this->pokedex[$pokemon->number];
 
-        $this->session->getFlashBag()->add("successes", "{$pokemonConfig['name']} levelled up to level {$result->newLevel}");
+        $this->notifyPlayerCommand->run(
+            Notification::persistent("{$pokemonConfig['name']} levelled up to level {$result->newLevel}")
+        );
 
         if ($result->evolved) {
             $oldPokemon = $pokemonConfig;
             $newPokemon = $this->pokedex[$result->newPokedexNumber];
-            $this->session->getFlashBag()->add("successes", "Your {$oldPokemon['name']} evolved into {$newPokemon['name']}!");
+            $this->notifyPlayerCommand->run(
+                Notification::persistent("Your {$oldPokemon['name']} evolved into {$newPokemon['name']}!")
+            );
         }
 
         return new RedirectResponse("/{$instanceId}/party/use/" . ItemId::RARE_CANDY);
@@ -145,7 +160,9 @@ final class PostPartyItemUse
         $pokemonConfig = $this->pokedex[$pokemonRow['pokemon_id']];
 
         if (!array_key_exists('evolutions', $pokemonConfig)) {
-            $this->session->getFlashBag()->add("successes", "That did nothing!");
+            $this->notifyPlayerCommand->run(
+                Notification::persistent("That did nothing!")
+            );
             return new RedirectResponse("/{$instanceId}/party/use/{$itemId}");
         }
 
@@ -162,7 +179,9 @@ final class PostPartyItemUse
         }
 
         if ($canEvolveUsingThisItem === false) {
-            $this->session->getFlashBag()->add("successes", "That did nothing!");
+            $this->notifyPlayerCommand->run(
+                Notification::persistent("That did nothing!")
+            );
             return new RedirectResponse("/{$instanceId}/party/use/{$itemId}");
         }
 
@@ -196,7 +215,9 @@ final class PostPartyItemUse
 
         $this->db->commit();
 
-        $this->session->getFlashBag()->add("successes", "{$pokemonConfig['name']} evolved into {$this->pokedex[$newPokemonNumber]['name']}");
+        $this->notifyPlayerCommand->run(
+            Notification::persistent("{$pokemonConfig['name']} evolved into {$this->pokedex[$newPokemonNumber]['name']}")
+        );
         return new RedirectResponse("/{$instanceId}/");
     }
 }

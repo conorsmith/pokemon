@@ -7,34 +7,39 @@ namespace ConorSmith\Pokemon\Habit\Controllers;
 use Carbon\CarbonImmutable;
 use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostLogFoodDiary
 {
     public function __construct(
         private readonly Connection              $db,
-        private readonly Session                 $session,
         private readonly DailyHabitLogRepository $habitLogRepository,
         private readonly BagRepository           $bagRepository,
+        private readonly NotifyPlayerCommand     $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
     {
         if ($request->request->get('date') === "") {
-            $this->session->getFlashBag()->add("errors", "Given date is empty.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Given date is empty.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/log/food-diary");
         }
 
         $submittedDate = CarbonImmutable::createFromFormat("Y-m-d", $request->request->get('date'));
 
         if ($submittedDate->isFuture()) {
-            $this->session->getFlashBag()->add("errors", "Given date cannot be in the future.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Given date cannot be in the future.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/log/food-diary");
         }
 
@@ -43,7 +48,9 @@ final class PostLogFoodDiary
 
         if ($habitLog->isDateLogged($submittedDate)) {
             $formattedDate = $submittedDate->format("Y-m-d");
-            $this->session->getFlashBag()->add("errors", "Date '{$formattedDate}' has already been logged");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Date '{$formattedDate}' has already been logged")
+            );
             return new RedirectResponse("/{$args['instanceId']}/log/food-diary");
         }
 
@@ -57,7 +64,9 @@ final class PostLogFoodDiary
 
         $this->db->commit();
 
-        $this->session->getFlashBag()->add("successes", "You earned 1 Rare Candy!");
+        $this->notifyPlayerCommand->run(
+            Notification::persistent("You earned 1 Rare Candy!")
+        );
 
         return new RedirectResponse("/{$args['instanceId']}/");
     }

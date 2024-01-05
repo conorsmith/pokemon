@@ -10,25 +10,26 @@ use ConorSmith\Pokemon\Habit\Domain\Habit;
 use ConorSmith\Pokemon\Habit\Domain\WeeklyHabitLogEntry;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Commands\WeeklyUpdateForPartyCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostLogWeeklyReview
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly Session $session,
         private readonly BagRepository $bagRepository,
         private readonly DailyHabitLogRepository $dailyHabitLogRepository,
         private readonly WeeklyHabitLogRepository $weeklyHabitLogRepository,
         private readonly WeeklyUpdateForPartyCommand $weeklyUpdateForPartyCommand,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -37,12 +38,16 @@ final class PostLogWeeklyReview
         $mondayOfSubmittedWeek = CarbonImmutable::createFromFormat("Y-m-d", $request->request->get('date'))->midDay();
 
         if (!$mondayOfSubmittedWeek->isMonday()) {
-            $this->session->getFlashBag()->add("errors", "Given date must be a Monday.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Given date must be a Monday.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
         }
 
         if ($mondayOfSubmittedWeek->isFuture()) {
-            $this->session->getFlashBag()->add("errors", "Given date cannot be in the future.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Given date cannot be in the future.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
         }
 
@@ -55,7 +60,9 @@ final class PostLogWeeklyReview
 
         if ($weeklyHabitLog->isWeekLogged($submittedWeek)) {
             $formattedDate = $mondayOfSubmittedWeek->format("Y-m-d");
-            $this->session->getFlashBag()->add("errors", "Week starting '{$formattedDate}' has already been logged");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Week starting '{$formattedDate}' has already been logged")
+            );
             return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
         }
 
@@ -82,8 +89,12 @@ final class PostLogWeeklyReview
 
         $this->db->commit();
 
-        $this->session->getFlashBag()->add("successes", "You earned {$rareCandy} Rare Candy!");
-        $this->session->getFlashBag()->add("successes", "You earned {$challengeTokens} Challenge Tokens!");
+        $this->notifyPlayerCommand->run(
+            Notification::persistent("You earned {$rareCandy} Rare Candy!")
+        );
+        $this->notifyPlayerCommand->run(
+            Notification::persistent("You earned {$challengeTokens} Challenge Tokens!")
+        );
 
         return new RedirectResponse("/{$args['instanceId']}/");
     }

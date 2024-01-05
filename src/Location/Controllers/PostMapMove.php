@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Location\Controllers;
 
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostMapMove
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly Session $session,
         private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -28,7 +29,9 @@ final class PostMapMove
         $currentLocation = $this->findLocation($instanceRow['current_location']);
 
         if (!in_array($request->request->get('location'), $currentLocation['directions'])) {
-            $this->session->getFlashBag()->add("errors", "Cannot move there from current location.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Cannot move there from current location.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/map");
         }
 

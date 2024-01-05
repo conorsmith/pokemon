@@ -6,17 +6,18 @@ namespace ConorSmith\Pokemon\Party\Controllers;
 
 use ConorSmith\Pokemon\Party\FriendshipLog;
 use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
+use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class PostPartySendToDayCare
 {
     public function __construct(
-        private readonly Session $session,
         private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly FriendshipLog $friendshipLog,
+        private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -26,14 +27,18 @@ final class PostPartySendToDayCare
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
         if (is_null($pokemon)) {
-            $this->session->getFlashBag()->add("errors", "Pokémon not found.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Pokémon not found.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/party");
         }
 
         $dayCare = $this->pokemonRepository->getDayCare();
 
         if ($dayCare->isFull()) {
-            $this->session->getFlashBag()->add("errors", "Day Care is full.");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Day Care is full.")
+            );
             return new RedirectResponse("/{$args['instanceId']}/party");
         }
 

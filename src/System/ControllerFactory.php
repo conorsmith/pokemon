@@ -96,6 +96,8 @@ use ConorSmith\Pokemon\Player\Controllers\GetBag;
 use ConorSmith\Pokemon\Player\Controllers\GetIndex;
 use ConorSmith\Pokemon\Player\Controllers\PostItemUse;
 use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
+use ConorSmith\Pokemon\Player\NotifyPlayerCommand;
+use ConorSmith\Pokemon\Player\Repositories\NotificationRepositoryDbAndSession;
 use ConorSmith\Pokemon\Pokedex\Controllers\GetPokedex;
 use ConorSmith\Pokemon\Pokedex\Controllers\GetPokedexEntry;
 use ConorSmith\Pokemon\Pokedex\RegisteredPokedexNumbersQuery;
@@ -104,6 +106,7 @@ use ConorSmith\Pokemon\Pokedex\Repositories\EvolutionaryLineRepository;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand as NotifyPlayerCommandInterface;
 use ConorSmith\Pokemon\SharedKernel\Commands\ReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\SharedKernel\Commands\ReportPartyPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
@@ -177,7 +180,6 @@ final class ControllerFactory
         private readonly RepositoryFactory $repositoryFactory,
         private readonly LocationControllerFactory $locationControllerFactory,
         private readonly Connection $db,
-        private readonly Session $session,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly FriendshipLog $friendshipLog,
@@ -185,7 +187,7 @@ final class ControllerFactory
         private readonly ReportPartyPokemonFaintedCommand $reportPartyPokemonFaintedCommand,
         private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
         private readonly array $pokedex,
-        private readonly TemplateEngine $templateEngine,
+        private readonly Session $session,
     ) {}
 
     public function create(string $className, InstanceId $instanceId): mixed
@@ -199,26 +201,24 @@ final class ControllerFactory
         return match ($className) {
             GetLogFoodDiary::class               => new GetLogFoodDiary(
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             PostLogFoodDiary::class              => new PostLogFoodDiary(
                 $this->db,
-                $this->session,
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             GetLogWeeklyReview::class            => new GetLogWeeklyReview(
                 $this->repositoryFactory->create(WeeklyHabitLogRepository::class, $instanceId),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             PostLogWeeklyReview::class           => new PostLogWeeklyReview(
                 $this->db,
-                $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
                 $this->repositoryFactory->create(WeeklyHabitLogRepository::class, $instanceId),
                 new WeeklyUpdateForPartyCommand(
-                    $this->session,
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                     new LevelUpPokemon(
                         $this->db,
@@ -232,17 +232,19 @@ final class ControllerFactory
                         $instanceId,
                     ),
                     new PokedexConfigRepository(),
+                    $this->createNotifyPlayerCommand($instanceId),
                 ),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             GetLogStretches::class               => new GetLogStretches(
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             PostLogStretches::class              => new PostLogStretches(
                 $this->db,
-                $this->session,
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             GetPokedex::class                    => new GetPokedex(
                 $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
@@ -250,7 +252,7 @@ final class ControllerFactory
                 new RegionRepositoryRegionIsLockedQuery(
                     $this->repositoryFactory->create(RegionRepository::class, $instanceId),
                 ),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             GetPokedexEntry::class               => new GetPokedexEntry(
                 $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
@@ -264,34 +266,32 @@ final class ControllerFactory
                 new ItemConfigRepository(),
                 new LocationConfigRepository(),
                 new PokedexConfigRepository(),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             GetLogCalorieGoal::class             => new GetLogCalorieGoal(
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             PostLogCalorieGoal::class            => new PostLogCalorieGoal(
                 $this->db,
-                $this->session,
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostMapMove::class                   => new PostMapMove(
                 $this->db,
-                $this->session,
                 $this->locationConfigRepository,
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             GetLogExercise::class                => new GetLogExercise(
                 $this->repositoryFactory->create(UnlimitedHabitLogRepository::class, $instanceId),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             PostLogExercise::class               => new PostLogExercise(
                 $this->db,
-                $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(UnlimitedHabitLogRepository::class, $instanceId),
                 new ReduceEggCyclesCommand(
-                    $this->session,
                     $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(GenealogyRepository::class, $instanceId),
                     new AddNewPokemon(
@@ -319,7 +319,9 @@ final class ControllerFactory
                     new TotalRegisteredPokemonQuery(
                         $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                     ),
+                    $this->createNotifyPlayerCommand($instanceId),
                 ),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostEncounterGenerateAndStart::class => new PostEncounterGenerateAndStart(
                 new CreateALegendaryEncounter(
@@ -359,45 +361,45 @@ final class ControllerFactory
                 new ShowPartyCoverage(
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
                 ),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             GetPartyEggs::class                  => new GetPartyEggs(),
             GetPartyDayCare::class               => new GetPartyDayCare(),
             GetPartyBox::class                   => new GetPartyBox(),
             GetPartyCompare::class               => new GetPartyCompare(
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             GetPartyCombinations::class          => new GetPartyCombinations(
                 new RegisteredPokedexNumbersQuery(
                     $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId)
                 ),
                 new PokemonConfigRepository(),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             GetPokemon::class                    => new GetPokemon(
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->locationConfigRepository,
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             GetPokemonBreed::class               => new GetPokemonBreed(
-                $this->session,
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPokemonBreed::class              => new PostPokemonBreed(
-                $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 new PokedexConfigRepository(),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             GetEncounter::class                  => new GetEncounter(
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->viewModelFactory,
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             PostEncounterCatch::class            => new PostEncounterCatch(
                 $this->db,
@@ -432,7 +434,6 @@ final class ControllerFactory
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
             ),
             PostEncounterFight::class            => new PostEncounterFight(
-                $this->session,
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 new EventFactory(
@@ -440,34 +441,34 @@ final class ControllerFactory
                     new PokedexConfigRepository(),
                 ),
                 $this->reportPartyPokemonFaintedCommand,
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartyMoveUp::class               => new PostPartyMoveUp(
                 $this->db,
-                $this->session,
                 $this->repositoryFactory->create(CaughtPokemonRepository::class, $instanceId),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartyMoveDown::class             => new PostPartyMoveDown(
                 $this->db,
-                $this->session,
                 $this->repositoryFactory->create(CaughtPokemonRepository::class, $instanceId),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartySendToBox::class            => new PostPartySendToBox(
-                $this->session,
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->friendshipLog,
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartySendToParty::class          => new PostPartySendToParty(
-                $this->session,
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->friendshipLog,
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartySendToDayCare::class        => new PostPartySendToDayCare(
-                $this->session,
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->friendshipLog,
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostBattleStart::class               => new PostBattleStart(
-                $this->session,
                 new StartABattle(
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                     $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
@@ -477,6 +478,7 @@ final class ControllerFactory
                 new SpendChallengeTokensUseCase(
                     $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 ),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             GetBattle::class                     => new GetBattle(
                 $this->db,
@@ -484,17 +486,16 @@ final class ControllerFactory
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->viewModelFactory,
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             GetHallOfFame::class                 => new GetHallOfFame(
-                $this->session,
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 new PokedexConfigRepository(),
-                $this->templateEngine,
+                $this->createNotifyPlayerCommand($instanceId),
+                $this->createTemplateEngine($instanceId),
             ),
             PostBattleFight::class               => new PostBattleFight(
                 $this->db,
-                $this->session,
                 new ItemConfigRepository(),
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
@@ -510,11 +511,12 @@ final class ControllerFactory
                     new PokedexConfigRepository(),
                 ),
                 $this->viewModelFactory,
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             GetSwitch::class                     => new GetSwitch(
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->viewModelFactory,
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             PostSwitch::class                    => new PostSwitch(
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
@@ -534,19 +536,18 @@ final class ControllerFactory
             GetBag::class                        => new GetBag(
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 new ItemConfigRepository(),
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             PostItemUse::class                   => new PostItemUse(
             ),
             GetPartyItemUse::class               => new GetPartyItemUse(
-                $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                $this->templateEngine,
+                $this->createNotifyPlayerCommand($instanceId),
+                $this->createTemplateEngine($instanceId),
             ),
             PostPartyItemUse::class              => new PostPartyItemUse(
                 $this->db,
-                $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 new LevelUpPokemon(
@@ -561,10 +562,10 @@ final class ControllerFactory
                     $instanceId,
                 ),
                 new ItemConfigRepository(),
+                $this->createNotifyPlayerCommand($instanceId),
                 $this->pokedex,
             ),
             PostChallengeEliteFour::class        => new PostChallengeEliteFour(
-                $this->session,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
@@ -574,6 +575,7 @@ final class ControllerFactory
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
                     $this->reportBattleWithGymLeaderCommand,
                 ),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             GetIndex::class                      => new GetIndex(
                 $this->db,
@@ -594,9 +596,31 @@ final class ControllerFactory
                     $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 ),
                 $this->viewModelFactory,
-                $this->templateEngine,
+                $this->createTemplateEngine($instanceId),
             ),
             default                              => throw new LogicException(),
         };
+    }
+
+    private function createTemplateEngine(InstanceId $instanceId): TemplateEngine
+    {
+        return new TemplateEngine(
+            new NotificationRepositoryDbAndSession(
+                $this->db,
+                $this->session,
+                $instanceId,
+            )
+        );
+    }
+
+    private function createNotifyPlayerCommand(InstanceId $instanceId): NotifyPlayerCommandInterface
+    {
+        return new NotifyPlayerCommand(
+            new NotificationRepositoryDbAndSession(
+                $this->db,
+                $this->session,
+                $instanceId
+            ),
+        );
     }
 }
