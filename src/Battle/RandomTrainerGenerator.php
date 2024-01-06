@@ -36,7 +36,11 @@ final class RandomTrainerGenerator
 
         $party = [];
 
-        $partySize = 6;
+        $partySize = RandomNumberGenerator::generateFromWeightedTable([
+            4 => 1,
+            5 => 4,
+            6 => 1,
+        ]);
 
         RandomNumberGenerator::setSeed(crc32($trainerId));
 
