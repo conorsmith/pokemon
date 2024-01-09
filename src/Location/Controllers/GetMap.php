@@ -10,6 +10,7 @@ use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
 use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
@@ -39,12 +40,12 @@ final class GetMap
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly SharedViewModelFactory $sharedViewModelFactory,
         private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
         private readonly PlayerIsLeagueChampionQuery $playerIsLeagueChampionQuery,
         private readonly RegionalVictoryQuery $regionalVictoryQuery,
-        private readonly array $pokedex,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
@@ -260,7 +261,7 @@ final class GetMap
 
         return (object) [
             'number'          => $legendaryConfig['pokemon'],
-            'name'            => $this->pokedex[$legendaryConfig['pokemon']]['name'],
+            'name'            => $this->pokedexConfigRepository->find($legendaryConfig['pokemon'])['name'],
             'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($legendaryConfig['pokemon']),
             'level'           => $legendaryConfig['level'] + $regionalLevelOffset,
             'canBattle'       => $canBattle,

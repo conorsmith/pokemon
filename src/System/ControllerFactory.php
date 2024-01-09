@@ -182,11 +182,11 @@ final class ControllerFactory
         private readonly Connection $db,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly FriendshipLog $friendshipLog,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly ReportPartyPokemonFaintedCommand $reportPartyPokemonFaintedCommand,
         private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
-        private readonly array $pokedex,
         private readonly Session $session,
     ) {}
 
@@ -562,8 +562,8 @@ final class ControllerFactory
                     $instanceId,
                 ),
                 new ItemConfigRepository(),
+                $this->pokedexConfigRepository,
                 $this->createNotifyPlayerCommand($instanceId),
-                $this->pokedex,
             ),
             PostChallengeEliteFour::class        => new PostChallengeEliteFour(
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
+
 final class PokedexConfigRepository
 {
     private readonly array $config;
@@ -17,9 +19,9 @@ final class PokedexConfigRepository
 
         $fullConfig = [];
 
-        foreach ($primaryConfig as $key => $primaryEentry) {
+        foreach ($primaryConfig as $key => $primaryEntry) {
             $fullConfig[$key] = array_merge(
-                $primaryEentry,
+                $primaryEntry,
                 [
                     'sexRatio'  => $sexRatiosConfig[$key],
                     'eggGroups' => $eggGroupsConfig[$key],
@@ -34,6 +36,17 @@ final class PokedexConfigRepository
     public function all(): array
     {
         return $this->config;
+    }
+
+    public function findAllWithType(int $type): array
+    {
+        return array_map(
+            function (array $config) use ($type) {
+                return $config['type'][0] === $type
+                    || $config['type'][1] === $type;
+            },
+            $this->config,
+        );
     }
 
     public function find(string $pokedexNumber): array

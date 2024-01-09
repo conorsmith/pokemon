@@ -19,7 +19,7 @@ use stdClass;
 final class ViewModelFactory
 {
     public function __construct(
-        private readonly array $pokedex,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
     ) {}
 
     public function createPokemonInBattle(Pokemon $pokemon): PokemonVm
@@ -44,7 +44,7 @@ final class ViewModelFactory
 
         return new PokemonVm(
             $pokemon->id,
-            $this->pokedex[$pokemon->number]['name'],
+            $this->pokedexConfigRepository->find($pokemon->number)['name'],
             $pokemon->form,
             self::createPokemonImageUrl($pokemon->number, $pokemon->form),
             self::createPokemonTypeName($pokemon->primaryType),

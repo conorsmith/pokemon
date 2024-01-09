@@ -9,6 +9,7 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\Party\LevelUpPokemon;
 use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
@@ -30,8 +31,8 @@ final class PostPartyItemUse
         private readonly PokemonRepositoryDb $pokemonRepository,
         private readonly LevelUpPokemon $levelUpPokemon,
         private readonly ItemConfigRepository $itemConfigRepository,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly NotifyPlayerCommand $notifyPlayerCommand,
-        private readonly array $pokedex,
     ) {}
 
     public function __invoke(Request $request, array $args): Response
@@ -133,7 +134,7 @@ final class PostPartyItemUse
         $bag = $bag->use(ItemId::RARE_CANDY);
         $this->bagRepository->save($bag);
 
-        $pokemonConfig = $this->pokedex[$pokemon->number];
+        $pokemonConfig = $this->pokedexConfigRepository->find($pokemon->number);
 
         $this->notifyPlayerCommand->run(
             Notification::persistent("{$pokemonConfig['name']} levelled up to level {$result->newLevel}")
@@ -141,7 +142,7 @@ final class PostPartyItemUse
 
         if ($result->evolved) {
             $oldPokemon = $pokemonConfig;
-            $newPokemon = $this->pokedex[$result->newPokedexNumber];
+            $newPokemon = $this->pokedexConfigRepository->find($result->newPokedexNumber);
             $this->notifyPlayerCommand->run(
                 Notification::persistent("Your {$oldPokemon['name']} evolved into {$newPokemon['name']}!")
             );
@@ -157,7 +158,7 @@ final class PostPartyItemUse
             'pokemonId'  => $pokemonId,
         ]);
 
-        $pokemonConfig = $this->pokedex[$pokemonRow['pokemon_id']];
+        $pokemonConfig = $this->pokedexConfigRepository->find($pokemonRow['pokemon_id']);
 
         if (!array_key_exists('evolutions', $pokemonConfig)) {
             $this->notifyPlayerCommand->run(
@@ -215,8 +216,10 @@ final class PostPartyItemUse
 
         $this->db->commit();
 
+        $newPokemonPokedexEntry = $this->pokedexConfigRepository->find($newPokemonNumber);
+
         $this->notifyPlayerCommand->run(
-            Notification::persistent("{$pokemonConfig['name']} evolved into {$this->pokedex[$newPokemonNumber]['name']}")
+            Notification::persistent("{$pokemonConfig['name']} evolved into {$newPokemonPokedexEntry['name']}")
         );
         return new RedirectResponse("/{$instanceId}/");
     }

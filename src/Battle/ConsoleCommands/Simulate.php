@@ -35,9 +35,10 @@ final class Simulate
             'driver'   => "pdo_mysql",
         ]);
 
+        $pokemonConfigRepository = new PokedexConfigRepository();
+
         $trainerRepository = new TrainerRepository(
             $db,
-            require __DIR__ . "/../../../src/Config/Pokedex.php",
             new EliteFourChallengeRepository(
                 $db,
                 new LeagueChampionRepository(
@@ -51,17 +52,20 @@ final class Simulate
             ),
             new TrainerConfigRepository(),
             new LocationConfigRepository(),
+            $pokemonConfigRepository,
             new InstanceId(Instance::DEFAULT_ID),
         );
 
         $randomTrainerGenerator = new RandomTrainerGenerator(
-            require __DIR__ . "/../../../src/Config/Pokedex.php",
+            $pokemonConfigRepository,
         );
 
         $useCase = new SimulateABattle(
             new EventFactory(
-                new ViewModelFactory(require __DIR__ . "/../../../src/Config/Pokedex.php"),
-                new PokedexConfigRepository(),
+                new ViewModelFactory(
+                    $pokemonConfigRepository,
+                ),
+                $pokemonConfigRepository,
             ),
         );
 

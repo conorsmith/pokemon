@@ -16,6 +16,7 @@ use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Player\Repositories\NotificationRepositoryDbAndSession;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -32,8 +33,8 @@ final class ControllerFactory
         private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly SharedViewModelFactory $sharedViewModelFactory,
-        private readonly array $pokedex,
         private readonly Session $session,
     ) {}
 
@@ -48,6 +49,7 @@ final class ControllerFactory
                 $this->locationConfigRepository,
                 $this->encounterConfigRepository,
                 $this->trainerConfigRepository,
+                $this->pokedexConfigRepository,
                 new ViewModelFactory(
                     $this->locationConfigRepository,
                 ),
@@ -61,7 +63,6 @@ final class ControllerFactory
                 new EliteFourChallengeRegionalVictoryQuery(
                     $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId)
                 ),
-                $this->pokedex,
                 new TemplateEngine(
                     new NotificationRepositoryDbAndSession(
                         $this->db,

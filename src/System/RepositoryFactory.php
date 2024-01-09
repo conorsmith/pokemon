@@ -108,11 +108,11 @@ final class RepositoryFactory
             ),
             TrainerRepository::class            => new TrainerRepository(
                 $this->db,
-                require __DIR__ . "/../Config/Pokedex.php",
                 $this->create(EliteFourChallengeRepository::class, $instanceId),
                 $this->create(LeagueChampionRepository::class, $instanceId),
                 new TrainerConfigRepository(),
                 new LocationConfigRepository(),
+                new PokedexConfigRepository(),
                 $instanceId,
             ),
             AreaRepository::class               => new AreaRepository(

@@ -9,9 +9,9 @@ use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
-use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
@@ -25,11 +25,11 @@ class TrainerRepository
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly array $pokedex,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly LeagueChampionRepository $leagueChampionRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly InstanceId $instanceId,
     ) {}
 
@@ -116,7 +116,7 @@ class TrainerRepository
                     'id' => $decodedPokemon['id'],
                 ]);
 
-                $pokedexEntry = $this->findPokedexEntry($decodedPokemon['pokedexNumber']);
+                $pokedexEntry = $this->pokedexConfigRepository->find($decodedPokemon['pokedexNumber']);
 
                 $pokemon = new Pokemon(
                     $decodedPokemon['id'],
@@ -203,7 +203,7 @@ class TrainerRepository
 
                 $level = $pokemonConfig['level'] + $location->calculateRegionalLevelOffset();
 
-                $pokedexEntry = $this->findPokedexEntry($pokemonConfig['id']);
+                $pokedexEntry = $this->pokedexConfigRepository->find($pokemonConfig['id']);
                 $pokemon = new Pokemon(
                     $trainerBattlePokemonId,
                     $pokemonConfig['id'],
@@ -253,15 +253,6 @@ class TrainerRepository
             $isBattling,
             array_key_exists('leader', $trainerConfig) ? $trainerConfig['leader']['badge'] : null,
         );
-    }
-
-    private function findPokedexEntry(string $number): array
-    {
-        if (!array_key_exists($number, $this->pokedex)) {
-            throw new Exception("Given Pokémon Number '{$number}' does not exist in Pokédex");
-        }
-
-        return $this->pokedex[$number];
     }
 
     public function saveTrainer(Trainer $battleTrainer): void

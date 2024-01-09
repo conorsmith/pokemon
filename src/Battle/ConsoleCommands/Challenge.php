@@ -48,6 +48,7 @@ final class Challenge
         ]);
 
         $repositoryFactory = new RepositoryFactory($db);
+        $pokemonConfigRepository = new PokedexConfigRepository();
 
         $instanceIds = self::allInstanceIds();
 
@@ -63,14 +64,18 @@ final class Challenge
                 $repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
                 new SimulateABattle(
                     new EventFactory(
-                        new ViewModelFactory(require __DIR__ . "/../../../src/Config/Pokedex.php"),
-                        new PokedexConfigRepository(),
+                        new ViewModelFactory(
+                            $pokemonConfigRepository,
+                        ),
+                        $pokemonConfigRepository,
                     ),
                 ),
                 new RandomTrainerGenerator(
-                    require __DIR__ . "/../../../src/Config/Pokedex.php"
+                    $pokemonConfigRepository,
                 ),
-                new ViewModelFactory(require __DIR__ . "/../../../src/Config/Pokedex.php"),
+                new ViewModelFactory(
+                    $pokemonConfigRepository,
+                ),
             );
 
             $startABattle = new StartABattle(

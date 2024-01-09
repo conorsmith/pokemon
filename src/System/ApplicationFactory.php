@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Party\FriendshipLog;
 use ConorSmith\Pokemon\Party\FriendshipLogReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\Party\FriendshipLogReportPartyPokemonFaintedCommand;
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
@@ -48,18 +49,22 @@ final class ApplicationFactory
                 new EncounterConfigRepository(),
                 new LocationConfigRepository(),
                 new TrainerConfigRepository(),
-                new ViewModelFactory(self::createPokedexConfigArray()),
-                self::createPokedexConfigArray(),
+                new PokedexConfigRepository(),
+                new ViewModelFactory(
+                    new PokedexConfigRepository(),
+                ),
                 self::createSessionManager(),
             ),
             self::createDatabaseConnection(),
             new LocationConfigRepository(),
             new TrainerConfigRepository(),
+            new PokedexConfigRepository(),
             new FriendshipLog(self::createDatabaseConnection()),
-            new ViewModelFactory(self::createPokedexConfigArray()),
+            new ViewModelFactory(
+                new PokedexConfigRepository(),
+            ),
             new FriendshipLogReportPartyPokemonFaintedCommand(new FriendshipLog(self::createDatabaseConnection())),
             new FriendshipLogReportBattleWithGymLeaderCommand(new FriendshipLog(self::createDatabaseConnection())),
-            self::createPokedexConfigArray(),
             self::createSessionManager(),
         );
     }
@@ -87,10 +92,5 @@ final class ApplicationFactory
         }
 
         return self::$sessionManager;
-    }
-
-    private static function createPokedexConfigArray(): array
-    {
-        return require __DIR__ . "/../Config/Pokedex.php";
     }
 }
