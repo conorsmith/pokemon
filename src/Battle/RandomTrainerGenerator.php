@@ -7,13 +7,16 @@ namespace ConorSmith\Pokemon\Battle;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
+use ConorSmith\Pokemon\Party\Domain\EggGroup;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Domain\AttributeTag;
 use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
+use ConorSmith\Pokemon\TrainerConfigRepository;
 use Exception;
 use Faker\Factory;
 use Ramsey\Uuid\Uuid;
@@ -22,6 +25,7 @@ final class RandomTrainerGenerator
 {
     public function __construct(
         private readonly PokedexConfigRepository $pokedexConfigRepository,
+        private readonly TrainerConfigRepository $trainerConfigRepository,
     ) {}
 
     public function generate(int $opponentHighestLevel, string $locationId): Trainer
@@ -53,15 +57,17 @@ final class RandomTrainerGenerator
 
         RandomNumberGenerator::unsetSeed();
 
+        $gender = $this->randomlyGenerateGender($trainerClass);
+
         return new Trainer(
             $trainerId,
-            $faker->firstName,
-            $trainerClass,
-            match (RandomNumberGenerator::generateInRange(0, 2)) {
-                0 => Gender::MALE,
-                1 => Gender::FEMALE,
-                2 => Gender::IMMATERIAL,
+            match ($gender) {
+                Gender::FEMALE     => $faker->firstNameFemale,
+                Gender::IMMATERIAL => $faker->firstName,
+                Gender::MALE       => $faker->firstNameMale,
             },
+            $trainerClass,
+            $gender,
             $party,
             $locationId,
             true,
@@ -107,262 +113,179 @@ final class RandomTrainerGenerator
     private function findRandomPokedexNumber(string $trainerClass): string
     {
         $pokedexNumbers = match ($trainerClass) {
-            TrainerClass::BEAUTY => [
-                PokedexNo::ODDISH,
-                PokedexNo::BELLSPROUT,
-                PokedexNo::PIDGEY,
-                PokedexNo::PIDGEOTTO,
-                PokedexNo::PIDGEOT,
-                PokedexNo::JIGGLYPUFF,
-                PokedexNo::WIGGLYTUFF,
-                PokedexNo::RATTATA,
-                PokedexNo::PIKACHU,
-                PokedexNo::EXEGGCUTE,
-                PokedexNo::NIDORAN_F,
-                PokedexNo::BULBASAUR,
-                PokedexNo::IVYSAUR,
-                PokedexNo::CLEFAIRY,
-                PokedexNo::CLEFABLE,
-                PokedexNo::MEOWTH,
-                PokedexNo::PERSIAN,
-                PokedexNo::IGGLYBUFF,
-                PokedexNo::PICHU,
-                PokedexNo::CLEFFA,
-                PokedexNo::AZURILL,
-                PokedexNo::MARILL,
-                PokedexNo::AZURILL,
-                PokedexNo::GOLDEEN,
-                PokedexNo::WAILMER,
-                PokedexNo::KECLEON,
-                PokedexNo::SEVIPER,
-                PokedexNo::LOMBRE,
-                PokedexNo::SHROOMISH,
-                PokedexNo::NUMEL,
-                PokedexNo::HORSEA,
-                PokedexNo::LUVDISC,
-            ],
-            TrainerClass::BIKER => array_merge(
+            TrainerClass::BEAUTY            => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::CUTE)),
+            TrainerClass::BIKER             => array_merge(
                 array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIRE)),
                 array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::POISON)),
             ),
-            TrainerClass::BIRD_KEEPER => [
-                PokedexNo::PIDGEY,
-                PokedexNo::PIDGEOTTO,
-                PokedexNo::PIDGEOT,
-                PokedexNo::SPEAROW,
-                PokedexNo::FEAROW,
-                PokedexNo::PSYDUCK,
-                PokedexNo::GOLDUCK,
-                PokedexNo::FARFETCH_D,
-                PokedexNo::DODUO,
-                PokedexNo::DODRIO,
-                PokedexNo::ARTICUNO,
-                PokedexNo::ZAPDOS,
-                PokedexNo::MOLTRES,
-                PokedexNo::HOOTHOOT,
-                PokedexNo::NOCTOWL,
-                PokedexNo::NATU,
-                PokedexNo::XATU,
-                PokedexNo::MURKROW,
-                PokedexNo::DELIBIRD,
-                PokedexNo::LUGIA,
-                PokedexNo::HO_OH,
-                PokedexNo::TORCHIC,
-                PokedexNo::COMBUSKEN,
-                PokedexNo::BLAZIKEN,
-                PokedexNo::TAILLOW,
-                PokedexNo::SWELLOW,
-                PokedexNo::WINGULL,
-                PokedexNo::PELIPPER,
-                PokedexNo::SWABLU,
-                PokedexNo::ALTARIA,
-            ],
-            TrainerClass::BLACK_BELT => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIGHTING)),
-            TrainerClass::BUG_CATCHER => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::BUG)),
-            TrainerClass::BURGLAR => array_merge(
+            TrainerClass::BIRD_KEEPER       => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::BIRD)),
+            TrainerClass::BLACK_BELT        => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIGHTING)),
+            TrainerClass::BUG_CATCHER       => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::BUG)),
+            TrainerClass::BURGLAR           => array_merge(
                 [
                     PokedexNo::KOFFING,
                     PokedexNo::WEEZING,
                 ],
-                $this->pokedexConfigRepository->findAllWithType(PokemonType::FIRE),
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIRE)),
             ),
-            TrainerClass::CHANNELER => [
+            TrainerClass::CHANNELER         => [
                 PokedexNo::GASTLY,
                 PokedexNo::HAUNTER,
                 PokedexNo::GENGAR,
             ],
-            TrainerClass::COOLTRAINER => [
-                PokedexNo::VENUSAUR,
-                PokedexNo::TYRANITAR,
-                PokedexNo::CLEFAIRY,
-                PokedexNo::JIGGLYPUFF,
-                PokedexNo::PERSIAN,
-                PokedexNo::DEWGONG,
-                PokedexNo::CHANSEY,
-                PokedexNo::STARMIE,
-                PokedexNo::KINGDRA,
-                PokedexNo::BELLSPROUT,
-                PokedexNo::WEEPINBELL,
-                PokedexNo::VICTREEBEL,
-                PokedexNo::PARAS,
-                PokedexNo::PARASECT,
-                PokedexNo::KINGLER,
-                PokedexNo::POLIWRATH,
-                PokedexNo::TENTACRUEL,
-                PokedexNo::SEADRA,
-                PokedexNo::BLASTOISE,
-                PokedexNo::EXEGGUTOR,
-                PokedexNo::SANDSLASH,
-                PokedexNo::CLOYSTER,
-                PokedexNo::ELECTRODE,
-                PokedexNo::ARCANINE,
-                PokedexNo::LAPRAS,
-                PokedexNo::RHYDON,
-                PokedexNo::SLOWBRO,
-                PokedexNo::URSARING,
-                PokedexNo::MACHOKE,
-                PokedexNo::KANGASKHAN,
-                PokedexNo::MACHAMP,
-                PokedexNo::ODDISH,
-                PokedexNo::GLOOM,
-                PokedexNo::IVYSAUR,
-                PokedexNo::NINETALES,
-                PokedexNo::RAPIDASH,
-                PokedexNo::GIRAFARIG,
-                PokedexNo::PONYTA,
-                PokedexNo::VULPIX,
-                PokedexNo::RATICATE,
-                PokedexNo::WARTORTLE,
-                PokedexNo::CHARMELEON,
-                PokedexNo::CHARIZARD,
-                PokedexNo::RHYHORN,
-                PokedexNo::NIDORINO,
-                PokedexNo::NIDOKING,
-                PokedexNo::MAROWAK,
-                PokedexNo::NIDORINA,
-                PokedexNo::NIDOQUEEN,
-                PokedexNo::GRAVELER,
-                PokedexNo::ONIX,
-                PokedexNo::MAGNETON,
-                PokedexNo::QUAGSIRE,
-                PokedexNo::EXEGGCUTE,
-                PokedexNo::BUTTERFREE,
-                PokedexNo::BELLOSSOM,
-                PokedexNo::POLIWHIRL,
-                PokedexNo::FLAREON,
-                PokedexNo::VAPOREON,
-                PokedexNo::JOLTEON,
-                PokedexNo::GOLDEEN,
-                PokedexNo::SEAKING,
-                PokedexNo::PARASECT,
-                PokedexNo::GOLDUCK,
-                PokedexNo::SKIPLOOM,
-                PokedexNo::DRATINI,
-                PokedexNo::DRAGONAIR,
-                PokedexNo::DRAGONITE,
-                PokedexNo::ELECTABUZZ,
-                PokedexNo::TAUROS,
-                PokedexNo::TANGELA,
-                PokedexNo::MANECTRIC,
-                PokedexNo::MUK,
-                PokedexNo::AZUMARILL,
-                PokedexNo::ZANGOOSE,
-                PokedexNo::PELIPPER,
-                PokedexNo::CAMERUPT,
-                PokedexNo::ROSELIA,
-                PokedexNo::MAWILE,
-                PokedexNo::SABLEYE,
-                PokedexNo::SWELLOW,
-                PokedexNo::TRAPINCH,
-                PokedexNo::WAILMER,
-                PokedexNo::SHIFTRY,
-                PokedexNo::CACTURNE,
-                PokedexNo::LAIRON,
-                PokedexNo::LINOONE,
-                PokedexNo::MILOTIC,
-                PokedexNo::DELCATTY,
-                PokedexNo::NOSEPASS,
-                PokedexNo::MEDICHAM,
-                PokedexNo::LUDICOLO,
-                PokedexNo::KECLEON,
-                PokedexNo::LOUDRED,
-                PokedexNo::DODRIO,
-                PokedexNo::KADABRA,
-                PokedexNo::CLAYDOL,
-                PokedexNo::SHARPEDO,
-                PokedexNo::MAGCARGO,
-                PokedexNo::HARIYAMA,
-            ],
-            TrainerClass::CUE_BALL => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIGHTING)),
-            TrainerClass::ENGINEER => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::ELECTRIC)),
-            TrainerClass::FISHERMAN => [
-                PokedexNo::POLIWAG,
-                PokedexNo::TENTACOOL,
-                PokedexNo::TENTACRUEL,
-                PokedexNo::SHELLDER,
-                PokedexNo::CLOYSTER,
-                PokedexNo::KRABBY,
-                PokedexNo::KINGLER,
-                PokedexNo::HORSEA,
-                PokedexNo::SEADRA,
-                PokedexNo::GOLDEEN,
-                PokedexNo::SEAKING,
-                PokedexNo::STARYU,
-                PokedexNo::STARMIE,
-                PokedexNo::MAGIKARP,
-                PokedexNo::GYARADOS,
-                PokedexNo::CHINCHOU,
-                PokedexNo::LANTURN,
-                PokedexNo::QWILFISH,
-                PokedexNo::CORSOLA,
-                PokedexNo::REMORAID,
-                PokedexNo::OCTILLERY,
-                PokedexNo::MANTINE,
-                PokedexNo::KINGDRA,
-                PokedexNo::CARVANHA,
-                PokedexNo::SHARPEDO,
-                PokedexNo::WAILMER,
-                PokedexNo::WAILORD,
-                PokedexNo::BARBOACH,
-                PokedexNo::WHISCASH,
-                PokedexNo::FEEBAS,
-                PokedexNo::MILOTIC,
-                PokedexNo::CLAMPERL,
-                PokedexNo::HUNTAIL,
-                PokedexNo::GOREBYSS,
-                PokedexNo::RELICANTH,
-                PokedexNo::LUVDISC,
-                PokedexNo::KYOGRE,
-            ],
-            TrainerClass::GAMER => [],
-            TrainerClass::GENTLEMAN => [],
-            TrainerClass::HIKER => [],
-            TrainerClass::CAMPER => [],
-            TrainerClass::PICNICKER => [],
-            TrainerClass::JUGGLER => [],
-            TrainerClass::LASS => [],
-            TrainerClass::POKEMANIAC => [],
-            TrainerClass::PSYCHIC => array_merge(
+            TrainerClass::CUE_BALL          => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIGHTING)),
+            TrainerClass::ENGINEER          => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::ELECTRIC)),
+            TrainerClass::FISHERMAN         => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::AQUATIC)),
+            TrainerClass::GENTLEMAN         => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::PET)),
+            TrainerClass::CAMPER            => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::WOODS_DWELLER)),
+            TrainerClass::PICNICKER         => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::WOODS_DWELLER)),
+            TrainerClass::JUGGLER           => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::SPHERICAL)),
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::PSYCHIC)),
+            ),
+            TrainerClass::LASS              => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::CUTE)),
+            TrainerClass::POKEMANIAC        => array_keys($this->pokedexConfigRepository->findAllInEggGroup(EggGroup::MONSTER)),
+            TrainerClass::PSYCHIC           => array_merge(
                 array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::PSYCHIC)),
                 array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::GHOST)),
             ),
-            TrainerClass::GUITARIST => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::ELECTRIC)),
-            TrainerClass::TEAM_ROCKET_GRUNT => [],
-            TrainerClass::SAILOR => [],
-            TrainerClass::SCIENTIST => [],
-            TrainerClass::SUPER_NERD => [],
-            TrainerClass::SWIMMER => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::WATER)),
-            TrainerClass::TAMER => [],
-            TrainerClass::YOUNGSTER => [],
-            default => array_keys($this->pokedexConfigRepository->all()),
+            TrainerClass::GUITARIST         => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::ELECTRIC)),
+                [
+                    PokedexNo::ZUBAT,
+                    PokedexNo::GOLBAT,
+                    PokedexNo::CROBAT,
+                    PokedexNo::WHISMUR,
+                    PokedexNo::LOUDRED,
+                    PokedexNo::EXPLOUD,
+                ]
+            ),
+            TrainerClass::SAILOR            => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::WATER)),
+                [
+                    PokedexNo::RATICATE,
+                    PokedexNo::MACHOP,
+                    PokedexNo::MACHOKE,
+                    PokedexNo::MACHAMP,
+                ],
+            ),
+            TrainerClass::SCIENTIST         => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::INORGANIC)),
+            TrainerClass::SUPER_NERD        => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::INORGANIC)),
+            TrainerClass::SWIMMER           => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::WATER)),
+            TrainerClass::BOARDER           => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::ICE)),
+            TrainerClass::FIREBREATHER      => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIRE)),
+                [
+                    PokedexNo::KOFFING,
+                    PokedexNo::WEEZING,
+                ],
+            ),
+            TrainerClass::KIMONO_GIRL       => [
+                PokedexNo::EEVEE,
+                PokedexNo::VAPOREON,
+                PokedexNo::JOLTEON,
+                PokedexNo::FLAREON,
+                PokedexNo::ESPEON,
+                PokedexNo::UMBREON,
+                PokedexNo::LEAFEON,
+                PokedexNo::GLACEON,
+                PokedexNo::SYLVEON,
+            ],
+            TrainerClass::MEDIUM            => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::PSYCHIC)),
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::GHOST)),
+            ),
+            TrainerClass::POKEFAN           => array_keys($this->pokedexConfigRepository->findAllInEggGroup(EggGroup::FAIRY)),
+            TrainerClass::SKIER             => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::ICE)),
+            TrainerClass::BATTLE_GIRL       => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIGHTING)),
+            TrainerClass::BUG_MANIAC        => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::BUG)),
+            TrainerClass::DRAGON_TAMER      => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::DRAGON)),
+                array_keys($this->pokedexConfigRepository->findAllInEggGroup(EggGroup::DRAGON)),
+            ),
+            TrainerClass::EXPERT            => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIGHTING)),
+            TrainerClass::HEX_MANIAC        => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::PSYCHIC)),
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::GHOST)),
+            ),
+            TrainerClass::KINDLER           => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIRE)),
+            TrainerClass::NINJA_BOY         => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::POISON)),
+                [
+                    PokedexNo::NINCADA,
+                    PokedexNo::NINJASK,
+                ],
+            ),
+            TrainerClass::PARASOL_LADY      => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::WATER)),
+            TrainerClass::TRIATHLETE        => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::WATER)),
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::ELECTRIC)),
+                [
+                    PokedexNo::DODUO,
+                    PokedexNo::DODRIO,
+                ]
+            ),
+            TrainerClass::TUBER             => array_merge(
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::WATER)),
+                array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::NORMAL)),
+            ),
+            TrainerClass::CRUSH_GIRL        => array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIGHTING)),
+            TrainerClass::PAINTER           => [
+                PokedexNo::SMEARGLE,
+            ],
+            default                         => $this->findAllPokemonUsedByTrainerClass($trainerClass),
         };
-
-        if ($pokedexNumbers === []) {
-            return PokedexNo::MAGIKARP;
-        }
 
         $randomPokedexEntryKey = RandomNumberGenerator::generateInRange(0, count($pokedexNumbers) - 1);
         return strval($pokedexNumbers[$randomPokedexEntryKey]);
+    }
+
+    private function findAllPokemonUsedByTrainerClass(string $trainerClass): array
+    {
+        $trainers = $this->trainerConfigRepository->findTrainersWithClass($trainerClass);
+
+        $pokedexNumbers = [];
+
+        foreach ($trainers as $trainer) {
+            foreach ($trainer['party'] as $trainerPokemonConfig) {
+                $pokedexNumbers[] = $trainerPokemonConfig['id'];
+            }
+        }
+
+        $pokedexNumbers = array_unique($pokedexNumbers);
+
+        $pokedexNumbersInclEvolutions = [];
+
+        foreach ($pokedexNumbers as $pokedexNumber) {
+            $pokedexNumbersInclEvolutions = array_merge(
+                $pokedexNumbersInclEvolutions,
+                [$pokedexNumber],
+                $this->findEvolutions($pokedexNumber),
+            );
+        }
+
+        return array_values(array_unique($pokedexNumbersInclEvolutions));
+    }
+
+    private function findEvolutions(string $pokedexNumber): array
+    {
+        $pokedexEntry = $this->pokedexConfigRepository->find($pokedexNumber);
+
+        if (!array_key_exists('evolutions', $pokedexEntry)) {
+            return [];
+        }
+
+        $evolutionPokedexNumbers = [];
+
+        foreach ($pokedexEntry['evolutions'] as $evolutionPokedexNumber => $config) {
+            $evolutionPokedexNumbers = array_merge(
+                $evolutionPokedexNumbers,
+                [strval($evolutionPokedexNumber)],
+                $this->findEvolutions(strval($evolutionPokedexNumber)),
+            );
+        }
+
+        return $evolutionPokedexNumbers;
     }
 
     private static function createStats(string $trainerClass, int $level, string $number): Stats
@@ -447,6 +370,8 @@ final class RandomTrainerGenerator
                 TrainerClass::RIVAL,
                 TrainerClass::DOUBLE_TEAM,
                 TrainerClass::TWINS,
+                TrainerClass::CRUSH_KIN,
+                TrainerClass::INTERVIEWER,
             ])) {
                 unset($trainerClasses[$i]);
             }
@@ -457,5 +382,79 @@ final class RandomTrainerGenerator
         $randomTrainerClassKey = RandomNumberGenerator::generateInRange(0, count($trainerClasses) - 1);
 
         return $trainerClasses[$randomTrainerClassKey];
+    }
+
+    public function randomlyGenerateGender(string $trainerClass): Gender
+    {
+        if (in_array(
+            $trainerClass,
+            [
+                TrainerClass::BEAUTY,
+                TrainerClass::PICNICKER,
+                TrainerClass::LASS,
+                TrainerClass::KIMONO_GIRL,
+                TrainerClass::AROMA_LADY,
+                TrainerClass::BATTLE_GIRL,
+                TrainerClass::LADY,
+                TrainerClass::PARASOL_LADY,
+                TrainerClass::CRUSH_GIRL,
+            ]
+        )) {
+            return Gender::FEMALE;
+        }
+
+        if (in_array(
+            $trainerClass,
+            [
+                TrainerClass::CUE_BALL,
+                TrainerClass::GAMER,
+                TrainerClass::GENTLEMAN,
+                TrainerClass::CAMPER,
+                TrainerClass::YOUNGSTER,
+                TrainerClass::NINJA_BOY,
+                TrainerClass::RICH_BOY,
+                TrainerClass::FISHERMAN,
+            ]
+        )) {
+            return Gender::MALE;
+        }
+
+        if (in_array(
+            $trainerClass,
+            [
+                TrainerClass::MEDIUM,
+                TrainerClass::TEACHER,
+                TrainerClass::HEX_MANIAC,
+            ]
+        )) {
+            return match (RandomNumberGenerator::generateInRange(0, 1)) {
+                0 => Gender::FEMALE,
+                1 => Gender::IMMATERIAL,
+            };
+        }
+
+        if (in_array(
+            $trainerClass,
+            [
+                TrainerClass::BLACK_BELT,
+                TrainerClass::BURGLAR,
+                TrainerClass::SAILOR,
+                TrainerClass::FIREBREATHER,
+                TrainerClass::GUITARIST,
+                TrainerClass::SAGE,
+                TrainerClass::RUIN_MANIAC,
+            ]
+        )) {
+            return match (RandomNumberGenerator::generateInRange(0, 1)) {
+                0 => Gender::IMMATERIAL,
+                1 => Gender::MALE,
+            };
+        }
+
+        return match (RandomNumberGenerator::generateInRange(0, 2)) {
+            0 => Gender::FEMALE,
+            1 => Gender::IMMATERIAL,
+            2 => Gender::MALE,
+        };
     }
 }

@@ -23,6 +23,7 @@ use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\System\RepositoryFactory;
+use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use ConorSmith\PokemonTest\Support\Instance;
 use Doctrine\DBAL\DriverManager;
@@ -72,6 +73,7 @@ final class Challenge
                 ),
                 new RandomTrainerGenerator(
                     $pokemonConfigRepository,
+                    new TrainerConfigRepository(),
                 ),
                 new ViewModelFactory(
                     $pokemonConfigRepository,

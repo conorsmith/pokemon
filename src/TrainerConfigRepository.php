@@ -70,4 +70,22 @@ final class TrainerConfigRepository
 
         return null;
     }
+
+    public function findTrainersWithClass(string $trainerClass): array
+    {
+        $trainers = [];
+
+        foreach ($this->trainerConfigRepository as $region => $config) {
+            foreach ($config as $locationId => $entries) {
+                foreach ($entries as $entry) {
+                    if ($entry['class'] === $trainerClass) {
+                        $entry['locationId'] = $locationId;
+                        $trainers[] = $entry;
+                    }
+                }
+            }
+        }
+
+        return $trainers;
+    }
 }

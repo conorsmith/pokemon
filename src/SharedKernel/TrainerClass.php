@@ -207,7 +207,7 @@ final class TrainerClass
             self::COOLTRAINER       => match ($gender) {
                 Gender::FEMALE => "/assets/trainers/Spr_FRLG_Cooltrainer_F.png",
                 Gender::MALE   => "/assets/trainers/Spr_FRLG_Cooltrainer_M.png",
-                default        => null,
+                default        => "/assets/trainers/Spr_FRLG_Cooltrainer_F.png",
             },
             self::TAMER             => "/assets/trainers/Spr_FRLG_Tamer.png",
             self::LASS              => "/assets/trainers/Spr_FRLG_Lass.png",
@@ -222,12 +222,12 @@ final class TrainerClass
             self::TEAM_ROCKET_ADMIN => match ($gender) {
                 Gender::FEMALE => "/assets/trainers/Spr_FRLG_Team_Rocket_Grunt_F.png",
                 Gender::MALE   => "/assets/trainers/Spr_FRLG_Team_Rocket_Grunt_M.png",
-                default        => null,
+                default        => "/assets/trainers/Spr_FRLG_Team_Rocket_Grunt_M.png",
             },
             self::SWIMMER           => match ($gender) {
                 Gender::FEMALE => "/assets/trainers/Spr_FRLG_Swimmer_F.png",
                 Gender::MALE   => "/assets/trainers/Spr_FRLG_Swimmer_M.png",
-                default        => null,
+                default        => "/assets/trainers/Spr_FRLG_Swimmer_M.png",
             },
             self::PICNICKER         => "/assets/trainers/Spr_FRLG_Picnicker.png",
             self::SAILOR            => "/assets/trainers/Spr_FRLG_Sailor.png",
@@ -253,7 +253,7 @@ final class TrainerClass
             self::PSYCHIC           => match ($gender) {
                 Gender::FEMALE => "/assets/trainers/Spr_RS_Psychic_F.png",
                 Gender::MALE   => "/assets/trainers/Spr_FRLG_Psychic_M.png",
-                default        => null,
+                default        => "/assets/trainers/Spr_RS_Psychic_F.png",
             },
             self::SCIENTIST         => "/assets/trainers/Spr_FRLG_Scientist.png",
             self::SIS_AND_BRO       => "/assets/trainers/Spr_FRLG_Sis_and_Bro.png",
@@ -263,14 +263,14 @@ final class TrainerClass
             self::POKEMON_RANGER    => match($gender) {
                 Gender::FEMALE => "/assets/trainers/Spr_FRLG_Pok%C3%A9mon_Ranger_F.png",
                 Gender::MALE   => "/assets/trainers/Spr_FRLG_Pok%C3%A9mon_Ranger_M.png",
-                default        => null,
+                default        => "/assets/trainers/Spr_FRLG_Pok%C3%A9mon_Ranger_F.png",
             },
             self::AROMA_LADY        => "/assets/trainers/Spr_FRLG_Aroma_Lady.png",
             self::TUBER             => "/assets/trainers/Spr_FRLG_Tuber.png",
             self::POKEMON_BREEDER   => match ($gender) {
                 Gender::FEMALE => "/assets/trainers/Spr_RS_Pok%C3%A9mon_Breeder_F.png",
                 Gender::MALE   => "/assets/trainers/Spr_RS_Pok%C3%A9mon_Breeder_M.png",
-                default        => null,
+                default        => "/assets/trainers/Spr_RS_Pok%C3%A9mon_Breeder_F.png",
             },
             self::PAINTER           => "/assets/trainers/Spr_FRLG_Painter.png",
             self::LADY              => "/assets/trainers/Spr_FRLG_Lady.png",
@@ -280,7 +280,7 @@ final class TrainerClass
             self::POKEFAN           => match($gender) {
                 Gender::FEMALE => "/assets/trainers/Spr_RS_Pok%C3%A9fan_F.png",
                 Gender::MALE   => "/assets/trainers/Spr_RS_Pok%C3%A9fan_M.png",
-                default        => null,
+                default        => "/assets/trainers/Spr_RS_Pok%C3%A9fan_F.png",
             },
             self::OFFICER           => "/assets/trainers/Spr_DP_Officer.png",
             self::SCHOOL_KID        => "/assets/trainers/Spr_HGSS_School_Kid.png",
@@ -295,7 +295,7 @@ final class TrainerClass
             self::TEAM_MAGMA_GRUNT  => match($gender) {
                 Gender::FEMALE => "/assets/trainers/Spr_RS_Team_Magma_Grunt_F.png",
                 Gender::MALE   => "/assets/trainers/Spr_RS_Team_Magma_Grunt_M.png",
-                default        => null,
+                default        => "/assets/trainers/Spr_RS_Team_Magma_Grunt_M.png",
             },
             self::TEAM_AQUA_GRUNT   => "/assets/trainers/Spr_RS_Team_Aqua_Grunt_M.png",
             self::RICH_BOY          => "/assets/trainers/Spr_RS_Rich_Boy.png",
@@ -316,7 +316,7 @@ final class TrainerClass
             self::TRIATHLETE        => match ($gender) {
                 Gender::FEMALE => "/assets/trainers/Spr_RS_Triathlete_Runner_F.png",
                 Gender::MALE   => "/assets/trainers/Spr_RS_Triathlete_Runner_M.png",
-                default        => null,
+                default        => "/assets/trainers/Spr_RS_Triathlete_Runner_M.png",
             },
             self::BUG_MANIAC        => "/assets/trainers/Spr_RS_Bug_Maniac.png",
             self::HEX_MANIAC        => "/assets/trainers/Spr_RS_Hex_Maniac.png",

@@ -58,6 +58,7 @@ final class Simulate
 
         $randomTrainerGenerator = new RandomTrainerGenerator(
             $pokemonConfigRepository,
+            new TrainerConfigRepository(),
         );
 
         $useCase = new SimulateABattle(
