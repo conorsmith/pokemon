@@ -71,6 +71,7 @@ final class AreaTest extends TestCase
         return new Battle(
             "some battle id",
             $trainerId,
+            true,
             null,
             123,
         );
@@ -81,6 +82,7 @@ final class AreaTest extends TestCase
         return new Battle(
             "some battle id",
             $trainerId,
+            true,
             new CarbonImmutable("2020-02-20 20:00:00"),
             123,
         );

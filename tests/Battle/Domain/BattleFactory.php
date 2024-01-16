@@ -12,6 +12,7 @@ final class BattleFactory
     public static function create(
         string $id = "dontcare",
         string $trainerId = "dontcare",
+        bool $isPlayerChallenger = true,
         ?CarbonImmutable $dateLastBeaten = null,
         int $battleCount = 0,
     ): Battle
@@ -19,6 +20,7 @@ final class BattleFactory
         return new Battle(
             $id,
             $trainerId,
+            $isPlayerChallenger,
             $dateLastBeaten,
             $battleCount,
         );

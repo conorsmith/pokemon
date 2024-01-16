@@ -99,9 +99,12 @@ final class PostBattleFight
         if ($trainer->hasEntirePartyFainted()) {
             $trainerWasPreviouslyBeaten = $battle->dateLastBeaten !== null;
 
-            $prizeItemId = self::generatePrize($this->getPrizePool($trainer));
-            $prize = self::findItem($prizeItemId);
-            $bag = $bag->add($prizeItemId);
+            if ($battle->isPlayerChallenger) {
+                $prizeItemId = self::generatePrize($this->getPrizePool($trainer));
+                $prize = self::findItem($prizeItemId);
+                $bag = $bag->add($prizeItemId);
+            }
+
             $battle = $battle->defeat();
 
             if ($trainer->isGymLeader() && !$player->hasGymBadge($trainer->gymBadge)) {
@@ -109,7 +112,10 @@ final class PostBattleFight
                 $playerEarnedGymBadge = true;
             }
 
-            if (!$trainerWasPreviouslyBeaten && !$trainer->isGymLeader()) {
+            if (!$trainerWasPreviouslyBeaten
+                && !$trainer->isGymLeader()
+                && $battle->isPlayerChallenger
+            ) {
 
                 $area = $this->areaRepository->find($trainer->locationId);
 
@@ -176,7 +182,9 @@ final class PostBattleFight
             if ($playerEarnedGymBadge) {
                 $events[] = $this->eventFactory->createMessageEvent("You earned the {$this->viewModelFactory->createGymBadgeName($trainer->gymBadge)}");
             }
-            $events[] = $this->eventFactory->createMessageEvent("You won a {$prize['name']}");
+            if (!is_null($prize)) {
+                $events[] = $this->eventFactory->createMessageEvent("You won a {$prize['name']}");
+            }
 
             if ($areaJustCleared) {
                 $events[] = $this->eventFactory->createMessageEvent("You cleared the area!");

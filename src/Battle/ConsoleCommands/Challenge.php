@@ -112,7 +112,7 @@ final class Challenge
                 default => throw new LogicException(),
             };
 
-            $result = $startABattle($result->getTrainerId());
+            $result = $startABattle($result->getTrainerId(), false);
 
             if ($result->succeeded()) {
                 echo "Battle started!" . PHP_EOL;

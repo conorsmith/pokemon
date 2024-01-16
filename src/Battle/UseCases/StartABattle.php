@@ -21,7 +21,7 @@ final class StartABattle
         private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
     ) {}
 
-    public function __invoke(string $trainerId): ResultOfStartingABattle
+    public function __invoke(string $trainerId, bool $isPlayerChallenger = true): ResultOfStartingABattle
     {
         $battle = $this->battleRepository->findForTrainer($trainerId);
         $player = $this->playerRepository->findPlayer();
@@ -31,9 +31,16 @@ final class StartABattle
             $battle = new Battle(
                 Uuid::uuid4()->toString(),
                 $trainerId,
+                $isPlayerChallenger,
                 null,
                 1,
             );
+        } else {
+            if ($isPlayerChallenger) {
+                $battle = $battle->setPlayerAsChallenger();
+            } else {
+                $battle = $battle->setTrainerAsChallenger();
+            }
         }
 
         if ($trainer->isGymLeader() || $trainer->isEliteFourOrEquivalent()) {

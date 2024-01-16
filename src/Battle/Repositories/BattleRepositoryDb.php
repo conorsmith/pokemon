@@ -36,6 +36,7 @@ final class BattleRepositoryDb implements BattleRepository
         return new Battle(
             $battleRow['id'],
             $battleRow['trainer_id'],
+            $battleRow['is_player_challenger'] === 1,
             is_null($battleRow['date_last_beaten'])
                 ? null
                 : CarbonImmutable::createFromFormat(
@@ -61,6 +62,7 @@ final class BattleRepositoryDb implements BattleRepository
         return new Battle(
             $battleRow['id'],
             $battleRow['trainer_id'],
+            $battleRow['is_player_challenger'] === 1,
             is_null($battleRow['date_last_beaten'])
                 ? null
                 : CarbonImmutable::createFromFormat(
@@ -120,16 +122,18 @@ final class BattleRepositoryDb implements BattleRepository
                     : $battle->dateLastBeaten->format("Y-m-d H:i:s"),
                 'battle_count'     => $battle->battleCount,
 
-                'is_battling'      => 0,
-                'active_pokemon'   => 0,
+                'is_battling'          => 0,
+                'is_player_challenger' => $battle->isPlayerChallenger ? 1 : 0,
+                'active_pokemon'       => 0,
             ]);
         } else {
             $this->db->update("trainer_battles", [
-                'trainer_id'       => $battle->trainerId,
-                'date_last_beaten' => is_null($battle->dateLastBeaten)
+                'trainer_id'           => $battle->trainerId,
+                'date_last_beaten'     => is_null($battle->dateLastBeaten)
                     ? null
                     : $battle->dateLastBeaten->format("Y-m-d H:i:s"),
-                'battle_count'     => $battle->battleCount,
+                'is_player_challenger' => $battle->isPlayerChallenger ? 1 : 0,
+                'battle_count'         => $battle->battleCount,
             ], [
                 'id'          => $battle->id,
                 'instance_id' => $this->instanceId->value,
