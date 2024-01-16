@@ -23,12 +23,13 @@ final class PostBattleFinishTest extends TestCase
         $db = Database::createDatabaseConnection();
 
         $db->insert("trainer_battles", [
-            'id'             => "the-battle-id",
-            'instance_id'    => Instance::DEFAULT_ID,
-            'trainer_id'     => "00416693-3615-4116-b964-f4960d9387e3",
-            'is_battling'    => 1,
-            'battle_count'   => 0,
-            'active_pokemon' => 1,
+            'id'                   => "the-battle-id",
+            'instance_id'          => Instance::DEFAULT_ID,
+            'trainer_id'           => "00416693-3615-4116-b964-f4960d9387e3",
+            'is_battling'          => 1,
+            'is_player_challenger' => 1,
+            'battle_count'         => 0,
+            'active_pokemon'       => 1,
         ]);
 
         $response = Website::post("/battle/the-battle-id/finish");
