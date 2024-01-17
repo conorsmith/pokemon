@@ -30,8 +30,6 @@ final class GetPartyItemUse
 
         $bag = $this->bagRepository->find();
         $party = $this->pokemonRepository->getParty();
-        $dayCare = $this->pokemonRepository->getDayCare();
-        $box = $this->pokemonRepository->getBox();
 
         $itemConfig = require __DIR__ . "/../../Config/Items.php";
 
@@ -51,14 +49,6 @@ final class GetPartyItemUse
             'party'   => array_map(
                 fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
                 $party->members
-            ),
-            'dayCare' => array_map(
-                fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
-                $dayCare->attendees
-            ),
-            'box'     => array_map(
-                fn(Pokemon $pokemon) => PokemonVm::create($pokemon),
-                $box
             ),
         ]));
     }

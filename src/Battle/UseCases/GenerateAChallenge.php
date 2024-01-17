@@ -11,8 +11,10 @@ use ConorSmith\Pokemon\Battle\RandomTrainerGenerator;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\Pokemon\ViewModelFactory;
 use LogicException;
@@ -24,6 +26,7 @@ final class GenerateAChallenge
         private readonly TrainerRepository $trainerRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly LeagueChampionRepository $leagueChampionRepository,
+        private readonly BagRepository $bagRepository,
         private readonly SimulateABattle $simulateABattle,
         private readonly RandomTrainerGenerator $randomTrainerGenerator,
         private readonly ViewModelFactory $viewModelFactory,
@@ -136,6 +139,10 @@ final class GenerateAChallenge
             }
 
             if ($eliteFourChallenge->isInFinalStage()) {
+
+                $bag = $this->bagRepository->find();
+                $bag = $bag->add(ItemId::CHALLENGE_TOKEN);
+                $this->bagRepository->save($bag);
 
                 $this->trainerRepository->saveTrainer($randomTrainer);
                 $this->eliteFourChallengeRepository->save($eliteFourChallenge);

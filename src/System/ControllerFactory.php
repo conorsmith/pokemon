@@ -69,6 +69,7 @@ use ConorSmith\Pokemon\Party\Controllers\GetPartyEggs;
 use ConorSmith\Pokemon\Party\Controllers\GetPartyItemUse;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemon;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemonBreed;
+use ConorSmith\Pokemon\Party\Controllers\GetPokemonItemUse;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyItemUse;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyMoveDown;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyMoveUp;
@@ -149,6 +150,7 @@ final class ControllerFactory
         $r->get("/party/compare", GetPartyCompare::class);
         $r->get("/party/combinations", GetPartyCombinations::class);
         $r->get("/party/member/{id}", GetPokemon::class);
+        $r->get("/party/member/{id}/item-use", GetPokemonItemUse::class);
         $r->get("/party/member/{id}/breed", GetPokemonBreed::class);
         $r->post("/party/member/{id}/breed", PostPokemonBreed::class);
         $r->get("/encounter/{id}", GetEncounter::class);
@@ -380,6 +382,12 @@ final class ControllerFactory
             GetPokemon::class                    => new GetPokemon(
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->locationConfigRepository,
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetPokemonItemUse::class             => new GetPokemonItemUse(
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                new ItemConfigRepository(),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPokemonBreed::class               => new GetPokemonBreed(

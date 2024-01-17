@@ -25,36 +25,6 @@
     </ul>
 </div>
 
-<?php if (count($dayCare) > 0) : ?>
-    <div class="card" style="margin-top: 2rem;">
-        <div class="card-header d-flex justify-content-between" style="border-bottom: 0;">
-            <div><strong>Day Care</strong></div>
-        </div>
-        <ul class="list-group list-group-flush">
-            <form method="POST" action="/<?=$instanceId?>/party/use/<?=$item->id?>" class="stretched-link-form">
-                <?php foreach ($dayCare as $pokemon) : ?>
-                    <?php require __DIR__ . "/ListPokemon.php" ?>
-                <?php endforeach ?>
-            </form>
-        </ul>
-    </div>
-<?php endif ?>
-
-<?php if (count($box) > 0) : ?>
-    <div class="card" style="margin-top: 2rem;">
-        <div class="card-header d-flex justify-content-between" style="border-bottom: 0;">
-            <div><strong>Box</strong></div>
-        </div>
-        <ul class="list-group list-group-flush">
-            <form method="POST" action="/<?=$instanceId?>/party/use/<?=$item->id?>" class="stretched-link-form">
-                <?php foreach ($box as $pokemon) : ?>
-                    <?php require __DIR__ . "/ListPokemon.php" ?>
-                <?php endforeach ?>
-            </form>
-        </ul>
-    </div>
-<?php endif ?>
-
 <div style="text-align: center; font-size: 0.8rem; padding: 0.6rem; margin-top: 2rem;">
     Powered by <a href="https://sunrisesunset.io/" target="_blank">SunriseSunset.io</a>
 </div>

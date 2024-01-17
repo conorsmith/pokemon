@@ -22,6 +22,7 @@ use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\System\RepositoryFactory;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
@@ -63,6 +64,7 @@ final class Challenge
                 $repositoryFactory->create(TrainerRepository::class, $instanceId),
                 $repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 $repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
+                $repositoryFactory->create(BagRepository::class, $instanceId),
                 new SimulateABattle(
                     new EventFactory(
                         new ViewModelFactory(
@@ -123,6 +125,10 @@ final class Challenge
 
             $notifyPlayerCommand->run(
                 Notification::persistent("You have been challenged for the {$challengeRegionName} championship!")
+            );
+
+            $notifyPlayerCommand->run(
+                Notification::persistent("You received a Challenge Token")
             );
 
             echo PHP_EOL;

@@ -37,22 +37,24 @@ final class PostPartyItemUse
 
     public function __invoke(Request $request, array $args): Response
     {
+        $instanceId = $args['instanceId'];
         $itemId = $args['id'];
         $pokemonId = $request->request->get('pokemon');
+        $redirectUrlPath = $request->request->get('redirectUrlPath', "/{$instanceId}/party/use/" . $itemId);
 
         $itemConfig = $this->itemConfigRepository->find($itemId);
 
         if ($itemId === ItemId::RARE_CANDY) {
-            return $this->attemptToLevelUpPokemon($args['instanceId'], $pokemonId);
+            return $this->attemptToLevelUpPokemon($instanceId, $pokemonId, $redirectUrlPath);
 
         } elseif ($itemId === ItemId::OVAL_CHARM) {
-            return $this->redirectToBreedingPage($args['instanceId'], $pokemonId);
+            return $this->redirectToBreedingPage($instanceId, $pokemonId);
 
         } elseif ($itemConfig['type'] === ItemType::STATS) {
-            return $this->attemptToAlterPokemonEvs($args['instanceId'], $pokemonId, $itemId, $itemConfig);
+            return $this->attemptToAlterPokemonEvs($instanceId, $pokemonId, $redirectUrlPath, $itemId, $itemConfig);
 
         } elseif ($itemConfig['type'] === ItemType::EVOLUTION) {
-            return $this->attemptToEvolvePokemon($args['instanceId'], $itemId, $pokemonId);
+            return $this->attemptToEvolvePokemon($instanceId, $itemId, $pokemonId, $redirectUrlPath);
 
         } else {
             throw new Exception("Unhandled item");
@@ -64,7 +66,7 @@ final class PostPartyItemUse
         return new RedirectResponse("/{$instanceId}/party/member/{$pokemonId}/breed");
     }
 
-    private function attemptToAlterPokemonEvs(string $instanceId, string $pokemonId, string $itemId, array $itemConfig): Response
+    private function attemptToAlterPokemonEvs(string $instanceId, string $pokemonId, string $redirectUrlPath, string $itemId, array $itemConfig): Response
     {
         $bag = $this->bagRepository->find();
 
@@ -72,7 +74,7 @@ final class PostPartyItemUse
             $this->notifyPlayerCommand->run(
                 Notification::transient("No {$itemConfig['name']} remaining.")
             );
-            return new RedirectResponse("/{$instanceId}/party/use/" . $itemId);
+            return new RedirectResponse($redirectUrlPath);
         }
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
@@ -81,7 +83,7 @@ final class PostPartyItemUse
             $this->notifyPlayerCommand->run(
                 Notification::transient("Pokémon not found.")
             );
-            return new RedirectResponse("/{$instanceId}/party/use/" . $itemId);
+            return new RedirectResponse($redirectUrlPath);
         }
 
         $pokemon = match ($itemId) {
@@ -99,10 +101,10 @@ final class PostPartyItemUse
         $this->bagRepository->save($bag);
         $this->pokemonRepository->save($pokemon);
 
-        return new RedirectResponse("/{$instanceId}/party/use/" . $itemId);
+        return new RedirectResponse($redirectUrlPath);
     }
 
-    private function attemptToLevelUpPokemon(string $instanceId, string $pokemonId): Response
+    private function attemptToLevelUpPokemon(string $instanceId, string $pokemonId, string $redirectUrlPath): Response
     {
         $bag = $this->bagRepository->find();
 
@@ -110,7 +112,7 @@ final class PostPartyItemUse
             $this->notifyPlayerCommand->run(
                 Notification::transient("No rare candies remaining.")
             );
-            return new RedirectResponse("/{$instanceId}/party/use/" . ItemId::RARE_CANDY);
+            return new RedirectResponse($redirectUrlPath);
         }
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
@@ -119,7 +121,7 @@ final class PostPartyItemUse
             $this->notifyPlayerCommand->run(
                 Notification::transient("Pokémon not found.")
             );
-            return new RedirectResponse("/{$instanceId}/party/use/" . ItemId::RARE_CANDY);
+            return new RedirectResponse($redirectUrlPath);
         }
 
         $result = $this->levelUpPokemon->run($pokemonId);
@@ -128,7 +130,7 @@ final class PostPartyItemUse
             $this->notifyPlayerCommand->run(
                 Notification::transient("You can't level up Pokémon beyond level {$result->levelLimit}")
             );
-            return new RedirectResponse("/{$instanceId}/party/use/" . ItemId::RARE_CANDY);
+            return new RedirectResponse($redirectUrlPath);
         }
 
         $bag = $bag->use(ItemId::RARE_CANDY);
@@ -148,10 +150,10 @@ final class PostPartyItemUse
             );
         }
 
-        return new RedirectResponse("/{$instanceId}/party/use/" . ItemId::RARE_CANDY);
+        return new RedirectResponse($redirectUrlPath);
     }
 
-    private function attemptToEvolvePokemon(string $instanceId, string $itemId, string $pokemonId): Response
+    private function attemptToEvolvePokemon(string $instanceId, string $itemId, string $pokemonId, string $redirectUrlPath): Response
     {
         $pokemonRow = $this->db->fetchAssociative("SELECT * FROM caught_pokemon WHERE instance_id = :instanceId and id = :pokemonId", [
             'instanceId' => $instanceId,
@@ -164,7 +166,7 @@ final class PostPartyItemUse
             $this->notifyPlayerCommand->run(
                 Notification::persistent("That did nothing!")
             );
-            return new RedirectResponse("/{$instanceId}/party/use/{$itemId}");
+            return new RedirectResponse($redirectUrlPath);
         }
 
         $canEvolveUsingThisItem = false;
@@ -183,7 +185,7 @@ final class PostPartyItemUse
             $this->notifyPlayerCommand->run(
                 Notification::persistent("That did nothing!")
             );
-            return new RedirectResponse("/{$instanceId}/party/use/{$itemId}");
+            return new RedirectResponse($redirectUrlPath);
         }
 
         $bag = $this->bagRepository->find();
