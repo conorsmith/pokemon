@@ -38,7 +38,7 @@ final class RandomTrainerGenerator
 
         $anchorLevel = RandomNumberGenerator::generateInRange(
             $opponentHighestLevel - 10,
-            $opponentHighestLevel + 10,
+            $opponentHighestLevel + 5,
         );
 
         $party = [];
