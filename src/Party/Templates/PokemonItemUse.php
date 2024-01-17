@@ -20,7 +20,7 @@
             <li class="list-group-item d-flex justify-content-between">
                 <div class="d-flex">
                     <div class="me-2" style="width: 24px; text-align: center;">
-                        <img src="<?=$item->imageUrl?>">
+                        <img src="<?=$item->imageUrl?>" style="width: 24px;">
                     </div>
                     <div><?=$item->name?></div>
                 </div>
