@@ -1,3 +1,5 @@
+<?php include __DIR__ . "/BottomNav.php" ?>
+
 <div class="d-grid gap-4">
 
     <div class="d-flex justify-content-between align-items-end">

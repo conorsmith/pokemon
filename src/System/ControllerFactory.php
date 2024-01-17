@@ -350,24 +350,30 @@ final class ControllerFactory
                 new ShowParty(
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
                 ),
-                new ShowEggs(
-                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                ),
-                new ShowDayCare(
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
-                ),
-                new ShowBox(
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
-                ),
                 new ShowPartyCoverage(
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
                 ),
                 $this->createTemplateEngine($instanceId),
             ),
-            GetPartyEggs::class                  => new GetPartyEggs(),
-            GetPartyDayCare::class               => new GetPartyDayCare(),
-            GetPartyBox::class                   => new GetPartyBox(),
+            GetPartyEggs::class                  => new GetPartyEggs(
+                new ShowEggs(
+                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                ),
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetPartyDayCare::class               => new GetPartyDayCare(
+                new ShowDayCare(
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                ),
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetPartyBox::class                   => new GetPartyBox(
+                new ShowBox(
+                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                ),
+                $this->createTemplateEngine($instanceId),
+            ),
             GetPartyCompare::class               => new GetPartyCompare(
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->createTemplateEngine($instanceId),
