@@ -7,6 +7,8 @@ namespace ConorSmith\Pokemon\Party\Controllers;
 use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\Party\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Party\ViewModels\Pokemon;
+use ConorSmith\Pokemon\SharedKernel\ViewModels\BagItemUseActionVm;
+use ConorSmith\Pokemon\SharedKernel\ViewModels\BagItemVm;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -24,6 +26,7 @@ final class GetPokemonItemUse
 
     public function __invoke(Request $request, array $args): Response
     {
+        $instanceId = $args['instanceId'];
         $pokemonId = $args['id'];
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
@@ -43,14 +46,21 @@ final class GetPokemonItemUse
                 continue;
             }
 
-            $itemViewModel = (object) [
-                'id'       => $item->id,
-                'name'     => $configEntry['name'],
-                'imageUrl' => $configEntry['imageUrl'],
-                'amount'   => $item->quantity,
-                'hasUse'   => array_key_exists('hasUse', $configEntry)
+            $itemViewModel = new BagItemVm(
+                $item->id,
+                $configEntry['name'],
+                $configEntry['imageUrl'],
+                strval($item->quantity),
+                array_key_exists('hasUse', $configEntry)
                     && $configEntry['hasUse'],
-            ];
+                new BagItemUseActionVm(
+                    "/{$instanceId}/party/use/{$item->id}",
+                    [
+                        'pokemon'         => $pokemonId,
+                        'redirectUrlPath' => "/{$instanceId}/party/member/{$pokemonId}/item-use",
+                    ],
+                ),
+            );
             
             match ($configEntry['type'] ?? null) {
                 ItemType::EVOLUTION => $evolutionItemViewModels[] = $itemViewModel,

@@ -5,26 +5,7 @@
     <ul class="list-group">
 
         <?php foreach ($items as $item) : ?>
-            <li class="list-group-item d-flex justify-content-between">
-                <div class="d-flex">
-                    <div class="me-2" style="width: 24px; text-align: center;">
-                        <img src="<?=$item->imageUrl?>" style="width: 24px;">
-                    </div>
-                    <div><?=$item->name?></div>
-                </div>
-                <div class="d-flex justify-content-between" style="width: 5rem;">
-                    <?php if ($item->hasUse) : ?>
-                        <form method="POST" action="/<?=$instanceId?>/item/<?=$item->id?>/use">
-                            <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
-                                Use
-                            </button>
-                        </form>
-                    <?php else : ?>
-                        <span></span>
-                    <?php endif ?>
-                    <?=$item->amount?>
-                </div>
-            </li>
+            <?php include __DIR__ . "/../../SharedKernel/Templates/BagItem.php" ?>
         <?php endforeach ?>
 
     </ul>
@@ -38,26 +19,7 @@
             </li>
 
             <?php foreach ($evolutionItems as $item) : ?>
-                <li class="list-group-item d-flex justify-content-between">
-                    <div class="d-flex">
-                        <div class="me-2" style="width: 24px; text-align: center;">
-                            <img src="<?=$item->imageUrl?>">
-                        </div>
-                        <div><?=$item->name?></div>
-                    </div>
-                    <div class="d-flex justify-content-between" style="width: 5rem;">
-                        <?php if ($item->hasUse) : ?>
-                            <form method="POST" action="/<?=$instanceId?>/item/<?=$item->id?>/use">
-                                <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
-                                    Use
-                                </button>
-                            </form>
-                        <?php else : ?>
-                            <span></span>
-                        <?php endif ?>
-                        <?=$item->amount?>
-                    </div>
-                </li>
+                <?php include __DIR__ . "/../../SharedKernel/Templates/BagItem.php" ?>
             <?php endforeach ?>
 
         </ul>
@@ -73,26 +35,7 @@
             </li>
 
             <?php foreach ($statsItems as $item) : ?>
-                <li class="list-group-item d-flex justify-content-between">
-                    <div class="d-flex">
-                        <div class="me-2" style="width: 24px; text-align: center;">
-                            <img src="<?=$item->imageUrl?>">
-                        </div>
-                        <div><?=$item->name?></div>
-                    </div>
-                    <div class="d-flex justify-content-between" style="width: 5rem;">
-                        <?php if ($item->hasUse) : ?>
-                            <form method="POST" action="/<?=$instanceId?>/item/<?=$item->id?>/use">
-                                <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
-                                    Use
-                                </button>
-                            </form>
-                        <?php else : ?>
-                            <span></span>
-                        <?php endif ?>
-                        <?=$item->amount?>
-                    </div>
-                </li>
+                <?php include __DIR__ . "/../../SharedKernel/Templates/BagItem.php" ?>
             <?php endforeach ?>
 
         </ul>
@@ -108,26 +51,7 @@
             </li>
 
             <?php foreach ($heldItems as $item) : ?>
-                <li class="list-group-item d-flex justify-content-between">
-                    <div class="d-flex">
-                        <div class="me-2" style="width: 24px; text-align: center;">
-                            <img src="<?=$item->imageUrl?>">
-                        </div>
-                        <div><?=$item->name?></div>
-                    </div>
-                    <div class="d-flex justify-content-between" style="width: 5rem;">
-                        <?php if ($item->hasUse) : ?>
-                            <form method="POST" action="/<?=$instanceId?>/item/<?=$item->id?>/use">
-                                <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
-                                    Use
-                                </button>
-                            </form>
-                        <?php else : ?>
-                            <span></span>
-                        <?php endif ?>
-                        <?=$item->amount?>
-                    </div>
-                </li>
+                <?php include __DIR__ . "/../../SharedKernel/Templates/BagItem.php" ?>
             <?php endforeach ?>
 
         </ul>
