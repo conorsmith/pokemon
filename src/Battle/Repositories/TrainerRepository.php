@@ -7,6 +7,8 @@ namespace ConorSmith\Pokemon\Battle\Repositories;
 use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
+use ConorSmith\Pokemon\Battle\Domain\StatsFactory;
+use ConorSmith\Pokemon\Battle\Domain\StatsIv;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
@@ -98,9 +100,16 @@ class TrainerRepository
 
         if (is_null($trainerConfig)) {
 
-            $row = $this->db->fetchAssociative("SELECT * FROM generated_trainers WHERE id = :id", [
-                'id' => $trainerId,
-            ]);
+            $row = $this->db->fetchAssociative("
+                SELECT *
+                FROM generated_trainers
+                WHERE id = :id
+                  AND instance_id = :instanceId
+                ", [
+                    'id'         => $trainerId,
+                    'instanceId' => $this->instanceId->value,
+                ]
+            );
 
             if ($row === false) {
                 throw new Exception("Trainer not found for ID '{$trainerId}'");
@@ -132,7 +141,11 @@ class TrainerRepository
                         "U" => Sex::UNKNOWN,
                     },
                     $decodedPokemon['isShiny'],
-                    self::createStats($row['class'], $decodedPokemon['level'], $decodedPokemon['pokedexNumber']),
+                    StatsFactory::createStats(
+                        $decodedPokemon['level'],
+                        $pokedexEntry,
+                        StatsFactory::generateIvsForTrainerClass($row['class'])
+                    ),
                     0,
                     false,
                 );
@@ -214,7 +227,11 @@ class TrainerRepository
                     0,
                     $pokemonConfig['sex'] ?? Sex::UNKNOWN,
                     isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
-                    self::createStats($trainerConfig['class'], $level, $pokemonConfig['id']),
+                    StatsFactory::createStats(
+                        $level,
+                        $pokedexEntry,
+                        StatsFactory::generateIvsForTrainerClass($trainerConfig['class'])
+                    ),
                     0,
                     false,
                 );
@@ -288,13 +305,21 @@ class TrainerRepository
 
     private function saveGeneratedTrainer(Trainer $trainer): void
     {
-        $row = $this->db->fetchAssociative("SELECT * FROM generated_trainers WHERE id = :id", [
-            'id' => $trainer->id,
-        ]);
+        $row = $this->db->fetchAssociative("
+                SELECT *
+                FROM generated_trainers
+                WHERE id = :id
+                  AND instance_id = :instanceId
+                ", [
+                'id'         => $trainer->id,
+                'instanceId' => $this->instanceId->value,
+            ]
+        );
 
         if ($row === false) {
             $this->db->insert("generated_trainers", [
                 'id'          => $trainer->id,
+                'instance_id' => $this->instanceId->value,
                 'name'        => $trainer->name,
                 'class'       => $trainer->class,
                 'gender'      => match ($trainer->gender) {
@@ -351,35 +376,21 @@ class TrainerRepository
                     $trainer->party,
                 )),
             ], [
-                'id' => $trainer->id,
+                'id'          => $trainer->id,
+                'instance_id' => $this->instanceId->value,
             ]);
         }
     }
 
-    private static function createStats(string $trainerClass, int $level, string $number): Stats
+    private static function generateIvs(string $trainerClass): StatsIv
     {
-        $baseStats = self::findBaseStats($number);
-
-        return new Stats(
-            $level,
-            $baseStats['hp'],
-            $baseStats['attack'],
-            $baseStats['defence'],
-            $baseStats['spAttack'],
-            $baseStats['spDefence'],
-            $baseStats['speed'],
+        return new StatsIv(
             self::generateIv($trainerClass),
             self::generateIv($trainerClass),
             self::generateIv($trainerClass),
             self::generateIv($trainerClass),
             self::generateIv($trainerClass),
             self::generateIv($trainerClass),
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
         );
     }
 
@@ -392,19 +403,5 @@ class TrainerRepository
         }
 
         return RandomNumberGenerator::generateFromWeightedTable($weightedDistribution);
-    }
-
-    private static function findBaseStats(string $number): array
-    {
-        $config = require __DIR__ . "/../../Config/Stats.php";
-
-        /** @var array $entry */
-        foreach ($config as $entry) {
-            if ($entry['number'] === $number) {
-                return $entry;
-            }
-        }
-
-        throw new Exception;
     }
 }

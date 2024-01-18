@@ -241,10 +241,6 @@ return [
                 'weight' => 6,
                 'levels' => [10, 12],
             ],
-            PokedexNo::CHARMANDER => [
-                'weight' => 5,
-                'levels' => [7, 10],
-            ],
         ],
     ],
     LocationId::ROUTE_4                => [
@@ -467,10 +463,6 @@ return [
             ],
         ],
         EncounterType::FISHING => [
-            PokedexNo::SQUIRTLE => [
-                'weight' => 10,
-                'levels' => [10, 14],
-            ],
             PokedexNo::MAGIKARP => [
                 'weight' => 120,
                 'levels' => [5, 15],
@@ -2391,10 +2383,6 @@ return [
                 'weight' => 15,
                 'levels' => [8, 12],
             ],
-            PokedexNo::BULBASAUR  => [
-                'weight' => 5,
-                'levels' => [7, 11],
-            ],
         ],
         EncounterType::SURFING => [
             PokedexNo::TENTACOOL => [
@@ -2462,10 +2450,6 @@ return [
             PokedexNo::ABRA       => [
                 'weight' => 15,
                 'levels' => [9, 13],
-            ],
-            PokedexNo::BULBASAUR  => [
-                'weight' => 5,
-                'levels' => [7, 11],
             ],
         ],
         EncounterType::SURFING => [

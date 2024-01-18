@@ -10,6 +10,8 @@ use ConorSmith\Pokemon\Battle\Domain\EncounterTableEntry;
 use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
+use ConorSmith\Pokemon\Battle\Domain\StatsFactory;
+use ConorSmith\Pokemon\Battle\Domain\StatsIv;
 use ConorSmith\Pokemon\EncounterConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
@@ -87,7 +89,11 @@ final class EncounterRepository
             0,
             $sex,
             $isShiny,
-            self::generateStats($level, $encounterTableEntry->pokedexNumber),
+            StatsFactory::createStats(
+                $level,
+                $pokedexEntry,
+                StatsFactory::generateIvsForEncounteredPokemon()
+            ),
             0,
             false,
         );
@@ -138,7 +144,18 @@ final class EncounterRepository
                 default => throw new RuntimeException(),
             },
             $encounterRow['is_shiny'] === 1,
-            self::createStatsFromRow($encounterRow),
+            StatsFactory::createStats(
+                $encounterRow['level'],
+                $pokedexEntry,
+                new StatsIv(
+                    $encounterRow['iv_hp'],
+                    $encounterRow['iv_physical_attack'],
+                    $encounterRow['iv_physical_defence'],
+                    $encounterRow['iv_special_attack'],
+                    $encounterRow['iv_special_defence'],
+                    $encounterRow['iv_speed'],
+                )
+            ),
             $encounterRow['remaining_hp'],
             $encounterRow['remaining_hp'] === 0,
         );
@@ -180,12 +197,12 @@ final class EncounterRepository
                 },
                 'is_shiny'                    => $encounter->pokemon->isShiny ? 1 : 0,
                 'is_legendary'                => $encounter->isLegendary ? 1 : 0,
-                'iv_hp'                       => $encounter->pokemon->stats->ivHp,
-                'iv_physical_attack'          => $encounter->pokemon->stats->ivPhysicalAttack,
-                'iv_physical_defence'         => $encounter->pokemon->stats->ivPhysicalDefence,
-                'iv_special_attack'           => $encounter->pokemon->stats->ivSpecialAttack,
-                'iv_special_defence'          => $encounter->pokemon->stats->ivSpecialDefence,
-                'iv_speed'                    => $encounter->pokemon->stats->ivSpeed,
+                'iv_hp'                       => $encounter->pokemon->stats->ivs->hp,
+                'iv_physical_attack'          => $encounter->pokemon->stats->ivs->physicalAttack,
+                'iv_physical_defence'         => $encounter->pokemon->stats->ivs->physicalDefence,
+                'iv_special_attack'           => $encounter->pokemon->stats->ivs->specialAttack,
+                'iv_special_defence'          => $encounter->pokemon->stats->ivs->specialDefence,
+                'iv_speed'                    => $encounter->pokemon->stats->ivs->speed,
                 'remaining_hp'                => $encounter->pokemon->remainingHp,
                 'has_started'                 => $encounter->hasStarted ? 1 : 0,
                 'was_caught'                  => 0,
@@ -228,74 +245,6 @@ final class EncounterRepository
                 'id'          => $row['id'],
             ]);
         }
-    }
-
-    private static function generateStats(int $level, string $number): Stats
-    {
-        $baseStats = self::findBaseStats($number);
-
-        return new Stats(
-            $level,
-            $baseStats['hp'],
-            $baseStats['attack'],
-            $baseStats['defence'],
-            $baseStats['spAttack'],
-            $baseStats['spDefence'],
-            $baseStats['speed'],
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-        );
-    }
-
-    private static function createStatsFromRow(array $row): Stats
-    {
-        $baseStats = self::findBaseStats($row['pokemon_id']);
-
-        return new Stats(
-            $row['level'],
-            $baseStats['hp'],
-            $baseStats['attack'],
-            $baseStats['defence'],
-            $baseStats['spAttack'],
-            $baseStats['spDefence'],
-            $baseStats['speed'],
-            $row['iv_hp'],
-            $row['iv_physical_attack'],
-            $row['iv_physical_defence'],
-            $row['iv_special_attack'],
-            $row['iv_special_defence'],
-            $row['iv_speed'],
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-        );
-    }
-
-    private static function findBaseStats(string $number): array
-    {
-        $config = require __DIR__ . "/../../Config/Stats.php";
-
-        /** @var array $entry */
-        foreach ($config as $entry) {
-            if ($entry['number'] === $number) {
-                return $entry;
-            }
-        }
-
-        throw new Exception;
     }
 
     private function findLegendaryPokemonLevel(string $legendaryPokemonNumber): int

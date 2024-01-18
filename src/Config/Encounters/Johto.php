@@ -142,6 +142,44 @@ return [
                 'levels' => 40,
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+        ]
     ],
     LocationId::TOHJO_FALLS                   => [
         EncounterType::WALKING => [

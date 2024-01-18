@@ -37,6 +37,7 @@ final class GetTrackPokemon
                 EncounterType::SURFING    => "fas fa-water",
                 EncounterType::FISHING    => "fas fa-fish",
                 EncounterType::ROCK_SMASH => "fab fa-sith",
+                EncounterType::HEADBUTT   => "fas fa-tree",
                 default                   => throw new RuntimeException(),
             },
             'scriptData'           => json_encode([

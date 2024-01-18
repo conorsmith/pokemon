@@ -7,6 +7,7 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
+use ConorSmith\Pokemon\Battle\ViewModels\TypeEffectiveness;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\TrainerConfigRepository;
@@ -42,11 +43,13 @@ final class GetBattle
             : $player->getLeadPokemon();
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Battle.php", [
-            'id'              => $trainerBattleId,
-            'opponentPokemon' => $this->viewModelFactory->createPokemonInBattle($trainerLeadPokemon),
-            'playerPokemon'   => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
-            'trainer'         => $this->viewModelFactory->createTrainerInBattle($trainer, $this->createImageUrl($args['instanceId'], $trainer)),
-            'isBattleOver'    => $trainer->hasEntirePartyFainted() || $player->hasEntirePartyFainted(),
+            'id'                         => $trainerBattleId,
+            'opponentPokemon'            => $this->viewModelFactory->createPokemonInBattle($trainerLeadPokemon),
+            'playerPokemon'              => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
+            'primaryTypeEffectiveness'   => TypeEffectiveness::create("primary", $playerLeadPokemon, $trainerLeadPokemon),
+            'secondaryTypeEffectiveness' => TypeEffectiveness::create("secondary", $playerLeadPokemon, $trainerLeadPokemon),
+            'trainer'                    => $this->viewModelFactory->createTrainerInBattle($trainer, $this->createImageUrl($args['instanceId'], $trainer)),
+            'isBattleOver'               => $trainer->hasEntirePartyFainted() || $player->hasEntirePartyFainted(),
         ]));
     }
 

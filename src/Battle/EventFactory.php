@@ -7,6 +7,7 @@ namespace ConorSmith\Pokemon\Battle;
 use ConorSmith\Pokemon\Battle\Domain\AttackOutcome;
 use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
+use ConorSmith\Pokemon\Battle\ViewModels\TypeEffectiveness;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 
@@ -60,7 +61,7 @@ final class EventFactory
             } elseif ($defender->hasFainted) {
                 $events[] = $this->createMessageEvent("{$defenderDescriptor} {$defenderVm->name} fainted");
 
-                $events[] = $this->createFaintingEvent($defender->id, $isPlayerDefending, $nextDefender);
+                $events[] = $this->createFaintingEvent($defender->id, $isPlayerDefending, $nextDefender, $attacker);
 
                 if ($nextDefender) {
                     $nextDefenderVm = $this->viewModelFactory->createPokemonInBattle($nextDefender);
@@ -118,7 +119,7 @@ final class EventFactory
             } elseif ($defender->hasFainted) {
                 $events[] = $this->createMessageEvent("{$defenderDescriptor} {$defenderVm->name} fainted");
 
-                $events[] = $this->createFaintingEvent($defender->id, $isPlayerDefending, $nextDefender);
+                $events[] = $this->createFaintingEvent($defender->id, $isPlayerDefending, $nextDefender, $attacker);
 
                 if ($nextDefender) {
                     $nextDefenderVm = $this->viewModelFactory->createPokemonInBattle($nextDefender);
@@ -155,13 +156,23 @@ final class EventFactory
         ];
     }
 
-    private function createFaintingEvent(string $id, bool $isPlayerPokemon, ?Pokemon $nextPokemon): array
+    private function createFaintingEvent(string $id, bool $isPlayerPokemon, ?Pokemon $nextPokemon, Pokemon $attacker): array
     {
         return [
             'type'            => "fainting",
             'target'          => $id,
             'isPlayerPokemon' => $isPlayerPokemon,
-            'next'            => $nextPokemon ? $this->viewModelFactory->createPokemonInBattle($nextPokemon) : null,
+            'next'            => !$nextPokemon
+                ? null
+                : [
+                    'pokemon'                    => $this->viewModelFactory->createPokemonInBattle($nextPokemon),
+                    'primaryTypeEffectiveness'   => $isPlayerPokemon
+                        ? TypeEffectiveness::create("primary", $nextPokemon, $attacker)
+                        : TypeEffectiveness::create("primary", $attacker, $nextPokemon),
+                    'secondaryTypeEffectiveness' => $isPlayerPokemon
+                        ? TypeEffectiveness::create("secondary", $nextPokemon, $attacker)
+                        : TypeEffectiveness::create("secondary", $attacker, $nextPokemon),
+                ],
         ];
     }
 

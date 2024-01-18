@@ -11,10 +11,12 @@ final class EncounterType
         self::SURFING,
         self::FISHING,
         self::ROCK_SMASH,
+        self::HEADBUTT,
     ];
 
     public const WALKING = "walking";
     public const SURFING = "surfing";
     public const FISHING = "fishing";
     public const ROCK_SMASH = "rockSmash";
+    public const HEADBUTT = "headbutt";
 }

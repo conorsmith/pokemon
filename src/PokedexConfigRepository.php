@@ -15,10 +15,12 @@ final class PokedexConfigRepository
     public function __construct()
     {
         $primaryConfig = require __DIR__ . "/Config/Pokedex.php";
-        $sexRatiosConfig = require __DIR__ . "/Config/SexRatios.php";
-        $eggGroupsConfig = require __DIR__ . "/Config/EggGroups.php";
-        $eggCyclesConfig = require __DIR__ . "/Config/EggCycles.php";
+
         $attributeTagsConfig = require __DIR__ . "/Config/AttributeTags.php";
+        $eggCyclesConfig = require __DIR__ . "/Config/EggCycles.php";
+        $eggGroupsConfig = require __DIR__ . "/Config/EggGroups.php";
+        $sexRatiosConfig = require __DIR__ . "/Config/SexRatios.php";
+        $statsConfig = require __DIR__ . "/Config/Stats.php";
 
         $fullConfig = [];
 
@@ -26,10 +28,11 @@ final class PokedexConfigRepository
             $fullConfig[$key] = array_merge(
                 $primaryEntry,
                 [
-                    'sexRatio'      => $sexRatiosConfig[$key],
-                    'eggGroups'     => $eggGroupsConfig[$key],
-                    'eggCycles'     => $eggCyclesConfig[$key],
                     'attributeTags' => $attributeTagsConfig[$key],
+                    'eggCycles'     => $eggCyclesConfig[$key],
+                    'eggGroups'     => $eggGroupsConfig[$key],
+                    'sexRatio'      => $sexRatiosConfig[$key],
+                    'stats'         => $statsConfig[$key],
                 ],
             );
         }

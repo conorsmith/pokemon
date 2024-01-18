@@ -6,6 +6,8 @@ namespace ConorSmith\Pokemon\Battle;
 
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
+use ConorSmith\Pokemon\Battle\Domain\StatsFactory;
+use ConorSmith\Pokemon\Battle\Domain\StatsIv;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Party\Domain\EggGroup;
 use ConorSmith\Pokemon\PokedexConfigRepository;
@@ -23,6 +25,76 @@ use Ramsey\Uuid\Uuid;
 
 final class RandomTrainerGenerator
 {
+    private const TRAINER_CLASS_BLACKLIST = [
+        TrainerClass::GYM_LEADER,
+        TrainerClass::TEAM_ROCKET_GRUNT,
+        TrainerClass::CHAMPION,
+        TrainerClass::ROCKET,
+        TrainerClass::ROCKET_EXECUTIVE,
+        TrainerClass::AQUA_ADMIN,
+        TrainerClass::AQUA_LEADER,
+        TrainerClass::MAGMA_ADMIN,
+        TrainerClass::MAGMA_LEADER,
+        TrainerClass::OLD_COUPLE,
+        TrainerClass::SIS_AND_BRO,
+        TrainerClass::TEAMMATES,
+        TrainerClass::TEAM_AQUA_GRUNT,
+        TrainerClass::TEAM_MAGMA_GRUNT,
+        TrainerClass::WINSTRATE,
+        TrainerClass::YOUNG_COUPLE,
+        TrainerClass::COOL_COUPLE,
+        TrainerClass::TEAM_ROCKET_ADMIN,
+        TrainerClass::BOSS,
+        TrainerClass::ELITE_FOUR,
+        TrainerClass::RETIRED_TRAINER,
+        TrainerClass::RIVAL,
+        TrainerClass::DOUBLE_TEAM,
+        TrainerClass::TWINS,
+        TrainerClass::CRUSH_KIN,
+        TrainerClass::INTERVIEWER,
+        TrainerClass::POKEMON_TRAINER,
+    ];
+
+    private const TRAINER_CLASS_FEMALE_ONLY = [
+        TrainerClass::BEAUTY,
+        TrainerClass::PICNICKER,
+        TrainerClass::LASS,
+        TrainerClass::KIMONO_GIRL,
+        TrainerClass::AROMA_LADY,
+        TrainerClass::BATTLE_GIRL,
+        TrainerClass::LADY,
+        TrainerClass::PARASOL_LADY,
+        TrainerClass::CRUSH_GIRL,
+    ];
+
+    private const TRAINER_CLASS_FEMALE_NEVER = [
+        TrainerClass::BLACK_BELT,
+        TrainerClass::BURGLAR,
+        TrainerClass::SAILOR,
+        TrainerClass::FIREBREATHER,
+        TrainerClass::GUITARIST,
+        TrainerClass::SAGE,
+        TrainerClass::RUIN_MANIAC,
+    ];
+
+    private const TRAINER_CLASS_MALE_ONLY = [
+        TrainerClass::CUE_BALL,
+        TrainerClass::GAMER,
+        TrainerClass::GENTLEMAN,
+        TrainerClass::CAMPER,
+        TrainerClass::YOUNGSTER,
+        TrainerClass::NINJA_BOY,
+        TrainerClass::RICH_BOY,
+        TrainerClass::FISHERMAN,
+    ];
+
+    private const TRAINER_CLASS_MALE_NEVER = [
+        TrainerClass::MEDIUM,
+        TrainerClass::TEACHER,
+        TrainerClass::HEX_MANIAC,
+    ];
+
+
     public function __construct(
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
@@ -30,14 +102,87 @@ final class RandomTrainerGenerator
 
     public function generate(int $opponentHighestLevel, string $locationId): Trainer
     {
-        $faker = Factory::create();
-
         $trainerId = Uuid::uuid4()->toString();
 
-        $trainerClass = RandomTrainerGenerator::randomlyGenerateTrainerClass();
+        $trainerClass = self::generateTrainerClass();
+
+        $gender = self::generateGender($trainerClass);
+
+        return new Trainer(
+            $trainerId,
+            self::generateName($gender),
+            $trainerClass,
+            $gender,
+            $this->generateParty($trainerId, $trainerClass, $opponentHighestLevel),
+            $locationId,
+            true,
+            null,
+        );
+    }
+
+    public static function generateTrainerClass(): string
+    {
+        $trainerClasses = TrainerClass::all();
+
+        foreach ($trainerClasses as $i => $trainerClass) {
+            if (in_array($trainerClass, self::TRAINER_CLASS_BLACKLIST)) {
+                unset($trainerClasses[$i]);
+            }
+        }
+
+        return RandomNumberGenerator::selectFromArray($trainerClasses);
+    }
+
+    public static function generateGender(string $trainerClass): Gender
+    {
+        if (in_array($trainerClass, self::TRAINER_CLASS_FEMALE_ONLY)) {
+            return Gender::FEMALE;
+        }
+
+        if (in_array($trainerClass, self::TRAINER_CLASS_MALE_ONLY)) {
+            return Gender::MALE;
+        }
+
+        if (in_array($trainerClass, self::TRAINER_CLASS_MALE_NEVER)) {
+            return RandomNumberGenerator::selectFromArray([
+                Gender::FEMALE,
+                Gender::IMMATERIAL,
+            ]);
+        }
+
+        if (in_array($trainerClass, self::TRAINER_CLASS_FEMALE_NEVER)) {
+            return RandomNumberGenerator::selectFromArray([
+                Gender::IMMATERIAL,
+                Gender::MALE,
+            ]);
+        }
+
+        return RandomNumberGenerator::selectFromArray([
+            Gender::FEMALE,
+            Gender::IMMATERIAL,
+            Gender::MALE,
+        ]);
+    }
+
+    private static function generateName(Gender $gender): string
+    {
+        $faker = Factory::create();
+
+        return match ($gender) {
+            Gender::FEMALE     => $faker->firstNameFemale,
+            Gender::IMMATERIAL => $faker->firstName,
+            Gender::MALE       => $faker->firstNameMale,
+        };
+    }
+
+    private function generateParty(
+        string $trainerId,
+        string $trainerClass,
+        int $opponentHighestLevel,
+    ): array {
 
         $anchorLevel = RandomNumberGenerator::generateInRange(
-            $opponentHighestLevel - 10,
+            max($opponentHighestLevel - 10, 1),
             $opponentHighestLevel + 5,
         );
 
@@ -52,39 +197,44 @@ final class RandomTrainerGenerator
         RandomNumberGenerator::setSeed(crc32($trainerId));
 
         for ($i = 0; $i < $partySize; $i++) {
-            $party[] = $this->randomlyGeneratePokemon($trainerClass, $anchorLevel);
+            $party[] = $this->generatePokemon($trainerClass, $anchorLevel);
         }
+
+        usort($party, function (Pokemon $memberA, Pokemon $memberB) {
+            $memberATotalStats = $memberA->stats->calculateHp()
+                + $memberA->stats->calculatePhysicalAttack()
+                + $memberA->stats->calculatePhysicalDefence()
+                + $memberA->stats->calculateSpecialAttack()
+                + $memberA->stats->calculateSpecialDefence()
+                + $memberA->stats->calculateSpeed();
+
+            $memberBTotalStats = $memberB->stats->calculateHp()
+                + $memberB->stats->calculatePhysicalAttack()
+                + $memberB->stats->calculatePhysicalDefence()
+                + $memberB->stats->calculateSpecialAttack()
+                + $memberB->stats->calculateSpecialDefence()
+                + $memberB->stats->calculateSpeed();
+
+            return $memberATotalStats > $memberBTotalStats;
+        });
 
         RandomNumberGenerator::unsetSeed();
 
-        $gender = $this->randomlyGenerateGender($trainerClass);
-
-        return new Trainer(
-            $trainerId,
-            match ($gender) {
-                Gender::FEMALE     => $faker->firstNameFemale,
-                Gender::IMMATERIAL => $faker->firstName,
-                Gender::MALE       => $faker->firstNameMale,
-            },
-            $trainerClass,
-            $gender,
-            $party,
-            $locationId,
-            true,
-            null,
-        );
+        return $party;
     }
 
-    private function randomlyGeneratePokemon(string $trainerClass, int $anchorLevel): Pokemon
+    private function generatePokemon(string $trainerClass, int $anchorLevel): Pokemon
     {
-        $pokedexNumber = $this->findRandomPokedexNumber($trainerClass);
+        $pokedexNumber = $this->generatePokedexNumber($trainerClass);
 
         $level = RandomNumberGenerator::generateInRange(
-            intval(floor($anchorLevel * 0.9)),
-            intval(ceil($anchorLevel * 1.1)),
+            intval(ceil($anchorLevel * 0.9)),
+            intval(floor($anchorLevel * 1.1)),
         );
 
         $pokedexEntry = $this->pokedexConfigRepository->find($pokedexNumber);
+
+        $sex = self::generateSex($pokedexEntry['sexRatio']);
 
         $pokemon = new Pokemon(
             Uuid::uuid4()->toString(),
@@ -94,13 +244,13 @@ final class RandomTrainerGenerator
             $pokedexEntry['type'][1] ?? null,
             $level,
             255,
-            match (RandomNumberGenerator::generateInRange(0, 2)) {
-                0 => Sex::MALE,
-                1 => Sex::FEMALE,
-                2 => Sex::UNKNOWN,
-            },
-            RandomNumberGenerator::generateInRange(0, 4095) === 0,
-            self::createStats($trainerClass, $level, $pokedexNumber),
+            $sex,
+            self::generateIsShiny(),
+            StatsFactory::createStats(
+                $level,
+                $pokedexEntry,
+                StatsFactory::generateIvsForTrainerClass($trainerClass)
+            ),
             0,
             false,
         );
@@ -110,9 +260,44 @@ final class RandomTrainerGenerator
         return $pokemon;
     }
 
-    private function findRandomPokedexNumber(string $trainerClass): string
+    private function generatePokedexNumber(string $trainerClass): string
     {
-        $pokedexNumbers = match ($trainerClass) {
+        $pokedexNumbers = $this->findPokemonPoolForTrainerClass($trainerClass);
+
+        return strval(RandomNumberGenerator::selectFromArray($pokedexNumbers));
+    }
+
+    private static function generateSex(array $sexRatioConfig): Sex
+    {
+        $aggregatedWeight = array_reduce(
+            $sexRatioConfig,
+            function ($carry, array $sexRatioEntry) {
+                return $carry + $sexRatioEntry['weight'];
+            },
+            0,
+        );
+
+        $randomlySelectedValue = mt_rand(1, $aggregatedWeight);
+
+        /** @var array $sexRatioEntry */
+        foreach ($sexRatioConfig as $sexRatioEntry) {
+            $randomlySelectedValue -= $sexRatioEntry['weight'];
+            if ($randomlySelectedValue <= 0) {
+                return $sexRatioEntry['sex'];
+            }
+        }
+
+        throw new Exception;
+    }
+
+    private static function generateIsShiny(): bool
+    {
+        return RandomNumberGenerator::generateInRange(0, 4095) === 0;
+    }
+
+    private function findPokemonPoolForTrainerClass(string $trainerClass): array
+    {
+        return match ($trainerClass) {
             TrainerClass::BEAUTY            => array_keys($this->pokedexConfigRepository->findAllWithAttributeTag(AttributeTag::CUTE)),
             TrainerClass::BIKER             => array_merge(
                 array_keys($this->pokedexConfigRepository->findAllWithType(PokemonType::FIRE)),
@@ -233,14 +418,11 @@ final class RandomTrainerGenerator
             TrainerClass::PAINTER           => [
                 PokedexNo::SMEARGLE,
             ],
-            default                         => $this->findAllPokemonUsedByTrainerClass($trainerClass),
+            default                         => $this->findAllPokemonUsedByTrainersOfClass($trainerClass),
         };
-
-        $randomPokedexEntryKey = RandomNumberGenerator::generateInRange(0, count($pokedexNumbers) - 1);
-        return strval($pokedexNumbers[$randomPokedexEntryKey]);
     }
 
-    private function findAllPokemonUsedByTrainerClass(string $trainerClass): array
+    private function findAllPokemonUsedByTrainersOfClass(string $trainerClass): array
     {
         $trainers = $this->trainerConfigRepository->findTrainersWithClass($trainerClass);
 
@@ -286,175 +468,5 @@ final class RandomTrainerGenerator
         }
 
         return $evolutionPokedexNumbers;
-    }
-
-    private static function createStats(string $trainerClass, int $level, string $number): Stats
-    {
-        $baseStats = self::findBaseStats($number);
-
-        return new Stats(
-            $level,
-            $baseStats['hp'],
-            $baseStats['attack'],
-            $baseStats['defence'],
-            $baseStats['spAttack'],
-            $baseStats['spDefence'],
-            $baseStats['speed'],
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-        );
-    }
-
-    private static function generateIv(string $trainerClass): int
-    {
-        $weightedDistribution = TrainerClass::getWeightedDistributionForIvs($trainerClass);
-
-        if (is_null($weightedDistribution)) {
-            return RandomNumberGenerator::generateInRange(0, 31);
-        }
-
-        return RandomNumberGenerator::generateFromWeightedTable($weightedDistribution);
-    }
-
-    private static function findBaseStats(string $number): array
-    {
-        $config = require __DIR__ . "/../Config/Stats.php";
-
-        /** @var array $entry */
-        foreach ($config as $entry) {
-            if ($entry['number'] === $number) {
-                return $entry;
-            }
-        }
-
-        throw new Exception;
-    }
-
-    public static function randomlyGenerateTrainerClass(): string
-    {
-        $trainerClasses = TrainerClass::all();
-
-        foreach ($trainerClasses as $i => $trainerClass) {
-            if (in_array($trainerClass, [
-                TrainerClass::GYM_LEADER,
-                TrainerClass::TEAM_ROCKET_GRUNT,
-                TrainerClass::CHAMPION,
-                TrainerClass::ROCKET,
-                TrainerClass::ROCKET_EXECUTIVE,
-                TrainerClass::AQUA_ADMIN,
-                TrainerClass::AQUA_LEADER,
-                TrainerClass::MAGMA_ADMIN,
-                TrainerClass::MAGMA_LEADER,
-                TrainerClass::OLD_COUPLE,
-                TrainerClass::SIS_AND_BRO,
-                TrainerClass::TEAMMATES,
-                TrainerClass::TEAM_AQUA_GRUNT,
-                TrainerClass::TEAM_MAGMA_GRUNT,
-                TrainerClass::WINSTRATE,
-                TrainerClass::YOUNG_COUPLE,
-                TrainerClass::COOL_COUPLE,
-                TrainerClass::TEAM_ROCKET_ADMIN,
-                TrainerClass::BOSS,
-                TrainerClass::ELITE_FOUR,
-                TrainerClass::RETIRED_TRAINER,
-                TrainerClass::RIVAL,
-                TrainerClass::DOUBLE_TEAM,
-                TrainerClass::TWINS,
-                TrainerClass::CRUSH_KIN,
-                TrainerClass::INTERVIEWER,
-            ])) {
-                unset($trainerClasses[$i]);
-            }
-        }
-
-        $trainerClasses = array_values($trainerClasses);
-
-        $randomTrainerClassKey = RandomNumberGenerator::generateInRange(0, count($trainerClasses) - 1);
-
-        return $trainerClasses[$randomTrainerClassKey];
-    }
-
-    public function randomlyGenerateGender(string $trainerClass): Gender
-    {
-        if (in_array(
-            $trainerClass,
-            [
-                TrainerClass::BEAUTY,
-                TrainerClass::PICNICKER,
-                TrainerClass::LASS,
-                TrainerClass::KIMONO_GIRL,
-                TrainerClass::AROMA_LADY,
-                TrainerClass::BATTLE_GIRL,
-                TrainerClass::LADY,
-                TrainerClass::PARASOL_LADY,
-                TrainerClass::CRUSH_GIRL,
-            ]
-        )) {
-            return Gender::FEMALE;
-        }
-
-        if (in_array(
-            $trainerClass,
-            [
-                TrainerClass::CUE_BALL,
-                TrainerClass::GAMER,
-                TrainerClass::GENTLEMAN,
-                TrainerClass::CAMPER,
-                TrainerClass::YOUNGSTER,
-                TrainerClass::NINJA_BOY,
-                TrainerClass::RICH_BOY,
-                TrainerClass::FISHERMAN,
-            ]
-        )) {
-            return Gender::MALE;
-        }
-
-        if (in_array(
-            $trainerClass,
-            [
-                TrainerClass::MEDIUM,
-                TrainerClass::TEACHER,
-                TrainerClass::HEX_MANIAC,
-            ]
-        )) {
-            return match (RandomNumberGenerator::generateInRange(0, 1)) {
-                0 => Gender::FEMALE,
-                1 => Gender::IMMATERIAL,
-            };
-        }
-
-        if (in_array(
-            $trainerClass,
-            [
-                TrainerClass::BLACK_BELT,
-                TrainerClass::BURGLAR,
-                TrainerClass::SAILOR,
-                TrainerClass::FIREBREATHER,
-                TrainerClass::GUITARIST,
-                TrainerClass::SAGE,
-                TrainerClass::RUIN_MANIAC,
-            ]
-        )) {
-            return match (RandomNumberGenerator::generateInRange(0, 1)) {
-                0 => Gender::IMMATERIAL,
-                1 => Gender::MALE,
-            };
-        }
-
-        return match (RandomNumberGenerator::generateInRange(0, 2)) {
-            0 => Gender::FEMALE,
-            1 => Gender::IMMATERIAL,
-            2 => Gender::MALE,
-        };
     }
 }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Party\Controllers;
 
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\Party\Domain\DayCare;
+use ConorSmith\Pokemon\Party\Domain\Party;
 use ConorSmith\Pokemon\Party\Domain\Pokemon;
 use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\Party\ViewModels\Pokemon as PokemonVm;
@@ -31,12 +33,28 @@ final class GetPokemon
 
         $pokemon = $this->pokemonRepository->find($pokemonId);
 
+        $party = $this->pokemonRepository->getParty();
+        $dayCare = $this->pokemonRepository->getDayCare();
+
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Pokemon.php", [
             'pokemon'           => PokemonVm::create($pokemon),
             'capture'           => $this->createCaptureVm($pokemon),
+            'location'          => $this->createLocationVm($pokemon, $party, $dayCare),
             'stats'             => self::createStatsVm($pokemon),
             'typeEffectiveness' => self::createTypeEffectivenessVms($pokemon),
         ]));
+    }
+
+    private function createLocationVm(Pokemon $pokemon, Party $party, DayCare $dayCare): stdClass
+    {
+        return (object) [
+            'isInParty'        => $party->contains($pokemon->id),
+            'isInDayCare'      => $dayCare->hasAttendee($pokemon->id),
+            'isInBox'          => !$party->contains($pokemon->id) && !$dayCare->hasAttendee($pokemon->id),
+            'canSendToParty'   => !$party->isFull(),
+            'canSendToDayCare' => !$dayCare->isFull(),
+            'canSendToBox'     => true,
+        ];
     }
 
     private function createCaptureVm(Pokemon $pokemon): stdClass
@@ -51,12 +69,12 @@ final class GetPokemon
                 RegionId::HOENN => "Hoenn",
                 default         => throw new LogicException(),
             },
-            'preposition' => match ($locationConfig['type']) {
+            'preposition' => match ($locationConfig['type'] ?? null) {
                 LocationType::ROUTE => "on",
                 LocationType::CITY  => "in",
                 LocationType::CAVE  => "in",
                 LocationType::TOWER => "in",
-                default             => "on",
+                default             => "at",
             },
         ];
     }

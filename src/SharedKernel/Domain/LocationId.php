@@ -8,6 +8,7 @@ final class LocationId
 {
     // KANTO
     public const PALLET_TOWN = "0998d25b-6afd-4bde-9ddc-57560660ffc3";
+    public const PROFESSOR_OAKS_LAB = "2ed967a4-150a-4f91-9ccc-ec4ed2fb264b";
     public const ROUTE_1 = "0e27acd0-1d6e-458a-9ba8-7344f90761e1";
     public const VIRIDIAN_CITY = "e130f4d7-38f3-4a0b-89b4-fa8480e888ac";
     public const VIRIDIAN_GYM = "278cb200-908a-437f-b664-5dba1a1db97c";

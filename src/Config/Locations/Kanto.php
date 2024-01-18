@@ -14,6 +14,14 @@ return [
         'directions' => [
             Direction::N => LocationId::ROUTE_1,
             Direction::S => LocationId::ROUTE_21,
+            LocationId::PROFESSOR_OAKS_LAB,
+        ],
+    ],
+    [
+        'id'         => LocationId::PROFESSOR_OAKS_LAB,
+        'name'       => "Professor Oak's Lab",
+        'directions' => [
+            LocationId::PALLET_TOWN,
         ],
     ],
     [

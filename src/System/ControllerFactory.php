@@ -34,6 +34,7 @@ use ConorSmith\Pokemon\Battle\UseCases\CreateAWildEncounter;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
 use ConorSmith\Pokemon\Battle\UseCases\StartAnEncounter;
 use ConorSmith\Pokemon\EncounterConfigRepository;
+use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogCalorieGoal;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogExercise;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogFoodDiary;
@@ -70,6 +71,7 @@ use ConorSmith\Pokemon\Party\Controllers\GetPartyItemUse;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemon;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemonBreed;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemonItemUse;
+use ConorSmith\Pokemon\Party\Controllers\PostObtain;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyItemUse;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyMoveDown;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyMoveUp;
@@ -84,6 +86,7 @@ use ConorSmith\Pokemon\Party\ReduceEggCyclesCommand;
 use ConorSmith\Pokemon\Party\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\Party\Repositories\EggRepositoryDb;
 use ConorSmith\Pokemon\Party\Repositories\EvolutionRepository;
+use ConorSmith\Pokemon\Party\Repositories\ObtainedGiftPokemonRepository;
 use ConorSmith\Pokemon\Party\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\Party\UseCases\AddNewPokemon;
@@ -175,6 +178,7 @@ final class ControllerFactory
         $r->post("/item/{id}/use", PostItemUse::class);
         $r->get("/party/use/{id}", GetPartyItemUse::class);
         $r->post("/party/use/{id}", PostPartyItemUse::class);
+        $r->post("/obtain", PostObtain::class);
         $r->get("/", GetIndex::class);
     }
 
@@ -322,6 +326,7 @@ final class ControllerFactory
                         $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                     ),
                     $this->createNotifyPlayerCommand($instanceId),
+                    $this->friendshipLog,
                 ),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
@@ -538,6 +543,7 @@ final class ControllerFactory
             PostBattleFinish::class              => new PostBattleFinish(
                 $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
+                $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 $this->repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
                 new StartABattle(
@@ -611,6 +617,36 @@ final class ControllerFactory
                 ),
                 $this->viewModelFactory,
                 $this->createTemplateEngine($instanceId),
+            ),
+            PostObtain::class                    => new PostObtain(
+                new AddNewPokemon(
+                    $this->db,
+                    new RegisterNewPokemonCommand(
+                        $this->db,
+                        $instanceId,
+                    ),
+                    new PokedexConfigRepository(),
+                    new LocationConfigRepository(),
+                    $instanceId,
+                ),
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
+                    $this->db,
+                    $this->repositoryFactory->create(RegionRepository::class, $instanceId),
+                    new LocationConfigRepository(),
+                    $instanceId,
+                ),
+                $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
+                new FoodDiaryHabitStreakQuery(
+                    $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
+                ),
+                new TotalRegisteredPokemonQuery(
+                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                ),
+                new GiftPokemonConfigRepository(),
+                new PokedexConfigRepository(),
+                $this->createNotifyPlayerCommand($instanceId),
+                $this->friendshipLog,
             ),
             default                              => throw new LogicException(),
         };

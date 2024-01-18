@@ -16,12 +16,7 @@ final class Stats
         private readonly int $baseSpecialAttack,
         private readonly int $baseSpecialDefence,
         private readonly int $baseSpeed,
-        public readonly int $ivHp,
-        public readonly int $ivPhysicalAttack,
-        public readonly int $ivPhysicalDefence,
-        public readonly int $ivSpecialAttack,
-        public readonly int $ivSpecialDefence,
-        public readonly int $ivSpeed,
+        public readonly StatsIv $ivs,
         public readonly int $evHp,
         public readonly int $evPhysicalAttack,
         public readonly int $evPhysicalDefence,
@@ -32,42 +27,42 @@ final class Stats
 
     public function calculateHp(): int
     {
-        return StatCalculator::calculateHp($this->baseHp, $this->ivHp, $this->evHp, $this->level);
+        return StatCalculator::calculateHp($this->baseHp, $this->ivs->hp, $this->evHp, $this->level);
     }
 
     public function calculatePhysicalAttack(): int
     {
-        return StatCalculator::calculate($this->basePhysicalAttack, $this->ivPhysicalAttack, $this->evPhysicalAttack, $this->level);
+        return StatCalculator::calculate($this->basePhysicalAttack, $this->ivs->physicalAttack, $this->evPhysicalAttack, $this->level);
     }
 
     public function calculatePhysicalDefence(): int
     {
-        return StatCalculator::calculate($this->basePhysicalDefence, $this->ivPhysicalDefence, $this->evPhysicalDefence, $this->level);
+        return StatCalculator::calculate($this->basePhysicalDefence, $this->ivs->physicalDefence, $this->evPhysicalDefence, $this->level);
     }
 
     public function calculateSpecialAttack(): int
     {
-        return StatCalculator::calculate($this->baseSpecialAttack, $this->ivSpecialAttack, $this->evSpecialAttack, $this->level);
+        return StatCalculator::calculate($this->baseSpecialAttack, $this->ivs->specialAttack, $this->evSpecialAttack, $this->level);
     }
 
     public function calculateSpecialDefence(): int
     {
-        return StatCalculator::calculate($this->baseSpecialDefence, $this->ivSpecialDefence, $this->evSpecialDefence, $this->level);
+        return StatCalculator::calculate($this->baseSpecialDefence, $this->ivs->specialDefence, $this->evSpecialDefence, $this->level);
     }
 
     public function calculateSpeed(): int
     {
-        return StatCalculator::calculate($this->baseSpeed, $this->ivSpeed, $this->evSpeed, $this->level);
+        return StatCalculator::calculate($this->baseSpeed, $this->ivs->speed, $this->evSpeed, $this->level);
     }
 
-    public function calculateTotalStrength(int $offset): float
+    public function calculateTotalIvStrength(int $offset): float
     {
-        $totalIvs = $this->ivPhysicalAttack
-            + $this->ivPhysicalDefence
-            + $this->ivSpecialAttack
-            + $this->ivSpecialDefence
-            + $this->ivSpeed
-            + $this->ivHp;
+        $totalIvs = $this->ivs->physicalAttack
+            + $this->ivs->physicalDefence
+            + $this->ivs->specialAttack
+            + $this->ivs->specialDefence
+            + $this->ivs->speed
+            + $this->ivs->hp;
 
         $totalIvs += $offset;
         $totalIvs = min($totalIvs, 31 * 6);
@@ -76,11 +71,11 @@ final class Stats
         return $totalIvs / (31 * 6);
     }
 
-    public function calculateOffensiveStrength(int $offset): float
+    public function calculateOffensiveIvStrength(int $offset): float
     {
-        $totalIvs = $this->ivPhysicalAttack
-            + $this->ivSpecialAttack
-            + $this->ivSpeed;
+        $totalIvs = $this->ivs->physicalAttack
+            + $this->ivs->specialAttack
+            + $this->ivs->speed;
 
         $totalIvs += $offset;
         $totalIvs = min($totalIvs, 31 * 3);
@@ -89,11 +84,11 @@ final class Stats
         return $totalIvs / (31 * 3);
     }
 
-    public function calculateDefensiveStrength(int $offset): float
+    public function calculateDefensiveIvStrength(int $offset): float
     {
-        $totalIvs = $this->ivPhysicalDefence
-            + $this->ivSpecialDefence
-            + $this->ivHp;
+        $totalIvs = $this->ivs->physicalDefence
+            + $this->ivs->specialDefence
+            + $this->ivs->hp;
 
         $totalIvs += $offset;
         $totalIvs = min($totalIvs, 31 * 3);
@@ -102,10 +97,10 @@ final class Stats
         return $totalIvs / (31 * 3);
     }
 
-    public function calculateAttackStrength(int $offset): float
+    public function calculateAttackIvStrength(int $offset): float
     {
-        $totalIvs = $this->ivPhysicalAttack
-            + $this->ivSpecialAttack;
+        $totalIvs = $this->ivs->physicalAttack
+            + $this->ivs->specialAttack;
 
         $totalIvs += $offset;
         $totalIvs = min($totalIvs, 31 * 2);
@@ -114,10 +109,10 @@ final class Stats
         return $totalIvs / (31 * 2);
     }
 
-    public function calculateDefenceStrength(int $offset): float
+    public function calculateDefenceIvStrength(int $offset): float
     {
-        $totalIvs = $this->ivPhysicalDefence
-            + $this->ivSpecialDefence;
+        $totalIvs = $this->ivs->physicalDefence
+            + $this->ivs->specialDefence;
 
         $totalIvs += $offset;
         $totalIvs = min($totalIvs, 31 * 2);

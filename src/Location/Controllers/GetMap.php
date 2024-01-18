@@ -7,9 +7,11 @@ namespace ConorSmith\Pokemon\Location\Controllers;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\EncounterConfigRepository;
+use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\Party\Repositories\ObtainedGiftPokemonRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
 use ConorSmith\Pokemon\SharedKernel\Domain\Gender;
@@ -37,10 +39,12 @@ final class GetMap
         private readonly Connection $db,
         private readonly LocationRepository $locationRepository,
         private readonly BagRepository $bagRepository,
+        private readonly ObtainedGiftPokemonRepository $obtainedGiftPokemonRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly EncounterConfigRepository $encounterConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
+        private readonly GiftPokemonConfigRepository $giftPokemonConfigRepository,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly SharedViewModelFactory $sharedViewModelFactory,
         private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
@@ -142,6 +146,11 @@ final class GetMap
                 $args['instanceId'],
                 $this->locationConfigRepository->findLocation($instanceRow['current_location']),
                 $legendaryConfig,
+            ),
+            'giftPokemon'     => $this->createGiftPokemonViewModels(
+                $args['instanceId'],
+                $this->locationConfigRepository->findLocation($instanceRow['current_location']),
+                $this->giftPokemonConfigRepository->findInLocation($instanceRow['current_location']),
             ),
             'eliteFour'       => $this->createEliteFourViewModel(
                 self::findEliteFourConfig($instanceRow['current_location']),
@@ -434,6 +443,7 @@ final class GetMap
                 'surfing'   => isset($encounterTables[EncounterType::SURFING]),
                 'fishing'   => isset($encounterTables[EncounterType::FISHING]),
                 'rockSmash' => isset($encounterTables[EncounterType::ROCK_SMASH]),
+                'headbutt'  => isset($encounterTables[EncounterType::HEADBUTT]),
             ],
         ];
     }
@@ -459,5 +469,66 @@ final class GetMap
         }
 
         return null;
+    }
+
+    private function createGiftPokemonViewModels(string $instanceId, array $currentLocation, array $giftPokemonConfigEntries): array
+    {
+        $giftPokemon = [];
+
+        foreach ($giftPokemonConfigEntries as $giftPokemonConfigEntry) {
+
+            $canObtain = true;
+
+            $bag = $this->bagRepository->find();
+
+            if (!$bag->has(ItemId::OVAL_CHARM)) {
+                $canObtain = false;
+            }
+
+            $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
+                'instanceId' => $instanceId,
+            ]);
+
+            $levelLimit = self::findLevelLimit($instanceRow);
+
+            if ($giftPokemonConfigEntry['level'] > $levelLimit) {
+                $canObtain = false;
+            }
+
+            $obtainedGiftPokemon = $this->obtainedGiftPokemonRepository->findMostRecent(
+                $giftPokemonConfigEntry['pokemon'],
+                $currentLocation['id'],
+            );
+
+            if (!is_null($obtainedGiftPokemon)
+                && $obtainedGiftPokemon->isInCooldownWindow()
+            ) {
+                $canObtain = false;
+            }
+
+            if (is_null($obtainedGiftPokemon)) {
+                $lastObtained = "";
+            } else {
+                $lastObtained = $obtainedGiftPokemon->obtainedAt->ago();
+            }
+
+            $regionalLevelOffset = match ($currentLocation['region']) {
+                RegionId::KANTO => 0,
+                RegionId::JOHTO => 50,
+                RegionId::HOENN => 100,
+                default         => throw new LogicException(),
+            };
+
+            $giftPokemon[] = (object) [
+                'number'          => $giftPokemonConfigEntry['pokemon'],
+                'name'            => $this->pokedexConfigRepository->find($giftPokemonConfigEntry['pokemon'])['name'],
+                'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($giftPokemonConfigEntry['pokemon']),
+                'level'           => $giftPokemonConfigEntry['level'] + $regionalLevelOffset,
+                'canObtain'       => $canObtain,
+                'lastObtained'    => $lastObtained,
+            ];
+        }
+
+        return $giftPokemon;
     }
 }

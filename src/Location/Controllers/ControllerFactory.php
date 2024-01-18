@@ -9,10 +9,12 @@ use ConorSmith\Pokemon\Battle\LeagueChampionRepositoryPlayerIsLeagueChampionQuer
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\EncounterConfigRepository;
+use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\RepositoryFactory;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\Party\Repositories\ObtainedGiftPokemonRepository;
 use ConorSmith\Pokemon\Player\Repositories\NotificationRepositoryDbAndSession;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
@@ -46,10 +48,12 @@ final class ControllerFactory
                 $this->db,
                 $this->repositoryFactory->create(LocationRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
                 $this->locationConfigRepository,
                 $this->encounterConfigRepository,
                 $this->trainerConfigRepository,
                 $this->pokedexConfigRepository,
+                new GiftPokemonConfigRepository(),
                 new ViewModelFactory(
                     $this->locationConfigRepository,
                 ),

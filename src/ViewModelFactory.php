@@ -27,17 +27,17 @@ final class ViewModelFactory
         RandomNumberGenerator::setSeed(crc32($pokemon->id));
 
         $ivStrength = new IvStrength(
-            $pokemon->stats->calculateTotalStrength(RandomNumberGenerator::generateInRange(-2, 2)),
-            $pokemon->stats->calculateOffensiveStrength(RandomNumberGenerator::generateInRange(-2, 2)),
-            $pokemon->stats->calculateDefensiveStrength(RandomNumberGenerator::generateInRange(-2, 2)),
-            $pokemon->stats->calculateAttackStrength(RandomNumberGenerator::generateInRange(-2, 2)),
-            $pokemon->stats->calculateDefenceStrength(RandomNumberGenerator::generateInRange(-2, 2)),
-            $pokemon->stats->ivPhysicalAttack / 31,
-            $pokemon->stats->ivPhysicalDefence / 31,
-            $pokemon->stats->ivSpecialAttack / 31,
-            $pokemon->stats->ivSpecialDefence / 31,
-            $pokemon->stats->ivSpeed / 31,
-            $pokemon->stats->ivHp / 31,
+            $pokemon->stats->calculateTotalIvStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->calculateOffensiveIvStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->calculateDefensiveIvStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->calculateAttackIvStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->calculateDefenceIvStrength(RandomNumberGenerator::generateInRange(-2, 2)),
+            $pokemon->stats->ivs->physicalAttack / 31,
+            $pokemon->stats->ivs->physicalDefence / 31,
+            $pokemon->stats->ivs->specialAttack / 31,
+            $pokemon->stats->ivs->specialDefence / 31,
+            $pokemon->stats->ivs->speed / 31,
+            $pokemon->stats->ivs->hp / 31,
         );
 
         RandomNumberGenerator::unsetSeed();

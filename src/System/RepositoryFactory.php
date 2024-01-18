@@ -27,6 +27,7 @@ use ConorSmith\Pokemon\Party\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\Party\Repositories\EggRepositoryDb;
 use ConorSmith\Pokemon\Party\Repositories\EvolutionRepository;
 use ConorSmith\Pokemon\Party\Repositories\GenealogyRepositoryDb;
+use ConorSmith\Pokemon\Party\Repositories\ObtainedGiftPokemonRepository;
 use ConorSmith\Pokemon\Party\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
 use ConorSmith\Pokemon\Player\EarnedGymBadgesQueryDb;
@@ -49,22 +50,22 @@ final class RepositoryFactory
 
     public function create(string $className, InstanceId $instanceId): mixed
     {
-        return match($className) {
-            DailyHabitLogRepository::class      => new DailyHabitLogRepository($this->db, $instanceId),
-            UnlimitedHabitLogRepository::class  => new UnlimitedHabitLogRepository($this->db, $instanceId),
-            WeeklyHabitLogRepository::class     => new WeeklyHabitLogRepository($this->db, $instanceId),
-            EliteFourChallengeRepository::class => new EliteFourChallengeRepository(
+        return match ($className) {
+            DailyHabitLogRepository::class       => new DailyHabitLogRepository($this->db, $instanceId),
+            UnlimitedHabitLogRepository::class   => new UnlimitedHabitLogRepository($this->db, $instanceId),
+            WeeklyHabitLogRepository::class      => new WeeklyHabitLogRepository($this->db, $instanceId),
+            EliteFourChallengeRepository::class  => new EliteFourChallengeRepository(
                 $this->db,
                 $this->create(LeagueChampionRepository::class, $instanceId),
             ),
-            BagRepository::class                => new BagRepository($this->db, $instanceId),
-            CaughtPokemonRepository::class      => new CaughtPokemonRepository($this->db, $instanceId),
-            LocationRepository::class           => new LocationRepository(
+            BagRepository::class                 => new BagRepository($this->db, $instanceId),
+            CaughtPokemonRepository::class       => new CaughtPokemonRepository($this->db, $instanceId),
+            LocationRepository::class            => new LocationRepository(
                 $this->db,
                 new LocationConfigRepository(),
                 $instanceId,
             ),
-            PlayerRepositoryDb::class           => new PlayerRepositoryDb(
+            PlayerRepositoryDb::class            => new PlayerRepositoryDb(
                 $this->db,
                 new CapturedPokemonQuery(
                     $this->create(PokemonRepositoryDb::class, $instanceId),
@@ -72,7 +73,7 @@ final class RepositoryFactory
                 require __DIR__ . "/../Config/Pokedex.php",
                 $instanceId,
             ),
-            PokemonRepositoryDb::class          => new PokemonRepositoryDb(
+            PokemonRepositoryDb::class           => new PokemonRepositoryDb(
                 $this->db,
                 new EarnedGymBadgesQueryDb($this->db, $instanceId),
                 new EvolutionaryLineQuery(
@@ -84,29 +85,29 @@ final class RepositoryFactory
                 new LocationConfigRepository(),
                 $instanceId,
             ),
-            EvolutionRepository::class          => new EvolutionRepository(new PokemonConfigRepository()),
-            PokedexEntryRepository::class       => new PokedexEntryRepository(
+            EvolutionRepository::class           => new EvolutionRepository(new PokemonConfigRepository()),
+            PokedexEntryRepository::class        => new PokedexEntryRepository(
                 $this->db,
                 new PokedexConfigRepository(),
                 $instanceId,
             ),
-            RegionRepository::class             => new RegionRepository(
+            RegionRepository::class              => new RegionRepository(
                 new RegionConfigRepository(),
                 new EliteFourChallengeRegionalVictoryQuery(
                     $this->create(EliteFourChallengeRepository::class, $instanceId),
                 ),
             ),
-            EncounterRepository::class          => new EncounterRepository(
+            EncounterRepository::class           => new EncounterRepository(
                 $this->db,
                 new EncounterConfigRepository(),
                 new LocationConfigRepository(),
                 new PokedexConfigRepository(),
                 new FoodDiaryHabitStreakQuery(
-                    $this->create(DailyHabitLogRepository::class, $instanceId)
+                    $this->create(DailyHabitLogRepository::class, $instanceId),
                 ),
                 $instanceId,
             ),
-            TrainerRepository::class            => new TrainerRepository(
+            TrainerRepository::class             => new TrainerRepository(
                 $this->db,
                 $this->create(EliteFourChallengeRepository::class, $instanceId),
                 $this->create(LeagueChampionRepository::class, $instanceId),
@@ -115,25 +116,29 @@ final class RepositoryFactory
                 new PokedexConfigRepository(),
                 $instanceId,
             ),
-            AreaRepository::class               => new AreaRepository(
+            AreaRepository::class                => new AreaRepository(
                 $this->create(BattleRepository::class, $instanceId),
                 $this->create(TrainerRepository::class, $instanceId),
                 new LocationConfigRepository(),
             ),
-            EggRepositoryDb::class              => new EggRepositoryDb($this->db, $instanceId),
-            GenealogyRepository::class          => new GenealogyRepositoryDb($this->db, $instanceId),
-            BattleRepository::class             => new BattleRepositoryDb(
+            EggRepositoryDb::class               => new EggRepositoryDb($this->db, $instanceId),
+            GenealogyRepository::class           => new GenealogyRepositoryDb($this->db, $instanceId),
+            BattleRepository::class              => new BattleRepositoryDb(
                 $this->db,
                 new TrainerConfigRepository(),
                 $this->create(EliteFourChallengeRepository::class, $instanceId),
                 $this->create(LeagueChampionRepository::class, $instanceId),
                 $instanceId,
             ),
-            LeagueChampionRepository::class     => new LeagueChampionRepository(
+            LeagueChampionRepository::class      => new LeagueChampionRepository(
                 $this->db,
                 $instanceId,
             ),
-            default                             => throw new LogicException(),
+            ObtainedGiftPokemonRepository::class => new ObtainedGiftPokemonRepository(
+                $this->db,
+                $instanceId,
+            ),
+            default                              => throw new LogicException(),
         };
     }
 }

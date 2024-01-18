@@ -8,6 +8,7 @@ use ConorSmith\Pokemon\Battle\Domain\Player;
 use ConorSmith\Pokemon\Battle\Domain\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
+use ConorSmith\Pokemon\Battle\Domain\StatsIv;
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
@@ -81,12 +82,14 @@ final class PlayerRepositoryDb implements PlayerRepository
                     $queryResult->get(CapturedPokemonQueryProperty::BASE_STATS)->specialAttack,
                     $queryResult->get(CapturedPokemonQueryProperty::BASE_STATS)->specialDefence,
                     $queryResult->get(CapturedPokemonQueryProperty::BASE_STATS)->speed,
-                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->hp,
-                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->physicalAttack,
-                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->physicalDefence,
-                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->specialAttack,
-                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->specialDefence,
-                    $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->speed,
+                    new StatsIv(
+                        $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->hp,
+                        $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->physicalAttack,
+                        $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->physicalDefence,
+                        $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->specialAttack,
+                        $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->specialDefence,
+                        $queryResult->get(CapturedPokemonQueryProperty::IV_STATS)->speed,
+                    ),
                     $queryResult->get(CapturedPokemonQueryProperty::EV_STATS)->hp,
                     $queryResult->get(CapturedPokemonQueryProperty::EV_STATS)->physicalAttack,
                     $queryResult->get(CapturedPokemonQueryProperty::EV_STATS)->physicalDefence,

@@ -6,6 +6,7 @@ use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 
 return [
     LocationId::PALLET_TOWN                  => "Kanto_Pallet_Town_Map.png",
+    LocationId::PROFESSOR_OAKS_LAB           => "Kanto_Pallet_Town_Map.png",
     LocationId::ROUTE_1                      => "Kanto_Route_1_Map.png",
     LocationId::VIRIDIAN_CITY                => "Kanto_Viridian_City_Map.png",
     LocationId::VIRIDIAN_GYM                 => "Kanto_Viridian_City_Map.png",

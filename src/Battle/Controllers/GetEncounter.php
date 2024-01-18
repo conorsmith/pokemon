@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
+use ConorSmith\Pokemon\Battle\ViewModels\TypeEffectiveness;
 use ConorSmith\Pokemon\SharedKernel\Domain\Item;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -49,6 +50,8 @@ final class GetEncounter
             'encounteredPokemonStrengthIndicatorProgress' => $encounter->strengthIndicatorProgress,
             'opponentPokemon'                             => $this->viewModelFactory->createPokemonInBattle($encounter->pokemon),
             'playerPokemon'                               => $this->viewModelFactory->createPokemonInBattle($playerLeadPokemon),
+            'primaryTypeEffectiveness'                    => TypeEffectiveness::create("primary", $playerLeadPokemon, $encounter->pokemon),
+            'secondaryTypeEffectiveness'                  => TypeEffectiveness::create("secondary", $playerLeadPokemon, $encounter->pokemon),
             'pokeballs'                                   => $pokeballs,
             'isLegendary'                                 => $encounter->isLegendary,
             'isBattleOver'                                => $encounter->pokemon->hasFainted || $encounter->wasCaught,

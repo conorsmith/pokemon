@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\PokemonTest\Battle\Domain;
 
 use ConorSmith\Pokemon\Battle\Domain\Stats;
+use ConorSmith\Pokemon\Battle\Domain\StatsIv;
 
 final class StatsFactory
 {
@@ -37,12 +38,14 @@ final class StatsFactory
             $baseSpecialAttack,
             $baseSpecialDefence,
             $baseSpeed,
-            $ivHp,
-            $ivPhysicalAttack,
-            $ivPhysicalDefence,
-            $ivSpecialAttack,
-            $ivSpecialDefence,
-            $ivSpeed,
+            new StatsIv(
+                $ivHp,
+                $ivPhysicalAttack,
+                $ivPhysicalDefence,
+                $ivSpecialAttack,
+                $ivSpecialDefence,
+                $ivSpeed,
+            ),
             $evHp,
             $evPhysicalAttack,
             $evPhysicalDefence,

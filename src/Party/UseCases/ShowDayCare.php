@@ -17,7 +17,6 @@ final class ShowDayCare
 
     public function run(): PokemonList
     {
-        $party = $this->pokemonRepository->getParty();
         $dayCare = $this->pokemonRepository->getDayCare();
 
         return new PokemonList(
@@ -25,9 +24,7 @@ final class ShowDayCare
             $dayCare->availablePlaces,
             array_map(
                 fn(Pokemon $pokemon) => (object) [
-                    'pokemon'        => PokemonVm::create($pokemon),
-                    'canSendToParty' => !$party->isFull(),
-                    'canSendToBox'   => true,
+                    'pokemon' => PokemonVm::create($pokemon),
                 ],
                 $dayCare->attendees
             )

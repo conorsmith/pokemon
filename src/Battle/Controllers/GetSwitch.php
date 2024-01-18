@@ -27,7 +27,9 @@ final class GetSwitch
         $partyViewModels = [];
 
         foreach ($player->party as $i => $pokemon) {
-            $partyViewModels[] = $this->viewModelFactory->createPokemonInBattle($pokemon);
+            $partyViewModels[] = (object) [
+                'pokemon' => $this->viewModelFactory->createPokemonInBattle($pokemon),
+            ];
         }
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Switch.php", [

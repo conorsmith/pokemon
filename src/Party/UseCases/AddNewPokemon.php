@@ -107,6 +107,7 @@ final class AddNewPokemon
             'level'               => $pokemon->level,
             'party_position'      => $partyPosition,
             'location'            => $isPartyFull ? "box" : "team",
+            'remaining_hp'        => $pokemon->hp->calculate($pokemon->level),
             'has_fainted'         => 0,
             'location_caught'     => $caughtLocationId,
             'date_caught'         => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),

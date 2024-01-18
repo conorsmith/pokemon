@@ -93,12 +93,12 @@ final class PostEncounterCatch
                 $encounter->pokemon->sex,
                 $encounter->pokemon->isShiny,
                 $encounter->isLegendary,
-                $encounter->pokemon->stats->ivHp,
-                $encounter->pokemon->stats->ivPhysicalAttack,
-                $encounter->pokemon->stats->ivPhysicalDefence,
-                $encounter->pokemon->stats->ivSpecialAttack,
-                $encounter->pokemon->stats->ivSpecialDefence,
-                $encounter->pokemon->stats->ivSpeed,
+                $encounter->pokemon->stats->ivs->hp,
+                $encounter->pokemon->stats->ivs->physicalAttack,
+                $encounter->pokemon->stats->ivs->physicalDefence,
+                $encounter->pokemon->stats->ivs->specialAttack,
+                $encounter->pokemon->stats->ivs->specialDefence,
+                $encounter->pokemon->stats->ivs->speed,
                 $currentLocation['id'],
             );
 

@@ -31,6 +31,7 @@ final class ReduceEggCyclesCommand implements CommandInterface
         private readonly CurrentLocationQuery $currentLocationQuery,
         private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
         private readonly NotifyPlayerCommand $notifyPlayerCommand,
+        private readonly FriendshipLog $friendshipLog,
     ) {}
 
     public function run(int $amount): void
@@ -79,6 +80,8 @@ final class ReduceEggCyclesCommand implements CommandInterface
         $this->eggRepository->remove($egg);
 
         $totalRegisteredPokemonAfterHatching = $this->totalRegisteredPokemonQuery->run();
+
+        $this->friendshipLog->sentToBox($pokemon);
 
         $pokemonVm = BreedingPokemon::create($pokemon);
         $this->notifyPlayerCommand->run(

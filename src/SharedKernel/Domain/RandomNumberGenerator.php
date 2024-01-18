@@ -46,4 +46,13 @@ final class RandomNumberGenerator
 
         throw new Exception;
     }
+
+    public static function selectFromArray(array $elements): mixed
+    {
+        $indexedElements = array_values($elements);
+
+        $randomlySelectedIndex = RandomNumberGenerator::generateInRange(0, count($indexedElements) - 1);
+
+        return $indexedElements[$randomlySelectedIndex];
+    }
 }

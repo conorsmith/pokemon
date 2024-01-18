@@ -98,14 +98,14 @@
                         return;
                     }
 
-                    target.dataset.targetId = event.next.id;
-                    target.querySelector(".js-name").innerText = event.next.name;
+                    target.dataset.targetId = event.next.pokemon.id;
+                    target.querySelector(".js-name").innerText = event.next.pokemon.name;
 
-                    target.querySelector(".pokemon-image img").src = event.next.imageUrl;
+                    target.querySelector(".pokemon-image img").src = event.next.pokemon.imageUrl;
                     target.querySelector(".pokemon-image img").addEventListener("load", function (e) {
                         target.querySelector(".pokemon-image").classList.remove("slide-down");
                     });
-                    if (event.next.isShiny) {
+                    if (event.next.pokemon.isShiny) {
                         target.querySelector(".pokemon-image").classList.add("pokemon-image--shiny");
                     } else {
                         target.querySelector(".pokemon-image").classList.remove("pokemon-image--shiny");
@@ -115,40 +115,40 @@
 
                     const primaryTypeEl = document.createElement("span");
                     primaryTypeEl.classList.add("badge");
-                    primaryTypeEl.classList.add("bg-" + event.next.primaryType);
+                    primaryTypeEl.classList.add("bg-" + event.next.pokemon.primaryType);
                     primaryTypeEl.style.textTransform = "uppercase";
-                    primaryTypeEl.innerText = event.next.primaryType;
+                    primaryTypeEl.innerText = event.next.pokemon.primaryType;
                     target.querySelector(".js-types").appendChild(primaryTypeEl);
 
-                    if (event.next.secondaryType) {
+                    if (event.next.pokemon.secondaryType) {
                         target.querySelector(".js-types").appendChild(document.createTextNode(" "));
 
                         const secondaryTypeEl = document.createElement("span");
                         secondaryTypeEl.classList.add("badge");
-                        secondaryTypeEl.classList.add("bg-" + event.next.secondaryType);
+                        secondaryTypeEl.classList.add("bg-" + event.next.pokemon.secondaryType);
                         secondaryTypeEl.style.textTransform = "uppercase";
-                        secondaryTypeEl.innerText = event.next.secondaryType;
+                        secondaryTypeEl.innerText = event.next.pokemon.secondaryType;
                         target.querySelector(".js-types").appendChild(secondaryTypeEl);
                     }
 
                     let sexIcon;
-                    if (event.next.sex === "F") {
+                    if (event.next.pokemon.sex === "F") {
                         sexIcon = "venus";
-                    } else if (event.next.sex === "M") {
+                    } else if (event.next.pokemon.sex === "M") {
                         sexIcon = "mars";
-                    } else if (event.next.sex === "U") {
+                    } else if (event.next.pokemon.sex === "U") {
                         sexIcon = "genderless";
                     }
 
                     target.querySelector(".js-sex").innerHTML = `<i class="fas fa-${sexIcon}"></i>`;
 
-                    target.querySelector(".js-level").innerHTML = "Lv " + event.next.level;
+                    target.querySelector(".js-level").innerHTML = "Lv " + event.next.pokemon.level;
 
                     target.querySelector(".progress-bar").classList.add("transition-disabled");
                     target.querySelector(".progress-bar").style.width = "100%";
 
-                    target.querySelector(".js-remaining-hp").innerText = event.next.remainingHp;
-                    target.querySelector(".js-total-hp").innerText = event.next.totalHp;
+                    target.querySelector(".js-remaining-hp").innerText = event.next.pokemon.remainingHp;
+                    target.querySelector(".js-total-hp").innerText = event.next.pokemon.totalHp;
 
                     if (event.isPlayerPokemon) {
                         const physicalPrimaryBtnEl = document.querySelector(".js-interaction[value='physical-primary']");
@@ -156,27 +156,49 @@
                         const physicalSecondaryBtnEl = document.querySelector(".js-interaction[value='physical-secondary']");
                         const specialSecondaryBtnEl = document.querySelector(".js-interaction[value='special-secondary']");
 
-                        physicalPrimaryBtnEl.querySelector(".badge").innerText = event.next.physicalAttack;
+                        physicalPrimaryBtnEl.querySelector(".js-stats").innerText = event.next.pokemon.physicalAttack;
                         physicalPrimaryBtnEl.classList.remove(...types.map((type) => "btn-" + type));
-                        physicalPrimaryBtnEl.classList.add("btn-" + event.next.primaryType);
+                        physicalPrimaryBtnEl.classList.add("btn-" + event.next.pokemon.primaryType);
 
-                        specialPrimaryBtnEl.querySelector(".badge").innerText = event.next.specialAttack;
+                        specialPrimaryBtnEl.querySelector(".js-stats").innerText = event.next.pokemon.specialAttack;
                         specialPrimaryBtnEl.classList.remove(...types.map((type) => "btn-" + type));
-                        specialPrimaryBtnEl.classList.add("btn-" + event.next.primaryType);
+                        specialPrimaryBtnEl.classList.add("btn-" + event.next.pokemon.primaryType);
 
-                        if (event.next.secondaryType) {
+                        if (event.next.pokemon.secondaryType) {
                             physicalSecondaryBtnEl.parentNode.classList.remove("d-none");
 
-                            physicalSecondaryBtnEl.querySelector(".badge").innerText = event.next.physicalAttack;
+                            physicalSecondaryBtnEl.querySelector(".js-stats").innerText = event.next.pokemon.physicalAttack;
                             physicalSecondaryBtnEl.classList.remove(...types.map((type) => "btn-" + type));
-                            physicalSecondaryBtnEl.classList.add("btn-" + event.next.secondaryType);
+                            physicalSecondaryBtnEl.classList.add("btn-" + event.next.pokemon.secondaryType);
 
-                            specialSecondaryBtnEl.querySelector(".badge").innerText = event.next.specialAttack;
+                            specialSecondaryBtnEl.querySelector(".js-stats").innerText = event.next.pokemon.specialAttack;
                             specialSecondaryBtnEl.classList.remove(...types.map((type) => "btn-" + type));
-                            specialSecondaryBtnEl.classList.add("btn-" + event.next.secondaryType);
+                            specialSecondaryBtnEl.classList.add("btn-" + event.next.pokemon.secondaryType);
+
                         } else {
                             physicalSecondaryBtnEl.parentNode.classList.add("d-none");
                         }
+                    }
+
+                    const primaryTypeEffectivenessBadgeEl = document.querySelector(".js-interaction[value='special-primary'] .js-effectiveness");
+                    const secondaryTypeEffectivenessBadgeEl = document.querySelector(".js-interaction[value='special-secondary'] .js-effectiveness");
+
+                    if (event.next.primaryTypeEffectiveness.isDisplayed) {
+                        primaryTypeEffectivenessBadgeEl.innerHTML = "&times;" + event.next.primaryTypeEffectiveness.value;
+                        primaryTypeEffectivenessBadgeEl.classList.remove("bg-secondary", "bg-primary", "bg-danger", "bg-dark");
+                        primaryTypeEffectivenessBadgeEl.classList.add(event.next.primaryTypeEffectiveness.contextClass);
+                        primaryTypeEffectivenessBadgeEl.classList.remove("d-none");
+                    } else {
+                        primaryTypeEffectivenessBadgeEl.classList.add("d-none");
+                    }
+
+                    if (event.next.secondaryTypeEffectiveness.isDisplayed) {
+                        secondaryTypeEffectivenessBadgeEl.innerHTML = "&times;" + event.next.secondaryTypeEffectiveness.value;
+                        secondaryTypeEffectivenessBadgeEl.classList.remove("bg-secondary", "bg-primary", "bg-danger", "bg-dark");
+                        secondaryTypeEffectivenessBadgeEl.classList.add(event.next.secondaryTypeEffectiveness.contextClass);
+                        secondaryTypeEffectivenessBadgeEl.classList.remove("d-none");
+                    } else {
+                        secondaryTypeEffectivenessBadgeEl.classList.add("d-none");
                     }
 
                     processNextEvent(responseData, fnCallback);

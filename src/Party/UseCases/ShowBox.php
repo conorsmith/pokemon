@@ -17,8 +17,6 @@ final class ShowBox
 
     public function run(): PokemonList
     {
-        $party = $this->pokemonRepository->getParty();
-        $dayCare = $this->pokemonRepository->getDayCare();
         $box = $this->pokemonRepository->getBox();
 
         return new PokemonList(
@@ -27,8 +25,6 @@ final class ShowBox
             array_map(
                 fn(Pokemon $pokemon) => (object) [
                     'pokemon'          => PokemonVm::create($pokemon),
-                    'canSendToParty'   => !$party->isFull(),
-                    'canSendToDayCare' => !$dayCare->isFull(),
                 ],
                 $box
             )

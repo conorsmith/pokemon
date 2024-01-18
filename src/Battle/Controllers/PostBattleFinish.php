@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Controllers;
 
+use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
 use ConorSmith\Pokemon\Battle\Domain\LeagueChampion;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
@@ -21,6 +22,7 @@ final class PostBattleFinish
     public function __construct(
         private readonly PlayerRepositoryDb $playerRepository,
         private readonly TrainerRepository $trainerRepository,
+        private readonly BattleRepository $battleRepository,
         private readonly EliteFourChallengeRepository $eliteFourChallengeRepository,
         private readonly LeagueChampionRepository $leagueChampionRepository,
         private readonly StartABattle $startABattleUseCase,
@@ -32,6 +34,7 @@ final class PostBattleFinish
 
         $player = $this->playerRepository->findPlayer();
         $trainer = $this->trainerRepository->findTrainer($trainerBattleId);
+        $battle = $this->battleRepository->find($trainerBattleId);
         $eliteFourChallenge = $this->eliteFourChallengeRepository->findActive();
         $leagueChampion = null;
 
@@ -88,8 +91,10 @@ final class PostBattleFinish
                 throw new LogicException();
             }
             return new RedirectResponse("/{$args['instanceId']}/battle/{$result->id}");
-        } else {
+        } elseif ($battle->isPlayerChallenger) {
             return new RedirectResponse("/{$args['instanceId']}/map");
+        } else {
+            return new RedirectResponse("/{$args['instanceId']}/");
         }
     }
 }
