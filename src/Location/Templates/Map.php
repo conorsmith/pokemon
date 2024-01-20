@@ -15,6 +15,13 @@
                     </span>
                 </button>
             <?php endif ?>
+            <?php if ($giftPokemon) : ?>
+                <button class="navbar-toggler js-gift-pokemon-link" type="button">
+                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
+                        <img src="/assets/items/Bag_Pok%C3%A9_Doll_Sprite.png">
+                    </span>
+                </button>
+            <?php endif ?>
             <?php if ($legendary) : ?>
                 <button class="navbar-toggler js-legendary-link" type="button">
                     <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
@@ -290,7 +297,7 @@
 
     <?php if ($giftPokemon) : ?>
 
-        <div class="card js-legendary-block">
+        <div class="card js-gift-pokemon-block">
             <div class="card-header d-flex justify-content-between">
                 <div><strong>Pokémon</strong></div>
                 <div class="d-flex" style="text-align: center; gap: 4px;">
@@ -416,6 +423,15 @@
         el.addEventListener("click", function (e) {
             e.preventDefault();
             document.querySelector(".js-trainers-block").scrollIntoView({
+                block: 'center'
+            });
+        })
+    });
+
+    document.querySelectorAll(".js-gift-pokemon-link").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(".js-gift-pokemon-block").scrollIntoView({
                 block: 'center'
             });
         })

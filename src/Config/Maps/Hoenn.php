@@ -6,6 +6,7 @@ use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 
 return [
     LocationId::LITTLEROOT_TOWN           => "Hoenn_Littleroot_Town_Map.png",
+    LocationId::PROFESSOR_BIRCHS_LAB      => "Hoenn_Littleroot_Town_Map.png",
     LocationId::ROUTE_101                 => "Hoenn_Route_101_Map.png",
     LocationId::OLDALE_TOWN               => "Hoenn_Oldale_Town_Map.png",
     LocationId::ROUTE_102                 => "Hoenn_Route_102_Map.png",
@@ -55,6 +56,7 @@ return [
     LocationId::MAGMA_HIDEOUT_6F          => "Hoenn_Jagged_Pass_Map.png",
     LocationId::LAVARIDGE_TOWN            => "Hoenn_Lavaridge_Town_Map.png",
     LocationId::LAVARIDGE_GYM             => "Hoenn_Lavaridge_Town_Map.png",
+    LocationId::HOT_SPRINGS               => "Hoenn_Lavaridge_Town_Map.png",
     LocationId::ROUTE_113                 => "Hoenn_Route_113_Map.png",
     LocationId::FALLARBOR_TOWN            => "Hoenn_Fallarbor_Town_Map.png",
     LocationId::ROUTE_114                 => "Hoenn_Route_114_Map.png",
@@ -99,6 +101,7 @@ return [
     LocationId::MOSSDEEP_CITY             => "Hoenn_Mossdeep_City_Map.png",
     LocationId::MOSSDEEP_GYM              => "Hoenn_Mossdeep_City_Map.png",
     LocationId::MOSSDEEP_SPACE_CENTER     => "Hoenn_Mossdeep_City_Map.png",
+    LocationId::STEVENS_HOUSE             => "Hoenn_Mossdeep_City_Map.png",
     LocationId::ROUTE_125                 => "Hoenn_Route_125_Map.png",
     LocationId::SHOAL_CAVE_MAIN_CAVE      => "Hoenn_Shoal_Cave_Map.png",
     LocationId::SHOAL_CAVE_ICE_ROOM       => "Hoenn_Shoal_Cave_Map.png",

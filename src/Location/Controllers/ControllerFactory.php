@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\Controllers;
 
+use ConorSmith\Pokemon\Battle\BattleRepositoryTrainerHasBeenBeatenQuery;
+use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
+use ConorSmith\Pokemon\Battle\BattleRepositoryAreaIsClearedQuery;
 use ConorSmith\Pokemon\Battle\EliteFourChallengeRegionalVictoryQuery;
 use ConorSmith\Pokemon\Battle\LeagueChampionRepositoryPlayerIsLeagueChampionQuery;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
@@ -66,6 +69,13 @@ final class ControllerFactory
                 ),
                 new EliteFourChallengeRegionalVictoryQuery(
                     $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId)
+                ),
+                new BattleRepositoryAreaIsClearedQuery(
+                    $this->repositoryFactory->create(BattleRepository::class, $instanceId),
+                    $this->locationConfigRepository,
+                ),
+                new BattleRepositoryTrainerHasBeenBeatenQuery(
+                    $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                 ),
                 new TemplateEngine(
                     new NotificationRepositoryDbAndSession(

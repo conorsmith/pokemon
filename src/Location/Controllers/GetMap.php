@@ -19,9 +19,11 @@ use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use ConorSmith\Pokemon\SharedKernel\Queries\AreaIsClearedQuery;
 use ConorSmith\Pokemon\SharedKernel\Queries\PlayerIsLeagueChampionQuery;
 use ConorSmith\Pokemon\SharedKernel\Queries\RegionalVictoryQuery;
 use ConorSmith\Pokemon\SharedKernel\Queries\TotalRegisteredPokemonQuery;
+use ConorSmith\Pokemon\SharedKernel\Queries\TrainerHasBeenBeatenQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
 use ConorSmith\Pokemon\TemplateEngine;
@@ -50,6 +52,8 @@ final class GetMap
         private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
         private readonly PlayerIsLeagueChampionQuery $playerIsLeagueChampionQuery,
         private readonly RegionalVictoryQuery $regionalVictoryQuery,
+        private readonly AreaIsClearedQuery $areaIsClearedQuery,
+        private readonly TrainerHasBeenBeatenQuery $trainerHasBeenBeatenQuery,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
@@ -504,6 +508,20 @@ final class GetMap
                 && $obtainedGiftPokemon->isInCooldownWindow()
             ) {
                 $canObtain = false;
+            }
+
+            if ($canObtain) {
+                if (isset($giftPokemonConfigEntry['requirements'])) {
+                    foreach ($giftPokemonConfigEntry['requirements'] as $requirementName => $requirementValue) {
+                        if ($requirementName === "clear") {
+                            $canObtain = $this->areaIsClearedQuery->run($requirementValue);
+                        } elseif ($requirementName === "defeat") {
+                            $canObtain = $this->trainerHasBeenBeatenQuery->run($requirementValue);
+                        } elseif ($requirementName === "victory") {
+                            $canObtain = $this->regionalVictoryQuery->run($requirementValue);
+                        }
+                    }
+                }
             }
 
             if (is_null($obtainedGiftPokemon)) {

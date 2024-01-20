@@ -189,6 +189,7 @@ return [
             Direction::S => LocationId::ROUTE_6,
             LocationId::SAFFRON_GYM,
             LocationId::SILPH_CO_1F,
+            LocationId::FIGHTING_DOJO,
             LocationId::SAFFRON_MAGNET_TRAIN_STATION,
         ],
     ],
@@ -196,6 +197,13 @@ return [
         'id'         => LocationId::SAFFRON_GYM,
         'name'       => "Saffron Gym",
         'type'       => LocationType::GYM,
+        'directions' => [
+            LocationId::SAFFRON_CITY,
+        ],
+    ],
+    [
+        'id'         => LocationId::FIGHTING_DOJO,
+        'name'       => "Fighting Dojo",
         'directions' => [
             LocationId::SAFFRON_CITY,
         ],
@@ -422,6 +430,7 @@ return [
             Direction::W => LocationId::ROUTE_16,
             Direction::E => LocationId::ROUTE_7,
             LocationId::CELADON_GYM,
+            LocationId::CELADON_CONDOMINIUMS,
             LocationId::ROCKET_GAME_CORNER,
         ],
     ],
@@ -429,6 +438,14 @@ return [
         'id'         => LocationId::CELADON_GYM,
         'name'       => "Celadon Gym",
         'type'       => LocationType::GYM,
+        'directions' => [
+            LocationId::CELADON_CITY,
+        ],
+    ],
+    [
+        'id'         => LocationId::CELADON_CONDOMINIUMS,
+        'name'       => "Celadon Condominiums",
+        'type'       => LocationType::TOWER,
         'directions' => [
             LocationId::CELADON_CITY,
         ],

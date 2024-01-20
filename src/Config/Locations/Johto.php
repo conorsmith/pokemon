@@ -126,6 +126,14 @@ return [
         'directions' => [
             Direction::E => LocationId::ROUTE_27,
             Direction::W => LocationId::ROUTE_29,
+            LocationId::PROFESSOR_ELMS_LAB,
+        ],
+    ],
+    [
+        'id'         => LocationId::PROFESSOR_ELMS_LAB,
+        'name'       => "Professor Elm's Lab",
+        'directions' => [
+            LocationId::NEW_BARK_TOWN,
         ],
     ],
     [
@@ -393,7 +401,23 @@ return [
             LocationId::GOLDENROD_RADIO_TOWER_1F,
             LocationId::GOLDENROD_TUNNEL_B1F,
             LocationId::GOLDENROD_MAGNET_TRAIN_STATION,
+            LocationId::GOLDENROD_BILLS_HOUSE,
+            LocationId::GOLDENROD_GAME_CORNER,
             LocationId::GOLDENROD_GYM,
+        ],
+    ],
+    [
+        'id'         => LocationId::GOLDENROD_BILLS_HOUSE,
+        'name'       => "Bill's House",
+        'directions' => [
+            LocationId::GOLDENROD_CITY,
+        ],
+    ],
+    [
+        'id'         => LocationId::GOLDENROD_GAME_CORNER,
+        'name'       => "Game Corner",
+        'directions' => [
+            LocationId::GOLDENROD_CITY,
         ],
     ],
     [

@@ -13,6 +13,14 @@ return [
         'type'       => LocationType::CITY,
         'directions' => [
             Direction::N => LocationId::ROUTE_101,
+            LocationId::PROFESSOR_BIRCHS_LAB,
+        ],
+    ],
+    [
+        'id'         => LocationId::PROFESSOR_BIRCHS_LAB,
+        'name'       => "Professor Birch's Lab",
+        'directions' => [
+            LocationId::LITTLEROOT_TOWN,
         ],
     ],
     [
@@ -473,12 +481,20 @@ return [
             Direction::N => LocationId::JAGGED_PASS,
             Direction::E => LocationId::ROUTE_112,
             LocationId::LAVARIDGE_GYM,
+            LocationId::HOT_SPRINGS,
         ],
     ],
     [
         'id'         => LocationId::LAVARIDGE_GYM,
         'name'       => "Lavaridge Gym",
         'type'       => LocationType::GYM,
+        'directions' => [
+            LocationId::LAVARIDGE_TOWN,
+        ],
+    ],
+    [
+        'id'         => LocationId::HOT_SPRINGS,
+        'name'       => "Hot Springs",
         'directions' => [
             LocationId::LAVARIDGE_TOWN,
         ],
@@ -909,6 +925,7 @@ return [
             Direction::W => LocationId::ROUTE_124,
             Direction::S => LocationId::ROUTE_127,
             LocationId::MOSSDEEP_SPACE_CENTER,
+            LocationId::STEVENS_HOUSE,
             LocationId::MOSSDEEP_GYM,
         ],
     ],
@@ -916,6 +933,13 @@ return [
         'id'         => LocationId::MOSSDEEP_SPACE_CENTER,
         'name'       => "Mossdeep Space Center",
         'type'       => LocationType::TOWER,
+        'directions' => [
+            LocationId::MOSSDEEP_CITY,
+        ],
+    ],
+    [
+        'id'         => LocationId::STEVENS_HOUSE,
+        'name'       => "Steven's House",
         'directions' => [
             LocationId::MOSSDEEP_CITY,
         ],

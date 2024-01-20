@@ -733,10 +733,6 @@ return [
                 'weight' => 5,
                 'levels' => [32, 35],
             ],
-            PokedexNo::PORYGON    => [
-                'weight' => 5,
-                'levels' => [30, 32],
-            ],
         ],
     ],
     LocationId::ROCK_TUNNEL_1F         => [
@@ -761,10 +757,6 @@ return [
                 'weight' => 5,
                 'levels' => [13, 15],
             ],
-            PokedexNo::HITMONCHAN => [
-                'weight' => 1,
-                'levels' => 20,
-            ],
         ],
     ],
     LocationId::ROCK_TUNNEL_B1F        => [
@@ -788,10 +780,6 @@ return [
             PokedexNo::ONIX      => [
                 'weight' => 10,
                 'levels' => [13, 17],
-            ],
-            PokedexNo::HITMONLEE => [
-                'weight' => 1,
-                'levels' => 20,
             ],
         ],
         EncounterType::ROCK_SMASH => [
@@ -1556,10 +1544,6 @@ return [
             PokedexNo::DODUO    => [
                 'weight' => 35,
                 'levels' => [24, 28],
-            ],
-            PokedexNo::EEVEE    => [
-                'weight' => 5,
-                'levels' => [22, 25],
             ],
         ],
     ],
@@ -3666,10 +3650,6 @@ return [
             PokedexNo::TENTACRUEL => [
                 'weight' => 4,
                 'levels' => [35, 45],
-            ],
-            PokedexNo::LAPRAS     => [
-                'weight' => 1,
-                'levels' => [30, 45],
             ],
         ],
         EncounterType::FISHING => [

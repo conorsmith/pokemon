@@ -381,27 +381,4 @@ class TrainerRepository
             ]);
         }
     }
-
-    private static function generateIvs(string $trainerClass): StatsIv
-    {
-        return new StatsIv(
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-            self::generateIv($trainerClass),
-        );
-    }
-
-    private static function generateIv(string $trainerClass): int
-    {
-        $weightedDistribution = TrainerClass::getWeightedDistributionForIvs($trainerClass);
-
-        if (is_null($weightedDistribution)) {
-            return RandomNumberGenerator::generateInRange(0, 31);
-        }
-
-        return RandomNumberGenerator::generateFromWeightedTable($weightedDistribution);
-    }
 }

@@ -28,6 +28,7 @@ final class LocationId
     public const ROUTE_5 = "2ae61913-311d-4b24-87dd-934586badb5c";
     public const SAFFRON_CITY = "96ab9b1c-dcd5-47f8-97b0-13dd864ae369";
     public const SAFFRON_GYM = "9a42886a-1440-4df3-a8b8-0b51706831b6";
+    public const FIGHTING_DOJO = "9d2a8a48-9cfc-4ec3-925b-990b13715d08";
     public const ROUTE_6 = "8ceee5a8-54dd-4c63-9629-40bff24f3b2d";
     public const VERMILLION_CITY = "41b38040-2b0b-4a4e-9333-67fc7a5bb003";
     public const VERMILLION_GYM = "7551e662-cd6b-4010-934b-6abfa82c4b4f";
@@ -40,6 +41,7 @@ final class LocationId
     public const ROUTE_7 = "85776d72-ece8-451f-a8b8-5b1f9c2b349b";
     public const CELADON_CITY = "57564cf4-9ac8-4b24-af13-eb158d969bb4";
     public const CELADON_GYM = "acbaddd5-3ccf-4e97-a4df-b0d512c1884b";
+    public const CELADON_CONDOMINIUMS = "678c02a8-5848-4c53-b46b-7e1e5892f7f1";
     public const ROCKET_GAME_CORNER = "14315b53-fd18-4d83-81c8-591f77ba2a17";
     public const TEAM_ROCKET_HIDEOUT = "3a4fb0ff-5464-4a7d-b02b-f0d204bd8959";
     public const TEAM_ROCKET_HIDEOUT_B1F = "962d8e48-81a2-4ae2-9385-a2ac4fcbfaa1";
@@ -199,6 +201,7 @@ final class LocationId
     public const MT_SILVER_UPPER_MOUNTAINSIDE = "03b63f0e-8d04-464b-9538-d1e6957c5355";
     public const MT_SILVER_SUMMIT = "effbbaae-836b-4b6f-97d4-a5a8be675e09";
     public const NEW_BARK_TOWN = "da7816a2-d476-4968-b60e-c5428b970131";
+    public const PROFESSOR_ELMS_LAB = "265eed95-5ad2-4d61-a64f-a66842859326";
     public const ROUTE_29 = "4678a84c-4e6d-4030-9e2e-2c5a7436f1f7";
     public const CHERRYGROVE_CITY = "d3709b73-1230-40da-845e-5ea9f50775f2";
     public const ROUTE_30 = "8737ff23-d092-407c-8a98-9f1fd7d93910";
@@ -230,6 +233,8 @@ final class LocationId
     public const ILEX_FOREST = "8074c97b-e20b-420b-bf7e-805698ddfd0f";
     public const ROUTE_34 = "60e23471-1179-41a2-b6d9-50cef3f357f6";
     public const GOLDENROD_CITY = "de72d39c-94ab-472b-a695-ac693067a919";
+    public const GOLDENROD_BILLS_HOUSE = "b3b16055-cf92-4fac-a28e-3c5603c39528";
+    public const GOLDENROD_GAME_CORNER = "4c4989dd-6912-41d1-a36a-4a578a8da8c9";
     public const GOLDENROD_TUNNEL = "88ff330a-9d52-4aed-8e7b-41e395971804";
     public const GOLDENROD_TUNNEL_B1F = "e3f8b50b-f883-4c35-aada-1f17ce5ddf23";
     public const GOLDENROD_TUNNEL_B2F = "4146da56-9681-4de7-9dc9-d2b5f7ec53b4";
@@ -334,6 +339,7 @@ final class LocationId
 
     // HOENN
     public const LITTLEROOT_TOWN = "42ae95fc-923d-4d5e-a7f4-017dc0995842";
+    public const PROFESSOR_BIRCHS_LAB = "25022c85-de96-426f-9e38-1f4de9658769";
     public const ROUTE_101 = "bbdbe8bb-5cc6-447e-b31e-a4afd079bc01";
     public const OLDALE_TOWN = "7fa9b878-a226-478f-a5c8-39652f3cd23a";
     public const ROUTE_102 = "05d968e4-0972-45c7-8cc6-114d0a0c673a";
@@ -386,6 +392,7 @@ final class LocationId
     public const MAGMA_HIDEOUT_6F = "1c0d0e39-3565-4203-b1ae-19fd014280fb";
     public const LAVARIDGE_TOWN = "be84fcb3-a858-49ed-9915-a680daec2cae";
     public const LAVARIDGE_GYM = "7d2d886d-9af8-41d0-8373-a6a6ddd4affb";
+    public const HOT_SPRINGS = "ede92219-0358-4ebd-a1ca-203c00241cc2";
     public const ROUTE_113 = "616b26d0-cf3a-45dd-972b-f5e3a6ff57cc";
     public const FALLARBOR_TOWN = "51719fe1-a3e5-4569-b8c1-95c9aaf385b7";
     public const ROUTE_114 = "16813710-8a49-47e4-b584-03a9608c031f";
@@ -434,6 +441,7 @@ final class LocationId
     public const ROUTE_124 = "ea7754dc-334e-4eeb-9afe-a78194e1c55d";
     public const MOSSDEEP_CITY = "4ebeddf0-1b0c-4295-b082-0f382cd90ea6";
     public const MOSSDEEP_SPACE_CENTER = "5cf6e0ca-45c4-4474-8f79-c79e0c4e33cc";
+    public const STEVENS_HOUSE = "bbc4bdab-035f-4aae-ab88-11da55fbae6d";
     public const MOSSDEEP_GYM = "47d581d1-5dba-49f5-b87d-27c37167f372";
     public const ROUTE_125 = "8fdb6cde-8b0a-4de4-a4b8-ad3d1317d311";
     public const SHOAL_CAVE = "83c06e92-1706-4f76-8875-00bd952cc841";

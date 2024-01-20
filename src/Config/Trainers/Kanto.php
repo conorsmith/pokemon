@@ -4230,6 +4230,103 @@ return [
             ],
         ],
     ],
+    LocationId::FIGHTING_DOJO           => [
+        [
+            'id'     => "8393519b-1e12-4c44-999a-7163642cb857",
+            'class'  => TrainerClass::BLACK_BELT,
+            'gender' => Gender::MALE,
+            'name'   => "Hideki",
+            'party'  => [
+                [
+                    'id'    => PokedexNo::MACHOP,
+                    'sex'   => Sex::MALE,
+                    'level' => 32,
+                ],
+                [
+                    'id'    => PokedexNo::MACHOKE,
+                    'sex'   => Sex::MALE,
+                    'level' => 32,
+                ],
+            ],
+        ],
+        [
+            'id'     => "01e307c9-4394-4360-9a23-18af1cf02834",
+            'class'  => TrainerClass::BLACK_BELT,
+            'gender' => Gender::MALE,
+            'name'   => "Hitoshi",
+            'party'  => [
+                [
+                    'id'    => PokedexNo::MACHOP,
+                    'sex'   => Sex::MALE,
+                    'level' => 31,
+                ],
+                [
+                    'id'    => PokedexNo::MANKEY,
+                    'sex'   => Sex::MALE,
+                    'level' => 31,
+                ],
+                [
+                    'id'    => PokedexNo::PRIMEAPE,
+                    'sex'   => Sex::MALE,
+                    'level' => 31,
+                ],
+            ],
+        ],
+        [
+            'id'     => "4b983db6-4ddb-4ccd-b53f-628ecad8e959",
+            'class'  => TrainerClass::BLACK_BELT,
+            'gender' => Gender::MALE,
+            'name'   => "Mike",
+            'party'  => [
+                [
+                    'id'    => PokedexNo::MANKEY,
+                    'sex'   => Sex::MALE,
+                    'level' => 31,
+                ],
+                [
+                    'id'    => PokedexNo::MANKEY,
+                    'sex'   => Sex::MALE,
+                    'level' => 31,
+                ],
+                [
+                    'id'    => PokedexNo::PRIMEAPE,
+                    'sex'   => Sex::MALE,
+                    'level' => 31,
+                ],
+            ],
+        ],
+        [
+            'id'     => "81eba38b-39e2-4874-9256-76afda8a9968",
+            'class'  => TrainerClass::BLACK_BELT,
+            'gender' => Gender::MALE,
+            'name'   => "Aaron",
+            'party'  => [
+                [
+                    'id'    => PokedexNo::PRIMEAPE,
+                    'sex'   => Sex::MALE,
+                    'level' => 36,
+                ],
+            ],
+        ],
+        [
+            'id'     => "acf01a5d-06e8-486b-8b4c-df46395b6d03",
+            'class'  => TrainerClass::BLACK_BELT,
+            'gender' => Gender::MALE,
+            'name'   => "Koichi",
+            'party'  => [
+                [
+                    'id'    => PokedexNo::HITMONLEE,
+                    'sex'   => Sex::MALE,
+                    'level' => 37,
+                ],
+                [
+                    'id'    => PokedexNo::HITMONCHAN,
+                    'sex'   => Sex::MALE,
+                    'level' => 37,
+                ],
+            ],
+        ],
+    ],
     LocationId::SILPH_CO_2F             => [
         [
             'id'     => "0c2300d5-94b5-4ff6-ab2c-4b2d8f32712e",
