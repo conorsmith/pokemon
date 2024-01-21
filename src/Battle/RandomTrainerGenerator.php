@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle;
 
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
-use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\StatsFactory;
-use ConorSmith\Pokemon\Battle\Domain\StatsIv;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Party\Domain\EggGroup;
 use ConorSmith\Pokemon\PokedexConfigRepository;
@@ -181,15 +179,15 @@ final class RandomTrainerGenerator
         int $opponentHighestLevel,
     ): array {
 
-        $anchorLevel = RandomNumberGenerator::generateInRange(
-            max($opponentHighestLevel - 10, 1),
+        $anchorLevel = self::generateAnchorLevel(
+            max($opponentHighestLevel - 25, 1),
             $opponentHighestLevel + 5,
         );
 
         $party = [];
 
         $partySize = RandomNumberGenerator::generateFromWeightedTable([
-            4 => 1,
+            4 => 2,
             5 => 4,
             6 => 1,
         ]);
@@ -223,13 +221,50 @@ final class RandomTrainerGenerator
         return $party;
     }
 
+    private function generateAnchorLevel(int $min, int $max): int
+    {
+        if ($min === $max) {
+            return $max;
+        }
+
+        $mid = 0.5;
+        $stdDeviation = 0.25;
+
+        $n = self::floatBell($min, $max, $mid, $stdDeviation);
+
+        return intval(floor((($n - $min) * ($max - $min + 1) / ($max - $min)) + $min));
+    }
+
+    private static function floatBell($min, $max, $mid, $stdDeviation)
+    {
+        if ($min === $max) {
+            return $max;
+        }
+
+        $d = (float) mt_getrandmax();
+        $r1 = (float) mt_rand() / $d;
+        $r2 = (float) mt_rand() / $d;
+
+        $gaussianNumber = sqrt(-2 * log($r1)) * cos(2 * M_PI * $r2);
+
+        $mean = ($max + $min) * $mid;
+
+        $randomNumber = ($gaussianNumber * $stdDeviation) + $mean;
+
+        if ($randomNumber < $min || $randomNumber > $max) {
+            $randomNumber = self::floatBell($min, $max, $mid, $stdDeviation);
+        }
+
+        return $randomNumber;
+    }
+
     private function generatePokemon(string $trainerClass, int $anchorLevel): Pokemon
     {
         $pokedexNumber = $this->generatePokedexNumber($trainerClass);
 
         $level = RandomNumberGenerator::generateInRange(
-            intval(ceil($anchorLevel * 0.9)),
-            intval(floor($anchorLevel * 1.1)),
+            $anchorLevel - 3,
+            $anchorLevel + 3,
         );
 
         $pokedexEntry = $this->pokedexConfigRepository->find($pokedexNumber);

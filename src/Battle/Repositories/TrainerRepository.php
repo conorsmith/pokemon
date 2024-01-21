@@ -204,7 +204,11 @@ class TrainerRepository
                 throw new RuntimeException("Persisted Pokémon doesn't match configuration for Battle ID '{$trainerId}'");
             }
 
-            RandomNumberGenerator::setSeed(crc32($trainerId));
+            $partyIvs = StatsFactory::generatePartyIvsForTrainer(
+                $trainerId,
+                $trainerConfig['class'],
+                count($trainerConfig['party']),
+            );
 
             foreach ($trainerConfig['party'] as $i => $pokemonConfig) {
 
@@ -230,7 +234,7 @@ class TrainerRepository
                     StatsFactory::createStats(
                         $level,
                         $pokedexEntry,
-                        StatsFactory::generateIvsForTrainerClass($trainerConfig['class'])
+                        $partyIvs[$i],
                     ),
                     0,
                     false,
@@ -255,9 +259,6 @@ class TrainerRepository
 
                 $party[] = $pokemon;
             }
-
-            RandomNumberGenerator::unsetSeed();
-
         }
 
         return new Trainer(

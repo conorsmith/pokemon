@@ -38,6 +38,16 @@ final class Challenge
 {
     public function __invoke(array $args): void
     {
+        $isBenchmark = isset($args[0]) && $args[0] === "--benchmark";
+        $isDryRun = isset($args[0]) && $args[0] === "--dry-run";
+
+        if ($isBenchmark) {
+            $tally = [
+                'runs' => 0,
+                'challenges' => 0,
+            ];
+        }
+
         echo "Generating challenges" . PHP_EOL;
         echo PHP_EOL;
 
@@ -56,6 +66,8 @@ final class Challenge
 
         /** @var InstanceId $instanceId */
         foreach ($instanceIds as $instanceId) {
+
+            benchmarkRun:
 
             echo "Generating challenge for instance {$instanceId->value}" . PHP_EOL;
             echo PHP_EOL;
@@ -97,14 +109,39 @@ final class Challenge
                 )
             );
 
-            $result = $generateAChallenge();
+            $result = $generateAChallenge($isDryRun, $isBenchmark);
 
             if (!$result->wasGenerated) {
                 echo "No challenge generated!" . PHP_EOL;
                 echo PHP_EOL;
-                return;
             } else {
                 echo "Challenger for {$result->getRegionId()->value} championship" . PHP_EOL;
+                echo PHP_EOL;
+            }
+
+            if ($isBenchmark) {
+                $tally['runs']++;
+                $tally['challenges'] += $result->wasGenerated ? 1 : 0;
+
+                if ($tally['runs'] < 1000) {
+                    goto benchmarkRun;
+                } else {
+                    echo "Benchmark complete" . PHP_EOL;
+                    echo "Runs:       {$tally['runs']}" . PHP_EOL;
+                    echo "Challenges: {$tally['challenges']}" . PHP_EOL;
+                    echo PHP_EOL;
+                    continue;
+                }
+            }
+
+            if ($isDryRun) {
+                echo "Dry run complete" . PHP_EOL;
+                echo PHP_EOL;
+                continue;
+            }
+
+            if (!$result->wasGenerated) {
+                continue;
             }
 
             $challengeRegionName = match ($result->getRegionId()) {

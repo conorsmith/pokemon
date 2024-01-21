@@ -32,13 +32,17 @@ final class GenerateAChallenge
         private readonly ViewModelFactory $viewModelFactory,
     ) {}
 
-    public function __invoke(): ResultOfGeneratingAChallenge
+    public function __invoke(bool $dryRun, bool $isBenchmark): ResultOfGeneratingAChallenge
     {
+        if ($isBenchmark) {
+            self::disableOutput();
+        }
+
         $eliteFourChallenge = $this->eliteFourChallengeRepository->findActive();
 
         if (!is_null($eliteFourChallenge)) {
-            echo "There is an existing Elite Four Challenge in progress" . PHP_EOL;
-            echo PHP_EOL;
+            self::output("There is an existing Elite Four Challenge in progress" . PHP_EOL);
+            self::output(PHP_EOL);
             return ResultOfGeneratingAChallenge::notGenerated();
         }
 
@@ -53,15 +57,17 @@ final class GenerateAChallenge
 
         foreach ($regionIds as $regionId) {
 
-            echo "## {$regionId->name}" . PHP_EOL;
-            echo PHP_EOL;
+            self::output("## {$regionId->name}" . PHP_EOL);
+            self::output(PHP_EOL);
 
-            $leagueChampion = $this->leagueChampionRepository->find($regionId);
+            if (!$isBenchmark) {
+                $leagueChampion = $this->leagueChampionRepository->find($regionId);
 
-            if (!$leagueChampion->isPlayer()) {
-                echo "The player is not the league champion" . PHP_EOL;
-                echo PHP_EOL;
-                continue;
+                if (!$leagueChampion->isPlayer()) {
+                    self::output("The player is not the league champion" . PHP_EOL);
+                    self::output(PHP_EOL);
+                    continue;
+                }
             }
 
             $eliteFourLeader = $this->trainerRepository->findTrainerByTrainerId(
@@ -78,16 +84,16 @@ final class GenerateAChallenge
                 }
             );
 
-            echo TrainerClass::getLabel($randomTrainer->class) . " {$randomTrainer->name} challenges the Elite Four [{$randomTrainer->id}]" . PHP_EOL;
-            echo PHP_EOL;
+            self::output(TrainerClass::getLabel($randomTrainer->class) . " {$randomTrainer->name} challenges the Elite Four [{$randomTrainer->id}]" . PHP_EOL);
+            self::output(PHP_EOL);
 
             /** @var Pokemon $pokemon */
             foreach ($randomTrainer->party as $pokemon) {
                 $pokemonVm = $this->viewModelFactory->createPokemonInBattle($pokemon);
-                echo "* {$pokemonVm->name} [Lv {$pokemonVm->level}]" . PHP_EOL;
+                self::output("* {$pokemonVm->name} [Lv {$pokemonVm->level}]" . PHP_EOL);
             }
 
-            echo PHP_EOL;
+            self::output(PHP_EOL);
 
             $eliteFourChallenge = $this->eliteFourChallengeRepository->createEliteFourChallenge(
                 Uuid::uuid4()->toString(),
@@ -113,17 +119,17 @@ final class GenerateAChallenge
                     $eliteFourChallenge->getMemberIdForCurrentStage(),
                 );
 
-                echo "### {$eliteFourMember->name}" . PHP_EOL;
-                echo PHP_EOL;
+                self::output("### {$eliteFourMember->name}" . PHP_EOL);
+                self::output(PHP_EOL);
 
-                $result = $this->simulateABattle->run($randomTrainer, $eliteFourMember);
+                $result = $this->simulateABattle->run($randomTrainer, $eliteFourMember, $isBenchmark);
 
                 if ($result->wasDraw) {
-                    echo "It's a draw!" . PHP_EOL;
-                    echo PHP_EOL;
+                    self::output("It's a draw!" . PHP_EOL);
+                    self::output(PHP_EOL);
                 } else {
-                    echo "The winner is " . TrainerClass::getLabel($result->getWinningTrainer()->class) . " " . $result->getWinningTrainer()->name . PHP_EOL;
-                    echo PHP_EOL;
+                    self::output("The winner is " . TrainerClass::getLabel($result->getWinningTrainer()->class) . " " . $result->getWinningTrainer()->name . PHP_EOL);
+                    self::output(PHP_EOL);
                 }
 
                 if ($result->wasDraw || $result->getWinningTrainer()->id !== $randomTrainer->id) {
@@ -140,12 +146,27 @@ final class GenerateAChallenge
 
             if ($eliteFourChallenge->isInFinalStage()) {
 
-                $bag = $this->bagRepository->find();
-                $bag = $bag->add(ItemId::CHALLENGE_TOKEN);
-                $this->bagRepository->save($bag);
+                if (!$dryRun && !$isBenchmark) {
 
-                $this->trainerRepository->saveTrainer($randomTrainer);
-                $this->eliteFourChallengeRepository->save($eliteFourChallenge);
+                    $bag = $this->bagRepository->find();
+                    $bag = $bag->add(ItemId::CHALLENGE_TOKEN);
+                    $this->bagRepository->save($bag);
+
+                    $this->trainerRepository->saveTrainer($randomTrainer);
+                    $this->eliteFourChallengeRepository->save($eliteFourChallenge);
+
+                }
+
+                if ($isBenchmark) {
+                    echo TrainerClass::getLabel($randomTrainer->class) . " {$randomTrainer->name} challenges the Elite Four [{$randomTrainer->id}]" . PHP_EOL;
+                    echo PHP_EOL;
+
+                    /** @var Pokemon $pokemon */
+                    foreach ($randomTrainer->party as $pokemon) {
+                        $pokemonVm = $this->viewModelFactory->createPokemonInBattle($pokemon);
+                        echo "* {$pokemonVm->name} [Lv {$pokemonVm->level}]" . PHP_EOL;
+                    }
+                }
 
                 return ResultOfGeneratingAChallenge::generated(
                     $regionId,
@@ -155,6 +176,22 @@ final class GenerateAChallenge
         }
 
         return ResultOfGeneratingAChallenge::notGenerated();
+    }
+
+    private static $isOutputDisabled = false;
+
+    private static function disableOutput(): void
+    {
+        self::$isOutputDisabled = true;
+    }
+
+    private static function output(string $message): void
+    {
+        if (self::$isOutputDisabled) {
+            return;
+        }
+
+        echo $message;
     }
 
     private static function findEliteFourConfig(RegionId $region): ?array

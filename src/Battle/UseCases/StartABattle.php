@@ -51,6 +51,7 @@ final class StartABattle
         }
 
         $trainer = $trainer->startBattle();
+        $trainer = $trainer->reviveParty();
         $player = $player->startBattle($battle);
         $player = $player->reviveParty();
 

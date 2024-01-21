@@ -35,6 +35,21 @@ final class StatsFactory
         );
     }
 
+    public static function generatePartyIvsForTrainer(string $trainerId, string $trainerClass, int $partySize): array
+    {
+        $partyIvs = [];
+
+        RandomNumberGenerator::setSeed(crc32($trainerId));
+
+        for ($i = 0; $i < $partySize; $i++) {
+            $partyIvs[] = self::generateIvsForTrainerClass($trainerClass);
+        }
+
+        RandomNumberGenerator::unsetSeed();
+
+        return $partyIvs;
+    }
+
     public static function generateIvsForTrainerClass(string $trainerClass): StatsIv
     {
         return new StatsIv(

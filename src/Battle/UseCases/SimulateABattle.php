@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Battle\UseCases;
 
 use ConorSmith\Pokemon\Battle\Domain\Attack;
+use ConorSmith\Pokemon\Battle\Domain\AttackOutcome;
 use ConorSmith\Pokemon\Battle\Domain\Round;
 use ConorSmith\Pokemon\Battle\Domain\Trainer;
 use ConorSmith\Pokemon\Battle\EventFactory;
@@ -18,7 +19,7 @@ final class SimulateABattle
         private readonly EventFactory $eventFactory,
     ) {}
 
-    public function run(Trainer $trainerA, Trainer $trainerB): ResultOfSimulatingABattle
+    public function run(Trainer $trainerA, Trainer $trainerB, bool $disableOutput = false): ResultOfSimulatingABattle
     {
         $trainerA = $trainerA->startBattle();
         $trainerB = $trainerB->startBattle();
@@ -38,17 +39,44 @@ final class SimulateABattle
                 && $trainerBPokemon->primaryType === PokemonType::NORMAL
                 && $trainerBPokemon->secondaryType === null)
             ) {
-                throw new RuntimeException("Halting execution to avoid infinite loop from stalemate");
+                $damageTaken = min(
+                    $trainerAPokemon->remainingHp,
+                    1000,
+                );
+                $trainerAPokemon->hitFor($damageTaken);
+                $round = new Round(
+                    true,
+                    $trainerAPokemon,
+                    $trainerBPokemon,
+                    new AttackOutcome(
+                        true,
+                        false,
+                        false,
+                        true,
+                        false,
+                        0
+                    ),
+                    new AttackOutcome(
+                        true,
+                        false,
+                        false,
+                        false,
+                        false,
+                        $damageTaken
+                    ),
+                );
+            } else {
+                $round = Round::execute(
+                    $trainerAPokemon,
+                    $trainerBPokemon,
+                    Attack::strongest($trainerAPokemon),
+                    Attack::strongest($trainerBPokemon),
+                );
             }
 
-            $round = Round::execute(
-                $trainerAPokemon,
-                $trainerBPokemon,
-                Attack::strongest($trainerAPokemon),
-                Attack::strongest($trainerBPokemon),
-            );
-
-            $this->outputRoundEvents($round, $trainerA, $trainerB);
+            if (!$disableOutput) {
+                $this->outputRoundEvents($round, $trainerA, $trainerB);
+            }
         }
 
         $trainerA = $trainerA->endBattle();
