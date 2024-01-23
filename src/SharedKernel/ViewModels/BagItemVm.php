@@ -13,5 +13,7 @@ final class BagItemVm
         public readonly string $amount,
         public readonly bool $hasUse,
         public readonly BagItemUseActionVm $useAction,
+        public readonly bool $canGive,
+        public readonly BagItemGiveActionVm $giveAction,
     ) {}
 }

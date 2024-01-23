@@ -70,6 +70,7 @@ use ConorSmith\Pokemon\Party\Controllers\GetPartyEggs;
 use ConorSmith\Pokemon\Party\Controllers\GetPartyItemUse;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemon;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemonBreed;
+use ConorSmith\Pokemon\Party\Controllers\GetPokemonItemGive;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemonItemUse;
 use ConorSmith\Pokemon\Party\Controllers\PostObtain;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyItemUse;
@@ -154,6 +155,7 @@ final class ControllerFactory
         $r->get("/party/combinations", GetPartyCombinations::class);
         $r->get("/party/member/{id}", GetPokemon::class);
         $r->get("/party/member/{id}/item-use", GetPokemonItemUse::class);
+        $r->get("/party/member/{id}/item-give", GetPokemonItemGive::class);
         $r->get("/party/member/{id}/breed", GetPokemonBreed::class);
         $r->post("/party/member/{id}/breed", PostPokemonBreed::class);
         $r->get("/encounter/{id}", GetEncounter::class);
@@ -235,6 +237,28 @@ final class ControllerFactory
                             $this->db,
                             $instanceId,
                         ),
+                        new FoodDiaryHabitStreakQuery(
+                            $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
+                        ),
+                        new LocationRepositoryCurrentLocationQuery(
+                            new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
+                                $this->db,
+                                $this->repositoryFactory->create(RegionRepository::class, $instanceId),
+                                new LocationConfigRepository(),
+                                $instanceId,
+                            ),
+                        ),
+                        new AddNewPokemon(
+                            $this->db,
+                            new RegisterNewPokemonCommand(
+                                $this->db,
+                                $instanceId,
+                            ),
+                            new PokedexConfigRepository(),
+                            new LocationConfigRepository(),
+                            $instanceId,
+                        ),
+                        new PokedexConfigRepository(),
                         $instanceId,
                     ),
                     new PokedexConfigRepository(),
@@ -396,6 +420,12 @@ final class ControllerFactory
                 $this->createTemplateEngine($instanceId),
             ),
             GetPokemonItemUse::class             => new GetPokemonItemUse(
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                new ItemConfigRepository(),
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetPokemonItemGive::class             => new GetPokemonItemGive(
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 new ItemConfigRepository(),
@@ -579,10 +609,35 @@ final class ControllerFactory
                         $this->db,
                         $instanceId,
                     ),
+                    new FoodDiaryHabitStreakQuery(
+                        $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
+                    ),
+                    new LocationRepositoryCurrentLocationQuery(
+                        new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
+                            $this->db,
+                            $this->repositoryFactory->create(RegionRepository::class, $instanceId),
+                            new LocationConfigRepository(),
+                            $instanceId,
+                        ),
+                    ),
+                    new AddNewPokemon(
+                        $this->db,
+                        new RegisterNewPokemonCommand(
+                            $this->db,
+                            $instanceId,
+                        ),
+                        new PokedexConfigRepository(),
+                        new LocationConfigRepository(),
+                        $instanceId,
+                    ),
+                    new PokedexConfigRepository(),
                     $instanceId,
                 ),
                 new ItemConfigRepository(),
                 $this->pokedexConfigRepository,
+                new TotalRegisteredPokemonQuery(
+                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                ),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostChallengeEliteFour::class        => new PostChallengeEliteFour(

@@ -16,6 +16,7 @@ final class Evolution
         private readonly bool $minimumFriendship,
         private readonly ?string $specificTime,
         private readonly ?string $stats,
+        private readonly bool $randomly,
     ) {}
 
     public function isTriggered(Pokemon $pokemon, int $level): bool
@@ -66,5 +67,10 @@ final class Evolution
             fn(bool $requirement, bool $carry) => $requirement && $carry,
             true
         );
+    }
+
+    public function isRandom(): bool
+    {
+        return $this->randomly;
     }
 }

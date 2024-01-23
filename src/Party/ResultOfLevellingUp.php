@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Party;
 
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
+
 final class ResultOfLevellingUp
 {
     public static function beyondLevelLimit(int $levelLimit): self
@@ -14,12 +16,24 @@ final class ResultOfLevellingUp
         );
     }
 
-    public static function levelledUpAndEvolved(int $newLevel, string $newPokedexNumber): self
+    public static function nincadaEvolvedIntoNinjask(int $newLevel, bool $newPokedexEntry): self
+    {
+        return new self(
+            newLevel: $newLevel,
+            evolved: true,
+            newPokedexNumber: PokedexNo::NINJASK,
+            newPokedexEntry: $newPokedexEntry,
+            isNincadaEvolution: true,
+        );
+    }
+
+    public static function levelledUpAndEvolved(int $newLevel, string $newPokedexNumber, bool $newPokedexEntry): self
     {
         return new self(
             newLevel: $newLevel,
             evolved: true,
             newPokedexNumber: $newPokedexNumber,
+            newPokedexEntry: $newPokedexEntry,
         );
     }
 
@@ -36,5 +50,7 @@ final class ResultOfLevellingUp
         public readonly ?int $levelLimit = null,
         public readonly bool $evolved = false,
         public readonly ?string $newPokedexNumber = null,
+        public readonly bool $newPokedexEntry = false,
+        public readonly bool $isNincadaEvolution = false,
     ) {}
 }

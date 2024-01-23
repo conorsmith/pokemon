@@ -74,6 +74,48 @@ return [
                 'levels' => 40,
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
     ],
     LocationId::ROUTE_27                      => [
         EncounterType::WALKING => [
@@ -179,7 +221,7 @@ return [
                 'weight' => 65,
                 'levels' => 10,
             ],
-        ]
+        ],
     ],
     LocationId::TOHJO_FALLS                   => [
         EncounterType::WALKING => [
@@ -618,6 +660,40 @@ return [
                 'levels' => [2, 4],
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::SPEAROW => [
+                'weight' => 80,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => 10,
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::AIPOM => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
     ],
     LocationId::CHERRYGROVE_CITY              => [
         EncounterType::SURFING => [
@@ -712,6 +788,40 @@ return [
                 'levels' => 10,
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::SPEAROW => [
+                'weight' => 80,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => 10,
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::AIPOM => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
     ],
     LocationId::ROUTE_31                      => [
         EncounterType::WALKING => [
@@ -773,6 +883,40 @@ return [
             ],
             PokedexNo::MAGIKARP => [
                 'weight' => 165,
+                'levels' => 10,
+            ],
+        ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::SPEAROW => [
+                'weight' => 80,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => 10,
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::AIPOM => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 30,
                 'levels' => 10,
             ],
         ],
@@ -970,6 +1114,36 @@ return [
             PokedexNo::QWILFISH  => [
                 'weight' => 15,
                 'levels' => 20,
+            ],
+        ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::SPEAROW => [
+                'weight' => 80,
+                'levels' => 10,
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::AIPOM => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 30,
+                'levels' => 10,
             ],
         ],
     ],
@@ -1340,6 +1514,76 @@ return [
                 'levels' => [6, 8],
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::SPEAROW => [
+                'weight' => 80,
+                'levels' => 10,
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::AIPOM => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
+    ],
+    LocationId::AZALEA_TOWN                   => [
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::SPEAROW => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 10,
+                'levels' => 10,
+            ],
+            PokedexNo::AIPOM => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
     ],
     LocationId::SLOWPOKE_WELL_B1F             => [
         EncounterType::WALKING => [
@@ -1468,6 +1712,48 @@ return [
                 'levels' => 10,
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 60,
+                'levels' => 10,
+            ],
+            PokedexNo::NOCTOWL => [
+                'weight' => 10,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
     ],
     LocationId::ROUTE_34                      => [
         EncounterType::WALKING => [
@@ -1518,6 +1804,52 @@ return [
             PokedexNo::KINGLER  => [
                 'weight' => 10,
                 'levels' => 40,
+            ],
+        ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
             ],
         ],
     ],
@@ -1573,6 +1905,52 @@ return [
             ],
             PokedexNo::MAGIKARP => [
                 'weight' => 162,
+                'levels' => 10,
+            ],
+        ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
                 'levels' => 10,
             ],
         ],
@@ -1640,6 +2018,52 @@ return [
                 'levels' => 13,
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
     ],
     LocationId::ROUTE_37                      => [
         EncounterType::WALKING => [
@@ -1674,6 +2098,52 @@ return [
             PokedexNo::STANTLER  => [
                 'weight' => 30,
                 'levels' => 15,
+            ],
+        ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
             ],
         ],
     ],
@@ -1882,6 +2352,52 @@ return [
                 'levels' => 13,
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
     ],
     LocationId::ROUTE_39                      => [
         EncounterType::WALKING => [
@@ -1912,6 +2428,52 @@ return [
             PokedexNo::MILTANK    => [
                 'weight' => 5,
                 'levels' => 15,
+            ],
+        ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
             ],
         ],
     ],
@@ -2354,6 +2916,48 @@ return [
                 'levels' => 40,
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::METAPOD => [
+                'weight' => 50,
+                'levels' => [25, 28],
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 30,
+                'levels' => [25, 28],
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 50,
+                'levels' => [25, 28],
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 30,
+                'levels' => [25, 28],
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => [15, 18],
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => [15, 18],
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 30,
+                'levels' => [17, 18],
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 30,
+                'levels' => [17, 18],
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => [15, 16],
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 15,
+                'levels' => [25, 30],
+            ],
+        ],
     ],
     LocationId::CLIFF_CAVE                    => [
         EncounterType::WALKING    => [
@@ -2458,6 +3062,52 @@ return [
             PokedexNo::GIRAFARIG  => [
                 'weight' => 5,
                 'levels' => 20,
+            ],
+        ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => [15, 18],
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => [15, 18],
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 30,
+                'levels' => [17, 18],
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 30,
+                'levels' => [17, 18],
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => [15, 16],
+            ],
+        ],
+    ],
+    LocationId::JOHTO_SAFARI_ZONE_GATE        => [
+        EncounterType::HEADBUTT => [
+            PokedexNo::HOOTHOOT => [
+                'weight' => 50,
+                'levels' => [14, 19],
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => [14, 19],
+            ],
+            PokedexNo::LEDYBA => [
+                'weight' => 30,
+                'levels' => [17, 19],
+            ],
+            PokedexNo::SPINARAK => [
+                'weight' => 30,
+                'levels' => [17, 19],
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => [14, 16],
             ],
         ],
     ],
@@ -3028,6 +3678,24 @@ return [
                 'levels' => 40,
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::SPEAROW => [
+                'weight' => 80,
+                'levels' => 10,
+            ],
+            PokedexNo::EKANS => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::AIPOM => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
     ],
     LocationId::MT_MORTAR_1F_ENTRANCE         => [
         EncounterType::WALKING => [
@@ -3244,6 +3912,36 @@ return [
                 'levels' => 10,
             ],
         ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::SPEAROW => [
+                'weight' => 80,
+                'levels' => 10,
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::AIPOM => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 30,
+                'levels' => 10,
+            ],
+        ],
     ],
     LocationId::LAKE_OF_RAGE                  => [
         EncounterType::SURFING => [
@@ -3264,6 +3962,48 @@ return [
             PokedexNo::GYARADOS => [
                 'weight' => 40,
                 'levels' => 20,
+            ],
+        ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::CATERPIE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::METAPOD => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BUTTERFREE => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::WEEDLE => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::KAKUNA => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::BEEDRILL => [
+                'weight' => 5,
+                'levels' => 10,
+            ],
+            PokedexNo::VENONAT => [
+                'weight' => 15,
+                'levels' => 10,
+            ],
+            PokedexNo::EXEGGCUTE => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HOOTHOOT => [
+                'weight' => 65,
+                'levels' => 10,
+            ],
+            PokedexNo::PINECO => [
+                'weight' => 30,
+                'levels' => 10,
             ],
         ],
     ],
@@ -3307,6 +4047,20 @@ return [
             ],
             PokedexNo::REMORAID => [
                 'weight' => 200,
+                'levels' => 10,
+            ],
+        ],
+        EncounterType::HEADBUTT => [
+            PokedexNo::SPEAROW => [
+                'weight' => 80,
+                'levels' => 10,
+            ],
+            PokedexNo::AIPOM => [
+                'weight' => 20,
+                'levels' => 10,
+            ],
+            PokedexNo::HERACROSS => [
+                'weight' => 30,
                 'levels' => 10,
             ],
         ],

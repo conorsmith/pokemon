@@ -27,6 +27,7 @@ final class EvolutionRepository
                     in_array('friendship', $evolution),
                     array_key_exists('time', $evolution) ? $evolution['time'] : null,
                     array_key_exists('stats', $evolution) ? $evolution['stats'] : null,
+                    in_array('randomly', $evolution),
                 );
             }
         }

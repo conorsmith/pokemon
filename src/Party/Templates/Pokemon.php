@@ -17,6 +17,9 @@
                     <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-use"">
                         Use Item
                     </a>
+                    <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-give"">
+                        Give Item
+                    </a>
                     <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         Send
                     </a>

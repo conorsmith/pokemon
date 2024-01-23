@@ -18,11 +18,12 @@ use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\Queries\HabitStreakQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
-use ConorSmith\Pokemon\ViewModelFactory;
 use Exception;
+use LogicException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,10 +93,17 @@ final class PostObtain
 
         $totalRegisteredPokemonBeforeObtaining = $this->totalRegisteredPokemonQuery->run();
 
+        $regionalLevelOffset = match ($currentLocation['region']) {
+            RegionId::KANTO => 0,
+            RegionId::JOHTO => 50,
+            RegionId::HOENN => 100,
+            default         => throw new LogicException(),
+        };
+
         $pokemon = $this->addNewPokemon->run(
             $pokedexNumber,
             null,
-            $giftPokemonConfig['level'],
+            $giftPokemonConfig['level'] + $regionalLevelOffset,
             $this->generateSex($pokedexNumber),
             $this->generateShininess(),
             RandomNumberGenerator::generateInRange(0, 31),

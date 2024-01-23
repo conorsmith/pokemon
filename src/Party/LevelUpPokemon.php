@@ -10,11 +10,20 @@ use ConorSmith\Pokemon\Party\Domain\Evolution;
 use ConorSmith\Pokemon\Party\Domain\Pokemon;
 use ConorSmith\Pokemon\Party\Repositories\EvolutionRepository;
 use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
+use ConorSmith\Pokemon\Party\UseCases\AddNewPokemon;
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
+use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
+use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
+use ConorSmith\Pokemon\SharedKernel\Queries\CurrentLocationQuery;
+use ConorSmith\Pokemon\SharedKernel\Queries\HabitStreakQuery;
 use ConorSmith\Pokemon\SharedKernel\Queries\HighestRankedGymBadgeQuery;
 use Doctrine\DBAL\Connection;
 use Exception;
+use LogicException;
 use Ramsey\Uuid\Uuid;
 
 final class LevelUpPokemon
@@ -25,6 +34,10 @@ final class LevelUpPokemon
         private readonly EvolutionRepository $evolutionRepository,
         private readonly FriendshipLog $friendshipLog,
         private readonly HighestRankedGymBadgeQuery $highestRankedGymBadgeQuery,
+        private readonly HabitStreakQuery $habitStreakQuery,
+        private readonly CurrentLocationQuery $currentLocationQuery,
+        private readonly AddNewPokemon $addNewPokemon,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly InstanceId $instanceId,
     ) {}
 
@@ -47,13 +60,30 @@ final class LevelUpPokemon
         $pokemonEvolves = false;
         $evolutions = $this->evolutionRepository->findAllForPokemon($pokemon);
 
+        $triggeredEvolutions = [];
+
         /** @var Evolution $evolution */
         foreach ($evolutions as $evolution) {
             if ($evolution->isTriggered($pokemon, $newLevel)) {
-                $pokemonEvolves = true;
-                $pokemon = $pokemon->evolve($evolution->evolvedPokedexNumber);
-                break; // Break loop once an evolution is triggered
+                $triggeredEvolutions[] = $evolution;
             }
+        }
+
+        if (count($triggeredEvolutions) === 1) {
+            $pokemonEvolves = true;
+            $pokemon = $pokemon->evolve($triggeredEvolutions[0]->evolvedPokedexNumber);
+
+        } elseif (count($triggeredEvolutions) > 1) {
+            foreach ($triggeredEvolutions as $triggeredEvolution) {
+                if (!$triggeredEvolution->isRandom()) {
+                    throw new LogicException("Multiple evolutions found that are not configured for random selection");
+                }
+            }
+
+            $randomlySelectedEvolution = RandomNumberGenerator::selectFromArray($triggeredEvolutions);
+
+            $pokemonEvolves = true;
+            $pokemon = $pokemon->evolve($randomlySelectedEvolution->evolvedPokedexNumber);
         }
 
         $pokemon = $pokemon->levelUp($newLevel);
@@ -64,33 +94,65 @@ final class LevelUpPokemon
         $this->pokemonRepository->save($pokemon);
 
         if ($pokemonEvolves) {
-            $this->addPokedexEntryIfNecessary($pokemon);
+            $newPokedexEntry = $this->addPokedexEntryIfNecessary($pokemon);
 
-            // TODO: Implement Shedinja generation
+            if ($pokemon->number === PokedexNo::NINJASK) {
+
+                $regionalLevelOffset = match ($pokemon->caughtLocation->region) {
+                    RegionId::KANTO => 0,
+                    RegionId::JOHTO => 50,
+                    RegionId::HOENN => 100,
+                    default         => throw new LogicException(),
+                };
+
+                $this->addNewPokemon->run(
+                    PokedexNo::SHEDINJA,
+                    null,
+                    5 + $regionalLevelOffset,
+                    $this->generateSex(PokedexNo::SHEDINJA),
+                    $this->generateShininess(),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    $this->currentLocationQuery->run(),
+                    null,
+                );
+
+                $this->db->commit();
+
+                return ResultOfLevellingUp::nincadaEvolvedIntoNinjask($pokemon->level, $newPokedexEntry);
+            }
         }
 
         $this->db->commit();
 
         return $pokemonEvolves
-            ? ResultOfLevellingUp::levelledUpAndEvolved($pokemon->level, $pokemon->number)
+            ? ResultOfLevellingUp::levelledUpAndEvolved($pokemon->level, $pokemon->number, $newPokedexEntry)
             : ResultOfLevellingUp::levelledUp($pokemon->level);
     }
 
-    private function addPokedexEntryIfNecessary(Pokemon $pokemon): void
+    private function addPokedexEntryIfNecessary(Pokemon $pokemon): bool
     {
         $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [
             'instanceId' => $this->instanceId->value,
             'number'     => $pokemon->number,
         ]);
 
-        if ($pokedexRow === false) {
-            $this->db->insert("pokedex_entries", [
-                'id'          => Uuid::uuid4(),
-                'instance_id' => $this->instanceId->value,
-                'number'      => $pokemon->number,
-                'date_added'  => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
-            ]);
+        if ($pokedexRow !== false) {
+            return false;
         }
+
+        $this->db->insert("pokedex_entries", [
+            'id'          => Uuid::uuid4(),
+            'instance_id' => $this->instanceId->value,
+            'number'      => $pokemon->number,
+            'date_added'  => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
+        ]);
+
+        return true;
     }
 
     public static function calculateNewLevel(int $currentLevel, int $levelLimit): int
@@ -132,5 +194,60 @@ final class LevelUpPokemon
         } else {
             return $currentLevel + 1;
         }
+    }
+
+    private function generateSex(string $pokedexNumber): Sex
+    {
+        $pokedexConfig = $this->pokedexConfigRepository->find($pokedexNumber);
+
+        if (count($pokedexConfig['sexRatio']) === 1) {
+            return $pokedexConfig['sexRatio'][0]['sex'];
+        }
+
+        return self::randomlySelectSex($pokedexConfig['sexRatio']);
+    }
+
+    private static function randomlySelectSex(array $sexRatioConfig): Sex
+    {
+        $aggregatedWeight = array_reduce(
+            $sexRatioConfig,
+            function ($carry, array $sexRatioEntry) {
+                return $carry + $sexRatioEntry['weight'];
+            },
+            0,
+        );
+
+        $randomlySelectedValue = mt_rand(1, $aggregatedWeight);
+
+        /** @var array $sexRatioEntry */
+        foreach ($sexRatioConfig as $sexRatioEntry) {
+            $randomlySelectedValue -= $sexRatioEntry['weight'];
+            if ($randomlySelectedValue <= 0) {
+                return $sexRatioEntry['sex'];
+            }
+        }
+
+        throw new Exception;
+    }
+
+    private function generateShininess(): bool
+    {
+        $streak = $this->habitStreakQuery->run();
+
+        $divisor = $streak < 7 ? self::curveBeforeOneWeek($streak) : self::curveAfterOneWeek($streak);
+
+        $odds = intval(round(4096 / $divisor));
+
+        return mt_rand(1, $odds) === 1;
+    }
+
+    private static function curveBeforeOneWeek(int $i): float
+    {
+        return 0.480898 * log(8 * ($i + 1));
+    }
+
+    private static function curveAfterOneWeek(int $i): float
+    {
+        return 3.54073 * log(0.251313 * $i);
     }
 }

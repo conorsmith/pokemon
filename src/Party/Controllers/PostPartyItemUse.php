@@ -14,6 +14,8 @@ use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
 use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
+use ConorSmith\Pokemon\SharedKernel\Queries\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use Doctrine\DBAL\Connection;
 use Exception;
@@ -32,6 +34,7 @@ final class PostPartyItemUse
         private readonly LevelUpPokemon $levelUpPokemon,
         private readonly ItemConfigRepository $itemConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
+        private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
         private readonly NotifyPlayerCommand $notifyPlayerCommand,
     ) {}
 
@@ -148,6 +151,29 @@ final class PostPartyItemUse
             $this->notifyPlayerCommand->run(
                 Notification::persistent("Your {$oldPokemon['name']} evolved into {$newPokemon['name']}!")
             );
+
+            if ($result->isNincadaEvolution) {
+                $shedinja = $this->pokedexConfigRepository->find(PokedexNo::SHEDINJA);
+                $this->notifyPlayerCommand->run(
+                    Notification::persistent("{$shedinja['name']} appeared in your box!")
+                );
+            }
+
+            if ($result->newPokedexEntry) {
+                $this->notifyPlayerCommand->run(
+                    Notification::persistent("{$newPokemon['name']} has been registered in your Pokédex")
+                );
+
+                $totalRegisteredPokemonAfterEvolution = $this->totalRegisteredPokemonQuery->run();
+
+                $legendaryConfig = $this->findLegendaryUnlock($totalRegisteredPokemonAfterEvolution);
+                if (!is_null($legendaryConfig)) {
+                    $pokedexConfig = $this->pokedexConfigRepository->find($legendaryConfig['pokemon']);
+                    $this->notifyPlayerCommand->run(
+                        Notification::persistent("The legendary Pokémon {$pokedexConfig['name']} has been sighted!")
+                    );
+                }
+            }
         }
 
         return new RedirectResponse($redirectUrlPath);
@@ -177,7 +203,7 @@ final class PostPartyItemUse
                 && $evolutionConfig['item'] === $itemId
             ) {
                 $canEvolveUsingThisItem = true;
-                $newPokemonNumber = $pokemonNumber;
+                $newPokemonNumber = strval($pokemonNumber);
             }
         }
 
@@ -207,13 +233,18 @@ final class PostPartyItemUse
             'number'     => $newPokemonNumber,
         ]);
 
+        $pokedexEntryRegistered = false;
+
         if ($pokedexRow === false) {
+            $pokedexEntryRegistered = true;
             $this->db->insert("pokedex_entries", [
                 'id'          => Uuid::uuid4(),
                 'instance_id' => $instanceId,
                 'number'      => $newPokemonNumber,
                 'date_added'  => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
             ]);
+
+            $totalRegisteredPokemonAfterEvolution = $this->totalRegisteredPokemonQuery->run();
         }
 
         $this->db->commit();
@@ -223,6 +254,31 @@ final class PostPartyItemUse
         $this->notifyPlayerCommand->run(
             Notification::persistent("{$pokemonConfig['name']} evolved into {$newPokemonPokedexEntry['name']}")
         );
-        return new RedirectResponse("/{$instanceId}/");
+        if ($pokedexEntryRegistered) {
+            $this->notifyPlayerCommand->run(
+                Notification::persistent("{$newPokemonPokedexEntry['name']} has been registered in your Pokédex")
+            );
+            $legendaryConfig = $this->findLegendaryUnlock($totalRegisteredPokemonAfterEvolution);
+            if (!is_null($legendaryConfig)) {
+                $pokedexConfig = $this->pokedexConfigRepository->find($legendaryConfig['pokemon']);
+                $this->notifyPlayerCommand->run(
+                    Notification::persistent("The legendary Pokémon {$pokedexConfig['name']} has been sighted!")
+                );
+            }
+        }
+        return new RedirectResponse($redirectUrlPath);
+    }
+
+    private function findLegendaryUnlock(int $totalRegisteredPokemon): ?array
+    {
+        $legendariesConfig = require __DIR__ . "/../../Config/Legendaries.php";
+
+        foreach ($legendariesConfig as $configEntry) {
+            if ($configEntry['unlock'] === $totalRegisteredPokemon) {
+                return $configEntry;
+            }
+        }
+
+        return null;
     }
 }

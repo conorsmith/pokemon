@@ -15,6 +15,15 @@
                     Use
                 </button>
             </form>
+        <?php elseif ($item->canGive) : ?>
+            <form method="POST" action="<?=$item->giveAction->url?>">
+                <?php foreach ($item->giveAction->hiddenInputs as $name => $value) : ?>
+                    <input type="hidden" name="<?=$name?>" value="<?=$value?>">
+                <?php endforeach ?>
+                <button type="submit" class="btn btn-primary btn-sm" <?=$item->amount === 0 ? "disabled" : ""?>>
+                    Give
+                </button>
+            </form>
         <?php else : ?>
             <span></span>
         <?php endif ?>

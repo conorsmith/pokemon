@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Player\Controllers;
 
 use ConorSmith\Pokemon\ItemConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\ViewModels\BagItemGiveActionVm;
 use ConorSmith\Pokemon\SharedKernel\ViewModels\BagItemUseActionVm;
 use ConorSmith\Pokemon\SharedKernel\ViewModels\BagItemVm;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
@@ -46,6 +47,13 @@ final class GetBag
                     "/{$instanceId}/item/{$item->id}/use",
                     [
                         'redirectUrlPath' => "/{$instanceId}/party/use/{$item->id}",
+                    ],
+                ),
+                isset($configEntry['type']) && $configEntry['type'] === ItemType::HELD,
+                new BagItemGiveActionVm(
+                    "/{$instanceId}/item/{$item->id}/give",
+                    [
+                        'redirectUrlPath' => "/{$instanceId}/party/give/{$item->id}",
                     ],
                 ),
             );

@@ -7,16 +7,16 @@ namespace ConorSmith\Pokemon\Party\Controllers;
 use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\Party\Domain\PokemonRepository;
 use ConorSmith\Pokemon\Party\ViewModels\Pokemon;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
+use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\SharedKernel\ViewModels\BagItemGiveActionVm;
 use ConorSmith\Pokemon\SharedKernel\ViewModels\BagItemUseActionVm;
 use ConorSmith\Pokemon\SharedKernel\ViewModels\BagItemVm;
-use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
-use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class GetPokemonItemUse
+final class GetPokemonItemGive
 {
     public function __construct(
         private readonly PokemonRepository $pokemonRepository,
@@ -34,26 +34,23 @@ final class GetPokemonItemUse
         $bag = $this->bagRepository->find();
 
         $itemViewModels = [];
-        $evolutionItemViewModels = [];
-        $heldItemViewModels = [];
-        $statsItemViewModels = [];
 
         foreach ($bag->items as $item) {
             $configEntry = $this->itemConfigRepository->find($item->id);
 
-            if (!array_key_exists('hasUse', $configEntry)
-                || !$configEntry['hasUse']
+            if (!array_key_exists('type', $configEntry)
+                || $configEntry['type'] !== ItemType::HELD
             ) {
                 continue;
             }
 
-            $itemViewModel = new BagItemVm(
+            $itemViewModels[] = new BagItemVm(
                 $item->id,
                 $configEntry['name'],
                 $configEntry['imageUrl'],
                 strval($item->quantity),
                 array_key_exists('hasUse', $configEntry)
-                    && $configEntry['hasUse'],
+                && $configEntry['hasUse'],
                 new BagItemUseActionVm(
                     "/{$instanceId}/party/use/{$item->id}",
                     [
@@ -61,7 +58,7 @@ final class GetPokemonItemUse
                         'redirectUrlPath' => "/{$instanceId}/party/member/{$pokemonId}/item-use",
                     ],
                 ),
-                false,
+                true,
                 new BagItemGiveActionVm(
                     "/{$instanceId}/party/give/{$item->id}",
                     [
@@ -70,21 +67,11 @@ final class GetPokemonItemUse
                     ],
                 ),
             );
-            
-            match ($configEntry['type'] ?? null) {
-                ItemType::EVOLUTION => $evolutionItemViewModels[] = $itemViewModel,
-                ItemType::HELD      => $heldItemViewModels[] = $itemViewModel,
-                ItemType::STATS     => $statsItemViewModels[] = $itemViewModel,
-                default             => $itemViewModels[] = $itemViewModel,
-            };
         }
 
-        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/PokemonItemUse.php", [
-            'pokemon'        => Pokemon::create($pokemon),
-            'items'          => $itemViewModels,
-            'evolutionItems' => $evolutionItemViewModels,
-            'heldItems'      => $heldItemViewModels,
-            'statsItems'     => $statsItemViewModels,
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/PokemonItemGive.php", [
+            'pokemon' => Pokemon::create($pokemon),
+            'items'   => $itemViewModels,
         ]));
     }
 }
