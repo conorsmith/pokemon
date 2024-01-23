@@ -14,12 +14,18 @@
         <li class="list-group-item d-flex justify-content-end" style="background: #fafafa;">
             <div class="d-flex gap-2">
                 <div class="dropdown">
-                    <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-use"">
+                    <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-use">
                         Use Item
                     </a>
-                    <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-give"">
-                        Give Item
-                    </a>
+                    <?php if ($pokemon->isHoldingAnItem) : ?>
+                        <a class="btn btn-outline-dark btn-sm disabled" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-take">
+                            Take Item
+                        </a>
+                    <?php else : ?>
+                        <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-give">
+                            Give Item
+                        </a>
+                    <?php endif ?>
                     <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         Send
                     </a>

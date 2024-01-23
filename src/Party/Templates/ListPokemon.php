@@ -35,7 +35,14 @@
         <div class="d-flex align-items-center gap-1" style="margin-top: 0.6rem;">
             <i class="far fa-fw <?=$pokemon->friendshipIcon?>" style="font-size: 1.4rem; color: #666;"></i>
             <?=$pokemon->friendship?>
+            <?php if ($pokemon->isHoldingAnItem) : ?>
+                <div class="ms-3" style="width: 24px; text-align: center;">
+                    <img src="<?=$pokemon->heldItem->imageUrl?>" style="width: 24px;">
+                </div>
+                <div style="font-size: 0.8rem;"><?=$pokemon->heldItem->name?></div>
+            <?php endif ?>
         </div>
+
     </div>
     <a href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>" data-id="<?=$pokemon->id?>" class="stretched-link stretched-link--hidden">Go to Stats</a>
 </li>

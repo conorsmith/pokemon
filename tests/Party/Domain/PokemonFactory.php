@@ -51,6 +51,7 @@ final class PokemonFactory
             $specialDefence,
             $speed,
             $caughtLocation,
+            null,
         );
     }
 

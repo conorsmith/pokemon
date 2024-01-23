@@ -37,6 +37,15 @@ final class Bag
         return new self($items);
     }
 
+    public function remove(string $id, int $quantity = 1): self
+    {
+        $items = $this->items;
+
+        $items[$id] = $items[$id]->remove($quantity);
+
+        return new self($items);
+    }
+
     public function add(string $id, int $quantity = 1): self
     {
         $items = $this->items;

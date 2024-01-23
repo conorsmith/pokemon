@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Party\Domain;
 
 use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
+use LogicException;
 
 final class Pokemon
 {
@@ -26,6 +27,7 @@ final class Pokemon
         public readonly Stat $specialDefence,
         public readonly Stat $speed,
         public readonly CaughtLocation $caughtLocation,
+        public readonly ?string $heldItemId,
     ) {}
 
     public function identicalTo(self $other): bool
@@ -122,6 +124,22 @@ final class Pokemon
         );
     }
 
+    public function isHoldingAnItem(): bool
+    {
+        return !is_null($this->heldItemId);
+    }
+
+    public function giveItem(string $itemId): self
+    {
+        if ($this->isHoldingAnItem()) {
+            throw new LogicException();
+        }
+
+        return $this->clone(
+            heldItemId: $itemId,
+        );
+    }
+
     private function clone(
         string $id = null,
         string $number = null,
@@ -139,6 +157,7 @@ final class Pokemon
         Stat $specialDefence = null,
         Stat $speed = null,
         CaughtLocation $caughtLocation = null,
+        ?string $heldItemId = null,
     ) {
         return new self(
             $id ?? $this->id,
@@ -157,6 +176,7 @@ final class Pokemon
             $specialDefence ?? $this->specialDefence,
             $speed ?? $this->speed,
             $caughtLocation ?? $this->caughtLocation,
+            $heldItemId ?? $this->heldItemId,
         );
     }
 }

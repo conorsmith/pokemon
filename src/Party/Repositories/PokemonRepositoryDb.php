@@ -225,6 +225,7 @@ final class PokemonRepositoryDb implements PokemonRepository
                 $row['location_caught'],
                 $caughtLocationConfig['region'],
             ),
+            $row['held_item_id'],
         );
     }
 
@@ -296,6 +297,7 @@ final class PokemonRepositoryDb implements PokemonRepository
             'ev_special_attack'   => $pokemon->specialAttack->ev,
             'ev_special_defence'  => $pokemon->specialDefence->ev,
             'ev_speed'            => $pokemon->speed->ev,
+            'held_item_id'        => $pokemon->heldItemId,
         ], [
             'id' => $pokemon->id,
         ]);

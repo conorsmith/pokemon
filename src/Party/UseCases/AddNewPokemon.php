@@ -79,6 +79,7 @@ final class AddNewPokemon
                 $caughtLocationId,
                 $caughtLocationConfig['region'],
             ),
+            null,
         );
 
         $this->db->insert("caught_pokemon", [

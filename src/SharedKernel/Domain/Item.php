@@ -19,6 +19,14 @@ final class Item
         );
     }
 
+    public function remove(int $quantity = 1): self
+    {
+        return new self(
+            $this->id,
+            $this->quantity - $quantity,
+        );
+    }
+
     public function add(int $quantity = 1): self
     {
         return new self(

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Party\ViewModels;
 
+use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\Party\Domain\Pokemon as DomainModel;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\ViewModelFactory;
 use LogicException;
+use stdClass;
 
 final class Pokemon
 {
@@ -15,7 +17,12 @@ final class Pokemon
     {
         $config = require __DIR__ . "/../../Config/Pokedex.php";
 
+        $itemConfigRepository = new ItemConfigRepository();
+
         $pokemonConfig = $config[$pokemon->number];
+        if ($pokemon->isHoldingAnItem()) {
+            $itemConfig = $itemConfigRepository->find($pokemon->heldItemId);
+        }
 
         return new self(
             $pokemon->id,
@@ -43,7 +50,17 @@ final class Pokemon
                 default                      => throw new LogicException(),
             },
             $pokemon->isShiny,
+            $pokemon->isHoldingAnItem(),
+            $pokemon->isHoldingAnItem() ? self::createHeldItemVm($itemConfig) : null,
         );
+    }
+
+    private static function createHeldItemVm(array $itemConfig): stdClass
+    {
+        return (object) [
+            'name'     => $itemConfig['name'],
+            'imageUrl' => $itemConfig['imageUrl'],
+        ];
     }
 
     public function __construct(
@@ -58,5 +75,7 @@ final class Pokemon
         public readonly string $friendship,
         public readonly string $friendshipIcon,
         public readonly bool $isShiny,
+        public readonly bool $isHoldingAnItem,
+        public readonly ?stdClass $heldItem,
     ) {}
 }

@@ -73,6 +73,7 @@ use ConorSmith\Pokemon\Party\Controllers\GetPokemonBreed;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemonItemGive;
 use ConorSmith\Pokemon\Party\Controllers\GetPokemonItemUse;
 use ConorSmith\Pokemon\Party\Controllers\PostObtain;
+use ConorSmith\Pokemon\Party\Controllers\PostPartyItemGive;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyItemUse;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyMoveDown;
 use ConorSmith\Pokemon\Party\Controllers\PostPartyMoveUp;
@@ -180,6 +181,7 @@ final class ControllerFactory
         $r->post("/item/{id}/use", PostItemUse::class);
         $r->get("/party/use/{id}", GetPartyItemUse::class);
         $r->post("/party/use/{id}", PostPartyItemUse::class);
+        $r->post("/party/give/{id}", PostPartyItemGive::class);
         $r->post("/obtain", PostObtain::class);
         $r->get("/", GetIndex::class);
     }
@@ -638,6 +640,13 @@ final class ControllerFactory
                 new TotalRegisteredPokemonQuery(
                     $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                 ),
+                $this->createNotifyPlayerCommand($instanceId),
+            ),
+            PostPartyItemGive::class             => new PostPartyItemGive(
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                new ItemConfigRepository(),
+                $this->pokedexConfigRepository,
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostChallengeEliteFour::class        => new PostChallengeEliteFour(
