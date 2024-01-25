@@ -19,6 +19,7 @@ use ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
+use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Party\CapturedPokemonQuery;
@@ -71,6 +72,7 @@ final class RepositoryFactory
                     $this->create(PokemonRepositoryDb::class, $instanceId),
                 ),
                 require __DIR__ . "/../Config/Pokedex.php",
+                new ItemConfigRepository(),
                 $instanceId,
             ),
             PokemonRepositoryDb::class           => new PokemonRepositoryDb(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
 
 return [
     ItemId::POKE_BALL       => [
@@ -228,86 +229,137 @@ return [
         'name'     => "Black Belt",
         'imageUrl' => "/assets/items/Bag_Black_Belt_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::FIGHTING,
+        ],
     ],
     ItemId::BLACK_GLASSES   => [
         'name'     => "Black Glasses",
         'imageUrl' => "/assets/items/Bag_Black_Glasses_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::DARK,
+        ],
     ],
     ItemId::CHARCOAL        => [
         'name'     => "Charcoal",
         'imageUrl' => "/assets/items/Bag_Charcoal_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::FIRE,
+        ],
     ],
     ItemId::DRAGON_FANG     => [
         'name'     => "Dragon Fang",
         'imageUrl' => "/assets/items/Bag_Dragon_Fang_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::DRAGON,
+        ],
     ],
     ItemId::HARD_STONE      => [
         'name'     => "Hard Stone",
         'imageUrl' => "/assets/items/Bag_Hard_Stone_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::ROCK,
+        ],
     ],
     ItemId::MAGNET          => [
         'name'     => "Magnet",
         'imageUrl' => "/assets/items/Bag_Magnet_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::ELECTRIC,
+        ],
     ],
     ItemId::MIRACLE_SEED    => [
         'name'     => "Miracle Seed",
         'imageUrl' => "/assets/items/Bag_Miracle_Seed_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::GRASS,
+        ],
     ],
     ItemId::MYSTIC_WATER    => [
         'name'     => "Mystic Water",
         'imageUrl' => "/assets/items/Bag_Mystic_Water_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::WATER,
+        ],
     ],
     ItemId::NEVER_MELT_ICE  => [
         'name'     => "Never-Melt Ice",
         'imageUrl' => "/assets/items/Bag_Never-Melt_Ice_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::ICE,
+        ],
     ],
     ItemId::POISON_BARB     => [
         'name'     => "Poison Barb",
         'imageUrl' => "/assets/items/Bag_Poison_Barb_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::POISON,
+        ],
     ],
     ItemId::SHARP_BEAK      => [
         'name'     => "Sharp Beak",
         'imageUrl' => "/assets/items/Bag_Sharp_Beak_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::FLYING,
+        ],
     ],
     ItemId::SILK_SCARF      => [
         'name'     => "Silk Scarf",
         'imageUrl' => "/assets/items/Bag_Silk_Scarf_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::NORMAL,
+        ],
     ],
     ItemId::SILVER_POWDER   => [
         'name'     => "Silver Powder",
         'imageUrl' => "/assets/items/Bag_Silver_Powder_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::BUG,
+        ],
     ],
     ItemId::SOFT_SAND       => [
         'name'     => "Soft Sand",
         'imageUrl' => "/assets/items/Bag_Soft_Sand_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::GROUND,
+        ],
     ],
     ItemId::SPELL_TAG       => [
         'name'     => "Spell Tag",
         'imageUrl' => "/assets/items/Bag_Spell_Tag_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::GHOST,
+        ],
     ],
     ItemId::TWISTED_SPOON   => [
         'name'     => "Twisted Spoon",
         'imageUrl' => "/assets/items/Bag_Twisted_Spoon_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::PSYCHIC,
+        ],
     ],
-    ItemId::FAIRY_DUST      => [
-        'name'     => "Fairy Dust",
-        'imageUrl' => "/assets/items/Bag_Soft_Sand_Sprite.png",
+    ItemId::FAIRY_FEATHER => [
+        'name'     => "Fairy Feather",
+        'imageUrl' => "/assets/items/36px-Bag_Fairy_Feather_SV_Sprite.png",
         'type'     => ItemType::HELD,
+        'effect'   => [
+            'typeEnhance' => PokemonType::FAIRY,
+        ],
     ],
     ItemId::HP_UP           => [
         'name'     => "HP Up",

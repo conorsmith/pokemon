@@ -96,6 +96,7 @@ final class EncounterRepository
             ),
             0,
             false,
+            null,
         );
 
         $pokemon->remainingHp = $pokemon->calculateHp();
@@ -158,6 +159,7 @@ final class EncounterRepository
             ),
             $encounterRow['remaining_hp'],
             $encounterRow['remaining_hp'] === 0,
+            null,
         );
 
         $pokedexRow = $this->db->fetchAssociative("SELECT * FROM pokedex_entries WHERE instance_id = :instanceId AND number = :number", [

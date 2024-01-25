@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Battle\Repositories;
 
+use ConorSmith\Pokemon\Battle\Domain\HeldItem;
 use ConorSmith\Pokemon\Battle\Domain\Player;
 use ConorSmith\Pokemon\Battle\Domain\PlayerRepository;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\StatsIv;
+use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
@@ -26,6 +28,7 @@ final class PlayerRepositoryDb implements PlayerRepository
         private readonly Connection $db,
         private readonly CapturedPokemonQuery $capturedPokemonQuery,
         private readonly array $pokedex,
+        private readonly ItemConfigRepository $itemConfigRepository,
         private readonly InstanceId $instanceId,
     ) {}
 
@@ -57,6 +60,16 @@ final class PlayerRepositoryDb implements PlayerRepository
 
         foreach ($caughtPokemonRows as $caughtPokemonRow) {
             $queryResult = $queryResultsByPokemonId[$caughtPokemonRow['id']];
+
+            $heldItem = null;
+
+            if (!is_null($caughtPokemonRow['held_item_id'])) {
+                $heldItemConfig = $this->itemConfigRepository->find($caughtPokemonRow['held_item_id']);
+                $heldItem = new HeldItem(
+                    $caughtPokemonRow['held_item_id'],
+                    $heldItemConfig['effect']['typeEnhance'] ?? null,
+                );
+            }
 
             $pokedexEntry = $this->findPokedexEntry($caughtPokemonRow['pokemon_id']);
             $party[] = new Pokemon(
@@ -99,6 +112,7 @@ final class PlayerRepositoryDb implements PlayerRepository
                 ),
                 $caughtPokemonRow['remaining_hp'] ?? 0,
                 $caughtPokemonRow['has_fainted'] === 1,
+                $heldItem,
             );
         }
 

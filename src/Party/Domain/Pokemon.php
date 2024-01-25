@@ -140,6 +140,33 @@ final class Pokemon
         );
     }
 
+    public function takeItem(): self
+    {
+        if (!$this->isHoldingAnItem()) {
+            throw new LogicException();
+        }
+
+        return new self(
+            $this->id,
+            $this->number,
+            $this->form,
+            $this->type,
+            $this->eggGroups,
+            $this->level,
+            $this->friendship,
+            $this->sex,
+            $this->isShiny,
+            $this->hp,
+            $this->physicalAttack,
+            $this->physicalDefence,
+            $this->specialAttack,
+            $this->specialDefence,
+            $this->speed,
+            $this->caughtLocation,
+            null,
+        );
+    }
+
     private function clone(
         string $id = null,
         string $number = null,

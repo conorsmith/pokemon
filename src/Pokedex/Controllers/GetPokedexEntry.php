@@ -188,6 +188,7 @@ final class GetPokedexEntry
                 EncounterType::SURFING    => "fas fa-water",
                 EncounterType::FISHING    => "fas fa-fish",
                 EncounterType::ROCK_SMASH => "fab fa-sith",
+                EncounterType::HEADBUTT   => "fas fa-tree",
                 default                   => throw new LogicException(),
             },
             'rarityIcons'       => match (true) {

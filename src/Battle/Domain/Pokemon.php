@@ -21,6 +21,7 @@ final class Pokemon
         public readonly Stats $stats,
         public int $remainingHp,
         public bool $hasFainted,
+        public readonly ?HeldItem $heldItem,
     ) {}
 
     public function hitFor(int $hp): void
@@ -71,5 +72,17 @@ final class Pokemon
     public function calculateSpeed(): int
     {
         return $this->stats->calculateSpeed();
+    }
+
+    public function doesHeldItemEnhancePrimaryType(): bool
+    {
+        return !is_null($this->heldItem)
+            && $this->heldItem->typeEnhance === $this->primaryType;
+    }
+
+    public function doesHeldItemEnhanceSecondaryType(): bool
+    {
+        return !is_null($this->heldItem)
+            && $this->heldItem->typeEnhance === $this->secondaryType;
     }
 }

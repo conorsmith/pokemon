@@ -124,9 +124,29 @@ final class Round
 
         $randomFactor = mt_rand(85, 100) / 100;
 
+        $typeEnhancingItemFactor = self::calculateTypeEnhancingItemFactor($attacker, $attack);
+
         $criticalFactor = $isCriticalHit ? 1.5 : 1;
 
-        return intval(round($baseDamage * $randomFactor * $typeMultiplier * $criticalFactor));
+        return intval(round(
+            $baseDamage
+            * $randomFactor
+            * $typeMultiplier
+            * $typeEnhancingItemFactor
+            * $criticalFactor
+        ));
+    }
+
+    private static function calculateTypeEnhancingItemFactor(Pokemon $attacker, Attack $attack): float
+    {
+        $value = 1.0;
+
+        if (($attack->isPrimaryType() && $attacker->doesHeldItemEnhancePrimaryType())
+            || ($attack->isSecondaryType() && $attacker->doesHeldItemEnhanceSecondaryType())) {
+            $value *= 1.2;
+        }
+
+        return $value;
     }
 
     private static function calculateCriticalHit(Pokemon $attacker, Pokemon $defender): bool

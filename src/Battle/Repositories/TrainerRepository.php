@@ -148,6 +148,7 @@ class TrainerRepository
                     ),
                     0,
                     false,
+                    null,
                 );
 
                 if ($battlePokemonRow === false) {
@@ -238,6 +239,7 @@ class TrainerRepository
                     ),
                     0,
                     false,
+                    null,
                 );
 
                 if ($trainerBattlePokemonRows === []) {

@@ -93,7 +93,7 @@ final class PostObtain
 
         $totalRegisteredPokemonBeforeObtaining = $this->totalRegisteredPokemonQuery->run();
 
-        $regionalLevelOffset = match ($currentLocation['region']) {
+        $regionalLevelOffset = match ($currentLocation->region) {
             RegionId::KANTO => 0,
             RegionId::JOHTO => 50,
             RegionId::HOENN => 100,

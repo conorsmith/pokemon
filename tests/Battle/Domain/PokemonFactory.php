@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\PokemonTest\Battle\Domain;
 
+use ConorSmith\Pokemon\Battle\Domain\HeldItem;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
@@ -24,6 +25,7 @@ final class PokemonFactory
         Stats $stats = null,
         int $remainingHp = 0,
         bool $hasFainted = false,
+        ?HeldItem $heldItem = null,
     ): Pokemon {
         return new Pokemon(
             $id,
@@ -38,6 +40,7 @@ final class PokemonFactory
             $stats ?? StatsFactory::any(),
             $remainingHp,
             $hasFainted,
+            $heldItem,
         );
     }
 

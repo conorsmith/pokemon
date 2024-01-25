@@ -13,54 +13,57 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item d-flex justify-content-end" style="background: #fafafa;">
             <div class="d-flex gap-2">
-                <div class="dropdown">
                     <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-use">
                         Use Item
                     </a>
                     <?php if ($pokemon->isHoldingAnItem) : ?>
-                        <a class="btn btn-outline-dark btn-sm disabled" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-take">
-                            Take Item
-                        </a>
+                        <form method="POST" action="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-take">
+                            <button type="submit" class="btn btn-outline-dark btn-sm">
+                                Take Item
+                            </button>
+                        </form>
                     <?php else : ?>
                         <a class="btn btn-outline-dark btn-sm" href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>/item-give">
                             Give Item
                         </a>
                     <?php endif ?>
-                    <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                        Send
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <?php if (!$location->isInParty) : ?>
-                            <li>
-                                <form method="POST" action="/<?=$instanceId?>/party/send-to-party">
-                                    <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                    <button type="submit" class="dropdown-item" <?=$location->canSendToParty ? "" : "disabled"?>>
-                                        Send to Party
-                                    </button>
-                                </form>
-                            </li>
-                        <?php endif ?>
-                        <?php if (!$location->isInDayCare) : ?>
-                            <li>
-                                <form method="POST" action="/<?=$instanceId?>/party/send-to-day-care">
-                                    <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                    <button type="submit" class="dropdown-item" <?=$location->canSendToDayCare ? "" : "disabled"?>>
-                                        Send to Day Care
-                                    </button>
-                                </form>
-                            </li>
-                        <?php endif ?>
-                        <?php if (!$location->isInBox) : ?>
-                            <li>
-                                <form method="POST" action="/<?=$instanceId?>/party/send-to-box">
-                                    <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
-                                    <button type="submit" class="dropdown-item" <?=$location->canSendToBox ? "" : "disabled"?>>
-                                        Send to Box
-                                    </button>
-                                </form>
-                            </li>
-                        <?php endif ?>
-                    </ul>
+                    <div class="dropdown">
+                        <a class="btn btn-outline-dark btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Send
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <?php if (!$location->isInParty) : ?>
+                                <li>
+                                    <form method="POST" action="/<?=$instanceId?>/party/send-to-party">
+                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$location->canSendToParty ? "" : "disabled"?>>
+                                            Send to Party
+                                        </button>
+                                    </form>
+                                </li>
+                            <?php endif ?>
+                            <?php if (!$location->isInDayCare) : ?>
+                                <li>
+                                    <form method="POST" action="/<?=$instanceId?>/party/send-to-day-care">
+                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$location->canSendToDayCare ? "" : "disabled"?>>
+                                            Send to Day Care
+                                        </button>
+                                    </form>
+                                </li>
+                            <?php endif ?>
+                            <?php if (!$location->isInBox) : ?>
+                                <li>
+                                    <form method="POST" action="/<?=$instanceId?>/party/send-to-box">
+                                        <input type="hidden" name="pokemon" value="<?=$pokemon->id?>">
+                                        <button type="submit" class="dropdown-item" <?=$location->canSendToBox ? "" : "disabled"?>>
+                                            Send to Box
+                                        </button>
+                                    </form>
+                                </li>
+                            <?php endif ?>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </li>

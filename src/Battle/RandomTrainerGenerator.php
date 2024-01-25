@@ -288,6 +288,7 @@ final class RandomTrainerGenerator
             ),
             0,
             false,
+            null,
         );
 
         $pokemon->remainingHp = $pokemon->calculateHp();

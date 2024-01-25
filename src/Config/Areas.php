@@ -18,7 +18,7 @@ return [
     ],
     LocationId::MT_MOON             => [
         'prizes' => [
-            ItemId::FAIRY_DUST,
+            ItemId::FAIRY_FEATHER,
         ],
     ],
     LocationId::ROUTE_4             => [

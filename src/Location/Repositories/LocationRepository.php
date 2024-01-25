@@ -41,6 +41,10 @@ final class LocationRepository
             );
         }
 
-        return new Location($locationConfig['id'], $adjacentLocations);
+        return new Location(
+            $locationConfig['id'],
+            $locationConfig['region'],
+            $adjacentLocations,
+        );
     }
 }

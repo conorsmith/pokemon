@@ -26,7 +26,7 @@ final class Area
         ItemId::SOFT_SAND,
         ItemId::SPELL_TAG,
         ItemId::TWISTED_SPOON,
-        ItemId::FAIRY_DUST,
+        ItemId::FAIRY_FEATHER,
     ];
 
     public function __construct(

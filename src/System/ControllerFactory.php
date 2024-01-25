@@ -81,6 +81,7 @@ use ConorSmith\Pokemon\Party\Controllers\PostPartySendToBox;
 use ConorSmith\Pokemon\Party\Controllers\PostPartySendToDayCare;
 use ConorSmith\Pokemon\Party\Controllers\PostPartySendToParty;
 use ConorSmith\Pokemon\Party\Controllers\PostPokemonBreed;
+use ConorSmith\Pokemon\Party\Controllers\PostPokemonItemTake;
 use ConorSmith\Pokemon\Party\Domain\GenealogyRepository;
 use ConorSmith\Pokemon\Party\FriendshipLog;
 use ConorSmith\Pokemon\Party\LevelUpPokemon;
@@ -157,6 +158,7 @@ final class ControllerFactory
         $r->get("/party/member/{id}", GetPokemon::class);
         $r->get("/party/member/{id}/item-use", GetPokemonItemUse::class);
         $r->get("/party/member/{id}/item-give", GetPokemonItemGive::class);
+        $r->post("/party/member/{id}/item-take", PostPokemonItemTake::class);
         $r->get("/party/member/{id}/breed", GetPokemonBreed::class);
         $r->post("/party/member/{id}/breed", PostPokemonBreed::class);
         $r->get("/encounter/{id}", GetEncounter::class);
@@ -643,6 +645,13 @@ final class ControllerFactory
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartyItemGive::class             => new PostPartyItemGive(
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                new ItemConfigRepository(),
+                $this->pokedexConfigRepository,
+                $this->createNotifyPlayerCommand($instanceId),
+            ),
+            PostPokemonItemTake::class           => new PostPokemonItemTake(
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 new ItemConfigRepository(),

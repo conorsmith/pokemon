@@ -49,7 +49,7 @@ final class ItemId
     public const SOFT_SAND = "7bd43440-8089-4d89-821d-8562bc73a981";
     public const SPELL_TAG = "ced0c430-0ed5-4b5a-a533-ce0afff85ef8";
     public const TWISTED_SPOON = "f34ca1cb-85e0-447e-bc6a-9e5b9a6c26db";
-    public const FAIRY_DUST = "7fd6c818-db55-4012-b3c6-9da401ee4e41";
+    public const FAIRY_FEATHER = "7fd6c818-db55-4012-b3c6-9da401ee4e41";
     public const RAZOR_FANG = "31724904-66c4-4fd6-b8dd-1340b07c7a63";
     public const RAZOR_CLAW = "fd96cb96-b814-4ca3-9052-cf8f2396f2da";
     public const PRISM_SCALE = "109463d8-92a3-4e54-b09e-92212daf4bef";
