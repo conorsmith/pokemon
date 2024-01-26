@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Party\Domain;
 
+use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Clock;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use LogicException;
 
@@ -17,6 +19,7 @@ final class Evolution
         private readonly ?string $specificTime,
         private readonly ?string $stats,
         private readonly bool $randomly,
+        private readonly string|int|null $move,
     ) {}
 
     public function isTriggered(Pokemon $pokemon, int $level): bool
@@ -58,6 +61,10 @@ final class Evolution
             };
         }
 
+        if (!is_null($this->move)) {
+            $requirements[] = self::pokemonIsHoldingItemWithSameTypeAsMove($pokemon, $this->move);
+        }
+
         if (count($requirements) === 0) {
             return false;
         }
@@ -72,5 +79,29 @@ final class Evolution
     public function isRandom(): bool
     {
         return $this->randomly;
+    }
+
+    private static function pokemonIsHoldingItemWithSameTypeAsMove(Pokemon $pokemon, string|int $move): bool
+    {
+        if (!$pokemon->isHoldingAnItem()) {
+            return false;
+        }
+
+        $itemConfigRepository = new ItemConfigRepository();
+
+        $moveType = match ($move) {
+            "Rage Fist"        => PokemonType::FIGHTING,
+            "Rollout"          => PokemonType::ROCK,
+            "Ancient Power"    => PokemonType::ROCK,
+            "Double Hit"       => PokemonType::NORMAL,
+            "Twin Beam"        => PokemonType::PSYCHIC,
+            "Hyper Drill"      => PokemonType::NORMAL,
+            "Psyshield Bash"   => PokemonType::PSYCHIC,
+            PokemonType::FAIRY => PokemonType::FAIRY,
+        };
+
+        $itemConfig = $itemConfigRepository->find($pokemon->heldItemId);
+
+        return $itemConfig['effect']['typeEnhance'] === $moveType;
     }
 }
