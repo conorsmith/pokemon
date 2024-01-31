@@ -30,7 +30,7 @@ final class GetTrackPokemon
         $bag = $this->bagRepository->find();
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/TrackPokemon.php", [
-            'currentLocation'      => $this->viewModelFactory->createLocation($location),
+            'currentLocation'      => $this->viewModelFactory->createLocationName($location),
             'pokeballs'            => $bag->countAllPokeBalls(),
             'encounterTypeClasses' => match ($encounterType) {
                 EncounterType::WALKING    => "fas fa-shoe-prints",

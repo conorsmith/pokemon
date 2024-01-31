@@ -29,6 +29,6 @@ final class PostEncounterRun
         $this->encounterRepository->delete($encounter);
         $this->playerRepository->savePlayer($player);
 
-        return new RedirectResponse("/{$args['instanceId']}/map");
+        return new RedirectResponse("/{$args['instanceId']}/map/wild-encounters");
     }
 }

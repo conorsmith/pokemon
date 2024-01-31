@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\LocationType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use LogicException;
+use stdClass;
 
 final class ViewModelFactory
 {
@@ -18,8 +19,14 @@ final class ViewModelFactory
         private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
-    public function createLocation(Location $location): LocationViewModel
-    {
+    public function createLocation(
+        Location $location,
+        ?array $encounters,
+        ?array $trainers,
+        array $giftPokemon,
+        ?array $legendary,
+        ?array $eliteFour,
+    ): LocationViewModel {
         $locationConfig = $this->locationConfigRepository->findLocation($location->id);
 
         $cardinalDirections = [
@@ -74,7 +81,27 @@ final class ViewModelFactory
             $verticalDirections[Direction::U],
             $verticalDirections[Direction::D],
             $otherDirections,
+            !is_null($encounters),
+            !is_null($trainers),
+            count($giftPokemon) > 0,
+            !is_null($legendary),
+            !is_null($eliteFour),
         );
+    }
+
+    public function createLocationName(Location $location): stdClass
+    {
+        $locationConfig = $this->locationConfigRepository->findLocation($location->id);
+
+        return (object) [
+            'name'   => $locationConfig['name'],
+            'region' => match ($locationConfig['region']) {
+                RegionId::KANTO => "Kanto",
+                RegionId::JOHTO => "Johto",
+                RegionId::HOENN => "Hoenn",
+                default         => throw new LogicException(),
+            },
+        ];
     }
 
     public function createAdjacentLocationViewModel(

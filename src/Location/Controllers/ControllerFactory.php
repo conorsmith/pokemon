@@ -85,6 +85,25 @@ final class ControllerFactory
                     )
                 ),
             ),
+            GetWildEncounters::class => new GetWildEncounters(
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(LocationRepository::class, $instanceId),
+                $this->encounterConfigRepository,
+                new GiftPokemonConfigRepository(),
+                $this->locationConfigRepository,
+                $this->trainerConfigRepository,
+                new ViewModelFactory(
+                    $this->locationConfigRepository,
+                ),
+                new TemplateEngine(
+                    new NotificationRepositoryDbAndSession(
+                        $this->db,
+                        $this->session,
+                        $instanceId,
+                    )
+                ),
+
+            ),
             GetTrackPokemon::class => new GetTrackPokemon(
                 $this->repositoryFactory->create(LocationRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),

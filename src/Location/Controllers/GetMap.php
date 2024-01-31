@@ -67,13 +67,22 @@ final class GetMap
 
         $challengeTokens = $bag->count(ItemId::CHALLENGE_TOKEN);
 
+        $encounters = $this->encounterConfigRepository->findEncounters($instanceRow['current_location']);
+        $trainersInLocation = $this->trainerConfigRepository->findTrainersInLocation($instanceRow['current_location']);
+        $giftPokemonConfigEntries = $this->giftPokemonConfigRepository->findInLocation($instanceRow['current_location']);
+        $legendaryConfig = $this->findLegendaryConfig($instanceRow['current_location']);
+        $eliteFourConfig = self::findEliteFourConfig($instanceRow['current_location']);
+
         $currentLocationViewModel = $this->viewModelFactory->createLocation(
             $this->locationRepository->findCurrentLocation(),
+            $encounters,
+            $trainersInLocation,
+            $giftPokemonConfigEntries,
+            $legendaryConfig,
+            $eliteFourConfig,
         );
 
         $trainers = [];
-
-        $trainersInLocation = $this->trainerConfigRepository->findTrainersInLocation($instanceRow['current_location']);
 
         if (!is_null($trainersInLocation)) {
             foreach ($trainersInLocation as $trainer) {
@@ -134,17 +143,12 @@ final class GetMap
             }
         }
 
-        $legendaryConfig = $this->findLegendaryConfig($instanceRow['current_location']);
-
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Map.php", [
             'canEncounter'    => true,
             'pokeballs'       => $bag->countAllPokeBalls(),
             'challengeTokens' => $challengeTokens,
             'ovalCharms'      => $bag->count(ItemId::OVAL_CHARM),
             'currentLocation' => $currentLocationViewModel,
-            'wildPokemon'     => $this->createWildPokemonViewModel(
-                $this->encounterConfigRepository->findEncounters($instanceRow['current_location']),
-            ),
             'trainers'        => $trainers,
             'legendary'       => $this->createLegendaryViewModel(
                 $args['instanceId'],
@@ -154,14 +158,14 @@ final class GetMap
             'giftPokemon'     => $this->createGiftPokemonViewModels(
                 $args['instanceId'],
                 $this->locationConfigRepository->findLocation($instanceRow['current_location']),
-                $this->giftPokemonConfigRepository->findInLocation($instanceRow['current_location']),
+                $giftPokemonConfigEntries,
             ),
             'eliteFour'       => $this->createEliteFourViewModel(
-                self::findEliteFourConfig($instanceRow['current_location']),
+                $eliteFourConfig,
                 $instanceRow,
             ),
             'hallOfFame'      => $this->createHallOfFameViewModel(
-                self::findEliteFourConfig($instanceRow['current_location']),
+                $eliteFourConfig,
             ),
             'map'             => self::createMapViewModel($instanceRow['current_location']),
         ]));
@@ -436,20 +440,6 @@ final class GetMap
         }
 
         return null;
-    }
-
-    private function createWildPokemonViewModel(?array $encounterTables): stdClass
-    {
-        return (object) [
-            'hasEncounters' => !is_null($encounterTables),
-            'encounters'    => (object) [
-                'walking'   => isset($encounterTables[EncounterType::WALKING]),
-                'surfing'   => isset($encounterTables[EncounterType::SURFING]),
-                'fishing'   => isset($encounterTables[EncounterType::FISHING]),
-                'rockSmash' => isset($encounterTables[EncounterType::ROCK_SMASH]),
-                'headbutt'  => isset($encounterTables[EncounterType::HEADBUTT]),
-            ],
-        ];
     }
 
     private static function findMapImage(string $locationId): ?string

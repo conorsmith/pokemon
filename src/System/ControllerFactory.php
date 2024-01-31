@@ -53,6 +53,7 @@ use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\Location\Controllers\GetMap;
 use ConorSmith\Pokemon\Location\Controllers\GetTrackPokemon;
+use ConorSmith\Pokemon\Location\Controllers\GetWildEncounters;
 use ConorSmith\Pokemon\Location\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Location\LocationRepositoryCurrentLocationQuery;
 use ConorSmith\Pokemon\Location\RegionRepositoryRegionIsLockedQuery;
@@ -146,6 +147,7 @@ final class ControllerFactory
         $r->get("/pokedex/{number}", GetPokedexEntry::class);
         $r->post("/map/move", PostMapMove::class);
         $r->get("/map", GetMap::class);
+        $r->get("/map/wild-encounters", GetWildEncounters::class);
         $r->get("/track-pokemon/{encounterType}", GetTrackPokemon::class);
         $r->post("/encounter", PostEncounterGenerateAndStart::class);
         $r->post("/encounter/generate", PostEncounterGenerate::class);

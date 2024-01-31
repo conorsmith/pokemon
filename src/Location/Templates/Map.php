@@ -1,44 +1,4 @@
-<nav class="navbar fixed-bottom bg-light">
-    <div class="container-fluid">
-        <div class="d-flex w-100 gap-4 justify-content-center" style="min-height: 40px;">
-            <?php if ($wildPokemon->hasEncounters) : ?>
-                <button class="navbar-toggler js-encounter-link" type="button">
-                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="/assets/items/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
-                    </span>
-                </button>
-            <?php endif ?>
-            <?php if (count($trainers) > 0) : ?>
-                <button class="navbar-toggler js-trainers-link" type="button">
-                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
-                    </span>
-                </button>
-            <?php endif ?>
-            <?php if ($giftPokemon) : ?>
-                <button class="navbar-toggler js-gift-pokemon-link" type="button">
-                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="/assets/items/Bag_Pok%C3%A9_Doll_Sprite.png">
-                    </span>
-                </button>
-            <?php endif ?>
-            <?php if ($legendary) : ?>
-                <button class="navbar-toggler js-legendary-link" type="button">
-                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="/assets/items/Bag_Star_Piece_Sprite.png">
-                    </span>
-                </button>
-            <?php endif ?>
-            <?php if ($eliteFour) : ?>
-                <button class="navbar-toggler js-elite-four-link" type="button">
-                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
-                    </span>
-                </button>
-            <?php endif ?>
-        </div>
-    </div>
-</nav>
+<?php include __DIR__ . "/BottomNav.php" ?>
 
 <div class="d-grid gap-4">
 
@@ -203,47 +163,6 @@
                 >
                     Hall of Fame
                 </a>
-            </div>
-        </div>
-    <?php endif ?>
-
-    <?php if ($wildPokemon->hasEncounters) : ?>
-        <div class="card js-encounter-block">
-            <div class="card-header d-flex justify-content-between">
-                <div><strong>Wild Pokémon</strong></div>
-                <div class="d-flex" style="text-align: center; gap: 4px;">
-                    <img src="/assets/items/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
-                    <span><?=$pokeballs?></span>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="d-flex gap-2">
-                    <?php if ($wildPokemon->encounters->walking) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/walking" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fas fa-fw fa-shoe-prints"></i>
-                        </a>
-                    <?php endif ?>
-                    <?php if ($wildPokemon->encounters->surfing) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/surfing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fas fa-fw fa-water"></i>
-                        </a>
-                    <?php endif ?>
-                    <?php if ($wildPokemon->encounters->fishing) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/fishing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fas fa-fw fa-fish"></i>
-                        </a>
-                    <?php endif ?>
-                    <?php if ($wildPokemon->encounters->rockSmash) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/rockSmash" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fab fa-fw fa-sith"></i>
-                        </a>
-                    <?php endif ?>
-                    <?php if ($wildPokemon->encounters->headbutt) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/headbutt" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fas fa-fw fa-tree"></i>
-                        </a>
-                    <?php endif ?>
-                </div>
             </div>
         </div>
     <?php endif ?>

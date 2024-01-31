@@ -20,7 +20,7 @@
 
     <div class="d-flex justify-content-between align-items-end">
         <h2 class="mb-0"><?=$currentLocation->name?></h2>
-        <a href="/<?=$instanceId?>/map" class="btn btn-sm btn-outline-dark">Stop Tracking</a>
+        <a href="/<?=$instanceId?>/map/wild-encounters" class="btn btn-sm btn-outline-dark">Stop Tracking</a>
     </div>
 
     <div class="card">
