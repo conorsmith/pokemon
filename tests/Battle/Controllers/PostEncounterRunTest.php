@@ -46,7 +46,7 @@ final class PostEncounterRunTest extends TestCase
         $response = Website::post("/encounter/the-encounter-id/run");
 
         assertThat(
-            $response->isRedirect(Website::url("/map")),
+            $response->isRedirect(Website::url("/map/wild-encounters")),
             isTrue(),
         );
     }
