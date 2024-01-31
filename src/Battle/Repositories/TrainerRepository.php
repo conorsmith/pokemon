@@ -211,6 +211,11 @@ class TrainerRepository
                 count($trainerConfig['party']),
             );
 
+            $partySexes = $this->determinePartySexesForTrainer(
+                $trainerId,
+                $trainerConfig['party'],
+            );
+
             foreach ($trainerConfig['party'] as $i => $pokemonConfig) {
 
                 if ($trainerBattlePokemonRows === []) {
@@ -230,7 +235,7 @@ class TrainerRepository
                     $pokedexEntry['type'][1] ?? null,
                     $level,
                     0,
-                    $pokemonConfig['sex'] ?? Sex::UNKNOWN,
+                    $partySexes[$i],
                     isset($pokemonConfig['isShiny']) && $pokemonConfig['isShiny'],
                     StatsFactory::createStats(
                         $level,
@@ -383,5 +388,58 @@ class TrainerRepository
                 'instance_id' => $this->instanceId->value,
             ]);
         }
+    }
+
+    private function determinePartySexesForTrainer(string $trainerId, array $party): array
+    {
+        $partySexes = [];
+
+        RandomNumberGenerator::setSeed(crc32($trainerId));
+
+        foreach ($party as $pokemonConfig) {
+            if (array_key_exists('sex', $pokemonConfig)) {
+                $partySexes[] = $pokemonConfig['sex'];
+            } else {
+                $partySexes[] = $this->generateSex($pokemonConfig['id']);
+            }
+        }
+
+        RandomNumberGenerator::unsetSeed();
+
+        return $partySexes;
+    }
+
+    private function generateSex(string $pokedexNumber): Sex
+    {
+        $pokedexConfig = $this->pokedexConfigRepository->find($pokedexNumber);
+
+        if (count($pokedexConfig['sexRatio']) === 1) {
+            return $pokedexConfig['sexRatio'][0]['sex'];
+        }
+
+        return self::randomlySelectSex($pokedexConfig['sexRatio']);
+    }
+
+    private static function randomlySelectSex(array $sexRatioConfig): Sex
+    {
+        $aggregatedWeight = array_reduce(
+            $sexRatioConfig,
+            function ($carry, array $sexRatioEntry) {
+                return $carry + $sexRatioEntry['weight'];
+            },
+            0,
+        );
+
+        $randomlySelectedValue = mt_rand(1, $aggregatedWeight);
+
+        /** @var array $sexRatioEntry */
+        foreach ($sexRatioConfig as $sexRatioEntry) {
+            $randomlySelectedValue -= $sexRatioEntry['weight'];
+            if ($randomlySelectedValue <= 0) {
+                return $sexRatioEntry['sex'];
+            }
+        }
+
+        throw new Exception;
     }
 }

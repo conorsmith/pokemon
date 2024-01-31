@@ -1,7 +1,18 @@
 <?php require __DIR__ . "/BattleScript.php" ?>
 
-<ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between">
+<style>
+    .battle-panel {
+        position: relative;
+        padding: 0.6rem 1.2rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        background-color: #fff;
+    }
+</style>
+
+<div class="d-flex flex-column align-items-stretch" style="position: absolute; top: 56px; left: 0; right: 0; bottom: 0;">
+
+<div>
+    <div class="battle-panel d-flex justify-content-between">
         <div>
             <div><strong><?=$trainer->name?></strong></div>
             <div class="js-trainer-party">
@@ -16,8 +27,8 @@
         <div>
             <img src="<?=$trainer->imageUrl?>">
         </div>
-    </li>
-    <li class="list-group-item d-flex flex-row-reverse" data-target-id="<?=$opponentPokemon->id?>">
+    </div>
+    <div class="battle-panel d-flex flex-row-reverse" data-target-id="<?=$opponentPokemon->id?>">
         <div class="pokemon-image <?=$opponentPokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$opponentPokemon->hasFainted ? "slid-down" : ""?>">
             <img src="<?=$opponentPokemon->imageUrl?>">
         </div>
@@ -59,8 +70,8 @@
                 <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$opponentPokemon->remainingHp?></span> / <span class="js-total-hp"><?=$opponentPokemon->totalHp?></span> HP</div>
             </div>
         </div>
-    </li>
-    <li class="list-group-item d-flex" data-target-id="<?=$playerPokemon->id?>">
+    </div>
+    <div class="battle-panel d-flex" data-target-id="<?=$playerPokemon->id?>">
         <div class="pokemon-image <?=$playerPokemon->isShiny ? "pokemon-image--shiny" : ""?> <?=$playerPokemon->hasFainted ? "slid-down" : ""?>">
             <img src="<?=$playerPokemon->imageUrl?>">
         </div>
@@ -102,21 +113,22 @@
                 <div style="font-size: 0.8rem;"><span class="js-remaining-hp"><?=$playerPokemon->remainingHp?></span> / <span class="js-total-hp"><?=$playerPokemon->totalHp?></span> HP</div>
             </div>
         </div>
-    </li>
-    <li id="messages" class="list-group-item" style="display: none;">
-        <ul>
-        </ul>
-    </li>
-    <li class="list-group-item d-grid gap-2 js-interaction-container" style="text-align: center;">
-        <form method="POST" action="/<?=$instanceId?>/battle/<?=$id?>/finish" class="d-grid <?=$isBattleOver ? "" : "d-none"?>">
-            <button type="submit" class="btn btn-outline-dark js-interaction">
-                Finish
-            </button>
-        </form>
-        <?php $mode = "battle" ?>
-        <?php require __DIR__ . "/ButtonsAttack.php" ?>
-        <a href="/<?=$instanceId?>/party/switch?redirect=<?=urlencode("/{$instanceId}/battle/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
-            Switch
-        </a>
-    </li>
-</ul>
+    </div>
+</div>
+
+<div id="messages" class="battle-panel flex-grow-1" style="overflow-y: auto;">
+    <ul style="margin-bottom: 0;"></ul>
+</div>
+
+<div class="battle-panel d-grid gap-2 js-interaction-container" style="text-align: center;">
+    <form method="POST" action="/<?=$instanceId?>/battle/<?=$id?>/finish" class="d-grid <?=$isBattleOver ? "" : "d-none"?>">
+        <button type="submit" class="btn btn-outline-dark js-interaction">
+            Finish
+        </button>
+    </form>
+    <?php $mode = "battle" ?>
+    <?php require __DIR__ . "/ButtonsAttack.php" ?>
+    <a href="/<?=$instanceId?>/party/switch?redirect=<?=urlencode("/{$instanceId}/battle/{$id}")?>" class="btn btn-outline-dark js-interaction <?=$isBattleOver ? "d-none" : ""?>">
+        Switch
+    </a>
+</div>

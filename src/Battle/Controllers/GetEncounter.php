@@ -53,7 +53,6 @@ final class GetEncounter
             'primaryTypeEffectiveness'                    => TypeEffectiveness::create("primary", $playerLeadPokemon, $encounter->pokemon),
             'secondaryTypeEffectiveness'                  => TypeEffectiveness::create("secondary", $playerLeadPokemon, $encounter->pokemon),
             'pokeballs'                                   => $pokeballs,
-            'isLegendary'                                 => $encounter->isLegendary,
             'isBattleOver'                                => $encounter->pokemon->hasFainted || $encounter->wasCaught,
         ]));
     }

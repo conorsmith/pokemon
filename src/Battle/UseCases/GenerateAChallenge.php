@@ -13,6 +13,7 @@ use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
+use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
@@ -68,6 +69,13 @@ final class GenerateAChallenge
                     self::output(PHP_EOL);
                     continue;
                 }
+            }
+
+            if (RandomNumberGenerator::coinToss()
+                || RandomNumberGenerator::coinToss()
+                || RandomNumberGenerator::coinToss()
+            ) {
+                continue;
             }
 
             $eliteFourLeader = $this->trainerRepository->findTrainerByTrainerId(

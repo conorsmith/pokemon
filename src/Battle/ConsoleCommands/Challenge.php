@@ -69,6 +69,14 @@ final class Challenge
 
             benchmarkRun:
 
+            if ($isBenchmark && $tally['runs'] > 0) {
+                echo "RUN #{$tally['runs']}" . PHP_EOL;
+                echo "Challenges: {$tally['challenges']}" . PHP_EOL;
+                $rate = $tally['challenges'] / $tally['runs'] * 100;
+                echo "Rate:       {$rate}%" . PHP_EOL;
+                echo PHP_EOL;
+            }
+
             echo "Generating challenge for instance {$instanceId->value}" . PHP_EOL;
             echo PHP_EOL;
 
@@ -129,6 +137,8 @@ final class Challenge
                     echo "Benchmark complete" . PHP_EOL;
                     echo "Runs:       {$tally['runs']}" . PHP_EOL;
                     echo "Challenges: {$tally['challenges']}" . PHP_EOL;
+                    $rate = $tally['challenges'] / $tally['runs'] * 100;
+                    echo "Rate:       {$rate}%" . PHP_EOL;
                     echo PHP_EOL;
                     continue;
                 }

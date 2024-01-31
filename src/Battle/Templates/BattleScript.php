@@ -271,6 +271,15 @@
 
         const messagesEl = document.getElementById("messages");
 
+        const messagesElObserver = new MutationObserver(function (e) {
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        });
+
+        messagesElObserver.observe(messagesEl, {
+            childList: true,
+            subtree: true
+        });
+
         document.querySelectorAll(".js-attack").forEach(function (el) {
             el.addEventListener("submit", function (e) {
                 interactionButtons.disable();
@@ -286,7 +295,6 @@
                 ))
                     .then(response => response.json())
                     .then(responseData => {
-                        messagesEl.style.removeProperty("display");
                         messagesEl.querySelector("ul").innerHTML = "";
 
                         processNextEvent(responseData, function () {
@@ -342,7 +350,6 @@
                             const newModalEl = oldModalEl.cloneNode(true);
                             oldModalEl.parentNode.replaceChild(newModalEl, oldModalEl);
 
-                            messagesEl.style.removeProperty("display");
                             messagesEl.querySelector("ul").innerHTML = "";
 
                             processNextEvent(responseData, function () {
