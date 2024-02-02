@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\Controllers;
 
-use ConorSmith\Pokemon\EncounterConfigRepository;
-use ConorSmith\Pokemon\GiftPokemonConfigRepository;
+use ConorSmith\Pokemon\WildEncounterConfigRepository;
+use ConorSmith\Pokemon\Location\Domain\FindFeatures;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
-use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
-use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
-use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
-use ConorSmith\Pokemon\TrainerConfigRepository;
 use stdClass;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,10 +21,8 @@ final class GetWildEncounters
     public function __construct(
         private readonly BagRepository $bagRepository,
         private readonly LocationRepository $locationRepository,
-        private readonly EncounterConfigRepository $encounterConfigRepository,
-        private readonly GiftPokemonConfigRepository $giftPokemonConfigRepository,
-        private readonly LocationConfigRepository $locationConfigRepository,
-        private readonly TrainerConfigRepository $trainerConfigRepository,
+        private readonly WildEncounterConfigRepository $wildEncounterConfigRepository,
+        private readonly FindFeatures $findFeatures,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -37,84 +32,34 @@ final class GetWildEncounters
         $currentLocation = $this->locationRepository->findCurrentLocation();
         $bag = $this->bagRepository->find();
 
-        $encounters = $this->encounterConfigRepository->findEncounters($currentLocation->id);
-        $trainers = $this->trainerConfigRepository->findTrainersInLocation($currentLocation->id);
-        $giftPokemonConfigEntries = $this->giftPokemonConfigRepository->findInLocation($currentLocation->id);
-        $legendaryConfig = $this->findLegendaryConfig($currentLocation->id);
-        $eliteFourConfig = self::findEliteFourConfig($currentLocation->id);
+        $features = $this->findFeatures->find($currentLocation->id);
 
-        $currentLocationViewModel = $this->viewModelFactory->createLocation(
-            $currentLocation,
-            $encounters,
-            $trainers,
-            $giftPokemonConfigEntries,
-            $legendaryConfig,
-            $eliteFourConfig,
-        );
+        if (!$features->hasWildEncounters) {
+            return new RedirectResponse("/{$args['instanceId']}/map");
+        }
+
+        $wildEncounters = $this->wildEncounterConfigRepository->findWildEncounters($currentLocation->id);
+
+        $currentLocationViewModel = $this->viewModelFactory->createLocation($currentLocation);
+        $navigationBarVm = $this->viewModelFactory->createNavigationBar($features);
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/WildEncounters.php", [
             'currentLocation' => $currentLocationViewModel,
             'canEncounter'    => true,
             'pokeballs'       => $bag->countAllPokeBalls(),
-            'wildPokemon'     => $this->createWildPokemonViewModel($encounters),
+            'wildEncounters'  => $this->createWildEncountersViewModel($wildEncounters),
+            'navigationBar'   => $navigationBarVm,
         ]));
     }
 
-    private function createWildPokemonViewModel(?array $encounterTables): stdClass
+    private function createWildEncountersViewModel(array $wildEncounterTables): stdClass
     {
         return (object) [
-            'hasEncounters' => !is_null($encounterTables),
-            'encounters'    => (object) [
-                'walking'   => isset($encounterTables[EncounterType::WALKING]),
-                'surfing'   => isset($encounterTables[EncounterType::SURFING]),
-                'fishing'   => isset($encounterTables[EncounterType::FISHING]),
-                'rockSmash' => isset($encounterTables[EncounterType::ROCK_SMASH]),
-                'headbutt'  => isset($encounterTables[EncounterType::HEADBUTT]),
-            ],
+            'walking'   => isset($wildEncounterTables[EncounterType::WALKING]),
+            'surfing'   => isset($wildEncounterTables[EncounterType::SURFING]),
+            'fishing'   => isset($wildEncounterTables[EncounterType::FISHING]),
+            'rockSmash' => isset($wildEncounterTables[EncounterType::ROCK_SMASH]),
+            'headbutt'  => isset($wildEncounterTables[EncounterType::HEADBUTT]),
         ];
-    }
-
-    private function findLegendaryConfig(string $locationId): ?array
-    {
-        $legendariesConfig = require __DIR__ . "/../../Config/Legendaries.php";
-
-        foreach ($legendariesConfig as $config) {
-            if ($config['location'] instanceof RegionId
-                && $this->encounterRoamingLegendary($locationId, $config)
-            ) {
-                return $config;
-            }
-            if ($config['location'] === $locationId) {
-                return $config;
-            }
-        }
-
-        return null;
-    }
-
-    private function encounterRoamingLegendary(string $currentLocationId, array $legendaryConfig): bool
-    {
-        RandomNumberGenerator::setSeed(crc32($legendaryConfig['pokemon'] . date("Y-m-d")));
-
-        $locations = $this->locationConfigRepository->findAllLocationsInRegion($legendaryConfig['location']);
-
-        $roamingLocation = $locations[RandomNumberGenerator::generateInRange(0, count($locations) - 1)];
-
-        RandomNumberGenerator::unsetSeed();
-
-        return $currentLocationId === $roamingLocation['id'];
-    }
-
-    private static function findEliteFourConfig(string $locationId): ?array
-    {
-        $eliteFourConfig = require __DIR__ . "/../../Config/EliteFour.php";
-
-        foreach ($eliteFourConfig as $config) {
-            if ($config['location'] === $locationId) {
-                return $config;
-            }
-        }
-
-        return null;
     }
 }

@@ -92,7 +92,7 @@ final class PostBattleFinish
             }
             return new RedirectResponse("/{$args['instanceId']}/battle/{$result->id}");
         } elseif ($battle->isPlayerChallenger) {
-            return new RedirectResponse("/{$args['instanceId']}/map");
+            return new RedirectResponse("/{$args['instanceId']}/map/trainers");
         } else {
             return new RedirectResponse("/{$args['instanceId']}/");
         }

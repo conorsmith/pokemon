@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\System;
 
-use ConorSmith\Pokemon\EncounterConfigRepository;
+use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\Location\RepositoryFactory as LocationRepositoryFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
@@ -46,7 +46,7 @@ final class ApplicationFactory
                     new RepositoryFactory(self::createDatabaseConnection()),
                 ),
                 self::createDatabaseConnection(),
-                new EncounterConfigRepository(),
+                new WildEncounterConfigRepository(),
                 new LocationConfigRepository(),
                 new TrainerConfigRepository(),
                 new PokedexConfigRepository(),

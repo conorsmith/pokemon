@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Location\ViewModels;
 
 use ConorSmith\Pokemon\Location\Domain\AdjacentLocation;
 use ConorSmith\Pokemon\Location\Domain\Direction;
+use ConorSmith\Pokemon\Location\Domain\Features;
 use ConorSmith\Pokemon\Location\Domain\Location;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\LocationType;
@@ -19,14 +20,8 @@ final class ViewModelFactory
         private readonly LocationConfigRepository $locationConfigRepository,
     ) {}
 
-    public function createLocation(
-        Location $location,
-        ?array $encounters,
-        ?array $trainers,
-        array $giftPokemon,
-        ?array $legendary,
-        ?array $eliteFour,
-    ): LocationViewModel {
+    public function createLocation(Location $location,): LocationViewModel
+    {
         $locationConfig = $this->locationConfigRepository->findLocation($location->id);
 
         $cardinalDirections = [
@@ -81,11 +76,6 @@ final class ViewModelFactory
             $verticalDirections[Direction::U],
             $verticalDirections[Direction::D],
             $otherDirections,
-            !is_null($encounters),
-            !is_null($trainers),
-            count($giftPokemon) > 0,
-            !is_null($legendary),
-            !is_null($eliteFour),
         );
     }
 
@@ -137,6 +127,17 @@ final class ViewModelFactory
             $section,
             $adjacentLocation->isLocked,
             $icon,
+        );
+    }
+
+    public function createNavigationBar(Features $features): NavigationBar
+    {
+        return new NavigationBar(
+            $features->hasWildEncounters,
+            $features->hasTrainers,
+            $features->hasGiftPokemon,
+            $features->hasLegendaryEncounters,
+            $features->hasEliteFour,
         );
     }
 }

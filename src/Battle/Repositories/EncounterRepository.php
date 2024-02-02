@@ -12,7 +12,7 @@ use ConorSmith\Pokemon\Battle\Domain\Pokemon;
 use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\StatsFactory;
 use ConorSmith\Pokemon\Battle\Domain\StatsIv;
-use ConorSmith\Pokemon\EncounterConfigRepository;
+use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
@@ -30,7 +30,7 @@ final class EncounterRepository
 {
     public function __construct(
         private readonly Connection $db,
-        private readonly EncounterConfigRepository $encounterConfigRepository,
+        private readonly WildEncounterConfigRepository $wildEncounterConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly HabitStreakQuery $habitStreakQuery,
@@ -286,7 +286,7 @@ final class EncounterRepository
 
     private function findEncounterTable(Location $location, string $encounterType): ?array
     {
-        $encountersConfig = $this->encounterConfigRepository->findEncounters($location->id);
+        $encountersConfig = $this->wildEncounterConfigRepository->findWildEncounters($location->id);
 
         foreach ($encountersConfig as $key => $encounterTableConfig) {
             if ($key === $encounterType) {

@@ -30,7 +30,7 @@ final class PostBattleStart
             $this->notifyPlayerCommand->run(
                 Notification::transient("No unused challenge tokens remaining.")
             );
-            return new RedirectResponse("/{$args['instanceId']}/map");
+            return new RedirectResponse("/{$args['instanceId']}/map/trainers");
         }
 
         $result = $this->startABattleUseCase->__invoke($trainerId);

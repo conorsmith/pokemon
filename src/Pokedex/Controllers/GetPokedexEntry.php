@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Pokedex\Controllers;
 
-use ConorSmith\Pokemon\EncounterConfigRepository;
+use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Pokedex\Domain\EncounterLocation;
@@ -32,7 +32,7 @@ final class GetPokedexEntry
         private readonly PokedexEntryRepository $pokedexEntryRepository,
         private readonly EvolutionaryLineRepository $evolutionaryLineRepository,
         private readonly RegionIsLockedQuery $regionIsLockedQuery,
-        private readonly EncounterConfigRepository $encounterConfigRepository,
+        private readonly WildEncounterConfigRepository $wildEncounterConfigRepository,
         private readonly ItemConfigRepository $itemConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
@@ -128,7 +128,7 @@ final class GetPokedexEntry
 
         $locations = [];
 
-        foreach ($this->encounterConfigRepository->allByRegion() as $region => $regionEncountersConfig) {
+        foreach ($this->wildEncounterConfigRepository->allByRegion() as $region => $regionEncountersConfig) {
             if ($this->regionIsLockedQuery->run($region)) {
                 continue;
             }

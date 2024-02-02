@@ -20,10 +20,5 @@ final class LocationViewModel
         public readonly ?AdjacentLocationViewModel $up,
         public readonly ?AdjacentLocationViewModel $down,
         public readonly array $directions,
-        public readonly bool $hasWildPokemon,
-        public readonly bool $hasTrainers,
-        public readonly bool $hasGiftPokemon,
-        public readonly bool $hasLegendaryPokemon,
-        public readonly bool $hasEliteFour,
     ) {}
 }

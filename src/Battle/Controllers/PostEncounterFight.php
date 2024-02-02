@@ -41,7 +41,7 @@ final class PostEncounterFight
             $this->notifyPlayerCommand->run(
                 Notification::transient("Encounter not found")
             );
-            return new RedirectResponse("/{$args['instanceId']}/map");
+            return new RedirectResponse("/{$args['instanceId']}/map/wild-encounters");
         }
 
         if ($player->hasEntirePartyFainted()) {

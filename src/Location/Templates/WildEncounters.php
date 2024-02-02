@@ -19,27 +19,27 @@
         </div>
         <div class="card-body">
             <div class="d-flex gap-2">
-                <?php if ($wildPokemon->encounters->walking) : ?>
+                <?php if ($wildEncounters->walking) : ?>
                     <a href="/<?=$instanceId?>/track-pokemon/walking" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
                         <i class="fas fa-fw fa-shoe-prints"></i>
                     </a>
                 <?php endif ?>
-                <?php if ($wildPokemon->encounters->surfing) : ?>
+                <?php if ($wildEncounters->surfing) : ?>
                     <a href="/<?=$instanceId?>/track-pokemon/surfing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
                         <i class="fas fa-fw fa-water"></i>
                     </a>
                 <?php endif ?>
-                <?php if ($wildPokemon->encounters->fishing) : ?>
+                <?php if ($wildEncounters->fishing) : ?>
                     <a href="/<?=$instanceId?>/track-pokemon/fishing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
                         <i class="fas fa-fw fa-fish"></i>
                     </a>
                 <?php endif ?>
-                <?php if ($wildPokemon->encounters->rockSmash) : ?>
+                <?php if ($wildEncounters->rockSmash) : ?>
                     <a href="/<?=$instanceId?>/track-pokemon/rockSmash" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
                         <i class="fab fa-fw fa-sith"></i>
                     </a>
                 <?php endif ?>
-                <?php if ($wildPokemon->encounters->headbutt) : ?>
+                <?php if ($wildEncounters->headbutt) : ?>
                     <a href="/<?=$instanceId?>/track-pokemon/headbutt" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
                         <i class="fas fa-fw fa-tree"></i>
                     </a>

@@ -35,7 +35,7 @@ final class PostBattleFinishTest extends TestCase
         $response = Website::post("/battle/the-battle-id/finish");
 
         assertThat(
-            $response->isRedirect(Website::url("/map")),
+            $response->isRedirect(Website::url("/map/trainers")),
             isTrue(),
         );
     }

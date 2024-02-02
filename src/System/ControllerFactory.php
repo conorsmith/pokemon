@@ -33,7 +33,9 @@ use ConorSmith\Pokemon\Battle\UseCases\CreateALegendaryEncounter;
 use ConorSmith\Pokemon\Battle\UseCases\CreateAWildEncounter;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
 use ConorSmith\Pokemon\Battle\UseCases\StartAnEncounter;
-use ConorSmith\Pokemon\EncounterConfigRepository;
+use ConorSmith\Pokemon\Location\Controllers\GetEliteFour;
+use ConorSmith\Pokemon\Location\Controllers\GetTrainers;
+use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogCalorieGoal;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogExercise;
@@ -148,6 +150,8 @@ final class ControllerFactory
         $r->post("/map/move", PostMapMove::class);
         $r->get("/map", GetMap::class);
         $r->get("/map/wild-encounters", GetWildEncounters::class);
+        $r->get("/map/trainers", GetTrainers::class);
+        $r->get("/map/elite-four", GetEliteFour::class);
         $r->get("/track-pokemon/{encounterType}", GetTrackPokemon::class);
         $r->post("/encounter", PostEncounterGenerateAndStart::class);
         $r->post("/encounter/generate", PostEncounterGenerate::class);
@@ -298,7 +302,7 @@ final class ControllerFactory
                 new RegionRepositoryRegionIsLockedQuery(
                     $this->repositoryFactory->create(RegionRepository::class, $instanceId),
                 ),
-                new EncounterConfigRepository(),
+                new WildEncounterConfigRepository(),
                 new ItemConfigRepository(),
                 new LocationConfigRepository(),
                 new PokedexConfigRepository(),
