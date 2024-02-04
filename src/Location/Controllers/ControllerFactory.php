@@ -63,11 +63,6 @@ final class ControllerFactory
             default                => null,
             GetMap::class          => new GetMap(
                 $this->repositoryFactory->create(LocationRepository::class, $instanceId),
-                $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
-                $this->locationConfigRepository,
-                $this->pokedexConfigRepository,
-                new GiftPokemonConfigRepository(),
                 new EliteFourConfigRepository(),
                 new ViewModelFactory(
                     $this->locationConfigRepository,
@@ -75,18 +70,6 @@ final class ControllerFactory
                 new EliteFourChallengeRegionalVictoryQuery(
                     $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId)
                 ),
-                new BattleRepositoryAreaIsClearedQuery(
-                    $this->repositoryFactory->create(BattleRepository::class, $instanceId),
-                    $this->locationConfigRepository,
-                ),
-                new BattleRepositoryTrainerHasBeenBeatenQuery(
-                    $this->repositoryFactory->create(BattleRepository::class, $instanceId),
-                ),
-                new HighestRankedGymBadgeQueryDb(
-                    $this->db,
-                    $instanceId,
-                ),
-                $this->createFindFixedEncounters($instanceId),
                 $this->createFindFeatures($instanceId),
                 new TemplateEngine(
                     new NotificationRepositoryDbAndSession(
@@ -141,6 +124,57 @@ final class ControllerFactory
                     $this->locationConfigRepository,
                 ),
                 $this->createNotifyPlayerCommand($instanceId),
+                new TemplateEngine(
+                    new NotificationRepositoryDbAndSession(
+                        $this->db,
+                        $this->session,
+                        $instanceId,
+                    )
+                ),
+            ),
+            GetLegendaryEncounters::class => new GetLegendaryEncounters(
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(LocationRepository::class, $instanceId),
+                $this->locationConfigRepository,
+                $this->pokedexConfigRepository,
+                $this->createFindFixedEncounters($instanceId),
+                $this->createFindFeatures($instanceId),
+                new ViewModelFactory(
+                    $this->locationConfigRepository,
+                ),
+                new TemplateEngine(
+                    new NotificationRepositoryDbAndSession(
+                        $this->db,
+                        $this->session,
+                        $instanceId,
+                    )
+                ),
+            ),
+            GetGiftPokemon::class => new GetGiftPokemon(
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(LocationRepository::class, $instanceId),
+                $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
+                new GiftPokemonConfigRepository(),
+                $this->locationConfigRepository,
+                $this->pokedexConfigRepository,
+                $this->createFindFeatures($instanceId),
+                new BattleRepositoryAreaIsClearedQuery(
+                    $this->repositoryFactory->create(BattleRepository::class, $instanceId),
+                    $this->locationConfigRepository,
+                ),
+                new HighestRankedGymBadgeQueryDb(
+                    $this->db,
+                    $instanceId,
+                ),
+                new EliteFourChallengeRegionalVictoryQuery(
+                    $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId)
+                ),
+                new BattleRepositoryTrainerHasBeenBeatenQuery(
+                    $this->repositoryFactory->create(BattleRepository::class, $instanceId),
+                ),
+                new ViewModelFactory(
+                    $this->locationConfigRepository,
+                ),
                 new TemplateEngine(
                     new NotificationRepositoryDbAndSession(
                         $this->db,

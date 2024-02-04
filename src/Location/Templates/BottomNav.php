@@ -21,14 +21,14 @@
                 </a>
             <?php endif ?>
             <?php if ($navigationBar->showGiftPokemon) : ?>
-                <a href="/<?=$instanceId?>/map" class="navbar-toggler" type="button">
+                <a href="/<?=$instanceId?>/map/gift-pokemon" class="navbar-toggler" type="button">
                     <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
                         <img src="/assets/items/Bag_Pok%C3%A9_Doll_Sprite.png">
                     </span>
                 </a>
             <?php endif ?>
             <?php if ($navigationBar->showLegendaryEncounters) : ?>
-                <a href="/<?=$instanceId?>/map" class="navbar-toggler" type="button">
+                <a href="/<?=$instanceId?>/map/legendary-encounters" class="navbar-toggler" type="button">
                     <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
                         <img src="/assets/items/Bag_Star_Piece_Sprite.png">
                     </span>

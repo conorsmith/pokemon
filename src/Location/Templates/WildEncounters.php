@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="card js-encounter-block">
+    <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div><strong>Wild Pokémon</strong></div>
             <div class="d-flex" style="text-align: center; gap: 4px;">

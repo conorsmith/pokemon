@@ -34,6 +34,8 @@ use ConorSmith\Pokemon\Battle\UseCases\CreateAWildEncounter;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
 use ConorSmith\Pokemon\Battle\UseCases\StartAnEncounter;
 use ConorSmith\Pokemon\Location\Controllers\GetEliteFour;
+use ConorSmith\Pokemon\Location\Controllers\GetGiftPokemon;
+use ConorSmith\Pokemon\Location\Controllers\GetLegendaryEncounters;
 use ConorSmith\Pokemon\Location\Controllers\GetTrainers;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
@@ -152,6 +154,8 @@ final class ControllerFactory
         $r->get("/map/wild-encounters", GetWildEncounters::class);
         $r->get("/map/trainers", GetTrainers::class);
         $r->get("/map/elite-four", GetEliteFour::class);
+        $r->get("/map/legendary-encounters", GetLegendaryEncounters::class);
+        $r->get("/map/gift-pokemon", GetGiftPokemon::class);
         $r->get("/track-pokemon/{encounterType}", GetTrackPokemon::class);
         $r->post("/encounter", PostEncounterGenerateAndStart::class);
         $r->post("/encounter/generate", PostEncounterGenerate::class);

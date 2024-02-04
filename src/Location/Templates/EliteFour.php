@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div class="card js-elite-four-block">
+    <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div><strong>Elite Four</strong></div>
             <div class="d-flex" style="text-align: center; gap: 4px;">
