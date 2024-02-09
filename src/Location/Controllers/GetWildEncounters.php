@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\Controllers;
 
-use ConorSmith\Pokemon\WildEncounterConfigRepository;
+use ConorSmith\Pokemon\Location\Domain\FindWildEncounters;
+use ConorSmith\Pokemon\Location\Domain\WildEncounters;
 use ConorSmith\Pokemon\Location\Domain\FindFeatures;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
-use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use stdClass;
@@ -21,8 +21,8 @@ final class GetWildEncounters
     public function __construct(
         private readonly BagRepository $bagRepository,
         private readonly LocationRepository $locationRepository,
-        private readonly WildEncounterConfigRepository $wildEncounterConfigRepository,
         private readonly FindFeatures $findFeatures,
+        private readonly FindWildEncounters $findWildEncounters,
         private readonly ViewModelFactory $viewModelFactory,
         private readonly TemplateEngine $templateEngine,
     ) {}
@@ -38,7 +38,7 @@ final class GetWildEncounters
             return new RedirectResponse("/{$args['instanceId']}/map");
         }
 
-        $wildEncounters = $this->wildEncounterConfigRepository->findWildEncounters($currentLocation->id);
+        $wildEncounters = $this->findWildEncounters->find($currentLocation->id);
 
         $currentLocationViewModel = $this->viewModelFactory->createLocation($currentLocation);
         $navigationBarVm = $this->viewModelFactory->createNavigationBar($features);
@@ -52,14 +52,14 @@ final class GetWildEncounters
         ]));
     }
 
-    private function createWildEncountersViewModel(array $wildEncounterTables): stdClass
+    private function createWildEncountersViewModel(WildEncounters $wildEncounters): stdClass
     {
         return (object) [
-            'walking'   => isset($wildEncounterTables[EncounterType::WALKING]),
-            'surfing'   => isset($wildEncounterTables[EncounterType::SURFING]),
-            'fishing'   => isset($wildEncounterTables[EncounterType::FISHING]),
-            'rockSmash' => isset($wildEncounterTables[EncounterType::ROCK_SMASH]),
-            'headbutt'  => isset($wildEncounterTables[EncounterType::HEADBUTT]),
+            'walking'   => $wildEncounters->includesWalking,
+            'surfing'   => $wildEncounters->includesSurfing,
+            'fishing'   => $wildEncounters->includesFishing,
+            'rockSmash' => $wildEncounters->includesRockSmash,
+            'headbutt'  => $wildEncounters->includesHeadbutt,
         ];
     }
 }

@@ -6,6 +6,10 @@ namespace ConorSmith\Pokemon\Location\Controllers;
 
 use ConorSmith\Pokemon\EliteFourConfigRepository;
 use ConorSmith\Pokemon\Location\Domain\FindFeatures;
+use ConorSmith\Pokemon\Location\Domain\FindTrainers;
+use ConorSmith\Pokemon\Location\Domain\FindWildEncounters;
+use ConorSmith\Pokemon\Location\Domain\Trainer;
+use ConorSmith\Pokemon\Location\Domain\WildEncounters;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\SharedKernel\Queries\RegionalVictoryQuery;
@@ -22,6 +26,8 @@ final class GetMap
         private readonly ViewModelFactory $viewModelFactory,
         private readonly RegionalVictoryQuery $regionalVictoryQuery,
         private readonly FindFeatures $findFeatures,
+        private readonly FindTrainers $findTrainers,
+        private readonly FindWildEncounters $findWildEncounters,
         private readonly TemplateEngine $templateEngine,
     ) {}
 
@@ -46,6 +52,10 @@ final class GetMap
             ),
             'map'             => self::createMapViewModel($currentLocation->id),
             'navigationBar'   => $navigationBarVm,
+            'summary'         => $this->createLocationSummaryViewModel(
+                $this->findTrainers->find($currentLocation->id),
+                $this->findWildEncounters->find($currentLocation->id),
+            ),
         ]));
     }
 
@@ -102,5 +112,27 @@ final class GetMap
         }
 
         return null;
+    }
+
+    private function createLocationSummaryViewModel(array $trainers, ?WildEncounters $wildEncounters): stdClass
+    {
+        return (object) [
+            'isShown'        => count($trainers) > 0 || ($wildEncounters && $wildEncounters->includesAny()),
+            'trainers'       => (object) [
+                'isShown' => count($trainers) > 0,
+                'beaten'  => count(array_filter(
+                    $trainers,
+                    fn(Trainer $trainer) => $trainer->playerHasBeaten(),
+                )),
+                'total'   => count($trainers),
+            ],
+            'wildEncounters' => (object) [
+                'walking'   => $wildEncounters && $wildEncounters->includesWalking,
+                'surfing'   => $wildEncounters && $wildEncounters->includesSurfing,
+                'fishing'   => $wildEncounters && $wildEncounters->includesFishing,
+                'rockSmash' => $wildEncounters && $wildEncounters->includesRockSmash,
+                'headbutt'  => $wildEncounters && $wildEncounters->includesHeadbutt,
+            ],
+        ];
     }
 }

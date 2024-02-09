@@ -15,4 +15,9 @@ final class Trainer
         public readonly ?DateTimeImmutable $lastBeaten,
         public readonly bool $isGymLeader,
     ) {}
+
+    public function playerHasBeaten(): bool
+    {
+        return !is_null($this->lastBeaten);
+    }
 }

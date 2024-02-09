@@ -2,11 +2,41 @@
 
 <div class="d-grid gap-4">
 
-    <div class="d-flex justify-content-between align-items-end">
-        <h2 class="mb-0"><?=$currentLocation->name?></h2>
-        <div>
-            <span class="badge bg-secondary"><?=$currentLocation->region?></span>
+    <div>
+        <div class="d-flex justify-content-between align-items-end">
+            <h2 class="mb-0"><?=$currentLocation->name?></h2>
+            <div>
+                <span class="badge bg-secondary"><?=$currentLocation->region?></span>
+            </div>
         </div>
+
+        <?php if ($summary->isShown) : ?>
+            <div class="d-flex justify-content-between" style="font-size: 0.8rem; margin-top: 0.5rem;">
+                <div>
+                    <?php if ($summary->trainers->isShown) : ?>
+                        <i class="fas fa-fw fa-user"></i> <?=$summary->trainers->beaten?> / <?=$summary->trainers->total?>
+                    <?php endif ?>
+                </div>
+                <div>
+                    <?php if ($summary->wildEncounters->walking) : ?>
+                        <i class="fas fa-fw fa-shoe-prints"></i>
+                    <?php endif ?>
+                    <?php if ($summary->wildEncounters->surfing) : ?>
+                        <i class="fas fa-fw fa-water"></i>
+                    <?php endif ?>
+                    <?php if ($summary->wildEncounters->fishing) : ?>
+                        <i class="fas fa-fw fa-fish"></i>
+                    <?php endif ?>
+                    <?php if ($summary->wildEncounters->rockSmash) : ?>
+                        <i class="fab fa-fw fa-sith"></i>
+                    <?php endif ?>
+                    <?php if ($summary->wildEncounters->headbutt) : ?>
+                        <i class="fas fa-fw fa-tree"></i>
+                    <?php endif ?>
+                </div>
+            </div>
+        <?php endif ?>
+
     </div>
 
     <style>
