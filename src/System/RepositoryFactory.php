@@ -14,6 +14,8 @@ use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
+use ConorSmith\Pokemon\Player\Repositories\GymBadgeRepository;
+use ConorSmith\Pokemon\Player\Repositories\GymBadgeRepositoryDb;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
@@ -142,6 +144,10 @@ final class RepositoryFactory
                 $instanceId,
             ),
             LegendaryCaptureEventRepositoryDb::class => new LegendaryCaptureEventRepositoryDb(
+                $this->db,
+                $instanceId,
+            ),
+            GymBadgeRepository::class                => new GymBadgeRepositoryDb(
                 $this->db,
                 $instanceId,
             ),

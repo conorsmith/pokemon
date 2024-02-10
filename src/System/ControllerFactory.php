@@ -20,8 +20,9 @@ use ConorSmith\Pokemon\Battle\Controllers\PostEncounterRun;
 use ConorSmith\Pokemon\Battle\Controllers\PostEncounterStart;
 use ConorSmith\Pokemon\Battle\Controllers\PostSwitch;
 use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
-use ConorSmith\Pokemon\Battle\EliteFourChallengeCurrentPokemonLeagueQuery;
+use ConorSmith\Pokemon\Battle\EliteFourChallengeRegionalVictoryQuery;
 use ConorSmith\Pokemon\Battle\EventFactory;
+use ConorSmith\Pokemon\Battle\LeagueChampionRepositoryPlayerIsLeagueChampionQuery;
 use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
@@ -37,6 +38,8 @@ use ConorSmith\Pokemon\Location\Controllers\GetEliteFour;
 use ConorSmith\Pokemon\Location\Controllers\GetGiftPokemon;
 use ConorSmith\Pokemon\Location\Controllers\GetLegendaryEncounters;
 use ConorSmith\Pokemon\Location\Controllers\GetTrainers;
+use ConorSmith\Pokemon\Player\Controllers\GetStatus;
+use ConorSmith\Pokemon\Player\Repositories\GymBadgeRepository;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogCalorieGoal;
@@ -195,6 +198,7 @@ final class ControllerFactory
         $r->post("/party/use/{id}", PostPartyItemUse::class);
         $r->post("/party/give/{id}", PostPartyItemGive::class);
         $r->post("/obtain", PostObtain::class);
+        $r->get("/status", GetStatus::class);
         $r->get("/", GetIndex::class);
     }
 
@@ -681,7 +685,6 @@ final class ControllerFactory
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             GetIndex::class                      => new GetIndex(
-                $this->db,
                 new CapturedPokemonQuery(
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                 ),
@@ -695,10 +698,6 @@ final class ControllerFactory
                 ),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->locationConfigRepository,
-                new EliteFourChallengeCurrentPokemonLeagueQuery(
-                    $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
-                ),
-                $this->viewModelFactory,
                 $this->createTemplateEngine($instanceId),
             ),
             PostObtain::class                    => new PostObtain(
@@ -730,6 +729,17 @@ final class ControllerFactory
                 new PokedexConfigRepository(),
                 $this->createNotifyPlayerCommand($instanceId),
                 $this->friendshipLog,
+            ),
+            GetStatus::class                     => new GetStatus(
+                $this->repositoryFactory->create(GymBadgeRepository::class, $instanceId),
+                new LeagueChampionRepositoryPlayerIsLeagueChampionQuery(
+                    $this->repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
+                ),
+                new EliteFourChallengeRegionalVictoryQuery(
+                    $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId)
+                ),
+                $this->viewModelFactory,
+                $this->createTemplateEngine($instanceId),
             ),
             default                              => throw new LogicException(),
         };
