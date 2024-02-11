@@ -18,20 +18,23 @@
                     <?php endif ?>
                 </div>
                 <div>
-                    <?php if ($summary->wildEncounters->walking) : ?>
+                    <?php if ($summary->pokemon->walking) : ?>
                         <i class="fas fa-fw fa-shoe-prints"></i>
                     <?php endif ?>
-                    <?php if ($summary->wildEncounters->surfing) : ?>
+                    <?php if ($summary->pokemon->surfing) : ?>
                         <i class="fas fa-fw fa-water"></i>
                     <?php endif ?>
-                    <?php if ($summary->wildEncounters->fishing) : ?>
+                    <?php if ($summary->pokemon->fishing) : ?>
                         <i class="fas fa-fw fa-fish"></i>
                     <?php endif ?>
-                    <?php if ($summary->wildEncounters->rockSmash) : ?>
+                    <?php if ($summary->pokemon->rockSmash) : ?>
                         <i class="fab fa-fw fa-sith"></i>
                     <?php endif ?>
-                    <?php if ($summary->wildEncounters->headbutt) : ?>
+                    <?php if ($summary->pokemon->headbutt) : ?>
                         <i class="fas fa-fw fa-tree"></i>
+                    <?php endif ?>
+                    <?php if ($summary->pokemon->gift) : ?>
+                        <i class="fas fa-fw fa-gift"></i>
                     <?php endif ?>
                 </div>
             </div>

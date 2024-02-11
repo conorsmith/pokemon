@@ -13,4 +13,11 @@ final class Features
         public readonly bool $hasLegendaryEncounters,
         public readonly bool $hasEliteFour,
     ) {}
+
+    public function hasPokemon(): bool
+    {
+        return $this->hasWildEncounters
+            || $this->hasGiftPokemon
+            || $this->hasLegendaryEncounters;
+    }
 }

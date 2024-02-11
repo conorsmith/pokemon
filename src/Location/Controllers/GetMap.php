@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Location\Controllers;
 
 use ConorSmith\Pokemon\EliteFourConfigRepository;
+use ConorSmith\Pokemon\Location\Domain\Features;
 use ConorSmith\Pokemon\Location\Domain\FindFeatures;
 use ConorSmith\Pokemon\Location\Domain\FindTrainers;
 use ConorSmith\Pokemon\Location\Domain\FindWildEncounters;
@@ -53,6 +54,7 @@ final class GetMap
             'map'             => self::createMapViewModel($currentLocation->id),
             'navigationBar'   => $navigationBarVm,
             'summary'         => $this->createLocationSummaryViewModel(
+                $features,
                 $this->findTrainers->find($currentLocation->id),
                 $this->findWildEncounters->find($currentLocation->id),
             ),
@@ -114,11 +116,16 @@ final class GetMap
         return null;
     }
 
-    private function createLocationSummaryViewModel(array $trainers, ?WildEncounters $wildEncounters): stdClass
-    {
+    private function createLocationSummaryViewModel(
+        Features $features,
+        array $trainers,
+        ?WildEncounters $wildEncounters
+    ): stdClass {
         return (object) [
-            'isShown'        => count($trainers) > 0 || ($wildEncounters && $wildEncounters->includesAny()),
-            'trainers'       => (object) [
+            'isShown'  => count($trainers) > 0
+                || ($wildEncounters && $wildEncounters->includesAny())
+                || $features->hasGiftPokemon,
+            'trainers' => (object) [
                 'isShown' => count($trainers) > 0,
                 'beaten'  => count(array_filter(
                     $trainers,
@@ -126,12 +133,13 @@ final class GetMap
                 )),
                 'total'   => count($trainers),
             ],
-            'wildEncounters' => (object) [
+            'pokemon'  => (object) [
                 'walking'   => $wildEncounters && $wildEncounters->includesWalking,
                 'surfing'   => $wildEncounters && $wildEncounters->includesSurfing,
                 'fishing'   => $wildEncounters && $wildEncounters->includesFishing,
                 'rockSmash' => $wildEncounters && $wildEncounters->includesRockSmash,
                 'headbutt'  => $wildEncounters && $wildEncounters->includesHeadbutt,
+                'gift'      => $features->hasGiftPokemon,
             ],
         ];
     }

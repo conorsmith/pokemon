@@ -1,6 +1,5 @@
 <div class="d-grid gap-4">
 
-
     <h2>Notifications</h2>
 
     <table class="table align-middle">

@@ -10,7 +10,9 @@
 
 <div class="d-flex gap-3 justify-content-between">
     <div>
-        <img src="/assets/FRLG_Red_Intro.png">
+        <a href="/<?=$instanceId?>/status">
+            <img src="/assets/FRLG_Red_Intro.png">
+        </a>
     </div>
     <div class="card flex-grow-1 bagSummary">
         <div class="card-body d-flex justify-content-between px-4">
@@ -35,7 +37,7 @@
     </div>
 </div>
 
-<div class="card mt-3" style="font-size: 0.875rem;">
+<div class="card mt-1" style="font-size: 0.875rem;">
     <div class="card-body d-flex gap-2 align-items-center py-2">
         <div>
             <img src="/assets/items/Bag_Town_Map_Sprite.png">
@@ -49,7 +51,7 @@
     <a href="/<?=$instanceId?>/map" class="stretched-link stretched-link--hidden">Go to Map</a>
 </div>
 
-<ul class="list-group mt-3">
+<ul class="list-group mt-1">
     <?php foreach ($party as $pokemon) : ?>
         <li class="list-group-item d-flex">
             <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>" style="width: 3rem; height: 3rem;">

@@ -133,9 +133,8 @@ final class ViewModelFactory
     public function createNavigationBar(Features $features): NavigationBar
     {
         return new NavigationBar(
-            $features->hasWildEncounters,
+            $features->hasPokemon(),
             $features->hasTrainers,
-            $features->hasGiftPokemon,
             $features->hasLegendaryEncounters,
             $features->hasEliteFour,
         );
