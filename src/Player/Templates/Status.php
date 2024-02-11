@@ -40,4 +40,8 @@
         </div>
     <?php endforeach ?>
 
+    <div class="d-grid">
+        <a href="/<?=$instanceId?>/notifications" class="btn btn-primary">Notifications</a>
+    </div>
+
 </div>

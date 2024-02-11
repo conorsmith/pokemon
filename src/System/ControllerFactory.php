@@ -38,6 +38,7 @@ use ConorSmith\Pokemon\Location\Controllers\GetEliteFour;
 use ConorSmith\Pokemon\Location\Controllers\GetGiftPokemon;
 use ConorSmith\Pokemon\Location\Controllers\GetLegendaryEncounters;
 use ConorSmith\Pokemon\Location\Controllers\GetTrainers;
+use ConorSmith\Pokemon\Player\Controllers\GetNotifications;
 use ConorSmith\Pokemon\Player\Controllers\GetStatus;
 use ConorSmith\Pokemon\Player\Repositories\GymBadgeRepository;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
@@ -199,6 +200,7 @@ final class ControllerFactory
         $r->post("/party/give/{id}", PostPartyItemGive::class);
         $r->post("/obtain", PostObtain::class);
         $r->get("/status", GetStatus::class);
+        $r->get("/notifications", GetNotifications::class);
         $r->get("/", GetIndex::class);
     }
 
@@ -739,6 +741,14 @@ final class ControllerFactory
                     $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId)
                 ),
                 $this->viewModelFactory,
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetNotifications::class              => new GetNotifications(
+                new NotificationRepositoryDbAndSession(
+                    $this->db,
+                    $this->session,
+                    $instanceId,
+                ),
                 $this->createTemplateEngine($instanceId),
             ),
             default                              => throw new LogicException(),

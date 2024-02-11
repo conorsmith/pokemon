@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Player\Repositories;
 
+use Carbon\CarbonImmutable;
 use ConorSmith\Pokemon\Player\Domain\PersistentNotification;
 use ConorSmith\Pokemon\Player\Domain\TransientNotification;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
@@ -42,6 +43,23 @@ final class NotificationRepositoryDbAndSession implements NotificationRepository
         return array_merge(
             $messages,
             $this->session->getFlashBag()->get("errors"),
+        );
+    }
+
+    public function findAllPersistent(): array
+    {
+        $rows = $this->db->fetchAllAssociative("SELECT * FROM notifications WHERE instance_id = :instanceId ORDER BY notified_at DESC", [
+            'instanceId' => $this->instanceId->value,
+        ]);
+
+        return array_map(
+            fn(array $row) => new PersistentNotification(
+                $row['id'],
+                CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['notified_at'], "Europe/Dublin"),
+                $row['message'],
+                $row['is_read'] === 1,
+            ),
+            $rows,
         );
     }
 
