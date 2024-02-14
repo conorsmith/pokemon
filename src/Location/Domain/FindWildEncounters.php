@@ -17,16 +17,16 @@ final class FindWildEncounters
     {
         $config = $this->wildEncounterConfigRepository->findWildEncounters($locationId);
 
-        if (is_null($config)) {
+        if (!$config->hasTables()) {
             return null;
         }
 
         return new WildEncounters(
-            isset($config[EncounterType::WALKING]),
-            isset($config[EncounterType::SURFING]),
-            isset($config[EncounterType::FISHING]),
-            isset($config[EncounterType::ROCK_SMASH]),
-            isset($config[EncounterType::HEADBUTT]),
+            $config->hasTable(EncounterType::WALKING),
+            $config->hasTable(EncounterType::SURFING),
+            $config->hasTable(EncounterType::FISHING),
+            $config->hasTable(EncounterType::ROCK_SMASH),
+            $config->hasTable(EncounterType::HEADBUTT),
         );
     }
 }

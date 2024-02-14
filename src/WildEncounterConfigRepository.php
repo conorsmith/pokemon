@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
+use ConorSmith\Pokemon\SharedKernel\Config\WildEncountersEntry;
+use ConorSmith\Pokemon\SharedKernel\Config\WildEncounterTable;
+use ConorSmith\Pokemon\SharedKernel\Config\WildEncounterTableEntry;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use WeakMap;
 
@@ -24,14 +27,56 @@ final class WildEncounterConfigRepository
         return $this->config;
     }
 
-    public function findWildEncounters(string $locationId): ?array
+    public function findWildEncounters(string $locationId): WildEncountersEntry
     {
-        foreach ($this->config as $region => $config) {
-            if (array_key_exists($locationId, $config)) {
-                return $config[$locationId];
+        foreach ($this->config as $config) {
+            if (!array_key_exists($locationId, $config)) {
+                continue;
             }
+
+            $tables = [];
+
+            /**
+             * @var string $encounterType
+             * @var array $tableConfig
+             */
+            foreach ($config[$locationId] as $encounterType => $tableConfig) {
+                $tableEntries = [];
+
+                /**
+                 * @var int $pokedexNumber
+                 * @var array $tableEntryConfig
+                 */
+                foreach ($tableConfig as $pokedexNumber => $tableEntryConfig) {
+
+                    if (array_is_list($tableEntryConfig)) {
+                        $multipleFormTableEntryConfig = $tableEntryConfig;
+
+                        /** @var array $multipleFormTableEntryConfigEntry */
+                        foreach ($multipleFormTableEntryConfig as $multipleFormTableEntryConfigEntry) {
+                            $tableEntries[] = WildEncounterTableEntry::fromConfig(
+                                strval($pokedexNumber),
+                                $multipleFormTableEntryConfigEntry,
+                            );
+                        }
+
+                    } else {
+                        $tableEntries[] = WildEncounterTableEntry::fromConfig(
+                            strval($pokedexNumber),
+                            $tableEntryConfig,
+                        );
+                    }
+                }
+
+                $tables[] = new WildEncounterTable(
+                    $encounterType,
+                    $tableEntries,
+                );
+            }
+
+            return new WildEncountersEntry($locationId, $tables);
         }
 
-        return null;
+        return [];
     }
 }

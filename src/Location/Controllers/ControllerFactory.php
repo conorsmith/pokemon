@@ -20,8 +20,13 @@ use ConorSmith\Pokemon\Location\Domain\FindFixedEncounters;
 use ConorSmith\Pokemon\Location\Domain\FindPokemonLeague;
 use ConorSmith\Pokemon\Location\Domain\FindTrainers;
 use ConorSmith\Pokemon\Location\Domain\FindWildEncounters;
+use ConorSmith\Pokemon\Location\Domain\SurveyRepository;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Location\RepositoryFactory;
+use ConorSmith\Pokemon\Location\UseCase\FinishSurveyingPokemon;
+use ConorSmith\Pokemon\Location\UseCase\ShowActiveSurvey;
+use ConorSmith\Pokemon\Location\UseCase\ShowSurveyRecord;
+use ConorSmith\Pokemon\Location\UseCase\StartSurveyingPokemon;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Party\LastTimeLegendaryPokemonWasCapturedQuery;
@@ -31,6 +36,7 @@ use ConorSmith\Pokemon\Player\EarnedAllRegionalGymBadgesQueryDb;
 use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
 use ConorSmith\Pokemon\Player\NotifyPlayerCommand;
 use ConorSmith\Pokemon\Player\Repositories\NotificationRepositoryDbAndSession;
+use ConorSmith\Pokemon\Pokedex\PokedexEntryRepositoryPokemonIsRegisteredQuery;
 use ConorSmith\Pokemon\Pokedex\PokedexRegionIsCompleteQuery;
 use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
 use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
@@ -131,6 +137,56 @@ final class ControllerFactory
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->createViewModelFactory(),
                 $this->createTemplateEngine($instanceId),
+            ),
+            GetSurveyPokemon::class => new GetSurveyPokemon(
+                $this->repositoryFactory->create(LocationRepository::class, $instanceId),
+                new ShowActiveSurvey(
+                    $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
+                ),
+                new ShowSurveyRecord(
+                    $this->pokedexConfigRepository,
+                    $this->wildEncounterConfigRepository,
+                    $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
+                    new PokedexEntryRepositoryPokemonIsRegisteredQuery(
+                        $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                    ),
+                ),
+                $this->createViewModelFactory(),
+                $this->createTemplateEngine($instanceId),
+                new NotifyPlayerCommand(
+                    new NotificationRepositoryDbAndSession(
+                        $this->db,
+                        $this->session,
+                        $instanceId
+                    ),
+                ),
+            ),
+            PostSurveyPokemonStart::class => new PostSurveyPokemonStart(
+                new StartSurveyingPokemon(
+                    $this->repositoryFactory->create(LocationRepository::class, $instanceId),
+                    $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
+                    $this->createFindWildEncounters(),
+                ),
+                new NotifyPlayerCommand(
+                    new NotificationRepositoryDbAndSession(
+                        $this->db,
+                        $this->session,
+                        $instanceId
+                    ),
+                ),
+            ),
+            PostSurveyPokemonFinish::class => new PostSurveyPokemonFinish(
+                new FinishSurveyingPokemon(
+                    $this->wildEncounterConfigRepository,
+                    $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
+                ),
+                new NotifyPlayerCommand(
+                    new NotificationRepositoryDbAndSession(
+                        $this->db,
+                        $this->session,
+                        $instanceId
+                    ),
+                ),
             ),
         };
     }

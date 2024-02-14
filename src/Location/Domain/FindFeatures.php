@@ -21,7 +21,7 @@ final class FindFeatures
 
     public function find(string $locationId): Features
     {
-        $wildEncounters = $this->wildEncounterConfigRepository->findWildEncounters($locationId);
+        $wildEncountersConfig = $this->wildEncounterConfigRepository->findWildEncounters($locationId);
         $giftPokemonConfigEntries = $this->giftPokemonConfigRepository->findInLocation($locationId);
 
         $legendaryEncounter = $this->findFixedEncounters->findLegendary(
@@ -33,7 +33,7 @@ final class FindFeatures
         $trainers = $this->findTrainers->find($locationId);
 
         return new Features(
-            !is_null($wildEncounters),
+            $wildEncountersConfig->hasTables(),
             count($trainers) > 0,
             count($giftPokemonConfigEntries) > 0,
             !is_null($legendaryEncounter),

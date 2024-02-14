@@ -20,31 +20,61 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="d-flex gap-2">
+                <div class="d-flex flex-column gap-2">
                     <?php if ($wildEncounters->walking) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/walking" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fas fa-fw fa-shoe-prints"></i>
-                        </a>
+                        <div class="d-flex gap-2 align-items-center">
+                            <i class="fas fa-fw fa-shoe-prints" style="font-size: 1.5rem;"></i>
+                            <a href="/<?=$instanceId?>/track-pokemon/walking" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Track
+                            </a>
+                            <a href="/<?=$instanceId?>/survey-pokemon/walking" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Survey
+                            </a>
+                        </div>
                     <?php endif ?>
                     <?php if ($wildEncounters->surfing) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/surfing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fas fa-fw fa-water"></i>
-                        </a>
+                        <div class="d-flex gap-2 align-items-center">
+                            <i class="fas fa-fw fa-water" style="font-size: 1.5rem;"></i>
+                            <a href="/<?=$instanceId?>/track-pokemon/surfing" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Track
+                            </a>
+                            <a href="/<?=$instanceId?>/survey-pokemon/surfing" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Survey
+                            </a>
+                        </div>
                     <?php endif ?>
                     <?php if ($wildEncounters->fishing) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/fishing" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fas fa-fw fa-fish"></i>
-                        </a>
+                        <div class="d-flex gap-2 align-items-center">
+                            <i class="fas fa-fw fa-fish" style="font-size: 1.5rem;"></i>
+                            <a href="/<?=$instanceId?>/track-pokemon/fishing" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Track
+                            </a>
+                            <a href="/<?=$instanceId?>/survey-pokemon/fishing" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Survey
+                            </a>
+                        </div>
                     <?php endif ?>
                     <?php if ($wildEncounters->rockSmash) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/rockSmash" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fab fa-fw fa-sith"></i>
-                        </a>
+                        <div class="d-flex gap-2 align-items-center">
+                            <i class="fab fa-fw fa-sith" style="font-size: 1.5rem;"></i>
+                            <a href="/<?=$instanceId?>/track-pokemon/rockSmash" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Track
+                            </a>
+                            <a href="/<?=$instanceId?>/survey-pokemon/rockSmash" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Survey
+                            </a>
+                        </div>
                     <?php endif ?>
                     <?php if ($wildEncounters->headbutt) : ?>
-                        <a href="/<?=$instanceId?>/track-pokemon/headbutt" class="flex-fill btn btn-primary btn-lg <?=$canEncounter ? "" : "disabled"?>">
-                            <i class="fas fa-fw fa-tree"></i>
-                        </a>
+                        <div class="d-flex gap-2 align-items-center">
+                            <i class="fas fa-fw fa-tree" style="font-size: 1.5rem;"></i>
+                            <a href="/<?=$instanceId?>/track-pokemon/headbutt" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Track
+                            </a>
+                            <a href="/<?=$instanceId?>/survey-pokemon/headbutt" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                                Survey
+                            </a>
+                        </div>
                     <?php endif ?>
                 </div>
             </div>

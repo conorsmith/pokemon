@@ -22,4 +22,15 @@ final class WildEncounters
             || $this->includesRockSmash
             || $this->includesHeadbutt;
     }
+
+    public function includes(string $encounterType): bool
+    {
+        return match ($encounterType) {
+            "walking"   => $this->includesWalking,
+            "surfing"   => $this->includesSurfing,
+            "fishing"   => $this->includesFishing,
+            "rockSmash" => $this->includesRockSmash,
+            "headbutt"  => $this->includesHeadbutt,
+        };
+    }
 }

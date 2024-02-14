@@ -23,6 +23,8 @@ use ConorSmith\Pokemon\Habit\Controllers\PostLogExercise;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogFoodDiary;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogStretches;
 use ConorSmith\Pokemon\Habit\Controllers\PostLogWeeklyReview;
+use ConorSmith\Pokemon\Location\Controllers\GetSurveyPokemon;
+use ConorSmith\Pokemon\Location\Controllers\PostSurveyPokemonFinish;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -60,6 +62,11 @@ final class GameModeMiddleware
         PostSwitch::class,
     ];
 
+    private const SURVEY_MODE_CONTROLLERS = [
+        GetSurveyPokemon::class,
+        PostSurveyPokemonFinish::class,
+    ];
+
     public function __construct(
         public readonly Connection $db,
     ) {}
@@ -71,6 +78,10 @@ final class GameModeMiddleware
         }
 
         if ($response = $this->redirectingToActiveTrainerBattle($controllerName, $instanceId)) {
+            return $response;
+        }
+
+        if ($response = $this->redirectingToActiveSurvey($controllerName, $instanceId)) {
             return $response;
         }
 
@@ -111,5 +122,24 @@ final class GameModeMiddleware
         }
 
         return new RedirectResponse("/{$instanceId->value}/battle/" . $instance['active_battle_id']);
+    }
+
+    private function redirectingToActiveSurvey(string $controllerName, InstanceId $instanceId): ?Response
+    {
+        if (in_array($controllerName, self::LOGGING_CONTROLLERS)
+            || in_array($controllerName, self::SURVEY_MODE_CONTROLLERS)
+        ) {
+            return null;
+        }
+
+        $activeSurvey = $this->db->fetchAssociative("SELECT * FROM surveys WHERE in_progress = 1 AND instance_id = :instanceId", [
+            'instanceId' => $instanceId->value,
+        ]);
+
+        if ($activeSurvey === false) {
+            return null;
+        }
+
+        return new RedirectResponse("/{$instanceId->value}/survey-pokemon/{$activeSurvey['encounter_type']}");
     }
 }
