@@ -77,6 +77,6 @@ final class WildEncounterConfigRepository
             return new WildEncountersEntry($locationId, $tables);
         }
 
-        return [];
+        return new WildEncountersEntry($locationId, []);
     }
 }
