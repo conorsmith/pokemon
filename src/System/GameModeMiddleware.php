@@ -73,73 +73,58 @@ final class GameModeMiddleware
 
     public function __invoke(string $controllerName, InstanceId $instanceId): ?Response
     {
-        if ($response = $this->redirectingToActiveEncounter($controllerName, $instanceId)) {
-            return $response;
+        $instance = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
+            'instanceId' => $instanceId->value,
+        ]);
+        $hasActiveTrainerBattle = !is_null($instance['active_battle_id']);
+
+        $activeEncounter = $this->db->fetchAssociative("SELECT * FROM encounters WHERE has_started = 1 ORDER BY id");
+        $hasActiveEncounter = $activeEncounter !== false;
+
+        $activeSurvey = $this->db->fetchAssociative("SELECT * FROM surveys WHERE in_progress = 1 AND instance_id = :instanceId", [
+            'instanceId' => $instanceId->value,
+        ]);
+        $hasActiveSurvey = $activeSurvey !== false;
+
+        if ($hasActiveTrainerBattle
+            && !self::isAllowedInBattleMode($controllerName)
+        ) {
+            return new RedirectResponse("/{$instanceId->value}/battle/" . $instance['active_battle_id']);
         }
 
-        if ($response = $this->redirectingToActiveTrainerBattle($controllerName, $instanceId)) {
-            return $response;
+        if ($hasActiveEncounter
+            && !$hasActiveTrainerBattle
+            && !self::isAllowedInEncounterMode($controllerName)
+        ) {
+            return new RedirectResponse("/{$instanceId->value}/encounter/" . $activeEncounter['id']);
         }
 
-        if ($response = $this->redirectingToActiveSurvey($controllerName, $instanceId)) {
-            return $response;
+        if ($hasActiveSurvey
+            && !$hasActiveTrainerBattle
+            && !$hasActiveEncounter
+            && !self::isAllowedInSurveyMode($controllerName)
+        ) {
+            return new RedirectResponse("/{$instanceId->value}/survey-pokemon/{$activeSurvey['encounter_type']}");
         }
 
         return null;
     }
 
-    private function redirectingToActiveEncounter(string $controllerName, InstanceId $instanceId): ?Response
+    private static function isAllowedInBattleMode(string $controllerName): bool
     {
-        if (in_array($controllerName, self::LOGGING_CONTROLLERS)
-            || in_array($controllerName, self::ENCOUNTER_MODE_CONTROLLERS)
-        ) {
-            return null;
-        }
-
-        $activeEncounter = $this->db->fetchAssociative("SELECT * FROM encounters WHERE has_started = 1 ORDER BY id");
-
-        if ($activeEncounter === false) {
-            return null;
-        }
-
-        return new RedirectResponse("/{$instanceId->value}/encounter/" . $activeEncounter['id']);
+        return in_array($controllerName, self::LOGGING_CONTROLLERS)
+            || in_array($controllerName, self::BATTLE_MODE_CONTROLLERS);
     }
 
-    private function redirectingToActiveTrainerBattle(string $controllerName, InstanceId $instanceId): ?Response
+    private static function isAllowedInEncounterMode(string $controllerName): bool
     {
-        if (in_array($controllerName, self::LOGGING_CONTROLLERS)
-            || in_array($controllerName, self::BATTLE_MODE_CONTROLLERS)
-        ) {
-            return null;
-        }
-
-        $instance = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => $instanceId->value,
-        ]);
-
-        if (is_null($instance['active_battle_id'])) {
-            return null;
-        }
-
-        return new RedirectResponse("/{$instanceId->value}/battle/" . $instance['active_battle_id']);
+        return in_array($controllerName, self::LOGGING_CONTROLLERS)
+            || in_array($controllerName, self::ENCOUNTER_MODE_CONTROLLERS);
     }
 
-    private function redirectingToActiveSurvey(string $controllerName, InstanceId $instanceId): ?Response
+    private static function isAllowedInSurveyMode(string $controllerName): bool
     {
-        if (in_array($controllerName, self::LOGGING_CONTROLLERS)
-            || in_array($controllerName, self::SURVEY_MODE_CONTROLLERS)
-        ) {
-            return null;
-        }
-
-        $activeSurvey = $this->db->fetchAssociative("SELECT * FROM surveys WHERE in_progress = 1 AND instance_id = :instanceId", [
-            'instanceId' => $instanceId->value,
-        ]);
-
-        if ($activeSurvey === false) {
-            return null;
-        }
-
-        return new RedirectResponse("/{$instanceId->value}/survey-pokemon/{$activeSurvey['encounter_type']}");
+        return in_array($controllerName, self::LOGGING_CONTROLLERS)
+            || in_array($controllerName, self::SURVEY_MODE_CONTROLLERS);
     }
 }
