@@ -13,20 +13,34 @@
                 <i class="fa-fw me-1 <?=$activeSurvey->encounterType->classes?>"></i>
                 <strong>Surveying Wild Pokémon</strong>
             </div>
+            <div class="text-center">
+                <?php if ($activeSurvey->cumulativeLength->hasDays) : ?>
+                    <?=$activeSurvey->cumulativeLength->days?> days
+                <?php endif ?>
+                <?php if ($activeSurvey->cumulativeLength->hasHours) : ?>
+                    <?=$activeSurvey->cumulativeLength->hours?>hr
+                <?php endif ?>
+                <?php if ($activeSurvey->cumulativeLength->hasMinutes) : ?>
+                    <?=$activeSurvey->cumulativeLength->minutes?>m
+                <?php endif ?>
+                <?php if ($activeSurvey->cumulativeLength->hasSeconds) : ?>
+                    <?=$activeSurvey->cumulativeLength->seconds?>s
+                <?php endif ?>
+            </div>
         </div>
         <div class="card-body">
-            <div class="text-center">
-                <span id="days" style="<?=$activeSurvey->length->hasDays ? "" : "display: none"?>">
-                    <span class="value"><?=$activeSurvey->length->days?></span> days
+            <div class="text-center" id="timer" data-started-at="<?=$activeSurvey->startedAt?>">
+                <span id="days" style="<?=$activeSurvey->currentLength->hasDays ? "" : "display: none"?>">
+                    <span class="value"><?=$activeSurvey->currentLength->days?></span> days
                 </span>
-                <span id="hours" style="<?=$activeSurvey->length->hasHours ? "" : "display: none"?>">
-                    <span class="value"><?=$activeSurvey->length->hours?></span>hr
+                <span id="hours" style="<?=$activeSurvey->currentLength->hasHours ? "" : "display: none"?>">
+                    <span class="value"><?=$activeSurvey->currentLength->hours?></span>hr
                 </span>
-                <span id="minutes" style="<?=$activeSurvey->length->hasMinutes ? "" : "display: none"?>">
-                    <span class="value"><?=$activeSurvey->length->minutes?></span>m
+                <span id="minutes" style="<?=$activeSurvey->currentLength->hasMinutes ? "" : "display: none"?>">
+                    <span class="value"><?=$activeSurvey->currentLength->minutes?></span>m
                 </span>
                 <span id="seconds">
-                    <span class="value"><?=$activeSurvey->length->seconds?></span>s
+                    <span class="value"><?=$activeSurvey->currentLength->seconds?></span>s
                 </span>
             </div>
         </div>
@@ -36,6 +50,14 @@
 
 <script>
     (function () {
+        const second = 1000,
+            minute = second * 60,
+            hour = minute * 60,
+            day = hour * 24;
+
+        const timerEl = document.getElementById("timer");
+        const startedAt = Date.parse(timerEl.dataset.startedAt);
+
         const secondsValueEl = document.querySelector("#seconds .value");
         const minutesEl = document.getElementById("minutes");
         const minutesValueEl = document.querySelector("#minutes .value");
@@ -56,49 +78,30 @@
 
             then = now;
 
-            const seconds = parseInt(secondsValueEl.innerText, 10);
+            const distance  = Math.floor(new Date().getTime() - startedAt);
 
-            if (seconds < 59) {
-                secondsValueEl.innerText = (seconds + 1).toString().padStart(2, "0");
-                return;
+            const newDays = Math.floor(distance / day);
+            const newHours = Math.floor((distance % day) / hour);
+            const newMinutes = Math.floor((distance % hour) / minute);
+            const newSeconds = Math.floor((distance % minute) / second);
+
+            if (newDays > 0 && daysEl.style.display === "none") {
+                daysEl.style.removeProperty("display")
             }
 
-            secondsValueEl.innerText = "00";
-
-            const minutes = parseInt(minutesValueEl.innerText, 10);
-
-            if (minutes === 0) {
-                minutesEl.style.removeProperty("display");
+            if (newHours > 0 && hoursEl.style.display === "none") {
+                hoursEl.style.removeProperty("display")
             }
 
-            if (minutes < 59) {
-                minutesValueEl.innerText = (minutes + 1).toString().padStart(2, "0");
-                return;
+            if (newMinutes > 0 && minutesEl.style.display === "none") {
+                minutesEl.style.removeProperty("display")
             }
 
-            minutesValueEl.innerText = "00";
+            daysValueEl.innerText = newDays.toString();
+            hoursValueEl.innerText = newHours.toString();
+            minutesValueEl.innerText = newMinutes.toString().padStart(2, "0");
+            secondsValueEl.innerText = newSeconds.toString().padStart(2, "0");
 
-            const hours = parseInt(hoursValueEl.innerText, 10);
-
-            if (hours === 0) {
-                hoursEl.style.removeProperty("display");
-            }
-
-            if (hours < 23) {
-                hoursValueEl.innerText = (hours + 1).toString();
-                return;
-            }
-
-            hoursValueEl.innerText = "0";
-
-            const days = parseInt(daysValueEl.innerText, 10);
-
-            if (days === 0) {
-                daysEl.style.removeProperty("display");
-            }
-
-            daysValueEl.innerText = (days + 1).toString();
-
-            }, 0);
+        }, 0);
     }());
 </script>

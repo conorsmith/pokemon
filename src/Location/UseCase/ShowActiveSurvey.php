@@ -24,7 +24,9 @@ final class ShowActiveSurvey
         }
 
         return ShowActiveSurveyResult::show(new ActiveSurveyVm(
+            $survey->startedAt->format("Y-m-d\TH:i:sP"),
             SurveyTimeVm::fromDomain($survey->currentDuration()),
+            SurveyTimeVm::fromDomain($survey->cumulativeTime),
             EncounterTypeVm::fromDomain($encounterType),
         ));
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\UseCase;
 
+use Carbon\CarbonImmutable;
 use ConorSmith\Pokemon\Location\Domain\Survey;
 use ConorSmith\Pokemon\Location\Domain\SurveyRepository;
 use ConorSmith\Pokemon\Location\Domain\SurveyResult;
@@ -11,6 +12,7 @@ use ConorSmith\Pokemon\SharedKernel\Config\WildEncounterTable;
 use ConorSmith\Pokemon\SharedKernel\Config\WildEncounterTableEntry;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use Exception;
+use Ramsey\Uuid\Uuid;
 
 final class FinishSurveyingPokemon
 {
@@ -31,14 +33,20 @@ final class FinishSurveyingPokemon
 
         $encounters = $survey->countEncountersInCurrentSession();
 
+        $perfectSurvey = self::createPerfectSurvey(
+            $survey->locationId,
+            $config->getTable($survey->encounterType),
+        );
+
         for ($i = 0; $i < $encounters; $i++) {
             $encounter = self::randomlySelectEntry($config->getTable($survey->encounterType));
 
             $survey = $survey->addEncounter($encounter->pokedexNumber, $encounter->form);
-        }
 
-        if ($this->surveyIsComplete($survey, $config->getTable($survey->encounterType))) {
-            $survey = $survey->complete();
+            if ($survey->matches($perfectSurvey)) {
+                $survey = $survey->complete();
+                break;
+            }
         }
 
         $survey = $survey->finish();
@@ -71,48 +79,28 @@ final class FinishSurveyingPokemon
         throw new Exception;
     }
 
-    private function surveyIsComplete(Survey $survey, WildEncounterTable $table): bool
+    private static function createPerfectSurvey(string $locationId, WildEncounterTable $table): Survey
     {
-        if ($survey->cumulativeTime + $survey->currentDuration() < 60 * 60) {
-            return false;
-        }
-
-        $largestConfiguredWeight = 0;
+        $results = [];
 
         /** @var WildEncounterTableEntry $entry */
         foreach ($table->entries as $entry) {
-            if ($entry->weight > $largestConfiguredWeight) {
-                $largestConfiguredWeight = $entry->weight;
-            }
+            $results[] = new SurveyResult(
+                $entry->pokedexNumber,
+                $entry->form,
+                $entry->weight,
+            );
         }
 
-        $mostSightings = 0;
-
-        /** @var SurveyResult $result */
-        foreach ($survey->results as $result) {
-            if ($result->sightings > $mostSightings) {
-                $mostSightings = $result->sightings;
-            }
-        }
-
-        /** @var WildEncounterTableEntry $entry */
-        foreach ($table->entries as $entry) {
-            $result = $survey->findResult($entry->pokedexNumber, $entry->form);
-            if (is_null($result)) {
-                return false;
-            }
-
-            $configuredRate = $entry->weight / $largestConfiguredWeight;
-            $surveyedRate = $result->sightings / $mostSightings;
-
-            $roundedConfiguredRate = round($configuredRate * 20);
-            $roundedSurveyedRate = round($surveyedRate * 20);
-
-            if ($roundedConfiguredRate !== $roundedSurveyedRate) {
-                return false;
-            }
-        }
-
-        return true;
+        return new Survey(
+            Uuid::uuid4()->toString(),
+            $locationId,
+            $table->encounterType,
+            true,
+            false,
+            CarbonImmutable::now("Europe/Dublin"),
+            0,
+            $results,
+        );
     }
 }

@@ -25,6 +25,9 @@ final class Survey
         );
     }
 
+    private readonly array $sortedResultsCache;
+    private readonly array $indexedResultsCache;
+
     public function __construct(
         public readonly string $id,
         public readonly string $locationId,
@@ -141,16 +144,42 @@ final class Survey
 
     public function findResult(string $pokedexNumber, ?string $form): ?SurveyResult
     {
-        /** @var SurveyResult $result */
-        foreach ($this->results as $result) {
-            if ($result->pokedexNumber === $pokedexNumber
-                && $result->form === $form
-            ) {
-                return $result;
-            }
+        $indexedResults = $this->getIndexedResults();
+
+        if (!array_key_exists($pokedexNumber, $indexedResults)
+            || !array_key_exists($form, $indexedResults[$pokedexNumber])
+        ) {
+            return null;
         }
 
-        return null;
+        return $indexedResults[$pokedexNumber][$form];
+    }
+
+    private function getIndexedResults(): array
+    {
+        if (isset($this->indexedResultsCache)) {
+            return $this->indexedResultsCache;
+        }
+
+        $indexedResults = [];
+
+        /** @var SurveyResult $result */
+        foreach ($this->results as $result) {
+
+            if (!array_key_exists($result->pokedexNumber, $indexedResults)) {
+                $indexedResults[$result->pokedexNumber] = [];
+            }
+
+            if (array_key_exists($result->form, $indexedResults[$result->pokedexNumber])) {
+                throw new LogicException();
+            }
+
+            $indexedResults[$result->pokedexNumber][$result->form] = $result;
+        }
+
+        $this->indexedResultsCache = $indexedResults;
+
+        return $this->indexedResultsCache;
     }
 
     public function getMostSightings(): int
@@ -162,14 +191,20 @@ final class Survey
 
     public function getSortedResultsFromMostSighted(): array
     {
-        $surveyResults = $this->results;
+        if (isset($this->sortedResultsCache)) {
+            return $this->sortedResultsCache;
+        }
+
+        $sortedResults = $this->results;
 
         usort(
-            $surveyResults,
+            $sortedResults,
             fn(SurveyResult $resultA, SurveyResult $resultB) => $resultA->sightings < $resultB->sightings,
         );
 
-        return $surveyResults;
+        $this->sortedResultsCache = $sortedResults;
+
+        return $this->sortedResultsCache;
     }
 
     public function currentDuration(): int
@@ -191,5 +226,37 @@ final class Survey
         }
 
         return intval(floor($this->currentDuration() / 5));
+    }
+
+    public function matches(self $other): bool
+    {
+        $mostOtherSightings = $other->getMostSightings();
+        $mostSightings = $this->getMostSightings();
+
+        /** @var SurveyResult $result */
+        foreach ($other->results as $otherResult) {
+
+            $thisResult = $this->findResult($otherResult->pokedexNumber, $otherResult->form);
+
+            if (is_null($thisResult)) {
+                return false;
+            }
+
+            $otherRate = $otherResult->sightings / $mostOtherSightings;
+            $thisRate = $thisResult->sightings / $mostSightings;
+
+            $roundedOtherRate = round($otherRate * 20);
+            $roundedThisRate = round($thisRate * 20);
+
+            if ($roundedOtherRate !== $roundedThisRate) {
+                return false;
+            }
+
+            if ($thisResult->sightings < $roundedOtherRate * 10) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

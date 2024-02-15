@@ -27,7 +27,7 @@
                             <a href="/<?=$instanceId?>/track-pokemon/walking" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Track
                             </a>
-                            <a href="/<?=$instanceId?>/survey-pokemon/walking" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                            <a href="/<?=$instanceId?>/survey-pokemon/walking" class="btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Survey
                             </a>
                         </div>
@@ -38,7 +38,7 @@
                             <a href="/<?=$instanceId?>/track-pokemon/surfing" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Track
                             </a>
-                            <a href="/<?=$instanceId?>/survey-pokemon/surfing" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                            <a href="/<?=$instanceId?>/survey-pokemon/surfing" class="btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Survey
                             </a>
                         </div>
@@ -49,7 +49,7 @@
                             <a href="/<?=$instanceId?>/track-pokemon/fishing" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Track
                             </a>
-                            <a href="/<?=$instanceId?>/survey-pokemon/fishing" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                            <a href="/<?=$instanceId?>/survey-pokemon/fishing" class="btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Survey
                             </a>
                         </div>
@@ -60,7 +60,7 @@
                             <a href="/<?=$instanceId?>/track-pokemon/rockSmash" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Track
                             </a>
-                            <a href="/<?=$instanceId?>/survey-pokemon/rockSmash" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                            <a href="/<?=$instanceId?>/survey-pokemon/rockSmash" class="btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Survey
                             </a>
                         </div>
@@ -71,7 +71,7 @@
                             <a href="/<?=$instanceId?>/track-pokemon/headbutt" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Track
                             </a>
-                            <a href="/<?=$instanceId?>/survey-pokemon/headbutt" class="flex-fill btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
+                            <a href="/<?=$instanceId?>/survey-pokemon/headbutt" class="btn btn-outline-dark <?=$canEncounter ? "" : "disabled"?>">
                                 Survey
                             </a>
                         </div>
