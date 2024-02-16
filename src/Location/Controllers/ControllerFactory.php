@@ -84,6 +84,7 @@ final class ControllerFactory
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(LocationRepository::class, $instanceId),
                 $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
                 $this->giftPokemonConfigRepository,
                 $this->locationConfigRepository,
                 $this->pokedexConfigRepository,

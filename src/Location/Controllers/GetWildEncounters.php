@@ -6,6 +6,8 @@ namespace ConorSmith\Pokemon\Location\Controllers;
 
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Location\Domain\FindWildEncounters;
+use ConorSmith\Pokemon\Location\Domain\Location;
+use ConorSmith\Pokemon\Location\Domain\SurveyRepository;
 use ConorSmith\Pokemon\Location\Domain\WildEncounters;
 use ConorSmith\Pokemon\Location\Domain\FindFeatures;
 use ConorSmith\Pokemon\Location\Repositories\LocationRepository;
@@ -13,6 +15,7 @@ use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Party\Repositories\ObtainedGiftPokemonRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
+use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Queries\AreaIsClearedQuery;
@@ -23,6 +26,7 @@ use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory as SharedViewModelFactory;
 use LogicException;
+use RuntimeException;
 use stdClass;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +38,7 @@ final class GetWildEncounters
         private readonly BagRepository $bagRepository,
         private readonly LocationRepository $locationRepository,
         private readonly ObtainedGiftPokemonRepository $obtainedGiftPokemonRepository,
+        private readonly SurveyRepository $surveyRepository,
         private readonly GiftPokemonConfigRepository $giftPokemonConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
@@ -59,6 +64,11 @@ final class GetWildEncounters
         }
 
         $wildEncounters = $this->findWildEncounters->find($currentLocation->id);
+        $surveys = [];
+        if (!is_null($wildEncounters)) {
+            $surveys = $this->findSurveys($currentLocation, $wildEncounters);
+        }
+
         $giftPokemonConfigEntries = $this->giftPokemonConfigRepository->findInLocation($currentLocation->id);
 
         $currentLocationViewModel = $this->viewModelFactory->createLocation($currentLocation);
@@ -70,7 +80,7 @@ final class GetWildEncounters
             'pokeballs'         => $bag->countAllPokeBalls(),
             'ovalCharms'        => $bag->count(ItemId::OVAL_CHARM),
             'hasWildEncounters' => $features->hasWildEncounters,
-            'wildEncounters'    => $wildEncounters ? $this->createWildEncountersViewModel($wildEncounters) : null,
+            'wildEncounters'    => $wildEncounters ? $this->createWildEncountersViewModels($wildEncounters, $surveys) : [],
             'hasGiftPokemon'    => $features->hasGiftPokemon,
             'giftPokemon'       => $this->createGiftPokemonViewModels(
                 $this->locationConfigRepository->findLocation($currentLocation->id),
@@ -80,15 +90,29 @@ final class GetWildEncounters
         ]));
     }
 
-    private function createWildEncountersViewModel(WildEncounters $wildEncounters): stdClass
+    private function createWildEncountersViewModels(WildEncounters $wildEncounters, array $surveys): array
     {
-        return (object) [
-            'walking'   => $wildEncounters->includesWalking,
-            'surfing'   => $wildEncounters->includesSurfing,
-            'fishing'   => $wildEncounters->includesFishing,
-            'rockSmash' => $wildEncounters->includesRockSmash,
-            'headbutt'  => $wildEncounters->includesHeadbutt,
-        ];
+        $viewModels = [];
+
+        foreach (EncounterType::ALL as $encounterType) {
+            if ($wildEncounters->includes($encounterType)) {
+                $viewModels[] = (object) [
+                    'encounterType'  => $encounterType,
+                    'classes'        => match ($encounterType) {
+                        EncounterType::WALKING    => "fas fa-shoe-prints",
+                        EncounterType::SURFING    => "fas fa-water",
+                        EncounterType::FISHING    => "fas fa-fish",
+                        EncounterType::ROCK_SMASH => "fab fa-sith",
+                        EncounterType::HEADBUTT   => "fas fa-tree",
+                        default                   => throw new RuntimeException(),
+                    },
+                    'surveyStarted'  => !is_null($surveys[$encounterType]),
+                    'surveyComplete' => !is_null($surveys[$encounterType]) && $surveys[$encounterType]->isComplete,
+                ];
+            }
+        }
+
+        return $viewModels;
     }
 
     private function createGiftPokemonViewModels(array $currentLocation, array $giftPokemonConfigEntries): array
@@ -167,5 +191,21 @@ final class GetWildEncounters
         $highestRankedBadge = $this->highestRankedGymBadgeQuery->run();
 
         return $highestRankedBadge->levelLimit();
+    }
+
+    private function findSurveys(Location $location, WildEncounters $wildEncounters): array
+    {
+        $surveys = [];
+
+        foreach (EncounterType::ALL as $encounterType) {
+            if ($wildEncounters->includes($encounterType)) {
+                $surveys[$encounterType] = $this->surveyRepository->findForLocationAndEncounterType(
+                    $location->id,
+                    $encounterType,
+                );
+            }
+        }
+
+        return $surveys;
     }
 }
