@@ -1,8 +1,8 @@
-<form method="POST" action="/<?=$instanceId?>/map/move" style="height: 100%;">
+<form method="POST" action="/<?=$instanceId?>/map/move">
     <input type="hidden" name="location" value="<?=$location->id?>">
     <button type="submit"
             class="btn btn-primary d-flex align-items-center justify-content-center"
-            style="width: 100%; height: 100%; gap: 4px;"
+            style="width: 100%; gap: 4px;"
             <?=$location->isLocked ? "disabled" : ""?>
     >
         <?php if ($location->icon) : ?>

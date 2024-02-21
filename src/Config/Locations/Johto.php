@@ -31,7 +31,7 @@ return [
         'name'       => "Tohjo Falls",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::ROUTE_27,
+            Direction::EXIT => LocationId::ROUTE_27,
         ],
     ],
     [
@@ -51,7 +51,7 @@ return [
         'area'       => LocationId::MT_SILVER,
         'directions' => [
             Direction::U => LocationId::MT_SILVER_1F,
-            LocationId::ROUTE_28,
+            Direction::EXIT => LocationId::ROUTE_28,
         ],
     ],
     [
@@ -133,7 +133,7 @@ return [
         'id'         => LocationId::PROFESSOR_ELMS_LAB,
         'name'       => "Professor Elm's Lab",
         'directions' => [
-            LocationId::NEW_BARK_TOWN,
+            Direction::EXIT => LocationId::NEW_BARK_TOWN,
         ],
     ],
     [
@@ -182,7 +182,7 @@ return [
         'area'       => LocationId::DARK_CAVE,
         'directions' => [
             Direction::E => LocationId::DARK_CAVE_EAST,
-            LocationId::ROUTE_31,
+            Direction::EXIT => LocationId::ROUTE_31,
         ],
     ],
     [
@@ -214,7 +214,7 @@ return [
         'name'       => "Violet Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::VIOLET_CITY,
+            Direction::EXIT => LocationId::VIOLET_CITY,
         ],
     ],
     [
@@ -225,7 +225,7 @@ return [
         'area'       => LocationId::SPROUT_TOWER,
         'directions' => [
             Direction::U => LocationId::SPROUT_TOWER_2F,
-            LocationId::VIOLET_CITY,
+            Direction::EXIT => LocationId::VIOLET_CITY,
         ],
     ],
     [
@@ -255,8 +255,8 @@ return [
         'type'       => LocationType::ROUTE,
         'directions' => [
             Direction::N => LocationId::VIOLET_CITY,
-            Direction::W => LocationId::RUINS_OF_ALPH_OUTSIDE,
-            Direction::S => LocationId::UNION_CAVE_1F,
+            LocationId::RUINS_OF_ALPH_OUTSIDE,
+            LocationId::UNION_CAVE_1F,
         ],
     ],
     [
@@ -266,9 +266,9 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::RUINS_OF_ALPH,
         'directions' => [
-            Direction::N => LocationId::ROUTE_36,
-            Direction::E => LocationId::ROUTE_32,
             LocationId::RUINS_OF_ALPH_CHAMBER,
+            LocationId::ROUTE_32,
+            LocationId::ROUTE_36,
         ],
     ],
     [
@@ -278,7 +278,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::RUINS_OF_ALPH,
         'directions' => [
-            LocationId::RUINS_OF_ALPH_OUTSIDE,
+            Direction::EXIT => LocationId::RUINS_OF_ALPH_OUTSIDE,
         ],
     ],
     [
@@ -289,7 +289,7 @@ return [
         'area'       => LocationId::UNION_CAVE,
         'directions' => [
             Direction::D => LocationId::UNION_CAVE_B1F,
-            LocationId::ROUTE_32,
+            Direction::EXIT => LocationId::ROUTE_32,
         ],
     ],
     [
@@ -311,7 +311,7 @@ return [
         'area'       => LocationId::UNION_CAVE,
         'directions' => [
             Direction::U => LocationId::UNION_CAVE_B1F,
-            LocationId::ROUTE_33,
+            Direction::EXIT => LocationId::ROUTE_33,
         ],
     ],
     [
@@ -339,7 +339,7 @@ return [
         'name'       => "Azalea Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::AZALEA_TOWN,
+            Direction::EXIT => LocationId::AZALEA_TOWN,
         ],
     ],
     [
@@ -350,7 +350,7 @@ return [
         'area'       => LocationId::SLOWPOKE_WELL,
         'directions' => [
             Direction::D => LocationId::SLOWPOKE_WELL_B1F,
-            LocationId::AZALEA_TOWN,
+            Direction::EXIT => LocationId::AZALEA_TOWN,
         ],
     ],
     [
@@ -410,14 +410,14 @@ return [
         'id'         => LocationId::GOLDENROD_BILLS_HOUSE,
         'name'       => "Bill's House",
         'directions' => [
-            LocationId::GOLDENROD_CITY,
+            Direction::EXIT => LocationId::GOLDENROD_CITY,
         ],
     ],
     [
         'id'         => LocationId::GOLDENROD_GAME_CORNER,
         'name'       => "Game Corner",
         'directions' => [
-            LocationId::GOLDENROD_CITY,
+            Direction::EXIT => LocationId::GOLDENROD_CITY,
         ],
     ],
     [
@@ -427,7 +427,7 @@ return [
         'type'       => LocationType::TOWER,
         'area'       => LocationId::GOLDENROD_TUNNEL,
         'directions' => [
-            Direction::U => LocationId::GOLDENROD_CITY,
+            Direction::EXIT => LocationId::GOLDENROD_CITY,
             Direction::D => LocationId::GOLDENROD_TUNNEL_B2F,
         ],
     ],
@@ -460,7 +460,7 @@ return [
         'area'       => LocationId::GOLDENROD_RADIO_TOWER,
         'directions' => [
             Direction::U => LocationId::GOLDENROD_RADIO_TOWER_2F,
-            Direction::D => LocationId::GOLDENROD_CITY,
+            Direction::EXIT => LocationId::GOLDENROD_CITY,
         ],
     ],
     [
@@ -522,7 +522,7 @@ return [
         'name'       => "Goldenrod Station",
         'directions' => [
             LocationId::MAGNET_TRAIN,
-            LocationId::GOLDENROD_CITY,
+            Direction::EXIT => LocationId::GOLDENROD_CITY,
         ],
     ],
     [
@@ -538,7 +538,7 @@ return [
         'name'       => "Goldenrod Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::GOLDENROD_CITY,
+            Direction::EXIT => LocationId::GOLDENROD_CITY,
         ],
     ],
     [
@@ -566,7 +566,7 @@ return [
             Direction::N => LocationId::ROUTE_37,
             Direction::E => LocationId::VIOLET_CITY,
             Direction::W => LocationId::NATIONAL_PARK,
-            Direction::S => LocationId::RUINS_OF_ALPH_OUTSIDE,
+            LocationId::RUINS_OF_ALPH_OUTSIDE,
         ],
     ],
     [
@@ -597,7 +597,7 @@ return [
         'name'       => "Ecruteak Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::ECRUTEAK_CITY,
+            Direction::EXIT => LocationId::ECRUTEAK_CITY,
         ],
     ],
     [
@@ -607,7 +607,7 @@ return [
         'type'       => LocationType::TOWER,
         'area'       => LocationId::BURNED_TOWER,
         'directions' => [
-            Direction::U => LocationId::ECRUTEAK_CITY,
+            Direction::EXIT => LocationId::ECRUTEAK_CITY,
             Direction::D => LocationId::BURNED_TOWER_B1F,
         ],
     ],
@@ -625,7 +625,7 @@ return [
         'id'         => LocationId::ECRUTEAK_DANCE_THEATRE,
         'name'       => "Ecruteak Dance Theatre",
         'directions' => [
-            LocationId::ECRUTEAK_CITY,
+            Direction::EXIT => LocationId::ECRUTEAK_CITY,
         ],
     ],
     [
@@ -636,7 +636,7 @@ return [
         'area'       => LocationId::BELL_TOWER,
         'directions' => [
             Direction::U => LocationId::BELL_TOWER_2F,
-            Direction::D => LocationId::ECRUTEAK_CITY,
+            Direction::EXIT => LocationId::ECRUTEAK_CITY,
         ],
     ],
     [
@@ -784,7 +784,7 @@ return [
         'name'       => "Olivine Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::OLIVINE_CITY,
+            Direction::EXIT => LocationId::OLIVINE_CITY,
         ],
     ],
     [
@@ -795,7 +795,7 @@ return [
         'area'       => LocationId::GLITTER_LIGHTHOUSE,
         'directions' => [
             Direction::U => LocationId::GLITTER_LIGHTHOUSE_2F,
-            Direction::D => LocationId::OLIVINE_CITY,
+            Direction::EXIT => LocationId::OLIVINE_CITY,
         ],
     ],
     [
@@ -909,7 +909,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::WHIRL_ISLANDS,
         'directions' => [
-            Direction::U => LocationId::ROUTE_41,
+            Direction::EXIT => LocationId::ROUTE_41,
             Direction::D => LocationId::WHIRL_ISLANDS_B1F,
         ],
     ],
@@ -960,7 +960,7 @@ return [
         'name'       => "Cianwood Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::CIANWOOD_CITY,
+            Direction::EXIT => LocationId::CIANWOOD_CITY,
         ],
     ],
     [
@@ -986,7 +986,7 @@ return [
         'name'       => "Cliff Cave",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::ROUTE_47,
+            Direction::EXIT => LocationId::ROUTE_47,
         ],
     ],
     [
@@ -994,7 +994,7 @@ return [
         'name'       => "Route 48",
         'type'       => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::JOHTO_SAFARI_ZONE_GATE,
+            LocationId::JOHTO_SAFARI_ZONE_GATE,
             Direction::S => LocationId::ROUTE_47,
         ],
     ],
@@ -1004,7 +1004,7 @@ return [
         'section'    => "Gate",
         'area'       => LocationId::JOHTO_SAFARI_ZONE,
         'directions' => [
-            Direction::S => LocationId::ROUTE_48,
+            Direction::EXIT => LocationId::ROUTE_48,
             LocationId::JOHTO_SAFARI_ZONE_PEAK,
             LocationId::JOHTO_SAFARI_ZONE_DESERT,
             LocationId::JOHTO_SAFARI_ZONE_PLAINS,
@@ -1132,7 +1132,7 @@ return [
         'name'       => "Route 42",
         'type'       => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::MT_MORTAR_1F_ENTRANCE,
+            LocationId::MT_MORTAR_1F_ENTRANCE,
             Direction::E => LocationId::MAHOGANY_TOWN,
             Direction::W => LocationId::ECRUTEAK_CITY,
         ],
@@ -1147,7 +1147,7 @@ return [
             Direction::U => LocationId::MT_MORTAR_2F,
             Direction::D => LocationId::MT_MORTAR_B1F,
             LocationId::MT_MORTAR_1F_BACK,
-            LocationId::ROUTE_42,
+            Direction::EXIT => LocationId::ROUTE_42,
         ],
     ],
     [
@@ -1157,7 +1157,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::MT_MORTAR,
         'directions' => [
-            LocationId::MT_MORTAR_1F_ENTRANCE,
+            Direction::EXIT => LocationId::MT_MORTAR_1F_ENTRANCE,
         ],
     ],
     [
@@ -1197,7 +1197,7 @@ return [
         'name'       => "Mahogany Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::MAHOGANY_TOWN,
+            Direction::EXIT => LocationId::MAHOGANY_TOWN,
         ],
     ],
     [
@@ -1206,7 +1206,7 @@ return [
         'area'       => LocationId::TEAM_ROCKET_HQ,
         'directions' => [
             Direction::D => LocationId::TEAM_ROCKET_HQ_B1F,
-            LocationId::MAHOGANY_TOWN,
+            Direction::EXIT => LocationId::MAHOGANY_TOWN,
         ],
     ],
     [
@@ -1288,7 +1288,7 @@ return [
         'name'       => "Blackthorn Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::BLACKTHORN_CITY,
+            Direction::EXIT => LocationId::BLACKTHORN_CITY,
         ],
     ],
     [
@@ -1296,7 +1296,7 @@ return [
         'name'       => "Dragon's Den",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::BLACKTHORN_CITY,
+            Direction::EXIT => LocationId::BLACKTHORN_CITY,
         ],
     ],
     [

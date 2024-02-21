@@ -101,6 +101,7 @@ return [
     LocationId::CIANWOOD_GYM                           => "Johto_Cianwood_City_Map.png",
     LocationId::ROUTE_47                               => "Johto_Route_47_Map.png",
     LocationId::CLIFF_GATE_EDGE                        => "Johto_Cianwood_City_Map.png",
+    LocationId::CLIFF_CAVE                             => "Johto_Route_47_Map.png",
     LocationId::ROUTE_48                               => "Johto_Route_48_Map.png",
     LocationId::JOHTO_SAFARI_ZONE_GATE                 => "Johto_Safari_Zone_Map.png",
     LocationId::JOHTO_SAFARI_ZONE_PEAK                 => "Johto_Safari_Zone_Map.png",

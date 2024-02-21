@@ -38,6 +38,9 @@ final class ViewModelFactory
         ];
         $hasVerticalDirections = false;
 
+        $exitDirections = [];
+        $hasExitDirections = false;
+
         $otherDirections = [];
 
         /** @var AdjacentLocation $adjacentLocation */
@@ -51,6 +54,10 @@ final class ViewModelFactory
             } elseif ($adjacentLocation->isInAVerticalDirection()) {
                 $hasVerticalDirections = true;
                 $verticalDirections[$adjacentLocation->direction] = $adjacentLocationViewModel;
+
+            } elseif ($adjacentLocation->isAnExit()) {
+                $hasExitDirections = true;
+                $exitDirections[] = $adjacentLocationViewModel;
 
             } else {
                 $otherDirections[] = $adjacentLocationViewModel;
@@ -69,12 +76,14 @@ final class ViewModelFactory
             $locationConfig['section'] ?? null,
             $hasCardinalDirections,
             $hasVerticalDirections,
+            $hasExitDirections,
             $cardinalDirections[Direction::N],
             $cardinalDirections[Direction::S],
             $cardinalDirections[Direction::E],
             $cardinalDirections[Direction::W],
             $verticalDirections[Direction::U],
             $verticalDirections[Direction::D],
+            $exitDirections,
             $otherDirections,
         );
     }
@@ -91,6 +100,7 @@ final class ViewModelFactory
                 RegionId::HOENN => "Hoenn",
                 default         => throw new LogicException(),
             },
+            'section' => $locationConfig['section'] ?? null,
         ];
     }
 
@@ -119,6 +129,10 @@ final class ViewModelFactory
 
         if ($adjacentLocation->isInAVerticalDirection() || $adjacentLocation->isInACardinalDirection()) {
             $icon = null;
+        }
+
+        if ($adjacentLocation->isAnExit()) {
+            $icon = "fas fa-door-open";
         }
 
         return new AdjacentLocationViewModel(

@@ -122,9 +122,7 @@ final class GetMap
         ?WildEncounters $wildEncounters
     ): stdClass {
         return (object) [
-            'isShown'  => count($trainers) > 0
-                || ($wildEncounters && $wildEncounters->includesAny())
-                || $features->hasGiftPokemon,
+            'isShown'  => true,
             'trainers' => (object) [
                 'isShown' => count($trainers) > 0,
                 'beaten'  => count(array_filter(

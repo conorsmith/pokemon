@@ -2,10 +2,10 @@
 
 <div class="d-grid gap-4">
 
-    <div class="d-flex justify-content-between align-items-end">
+    <div class="d-flex gap-2 align-items-end">
         <h2 class="mb-0"><?=$currentLocation->name?></h2>
         <div>
-            <span class="badge bg-secondary"><?=$currentLocation->region?></span>
+            <?=$currentLocation->section?>
         </div>
     </div>
 

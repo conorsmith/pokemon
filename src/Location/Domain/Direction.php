@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\Domain;
 
-use LogicException;
-
 final class Direction
 {
     public const N = "n";
@@ -15,6 +13,8 @@ final class Direction
 
     public const U = "u";
     public const D = "d";
+
+    public const EXIT = "x";
 
     public static function isCardinal($direction): bool
     {
@@ -29,16 +29,9 @@ final class Direction
         return $direction === self::U
             || $direction === self::D;
     }
-    public static function toSlug(string $direction): string
+
+    public static function isExit($direction): bool
     {
-        return match ($direction) {
-            self::N => "north",
-            self::E => "east",
-            self::W => "west",
-            self::S => "south",
-            self::U => "up",
-            self::D => "down",
-            default => throw new LogicException(),
-        };
+        return $direction === self::EXIT;
     }
 }

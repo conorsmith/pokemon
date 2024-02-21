@@ -21,7 +21,7 @@ return [
         'id'         => LocationId::PROFESSOR_OAKS_LAB,
         'name'       => "Professor Oak's Lab",
         'directions' => [
-            LocationId::PALLET_TOWN,
+            Direction::EXIT => LocationId::PALLET_TOWN,
         ],
     ],
     [
@@ -49,7 +49,7 @@ return [
         'name'       => "Viridian Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::VIRIDIAN_CITY,
+            Direction::EXIT => LocationId::VIRIDIAN_CITY,
         ],
     ],
     [
@@ -78,7 +78,7 @@ return [
         'name'       => "Pewter Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::PEWTER_CITY,
+            Direction::EXIT => LocationId::PEWTER_CITY,
         ],
     ],
     [
@@ -86,7 +86,7 @@ return [
         'name'       => "Viridian Forest",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::ROUTE_2,
+            Direction::EXIT => LocationId::ROUTE_2,
         ],
     ],
     [
@@ -104,7 +104,7 @@ return [
         'type'       => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::PEWTER_CITY,
-            Direction::E => LocationId::MT_MOON_F1,
+            LocationId::MT_MOON_F1,
         ],
     ],
     [
@@ -114,7 +114,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::MT_MOON,
         'directions' => [
-            LocationId::ROUTE_3,
+            Direction::EXIT => LocationId::ROUTE_3,
             Direction::D => LocationId::MT_MOON_BF1,
         ],
     ],
@@ -137,7 +137,7 @@ return [
         'area'       => LocationId::MT_MOON,
         'directions' => [
             Direction::U => LocationId::MT_MOON_BF1,
-            LocationId::ROUTE_4,
+            Direction::EXIT => LocationId::ROUTE_4,
         ],
     ],
     [
@@ -145,7 +145,7 @@ return [
         'name'       => "Route 4",
         'type'       => LocationType::ROUTE,
         'directions' => [
-            Direction::W => LocationId::MT_MOON_BF2,
+            LocationId::MT_MOON_BF2,
             Direction::E => LocationId::CERULEAN_CITY,
         ],
     ],
@@ -166,7 +166,7 @@ return [
         'name'       => "Cerulean Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::CERULEAN_CITY,
+            Direction::EXIT => LocationId::CERULEAN_CITY,
         ],
     ],
     [
@@ -198,14 +198,14 @@ return [
         'name'       => "Saffron Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::SAFFRON_CITY,
+            Direction::EXIT => LocationId::SAFFRON_CITY,
         ],
     ],
     [
         'id'         => LocationId::FIGHTING_DOJO,
         'name'       => "Fighting Dojo",
         'directions' => [
-            LocationId::SAFFRON_CITY,
+            Direction::EXIT => LocationId::SAFFRON_CITY,
         ],
     ],
     [
@@ -213,7 +213,7 @@ return [
         'name'       => "Saffron Station",
         'directions' => [
             LocationId::MAGNET_TRAIN,
-            LocationId::SAFFRON_CITY,
+            Direction::EXIT => LocationId::SAFFRON_CITY,
         ],
     ],
     [
@@ -224,7 +224,7 @@ return [
         'area'       => LocationId::SILPH_CO,
         'directions' => [
             Direction::U => LocationId::SILPH_CO_2F,
-            LocationId::SAFFRON_CITY,
+            Direction::EXIT => LocationId::SAFFRON_CITY,
         ],
     ],
     [
@@ -361,14 +361,14 @@ return [
         'name'       => "Vermillion Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::VERMILLION_CITY,
+            Direction::EXIT => LocationId::VERMILLION_CITY,
         ],
     ],
     [
         'id'         => LocationId::VERMILLION_HARBOUR,
         'name'       => "Vermillion Harbour",
         'directions' => [
-            LocationId::VERMILLION_CITY,
+            Direction::EXIT => LocationId::VERMILLION_CITY,
             LocationId::SS_ANNE_1F,
             LocationId::SEAGALLOP_FERRY,
             LocationId::SS_AQUA_1F,
@@ -380,7 +380,7 @@ return [
         'section'    => "1st Floor",
         'area'       => LocationId::SS_ANNE,
         'directions' => [
-            LocationId::VERMILLION_HARBOUR,
+            Direction::EXIT => LocationId::VERMILLION_HARBOUR,
             Direction::D => LocationId::SS_ANNE_B1F,
             Direction::U => LocationId::SS_ANNE_2F,
         ],
@@ -439,7 +439,7 @@ return [
         'name'       => "Celadon Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::CELADON_CITY,
+            Direction::EXIT => LocationId::CELADON_CITY,
         ],
     ],
     [
@@ -447,7 +447,7 @@ return [
         'name'       => "Celadon Condominiums",
         'type'       => LocationType::TOWER,
         'directions' => [
-            LocationId::CELADON_CITY,
+            Direction::EXIT => LocationId::CELADON_CITY,
         ],
     ],
     [
@@ -455,7 +455,7 @@ return [
         'name'       => "Rocket Game Corner",
         'type'       => LocationType::TOWER,
         'directions' => [
-            LocationId::CELADON_CITY,
+            Direction::EXIT => LocationId::CELADON_CITY,
             Direction::D => LocationId::TEAM_ROCKET_HIDEOUT_B1F,
         ],
     ],
@@ -530,7 +530,7 @@ return [
         'area'       => LocationId::POKEMON_TOWER,
         'directions' => [
             Direction::U => LocationId::POKEMON_TOWER_2F,
-            LocationId::LAVENDER_TOWN,
+            Direction::EXIT => LocationId::LAVENDER_TOWN,
         ],
     ],
     [
@@ -613,7 +613,7 @@ return [
         'name'       => "Power Plant",
         'type'       => LocationType::TOWER,
         'directions' => [
-            LocationId::ROUTE_9,
+            Direction::EXIT => LocationId::ROUTE_9,
         ],
     ],
     [
@@ -699,7 +699,7 @@ return [
         'name'       => "Fuchsia City",
         'type'       => LocationType::CITY,
         'directions' => [
-            Direction::N => LocationId::KANTO_SAFARI_ZONE_S,
+            LocationId::KANTO_SAFARI_ZONE_S,
             Direction::W => LocationId::ROUTE_18,
             Direction::E => LocationId::ROUTE_15,
             Direction::S => LocationId::ROUTE_19,
@@ -711,7 +711,7 @@ return [
         'name'       => "Fuchsia Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::FUCHSIA_CITY,
+            Direction::EXIT => LocationId::FUCHSIA_CITY,
         ],
     ],
     [
@@ -722,7 +722,7 @@ return [
             Direction::N => LocationId::KANTO_SAFARI_ZONE_N,
             Direction::W => LocationId::KANTO_SAFARI_ZONE_W,
             Direction::E => LocationId::KANTO_SAFARI_ZONE_E,
-            Direction::S => LocationId::FUCHSIA_CITY,
+            Direction::EXIT => LocationId::FUCHSIA_CITY,
         ],
     ],
     [
@@ -805,7 +805,7 @@ return [
         'section'    => "1st Floor",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::ROUTE_20,
+            Direction::EXIT => LocationId::ROUTE_20,
             Direction::D => LocationId::SEAFOAM_ISLANDS_B1F,
         ],
     ],
@@ -864,7 +864,7 @@ return [
         'name'       => "Cinnabar Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::CINNABAR_ISLAND,
+            Direction::EXIT => LocationId::CINNABAR_ISLAND,
         ],
     ],
     [
@@ -872,7 +872,7 @@ return [
         'name'       => "Pokémon Mansion",
         'type'       => LocationType::TOWER,
         'directions' => [
-            LocationId::CINNABAR_ISLAND,
+            Direction::EXIT => LocationId::CINNABAR_ISLAND,
         ],
     ],
     [
@@ -898,7 +898,7 @@ return [
         'name'       => "Pokémon League Front Gate",
         'type'       => LocationType::TOWER,
         'directions' => [
-            Direction::N => LocationId::VICTORY_ROAD_1F,
+            LocationId::VICTORY_ROAD_1F,
             Direction::E => LocationId::ROUTE_22,
             Direction::W => LocationId::ROUTE_28,
             Direction::S => LocationId::ROUTE_26,
@@ -912,7 +912,7 @@ return [
         'area'       => LocationId::VICTORY_ROAD,
         'directions' => [
             Direction::U => LocationId::VICTORY_ROAD_2F,
-            LocationId::POKEMON_LEAGUE_FRONT_GATE,
+            Direction::EXIT => LocationId::POKEMON_LEAGUE_FRONT_GATE,
         ],
     ],
     [
@@ -933,7 +933,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::VICTORY_ROAD,
         'directions' => [
-            LocationId::ROUTE_23,
+            Direction::EXIT => LocationId::ROUTE_23,
             Direction::D => LocationId::VICTORY_ROAD_2F,
         ],
     ],
@@ -942,8 +942,8 @@ return [
         'name'       => "Route 23",
         'type'       => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::INDIGO_PLATEAU,
-            Direction::S => LocationId::VICTORY_ROAD_3F,
+            LocationId::INDIGO_PLATEAU,
+            LocationId::VICTORY_ROAD_3F,
         ],
     ],
     [
@@ -952,7 +952,7 @@ return [
         'directions' => [
             LocationId::KANTO_LEAGUE_CHAMBER,
             LocationId::JOHTO_LEAGUE_CHAMBER,
-            LocationId::ROUTE_23,
+            Direction::EXIT => LocationId::ROUTE_23,
         ],
     ],
     [
@@ -995,7 +995,7 @@ return [
         'section'    => "1st Floor",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::ROUTE_24,
+            Direction::EXIT => LocationId::ROUTE_24,
             Direction::U => LocationId::CERULEAN_CAVE_2F,
             Direction::D => LocationId::CERULEAN_CAVE_B1F,
         ],
@@ -1052,7 +1052,7 @@ return [
         'id'         => LocationId::KINDLE_ROAD,
         'name'       => "Kindle Road",
         'directions' => [
-            Direction::N => LocationId::MT_EMBER_BASE,
+            LocationId::MT_EMBER_BASE,
             Direction::W => LocationId::KNOT_ISLAND,
         ],
     ],
@@ -1063,9 +1063,9 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::MT_EMBER,
         'directions' => [
-            LocationId::MT_EMBER_SUMMIT_PATH_1,
-            LocationId::MT_EMBER_1F,
-            LocationId::KINDLE_ROAD,
+            Direction::U => LocationId::MT_EMBER_SUMMIT_PATH_1,
+            Direction::D => LocationId::MT_EMBER_1F,
+            Direction::EXIT => LocationId::KINDLE_ROAD,
         ],
     ],
     [
@@ -1119,7 +1119,7 @@ return [
         'area'       => LocationId::MT_EMBER,
         'directions' => [
             Direction::D => LocationId::MT_EMBER_B1F,
-            LocationId::MT_EMBER_BASE,
+            Direction::U => LocationId::MT_EMBER_BASE,
         ],
     ],
     [
@@ -1195,7 +1195,7 @@ return [
         'id'         => LocationId::KIN_ISLAND_PORT,
         'name'       => "Kin Island Port",
         'directions' => [
-            Direction::N => LocationId::KIN_ISLAND,
+            Direction::EXIT => LocationId::KIN_ISLAND,
             LocationId::SEAGALLOP_FERRY,
         ],
     ],
@@ -1204,7 +1204,7 @@ return [
         'name'       => "Kin Island",
         'directions' => [
             Direction::W => LocationId::BOND_BRIDGE,
-            Direction::S => LocationId::KIN_ISLAND_PORT,
+            LocationId::KIN_ISLAND_PORT,
         ],
     ],
     [
@@ -1226,7 +1226,7 @@ return [
         'id'         => LocationId::FLOE_ISLAND,
         'name'       => "Floe Island",
         'directions' => [
-            Direction::N => LocationId::ICEFALL_CAVE_ENTRANCE,
+            LocationId::ICEFALL_CAVE_ENTRANCE,
             LocationId::SEAGALLOP_FERRY,
         ],
     ],
@@ -1237,8 +1237,8 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::ICEFALL_CAVE,
         'directions' => [
-            Direction::N => LocationId::ICEFALL_CAVE_1F,
-            LocationId::FLOE_ISLAND,
+            Direction::D => LocationId::ICEFALL_CAVE_1F,
+            Direction::EXIT => LocationId::FLOE_ISLAND,
         ],
     ],
     [
@@ -1248,9 +1248,9 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::ICEFALL_CAVE,
         'directions' => [
-            Direction::N => LocationId::ICEFALL_CAVE_BACK_CAVE,
-            Direction::S => LocationId::ICEFALL_CAVE_ENTRANCE,
-            LocationId::ICEFALL_CAVE_B1F,
+            LocationId::ICEFALL_CAVE_BACK_CAVE,
+            Direction::U => LocationId::ICEFALL_CAVE_ENTRANCE,
+            Direction::D => LocationId::ICEFALL_CAVE_B1F,
         ],
     ],
     [
@@ -1260,7 +1260,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::ICEFALL_CAVE,
         'directions' => [
-            LocationId::ICEFALL_CAVE_1F,
+            Direction::U => LocationId::ICEFALL_CAVE_1F,
         ],
     ],
     [
@@ -1270,7 +1270,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::ICEFALL_CAVE,
         'directions' => [
-            Direction::S => LocationId::ICEFALL_CAVE_1F,
+            Direction::EXIT => LocationId::ICEFALL_CAVE_1F,
         ],
     ],
     [
@@ -1305,7 +1305,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::LOST_CAVE,
         'directions' => [
-            LocationId::RESORT_GORGEOUS,
+            Direction::EXIT => LocationId::RESORT_GORGEOUS,
             LocationId::LOST_CAVE_B1F_1,
         ],
     ],
@@ -1476,7 +1476,7 @@ return [
         'id'         => LocationId::ROCKET_WAREHOUSE,
         'name'       => "Rocket Warehouse",
         'directions' => [
-            LocationId::CHRONO_ISLE_MEADOW,
+            Direction::EXIT => LocationId::CHRONO_ISLE_MEADOW,
         ],
     ],
     [
@@ -1516,14 +1516,14 @@ return [
         'id'         => LocationId::PATTERN_BUSH,
         'name'       => "Pattern Bush",
         'directions' => [
-            LocationId::GREEN_PATH,
+            Direction::EXIT => LocationId::GREEN_PATH,
         ],
     ],
     [
         'id'         => LocationId::OUTCAST_ISLAND,
         'name'       => "Outcast Island",
         'directions' => [
-            Direction::N => LocationId::ALTERING_CAVE,
+            LocationId::ALTERING_CAVE,
             Direction::S => LocationId::GREEN_PATH,
         ],
     ],
@@ -1531,7 +1531,7 @@ return [
         'id'         => LocationId::ALTERING_CAVE,
         'name'       => "Altering Cave",
         'directions' => [
-            Direction::S => LocationId::OUTCAST_ISLAND,
+            Direction::EXIT => LocationId::OUTCAST_ISLAND,
         ],
     ],
     [
@@ -1546,14 +1546,14 @@ return [
         'id'         => LocationId::DOTTED_HOLE,
         'name'       => "Dotted Hole",
         'directions' => [
-            LocationId::RUIN_VALLEY,
+            Direction::EXIT => LocationId::RUIN_VALLEY,
         ],
     ],
     [
         'id'         => LocationId::QUEST_ISLAND,
         'name'       => "Quest Island",
         'directions' => [
-            Direction::N => LocationId::TRAINER_TOWER,
+            LocationId::TRAINER_TOWER,
             Direction::S => LocationId::CANYON_ENTRANCE,
             LocationId::SEAGALLOP_FERRY,
         ],
@@ -1562,7 +1562,7 @@ return [
         'id'         => LocationId::TRAINER_TOWER,
         'name'       => "Trainer Tower",
         'directions' => [
-            Direction::S => LocationId::QUEST_ISLAND,
+            Direction::EXIT => LocationId::QUEST_ISLAND,
         ],
     ],
     [
@@ -1601,7 +1601,7 @@ return [
         'name'       => "Tanoby Ruins",
         'section'    => "Monean Chamber",
         'directions' => [
-            LocationId::TANOBY_RUINS,
+            Direction::EXIT => LocationId::TANOBY_RUINS,
         ],
     ],
     [
@@ -1609,7 +1609,7 @@ return [
         'name'       => "Tanoby Ruins",
         'section'    => "Liptoo Chamber",
         'directions' => [
-            LocationId::TANOBY_RUINS,
+            Direction::EXIT => LocationId::TANOBY_RUINS,
         ],
     ],
     [
@@ -1617,7 +1617,7 @@ return [
         'name'       => "Tanoby Ruins",
         'section'    => "Weepth Chamber",
         'directions' => [
-            LocationId::TANOBY_RUINS,
+            Direction::EXIT => LocationId::TANOBY_RUINS,
         ],
     ],
     [
@@ -1625,7 +1625,7 @@ return [
         'name'       => "Tanoby Ruins",
         'section'    => "Dilford Chamber",
         'directions' => [
-            LocationId::TANOBY_RUINS,
+            Direction::EXIT => LocationId::TANOBY_RUINS,
         ],
     ],
     [
@@ -1633,7 +1633,7 @@ return [
         'name'       => "Tanoby Ruins",
         'section'    => "Scufib Chamber",
         'directions' => [
-            LocationId::TANOBY_RUINS,
+            Direction::EXIT => LocationId::TANOBY_RUINS,
         ],
     ],
     [
@@ -1641,7 +1641,7 @@ return [
         'name'       => "Tanoby Ruins",
         'section'    => "Rixy Chamber",
         'directions' => [
-            LocationId::TANOBY_RUINS,
+            Direction::EXIT => LocationId::TANOBY_RUINS,
         ],
     ],
     [
@@ -1649,7 +1649,7 @@ return [
         'name'       => "Tanoby Ruins",
         'section'    => "Viapois Chamber",
         'directions' => [
-            LocationId::TANOBY_RUINS,
+            Direction::EXIT => LocationId::TANOBY_RUINS,
         ],
     ],
 ];

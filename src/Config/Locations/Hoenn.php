@@ -20,7 +20,7 @@ return [
         'id'         => LocationId::PROFESSOR_BIRCHS_LAB,
         'name'       => "Professor Birch's Lab",
         'directions' => [
-            LocationId::LITTLEROOT_TOWN,
+            Direction::EXIT => LocationId::LITTLEROOT_TOWN,
         ],
     ],
     [
@@ -75,7 +75,7 @@ return [
         'name'       => "Petalburg Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::PETALBURG_CITY,
+            Direction::EXIT => LocationId::PETALBURG_CITY,
         ],
     ],
     [
@@ -93,7 +93,7 @@ return [
         'id'         => LocationId::PETALBURG_WOODS,
         'name'       => "Petalburg Woods",
         'directions' => [
-            LocationId::ROUTE_104,
+            Direction::EXIT => LocationId::ROUTE_104,
         ],
     ],
     [
@@ -112,7 +112,7 @@ return [
         'name'       => "Rustboro Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::RUSTBORO_CITY,
+            Direction::EXIT => LocationId::RUSTBORO_CITY,
         ],
     ],
     [
@@ -121,7 +121,7 @@ return [
         'type'       => LocationType::ROUTE,
         'directions' => [
             Direction::W => LocationId::RUSTBORO_CITY,
-            Direction::E => LocationId::RUSTURF_TUNNEL,
+            LocationId::RUSTURF_TUNNEL,
         ],
     ],
     [
@@ -129,8 +129,8 @@ return [
         'name'       => "Rusturf Tunnel",
         'type'       => LocationType::CAVE,
         'directions' => [
-            Direction::W => LocationId::ROUTE_116,
-            Direction::S => LocationId::VERDANTURF_TOWN,
+            LocationId::ROUTE_116,
+            LocationId::VERDANTURF_TOWN,
         ],
     ],
     [
@@ -148,7 +148,7 @@ return [
         'name'       => "Island Cave",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::ROUTE_105,
+            Direction::EXIT => LocationId::ROUTE_105,
         ],
     ],
     [
@@ -168,7 +168,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::GRANITE_CAVE,
         'directions' => [
-            Direction::U => LocationId::ROUTE_106,
+            Direction::EXIT => LocationId::ROUTE_106,
             Direction::D => LocationId::GRANITE_CAVE_B1F,
         ],
     ],
@@ -219,7 +219,7 @@ return [
         'name'       => "Dewford Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::DEWFORD_TOWN,
+            Direction::EXIT => LocationId::DEWFORD_TOWN,
         ],
     ],
     [
@@ -248,7 +248,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::ABANDONED_SHIP,
         'directions' => [
-            Direction::U => LocationId::ROUTE_108,
+            Direction::EXIT => LocationId::ROUTE_108,
             Direction::D => LocationId::ABANDONED_SHIP_B1F,
         ],
     ],
@@ -276,7 +276,7 @@ return [
         'id'         => LocationId::SEASHORE_HOUSE,
         'name'       => "Seashore House",
         'directions' => [
-            LocationId::ROUTE_109,
+            Direction::EXIT => LocationId::ROUTE_109,
         ],
     ],
     [
@@ -303,7 +303,7 @@ return [
         'id'         => LocationId::OCEANIC_MUSEUM,
         'name'       => "Oceanic Museum",
         'directions' => [
-            LocationId::SLATEPORT_CITY,
+            Direction::EXIT => LocationId::SLATEPORT_CITY,
         ],
     ],
     [
@@ -333,7 +333,7 @@ return [
         'name'       => "Mauville Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::MAUVILLE_CITY,
+            Direction::EXIT => LocationId::MAUVILLE_CITY,
         ],
     ],
     [
@@ -353,21 +353,21 @@ return [
         'id'         => LocationId::WINSTRATE_FAMILY_HOME,
         'name'       => "Winstrate Family Home",
         'directions' => [
-            LocationId::ROUTE_111,
+            Direction::EXIT => LocationId::ROUTE_111,
         ],
     ],
     [
         'id'         => LocationId::DESERT_RUINS,
         'name'       => "Desert Ruins",
         'directions' => [
-            LocationId::ROUTE_111,
+            Direction::EXIT => LocationId::ROUTE_111,
         ],
     ],
     [
         'id'         => LocationId::MIRAGE_TOWER,
         'name'       => "Mirage Tower",
         'directions' => [
-            LocationId::ROUTE_111,
+            Direction::EXIT => LocationId::ROUTE_111,
         ],
     ],
     [
@@ -375,7 +375,7 @@ return [
         'name'       => "Route 112",
         'type'       => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::FIERY_PATH,
+            LocationId::FIERY_PATH,
             Direction::E => LocationId::ROUTE_111,
             Direction::W => LocationId::LAVARIDGE_TOWN,
             LocationId::MT_CHIMNEY,
@@ -386,8 +386,8 @@ return [
         'name'       => "Fiery Path",
         'type'       => LocationType::CAVE,
         'directions' => [
-            Direction::N => LocationId::ROUTE_113,
-            Direction::S => LocationId::ROUTE_112,
+            LocationId::ROUTE_113,
+            LocationId::ROUTE_112,
         ],
     ],
     [
@@ -396,7 +396,7 @@ return [
         'type'       => LocationType::CAVE,
         'directions' => [
             Direction::S => LocationId::JAGGED_PASS,
-            LocationId::ROUTE_112,
+            Direction::EXIT => LocationId::ROUTE_112,
         ],
     ],
     [
@@ -416,7 +416,7 @@ return [
         'area'       => LocationId::MAGMA_HIDEOUT,
         'directions' => [
             Direction::U => LocationId::MAGMA_HIDEOUT_2F,
-            Direction::D => LocationId::JAGGED_PASS,
+            Direction::EXIT => LocationId::JAGGED_PASS,
         ],
     ],
     [
@@ -489,14 +489,14 @@ return [
         'name'       => "Lavaridge Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::LAVARIDGE_TOWN,
+            Direction::EXIT => LocationId::LAVARIDGE_TOWN,
         ],
     ],
     [
         'id'         => LocationId::HOT_SPRINGS,
         'name'       => "Hot Springs",
         'directions' => [
-            LocationId::LAVARIDGE_TOWN,
+            Direction::EXIT => LocationId::LAVARIDGE_TOWN,
         ],
     ],
     [
@@ -524,7 +524,7 @@ return [
         'type'       => LocationType::ROUTE,
         'directions' => [
             Direction::E => LocationId::FALLARBOR_TOWN,
-            Direction::S => LocationId::METEOR_FALLS_1F,
+            LocationId::METEOR_FALLS_1F,
             LocationId::DESERT_UNDERPASS,
         ],
     ],
@@ -533,7 +533,7 @@ return [
         'name'       => "Desert Underpass",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::ROUTE_114,
+            Direction::EXIT => LocationId::ROUTE_114,
         ],
     ],
     [
@@ -543,7 +543,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::METEOR_FALLS,
         'directions' => [
-            Direction::U => LocationId::ROUTE_114,
+            Direction::EXIT => LocationId::ROUTE_114,
             Direction::D => LocationId::METEOR_FALLS_B1F,
             LocationId::METEOR_FALLS_STEVENS_CAVE,
         ],
@@ -567,7 +567,7 @@ return [
         'area'       => LocationId::METEOR_FALLS,
         'directions' => [
             Direction::U => LocationId::METEOR_FALLS_B1F,
-            Direction::D => LocationId::ROUTE_115,
+            Direction::EXIT => LocationId::ROUTE_115,
         ],
     ],
     [
@@ -577,7 +577,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::METEOR_FALLS,
         'directions' => [
-            LocationId::METEOR_FALLS_1F,
+            Direction::EXIT => LocationId::METEOR_FALLS_1F,
         ],
     ],
     [
@@ -585,7 +585,7 @@ return [
         'name'       => "Route 115",
         'type'       => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::METEOR_FALLS_B2F,
+            LocationId::METEOR_FALLS_B2F,
             Direction::S => LocationId::RUSTBORO_CITY,
         ],
     ],
@@ -594,7 +594,7 @@ return [
         'name'       => "Verdanturf Town",
         'type'       => LocationType::CITY,
         'directions' => [
-            Direction::N => LocationId::RUSTURF_TUNNEL,
+            LocationId::RUSTURF_TUNNEL,
             Direction::E => LocationId::ROUTE_117,
         ],
     ],
@@ -635,7 +635,7 @@ return [
         'area'       => LocationId::WEATHER_INSTITUTE,
         'directions' => [
             Direction::U => LocationId::WEATHER_INSTITUTE_2F,
-            Direction::D => LocationId::ROUTE_119,
+            Direction::EXIT => LocationId::ROUTE_119,
         ],
     ],
     [
@@ -663,7 +663,7 @@ return [
         'name'       => "Fortree Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::FORTREE_CITY,
+            Direction::EXIT => LocationId::FORTREE_CITY,
         ],
     ],
     [
@@ -681,7 +681,7 @@ return [
         'name'       => "Ancient Tomb",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::ROUTE_120,
+            Direction::EXIT => LocationId::ROUTE_120,
         ],
     ],
     [
@@ -689,7 +689,7 @@ return [
         'name'       => "Route 121",
         'type'       => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::HOENN_SAFARI_ZONE_AREA_1,
+            LocationId::HOENN_SAFARI_ZONE_AREA_1,
             Direction::E => LocationId::LILYCOVE_CITY,
             Direction::W => LocationId::ROUTE_120,
             Direction::S => LocationId::ROUTE_122,
@@ -704,7 +704,7 @@ return [
             Direction::N => LocationId::HOENN_SAFARI_ZONE_AREA_4,
             Direction::E => LocationId::HOENN_SAFARI_ZONE_AREA_5,
             Direction::W => LocationId::HOENN_SAFARI_ZONE_AREA_2,
-            Direction::S => LocationId::ROUTE_121,
+            Direction::EXIT => LocationId::ROUTE_121,
         ],
     ],
     [
@@ -776,7 +776,7 @@ return [
         'area'       => LocationId::MT_PYRE,
         'directions' => [
             Direction::U => LocationId::MT_PYRE_1F,
-            Direction::D => LocationId::ROUTE_122,
+            Direction::EXIT => LocationId::ROUTE_122,
         ],
     ],
     [
@@ -881,7 +881,7 @@ return [
         'type'       => LocationType::TOWER,
         'area'       => LocationId::AQUA_HIDEOUT,
         'directions' => [
-            Direction::U => LocationId::LILYCOVE_CITY,
+            Direction::EXIT => LocationId::LILYCOVE_CITY,
             Direction::D => LocationId::AQUA_HIDEOUT_B1F,
         ],
     ],
@@ -934,14 +934,14 @@ return [
         'name'       => "Mossdeep Space Center",
         'type'       => LocationType::TOWER,
         'directions' => [
-            LocationId::MOSSDEEP_CITY,
+            Direction::EXIT => LocationId::MOSSDEEP_CITY,
         ],
     ],
     [
         'id'         => LocationId::STEVENS_HOUSE,
         'name'       => "Steven's House",
         'directions' => [
-            LocationId::MOSSDEEP_CITY,
+            Direction::EXIT => LocationId::MOSSDEEP_CITY,
         ],
     ],
     [
@@ -949,7 +949,7 @@ return [
         'name'       => "Mossdeep Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::MOSSDEEP_CITY,
+            Direction::EXIT => LocationId::MOSSDEEP_CITY,
         ],
     ],
     [
@@ -957,7 +957,7 @@ return [
         'name'       => "Route 125",
         'type'       => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::SHOAL_CAVE_MAIN_CAVE,
+            LocationId::SHOAL_CAVE_MAIN_CAVE,
             Direction::S => LocationId::MOSSDEEP_CITY,
         ],
     ],
@@ -968,8 +968,8 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::SHOAL_CAVE,
         'directions' => [
-            Direction::N => LocationId::SHOAL_CAVE_ICE_ROOM,
-            Direction::S => LocationId::ROUTE_125,
+            LocationId::SHOAL_CAVE_ICE_ROOM,
+            Direction::EXIT => LocationId::ROUTE_125,
         ],
     ],
     [
@@ -979,7 +979,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::SHOAL_CAVE,
         'directions' => [
-            Direction::S => LocationId::SHOAL_CAVE_MAIN_CAVE,
+            LocationId::SHOAL_CAVE_MAIN_CAVE,
         ],
     ],
     [
@@ -999,7 +999,7 @@ return [
         'directions' => [
             LocationId::CAVE_OF_ORIGIN,
             LocationId::SOOTOPOLIS_GYM,
-            LocationId::ROUTE_126,
+            Direction::EXIT => LocationId::ROUTE_126,
         ],
     ],
     [
@@ -1007,7 +1007,7 @@ return [
         'name'       => "Cave of Origin",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::SOOTOPOLIS_CITY,
+            Direction::EXIT => LocationId::SOOTOPOLIS_CITY,
         ],
     ],
     [
@@ -1015,7 +1015,7 @@ return [
         'name'       => "Sootopolis Gym",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::SOOTOPOLIS_CITY,
+            Direction::EXIT => LocationId::SOOTOPOLIS_CITY,
         ],
     ],
     [
@@ -1044,7 +1044,7 @@ return [
         'name'       => "Seafloor Cavern",
         'type'       => LocationType::CAVE,
         'directions' => [
-            LocationId::ROUTE_128,
+            Direction::EXIT => LocationId::ROUTE_128,
         ],
     ],
     [
@@ -1070,7 +1070,7 @@ return [
         'name'       => "Route 131",
         'type'       => LocationType::ROUTE,
         'directions' => [
-            Direction::N => LocationId::SKY_PILLAR_1F,
+            LocationId::SKY_PILLAR_1F,
             Direction::E => LocationId::ROUTE_130,
             Direction::W => LocationId::PACIFIDLOG_TOWN,
         ],
@@ -1083,7 +1083,7 @@ return [
         'area'       => LocationId::SKY_PILLAR,
         'directions' => [
             Direction::U => LocationId::SKY_PILLAR_2F,
-            Direction::D => LocationId::ROUTE_131,
+            Direction::EXIT => LocationId::ROUTE_131,
         ],
     ],
     [
@@ -1192,7 +1192,7 @@ return [
         'type'       => LocationType::CAVE,
         'area'       => LocationId::HOENN_VICTORY_ROAD,
         'directions' => [
-            Direction::U => LocationId::EVER_GRANDE_CITY,
+            Direction::EXIT => LocationId::EVER_GRANDE_CITY,
             Direction::D => LocationId::HOENN_VICTORY_ROAD_B1F,
         ],
     ],
@@ -1223,7 +1223,7 @@ return [
         'name'       => "Pokémon League",
         'type'       => LocationType::GYM,
         'directions' => [
-            LocationId::HOENN_VICTORY_ROAD_B2F,
+            Direction::EXIT => LocationId::HOENN_VICTORY_ROAD_B2F,
         ],
     ],
 ];

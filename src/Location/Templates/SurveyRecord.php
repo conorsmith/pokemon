@@ -1,7 +1,12 @@
 <div class="d-grid gap-4">
 
     <div class="d-flex justify-content-between align-items-end">
-        <h2 class="mb-0"><?=$currentLocation->name?></h2>
+        <div class="d-flex gap-2 align-items-end">
+            <h2 class="mb-0"><?=$currentLocation->name?></h2>
+            <div>
+                <?=$currentLocation->section?>
+            </div>
+        </div>
         <a href="/<?=$instanceId?>/map/wild-encounters" class="btn btn-sm btn-outline-dark">
             Back
         </a>
