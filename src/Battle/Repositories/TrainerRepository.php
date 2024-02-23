@@ -121,8 +121,14 @@ class TrainerRepository
             RandomNumberGenerator::setSeed(crc32($trainerId));
 
             foreach ($decodedParty as $i => $decodedPokemon) {
-                $battlePokemonRow = $this->db->fetchAssociative("SELECT * FROM trainer_battle_pokemon WHERE id = :id", [
-                    'id' => $decodedPokemon['id'],
+                $battlePokemonRow = $this->db->fetchAssociative("
+                    SELECT *
+                    FROM trainer_battle_pokemon
+                    WHERE instance_id = :instanceId
+                        AND id = :id
+                ", [
+                    'instanceId' => $this->instanceId->value,
+                    'id'         => $decodedPokemon['id'],
                 ]);
 
                 $pokedexEntry = $this->pokedexConfigRepository->find($decodedPokemon['pokedexNumber']);
@@ -136,9 +142,10 @@ class TrainerRepository
                     $decodedPokemon['level'],
                     $decodedPokemon['friendship'],
                     match($decodedPokemon['sex']) {
-                        "F" => Sex::FEMALE,
-                        "M" => Sex::MALE,
-                        "U" => Sex::UNKNOWN,
+                        "F"     => Sex::FEMALE,
+                        "M"     => Sex::MALE,
+                        "U"     => Sex::UNKNOWN,
+                        default => throw new RuntimeException("Unhandled sex value '{$decodedPokemon['sex']}'"),
                     },
                     $decodedPokemon['isShiny'],
                     StatsFactory::createStats(
@@ -161,6 +168,7 @@ class TrainerRepository
                 if ($battlePokemonRow === false) {
                     $this->db->insert("trainer_battle_pokemon", [
                         'id'                => $decodedPokemon['id'],
+                        'instance_id'       => $this->instanceId->value,
                         'trainer_battle_id' => $trainerId,
                         'party_order'       => $i,
                         'pokemon_number'    => $pokemon->number,
@@ -178,9 +186,10 @@ class TrainerRepository
                 $row['name'],
                 $row['class'],
                 match ($row['gender']) {
-                    "F" => Gender::FEMALE,
-                    "I" => Gender::IMMATERIAL,
-                    "M" => Gender::MALE,
+                    "F"     => Gender::FEMALE,
+                    "I"     => Gender::IMMATERIAL,
+                    "M"     => Gender::MALE,
+                    default => throw new RuntimeException("Unhandled gender value '{$row['gender']}'"),
                 },
                 $party,
                 $row['location_id'],
@@ -195,7 +204,14 @@ class TrainerRepository
 
             $party = [];
 
-            $trainerBattlePokemonRows = $this->db->fetchAllAssociative("SELECT * FROM trainer_battle_pokemon WHERE trainer_battle_id = :trainerBattleId ORDER BY party_order", [
+            $trainerBattlePokemonRows = $this->db->fetchAllAssociative("
+                SELECT *
+                FROM trainer_battle_pokemon
+                WHERE instance_id = :instanceId
+                    AND trainer_battle_id = :trainerBattleId
+                ORDER BY party_order
+            ", [
+                'instanceId'      => $this->instanceId->value,
                 'trainerBattleId' => $trainerId,
             ]);
 
@@ -257,6 +273,7 @@ class TrainerRepository
                 if ($trainerBattlePokemonRows === []) {
                     $this->db->insert("trainer_battle_pokemon", [
                         'id'                => Uuid::uuid4(),
+                        'instance_id'       => $this->instanceId->value,
                         'trainer_battle_id' => $trainerId,
                         'party_order'       => $i,
                         'pokemon_number'    => $pokemon->number,
@@ -301,12 +318,14 @@ class TrainerRepository
                 $this->db->update("trainer_battle_pokemon", [
                     'remaining_hp' => $pokemon->remainingHp,
                 ], [
-                    'id' => $pokemon->id,
+                    'id'          => $pokemon->id,
+                    'instance_id' => $this->instanceId->value,
                 ]);
             }
         } else {
             $this->db->delete("trainer_battle_pokemon", [
                 'trainer_battle_id' => $battleTrainer->id,
+                'instance_id'       => $this->instanceId->value,
             ]);
         }
     }

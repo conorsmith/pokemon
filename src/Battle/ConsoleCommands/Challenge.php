@@ -41,12 +41,10 @@ final class Challenge
         $isBenchmark = isset($args[0]) && $args[0] === "--benchmark";
         $isDryRun = isset($args[0]) && $args[0] === "--dry-run";
 
-        if ($isBenchmark) {
-            $tally = [
-                'runs' => 0,
-                'challenges' => 0,
-            ];
-        }
+        $tally = [
+            'runs' => 0,
+            'challenges' => 0,
+        ];
 
         echo "Generating challenges" . PHP_EOL;
         echo PHP_EOL;
@@ -106,7 +104,7 @@ final class Challenge
                 $repositoryFactory->create(BattleRepository::class, $instanceId),
                 $repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                 $repositoryFactory->create(TrainerRepository::class, $instanceId),
-                new FriendshipLogReportBattleWithGymLeaderCommand(new FriendshipLog($db)),
+                new FriendshipLogReportBattleWithGymLeaderCommand(new FriendshipLog($db, $instanceId)),
             );
 
             $notifyPlayerCommand = new NotifyPlayerCommand(

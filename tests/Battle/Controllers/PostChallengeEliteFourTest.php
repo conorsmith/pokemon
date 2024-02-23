@@ -30,8 +30,14 @@ final class PostChallengeEliteFourTest extends TestCase
 
         $response = Website::post("/challenge/elite-four/KANTO");
 
-        $row = $db->fetchAssociative("SELECT * FROM trainer_battles WHERE trainer_id = :trainerId", [
-            'trainerId' => "e06b0584-3f6d-47ce-a100-fab5b75e62b5"
+        $row = $db->fetchAssociative("
+            SELECT *
+            FROM trainer_battles
+            WHERE instance_id = :instanceId
+                AND trainer_id = :trainerId
+        ", [
+            'instanceId' => Instance::DEFAULT_ID,
+            'trainerId'  => "e06b0584-3f6d-47ce-a100-fab5b75e62b5"
         ]);
 
         assertThat(

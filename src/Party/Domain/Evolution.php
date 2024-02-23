@@ -9,6 +9,7 @@ use ConorSmith\Pokemon\SharedKernel\Clock;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use LogicException;
+use RuntimeException;
 
 final class Evolution
 {
@@ -89,16 +90,21 @@ final class Evolution
 
         $itemConfigRepository = new ItemConfigRepository();
 
-        $moveType = match ($move) {
-            "Rage Fist"        => PokemonType::FIGHTING,
-            "Rollout"          => PokemonType::ROCK,
-            "Ancient Power"    => PokemonType::ROCK,
-            "Double Hit"       => PokemonType::NORMAL,
-            "Twin Beam"        => PokemonType::PSYCHIC,
-            "Hyper Drill"      => PokemonType::NORMAL,
-            "Psyshield Bash"   => PokemonType::PSYCHIC,
-            PokemonType::FAIRY => PokemonType::FAIRY,
-        };
+        if (is_int($move)) {
+            $moveType = $move;
+        } else {
+            $moveType = match ($move) {
+                "Rage Fist"      => PokemonType::FIGHTING,
+                "Rollout"        => PokemonType::ROCK,
+                "Ancient Power"  => PokemonType::ROCK,
+                "Double Hit"     => PokemonType::NORMAL,
+                "Twin Beam"      => PokemonType::PSYCHIC,
+                "Hyper Drill"    => PokemonType::NORMAL,
+                "Psyshield Bash" => PokemonType::PSYCHIC,
+                default          => throw new RuntimeException("Unhandled move value '{$move}'"),
+            };
+        }
+
 
         $itemConfig = $itemConfigRepository->find($pokemon->heldItemId);
 

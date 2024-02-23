@@ -34,8 +34,14 @@ final class PostEncounterGenerateAndStartTest extends TestCase
             'legendary' => PokedexNo::MEWTWO,
         ]);
 
-        $row = $db->fetchAssociative("SELECT * FROM encounters WHERE pokemon_id = :pokemonId", [
-            'pokemonId' => PokedexNo::MEWTWO
+        $row = $db->fetchAssociative("
+            SELECT *
+            FROM encounters
+            WHERE instance_id = :instanceId
+                AND pokemon_id = :pokemonId
+        ", [
+            'instanceId' => Instance::DEFAULT_ID,
+            'pokemonId'  => PokedexNo::MEWTWO
         ]);
 
         assertThat(

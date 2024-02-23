@@ -25,8 +25,8 @@ final class Survey
         );
     }
 
-    private readonly array $sortedResultsCache;
-    private readonly array $indexedResultsCache;
+    private readonly SurveyResultsCache $sortedResultsCache;
+    private readonly SurveyResultsCache $indexedResultsCache;
 
     public function __construct(
         public readonly string $id,
@@ -37,7 +37,10 @@ final class Survey
         public readonly DateTimeImmutable $startedAt,
         public readonly int $cumulativeTime,
         public readonly array $results,
-    ) {}
+    ) {
+        $this->sortedResultsCache = new SurveyResultsCache();
+        $this->indexedResultsCache = new SurveyResultsCache();
+    }
 
     public function start(): self
     {
@@ -157,8 +160,8 @@ final class Survey
 
     private function getIndexedResults(): array
     {
-        if (isset($this->indexedResultsCache)) {
-            return $this->indexedResultsCache;
+        if ($this->indexedResultsCache->isSet()) {
+            return $this->indexedResultsCache->get();
         }
 
         $indexedResults = [];
@@ -177,9 +180,9 @@ final class Survey
             $indexedResults[$result->pokedexNumber][$result->form] = $result;
         }
 
-        $this->indexedResultsCache = $indexedResults;
+        $this->indexedResultsCache->set($indexedResults);
 
-        return $this->indexedResultsCache;
+        return $this->indexedResultsCache->get();
     }
 
     public function getMostSightings(): int
@@ -191,20 +194,20 @@ final class Survey
 
     public function getSortedResultsFromMostSighted(): array
     {
-        if (isset($this->sortedResultsCache)) {
-            return $this->sortedResultsCache;
+        if ($this->sortedResultsCache->isSet()) {
+            return $this->sortedResultsCache->get();
         }
 
         $sortedResults = $this->results;
 
         usort(
             $sortedResults,
-            fn(SurveyResult $resultA, SurveyResult $resultB) => $resultA->sightings < $resultB->sightings,
+            fn(SurveyResult $resultA, SurveyResult $resultB) => $resultA->sightings < $resultB->sightings ? 1 : -1,
         );
 
-        $this->sortedResultsCache = $sortedResults;
+        $this->sortedResultsCache->set($sortedResults);
 
-        return $this->sortedResultsCache;
+        return $this->sortedResultsCache->get();
     }
 
     public function currentDuration(): int
@@ -233,7 +236,7 @@ final class Survey
         $mostOtherSightings = $other->getMostSightings();
         $mostSightings = $this->getMostSightings();
 
-        /** @var SurveyResult $result */
+        /** @var SurveyResult $otherResult */
         foreach ($other->results as $otherResult) {
 
             $thisResult = $this->findResult($otherResult->pokedexNumber, $otherResult->form);

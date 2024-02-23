@@ -76,7 +76,7 @@ final class GameModeMiddleware
         $instance = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
             'instanceId' => $instanceId->value,
         ]);
-        $hasActiveTrainerBattle = !is_null($instance['active_battle_id']);
+        $hasActiveTrainerBattle = $instance !== false && !is_null($instance['active_battle_id']);
 
         $activeEncounter = $this->db->fetchAssociative("SELECT * FROM encounters WHERE has_started = 1 ORDER BY id");
         $hasActiveEncounter = $activeEncounter !== false;

@@ -149,7 +149,6 @@ final class ViewModelFactory
         return new NavigationBar(
             $features->hasPokemon(),
             $features->hasTrainers,
-            $features->hasLegendaryEncounters,
             $features->hasEliteFour,
         );
     }

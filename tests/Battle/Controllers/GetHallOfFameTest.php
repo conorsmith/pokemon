@@ -24,6 +24,7 @@ final class GetHallOfFameTest extends TestCase
 
         $db->insert("elite_four_challenges", [
             'id'             => "dontcare",
+            'instance_id'    => Instance::DEFAULT_ID,
             'region'         => "KANTO",
             'party'          => json_encode([
                 [

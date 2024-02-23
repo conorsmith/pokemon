@@ -32,7 +32,9 @@ final class PostLogStretchesTest extends TestCase
 
         $db = Database::createDatabaseConnection();
 
-        $rows = $db->fetchAllAssociative("SELECT * FROM log_stretches");
+        $rows = $db->fetchAllAssociative("SELECT * FROM log_stretches WHERE instance_id = :instanceId", [
+            'instanceId' => Instance::DEFAULT_ID,
+        ]);
 
         assertThat(
             $rows,

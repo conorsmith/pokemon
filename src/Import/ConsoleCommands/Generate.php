@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Import\ConsoleCommands;
 
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Exception;
 
@@ -29,7 +30,7 @@ final class Generate
                 'driver'   => "pdo_mysql",
             ]);
 
-            $rows = $db->fetchAllAssociative("SELECT * FROM caught_pokemon");
+            $rows = self::fetchCaughtPokemonWithNoSexFromAllInstances($db);
 
             foreach ($rows as $row) {
                 $sex = self::generateEncounteredSex($row['pokemon_id']);
@@ -44,6 +45,11 @@ final class Generate
                 ]);
             }
         }
+    }
+
+    private static function fetchCaughtPokemonWithNoSexFromAllInstances(Connection $db): array
+    {
+        return $db->fetchAllAssociative("SELECT * FROM caught_pokemon WHERE sex IS NULL");
     }
 
     private static function generateEncounteredSex(string $pokedexNumber): Sex

@@ -32,7 +32,9 @@ final class PostLogFoodDiaryTest extends TestCase
 
         $db = Database::createDatabaseConnection();
 
-        $rows = $db->fetchAllAssociative("SELECT * FROM log_food_diary");
+        $rows = $db->fetchAllAssociative("SELECT * FROM log_food_diary WHERE instance_id = :instanceId", [
+            'instanceId' => Instance::DEFAULT_ID,
+        ]);
 
         assertThat(
             $rows,

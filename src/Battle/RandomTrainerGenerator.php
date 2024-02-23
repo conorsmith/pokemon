@@ -213,7 +213,7 @@ final class RandomTrainerGenerator
                 + $memberB->stats->calculateSpecialDefence()
                 + $memberB->stats->calculateSpeed();
 
-            return $memberATotalStats > $memberBTotalStats;
+            return $memberATotalStats > $memberBTotalStats ? 1 : -1;
         });
 
         RandomNumberGenerator::unsetSeed();

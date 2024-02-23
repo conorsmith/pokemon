@@ -35,11 +35,12 @@ use ConorSmith\Pokemon\Battle\UseCases\CreateAWildEncounter;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
 use ConorSmith\Pokemon\Battle\UseCases\StartAnEncounter;
 use ConorSmith\Pokemon\Location\Controllers\GetEliteFour;
-use ConorSmith\Pokemon\Location\Controllers\GetLegendaryEncounters;
 use ConorSmith\Pokemon\Location\Controllers\GetSurveyPokemon;
 use ConorSmith\Pokemon\Location\Controllers\GetTrainers;
 use ConorSmith\Pokemon\Location\Controllers\PostSurveyPokemonFinish;
 use ConorSmith\Pokemon\Location\Controllers\PostSurveyPokemonStart;
+use ConorSmith\Pokemon\Party\FriendshipLogReportBattleWithGymLeaderCommand;
+use ConorSmith\Pokemon\Party\FriendshipLogReportPartyPokemonFaintedCommand;
 use ConorSmith\Pokemon\Player\Controllers\GetNotifications;
 use ConorSmith\Pokemon\Player\Controllers\GetStatus;
 use ConorSmith\Pokemon\Player\Repositories\GymBadgeRepository;
@@ -160,7 +161,6 @@ final class ControllerFactory
         $r->get("/map/wild-encounters", GetWildEncounters::class);
         $r->get("/map/trainers", GetTrainers::class);
         $r->get("/map/elite-four", GetEliteFour::class);
-        $r->get("/map/legendary-encounters", GetLegendaryEncounters::class);
         $r->get("/track-pokemon/{encounterType}", GetTrackPokemon::class);
         $r->get("/survey-pokemon/{encounterType}", GetSurveyPokemon::class);
         $r->post("/survey-pokemon/{encounterType}/start", PostSurveyPokemonStart::class);
@@ -215,10 +215,7 @@ final class ControllerFactory
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
-        private readonly FriendshipLog $friendshipLog,
         private readonly ViewModelFactory $viewModelFactory,
-        private readonly ReportPartyPokemonFaintedCommand $reportPartyPokemonFaintedCommand,
-        private readonly ReportBattleWithGymLeaderCommand $reportBattleWithGymLeaderCommand,
         private readonly Session $session,
     ) {}
 
@@ -256,7 +253,7 @@ final class ControllerFactory
                         $this->db,
                         $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                         $this->repositoryFactory->create(EvolutionRepository::class, $instanceId),
-                        new FriendshipLog($this->db),
+                        $this->createFriendshipLog($instanceId),
                         new HighestRankedGymBadgeQueryDb(
                             $this->db,
                             $instanceId,
@@ -374,7 +371,7 @@ final class ControllerFactory
                         $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                     ),
                     $this->createNotifyPlayerCommand($instanceId),
-                    $this->friendshipLog,
+                    $this->createFriendshipLog($instanceId),
                 ),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
@@ -491,7 +488,7 @@ final class ControllerFactory
                         $instanceId,
                     ),
                     $this->db,
-                    new FriendshipLog($this->db),
+                    $this->createFriendshipLog($instanceId),
                     $instanceId,
                 ),
                 new TotalRegisteredPokemonQuery(
@@ -513,7 +510,7 @@ final class ControllerFactory
                     $this->viewModelFactory,
                     new PokedexConfigRepository(),
                 ),
-                $this->reportPartyPokemonFaintedCommand,
+                new FriendshipLogReportPartyPokemonFaintedCommand($this->createFriendshipLog($instanceId)),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartyMoveUp::class               => new PostPartyMoveUp(
@@ -528,17 +525,17 @@ final class ControllerFactory
             ),
             PostPartySendToBox::class            => new PostPartySendToBox(
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                $this->friendshipLog,
+                $this->createFriendshipLog($instanceId),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartySendToParty::class          => new PostPartySendToParty(
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                $this->friendshipLog,
+                $this->createFriendshipLog($instanceId),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartySendToDayCare::class        => new PostPartySendToDayCare(
                 $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                $this->friendshipLog,
+                $this->createFriendshipLog($instanceId),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostBattleStart::class               => new PostBattleStart(
@@ -546,7 +543,7 @@ final class ControllerFactory
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                     $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                    $this->reportBattleWithGymLeaderCommand,
+                    new FriendshipLogReportBattleWithGymLeaderCommand($this->createFriendshipLog($instanceId)),
                 ),
                 new SpendChallengeTokensUseCase(
                     $this->repositoryFactory->create(BagRepository::class, $instanceId),
@@ -575,7 +572,7 @@ final class ControllerFactory
                 $this->repositoryFactory->create(AreaRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(BattleRepository::class, $instanceId),
-                $this->reportPartyPokemonFaintedCommand,
+                new FriendshipLogReportPartyPokemonFaintedCommand($this->createFriendshipLog($instanceId)),
                 new BoostPokemonEvsCommand(
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
                 ),
@@ -604,7 +601,7 @@ final class ControllerFactory
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                     $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                    $this->reportBattleWithGymLeaderCommand,
+                    new FriendshipLogReportBattleWithGymLeaderCommand($this->createFriendshipLog($instanceId)),
                 ),
             ),
             GetBag::class                        => new GetBag(
@@ -628,7 +625,7 @@ final class ControllerFactory
                     $this->db,
                     $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(EvolutionRepository::class, $instanceId),
-                    new FriendshipLog($this->db),
+                    $this->createFriendshipLog($instanceId),
                     new HighestRankedGymBadgeQueryDb(
                         $this->db,
                         $instanceId,
@@ -686,7 +683,7 @@ final class ControllerFactory
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                     $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                    $this->reportBattleWithGymLeaderCommand,
+                    new FriendshipLogReportBattleWithGymLeaderCommand($this->createFriendshipLog($instanceId)),
                 ),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
@@ -734,7 +731,7 @@ final class ControllerFactory
                 new GiftPokemonConfigRepository(),
                 new PokedexConfigRepository(),
                 $this->createNotifyPlayerCommand($instanceId),
-                $this->friendshipLog,
+                $this->createFriendshipLog($instanceId),
             ),
             GetStatus::class                     => new GetStatus(
                 $this->repositoryFactory->create(GymBadgeRepository::class, $instanceId),
@@ -779,5 +776,10 @@ final class ControllerFactory
                 $instanceId
             ),
         );
+    }
+
+    private function createFriendshipLog(InstanceId $instanceId): FriendshipLog
+    {
+        return new FriendshipLog($this->db, $instanceId);
     }
 }

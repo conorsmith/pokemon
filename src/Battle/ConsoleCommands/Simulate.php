@@ -45,6 +45,7 @@ final class Simulate
                     $db,
                     new InstanceId(Instance::DEFAULT_ID),
                 ),
+                new InstanceId(Instance::DEFAULT_ID),
             ),
             new LeagueChampionRepository(
                 $db,

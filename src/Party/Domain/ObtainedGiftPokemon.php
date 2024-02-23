@@ -19,6 +19,8 @@ final class ObtainedGiftPokemon
 
     public function isInCooldownWindow(): bool
     {
-        return $this->obtainedAt->addWeek() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
+        $obtainedAd = new CarbonImmutable($this->obtainedAt);
+
+        return $obtainedAd->addWeek() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
     }
 }

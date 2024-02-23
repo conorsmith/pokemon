@@ -30,8 +30,14 @@ final class PostBattleStartTest extends TestCase
 
         $response = Website::post("/battle/trainer/00416693-3615-4116-b964-f4960d9387e3");
 
-        $row = $db->fetchAssociative("SELECT * FROM trainer_battles WHERE trainer_id = :trainerId", [
-            'trainerId' => "00416693-3615-4116-b964-f4960d9387e3"
+        $row = $db->fetchAssociative("
+            SELECT *
+            FROM trainer_battles
+            WHERE instance_id = :instanceId
+                AND trainer_id = :trainerId
+        ", [
+            'instanceId' => Instance::DEFAULT_ID,
+            'trainerId'  => "00416693-3615-4116-b964-f4960d9387e3"
         ]);
 
         assertThat(

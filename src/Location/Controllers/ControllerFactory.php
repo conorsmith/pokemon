@@ -90,6 +90,7 @@ final class ControllerFactory
                 $this->pokedexConfigRepository,
                 $this->createFindFeatures($instanceId),
                 $this->createFindWildEncounters(),
+                $this->createFindFixedEncounters($instanceId),
                 new BattleRepositoryAreaIsClearedQuery(
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                     $this->locationConfigRepository,
@@ -121,16 +122,6 @@ final class ControllerFactory
                 new EarnedAllRegionalGymBadgesQueryDb($this->db, $instanceId),
                 $this->createViewModelFactory(),
                 $this->createNotifyPlayerCommand($instanceId),
-                $this->createTemplateEngine($instanceId),
-            ),
-            GetLegendaryEncounters::class => new GetLegendaryEncounters(
-                $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(LocationRepository::class, $instanceId),
-                $this->locationConfigRepository,
-                $this->pokedexConfigRepository,
-                $this->createFindFixedEncounters($instanceId),
-                $this->createFindFeatures($instanceId),
-                $this->createViewModelFactory(),
                 $this->createTemplateEngine($instanceId),
             ),
             GetTrackPokemon::class => new GetTrackPokemon(

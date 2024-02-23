@@ -16,4 +16,5 @@ parameters:
                 - src/Party/Templates
                 - src/Player/Templates
                 - src/Pokedex/Templates
+                - src/SharedKernel/Templates
                 - src/Templates

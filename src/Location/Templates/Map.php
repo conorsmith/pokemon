@@ -38,6 +38,9 @@
                     <?php if ($summary->pokemon->gift) : ?>
                         <i class="fas fa-fw fa-gift"></i>
                     <?php endif ?>
+                    <?php if ($summary->pokemon->legendary) : ?>
+                        <i class="fas fa-fw fa-star"></i>
+                    <?php endif ?>
                 </div>
             </div>
         <?php endif ?>

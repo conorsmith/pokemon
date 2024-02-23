@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\Domain;
 
+use LogicException;
+
 final class WildEncounters
 {
     public function __construct(
@@ -14,15 +16,6 @@ final class WildEncounters
         public readonly bool $includesHeadbutt,
     ) {}
 
-    public function includesAny(): bool
-    {
-        return $this->includesWalking
-            || $this->includesSurfing
-            || $this->includesFishing
-            || $this->includesRockSmash
-            || $this->includesHeadbutt;
-    }
-
     public function includes(string $encounterType): bool
     {
         return match ($encounterType) {
@@ -31,6 +24,7 @@ final class WildEncounters
             "fishing"   => $this->includesFishing,
             "rockSmash" => $this->includesRockSmash,
             "headbutt"  => $this->includesHeadbutt,
+            default     => throw new LogicException("Invalid encounter type '{$encounterType}'"),
         };
     }
 }

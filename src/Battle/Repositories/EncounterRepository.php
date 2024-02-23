@@ -237,8 +237,14 @@ final class EncounterRepository
     {
         $limit = 10;
 
-        $rows = $this->db->fetchAllAssociative("SELECT * FROM encounters WHERE has_started = 0 ORDER BY generated_at ASC", [
-            'instance_id' => $this->instanceId->value,
+        $rows = $this->db->fetchAllAssociative("
+            SELECT *
+            FROM encounters
+            WHERE instance_id = :instanceId
+                AND has_started = 0
+            ORDER BY generated_at ASC
+        ", [
+            'instanceId' => $this->instanceId->value,
         ]);
 
         $rowsToDelete = array_splice($rows, 0, $limit * -1);

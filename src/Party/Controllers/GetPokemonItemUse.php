@@ -52,8 +52,7 @@ final class GetPokemonItemUse
                 $configEntry['name'],
                 $configEntry['imageUrl'],
                 strval($item->quantity),
-                array_key_exists('hasUse', $configEntry)
-                    && $configEntry['hasUse'],
+                true,
                 new BagItemUseActionVm(
                     "/{$instanceId}/party/use/{$item->id}",
                     [

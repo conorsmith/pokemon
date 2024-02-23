@@ -20,13 +20,6 @@
                     </span>
                 </a>
             <?php endif ?>
-            <?php if ($navigationBar->showLegendaryEncounters) : ?>
-                <a href="/<?=$instanceId?>/map/legendary-encounters" class="navbar-toggler" type="button">
-                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
-                        <img src="/assets/items/Bag_Star_Piece_Sprite.png">
-                    </span>
-                </a>
-            <?php endif ?>
             <?php if ($navigationBar->showEliteFour) : ?>
                 <a href="/<?=$instanceId?>/map/elite-four" class="navbar-toggler" type="button">
                     <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">

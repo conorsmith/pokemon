@@ -10,9 +10,6 @@ use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\Location\RepositoryFactory as LocationRepositoryFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\Party\FriendshipLog;
-use ConorSmith\Pokemon\Party\FriendshipLogReportBattleWithGymLeaderCommand;
-use ConorSmith\Pokemon\Party\FriendshipLogReportPartyPokemonFaintedCommand;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
@@ -63,12 +60,9 @@ final class ApplicationFactory
             new LocationConfigRepository(),
             new TrainerConfigRepository(),
             new PokedexConfigRepository(),
-            new FriendshipLog(self::createDatabaseConnection()),
             new ViewModelFactory(
                 new PokedexConfigRepository(),
             ),
-            new FriendshipLogReportPartyPokemonFaintedCommand(new FriendshipLog(self::createDatabaseConnection())),
-            new FriendshipLogReportBattleWithGymLeaderCommand(new FriendshipLog(self::createDatabaseConnection())),
             self::createSessionManager(),
         );
     }

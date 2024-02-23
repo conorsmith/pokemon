@@ -18,16 +18,19 @@ final class RandomNumberGenerator
         mt_srand();
     }
 
+    /** @phpstan-impure */
     public static function generateInRange(int $min, int $max): int
     {
         return mt_rand($min, $max);
     }
 
+    /** @phpstan-impure */
     public static function coinToss(): bool
     {
         return self::generateInRange(0, 1) === 0;
     }
 
+    /** @phpstan-impure */
     public static function generateFromWeightedTable(array $weights): int
     {
         $sumOfWeights = array_reduce($weights, function ($carry, $weight) {
@@ -47,6 +50,7 @@ final class RandomNumberGenerator
         throw new Exception;
     }
 
+    /** @phpstan-impure */
     public static function selectFromArray(array $elements): mixed
     {
         $indexedElements = array_values($elements);

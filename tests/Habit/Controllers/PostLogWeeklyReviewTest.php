@@ -33,7 +33,9 @@ final class PostLogWeeklyReviewTest extends TestCase
 
         $db = Database::createDatabaseConnection();
 
-        $rows = $db->fetchAllAssociative("SELECT * FROM log_weekly_review");
+        $rows = $db->fetchAllAssociative("SELECT * FROM log_weekly_review WHERE instance_id = :instanceId", [
+            'instanceId' => Instance::DEFAULT_ID,
+        ]);
 
         assertThat(
             $rows,

@@ -427,20 +427,18 @@
 
 <?php if ($notifications) : ?>
     <div class="position-fixed w-100 px-3 pt-3" style="top: 56px; z-index: 10;">
-        <?php if ($notifications) : ?>
-            <div class="alert alert-success alert-dismissible">
-                <?php if (count($notifications) === 1) : ?>
-                    <?=$notifications[0]?>
-                <?php else : ?>
-                    <ul class="mb-0">
-                        <?php foreach ($notifications as $notification) : ?>
-                            <li><?=$notification?></li>
-                        <?php endforeach ?>
-                    </ul>
-                <?php endif ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif ?>
+        <div class="alert alert-success alert-dismissible">
+            <?php if (count($notifications) === 1) : ?>
+                <?=$notifications[0]?>
+            <?php else : ?>
+                <ul class="mb-0">
+                    <?php foreach ($notifications as $notification) : ?>
+                        <li><?=$notification?></li>
+                    <?php endforeach ?>
+                </ul>
+            <?php endif ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </div>
 <?php endif ?>
 

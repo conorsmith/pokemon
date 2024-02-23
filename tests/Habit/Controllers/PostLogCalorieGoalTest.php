@@ -32,7 +32,9 @@ final class PostLogCalorieGoalTest extends TestCase
 
         $db = Database::createDatabaseConnection();
 
-        $rows = $db->fetchAllAssociative("SELECT * FROM log_calorie_goal");
+        $rows = $db->fetchAllAssociative("SELECT * FROM log_calorie_goal WHERE instance_id = :instanceId", [
+            'instanceId' => Instance::DEFAULT_ID,
+        ]);
 
         assertThat(
             $rows,

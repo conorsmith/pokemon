@@ -34,7 +34,9 @@ final class PostLogExerciseTest extends TestCase
 
         $db = Database::createDatabaseConnection();
 
-        $rows = $db->fetchAllAssociative("SELECT * FROM log_exercise");
+        $rows = $db->fetchAllAssociative("SELECT * FROM log_exercise WHERE instance_id = :instanceId", [
+            'instanceId' => Instance::DEFAULT_ID,
+        ]);
 
         assertThat(
             $rows,

@@ -9,6 +9,7 @@ use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallenge;
 use ConorSmith\Pokemon\Battle\Domain\EliteFourChallengePartyMember;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 use Exception;
 
@@ -17,11 +18,19 @@ final class EliteFourChallengeRepository
     public function __construct(
         private readonly Connection $db,
         private readonly LeagueChampionRepository $leagueChampionRepository,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function findActive(): ?EliteFourChallenge
     {
-        $row = $this->db->fetchAssociative("SELECT * FROM elite_four_challenges WHERE date_completed IS NULL");
+        $row = $this->db->fetchAssociative("
+            SELECT *
+            FROM elite_four_challenges
+            WHERE instance_id = :instanceId
+                AND date_completed IS NULL
+        ", [
+            'instanceId' => $this->instanceId->value,
+        ]);
 
         if ($row === false) {
             return null;
@@ -32,8 +41,17 @@ final class EliteFourChallengeRepository
 
     public function findPlayerVictoryInRegion(RegionId $region): ?EliteFourChallenge
     {
-        $row = $this->db->fetchAssociative("SELECT * FROM elite_four_challenges WHERE trainer_id IS NULL AND date_completed IS NOT NULL AND victory = 1 AND region = :region", [
-            'region' => $region->value,
+        $row = $this->db->fetchAssociative("
+            SELECT *
+            FROM elite_four_challenges
+            WHERE instance_id = :instanceId
+                AND trainer_id IS NULL
+                AND date_completed IS NOT NULL
+                AND victory = 1
+                AND region = :region
+            ", [
+            'instanceId' => $this->instanceId->value,
+            'region'     => $region->value,
         ]);
 
         if ($row === false) {
@@ -45,8 +63,17 @@ final class EliteFourChallengeRepository
 
     public function findAllVictoriesInRegion(RegionId $region): array
     {
-        $rows = $this->db->fetchAllAssociative("SELECT * FROM elite_four_challenges WHERE date_completed IS NOT NULL AND victory = 1 AND region = :region ORDER BY date_completed DESC", [
-            'region' => $region->value,
+        $rows = $this->db->fetchAllAssociative("
+            SELECT *
+            FROM elite_four_challenges
+            WHERE instance_id = :instanceId
+                AND date_completed IS NOT NULL
+                AND victory = 1
+                AND region = :region
+            ORDER BY date_completed DESC
+        ", [
+            'instanceId' => $this->instanceId->value,
+            'region'     => $region->value,
         ]);
 
         return array_map(
@@ -57,7 +84,16 @@ final class EliteFourChallengeRepository
 
     public function findCurrentPokemonLeagueRegionForPlayer(): RegionId
     {
-        $rows = $this->db->fetchAllAssociative("SELECT * FROM elite_four_challenges WHERE trainer_id IS NULL AND date_completed IS NOT NULL AND victory = 1");
+        $rows = $this->db->fetchAllAssociative("
+            SELECT *
+            FROM elite_four_challenges
+            WHERE instance_id = :instanceId
+                AND trainer_id IS NULL
+                AND date_completed IS NOT NULL
+                AND victory = 1
+        ", [
+            'instanceId' => $this->instanceId->value,
+        ]);
 
         $regionsWithVictory = array_map(
             fn(array $row) => RegionId::from($row['region']),
@@ -104,13 +140,20 @@ final class EliteFourChallengeRepository
 
     public function save(EliteFourChallenge $eliteFourChallenge): void
     {
-        $row = $this->db->fetchAssociative("SELECT * FROM elite_four_challenges WHERE id = :id", [
-            'id' => $eliteFourChallenge->id,
+        $row = $this->db->fetchAssociative("
+            SELECT *
+            FROM elite_four_challenges
+            WHERE instance_id = :instanceId
+                AND id = :id
+        ", [
+            'instanceId' => $this->instanceId->value,
+            'id'         => $eliteFourChallenge->id,
         ]);
 
         if ($row === false) {
             $this->db->insert("elite_four_challenges", [
                 'id'           => $eliteFourChallenge->id,
+                'instance_id'  => $this->instanceId->value,
                 'region'       => $eliteFourChallenge->region->value,
                 'trainer_id'   => $eliteFourChallenge->trainerId,
                 'party'        => json_encode(array_map(
@@ -134,7 +177,8 @@ final class EliteFourChallengeRepository
                 'victory'        => $eliteFourChallenge->victory ? 1 : 0,
                 'date_completed' => $eliteFourChallenge->dateCompleted ? $eliteFourChallenge->dateCompleted->format("Y-m-d H:i:s") : null,
             ], [
-                'id' => $eliteFourChallenge->id,
+                'id'          => $eliteFourChallenge->id,
+                'instance_id' => $this->instanceId->value,
             ]);
         }
     }

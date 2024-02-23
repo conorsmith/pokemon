@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Location\Controllers;
 
+use Carbon\CarbonImmutable;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
+use ConorSmith\Pokemon\Location\Domain\FindFixedEncounters;
 use ConorSmith\Pokemon\Location\Domain\FindWildEncounters;
+use ConorSmith\Pokemon\Location\Domain\FixedEncounter;
 use ConorSmith\Pokemon\Location\Domain\Location;
 use ConorSmith\Pokemon\Location\Domain\SurveyRepository;
 use ConorSmith\Pokemon\Location\Domain\WildEncounters;
@@ -26,7 +29,6 @@ use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\TemplateEngine;
 use ConorSmith\Pokemon\ViewModelFactory as SharedViewModelFactory;
 use LogicException;
-use RuntimeException;
 use stdClass;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +46,7 @@ final class GetWildEncounters
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly FindFeatures $findFeatures,
         private readonly FindWildEncounters $findWildEncounters,
+        private readonly FindFixedEncounters $findFixedEncounters,
         private readonly AreaIsClearedQuery $areaIsClearedQuery,
         private readonly HighestRankedGymBadgeQuery $highestRankedGymBadgeQuery,
         private readonly RegionalVictoryQuery $regionalVictoryQuery,
@@ -71,6 +74,10 @@ final class GetWildEncounters
 
         $giftPokemonConfigEntries = $this->giftPokemonConfigRepository->findInLocation($currentLocation->id);
 
+        $legendaryEncounter = $this->findFixedEncounters->findLegendary(
+            $this->locationConfigRepository->findLocation($currentLocation->id)
+        );
+
         $currentLocationViewModel = $this->viewModelFactory->createLocation($currentLocation);
         $navigationBarVm = $this->viewModelFactory->createNavigationBar($features);
 
@@ -86,6 +93,10 @@ final class GetWildEncounters
                 $this->locationConfigRepository->findLocation($currentLocation->id),
                 $giftPokemonConfigEntries,
             ),
+            'hasLegendaryEncounters' => $features->hasLegendaryEncounters,
+            'legendary'       => $legendaryEncounter
+                ? $this->createLegendaryViewModel($legendaryEncounter)
+                : null,
             'navigationBar'     => $navigationBarVm,
         ]));
     }
@@ -104,7 +115,6 @@ final class GetWildEncounters
                         EncounterType::FISHING    => "fas fa-fish",
                         EncounterType::ROCK_SMASH => "fab fa-sith",
                         EncounterType::HEADBUTT   => "fas fa-tree",
-                        default                   => throw new RuntimeException(),
                     },
                     'surveyStarted'  => !is_null($surveys[$encounterType]),
                     'surveyComplete' => !is_null($surveys[$encounterType]) && $surveys[$encounterType]->isComplete,
@@ -163,7 +173,8 @@ final class GetWildEncounters
             if (is_null($obtainedGiftPokemon)) {
                 $lastObtained = "";
             } else {
-                $lastObtained = $obtainedGiftPokemon->obtainedAt->ago();
+                $obtainedAt = new CarbonImmutable($obtainedGiftPokemon->obtainedAt);
+                $lastObtained = $obtainedAt->ago();
             }
 
             $regionalLevelOffset = match ($currentLocation['region']) {
@@ -191,6 +202,25 @@ final class GetWildEncounters
         $highestRankedBadge = $this->highestRankedGymBadgeQuery->run();
 
         return $highestRankedBadge->levelLimit();
+    }
+
+    private function createLegendaryViewModel(FixedEncounter $fixedEncounter): stdClass
+    {
+        if ($fixedEncounter->lastCaptured) {
+            $lastCaptured = new CarbonImmutable($fixedEncounter->lastCaptured);
+            $lastEncountered = $lastCaptured->ago();
+        } else {
+            $lastEncountered = "";
+        }
+
+        return (object) [
+            'number'          => $fixedEncounter->pokedexNumber,
+            'name'            => $this->pokedexConfigRepository->find($fixedEncounter->pokedexNumber)['name'],
+            'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($fixedEncounter->pokedexNumber),
+            'level'           => $fixedEncounter->level,
+            'canBattle'       => $fixedEncounter->canBattle,
+            'lastEncountered' => $lastEncountered,
+        ];
     }
 
     private function findSurveys(Location $location, WildEncounters $wildEncounters): array

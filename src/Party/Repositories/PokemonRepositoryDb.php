@@ -305,8 +305,15 @@ final class PokemonRepositoryDb implements PokemonRepository
 
     private function calculateFriendship(array $pokemonRow): int
     {
-        $eventRows = $this->db->fetchAllAssociative("SELECT * FROM friendship_event_log WHERE pokemon_id = :pokemonId ORDER BY date_logged", [
-            'pokemonId' => $pokemonRow['id'],
+        $eventRows = $this->db->fetchAllAssociative("
+            SELECT *
+            FROM friendship_event_log
+            WHERE instance_id = :instanceId
+                AND pokemon_id = :pokemonId
+            ORDER BY date_logged
+        ", [
+            'instanceId' => $this->instanceId->value,
+            'pokemonId'  => $pokemonRow['id'],
         ]);
 
         $pokemonConfig = self::findPokemonConfig($pokemonRow['pokemon_id']);
