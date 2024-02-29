@@ -18,6 +18,7 @@ final class Pokemon
         public readonly string $level,
         public readonly Sex $sex,
         public readonly bool $isShiny,
+        public readonly bool $isLegendary,
         public readonly string $remainingHp,
         public readonly string $totalHp,
         public readonly bool $hasFainted,

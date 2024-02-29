@@ -7,7 +7,7 @@
                 </span>
             </a>
             <?php if ($navigationBar->showPokemon) : ?>
-                <a href="/<?=$instanceId?>/map/wild-encounters" class="navbar-toggler" type="button">
+                <a href="/<?=$instanceId?>/map/pokemon" class="navbar-toggler" type="button">
                     <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
                         <img src="/assets/items/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
                     </span>

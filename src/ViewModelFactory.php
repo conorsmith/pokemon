@@ -42,9 +42,11 @@ final class ViewModelFactory
 
         RandomNumberGenerator::unsetSeed();
 
+        $pokemonConfigEntry = $this->pokedexConfigRepository->find($pokemon->number);
+
         return new PokemonVm(
             $pokemon->id,
-            $this->pokedexConfigRepository->find($pokemon->number)['name'],
+            $pokemonConfigEntry['name'],
             $pokemon->form,
             self::createPokemonImageUrl($pokemon->number, $pokemon->form),
             self::createPokemonTypeName($pokemon->primaryType),
@@ -52,6 +54,7 @@ final class ViewModelFactory
             strval($pokemon->level),
             $pokemon->sex,
             $pokemon->isShiny,
+            isset($pokemonConfigEntry['isLegendary']) && $pokemonConfigEntry['isLegendary'],
             strval($pokemon->remainingHp),
             strval($pokemon->calculateHp()),
             $pokemon->remainingHp === 0,

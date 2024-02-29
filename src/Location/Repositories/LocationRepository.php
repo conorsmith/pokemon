@@ -19,13 +19,9 @@ final class LocationRepository
         private readonly InstanceId $instanceId,
     ) {}
 
-    public function findCurrentLocation(): Location
+    public function find(string $locationId): Location
     {
-        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
-            'instanceId' => $this->instanceId->value,
-        ]);
-
-        $locationConfig = $this->locationConfigRepository->findLocation($instanceRow['current_location']);
+        $locationConfig = $this->locationConfigRepository->findLocation($locationId);
 
         $adjacentLocations = [];
 
@@ -46,5 +42,14 @@ final class LocationRepository
             $locationConfig['region'],
             $adjacentLocations,
         );
+    }
+
+    public function findCurrentLocation(): Location
+    {
+        $instanceRow = $this->db->fetchAssociative("SELECT * FROM instances WHERE id = :instanceId", [
+            'instanceId' => $this->instanceId->value,
+        ]);
+
+        return $this->find($instanceRow['current_location']);
     }
 }

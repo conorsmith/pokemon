@@ -8,6 +8,7 @@ final class Features
 {
     public function __construct(
         public readonly bool $hasWildEncounters,
+        public readonly bool $hasFixedEncounters,
         public readonly bool $hasTrainers,
         public readonly bool $hasGiftPokemon,
         public readonly bool $hasLegendaryEncounters,
@@ -17,6 +18,7 @@ final class Features
     public function hasPokemon(): bool
     {
         return $this->hasWildEncounters
+            || $this->hasFixedEncounters
             || $this->hasGiftPokemon
             || $this->hasLegendaryEncounters;
     }

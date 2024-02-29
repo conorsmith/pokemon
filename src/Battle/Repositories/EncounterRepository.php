@@ -9,16 +9,11 @@ use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\Domain\EncounterTableEntry;
 use ConorSmith\Pokemon\Battle\Domain\Location;
 use ConorSmith\Pokemon\Battle\Domain\Pokemon;
-use ConorSmith\Pokemon\Battle\Domain\Stats;
 use ConorSmith\Pokemon\Battle\Domain\StatsFactory;
 use ConorSmith\Pokemon\Battle\Domain\StatsIv;
-use ConorSmith\Pokemon\SharedKernel\Config\WildEncounterTable;
-use ConorSmith\Pokemon\SharedKernel\Config\WildEncounterTableEntry;
+use ConorSmith\Pokemon\SharedKernel\Queries\FixedEncounterQuery;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
-use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
-use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
-use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\Queries\HabitStreakQuery;
@@ -33,8 +28,8 @@ final class EncounterRepository
     public function __construct(
         private readonly Connection $db,
         private readonly WildEncounterConfigRepository $wildEncounterConfigRepository,
-        private readonly LocationConfigRepository $locationConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
+        private readonly FixedEncounterQuery $fixedEncounterQuery,
         private readonly HabitStreakQuery $habitStreakQuery,
         private readonly InstanceId $instanceId,
     ) {}
@@ -56,21 +51,31 @@ final class EncounterRepository
         );
     }
 
-    public function generateLegendaryEncounter(string $number): Encounter
+    public function generateFixedEncounter(Location $location, string $number): Encounter
     {
+        $encounter = $this->fixedEncounterQuery->run($location->id, $number);
+
+        if (is_null($encounter)) {
+            throw new LogicException("Case where fixed encounter doesn't exist is unhandled");
+        }
+
+        if ($encounter->canBattle === false) {
+            throw new LogicException("Case where player can't battle pokemon is unhandled");
+        }
+
         return $this->generate(
             new EncounterTableEntry(
-                $number,
-                null,
+                $encounter->pokedexNumber,
+                $encounter->form,
                 1,
-                self::findLegendaryPokemonLevel($number),
-                self::findLegendaryPokemonLevel($number),
+                $encounter->level,
+                $encounter->level,
             ),
             true
         );
     }
 
-    private function generate(EncounterTableEntry $encounterTableEntry, bool $isLegendary): Encounter
+    private function generate(EncounterTableEntry $encounterTableEntry, bool $isFixedEncounter): Encounter
     {
         $sex = $this->generateEncounteredSex($encounterTableEntry->pokedexNumber);
         $isShiny = $this->generateEncounteredShininess();
@@ -112,7 +117,7 @@ final class EncounterRepository
             $encounterId,
             $pokemon,
             false,
-            $isLegendary,
+            $isFixedEncounter,
             $pokedexRow !== false,
             false,
             0
@@ -200,7 +205,7 @@ final class EncounterRepository
                     Sex::UNKNOWN => "U",
                 },
                 'is_shiny'                    => $encounter->pokemon->isShiny ? 1 : 0,
-                'is_legendary'                => $encounter->isLegendary ? 1 : 0,
+                'is_legendary'                => $encounter->isFixed ? 1 : 0,
                 'iv_hp'                       => $encounter->pokemon->stats->ivs->hp,
                 'iv_physical_attack'          => $encounter->pokemon->stats->ivs->physicalAttack,
                 'iv_physical_defence'         => $encounter->pokemon->stats->ivs->physicalDefence,
@@ -255,41 +260,6 @@ final class EncounterRepository
                 'id'          => $row['id'],
             ]);
         }
-    }
-
-    private function findLegendaryPokemonLevel(string $legendaryPokemonNumber): int
-    {
-        $legendaryConfig = self::findLegendaryConfig($legendaryPokemonNumber);
-
-        if ($legendaryConfig['location'] instanceof RegionId) {
-            $region = $legendaryConfig['location'];
-        } else {
-            $locationConfig = $this->locationConfigRepository->findLocation($legendaryConfig['location']);
-
-            $region = $locationConfig['region'];
-        }
-
-        $regionalLevelOffset = match ($region) {
-            RegionId::KANTO => 0,
-            RegionId::JOHTO => 50,
-            RegionId::HOENN => 100,
-            default         => throw new LogicException(),
-        };
-
-        return $legendaryConfig['level'] + $regionalLevelOffset;
-    }
-
-    private static function findLegendaryConfig(string $legendaryPokemonNumber): ?array
-    {
-        $legendariesConfig = require __DIR__ . "/../../Config/Legendaries.php";
-
-        foreach ($legendariesConfig as $config) {
-            if ($config['pokemon'] === $legendaryPokemonNumber) {
-                return $config;
-            }
-        }
-
-        return null;
     }
 
     private function findEncounterTable(Location $location, string $encounterType): ?array

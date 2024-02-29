@@ -92,7 +92,7 @@ final class PostEncounterCatch
                 $encounter->pokemon->level,
                 $encounter->pokemon->sex,
                 $encounter->pokemon->isShiny,
-                $encounter->isLegendary,
+                $encounter->isFixed,
                 $encounter->pokemon->stats->ivs->hp,
                 $encounter->pokemon->stats->ivs->physicalAttack,
                 $encounter->pokemon->stats->ivs->physicalDefence,

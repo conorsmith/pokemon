@@ -14,7 +14,7 @@ interface CatchPokemonCommand
         int $level,
         Sex $sex,
         bool $isShiny,
-        bool $isLegendary,
+        bool $isFixedEncounter,
         int $ivHp,
         int $ivPhysicalAttack,
         int $ivPhysicalDefence,

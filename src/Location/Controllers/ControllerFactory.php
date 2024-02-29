@@ -14,6 +14,7 @@ use ConorSmith\Pokemon\Battle\LeagueChampionRepositoryPlayerIsLeagueChampionQuer
 use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\EliteFourConfigRepository;
+use ConorSmith\Pokemon\FixedEncounterConfigRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Location\Domain\FindFeatures;
 use ConorSmith\Pokemon\Location\Domain\FindFixedEncounters;
@@ -29,8 +30,8 @@ use ConorSmith\Pokemon\Location\UseCase\ShowSurveyRecord;
 use ConorSmith\Pokemon\Location\UseCase\StartSurveyingPokemon;
 use ConorSmith\Pokemon\Location\ViewModels\ViewModelFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\Party\LastTimeLegendaryPokemonWasCapturedQuery;
-use ConorSmith\Pokemon\Party\Repositories\LegendaryCaptureEventRepositoryDb;
+use ConorSmith\Pokemon\Party\LastTimeFixedEncounterPokemonWasCapturedQuery;
+use ConorSmith\Pokemon\Party\Repositories\FixedEncounterCaptureEventRepositoryDb;
 use ConorSmith\Pokemon\Party\Repositories\ObtainedGiftPokemonRepository;
 use ConorSmith\Pokemon\Player\EarnedAllRegionalGymBadgesQueryDb;
 use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
@@ -61,6 +62,7 @@ final class ControllerFactory
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly EliteFourConfigRepository $eliteFourConfigRepository,
+        private readonly FixedEncounterConfigRepository $fixedEncounterConfigRepository,
         private readonly GiftPokemonConfigRepository $giftPokemonConfigRepository,
         private readonly SharedViewModelFactory $sharedViewModelFactory,
         private readonly Session $session,
@@ -80,7 +82,7 @@ final class ControllerFactory
                 $this->createFindWildEncounters(),
                 $this->createTemplateEngine($instanceId),
             ),
-            GetWildEncounters::class => new GetWildEncounters(
+            GetObtainablePokemon::class => new GetObtainablePokemon(
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(LocationRepository::class, $instanceId),
                 $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
@@ -212,10 +214,11 @@ final class ControllerFactory
     {
         return new FindFixedEncounters(
             $this->repositoryFactory->create(BagRepository::class, $instanceId),
+            $this->fixedEncounterConfigRepository,
             $this->locationConfigRepository,
             $this->createHighestRankedGymBadgeQuery($instanceId),
-            new LastTimeLegendaryPokemonWasCapturedQuery(
-                $this->repositoryFactory->create(LegendaryCaptureEventRepositoryDb::class, $instanceId),
+            new LastTimeFixedEncounterPokemonWasCapturedQuery(
+                $this->repositoryFactory->create(FixedEncounterCaptureEventRepositoryDb::class, $instanceId),
             ),
             new PokedexRegionIsCompleteQuery(
                 $this->db,
@@ -256,8 +259,8 @@ final class ControllerFactory
     {
         return new FindFeatures(
             $this->wildEncounterConfigRepository,
+            $this->fixedEncounterConfigRepository,
             $this->giftPokemonConfigRepository,
-            $this->locationConfigRepository,
             $this->createFindFixedEncounters($instanceId),
             $this->createFindPokemonLeague($instanceId),
             $this->createFindTrainers($instanceId),

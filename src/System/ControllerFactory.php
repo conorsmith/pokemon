@@ -30,7 +30,7 @@ use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\Battle\UseCases\CreateALegendaryEncounter;
+use ConorSmith\Pokemon\Battle\UseCases\CreateAFixedEncounter;
 use ConorSmith\Pokemon\Battle\UseCases\CreateAWildEncounter;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
 use ConorSmith\Pokemon\Battle\UseCases\StartAnEncounter;
@@ -41,6 +41,7 @@ use ConorSmith\Pokemon\Location\Controllers\PostSurveyPokemonFinish;
 use ConorSmith\Pokemon\Location\Controllers\PostSurveyPokemonStart;
 use ConorSmith\Pokemon\Party\FriendshipLogReportBattleWithGymLeaderCommand;
 use ConorSmith\Pokemon\Party\FriendshipLogReportPartyPokemonFaintedCommand;
+use ConorSmith\Pokemon\Party\Repositories\FixedEncounterCaptureEventRepositoryDb;
 use ConorSmith\Pokemon\Player\Controllers\GetNotifications;
 use ConorSmith\Pokemon\Player\Controllers\GetStatus;
 use ConorSmith\Pokemon\Player\Repositories\GymBadgeRepository;
@@ -64,7 +65,7 @@ use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
 use ConorSmith\Pokemon\Location\Controllers\GetMap;
 use ConorSmith\Pokemon\Location\Controllers\GetTrackPokemon;
-use ConorSmith\Pokemon\Location\Controllers\GetWildEncounters;
+use ConorSmith\Pokemon\Location\Controllers\GetObtainablePokemon;
 use ConorSmith\Pokemon\Location\Controllers\PostMapMove;
 use ConorSmith\Pokemon\Location\LocationRepositoryCurrentLocationQuery;
 use ConorSmith\Pokemon\Location\RegionRepositoryRegionIsLockedQuery;
@@ -158,7 +159,7 @@ final class ControllerFactory
         $r->get("/pokedex/{number}", GetPokedexEntry::class);
         $r->post("/map/move", PostMapMove::class);
         $r->get("/map", GetMap::class);
-        $r->get("/map/wild-encounters", GetWildEncounters::class);
+        $r->get("/map/pokemon", GetObtainablePokemon::class);
         $r->get("/map/trainers", GetTrainers::class);
         $r->get("/map/elite-four", GetEliteFour::class);
         $r->get("/track-pokemon/{encounterType}", GetTrackPokemon::class);
@@ -376,9 +377,10 @@ final class ControllerFactory
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostEncounterGenerateAndStart::class => new PostEncounterGenerateAndStart(
-                new CreateALegendaryEncounter(
-                    $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
+                new CreateAFixedEncounter(
                     $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                    $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
+                    $this->repositoryFactory->create(LocationRepository::class, $instanceId),
                 ),
                 new StartAnEncounter(
                     $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
@@ -487,6 +489,7 @@ final class ControllerFactory
                         new LocationConfigRepository(),
                         $instanceId,
                     ),
+                    $this->repositoryFactory->create(FixedEncounterCaptureEventRepositoryDb::class, $instanceId),
                     $this->db,
                     $this->createFriendshipLog($instanceId),
                     $instanceId,

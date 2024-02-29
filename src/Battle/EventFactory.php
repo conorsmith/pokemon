@@ -81,15 +81,14 @@ final class EventFactory
         Pokemon $defender,
         bool $isPlayerDefending,
         ?Pokemon $nextDefender,
-        bool $isLegendary,
     ): array {
         $events = [];
 
         $attackerVm = $this->viewModelFactory->createPokemonInBattle($attacker);
-        $attackerDescriptor = $isPlayerDefending ? ($isLegendary ? "Legendary" : "Wild") : "Your";
+        $attackerDescriptor = $isPlayerDefending ? ($attackerVm->isLegendary ? "Legendary" : "Wild") : "Your";
 
         $defenderVm = $this->viewModelFactory->createPokemonInBattle($defender);
-        $defenderDescriptor = $isPlayerDefending ? "Your" : ($isLegendary ? "Legendary" : "Wild");
+        $defenderDescriptor = $isPlayerDefending ? "Your" : ($defenderVm->isLegendary ? "Legendary" : "Wild");
 
         if ($attack->hit) {
 
@@ -179,7 +178,7 @@ final class EventFactory
     public function createEncounterDefeatEvent(Encounter $encounter): array
     {
         $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
-        $name = $encounter->isLegendary
+        $name = $pokemonVm->isLegendary
             ? "the legendary Pokémon {$pokemonVm->name}"
             : "a wild {$pokemonVm->name}";
         return $this->createMessageEvent("You were defeated by {$name}");
@@ -188,7 +187,7 @@ final class EventFactory
     public function createCatchSuccessEvent(Encounter $encounter, float $catchRate): array
     {
         $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
-        $name = $encounter->isLegendary
+        $name = $pokemonVm->isLegendary
             ? "the legendary Pokémon {$pokemonVm->name}"
             : "the wild {$pokemonVm->name}";
         return [
@@ -201,7 +200,7 @@ final class EventFactory
     public function createCatchFailureEvent(Encounter $encounter): array
     {
         $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
-        $name = $encounter->isLegendary
+        $name = $pokemonVm->isLegendary
             ? "the legendary Pokémon {$pokemonVm->name}"
             : "the wild {$pokemonVm->name}";
         return $this->createMessageEvent("You failed to catch {$name}");
@@ -239,9 +238,11 @@ final class EventFactory
     {
         $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
 
+        $descriptor = $pokemonVm->isLegendary ? "legendary" : "wild";
+
         return [
             'type'     => "strengthIndicatorProgresses",
-            'value'    => "You learn more about the strengths of the wild {$pokemonVm->name}",
+            'value'    => "You learn more about the strengths of the {$descriptor} {$pokemonVm->name}",
             'progress' => $encounter->strengthIndicatorProgress,
         ];
     }

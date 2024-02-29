@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class GetWildEncounters
+final class GetObtainablePokemon
 {
     public function __construct(
         private readonly BagRepository $bagRepository,
@@ -60,7 +60,7 @@ final class GetWildEncounters
         $currentLocation = $this->locationRepository->findCurrentLocation();
         $bag = $this->bagRepository->find();
 
-        $features = $this->findFeatures->find($currentLocation->id);
+        $features = $this->findFeatures->find($currentLocation);
 
         if (!$features->hasPokemon()) {
             return new RedirectResponse("/{$args['instanceId']}/map");
@@ -72,32 +72,34 @@ final class GetWildEncounters
             $surveys = $this->findSurveys($currentLocation, $wildEncounters);
         }
 
+        $location = $this->locationConfigRepository->findLocation($currentLocation->id);
+
         $giftPokemonConfigEntries = $this->giftPokemonConfigRepository->findInLocation($currentLocation->id);
 
-        $legendaryEncounter = $this->findFixedEncounters->findLegendary(
-            $this->locationConfigRepository->findLocation($currentLocation->id)
-        );
+        $fixedEncounters = $this->findFixedEncounters->findEncounters($currentLocation);
+
+        $legendaryEncounters = $this->findFixedEncounters->findLegendaries($currentLocation);
 
         $currentLocationViewModel = $this->viewModelFactory->createLocation($currentLocation);
         $navigationBarVm = $this->viewModelFactory->createNavigationBar($features);
 
-        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/WildEncounters.php", [
-            'currentLocation'   => $currentLocationViewModel,
-            'canEncounter'      => true,
-            'pokeballs'         => $bag->countAllPokeBalls(),
-            'ovalCharms'        => $bag->count(ItemId::OVAL_CHARM),
-            'hasWildEncounters' => $features->hasWildEncounters,
-            'wildEncounters'    => $wildEncounters ? $this->createWildEncountersViewModels($wildEncounters, $surveys) : [],
-            'hasGiftPokemon'    => $features->hasGiftPokemon,
-            'giftPokemon'       => $this->createGiftPokemonViewModels(
-                $this->locationConfigRepository->findLocation($currentLocation->id),
+        return new Response($this->templateEngine->render(__DIR__ . "/../Templates/ObtainablePokemon.php", [
+            'currentLocation'        => $currentLocationViewModel,
+            'canEncounter'           => true,
+            'pokeballs'              => $bag->countAllPokeBalls(),
+            'ovalCharms'             => $bag->count(ItemId::OVAL_CHARM),
+            'hasWildEncounters'      => $features->hasWildEncounters,
+            'wildEncounters'         => $wildEncounters ? $this->createWildEncountersViewModels($wildEncounters, $surveys) : [],
+            'hasFixedEncounters'     => $features->hasFixedEncounters
+                || $features->hasGiftPokemon
+                || $features->hasLegendaryEncounters,
+            'fixedEncounters'        => $this->createFixedEncounterViewModels($fixedEncounters),
+            'giftPokemon'            => $this->createGiftPokemonViewModels(
+                $location,
                 $giftPokemonConfigEntries,
             ),
-            'hasLegendaryEncounters' => $features->hasLegendaryEncounters,
-            'legendary'       => $legendaryEncounter
-                ? $this->createLegendaryViewModel($legendaryEncounter)
-                : null,
-            'navigationBar'     => $navigationBarVm,
+            'legendaryEncounters'    => $this->createLegendaryViewModels($legendaryEncounters),
+            'navigationBar'          => $navigationBarVm,
         ]));
     }
 
@@ -204,23 +206,58 @@ final class GetWildEncounters
         return $highestRankedBadge->levelLimit();
     }
 
-    private function createLegendaryViewModel(FixedEncounter $fixedEncounter): stdClass
+    private function createFixedEncounterViewModels(array $fixedEncounters): array
     {
-        if ($fixedEncounter->lastCaptured) {
-            $lastCaptured = new CarbonImmutable($fixedEncounter->lastCaptured);
-            $lastEncountered = $lastCaptured->ago();
-        } else {
-            $lastEncountered = "";
+        $viewModels = [];
+
+        /** @var FixedEncounter $fixedEncounter */
+        foreach ($fixedEncounters as $fixedEncounter) {
+
+            if ($fixedEncounter->lastCaptured) {
+                $lastCaptured = new CarbonImmutable($fixedEncounter->lastCaptured);
+                $lastEncountered = $lastCaptured->ago();
+            } else {
+                $lastEncountered = "";
+            }
+
+            $viewModels[] = (object) [
+                'number'          => $fixedEncounter->pokedexNumber,
+                'name'            => $this->pokedexConfigRepository->find($fixedEncounter->pokedexNumber)['name'],
+                'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($fixedEncounter->pokedexNumber),
+                'level'           => $fixedEncounter->level,
+                'canBattle'       => $fixedEncounter->canBattle,
+                'lastEncountered' => $lastEncountered,
+            ];
         }
 
-        return (object) [
-            'number'          => $fixedEncounter->pokedexNumber,
-            'name'            => $this->pokedexConfigRepository->find($fixedEncounter->pokedexNumber)['name'],
-            'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($fixedEncounter->pokedexNumber),
-            'level'           => $fixedEncounter->level,
-            'canBattle'       => $fixedEncounter->canBattle,
-            'lastEncountered' => $lastEncountered,
-        ];
+        return $viewModels;
+    }
+
+    private function createLegendaryViewModels(array $fixedEncounters): array
+    {
+        $viewModels = [];
+
+        /** @var FixedEncounter $fixedEncounter */
+        foreach ($fixedEncounters as $fixedEncounter) {
+
+            if ($fixedEncounter->lastCaptured) {
+                $lastCaptured = new CarbonImmutable($fixedEncounter->lastCaptured);
+                $lastEncountered = $lastCaptured->ago();
+            } else {
+                $lastEncountered = "";
+            }
+
+            $viewModels[] = (object) [
+                'number'          => $fixedEncounter->pokedexNumber,
+                'name'            => $this->pokedexConfigRepository->find($fixedEncounter->pokedexNumber)['name'],
+                'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($fixedEncounter->pokedexNumber),
+                'level'           => $fixedEncounter->level,
+                'canBattle'       => $fixedEncounter->canBattle,
+                'lastEncountered' => $lastEncountered,
+            ];
+        }
+
+        return $viewModels;
     }
 
     private function findSurveys(Location $location, WildEncounters $wildEncounters): array

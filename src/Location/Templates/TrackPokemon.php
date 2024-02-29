@@ -25,7 +25,7 @@
                 <?=$currentLocation->section?>
             </div>
         </div>
-        <a href="/<?=$instanceId?>/map/wild-encounters" class="btn btn-sm btn-outline-dark">Stop Tracking</a>
+        <a href="/<?=$instanceId?>/map/pokemon" class="btn btn-sm btn-outline-dark">Stop Tracking</a>
     </div>
 
     <div class="card">

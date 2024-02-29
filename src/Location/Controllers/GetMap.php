@@ -42,7 +42,7 @@ final class GetMap
             $currentLocation,
         );
 
-        $features = $this->findFeatures->find($currentLocation->id);
+        $features = $this->findFeatures->find($currentLocation);
 
         $navigationBarVm = $this->viewModelFactory->createNavigationBar($features);
 

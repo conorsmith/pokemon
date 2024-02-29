@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\System;
 
 use ConorSmith\Pokemon\EliteFourConfigRepository;
+use ConorSmith\Pokemon\FixedEncounterConfigRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
@@ -50,6 +51,7 @@ final class ApplicationFactory
                 new TrainerConfigRepository(),
                 new PokedexConfigRepository(),
                 new EliteFourConfigRepository(),
+                new FixedEncounterConfigRepository(),
                 new GiftPokemonConfigRepository(),
                 new ViewModelFactory(
                     new PokedexConfigRepository(),

@@ -14,8 +14,15 @@ use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
 use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
 use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
 use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
+use ConorSmith\Pokemon\FixedEncounterConfigRepository;
+use ConorSmith\Pokemon\Location\Domain\FindFixedEncounters;
+use ConorSmith\Pokemon\Location\FindFixedEncountersFixedEncounterQuery;
+use ConorSmith\Pokemon\Party\LastTimeFixedEncounterPokemonWasCapturedQuery;
+use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
 use ConorSmith\Pokemon\Player\Repositories\GymBadgeRepository;
 use ConorSmith\Pokemon\Player\Repositories\GymBadgeRepositoryDb;
+use ConorSmith\Pokemon\Pokedex\PokedexRegionIsCompleteQuery;
+use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\Habit\FoodDiaryHabitStreakQuery;
 use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
@@ -30,7 +37,7 @@ use ConorSmith\Pokemon\Party\Repositories\CaughtPokemonRepository;
 use ConorSmith\Pokemon\Party\Repositories\EggRepositoryDb;
 use ConorSmith\Pokemon\Party\Repositories\EvolutionRepository;
 use ConorSmith\Pokemon\Party\Repositories\GenealogyRepositoryDb;
-use ConorSmith\Pokemon\Party\Repositories\LegendaryCaptureEventRepositoryDb;
+use ConorSmith\Pokemon\Party\Repositories\FixedEncounterCaptureEventRepositoryDb;
 use ConorSmith\Pokemon\Party\Repositories\ObtainedGiftPokemonRepository;
 use ConorSmith\Pokemon\Party\Repositories\PokemonConfigRepository;
 use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
@@ -103,11 +110,37 @@ final class RepositoryFactory
                     $this->create(EliteFourChallengeRepository::class, $instanceId),
                 ),
             ),
-            EncounterRepository::class               => new EncounterRepository(
+            EncounterRepository::class                    => new EncounterRepository(
                 $this->db,
                 new WildEncounterConfigRepository(),
-                new LocationConfigRepository(),
                 new PokedexConfigRepository(),
+                new FindFixedEncountersFixedEncounterQuery(
+                    new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
+                        $this->db,
+                        $this->create(RegionRepository::class, $instanceId),
+                        new LocationConfigRepository(),
+                        $instanceId,
+                    ),
+                    new FindFixedEncounters(
+                        $this->create(BagRepository::class, $instanceId),
+                        new FixedEncounterConfigRepository(),
+                        new LocationConfigRepository(),
+                        new HighestRankedGymBadgeQueryDb(
+                            $this->db,
+                            $instanceId,
+                        ),
+                        new LastTimeFixedEncounterPokemonWasCapturedQuery(
+                            $this->create(FixedEncounterCaptureEventRepositoryDb::class, $instanceId),
+                        ),
+                        new PokedexRegionIsCompleteQuery(
+                            $this->db,
+                            $instanceId,
+                        ),
+                        new TotalRegisteredPokemonQuery(
+                            $this->create(PokedexEntryRepository::class, $instanceId),
+                        ),
+                    ),
+                ),
                 new FoodDiaryHabitStreakQuery(
                     $this->create(DailyHabitLogRepository::class, $instanceId),
                 ),
@@ -144,7 +177,7 @@ final class RepositoryFactory
                 $this->db,
                 $instanceId,
             ),
-            LegendaryCaptureEventRepositoryDb::class => new LegendaryCaptureEventRepositoryDb(
+            FixedEncounterCaptureEventRepositoryDb::class => new FixedEncounterCaptureEventRepositoryDb(
                 $this->db,
                 $instanceId,
             ),

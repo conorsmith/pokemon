@@ -6,6 +6,8 @@ namespace ConorSmith\Pokemon\Party;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\Party\Domain\FixedEncounterCaptureEvent;
+use ConorSmith\Pokemon\Party\Repositories\FixedEncounterCaptureEventRepositoryDb;
 use ConorSmith\Pokemon\Party\UseCases\AddNewPokemon;
 use ConorSmith\Pokemon\SharedKernel\Commands\CatchPokemonCommand as CommandInterface;
 use ConorSmith\Pokemon\SharedKernel\Commands\CatchPokemonResult;
@@ -18,6 +20,7 @@ final class CatchPokemonCommand implements CommandInterface
 {
     public function __construct(
         private readonly AddNewPokemon $addNewPokemon,
+        private readonly FixedEncounterCaptureEventRepositoryDb $fixedEncounterCaptureEventRepositoryDb,
         private readonly Connection $db,
         private readonly FriendshipLog $friendshipLog,
         private readonly InstanceId $instanceId,
@@ -29,7 +32,7 @@ final class CatchPokemonCommand implements CommandInterface
         int $level,
         Sex $sex,
         bool $isShiny,
-        bool $isLegendary,
+        bool $isFixedEncounter,
         int $ivHp,
         int $ivPhysicalAttack,
         int $ivPhysicalDefence,
@@ -57,13 +60,13 @@ final class CatchPokemonCommand implements CommandInterface
             $partyPosition,
         );
 
-        if ($isLegendary) {
-            $this->db->insert("legendary_captures", [
-                'id'          => Uuid::uuid4(),
-                'instance_id' => $this->instanceId->value,
-                'pokemon_id'  => $pokemon->number,
-                'date_caught' => CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
-            ]);
+        if ($isFixedEncounter) {
+            $this->fixedEncounterCaptureEventRepositoryDb->save(new FixedEncounterCaptureEvent(
+                Uuid::uuid4()->toString(),
+                $caughtLocationId,
+                $pokemon->number,
+                CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
+            ));
         }
 
         if (is_null($partyPosition)) {

@@ -41,7 +41,7 @@ final class PostEncounterFight
             $this->notifyPlayerCommand->run(
                 Notification::transient("Encounter not found")
             );
-            return new RedirectResponse("/{$args['instanceId']}/map/wild-encounters");
+            return new RedirectResponse("/{$args['instanceId']}/map/pokemon");
         }
 
         if ($player->hasEntirePartyFainted()) {
@@ -97,7 +97,6 @@ final class PostEncounterFight
                 $round->secondPokemon,
                 !$round->playerFirst,
                 $nextSecondPokemon,
-                $encounter->isLegendary,
             ),
             $this->eventFactory->createEncounterRoundEvents(
                 $round->secondAttack,
@@ -105,7 +104,6 @@ final class PostEncounterFight
                 $round->firstPokemon,
                 $round->playerFirst,
                 $nextFirstPokemon,
-                $encounter->isLegendary,
             ),
         );
 

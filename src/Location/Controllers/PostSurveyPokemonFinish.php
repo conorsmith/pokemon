@@ -29,7 +29,7 @@ final class PostSurveyPokemonFinish
             $this->notifyPlayerCommand->run(
                 Notification::transient("No active survey"),
             );
-            return new RedirectResponse("/{$instanceId}/map/wild-encounters");
+            return new RedirectResponse("/{$instanceId}/map/pokemon");
         }
 
         if ($result->surveyIsComplete()) {

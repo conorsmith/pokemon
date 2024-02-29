@@ -2507,10 +2507,6 @@ return [
                 'weight' => 5,
                 'levels' => 58,
             ],
-            PokedexNo::SNORLAX   => [
-                'weight' => 4,
-                'levels' => 55,
-            ],
         ],
         EncounterType::SURFING    => [
             PokedexNo::PSYDUCK  => [
@@ -2597,10 +2593,6 @@ return [
                 'weight' => 4,
                 'levels' => 61,
             ],
-            PokedexNo::SNORLAX   => [
-                'weight' => 5,
-                'levels' => 58,
-            ],
             PokedexNo::KADABRA   => [
                 'weight' => 11,
                 'levels' => [55, 64],
@@ -2642,10 +2634,6 @@ return [
             PokedexNo::ELECTRODE => [
                 'weight' => 4,
                 'levels' => 64,
-            ],
-            PokedexNo::SNORLAX   => [
-                'weight' => 1,
-                'levels' => 61,
             ],
             PokedexNo::KADABRA   => [
                 'weight' => 25,

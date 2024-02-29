@@ -39,7 +39,7 @@ final class GetTrainers
         $currentLocation = $this->locationRepository->findCurrentLocation();
         $bag = $this->bagRepository->find();
 
-        $features = $this->findFeatures->find($currentLocation->id);
+        $features = $this->findFeatures->find($currentLocation);
 
         if (!$features->hasTrainers) {
             return new RedirectResponse("/{$args['instanceId']}/map");

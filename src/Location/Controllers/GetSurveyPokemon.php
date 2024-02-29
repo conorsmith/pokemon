@@ -48,7 +48,7 @@ final class GetSurveyPokemon
             $this->notifyPlayerCommand->run(
                 Notification::transient("No {$encounterType} encounters in this location"),
             );
-            return new RedirectResponse("/{$instanceId}/map/wild-encounters");
+            return new RedirectResponse("/{$instanceId}/map/pokemon");
         }
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/SurveyRecord.php", [

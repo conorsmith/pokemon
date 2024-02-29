@@ -1687,10 +1687,6 @@ return [
                 'weight' => 15,
                 'levels' => [5, 6],
             ],
-            PokedexNo::SUDOWOODO => [
-                'weight' => 15,
-                'levels' => [5, 6],
-            ],
         ],
         EncounterType::SURFING => [
             PokedexNo::PSYDUCK => [

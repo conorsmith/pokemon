@@ -7,7 +7,7 @@
                 <?=$currentLocation->section?>
             </div>
         </div>
-        <a href="/<?=$instanceId?>/map/wild-encounters" class="btn btn-sm btn-outline-dark">
+        <a href="/<?=$instanceId?>/map/pokemon" class="btn btn-sm btn-outline-dark">
             Back
         </a>
     </div>
