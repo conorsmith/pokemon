@@ -35,11 +35,14 @@
                     <?php if ($summary->pokemon->headbutt) : ?>
                         <i class="fas fa-fw fa-tree"></i>
                     <?php endif ?>
-                    <?php if ($summary->pokemon->gift) : ?>
-                        <i class="fas fa-fw fa-gift"></i>
+                    <?php if ($summary->pokemon->fixed) : ?>
+                        <i class="fas fa-fw fa-map-marked"></i>
                     <?php endif ?>
                     <?php if ($summary->pokemon->legendary) : ?>
                         <i class="fas fa-fw fa-star"></i>
+                    <?php endif ?>
+                    <?php if ($summary->pokemon->gift) : ?>
+                        <i class="fas fa-fw fa-gift"></i>
                     <?php endif ?>
                 </div>
             </div>

@@ -47,7 +47,7 @@ final class EncounterRepository
 
         return $this->generate(
             self::randomlySelectEntry($encounterTable),
-            false,
+            null,
         );
     }
 
@@ -71,14 +71,21 @@ final class EncounterRepository
                 $encounter->level,
                 $encounter->level,
             ),
-            true
+            $encounter->fixedEncounterId,
+            $encounter->isShiny,
         );
     }
 
-    private function generate(EncounterTableEntry $encounterTableEntry, bool $isFixedEncounter): Encounter
-    {
+    private function generate(
+        EncounterTableEntry $encounterTableEntry,
+        ?string $fixedEncounterId,
+        bool $isShiny = null,
+    ): Encounter {
         $sex = $this->generateEncounteredSex($encounterTableEntry->pokedexNumber);
-        $isShiny = $this->generateEncounteredShininess();
+
+        if (is_null($isShiny)) {
+            $isShiny = $this->generateEncounteredShininess();
+        }
 
         $encounterId = Uuid::uuid4()->toString();
 
@@ -117,10 +124,10 @@ final class EncounterRepository
             $encounterId,
             $pokemon,
             false,
-            $isFixedEncounter,
             $pokedexRow !== false,
             false,
-            0
+            0,
+            $fixedEncounterId,
         );
     }
 
@@ -178,10 +185,10 @@ final class EncounterRepository
             $id,
             $pokemon,
             $encounterRow['has_started'] === 1 ? true : false,
-            $encounterRow['is_legendary'] === 0 ? false : true,
             $pokedexRow !== false,
             $encounterRow['was_caught'] === 1 ? true : false,
-            $encounterRow['strength_indicator_progress']
+            $encounterRow['strength_indicator_progress'],
+            $encounterRow['fixed_encounter_id'],
         );
     }
 
@@ -205,7 +212,8 @@ final class EncounterRepository
                     Sex::UNKNOWN => "U",
                 },
                 'is_shiny'                    => $encounter->pokemon->isShiny ? 1 : 0,
-                'is_legendary'                => $encounter->isFixed ? 1 : 0,
+                'is_legendary'                => 0,
+                'fixed_encounter_id'          => $encounter->fixedEncounterId,
                 'iv_hp'                       => $encounter->pokemon->stats->ivs->hp,
                 'iv_physical_attack'          => $encounter->pokemon->stats->ivs->physicalAttack,
                 'iv_physical_defence'         => $encounter->pokemon->stats->ivs->physicalDefence,

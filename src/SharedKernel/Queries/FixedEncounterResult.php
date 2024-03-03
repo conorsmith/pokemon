@@ -7,6 +7,7 @@ namespace ConorSmith\Pokemon\SharedKernel\Queries;
 final class FixedEncounterResult
 {
     public function __construct(
+        public readonly string $fixedEncounterId,
         public readonly string $pokedexNumber,
         public readonly ?string $form,
         public readonly bool $isShiny,

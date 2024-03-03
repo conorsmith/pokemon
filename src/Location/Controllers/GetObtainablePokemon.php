@@ -76,30 +76,27 @@ final class GetObtainablePokemon
 
         $giftPokemonConfigEntries = $this->giftPokemonConfigRepository->findInLocation($currentLocation->id);
 
-        $fixedEncounters = $this->findFixedEncounters->findEncounters($currentLocation);
-
-        $legendaryEncounters = $this->findFixedEncounters->findLegendaries($currentLocation);
+        $fixedEncounters = $this->findFixedEncounters->findInLocation($currentLocation);
 
         $currentLocationViewModel = $this->viewModelFactory->createLocation($currentLocation);
         $navigationBarVm = $this->viewModelFactory->createNavigationBar($features);
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/ObtainablePokemon.php", [
-            'currentLocation'        => $currentLocationViewModel,
-            'canEncounter'           => true,
-            'pokeballs'              => $bag->countAllPokeBalls(),
-            'ovalCharms'             => $bag->count(ItemId::OVAL_CHARM),
-            'hasWildEncounters'      => $features->hasWildEncounters,
-            'wildEncounters'         => $wildEncounters ? $this->createWildEncountersViewModels($wildEncounters, $surveys) : [],
-            'hasFixedEncounters'     => $features->hasFixedEncounters
-                || $features->hasGiftPokemon
-                || $features->hasLegendaryEncounters,
-            'fixedEncounters'        => $this->createFixedEncounterViewModels($fixedEncounters),
-            'giftPokemon'            => $this->createGiftPokemonViewModels(
+            'currentLocation'    => $currentLocationViewModel,
+            'canEncounter'       => true,
+            'pokeballs'          => $bag->countAllPokeBalls(),
+            'ovalCharms'         => $bag->count(ItemId::OVAL_CHARM),
+            'hasWildEncounters'  => $features->hasWildEncounters,
+            'wildEncounters'     => $wildEncounters ? $this->createWildEncountersViewModels($wildEncounters, $surveys) : [],
+            'hasFixedEncounters' => $features->hasStandardFixedEncounters
+                || $features->hasLegendaryFixedEncounters
+                || $features->hasGiftPokemon,
+            'fixedEncounters'    => $this->createFixedEncounterViewModels($fixedEncounters),
+            'giftPokemon'        => $this->createGiftPokemonViewModels(
                 $location,
                 $giftPokemonConfigEntries,
             ),
-            'legendaryEncounters'    => $this->createLegendaryViewModels($legendaryEncounters),
-            'navigationBar'          => $navigationBarVm,
+            'navigationBar'      => $navigationBarVm,
         ]));
     }
 
@@ -224,33 +221,8 @@ final class GetObtainablePokemon
                 'number'          => $fixedEncounter->pokedexNumber,
                 'name'            => $this->pokedexConfigRepository->find($fixedEncounter->pokedexNumber)['name'],
                 'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($fixedEncounter->pokedexNumber),
-                'level'           => $fixedEncounter->level,
-                'canBattle'       => $fixedEncounter->canBattle,
-                'lastEncountered' => $lastEncountered,
-            ];
-        }
-
-        return $viewModels;
-    }
-
-    private function createLegendaryViewModels(array $fixedEncounters): array
-    {
-        $viewModels = [];
-
-        /** @var FixedEncounter $fixedEncounter */
-        foreach ($fixedEncounters as $fixedEncounter) {
-
-            if ($fixedEncounter->lastCaptured) {
-                $lastCaptured = new CarbonImmutable($fixedEncounter->lastCaptured);
-                $lastEncountered = $lastCaptured->ago();
-            } else {
-                $lastEncountered = "";
-            }
-
-            $viewModels[] = (object) [
-                'number'          => $fixedEncounter->pokedexNumber,
-                'name'            => $this->pokedexConfigRepository->find($fixedEncounter->pokedexNumber)['name'],
-                'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($fixedEncounter->pokedexNumber),
+                'isLegendary'     => $fixedEncounter->isLegendary,
+                'isShiny'         => $fixedEncounter->isShiny,
                 'level'           => $fixedEncounter->level,
                 'canBattle'       => $fixedEncounter->canBattle,
                 'lastEncountered' => $lastEncountered,

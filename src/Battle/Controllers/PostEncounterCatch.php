@@ -7,6 +7,7 @@ namespace ConorSmith\Pokemon\Battle\Controllers;
 use ConorSmith\Pokemon\Battle\Domain\Encounter;
 use ConorSmith\Pokemon\Battle\EventFactory;
 use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
+use ConorSmith\Pokemon\FixedEncounterConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Commands\CatchPokemonCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
@@ -25,6 +26,7 @@ final class PostEncounterCatch
         private readonly Connection $db,
         private readonly EncounterRepository $encounterRepository,
         private readonly BagRepository $bagRepository,
+        private readonly FixedEncounterConfigRepository $fixedEncounterConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly CatchPokemonCommand $catchPokemonCommand,
         private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
@@ -92,7 +94,7 @@ final class PostEncounterCatch
                 $encounter->pokemon->level,
                 $encounter->pokemon->sex,
                 $encounter->pokemon->isShiny,
-                $encounter->isFixed,
+                $encounter->fixedEncounterId,
                 $encounter->pokemon->stats->ivs->hp,
                 $encounter->pokemon->stats->ivs->physicalAttack,
                 $encounter->pokemon->stats->ivs->physicalDefence,
@@ -111,9 +113,9 @@ final class PostEncounterCatch
             if ($totalRegisteredPokemonAfterCatch > $totalRegisteredPokemonBeforeCatch) {
                 $events[] = $this->eventFactory->createPokedexRegistrationEvent($encounter);
 
-                $legendaryConfig = $this->findLegendaryUnlock($totalRegisteredPokemonAfterCatch);
-                if (!is_null($legendaryConfig)) {
-                    $events[] = $this->eventFactory->createLegendaryUnlockEvent($legendaryConfig['pokemon']);
+                $configEntry = $this->findLegendaryUnlock($totalRegisteredPokemonAfterCatch);
+                if (!is_null($configEntry)) {
+                    $events[] = $this->eventFactory->createLegendaryUnlockEvent($configEntry['pokemon']);
                 }
             }
 
@@ -209,10 +211,12 @@ final class PostEncounterCatch
 
     private function findLegendaryUnlock(int $totalRegisteredPokemon): ?array
     {
-        $legendariesConfig = require __DIR__ . "/../../Config/Legendaries.php";
+        $fixedEncountersConfig = $this->fixedEncounterConfigRepository->all();
 
-        foreach ($legendariesConfig as $configEntry) {
-            if ($configEntry['unlock'] === $totalRegisteredPokemon) {
+        foreach ($fixedEncountersConfig as $configEntry) {
+            if (isset($configEntry['unlock'])
+                && $configEntry['unlock'] === $totalRegisteredPokemon
+            ) {
                 return $configEntry;
             }
         }

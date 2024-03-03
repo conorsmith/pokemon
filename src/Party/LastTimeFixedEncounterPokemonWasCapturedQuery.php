@@ -15,12 +15,11 @@ final class LastTimeFixedEncounterPokemonWasCapturedQuery implements QueryInterf
         private readonly FixedEncounterCaptureEventRepositoryDb $fixedEncounterCaptureEventRepositoryDb,
     ) {}
 
-    public function run(string $locationId, string $pokedexNumber): ?DateTimeImmutable
+    public function run(string $fixedEncounterId): ?DateTimeImmutable
     {
         /** @var FixedEncounterCaptureEvent[] $events */
         $events = $this->fixedEncounterCaptureEventRepositoryDb->findForPokemonInReverseChronologicalOrder(
-            $locationId,
-            $pokedexNumber,
+            $fixedEncounterId,
         );
 
         if (count($events) === 0) {

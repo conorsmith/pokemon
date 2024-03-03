@@ -32,7 +32,7 @@ final class CatchPokemonCommand implements CommandInterface
         int $level,
         Sex $sex,
         bool $isShiny,
-        bool $isFixedEncounter,
+        ?string $fixedEncounterId,
         int $ivHp,
         int $ivPhysicalAttack,
         int $ivPhysicalDefence,
@@ -60,9 +60,10 @@ final class CatchPokemonCommand implements CommandInterface
             $partyPosition,
         );
 
-        if ($isFixedEncounter) {
+        if (!is_null($fixedEncounterId)) {
             $this->fixedEncounterCaptureEventRepositoryDb->save(new FixedEncounterCaptureEvent(
                 Uuid::uuid4()->toString(),
+                $fixedEncounterId,
                 $caughtLocationId,
                 $pokemon->number,
                 CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),

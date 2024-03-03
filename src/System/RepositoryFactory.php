@@ -124,6 +124,7 @@ final class RepositoryFactory
                     new FindFixedEncounters(
                         $this->create(BagRepository::class, $instanceId),
                         new FixedEncounterConfigRepository(),
+                        new PokedexConfigRepository(),
                         new LocationConfigRepository(),
                         new HighestRankedGymBadgeQueryDb(
                             $this->db,

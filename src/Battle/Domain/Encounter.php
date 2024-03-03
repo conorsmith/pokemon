@@ -14,10 +14,10 @@ final class Encounter
         public readonly string $id,
         public readonly Pokemon $pokemon,
         public readonly bool $hasStarted,
-        public readonly bool $isFixed,
         public readonly bool $isRegistered,
         public readonly bool $wasCaught,
         public readonly int $strengthIndicatorProgress,
+        public readonly ?string $fixedEncounterId,
     ) {}
 
     public function captured(): self
@@ -26,10 +26,10 @@ final class Encounter
             $this->id,
             $this->pokemon,
             $this->hasStarted,
-            $this->isFixed,
             $this->isRegistered,
             true,
             $this->strengthIndicatorProgress,
+            $this->fixedEncounterId,
         );
     }
 
@@ -39,10 +39,10 @@ final class Encounter
             $this->id,
             $this->pokemon,
             true,
-            $this->isFixed,
             $this->isRegistered,
             $this->wasCaught,
             $this->strengthIndicatorProgress,
+            $this->fixedEncounterId,
         );
     }
 
@@ -61,10 +61,10 @@ final class Encounter
             $this->id,
             $this->pokemon,
             $this->hasStarted,
-            $this->isFixed,
             $this->isRegistered,
             $this->wasCaught,
-            $this->strengthIndicatorProgress + 1
+            $this->strengthIndicatorProgress + 1,
+            $this->fixedEncounterId,
         );
     }
 }

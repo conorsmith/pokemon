@@ -238,7 +238,7 @@ final class EventFactory
     {
         $pokemonVm = $this->viewModelFactory->createPokemonInBattle($encounter->pokemon);
 
-        $descriptor = $pokemonVm->isLegendary ? "legendary" : "wild";
+        $descriptor = $pokemonVm->isLegendary ? "legendary Pokémon" : "wild";
 
         return [
             'type'     => "strengthIndicatorProgresses",

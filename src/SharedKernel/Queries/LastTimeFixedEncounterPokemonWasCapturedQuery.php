@@ -8,5 +8,5 @@ use DateTimeImmutable;
 
 interface LastTimeFixedEncounterPokemonWasCapturedQuery
 {
-    public function run(string $locationId, string $pokedexNumber): ?DateTimeImmutable;
+    public function run(string $fixedEncounterId): ?DateTimeImmutable;
 }

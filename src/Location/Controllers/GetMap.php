@@ -137,8 +137,9 @@ final class GetMap
                 'fishing'   => $wildEncounters && $wildEncounters->includesFishing,
                 'rockSmash' => $wildEncounters && $wildEncounters->includesRockSmash,
                 'headbutt'  => $wildEncounters && $wildEncounters->includesHeadbutt,
+                'fixed'     => $features->hasStandardFixedEncounters,
+                'legendary' => $features->hasLegendaryFixedEncounters,
                 'gift'      => $features->hasGiftPokemon,
-                'legendary' => $features->hasLegendaryEncounters,
             ],
         ];
     }

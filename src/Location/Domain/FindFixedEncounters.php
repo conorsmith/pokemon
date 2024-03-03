@@ -8,6 +8,7 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
 use ConorSmith\Pokemon\FixedEncounterConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
+use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
@@ -24,6 +25,7 @@ final class FindFixedEncounters
     public function __construct(
         private readonly BagRepository $bagRepository,
         private readonly FixedEncounterConfigRepository $fixedEncounterConfigRepository,
+        private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly HighestRankedGymBadgeQuery $highestRankedGymBadgeQuery,
         private readonly LastTimeFixedEncounterPokemonWasCapturedQuery $lastTimeFixedEncounterPokemonWasCapturedQuery,
@@ -31,9 +33,18 @@ final class FindFixedEncounters
         private readonly TotalRegisteredPokemonQuery $totalRegisteredPokemonQuery,
     ) {}
 
-    public function findEncounters(Location $location): array
+    public function findInLocation(Location $location): array
     {
-        $configEntries = $this->fixedEncounterConfigRepository->findInLocation($location->id);
+        $configEntries = array_filter(
+            $this->fixedEncounterConfigRepository->all(),
+            fn (array $entry) => (
+                    $entry['location'] instanceof RegionId
+                    && $entry['location'] === $location->region
+                    && $this->isRoamingLegendaryInLocation($entry, $location)
+                ) || (
+                    $entry['location'] === $location->id
+                ),
+        );
 
         if (count($configEntries) === 0) {
             return [];
@@ -44,12 +55,32 @@ final class FindFixedEncounters
         /** @var array $configEntry */
         foreach ($configEntries as $configEntry) {
 
+            if (isset($configEntry['unlock'])) {
+                if ($configEntry['unlock'] instanceof RegionId
+                    && !$this->pokedexRegionIsCompleteQuery->run($configEntry['unlock'])
+                ) {
+                    continue;
+                }
+
+                if ($this->totalRegisteredPokemonQuery->run() < $configEntry['unlock']) {
+                    continue;
+                }
+            }
+
             $canBattle = true;
 
-            $lastCaught = $this->lastTimeFixedEncounterPokemonWasCapturedQuery->run($location->id, $configEntry['pokemon']);
+            $lastCaught = $this->lastTimeFixedEncounterPokemonWasCapturedQuery->run($configEntry['id']);
 
-            if ($this->pokemonHasBeenCapturedTooRecently($lastCaught)) {
-                $canBattle = false;
+            $pokedexConfigEntry = $this->pokedexConfigRepository->find($configEntry['pokemon']);
+
+            if (isset($pokedexConfigEntry['isLegendary']) && $pokedexConfigEntry['isLegendary'] === true) {
+                if ($this->legendaryHasBeenCapturedTooRecently($lastCaught)) {
+                    $canBattle = false;
+                }
+            } else {
+                if ($this->pokemonHasBeenCapturedTooRecently($lastCaught)) {
+                    $canBattle = false;
+                }
             }
 
             $bag = $this->bagRepository->find();
@@ -76,7 +107,10 @@ final class FindFixedEncounters
             };
 
             $encounters[] = new FixedEncounter(
+                $configEntry['id'],
                 $configEntry['pokemon'],
+                isset($pokedexConfigEntry['isLegendary']) && $pokedexConfigEntry['isLegendary'] === true,
+                isset($configEntry['isShiny']) && $configEntry['isShiny'] === true,
                 $configEntry['level'] + $regionalLevelOffset,
                 $canBattle,
                 $lastCaught,
@@ -86,101 +120,17 @@ final class FindFixedEncounters
         return $encounters;
     }
 
-    public function findLegendaries(Location $location): array
+    private function isRoamingLegendaryInLocation(array $entry, Location $location): bool
     {
-        $legendaryConfigs = $this->findConfigEntries($location->id);
+        RandomNumberGenerator::setSeed(crc32($entry['pokemon'] . date("Y-m-d")));
 
-        if (count($legendaryConfigs) === 0) {
-            return [];
-        }
-
-        $legendaryEncounters = [];
-
-        /** @var array $legendaryConfig */
-        foreach ($legendaryConfigs as $legendaryConfig) {
-
-            if ($legendaryConfig['unlock'] instanceof RegionId
-                && !$this->pokedexRegionIsCompleteQuery->run($legendaryConfig['unlock'])
-            ) {
-                continue;
-            }
-
-            if ($this->totalRegisteredPokemonQuery->run() < $legendaryConfig['unlock']) {
-                continue;
-            }
-
-            $canBattle = true;
-
-            $lastCaught = $this->lastTimeFixedEncounterPokemonWasCapturedQuery->run($location->id, $legendaryConfig['pokemon']);
-
-            if ($this->legendaryHasBeenCapturedTooRecently($lastCaught)) {
-                $canBattle = false;
-            }
-
-            $bag = $this->bagRepository->find();
-
-            if (!$bag->hasAnyPokeBall()) {
-                $canBattle = false;
-            }
-
-            if (!$bag->has(ItemId::OVAL_CHARM)) {
-                $canBattle = false;
-            }
-
-            $levelLimit = $this->findLevelLimit();
-
-            if ($legendaryConfig['level'] > $levelLimit) {
-                $canBattle = false;
-            }
-
-            $regionalLevelOffset = match ($location->region) {
-                RegionId::KANTO => 0,
-                RegionId::JOHTO => 50,
-                RegionId::HOENN => 100,
-                default         => throw new LogicException(),
-            };
-
-            $legendaryEncounters[] = new FixedEncounter(
-                $legendaryConfig['pokemon'],
-                $legendaryConfig['level'] + $regionalLevelOffset,
-                $canBattle,
-                $lastCaught,
-            );
-        }
-
-        return $legendaryEncounters;
-    }
-
-    private function findConfigEntries(string $locationId): array
-    {
-        $legendariesConfig = require __DIR__ . "/../../Config/Legendaries.php";
-
-        $filteredConfigs = [];
-
-        foreach ($legendariesConfig as $config) {
-            if ($config['location'] instanceof RegionId
-                && $this->encounterRoamingLegendary($locationId, $config)
-            ) {
-                $filteredConfigs[] = $config;
-            } elseif ($config['location'] === $locationId) {
-                $filteredConfigs[] = $config;
-            }
-        }
-
-        return $filteredConfigs;
-    }
-
-    private function encounterRoamingLegendary(string $currentLocationId, array $legendaryConfig): bool
-    {
-        RandomNumberGenerator::setSeed(crc32($legendaryConfig['pokemon'] . date("Y-m-d")));
-
-        $locations = $this->locationConfigRepository->findAllLocationsInRegion($legendaryConfig['location']);
+        $locations = $this->locationConfigRepository->findAllLocationsInRegion($entry['location']);
 
         $roamingLocation = $locations[RandomNumberGenerator::generateInRange(0, count($locations) - 1)];
 
         RandomNumberGenerator::unsetSeed();
 
-        return $currentLocationId === $roamingLocation['id'];
+        return $location->id === $roamingLocation['id'];
     }
 
     private function pokemonHasBeenCapturedTooRecently(?DateTimeImmutable $lastTime): bool

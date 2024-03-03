@@ -21,32 +21,17 @@ final class FindFixedEncountersFixedEncounterQuery implements FixedEncounterQuer
     {
         $location = $this->locationRepository->find($locationId);
 
-        $encounters = $this->findFixedEncounters->findEncounters($location);
+        $encounters = $this->findFixedEncounters->findInLocation($location);
 
         /** @var FixedEncounter $encounter */
         foreach ($encounters as $encounter) {
             if ($encounter->pokedexNumber === $pokedexNumber) {
                 return new FixedEncounterResult(
+                    $encounter->id,
                     $encounter->pokedexNumber,
                     null,
-                    false,
-                    false,
-                    $encounter->level,
-                    $encounter->canBattle,
-                );
-            }
-        }
-
-        $legendaryEncounters = $this->findFixedEncounters->findLegendaries($location);
-
-        /** @var FixedEncounter $encounter */
-        foreach ($legendaryEncounters as $encounter) {
-            if ($encounter->pokedexNumber === $pokedexNumber) {
-                return new FixedEncounterResult(
-                    $encounter->pokedexNumber,
-                    null,
-                    false,
-                    true,
+                    $encounter->isShiny,
+                    $encounter->isLegendary,
                     $encounter->level,
                     $encounter->canBattle,
                 );

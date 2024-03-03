@@ -215,6 +215,7 @@ final class ControllerFactory
         return new FindFixedEncounters(
             $this->repositoryFactory->create(BagRepository::class, $instanceId),
             $this->fixedEncounterConfigRepository,
+            $this->pokedexConfigRepository,
             $this->locationConfigRepository,
             $this->createHighestRankedGymBadgeQuery($instanceId),
             new LastTimeFixedEncounterPokemonWasCapturedQuery(
@@ -259,7 +260,6 @@ final class ControllerFactory
     {
         return new FindFeatures(
             $this->wildEncounterConfigRepository,
-            $this->fixedEncounterConfigRepository,
             $this->giftPokemonConfigRepository,
             $this->createFindFixedEncounters($instanceId),
             $this->createFindPokemonLeague($instanceId),

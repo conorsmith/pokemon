@@ -31,30 +31,29 @@ final class FixedEncounterCaptureEventRepositoryDb
 
         if ($row === false) {
             $this->db->insert("legendary_captures", [
-                'id'          => $legendaryCaptureEvent->id,
-                'instance_id' => $this->instanceId->value,
-                'location_id' => $legendaryCaptureEvent->locationId,
-                'pokemon_id'  => $legendaryCaptureEvent->pokedexNumber,
-                'date_caught' => $legendaryCaptureEvent->capturedAt->format("Y-m-d H:i:s"),
+                'id'                 => $legendaryCaptureEvent->id,
+                'instance_id'        => $this->instanceId->value,
+                'fixed_encounter_id' => $legendaryCaptureEvent->fixedEncounterId,
+                'location_id'        => $legendaryCaptureEvent->locationId,
+                'pokemon_id'         => $legendaryCaptureEvent->pokedexNumber,
+                'date_caught'        => $legendaryCaptureEvent->capturedAt->format("Y-m-d H:i:s"),
             ]);
         } else {
             throw new LogicException("Legendary Capture Events are append only");
         }
     }
 
-    public function findForPokemonInReverseChronologicalOrder(string $locationId, string $pokedexNumber): array
+    public function findForPokemonInReverseChronologicalOrder(string $fixedEncounterId): array
     {
         $rows = $this->db->fetchAllAssociative("
             SELECT *
             FROM legendary_captures
             WHERE instance_id = :instanceId
-                AND location_id = :locationId
-                AND pokemon_id = :pokedexNumber
+                AND fixed_encounter_id = :fixedEncounterId
             ORDER BY date_caught DESC
         ", [
-            'instanceId'    => $this->instanceId->value,
-            'locationId'    => $locationId,
-            'pokedexNumber' => $pokedexNumber,
+            'instanceId'       => $this->instanceId->value,
+            'fixedEncounterId' => $fixedEncounterId,
         ]);
 
         $events = [];
@@ -63,6 +62,7 @@ final class FixedEncounterCaptureEventRepositoryDb
         foreach ($rows as $row) {
             $events[] = new FixedEncounterCaptureEvent(
                 $row['id'],
+                $row['fixed_encounter_id'],
                 $row['location_id'],
                 $row['pokemon_id'],
                 CarbonImmutable::createFromFormat(

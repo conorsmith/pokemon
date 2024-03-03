@@ -77,13 +77,13 @@
                 <?php endforeach ?>
                 <?php foreach ($fixedEncounters as $fixedEncounter) : ?>
                     <li class="list-group-item d-flex align-items-start">
-                        <div class="pokemon-image">
+                        <div class="pokemon-image <?=$fixedEncounter->isShiny ? "pokemon-image--shiny" : ""?>">
                             <img src="<?=$fixedEncounter->imageUrl?>">
                         </div>
                         <div>
                             <div><strong><?=$fixedEncounter->name?></strong></div>
                             <div>
-                                <small><i class="fas fa-map-marked"></i> Lv <?=$fixedEncounter->level?></small>
+                                <small><i class="fas <?=$fixedEncounter->isLegendary ? "fa-star" : "fa-map-marked"?>"></i> Lv <?=$fixedEncounter->level?></small>
                             </div>
                             <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
                                 <form method="POST" action="/<?=$instanceId?>/encounter" style="margin-right: 0.6rem;">
@@ -92,28 +92,6 @@
                                 </form>
                                 <?php if ($fixedEncounter->lastEncountered) : ?>
                                     <span style="font-size: 0.8rem;">Last captured <?=$fixedEncounter->lastEncountered?></span>
-                                <?php endif ?>
-                            </div>
-                        </div>
-                    </li>
-                <?php endforeach ?>
-                <?php foreach ($legendaryEncounters as $legendary) : ?>
-                    <li class="list-group-item d-flex align-items-start">
-                        <div class="pokemon-image">
-                            <img src="<?=$legendary->imageUrl?>">
-                        </div>
-                        <div>
-                            <div><strong><?=$legendary->name?></strong></div>
-                            <div>
-                                <small><i class="fas fa-star"></i> Lv <?=$legendary->level?></small>
-                            </div>
-                            <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
-                                <form method="POST" action="/<?=$instanceId?>/encounter" style="margin-right: 0.6rem;">
-                                    <input type="hidden" name="pokedexNumber" value="<?=$legendary->number?>">
-                                    <button type="submit" class="btn btn-outline-dark btn-sm" <?=$legendary->canBattle ? "" : "disabled"?>>Battle</button>
-                                </form>
-                                <?php if ($legendary->lastEncountered) : ?>
-                                    <span style="font-size: 0.8rem;">Last captured <?=$legendary->lastEncountered?></span>
                                 <?php endif ?>
                             </div>
                         </div>

@@ -34,6 +34,7 @@ use ConorSmith\Pokemon\Battle\UseCases\CreateAFixedEncounter;
 use ConorSmith\Pokemon\Battle\UseCases\CreateAWildEncounter;
 use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
 use ConorSmith\Pokemon\Battle\UseCases\StartAnEncounter;
+use ConorSmith\Pokemon\FixedEncounterConfigRepository;
 use ConorSmith\Pokemon\Location\Controllers\GetEliteFour;
 use ConorSmith\Pokemon\Location\Controllers\GetSurveyPokemon;
 use ConorSmith\Pokemon\Location\Controllers\GetTrainers;
@@ -477,6 +478,7 @@ final class ControllerFactory
                 $this->db,
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                new FixedEncounterConfigRepository(),
                 $this->locationConfigRepository,
                 new CatchPokemonCommand(
                     new AddNewPokemon(
@@ -657,6 +659,7 @@ final class ControllerFactory
                     new PokedexConfigRepository(),
                     $instanceId,
                 ),
+                new FixedEncounterConfigRepository(),
                 new ItemConfigRepository(),
                 $this->pokedexConfigRepository,
                 new TotalRegisteredPokemonQuery(

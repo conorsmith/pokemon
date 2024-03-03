@@ -13,11 +13,8 @@ final class FixedEncounterConfigRepository
         $this->config = require __DIR__ . "/Config/FixedEncounters.php";
     }
 
-    public function findInLocation(string $locationId): array
+    public function all(): array
     {
-        return array_filter(
-            $this->config,
-            fn (array $entry) => $entry['location'] === $locationId,
-        );
+        return $this->config;
     }
 }
