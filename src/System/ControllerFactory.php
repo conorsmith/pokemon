@@ -4,48 +4,63 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\System;
 
-use ConorSmith\Pokemon\Battle\Controllers\GetBattle;
-use ConorSmith\Pokemon\Battle\Controllers\GetEncounter;
-use ConorSmith\Pokemon\Battle\Controllers\GetHallOfFame;
-use ConorSmith\Pokemon\Battle\Controllers\GetSwitch;
-use ConorSmith\Pokemon\Battle\Controllers\PostBattleFight;
-use ConorSmith\Pokemon\Battle\Controllers\PostBattleFinish;
-use ConorSmith\Pokemon\Battle\Controllers\PostBattleStart;
-use ConorSmith\Pokemon\Battle\Controllers\PostChallengeEliteFour;
-use ConorSmith\Pokemon\Battle\Controllers\PostEncounterCatch;
-use ConorSmith\Pokemon\Battle\Controllers\PostEncounterFight;
-use ConorSmith\Pokemon\Battle\Controllers\PostEncounterGenerate;
-use ConorSmith\Pokemon\Battle\Controllers\PostEncounterGenerateAndStart;
-use ConorSmith\Pokemon\Battle\Controllers\PostEncounterRun;
-use ConorSmith\Pokemon\Battle\Controllers\PostEncounterStart;
-use ConorSmith\Pokemon\Battle\Controllers\PostSwitch;
-use ConorSmith\Pokemon\Battle\Domain\BattleRepository;
-use ConorSmith\Pokemon\Battle\EliteFourChallengeRegionalVictoryQuery;
-use ConorSmith\Pokemon\Battle\EventFactory;
-use ConorSmith\Pokemon\Battle\LeagueChampionRepositoryPlayerIsLeagueChampionQuery;
-use ConorSmith\Pokemon\Battle\Repositories\AreaRepository;
-use ConorSmith\Pokemon\Battle\Repositories\EliteFourChallengeRepository;
-use ConorSmith\Pokemon\Battle\Repositories\EncounterRepository;
-use ConorSmith\Pokemon\Battle\Repositories\LeagueChampionRepository;
-use ConorSmith\Pokemon\Battle\Repositories\LocationRepository;
-use ConorSmith\Pokemon\Battle\Repositories\PlayerRepositoryDb;
-use ConorSmith\Pokemon\Battle\Repositories\TrainerRepository;
-use ConorSmith\Pokemon\Battle\UseCases\CreateAFixedEncounter;
-use ConorSmith\Pokemon\Battle\UseCases\CreateAWildEncounter;
-use ConorSmith\Pokemon\Battle\UseCases\StartABattle;
-use ConorSmith\Pokemon\Battle\UseCases\StartAnEncounter;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\AreaRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\EliteFourChallengeRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\EncounterRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\LeagueChampionRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\LocationRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\TrainerRepository;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\GetBattle;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\GetEncounter;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\GetHallOfFame;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\GetSwitch;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostBattleFight;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostBattleFinish;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostBattleStart;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostChallengeEliteFour;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostEncounterCatch;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostEncounterFight;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostEncounterGenerate;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostEncounterGenerateAndStart;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostEncounterRun;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostEncounterStart;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\PostSwitch;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\BattleRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\PlayerRepository;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\ViewModels\EventFactory;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\CreateAFixedEncounter;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\CreateAWildEncounter;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\StartABattle;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\StartAnEncounter;
+use ConorSmith\Pokemon\EliteFourConfigRepository;
 use ConorSmith\Pokemon\FixedEncounterConfigRepository;
-use ConorSmith\Pokemon\Location\Controllers\GetEliteFour;
-use ConorSmith\Pokemon\Location\Controllers\GetSurveyPokemon;
-use ConorSmith\Pokemon\Location\Controllers\GetTrainers;
-use ConorSmith\Pokemon\Location\Controllers\PostSurveyPokemonFinish;
-use ConorSmith\Pokemon\Location\Controllers\PostSurveyPokemonStart;
-use ConorSmith\Pokemon\Party\FriendshipLogReportBattleWithGymLeaderCommand;
-use ConorSmith\Pokemon\Party\FriendshipLogReportPartyPokemonFaintedCommand;
-use ConorSmith\Pokemon\Party\Repositories\FixedEncounterCaptureEventRepositoryDb;
-use ConorSmith\Pokemon\Player\Controllers\GetNotifications;
-use ConorSmith\Pokemon\Player\Controllers\GetStatus;
-use ConorSmith\Pokemon\Player\Repositories\GymBadgeRepository;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\FinishSurveyingPokemon;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowActiveSurvey;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowSurveyRecord;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\StartSurveyingPokemon;
+use ConorSmith\Pokemon\Gameplay\Domain\Evolution\EvolutionRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\InGameEvents\FixedEncounterCaptureEventRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\InGameEvents\ObtainedGiftPokemonRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\LocationFeatures\FindFeatures;
+use ConorSmith\Pokemon\Gameplay\Domain\LocationFeatures\FindFixedEncounters;
+use ConorSmith\Pokemon\Gameplay\Domain\LocationFeatures\FindPokemonLeague;
+use ConorSmith\Pokemon\Gameplay\Domain\LocationFeatures\FindTrainers;
+use ConorSmith\Pokemon\Gameplay\Domain\LocationFeatures\FindWildEncounters;
+use ConorSmith\Pokemon\Gameplay\Domain\LocationFeatures\RegionRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Notifications\NotificationRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\CaughtPokemonRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\FriendshipEventLogRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\PokemonRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Pokedex\PokedexEntryRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Surveying\SurveyRepository;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\GetEliteFour;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\GetSurveyPokemon;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\GetTrainers;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\PostSurveyPokemonFinish;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\PostSurveyPokemonStart;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Player\Controllers\GetNotifications;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Player\Controllers\GetStatus;
+use ConorSmith\Pokemon\Gameplay\Domain\GymBadgeRepository;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogCalorieGoal;
@@ -63,73 +78,52 @@ use ConorSmith\Pokemon\Habit\Repositories\DailyHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\UnlimitedHabitLogRepository;
 use ConorSmith\Pokemon\Habit\Repositories\WeeklyHabitLogRepository;
 use ConorSmith\Pokemon\ItemConfigRepository;
-use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
-use ConorSmith\Pokemon\Location\Controllers\GetMap;
-use ConorSmith\Pokemon\Location\Controllers\GetTrackPokemon;
-use ConorSmith\Pokemon\Location\Controllers\GetObtainablePokemon;
-use ConorSmith\Pokemon\Location\Controllers\PostMapMove;
-use ConorSmith\Pokemon\Location\LocationRepositoryCurrentLocationQuery;
-use ConorSmith\Pokemon\Location\RegionRepositoryRegionIsLockedQuery;
-use ConorSmith\Pokemon\Location\Repositories\RegionRepository;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\GetMap;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\GetTrackPokemon;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\GetObtainablePokemon;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\PostMapMove;
 use ConorSmith\Pokemon\LocationConfigRepository;
-use ConorSmith\Pokemon\Party\BoostPokemonEvsCommand;
-use ConorSmith\Pokemon\Party\CapturedPokemonQuery;
-use ConorSmith\Pokemon\Party\CatchPokemonCommand;
-use ConorSmith\Pokemon\Party\Controllers\GetParty;
-use ConorSmith\Pokemon\Party\Controllers\GetPartyBox;
-use ConorSmith\Pokemon\Party\Controllers\GetPartyCombinations;
-use ConorSmith\Pokemon\Party\Controllers\GetPartyCompare;
-use ConorSmith\Pokemon\Party\Controllers\GetPartyDayCare;
-use ConorSmith\Pokemon\Party\Controllers\GetPartyEggs;
-use ConorSmith\Pokemon\Party\Controllers\GetPartyItemUse;
-use ConorSmith\Pokemon\Party\Controllers\GetPokemon;
-use ConorSmith\Pokemon\Party\Controllers\GetPokemonBreed;
-use ConorSmith\Pokemon\Party\Controllers\GetPokemonItemGive;
-use ConorSmith\Pokemon\Party\Controllers\GetPokemonItemUse;
-use ConorSmith\Pokemon\Party\Controllers\PostObtain;
-use ConorSmith\Pokemon\Party\Controllers\PostPartyItemGive;
-use ConorSmith\Pokemon\Party\Controllers\PostPartyItemUse;
-use ConorSmith\Pokemon\Party\Controllers\PostPartyMoveDown;
-use ConorSmith\Pokemon\Party\Controllers\PostPartyMoveUp;
-use ConorSmith\Pokemon\Party\Controllers\PostPartySendToBox;
-use ConorSmith\Pokemon\Party\Controllers\PostPartySendToDayCare;
-use ConorSmith\Pokemon\Party\Controllers\PostPartySendToParty;
-use ConorSmith\Pokemon\Party\Controllers\PostPokemonBreed;
-use ConorSmith\Pokemon\Party\Controllers\PostPokemonItemTake;
-use ConorSmith\Pokemon\Party\Domain\GenealogyRepository;
-use ConorSmith\Pokemon\Party\FriendshipLog;
-use ConorSmith\Pokemon\Party\LevelUpPokemon;
-use ConorSmith\Pokemon\Party\ReduceEggCyclesCommand;
-use ConorSmith\Pokemon\Party\Repositories\CaughtPokemonRepository;
-use ConorSmith\Pokemon\Party\Repositories\EggRepositoryDb;
-use ConorSmith\Pokemon\Party\Repositories\EvolutionRepository;
-use ConorSmith\Pokemon\Party\Repositories\ObtainedGiftPokemonRepository;
-use ConorSmith\Pokemon\Party\Repositories\PokemonConfigRepository;
-use ConorSmith\Pokemon\Party\Repositories\PokemonRepositoryDb;
-use ConorSmith\Pokemon\Party\UseCases\AddNewPokemon;
-use ConorSmith\Pokemon\Party\UseCases\ShowBox;
-use ConorSmith\Pokemon\Party\UseCases\ShowDayCare;
-use ConorSmith\Pokemon\Party\UseCases\ShowEggs;
-use ConorSmith\Pokemon\Party\UseCases\ShowParty;
-use ConorSmith\Pokemon\Party\UseCases\ShowPartyCoverage;
-use ConorSmith\Pokemon\Party\WeeklyUpdateForPartyCommand;
-use ConorSmith\Pokemon\Player\Controllers\GetBag;
-use ConorSmith\Pokemon\Player\Controllers\GetIndex;
-use ConorSmith\Pokemon\Player\Controllers\PostItemUse;
-use ConorSmith\Pokemon\Player\HighestRankedGymBadgeQueryDb;
-use ConorSmith\Pokemon\Player\NotifyPlayerCommand;
-use ConorSmith\Pokemon\Player\Repositories\NotificationRepositoryDbAndSession;
-use ConorSmith\Pokemon\Pokedex\Controllers\GetPokedex;
-use ConorSmith\Pokemon\Pokedex\Controllers\GetPokedexEntry;
-use ConorSmith\Pokemon\Pokedex\RegisteredPokedexNumbersQuery;
-use ConorSmith\Pokemon\Pokedex\RegisterNewPokemonCommand;
-use ConorSmith\Pokemon\Pokedex\Repositories\EvolutionaryLineRepository;
-use ConorSmith\Pokemon\Pokedex\Repositories\PokedexEntryRepository;
-use ConorSmith\Pokemon\Pokedex\TotalRegisteredPokemonQuery;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetParty;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPartyBox;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPartyCombinations;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPartyCompare;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPartyDayCare;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPartyEggs;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPartyItemUse;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPokemon;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPokemonBreed;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPokemonItemGive;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\GetPokemonItemUse;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostObtain;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPartyItemGive;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPartyItemUse;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPartyMoveDown;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPartyMoveUp;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPartySendToBox;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPartySendToDayCare;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPartySendToParty;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPokemonBreed;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPokemonItemTake;
+use ConorSmith\Pokemon\Gameplay\Domain\Breeding\GenealogyRepository;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\LevelUpPokemon;
+use ConorSmith\Pokemon\Gameplay\Infra\ReduceEggCyclesCommand;
+use ConorSmith\Pokemon\Gameplay\Infra\Repositories\EggRepositoryDb;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\AddNewPokemon;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowBox;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowDayCare;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowEggs;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowParty;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowPartyCoverage;
+use ConorSmith\Pokemon\Gameplay\Infra\WeeklyUpdateForPartyCommand;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Bag\Controllers\GetBag;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Index\Controllers\GetIndex;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Bag\Controllers\PostItemUse;
+use ConorSmith\Pokemon\Gameplay\Infra\NotifyPlayerCommand;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Pokedex\Controllers\GetPokedex;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Pokedex\Controllers\GetPokedexEntry;
+use ConorSmith\Pokemon\Gameplay\Infra\Repositories\EvolutionaryLineRepositoryConfig;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand as NotifyPlayerCommandInterface;
-use ConorSmith\Pokemon\SharedKernel\Commands\ReportBattleWithGymLeaderCommand;
-use ConorSmith\Pokemon\SharedKernel\Commands\ReportPartyPokemonFaintedCommand;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\SharedKernel\UseCases\SpendChallengeTokensUseCase;
@@ -139,7 +133,6 @@ use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\Connection;
 use FastRoute\RouteCollector;
 use LogicException;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class ControllerFactory
 {
@@ -212,23 +205,19 @@ final class ControllerFactory
 
     public function __construct(
         private readonly RepositoryFactory $repositoryFactory,
-        private readonly LocationControllerFactory $locationControllerFactory,
         private readonly Connection $db,
+        private readonly EliteFourConfigRepository $eliteFourConfigRepository,
+        private readonly FixedEncounterConfigRepository $fixedEncounterConfigRepository,
+        private readonly GiftPokemonConfigRepository $giftPokemonConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly TrainerConfigRepository $trainerConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
+        private readonly WildEncounterConfigRepository $wildEncounterConfigRepository,
         private readonly ViewModelFactory $viewModelFactory,
-        private readonly Session $session,
     ) {}
 
     public function create(string $className, InstanceId $instanceId): mixed
     {
-        $controller = $this->locationControllerFactory->create($className, $instanceId);
-
-        if (!is_null($controller)) {
-            return $controller;
-        }
-
         return match ($className) {
             GetLogFoodDiary::class               => new GetLogFoodDiary(
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
@@ -250,39 +239,25 @@ final class ControllerFactory
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
                 $this->repositoryFactory->create(WeeklyHabitLogRepository::class, $instanceId),
                 new WeeklyUpdateForPartyCommand(
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                     new LevelUpPokemon(
-                        $this->db,
-                        $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                        $this->repositoryFactory->create(GymBadgeRepository::class, $instanceId),
+                        $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                        $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                        $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                         $this->repositoryFactory->create(EvolutionRepository::class, $instanceId),
-                        $this->createFriendshipLog($instanceId),
-                        new HighestRankedGymBadgeQueryDb(
-                            $this->db,
-                            $instanceId,
-                        ),
+                        $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
                         new FoodDiaryHabitStreakQuery(
                             $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
                         ),
-                        new LocationRepositoryCurrentLocationQuery(
-                            new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
-                                $this->db,
-                                $this->repositoryFactory->create(RegionRepository::class, $instanceId),
-                                new LocationConfigRepository(),
-                                $instanceId,
-                            ),
-                        ),
                         new AddNewPokemon(
                             $this->db,
-                            new RegisterNewPokemonCommand(
-                                $this->db,
-                                $instanceId,
-                            ),
+                            $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                             new PokedexConfigRepository(),
                             new LocationConfigRepository(),
                             $instanceId,
                         ),
                         new PokedexConfigRepository(),
-                        $instanceId,
                     ),
                     new PokedexConfigRepository(),
                     $this->createNotifyPlayerCommand($instanceId),
@@ -301,19 +276,15 @@ final class ControllerFactory
             ),
             GetPokedex::class                    => new GetPokedex(
                 $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                $this->repositoryFactory->create(RegionRepository::class, $instanceId),
                 new PokedexConfigRepository(),
-                new RegionRepositoryRegionIsLockedQuery(
-                    $this->repositoryFactory->create(RegionRepository::class, $instanceId),
-                ),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPokedexEntry::class               => new GetPokedexEntry(
                 $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
-                new EvolutionaryLineRepository(
+                $this->repositoryFactory->create(RegionRepository::class, $instanceId),
+                new EvolutionaryLineRepositoryConfig(
                     new PokedexConfigRepository(),
-                ),
-                new RegionRepositoryRegionIsLockedQuery(
-                    $this->repositoryFactory->create(RegionRepository::class, $instanceId),
                 ),
                 new WildEncounterConfigRepository(),
                 new ItemConfigRepository(),
@@ -347,12 +318,11 @@ final class ControllerFactory
                 new ReduceEggCyclesCommand(
                     $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
                     $this->repositoryFactory->create(GenealogyRepository::class, $instanceId),
+                    $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                     new AddNewPokemon(
                         $this->db,
-                        new RegisterNewPokemonCommand(
-                            $this->db,
-                            $instanceId,
-                        ),
+                        $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                         new PokedexConfigRepository(),
                         new LocationConfigRepository(),
                         $instanceId,
@@ -361,19 +331,8 @@ final class ControllerFactory
                     new FoodDiaryHabitStreakQuery(
                         $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
                     ),
-                    new LocationRepositoryCurrentLocationQuery(
-                        new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
-                            $this->db,
-                            $this->repositoryFactory->create(RegionRepository::class, $instanceId),
-                            new LocationConfigRepository(),
-                            $instanceId,
-                        ),
-                    ),
-                    new TotalRegisteredPokemonQuery(
-                        $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
-                    ),
                     $this->createNotifyPlayerCommand($instanceId),
-                    $this->createFriendshipLog($instanceId),
+                    $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
                 ),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
@@ -401,74 +360,72 @@ final class ControllerFactory
             ),
             GetParty::class                      => new GetParty(
                 new ShowParty(
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId)
                 ),
                 new ShowPartyCoverage(
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId)
                 ),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPartyEggs::class                  => new GetPartyEggs(
                 new ShowEggs(
                     $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 ),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPartyDayCare::class               => new GetPartyDayCare(
                 new ShowDayCare(
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId)
                 ),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPartyBox::class                   => new GetPartyBox(
                 new ShowBox(
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
+                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId)
                 ),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPartyCompare::class               => new GetPartyCompare(
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPartyCombinations::class          => new GetPartyCombinations(
-                new RegisteredPokedexNumbersQuery(
-                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId)
-                ),
-                new PokemonConfigRepository(),
+                $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                new PokedexConfigRepository(),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPokemon::class                    => new GetPokemon(
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->locationConfigRepository,
                 $this->createTemplateEngine($instanceId),
             ),
             GetPokemonItemUse::class             => new GetPokemonItemUse(
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 new ItemConfigRepository(),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPokemonItemGive::class             => new GetPokemonItemGive(
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 new ItemConfigRepository(),
                 $this->createTemplateEngine($instanceId),
             ),
             GetPokemonBreed::class               => new GetPokemonBreed(
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->createTemplateEngine($instanceId),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPokemonBreed::class              => new PostPokemonBreed(
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 new PokedexConfigRepository(),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             GetEncounter::class                  => new GetEncounter(
-                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->viewModelFactory,
@@ -477,27 +434,19 @@ final class ControllerFactory
             PostEncounterCatch::class            => new PostEncounterCatch(
                 $this->db,
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
+                $this->repositoryFactory->create(FixedEncounterCaptureEventRepository::class, $instanceId),
+                $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 new FixedEncounterConfigRepository(),
                 $this->locationConfigRepository,
-                new CatchPokemonCommand(
-                    new AddNewPokemon(
-                        $this->db,
-                        new RegisterNewPokemonCommand(
-                            $this->db,
-                            $instanceId,
-                        ),
-                        new PokedexConfigRepository(),
-                        new LocationConfigRepository(),
-                        $instanceId,
-                    ),
-                    $this->repositoryFactory->create(FixedEncounterCaptureEventRepositoryDb::class, $instanceId),
+                new AddNewPokemon(
                     $this->db,
-                    $this->createFriendshipLog($instanceId),
-                    $instanceId,
-                ),
-                new TotalRegisteredPokemonQuery(
                     $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                    new PokedexConfigRepository(),
+                    new LocationConfigRepository(),
+                    $instanceId,
                 ),
                 new EventFactory(
                     $this->viewModelFactory,
@@ -506,16 +455,16 @@ final class ControllerFactory
             ),
             PostEncounterRun::class              => new PostEncounterRun(
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
             ),
             PostEncounterFight::class            => new PostEncounterFight(
                 $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                 new EventFactory(
                     $this->viewModelFactory,
                     new PokedexConfigRepository(),
                 ),
-                new FriendshipLogReportPartyPokemonFaintedCommand($this->createFriendshipLog($instanceId)),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartyMoveUp::class               => new PostPartyMoveUp(
@@ -529,26 +478,26 @@ final class ControllerFactory
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartySendToBox::class            => new PostPartySendToBox(
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                $this->createFriendshipLog($instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartySendToParty::class          => new PostPartySendToParty(
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                $this->createFriendshipLog($instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartySendToDayCare::class        => new PostPartySendToDayCare(
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                $this->createFriendshipLog($instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostBattleStart::class               => new PostBattleStart(
                 new StartABattle(
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
-                    $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                    new FriendshipLogReportBattleWithGymLeaderCommand($this->createFriendshipLog($instanceId)),
                 ),
                 new SpendChallengeTokensUseCase(
                     $this->repositoryFactory->create(BagRepository::class, $instanceId),
@@ -559,7 +508,7 @@ final class ControllerFactory
                 $this->db,
                 $this->trainerConfigRepository,
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                 $this->viewModelFactory,
                 $this->createTemplateEngine($instanceId),
             ),
@@ -571,16 +520,14 @@ final class ControllerFactory
             ),
             PostBattleFight::class               => new PostBattleFight(
                 $this->db,
+                $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
                 new ItemConfigRepository(),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                 $this->repositoryFactory->create(AreaRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(BattleRepository::class, $instanceId),
-                new FriendshipLogReportPartyPokemonFaintedCommand($this->createFriendshipLog($instanceId)),
-                new BoostPokemonEvsCommand(
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId)
-                ),
                 new EventFactory(
                     $this->viewModelFactory,
                     new PokedexConfigRepository(),
@@ -589,24 +536,24 @@ final class ControllerFactory
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             GetSwitch::class                     => new GetSwitch(
-                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                 $this->viewModelFactory,
                 $this->createTemplateEngine($instanceId),
             ),
             PostSwitch::class                    => new PostSwitch(
-                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
             ),
             PostBattleFinish::class              => new PostBattleFinish(
-                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                 $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
                 $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 $this->repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
                 new StartABattle(
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
-                    $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                    new FriendshipLogReportBattleWithGymLeaderCommand($this->createFriendshipLog($instanceId)),
                 ),
             ),
             GetBag::class                        => new GetBag(
@@ -618,93 +565,68 @@ final class ControllerFactory
             ),
             GetPartyItemUse::class               => new GetPartyItemUse(
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->createNotifyPlayerCommand($instanceId),
                 $this->createTemplateEngine($instanceId),
             ),
             PostPartyItemUse::class              => new PostPartyItemUse(
                 $this->db,
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 new LevelUpPokemon(
-                    $this->db,
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(GymBadgeRepository::class, $instanceId),
+                    $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                     $this->repositoryFactory->create(EvolutionRepository::class, $instanceId),
-                    $this->createFriendshipLog($instanceId),
-                    new HighestRankedGymBadgeQueryDb(
-                        $this->db,
-                        $instanceId,
-                    ),
+                    $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
                     new FoodDiaryHabitStreakQuery(
                         $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
                     ),
-                    new LocationRepositoryCurrentLocationQuery(
-                        new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
-                            $this->db,
-                            $this->repositoryFactory->create(RegionRepository::class, $instanceId),
-                            new LocationConfigRepository(),
-                            $instanceId,
-                        ),
-                    ),
                     new AddNewPokemon(
                         $this->db,
-                        new RegisterNewPokemonCommand(
-                            $this->db,
-                            $instanceId,
-                        ),
+                        $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                         new PokedexConfigRepository(),
                         new LocationConfigRepository(),
                         $instanceId,
                     ),
                     new PokedexConfigRepository(),
-                    $instanceId,
                 ),
                 new FixedEncounterConfigRepository(),
                 new ItemConfigRepository(),
                 $this->pokedexConfigRepository,
-                new TotalRegisteredPokemonQuery(
-                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
-                ),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPartyItemGive::class             => new PostPartyItemGive(
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 new ItemConfigRepository(),
                 $this->pokedexConfigRepository,
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPokemonItemTake::class           => new PostPokemonItemTake(
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 new ItemConfigRepository(),
                 $this->pokedexConfigRepository,
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostChallengeEliteFour::class        => new PostChallengeEliteFour(
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                 $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 new StartABattle(
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
-                    $this->repositoryFactory->create(PlayerRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PlayerRepository::class, $instanceId),
                     $this->repositoryFactory->create(TrainerRepository::class, $instanceId),
-                    new FriendshipLogReportBattleWithGymLeaderCommand($this->createFriendshipLog($instanceId)),
                 ),
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             GetIndex::class                      => new GetIndex(
-                new CapturedPokemonQuery(
-                    $this->repositoryFactory->create(PokemonRepositoryDb::class, $instanceId),
-                ),
-                new LocationRepositoryCurrentLocationQuery(
-                    new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
-                        $this->db,
-                        $this->repositoryFactory->create(RegionRepository::class, $instanceId),
-                        new LocationConfigRepository(),
-                        $instanceId,
-                    ),
-                ),
+                $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->locationConfigRepository,
                 $this->createTemplateEngine($instanceId),
@@ -712,80 +634,197 @@ final class ControllerFactory
             PostObtain::class                    => new PostObtain(
                 new AddNewPokemon(
                     $this->db,
-                    new RegisterNewPokemonCommand(
-                        $this->db,
-                        $instanceId,
-                    ),
+                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                     new PokedexConfigRepository(),
                     new LocationConfigRepository(),
                     $instanceId,
                 ),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                new \ConorSmith\Pokemon\Location\Repositories\LocationRepository(
-                    $this->db,
-                    $this->repositoryFactory->create(RegionRepository::class, $instanceId),
-                    new LocationConfigRepository(),
-                    $instanceId,
-                ),
+                $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
                 $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                 new FoodDiaryHabitStreakQuery(
                     $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
-                ),
-                new TotalRegisteredPokemonQuery(
-                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
                 ),
                 new GiftPokemonConfigRepository(),
                 new PokedexConfigRepository(),
                 $this->createNotifyPlayerCommand($instanceId),
-                $this->createFriendshipLog($instanceId),
+                $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
             ),
             GetStatus::class                     => new GetStatus(
+                $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
                 $this->repositoryFactory->create(GymBadgeRepository::class, $instanceId),
-                new LeagueChampionRepositoryPlayerIsLeagueChampionQuery(
-                    $this->repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
-                ),
-                new EliteFourChallengeRegionalVictoryQuery(
-                    $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId)
-                ),
+                $this->repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
                 $this->viewModelFactory,
                 $this->createTemplateEngine($instanceId),
             ),
             GetNotifications::class              => new GetNotifications(
-                new NotificationRepositoryDbAndSession(
-                    $this->db,
-                    $this->session,
-                    $instanceId,
-                ),
+                $this->repositoryFactory->create(NotificationRepository::class, $instanceId),
                 $this->createTemplateEngine($instanceId),
             ),
-            default                              => throw new LogicException(),
+            GetMap::class          => new GetMap(
+                $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
+                $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                $this->eliteFourConfigRepository,
+                $this->createViewModelFactory(),
+                $this->createFindFeatures($instanceId),
+                $this->createFindTrainers($instanceId),
+                $this->createFindWildEncounters(),
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetObtainablePokemon::class => new GetObtainablePokemon(
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(BattleRepository::class, $instanceId),
+                $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
+                $this->repositoryFactory->create(GymBadgeRepository::class, $instanceId),
+                $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
+                $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
+                $this->giftPokemonConfigRepository,
+                $this->locationConfigRepository,
+                $this->pokedexConfigRepository,
+                $this->createFindFeatures($instanceId),
+                $this->createFindWildEncounters(),
+                $this->createFindFixedEncounters($instanceId),
+                $this->createViewModelFactory(),
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetTrainers::class => new GetTrainers(
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                $this->trainerConfigRepository,
+                $this->createFindFeatures($instanceId),
+                $this->createFindTrainers($instanceId),
+                $this->createViewModelFactory(),
+                $this->viewModelFactory,
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetEliteFour::class => new GetEliteFour(
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->repositoryFactory->create(GymBadgeRepository::class, $instanceId),
+                $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                $this->eliteFourConfigRepository,
+                $this->createFindFeatures($instanceId),
+                $this->createFindPokemonLeague($instanceId),
+                $this->createViewModelFactory(),
+                $this->createNotifyPlayerCommand($instanceId),
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetTrackPokemon::class => new GetTrackPokemon(
+                $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                $this->repositoryFactory->create(BagRepository::class, $instanceId),
+                $this->createViewModelFactory(),
+                $this->createTemplateEngine($instanceId),
+            ),
+            GetSurveyPokemon::class => new GetSurveyPokemon(
+                $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                new ShowActiveSurvey(
+                    $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
+                ),
+                new ShowSurveyRecord(
+                    $this->pokedexConfigRepository,
+                    $this->wildEncounterConfigRepository,
+                    $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                    $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
+                ),
+                $this->createViewModelFactory(),
+                $this->createTemplateEngine($instanceId),
+                new NotifyPlayerCommand(
+                    $this->repositoryFactory->create(NotificationRepository::class, $instanceId),
+                ),
+            ),
+            PostSurveyPokemonStart::class => new PostSurveyPokemonStart(
+                new StartSurveyingPokemon(
+                    $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                    $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
+                    $this->createFindWildEncounters(),
+                ),
+                new NotifyPlayerCommand(
+                    $this->repositoryFactory->create(NotificationRepository::class, $instanceId),
+                ),
+            ),
+            PostSurveyPokemonFinish::class => new PostSurveyPokemonFinish(
+                new FinishSurveyingPokemon(
+                    $this->wildEncounterConfigRepository,
+                    $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
+                ),
+                new NotifyPlayerCommand(
+                    $this->repositoryFactory->create(NotificationRepository::class, $instanceId),
+                ),
+            ),
+            default => throw new LogicException("Failed to find controller '{$className}'"),
         };
     }
 
     private function createTemplateEngine(InstanceId $instanceId): TemplateEngine
     {
         return new TemplateEngine(
-            new NotificationRepositoryDbAndSession(
-                $this->db,
-                $this->session,
-                $instanceId,
-            )
+            $this->repositoryFactory->create(NotificationRepository::class, $instanceId),
+            $instanceId,
         );
     }
 
     private function createNotifyPlayerCommand(InstanceId $instanceId): NotifyPlayerCommandInterface
     {
         return new NotifyPlayerCommand(
-            new NotificationRepositoryDbAndSession(
-                $this->db,
-                $this->session,
-                $instanceId
-            ),
+            $this->repositoryFactory->create(NotificationRepository::class, $instanceId),
         );
     }
 
-    private function createFriendshipLog(InstanceId $instanceId): FriendshipLog
+    private function createViewModelFactory(): \ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\ViewModels\ViewModelFactory
     {
-        return new FriendshipLog($this->db, $instanceId);
+        return new \ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\ViewModels\ViewModelFactory(
+            $this->locationConfigRepository,
+        );
+    }
+
+    private function createFindWildEncounters(): FindWildEncounters
+    {
+        return new FindWildEncounters(
+            $this->wildEncounterConfigRepository
+        );
+    }
+
+    private function createFindFixedEncounters(InstanceId $instanceId): FindFixedEncounters
+    {
+        return new FindFixedEncounters(
+            $this->repositoryFactory->create(BagRepository::class, $instanceId),
+            $this->repositoryFactory->create(FixedEncounterCaptureEventRepository::class, $instanceId),
+            $this->repositoryFactory->create(GymBadgeRepository::class, $instanceId),
+            $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+            $this->fixedEncounterConfigRepository,
+            $this->pokedexConfigRepository,
+            $this->locationConfigRepository,
+        );
+    }
+
+    private function createFindTrainers(InstanceId $instanceId): FindTrainers
+    {
+        return new FindTrainers(
+            $this->repositoryFactory->create(BagRepository::class, $instanceId),
+            $this->repositoryFactory->create(BattleRepository::class, $instanceId),
+            $this->repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
+            $this->repositoryFactory->create(EliteFourChallengeRepository::class, $instanceId),
+            $this->trainerConfigRepository,
+        );
+    }
+
+    private function createFindPokemonLeague(InstanceId $instanceId): FindPokemonLeague
+    {
+        return new FindPokemonLeague(
+            $this->repositoryFactory->create(LeagueChampionRepository::class, $instanceId),
+            $this->eliteFourConfigRepository,
+        );
+    }
+
+    private function createFindFeatures(InstanceId $instanceId): FindFeatures
+    {
+        return new FindFeatures(
+            $this->wildEncounterConfigRepository,
+            $this->giftPokemonConfigRepository,
+            $this->createFindFixedEncounters($instanceId),
+            $this->createFindPokemonLeague($instanceId),
+            $this->createFindTrainers($instanceId),
+        );
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use ConorSmith\Pokemon\Party\Domain\EggGroup;
+use ConorSmith\Pokemon\Gameplay\Domain\Breeding\EggGroup;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 
 return [

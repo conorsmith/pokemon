@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
-use ConorSmith\Pokemon\Battle\Domain\Pokemon;
-use ConorSmith\Pokemon\Battle\Domain\Trainer;
-use ConorSmith\Pokemon\Battle\ViewModels\IvStrength;
-use ConorSmith\Pokemon\Battle\ViewModels\Pokemon as PokemonVm;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\Pokemon;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\Trainer;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\ViewModels\IvStrength;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\ViewModels\Pokemon as PokemonVm;
 use ConorSmith\Pokemon\SharedKernel\Domain\GymBadge;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;

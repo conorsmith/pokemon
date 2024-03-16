@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
-use ConorSmith\Pokemon\Party\Domain\EggGroup;
+use ConorSmith\Pokemon\Gameplay\Domain\Breeding\EggGroup;
 use ConorSmith\Pokemon\SharedKernel\Domain\AttributeTag;
 use Exception;
 

@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon;
 
-use ConorSmith\Pokemon\Player\Repositories\NotificationRepositoryDbAndSession;
+use ConorSmith\Pokemon\Gameplay\Domain\Notifications\NotificationRepository;
+use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Exception;
 
 final class TemplateEngine
 {
     public function __construct(
-        private readonly NotificationRepositoryDbAndSession $notificationRepository,
+        private readonly NotificationRepository $notificationRepository,
+        private readonly InstanceId $instanceId,
     ) {}
 
     public function render(string $templatePath, array $variables): string
@@ -21,7 +23,7 @@ final class TemplateEngine
             throw new Exception("Reserved template variable given");
         }
 
-        $variables['instanceId'] = "8a04a1fc-f9e9-4feb-98fc-470f90c8fdb1";
+        $variables['instanceId'] = $this->instanceId->value;
 
         extract($variables);
 

@@ -96,19 +96,14 @@ final class Calendar
 
                 $logCount = $habitLog->countLoggedOnDate($runningDay);
 
-                /** @var EntryType $entryType */
-                $entryType = $habitLog->getEntriesOnDate($runningDay)[0]->entryType;
-
                 $calendarSquare = new CalendarSquare(
                     new CalendarSquareContents(
                         (string) $runningDay->day,
                         match ($logCount) {
                             0 => "&nbsp;",
-                            1 => match ($entryType) {
-                                EntryType::SHORT_WALK => "<i class=\"fas fa-fw fa-walking\">",
-                                EntryType::LONG_WALK  => "<i class=\"fas fa-fw fa-hiking\">",
-                                EntryType::RUN        => "<i class=\"fas fa-fw fa-running\">",
-                            },
+                            1 => self::renderEntryTypeIcon(
+                                $habitLog->getEntriesOnDate($runningDay)[0]->entryType
+                            ),
                             default => "<strong>{$logCount}</strong>",
                         }
                     ),
@@ -144,6 +139,15 @@ final class Calendar
         }
 
         return new self($months);
+    }
+
+    private static function renderEntryTypeIcon(EntryType $entryType)
+    {
+        return match ($entryType) {
+            EntryType::SHORT_WALK => "<i class=\"fas fa-fw fa-walking\">",
+            EntryType::LONG_WALK  => "<i class=\"fas fa-fw fa-hiking\">",
+            EntryType::RUN        => "<i class=\"fas fa-fw fa-running\">",
+        };
     }
 
     public function __construct(

@@ -10,11 +10,13 @@ parameters:
         -
             message: '#Variable \$[a-zA-Z0-9\\_]+ might not be defined.#'
             paths:
-                - src/Battle/Templates
+                - src/Gameplay/Infra/Endpoints/Bag/Templates
+                - src/Gameplay/Infra/Endpoints/Battle/Templates
+                - src/Gameplay/Infra/Endpoints/Index/Templates
+                - src/Gameplay/Infra/Endpoints/Map/Templates
+                - src/Gameplay/Infra/Endpoints/Party/Templates
+                - src/Gameplay/Infra/Endpoints/Player/Templates
+                - src/Gameplay/Infra/Endpoints/Pokedex/Templates
                 - src/Habit/Templates
-                - src/Location/Templates
-                - src/Party/Templates
-                - src/Player/Templates
-                - src/Pokedex/Templates
                 - src/SharedKernel/Templates
                 - src/Templates

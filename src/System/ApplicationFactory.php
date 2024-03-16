@@ -8,8 +8,6 @@ use ConorSmith\Pokemon\EliteFourConfigRepository;
 use ConorSmith\Pokemon\FixedEncounterConfigRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
-use ConorSmith\Pokemon\Location\Controllers\ControllerFactory as LocationControllerFactory;
-use ConorSmith\Pokemon\Location\RepositoryFactory as LocationRepositoryFactory;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\TrainerConfigRepository;
@@ -39,33 +37,18 @@ final class ApplicationFactory
     private static function createControllerFactory(): ControllerFactory
     {
         return new ControllerFactory(
-            new RepositoryFactory(self::createDatabaseConnection()),
-            new LocationControllerFactory(
-                new LocationRepositoryFactory(
-                    self::createDatabaseConnection(),
-                    new RepositoryFactory(self::createDatabaseConnection()),
-                ),
-                self::createDatabaseConnection(),
-                new WildEncounterConfigRepository(),
-                new LocationConfigRepository(),
-                new TrainerConfigRepository(),
-                new PokedexConfigRepository(),
-                new EliteFourConfigRepository(),
-                new FixedEncounterConfigRepository(),
-                new GiftPokemonConfigRepository(),
-                new ViewModelFactory(
-                    new PokedexConfigRepository(),
-                ),
-                self::createSessionManager(),
-            ),
+            new RepositoryFactory(self::createDatabaseConnection(), self::createSessionManager()),
             self::createDatabaseConnection(),
+            new EliteFourConfigRepository(),
+            new FixedEncounterConfigRepository(),
+            new GiftPokemonConfigRepository(),
             new LocationConfigRepository(),
             new TrainerConfigRepository(),
             new PokedexConfigRepository(),
+            new WildEncounterConfigRepository(),
             new ViewModelFactory(
                 new PokedexConfigRepository(),
             ),
-            self::createSessionManager(),
         );
     }
 

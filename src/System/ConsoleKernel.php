@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\System;
 
-use ConorSmith\Pokemon\Battle\ConsoleCommands\Challenge;
-use ConorSmith\Pokemon\Battle\ConsoleCommands\Simulate;
+use ConorSmith\Pokemon\Gameplay\Infra\ConsoleCommands\Challenge;
+use ConorSmith\Pokemon\Gameplay\Infra\ConsoleCommands\Simulate;
 use ConorSmith\Pokemon\Import\ConsoleCommands\Convert;
 use ConorSmith\Pokemon\Import\ConsoleCommands\Download;
 use ConorSmith\Pokemon\Import\ConsoleCommands\Generate;

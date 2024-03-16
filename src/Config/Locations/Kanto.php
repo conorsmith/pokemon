@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use ConorSmith\Pokemon\Location\Domain\Direction;
+use ConorSmith\Pokemon\Gameplay\Domain\Navigation\Direction;
 use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ConorSmith\Pokemon\SharedKernel\Domain\LocationType;
 
