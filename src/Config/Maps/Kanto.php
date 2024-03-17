@@ -94,6 +94,7 @@ return [
     LocationId::CINNABAR_ISLAND              => "Kanto_Cinnabar_Island_Map.png",
     LocationId::CINNABAR_GYM                 => "Kanto_Cinnabar_Island_Map.png",
     LocationId::POKEMON_MANSION              => "Kanto_Cinnabar_Island_Map.png",
+    LocationId::CINNABAR_LAB                 => "Kanto_Cinnabar_Island_Map.png",
     LocationId::ROUTE_21                     => "Kanto_Route_21_Map.png",
     LocationId::ROUTE_22                     => "Kanto_Route_22_Map.png",
     LocationId::POKEMON_LEAGUE_FRONT_GATE    => "Kanto_Victory_Road_Map.png",

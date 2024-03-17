@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\SharedKernel\Domain;
 
+use ConorSmith\Pokemon\ItemConfigRepository;
+
 final class Bag
 {
     public function __construct(
@@ -51,7 +53,12 @@ final class Bag
         $items = $this->items;
 
         if (!array_key_exists($id, $items)) {
-            $items[$id] = new Item($id, 0);
+            $itemConfig = (new ItemConfigRepository())->find($id);
+            $items[$id] = new Item(
+                $id,
+                0,
+                $itemConfig['type'] ?? null,
+            );
         }
 
         $items[$id] = $items[$id]->add($quantity);
@@ -90,15 +97,17 @@ final class Bag
             + $this->count(ItemId::ULTRA_BALL);
     }
 
-    public function countAllItems(): int
+    public function getEachOfType(ItemType $type): array
     {
-        $total = 0;
+        $filteredItems = [];
 
         /** @var Item $item */
         foreach ($this->items as $item) {
-            $total += $item->quantity;
+            if ($item->type === $type) {
+                $filteredItems[] = $item;
+            }
         }
 
-        return $total;
+        return $filteredItems;
     }
 }

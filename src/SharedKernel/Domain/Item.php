@@ -9,6 +9,7 @@ final class Item
     public function __construct(
         public readonly string $id,
         public readonly int $quantity,
+        public readonly ?ItemType $type,
     ) {}
 
     public function use(int $quantity = 1): self
@@ -16,6 +17,7 @@ final class Item
         return new self(
             $this->id,
             $this->quantity - $quantity,
+            $this->type,
         );
     }
 
@@ -24,6 +26,7 @@ final class Item
         return new self(
             $this->id,
             $this->quantity - $quantity,
+            $this->type,
         );
     }
 
@@ -32,6 +35,7 @@ final class Item
         return new self(
             $this->id,
             $this->quantity + $quantity,
+            $this->type,
         );
     }
 }

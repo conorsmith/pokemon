@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
+use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokemonType;
 
 return [
@@ -401,25 +402,30 @@ return [
         'name'     => "Dome Fossil",
         'imageUrl' => "/assets/items/Bag_Dome_Fossil_Sprite.png",
         'type'     => ItemType::FOSSIL,
+        'pokemon'  => PokedexNo::KABUTO,
     ],
-    ItemId::HELIX_FOSSIL     => [
+    ItemId::HELIX_FOSSIL    => [
         'name'     => "Helix Fossil",
         'imageUrl' => "/assets/items/Bag_Helix_Fossil_Sprite.png",
         'type'     => ItemType::FOSSIL,
+        'pokemon'  => PokedexNo::OMANYTE,
     ],
-    ItemId::OLD_AMBER     => [
+    ItemId::OLD_AMBER       => [
         'name'     => "Old Amber",
         'imageUrl' => "/assets/items/Bag_Old_Amber_Sprite.png",
         'type'     => ItemType::FOSSIL,
+        'pokemon'  => PokedexNo::AERODACTYL,
     ],
     ItemId::ROOT_FOSSIL     => [
         'name'     => "Root Fossil",
         'imageUrl' => "/assets/items/Bag_Root_Fossil_Sprite.png",
         'type'     => ItemType::FOSSIL,
+        'pokemon'  => PokedexNo::LILEEP,
     ],
     ItemId::CLAW_FOSSIL     => [
         'name'     => "Claw Fossil",
         'imageUrl' => "/assets/items/Bag_Claw_Fossil_Sprite.png",
         'type'     => ItemType::FOSSIL,
+        'pokemon'  => PokedexNo::ANORITH,
     ],
 ];

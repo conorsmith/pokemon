@@ -31,6 +31,7 @@ final class GetBag
         $itemViewModels = [];
         $evolutionItemViewModels = [];
         $heldItemViewModels = [];
+        $fossilItemViewModels = [];
         $statsItemViewModels = [];
 
         foreach ($bag->items as $item) {
@@ -62,6 +63,7 @@ final class GetBag
                 ItemType::EVOLUTION => $evolutionItemViewModels[] = $itemViewModel,
                 ItemType::HELD      => $heldItemViewModels[] = $itemViewModel,
                 ItemType::STATS     => $statsItemViewModels[] = $itemViewModel,
+                ItemType::FOSSIL    => $fossilItemViewModels[] = $itemViewModel,
                 default             => $itemViewModels[] = $itemViewModel,
             };
         }
@@ -71,6 +73,7 @@ final class GetBag
             'evolutionItems' => $evolutionItemViewModels,
             'heldItems'      => $heldItemViewModels,
             'statsItems'     => $statsItemViewModels,
+            'fossilItems'    => $fossilItemViewModels,
         ]));
     }
 }

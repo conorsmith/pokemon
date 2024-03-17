@@ -150,6 +150,7 @@ final class ViewModelFactory
             $features->hasPokemon(),
             $features->hasTrainers,
             $features->hasEliteFour,
+            $features->hasFacilities,
         );
     }
 }

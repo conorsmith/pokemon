@@ -27,6 +27,13 @@
                     </span>
                 </a>
             <?php endif ?>
+            <?php if ($navigationBar->showFacilities) : ?>
+                <a href="/<?=$instanceId?>/map/facilities" class="navbar-toggler" type="button">
+                    <span style="display: inline-block; width: 1.5em; height: 1.5em; vertical-align: middle;">
+                        <img src="/assets/items/Bag_Devon_Parts_Sprite.png">
+                    </span>
+                </a>
+            <?php endif ?>
         </div>
     </div>
 </nav>

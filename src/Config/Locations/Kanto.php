@@ -862,8 +862,9 @@ return [
         'type'       => LocationType::CITY,
         'directions' => [
             Direction::N => LocationId::ROUTE_21,
-            LocationId::POKEMON_MANSION,
             LocationId::CINNABAR_GYM,
+            LocationId::POKEMON_MANSION,
+            LocationId::CINNABAR_LAB,
             Direction::E => LocationId::ROUTE_20,
         ],
     ],
@@ -882,6 +883,14 @@ return [
         'directions' => [
             Direction::EXIT => LocationId::CINNABAR_ISLAND,
         ],
+    ],
+    [
+        'id'         => LocationId::CINNABAR_LAB,
+        'name'       => "Cinnabar Lab",
+        'directions' => [
+            Direction::EXIT => LocationId::CINNABAR_ISLAND,
+        ],
+        'facilities' => true,
     ],
     [
         'id'         => LocationId::ROUTE_21,

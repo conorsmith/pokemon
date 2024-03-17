@@ -101,6 +101,7 @@ final class LocationId
     public const CINNABAR_ISLAND = "a5520b4e-314b-4893-b56d-63b102295956";
     public const CINNABAR_GYM = "72e0a851-f383-4b60-a8e3-95e2c7626d47";
     public const POKEMON_MANSION = "ba90917a-2258-42ae-a4c7-bb074de9f01b";
+    public const CINNABAR_LAB = "51e4c39a-25fe-4b18-aa18-43595c314a94";
     public const ROUTE_21 = "e2d59a4a-52c0-4daf-98e6-d7714bbb1c6a";
     public const ROUTE_22 = "ef4eb649-cf0c-40f1-a11b-601eb4d78a3c";
     public const POKEMON_LEAGUE_FRONT_GATE = "5d769d58-8fb9-4b8f-8858-ad0af184aab4";
@@ -351,6 +352,7 @@ final class LocationId
     public const PETALBURG_WOODS = "182fae9d-388e-4ab7-a74a-3a207150b6f1";
     public const RUSTBORO_CITY = "94647e89-6030-4d0c-9811-4b757503631b";
     public const RUSTBORO_GYM = "b07148d3-6100-4b05-9041-e1bfd240f9e6";
+    public const DEVON_CORPORATION = "fd7f3c3d-a506-4233-b6ec-f99b4a921e3c";
     public const ROUTE_116 = "04bf6816-3ef2-4cec-85a8-8677be2a60e6";
     public const RUSTURF_TUNNEL = "fab6bf81-3e0b-4124-9b6c-efdf0f0b36a4";
     public const ROUTE_105 = "5949b454-0504-4bb7-b00b-2005cb10f390";

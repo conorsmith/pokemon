@@ -13,6 +13,7 @@ final class Features
         public readonly bool $hasTrainers,
         public readonly bool $hasGiftPokemon,
         public readonly bool $hasEliteFour,
+        public readonly bool $hasFacilities,
     ) {}
 
     public function hasPokemon(): bool

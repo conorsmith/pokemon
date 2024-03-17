@@ -195,7 +195,7 @@ final class PostObtain
             }
         }
 
-        return new RedirectResponse("/{$instanceId}/map");
+        return new RedirectResponse("/{$instanceId}/map/pokemon");
     }
 
     private function generateSex(string $pokedexNumber): Sex

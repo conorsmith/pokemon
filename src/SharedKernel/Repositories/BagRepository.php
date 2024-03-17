@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\SharedKernel\Repositories;
 
+use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\Bag;
 use ConorSmith\Pokemon\SharedKernel\Domain\Item;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemType;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use Doctrine\DBAL\Connection;
 
@@ -15,6 +17,7 @@ final class BagRepository
     public function __construct(
         private readonly Connection $db,
         private readonly InstanceId $instanceId,
+        private readonly ItemConfigRepository $itemConfigRepository,
     ) {}
 
     public function find(): Bag
@@ -31,29 +34,37 @@ final class BagRepository
             ItemId::POKE_BALL       => new Item(
                 ItemId::POKE_BALL,
                 0,
+                ItemType::POKE_BALL,
             ),
             ItemId::GREAT_BALL      => new Item(
                 ItemId::GREAT_BALL,
                 0,
+                ItemType::POKE_BALL,
             ),
             ItemId::ULTRA_BALL      => new Item(
                 ItemId::ULTRA_BALL,
                 0,
+                ItemType::POKE_BALL,
             ),
             ItemId::RARE_CANDY      => new Item(
                 ItemId::RARE_CANDY,
                 $instanceRow['unused_level_ups'],
+                null,
             ),
             ItemId::CHALLENGE_TOKEN => new Item(
                 ItemId::CHALLENGE_TOKEN,
                 $instanceRow['unused_moves'],
+                null,
             ),
         ];
 
         foreach ($itemRows as $itemRow) {
+            $itemConfig = $this->itemConfigRepository->find($itemRow['item_id']);
+
             $items[$itemRow['item_id']] = new Item(
                 $itemRow['item_id'],
                 $itemRow['quantity'],
+                $itemConfig['type'] ?? null,
             );
         }
 

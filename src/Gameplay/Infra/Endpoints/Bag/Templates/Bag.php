@@ -58,4 +58,20 @@
 
     <?php endif ?>
 
+    <?php if (count($fossilItems) > 0) : ?>
+
+        <ul class="list-group">
+
+            <li class="list-group-item d-flex justify-content-between" style="background: #fafafa;">
+                <strong>Fossils</strong>
+            </li>
+
+            <?php foreach ($fossilItems as $item) : ?>
+                <?php include __DIR__ . "/../../../../../SharedKernel/Templates/BagItem.php" ?>
+            <?php endforeach ?>
+
+        </ul>
+
+    <?php endif ?>
+
 </div>

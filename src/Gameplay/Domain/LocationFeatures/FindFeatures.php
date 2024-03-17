@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Gameplay\Domain\LocationFeatures;
 
 use ConorSmith\Pokemon\Gameplay\Domain\Navigation\Location;
+use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 
 final class FindFeatures
 {
     public function __construct(
-        private readonly WildEncounterConfigRepository $wildEncounterConfigRepository,
         private readonly GiftPokemonConfigRepository $giftPokemonConfigRepository,
+        private readonly LocationConfigRepository $locationConfigRepository,
+        private readonly WildEncounterConfigRepository $wildEncounterConfigRepository,
         private readonly FindFixedEncounters $findFixedEncounters,
         private readonly FindPokemonLeague $findPokemonLeague,
         private readonly FindTrainers $findTrainers,
@@ -20,6 +22,7 @@ final class FindFeatures
 
     public function find(Location $location): Features
     {
+        $locationConfig = $this->locationConfigRepository->findLocation($location->id);
         $wildEncountersConfig = $this->wildEncounterConfigRepository->findWildEncounters($location->id);
         $fixedEncounters = $this->findFixedEncounters->findInLocation($location);
         $giftPokemonConfigEntries = $this->giftPokemonConfigRepository->findInLocation($location->id);
@@ -45,6 +48,7 @@ final class FindFeatures
             count($trainers) > 0,
             count($giftPokemonConfigEntries) > 0,
             !is_null($pokemonLeague) && !$pokemonLeague->isPlayerChampion,
+            isset($locationConfig['facilities']),
         );
     }
 }

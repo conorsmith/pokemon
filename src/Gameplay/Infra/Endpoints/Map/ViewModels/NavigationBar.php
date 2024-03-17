@@ -10,5 +10,6 @@ final class NavigationBar
         public readonly bool $showPokemon,
         public readonly bool $showTrainers,
         public readonly bool $showEliteFour,
+        public readonly bool $showFacilities,
     ) {}
 }

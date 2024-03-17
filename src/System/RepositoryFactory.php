@@ -83,7 +83,11 @@ final class RepositoryFactory
                 $this->create(LeagueChampionRepository::class, $instanceId),
                 $instanceId,
             ),
-            BagRepository::class                => new BagRepository($this->db, $instanceId),
+            BagRepository::class                => new BagRepository(
+                $this->db,
+                $instanceId,
+                new ItemConfigRepository(),
+            ),
             CaughtPokemonRepository::class      => new CaughtPokemonRepositoryDb($this->db, $instanceId),
             LocationRepository::class => new BattleLocationRepositoryDb(
                 $this->db,

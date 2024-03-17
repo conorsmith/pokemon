@@ -105,6 +105,7 @@ return [
             Direction::E => LocationId::ROUTE_116,
             Direction::S => LocationId::ROUTE_104,
             LocationId::RUSTBORO_GYM,
+            LocationId::DEVON_CORPORATION,
         ],
     ],
     [
@@ -114,6 +115,14 @@ return [
         'directions' => [
             Direction::EXIT => LocationId::RUSTBORO_CITY,
         ],
+    ],
+    [
+        'id'         => LocationId::DEVON_CORPORATION,
+        'name'       => "Devon Corporation",
+        'directions' => [
+            Direction::EXIT => LocationId::RUSTBORO_CITY,
+        ],
+        'facilities' => true,
     ],
     [
         'id'         => LocationId::ROUTE_116,

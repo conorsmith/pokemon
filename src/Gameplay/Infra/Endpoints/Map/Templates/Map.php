@@ -249,7 +249,7 @@
 
     </div>
 
-    <?php if ($navigationBar->showPokemon || $navigationBar->showTrainers || $navigationBar->showEliteFour) : ?>
+    <?php if ($navigationBar->showPokemon || $navigationBar->showTrainers || $navigationBar->showEliteFour || $navigationBar->showFacilities) : ?>
         <div class="card">
             <div class="card-header">
                 Location Features
@@ -271,6 +271,12 @@
                     <a href="/<?=$instanceId?>/map/elite-four" class="list-group-item list-group-item-action">
                         <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
                         <span>Elite Four</span>
+                    </a>
+                <?php endif ?>
+                <?php if ($navigationBar->showFacilities) : ?>
+                    <a href="/<?=$instanceId?>/map/facilities" class="list-group-item list-group-item-action">
+                        <img src="/assets/items/Bag_Devon_Parts_Sprite.png">
+                        <span>Facilities</span>
                     </a>
                 <?php endif ?>
             </ul>
