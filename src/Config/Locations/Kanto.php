@@ -70,6 +70,7 @@ return [
         'directions' => [
             Direction::E => LocationId::ROUTE_3,
             LocationId::PEWTER_GYM,
+            LocationId::PEWTER_MUSEUM,
             Direction::S => LocationId::ROUTE_2,
         ],
     ],
@@ -77,6 +78,13 @@ return [
         'id'         => LocationId::PEWTER_GYM,
         'name'       => "Pewter Gym",
         'type'       => LocationType::GYM,
+        'directions' => [
+            Direction::EXIT => LocationId::PEWTER_CITY,
+        ],
+    ],
+    [
+        'id'         => LocationId::PEWTER_MUSEUM,
+        'name'       => "Museum of Science",
         'directions' => [
             Direction::EXIT => LocationId::PEWTER_CITY,
         ],

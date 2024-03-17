@@ -62,4 +62,9 @@ final class ItemId
     public const CALCIUM = "ce0caaef-6766-4189-b608-db760c5b190e";
     public const ZINC = "79563cc8-13c1-499d-8551-b5ce3a8edab6";
     public const CARBOS = "ece6c73f-32f7-40fa-b1c9-1e15b34caed0";
+    public const DOME_FOSSIL = "b0303c57-9890-4dfd-adc3-bdebf075cebe";
+    public const HELIX_FOSSIL = "34b83d04-62d9-46de-8443-2629e71ff260";
+    public const OLD_AMBER = "fd3cac78-7b98-4bab-83c3-bbe27ec050c7";
+    public const ROOT_FOSSIL = "f85ae6ba-9727-4927-a3ad-6bb1e7a8637e";
+    public const CLAW_FOSSIL = "105dc16f-8a61-4d84-99af-7d1c8d22c1f6";
 }

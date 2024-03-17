@@ -15,6 +15,7 @@ final class LocationId
     public const ROUTE_2 = "4f788128-22d4-4bbe-a954-029a7fd599bd";
     public const PEWTER_CITY = "d2aefee3-2743-4fea-9425-b30041eb70f2";
     public const PEWTER_GYM = "fe280ea9-801d-4e71-9360-6fc29d46b3cd";
+    public const PEWTER_MUSEUM = "979b98cb-8ffb-4b4a-9842-c066754b4f23";
     public const VIRIDIAN_FOREST = "689069a9-13a7-4068-a49e-5395c05a4312";
     public const DIGLETTS_CAVE = "59149839-b573-4153-b75e-0664498370f6";
     public const ROUTE_3 = "a5cd2de7-300e-4739-a222-5a0a1fed4d31";

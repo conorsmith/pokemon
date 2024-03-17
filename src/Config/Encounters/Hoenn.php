@@ -931,14 +931,6 @@ return [
                 'weight' => 16,
                 'levels' => [38, 44],
             ],
-            PokedexNo::LILEEP  => [
-                'weight' => 1,
-                'levels' => [20, 30],
-            ],
-            PokedexNo::ANORITH => [
-                'weight' => 1,
-                'levels' => [20, 30],
-            ],
         ],
     ],
     LocationId::METEOR_FALLS_1F           => [

@@ -397,4 +397,29 @@ return [
         'type'     => ItemType::STATS,
         'hasUse'   => true,
     ],
+    ItemId::DOME_FOSSIL     => [
+        'name'     => "Dome Fossil",
+        'imageUrl' => "/assets/items/Bag_Dome_Fossil_Sprite.png",
+        'type'     => ItemType::FOSSIL,
+    ],
+    ItemId::HELIX_FOSSIL     => [
+        'name'     => "Helix Fossil",
+        'imageUrl' => "/assets/items/Bag_Helix_Fossil_Sprite.png",
+        'type'     => ItemType::FOSSIL,
+    ],
+    ItemId::OLD_AMBER     => [
+        'name'     => "Old Amber",
+        'imageUrl' => "/assets/items/Bag_Old_Amber_Sprite.png",
+        'type'     => ItemType::FOSSIL,
+    ],
+    ItemId::ROOT_FOSSIL     => [
+        'name'     => "Root Fossil",
+        'imageUrl' => "/assets/items/Bag_Root_Fossil_Sprite.png",
+        'type'     => ItemType::FOSSIL,
+    ],
+    ItemId::CLAW_FOSSIL     => [
+        'name'     => "Claw Fossil",
+        'imageUrl' => "/assets/items/Bag_Claw_Fossil_Sprite.png",
+        'type'     => ItemType::FOSSIL,
+    ],
 ];

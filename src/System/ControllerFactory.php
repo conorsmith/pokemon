@@ -672,6 +672,7 @@ final class ControllerFactory
                     $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
                 ),
                 new GiftPokemonConfigRepository(),
+                new ItemConfigRepository(),
                 new PokedexConfigRepository(),
                 $this->createNotifyPlayerCommand($instanceId),
                 $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
@@ -706,6 +707,7 @@ final class ControllerFactory
                 $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
                 $this->repositoryFactory->create(SurveyRepository::class, $instanceId),
                 $this->giftPokemonConfigRepository,
+                new ItemConfigRepository(),
                 $this->locationConfigRepository,
                 $this->pokedexConfigRepository,
                 $this->createFindFeatures($instanceId),

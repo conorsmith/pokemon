@@ -10,4 +10,5 @@ enum ItemType
     case EVOLUTION;
     case HELD;
     case STATS;
+    case FOSSIL;
 }

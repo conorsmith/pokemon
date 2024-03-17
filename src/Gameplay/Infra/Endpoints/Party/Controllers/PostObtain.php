@@ -17,6 +17,7 @@ use ConorSmith\Pokemon\Gameplay\Domain\Party\FriendshipEventLogRepository;
 use ConorSmith\Pokemon\Gameplay\App\UseCases\AddNewPokemon;
 use ConorSmith\Pokemon\Gameplay\Domain\Pokedex\PokedexEntryRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Pokedex\PokemonEntry;
+use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
 use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
@@ -45,6 +46,7 @@ final class PostObtain
         private readonly PokemonRepository $pokemonRepository,
         private readonly HabitStreakQuery $habitStreakQuery,
         private readonly GiftPokemonConfigRepository $giftPokemonConfigRepository,
+        private readonly ItemConfigRepository $itemConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly NotifyPlayerCommand $notifyPlayerCommand,
         private readonly FriendshipEventLogRepository $friendshipLog,
@@ -53,7 +55,7 @@ final class PostObtain
     public function __invoke(Request $request, array $args): Response
     {
         $instanceId = $args['instanceId'];
-        $pokedexNumber = $request->request->get("pokedexNumber");
+        $giftPokemonId = $request->request->get("giftPokemonId");
 
         $bag = $this->bagRepository->find();
 
@@ -66,17 +68,16 @@ final class PostObtain
 
         $currentLocation = $this->locationRepository->findCurrentLocation();
 
-        $availableGiftPokemon = $this->giftPokemonConfigRepository->findInLocation($currentLocation->id);
-
-        $giftPokemonConfig = null;
-
-        foreach ($availableGiftPokemon as $configEntry) {
-            if ($pokedexNumber === $configEntry['pokemon']) {
-                $giftPokemonConfig = $configEntry;
-            }
-        }
+        $giftPokemonConfig = $this->giftPokemonConfigRepository->find($giftPokemonId);
 
         if (is_null($giftPokemonConfig)) {
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Gift Pokémon config not found.")
+            );
+            return new RedirectResponse("/{$instanceId}/map");
+        }
+
+        if ($giftPokemonConfig['location'] !== $currentLocation->id) {
             $this->notifyPlayerCommand->run(
                 Notification::transient("The requested Pokémon is not available in your current location")
             );
@@ -108,10 +109,14 @@ final class PostObtain
             default         => throw new LogicException(),
         };
 
-        if (isset($giftPokemonConfig['isEgg'])) {
+        if (isset($giftPokemonConfig['item'])) {
+
+            $bag = $bag->add($giftPokemonConfig['item']);
+
+        } elseif (isset($giftPokemonConfig['isEgg'])) {
 
             $this->addNewEgg->run(
-                $pokedexNumber,
+                $giftPokemonConfig['pokemon'],
                 null,
                 new Stats(
                     RandomNumberGenerator::generateInRange(0, 31),
@@ -129,10 +134,10 @@ final class PostObtain
             $party = $this->pokemonRepository->getParty();
 
             $pokemon = $this->addNewPokemon->run(
-                $pokedexNumber,
+                $giftPokemonConfig['pokemon'],
                 null,
                 $giftPokemonConfig['level'] + $regionalLevelOffset,
-                $this->generateSex($pokedexNumber),
+                $this->generateSex($giftPokemonConfig['pokemon']),
                 $this->generateShininess(),
                 RandomNumberGenerator::generateInRange(0, 31),
                 RandomNumberGenerator::generateInRange(0, 31),
@@ -154,8 +159,6 @@ final class PostObtain
         $this->obtainedGiftPokemonRepository->save(new ObtainedGiftPokemon(
             Uuid::uuid4()->toString(),
             $giftPokemonConfig['id'],
-            $pokedexNumber,
-            $currentLocation->id,
             CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
         ));
 
@@ -164,22 +167,32 @@ final class PostObtain
             fn (PokemonEntry $entry) => $entry->isRegistered,
         ));
 
-        $pokedexConfig = $this->pokedexConfigRepository->find($pokedexNumber);
+        if (isset($giftPokemonConfig['item'])) {
+            $itemConfig = $this->itemConfigRepository->find($giftPokemonConfig['item']);
 
-        if (isset($giftPokemonConfig['isEgg'])) {
-            $name = "{$pokedexConfig['name']} Egg";
-        } else {
-            $name = $pokedexConfig['name'];
-        }
+            $name = $itemConfig['name'];
 
-        $this->notifyPlayerCommand->run(
-            Notification::persistent("You obtained {$name}!")
-        );
-
-        if ($totalRegisteredPokemonBeforeObtaining > $totalRegisteredPokemonAfterObtaining) {
             $this->notifyPlayerCommand->run(
-                Notification::persistent("{$pokedexConfig['name']} has been registered in your Pokédex")
+                Notification::persistent("You obtained {$name}!")
             );
+        } else {
+            $pokedexConfig = $this->pokedexConfigRepository->find($giftPokemonConfig['pokemon']);
+
+            if (isset($giftPokemonConfig['isEgg'])) {
+                $name = "{$pokedexConfig['name']} Egg";
+            } else {
+                $name = $pokedexConfig['name'];
+            }
+
+            $this->notifyPlayerCommand->run(
+                Notification::persistent("You obtained {$name}!")
+            );
+
+            if ($totalRegisteredPokemonBeforeObtaining > $totalRegisteredPokemonAfterObtaining) {
+                $this->notifyPlayerCommand->run(
+                    Notification::persistent("{$pokedexConfig['name']} has been registered in your Pokédex")
+                );
+            }
         }
 
         return new RedirectResponse("/{$instanceId}/map");

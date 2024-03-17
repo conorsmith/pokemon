@@ -20,6 +20,7 @@ use ConorSmith\Pokemon\Gameplay\Domain\Surveying\SurveyRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\LocationFeatures\WildEncounters;
 use ConorSmith\Pokemon\Gameplay\Domain\LocationFeatures\FindFeatures;
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\ViewModels\ViewModelFactory;
+use ConorSmith\Pokemon\ItemConfigRepository;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\EncounterType;
@@ -44,6 +45,7 @@ final class GetObtainablePokemon
         private readonly ObtainedGiftPokemonRepository $obtainedGiftPokemonRepository,
         private readonly SurveyRepository $surveyRepository,
         private readonly GiftPokemonConfigRepository $giftPokemonConfigRepository,
+        private readonly ItemConfigRepository $itemConfigRepository,
         private readonly LocationConfigRepository $locationConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly FindFeatures $findFeatures,
@@ -184,24 +186,39 @@ final class GetObtainablePokemon
                 default         => throw new LogicException(),
             };
 
-            if (isset($giftPokemonConfigEntry['isEgg'])) {
+            if (isset($giftPokemonConfigEntry['item'])) {
+                $itemConfig = $this->itemConfigRepository->find($giftPokemonConfigEntry['item']);
+
                 $giftPokemon[] = (object) [
-                    'number'          => $giftPokemonConfigEntry['pokemon'],
+                    'id'              => $giftPokemonConfigEntry['id'],
+                    'name'            => $itemConfig['name'],
+                    'imageUrl'        => $itemConfig['imageUrl'],
+                    'hasLevel'        => false,
+                    'canObtain'       => $canObtain,
+                    'lastObtained'    => $lastObtained,
+                    'isFossil'        => true,
+
+                ];
+            } elseif (isset($giftPokemonConfigEntry['isEgg'])) {
+                $giftPokemon[] = (object) [
+                    'id'              => $giftPokemonConfigEntry['id'],
                     'name'            => $this->pokedexConfigRepository->find($giftPokemonConfigEntry['pokemon'])['name'] . " Egg",
                     'imageUrl'        => "/assets/Spr_3r_Egg.png",
                     'hasLevel'        => false,
                     'canObtain'       => $canObtain,
                     'lastObtained'    => $lastObtained,
+                    'isFossil'        => false,
                 ];
             } else {
                 $giftPokemon[] = (object) [
-                    'number'          => $giftPokemonConfigEntry['pokemon'],
+                    'id'              => $giftPokemonConfigEntry['id'],
                     'name'            => $this->pokedexConfigRepository->find($giftPokemonConfigEntry['pokemon'])['name'],
                     'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($giftPokemonConfigEntry['pokemon']),
                     'hasLevel'        => true,
                     'level'           => $giftPokemonConfigEntry['level'] + $regionalLevelOffset,
                     'canObtain'       => $canObtain,
                     'lastObtained'    => $lastObtained,
+                    'isFossil'        => false,
                 ];
             }
         }

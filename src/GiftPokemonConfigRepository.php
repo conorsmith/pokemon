@@ -13,6 +13,17 @@ final class GiftPokemonConfigRepository
         $this->config = require __DIR__ . "/Config/GiftPokemon.php";
     }
 
+    public function find(string $giftPokemonId): ?array
+    {
+        foreach ($this->config as $config) {
+            if ($config['id'] === $giftPokemonId) {
+                return $config;
+            }
+        }
+
+        return null;
+    }
+
     public function findInLocation(string $locationId): array
     {
         return array_filter(

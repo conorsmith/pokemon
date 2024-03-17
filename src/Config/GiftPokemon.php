@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use ConorSmith\Pokemon\SharedKernel\Domain\ItemId;
 use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ConorSmith\Pokemon\SharedKernel\Domain\PokedexNo;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
@@ -26,6 +27,27 @@ return [
         'pokemon'  => PokedexNo::SQUIRTLE,
         'location' => LocationId::PROFESSOR_OAKS_LAB,
         'level'    => 5,
+    ],
+    [
+        'id'       => "0eb37f88-2c59-4134-8586-6aa90127a352",
+        'item'     => ItemId::OLD_AMBER,
+        'location' => LocationId::PEWTER_MUSEUM,
+    ],
+    [
+        'id'       => "22304556-7d3b-4763-b9b8-a5542f6f441d",
+        'item'     => ItemId::DOME_FOSSIL,
+        'location' => LocationId::MT_MOON_BF2,
+        'requirements' => [
+            'clear' => LocationId::MT_MOON,
+        ],
+    ],
+    [
+        'id'       => "25d295fd-daa4-4798-9300-80a0d8c565c0",
+        'item'     => ItemId::HELIX_FOSSIL,
+        'location' => LocationId::MT_MOON_BF2,
+        'requirements' => [
+            'clear' => LocationId::MT_MOON,
+        ],
     ],
     [
         'id'           => "f0ef06a1-f4e9-42a0-baf5-b41ac0a2db75",
@@ -216,6 +238,22 @@ return [
         'pokemon'  => PokedexNo::WYNAUT,
         'location' => LocationId::HOT_SPRINGS,
         'isEgg'    => true,
+    ],
+    [
+        'id'       => "d1c4864f-c613-488a-ad25-2cf4e98a39af",
+        'item'     => ItemId::ROOT_FOSSIL,
+        'location' => LocationId::ROUTE_111,
+        'requirements' => [
+            'clear' => LocationId::ROUTE_111,
+        ],
+    ],
+    [
+        'id'       => "33af2a6f-026e-4a28-8d05-02831a258337",
+        'item'     => ItemId::CLAW_FOSSIL,
+        'location' => LocationId::ROUTE_111,
+        'requirements' => [
+            'clear' => LocationId::ROUTE_111,
+        ],
     ],
     [
         'id'       => "d378014b-cab2-4045-ba83-f998fe00c946",

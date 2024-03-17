@@ -15,6 +15,7 @@ return [
     LocationId::DIGLETTS_CAVE                => "Kanto_Digletts_Cave_Map.png",
     LocationId::PEWTER_CITY                  => "Kanto_Pewter_City_Map.png",
     LocationId::PEWTER_GYM                   => "Kanto_Pewter_City_Map.png",
+    LocationId::PEWTER_MUSEUM               => "Kanto_Pewter_City_Map.png",
     LocationId::ROUTE_3                      => "Kanto_Route_3_Map.png",
     LocationId::MT_MOON_F1                   => "Kanto_Mt_Moon_Map.png",
     LocationId::MT_MOON_BF1                  => "Kanto_Mt_Moon_Map.png",

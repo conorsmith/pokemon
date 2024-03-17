@@ -40,8 +40,6 @@ final class ObtainedGiftPokemonRepositoryDb implements ObtainedGiftPokemonReposi
         return new ObtainedGiftPokemon(
             $row['id'],
             $row['gift_pokemon_id'],
-            $row['pokedex_number'],
-            $row['location_id'],
             CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['obtained_at'], "Europe/Dublin"),
         );
     }
@@ -52,8 +50,6 @@ final class ObtainedGiftPokemonRepositoryDb implements ObtainedGiftPokemonReposi
             'id'              => $obtainedGiftPokemon->id,
             'instance_id'     => $this->instanceId->value,
             'gift_pokemon_id' => $obtainedGiftPokemon->giftPokemonId,
-            'location_id'     => $obtainedGiftPokemon->locationId,
-            'pokedex_number'  => $obtainedGiftPokemon->pokedexNumber,
             'obtained_at'     => $obtainedGiftPokemon->obtainedAt->format("Y-m-d H:i:s"),
         ]);
     }

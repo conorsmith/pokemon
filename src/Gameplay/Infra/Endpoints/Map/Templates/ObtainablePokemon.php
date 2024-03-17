@@ -51,9 +51,15 @@
             <ul class="list-group list-group-flush">
                 <?php foreach ($giftPokemon as $giftPokemonEntry) : ?>
                     <li class="list-group-item d-flex align-items-start">
-                        <div class="pokemon-image">
-                            <img src="<?=$giftPokemonEntry->imageUrl?>">
-                        </div>
+                        <?php if ($giftPokemonEntry->isFossil) : ?>
+                            <div class="d-flex align-items-center justify-content-center" style="width: 6rem; height: 6rem; margin-right: 1rem;">
+                                <img src="<?=$giftPokemonEntry->imageUrl?>">
+                            </div>
+                        <?php else : ?>
+                            <div class="pokemon-image">
+                                <img src="<?=$giftPokemonEntry->imageUrl?>">
+                            </div>
+                        <?php endif ?>
                         <div>
                             <div>
                                 <strong>
@@ -70,7 +76,7 @@
                             </div>
                             <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
                                 <form method="POST" action="/<?=$instanceId?>/obtain" style="margin-right: 0.6rem;">
-                                    <input type="hidden" name="pokedexNumber" value="<?=$giftPokemonEntry->number?>">
+                                    <input type="hidden" name="giftPokemonId" value="<?=$giftPokemonEntry->id?>">
                                     <button type="submit" class="btn btn-outline-dark btn-sm" <?=$giftPokemonEntry->canObtain ? "" : "disabled"?>>Obtain</button>
                                 </form>
                                 <?php if ($giftPokemonEntry->lastObtained) : ?>

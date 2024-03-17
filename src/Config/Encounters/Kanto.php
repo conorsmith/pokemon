@@ -1201,14 +1201,6 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KABUTO    => [
-                'weight' => 1,
-                'levels' => 30,
-            ],
-            PokedexNo::OMANYTE   => [
-                'weight' => 1,
-                'levels' => 30,
-            ],
         ],
     ],
     LocationId::KANTO_SAFARI_ZONE_N    => [
@@ -1300,10 +1292,6 @@ return [
             PokedexNo::DRAGONAIR => [
                 'weight' => 1,
                 'levels' => [25, 35],
-            ],
-            PokedexNo::OMANYTE   => [
-                'weight' => 5,
-                'levels' => 30,
             ],
         ],
     ],
@@ -1401,10 +1389,6 @@ return [
                 'weight' => 1,
                 'levels' => [25, 35],
             ],
-            PokedexNo::KABUTO    => [
-                'weight' => 5,
-                'levels' => 30,
-            ],
         ],
     ],
     LocationId::KANTO_SAFARI_ZONE_W    => [
@@ -1448,10 +1432,6 @@ return [
             PokedexNo::TAUROS     => [
                 'weight' => 4,
                 'levels' => 25,
-            ],
-            PokedexNo::AERODACTYL => [
-                'weight' => 1,
-                'levels' => 30,
             ],
             PokedexNo::LICKITUNG  => [
                 'weight' => 1,
