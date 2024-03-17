@@ -6,6 +6,7 @@ namespace ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\PokemonRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\InGameEvents\ObtainedGiftPokemonRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository;
@@ -38,6 +39,7 @@ final class PostObtain
         private readonly LocationRepository $locationRepository,
         private readonly ObtainedGiftPokemonRepository $obtainedGiftPokemonRepository,
         private readonly PokedexEntryRepository $pokedexEntryRepository,
+        private readonly PokemonRepository $pokemonRepository,
         private readonly HabitStreakQuery $habitStreakQuery,
         private readonly GiftPokemonConfigRepository $giftPokemonConfigRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
@@ -104,6 +106,8 @@ final class PostObtain
             default         => throw new LogicException(),
         };
 
+        $party = $this->pokemonRepository->getParty();
+
         $pokemon = $this->addNewPokemon->run(
             $pokedexNumber,
             null,
@@ -117,7 +121,7 @@ final class PostObtain
             RandomNumberGenerator::generateInRange(0, 31),
             RandomNumberGenerator::generateInRange(0, 31),
             $currentLocation->id,
-            null,
+            $party->isFull() ? null : $party->getNextOpenPosition(),
         );
 
         $this->friendshipLog->sentToBox($pokemon);

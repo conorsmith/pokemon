@@ -44,19 +44,27 @@ final class PostLogWeeklyReview
             return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
         }
 
-        if ($mondayOfSubmittedWeek->isFuture()) {
+        $submittedWeek = CarbonPeriod::between($mondayOfSubmittedWeek, $mondayOfSubmittedWeek->addDays(6));
+
+        if ($submittedWeek->end->isFuture()) {
             $this->notifyPlayerCommand->run(
-                Notification::transient("Given date cannot be in the future.")
+                Notification::transient("Given week cannot be in the future.")
             );
             return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
         }
-
-        $submittedWeek = CarbonPeriod::between($mondayOfSubmittedWeek, $mondayOfSubmittedWeek->addDays(6));
 
         $weeklyHabitLog = $this->weeklyHabitLogRepository->find(Habit::CALORIE_EXCESS);
         $foodDiaryHabitLog = $this->dailyHabitLogRepository->find(Habit::FOOD_DIARY_COMPLETED);
         $calorieGoalHabitLog = $this->dailyHabitLogRepository->find(Habit::CALORIE_GOAL_ATTAINED);
         $bag = $this->bagRepository->find();
+
+        if ($weeklyHabitLog->doesWeekPredateLog($submittedWeek)) {
+            $formattedDate = $mondayOfSubmittedWeek->format("Y-m-d");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Week starting '{$formattedDate}' is before you began logging")
+            );
+            return new RedirectResponse("/{$args['instanceId']}/log/weekly-review");
+        }
 
         if ($weeklyHabitLog->isWeekLogged($submittedWeek)) {
             $formattedDate = $mondayOfSubmittedWeek->format("Y-m-d");

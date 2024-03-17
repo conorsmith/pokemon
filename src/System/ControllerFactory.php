@@ -61,6 +61,9 @@ use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Map\Controllers\PostSurveyPokemo
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Player\Controllers\GetNotifications;
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Player\Controllers\GetStatus;
 use ConorSmith\Pokemon\Gameplay\Domain\GymBadgeRepository;
+use ConorSmith\Pokemon\MainMenu\Infra\Endpoints\NewGame\Controllers\GetNewGame;
+use ConorSmith\Pokemon\MainMenu\Infra\Endpoints\NewGame\Controllers\PostNewGame;
+use ConorSmith\Pokemon\MainMenu\Infra\Repositories\InstanceRepositoryDb;
 use ConorSmith\Pokemon\WildEncounterConfigRepository;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Habit\Controllers\GetLogCalorieGoal;
@@ -138,6 +141,9 @@ final class ControllerFactory
 {
     public static function routes(RouteCollector $r): void
     {
+        $r->get("/new-game", GetNewGame::class);
+        $r->post("/new-game", PostNewGame::class);
+
         $r->get("/log/calorie-goal", GetLogCalorieGoal::class);
         $r->post("/log/calorie-goal", PostLogCalorieGoal::class);
         $r->get("/log/exercise", GetLogExercise::class);
@@ -219,6 +225,12 @@ final class ControllerFactory
     public function create(string $className, InstanceId $instanceId): mixed
     {
         return match ($className) {
+            GetNewGame::class                    => new GetNewGame(
+                $this->createTemplateEngine($instanceId),
+            ),
+            PostNewGame::class                   => new PostNewGame(
+                new InstanceRepositoryDb($this->db),
+            ),
             GetLogFoodDiary::class               => new GetLogFoodDiary(
                 $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId),
                 $this->createTemplateEngine($instanceId),
@@ -320,6 +332,7 @@ final class ControllerFactory
                     $this->repositoryFactory->create(GenealogyRepository::class, $instanceId),
                     $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
                     $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                    $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                     new AddNewPokemon(
                         $this->db,
                         $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
@@ -337,6 +350,7 @@ final class ControllerFactory
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostEncounterGenerateAndStart::class => new PostEncounterGenerateAndStart(
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 new CreateAFixedEncounter(
                     $this->repositoryFactory->create(BagRepository::class, $instanceId),
                     $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
@@ -345,6 +359,7 @@ final class ControllerFactory
                 new StartAnEncounter(
                     $this->repositoryFactory->create(EncounterRepository::class, $instanceId),
                 ),
+                $this->createNotifyPlayerCommand($instanceId),
             ),
             PostEncounterGenerate::class         => new PostEncounterGenerate(
                 new CreateAWildEncounter(
@@ -493,6 +508,7 @@ final class ControllerFactory
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostBattleStart::class               => new PostBattleStart(
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 new StartABattle(
                     $this->repositoryFactory->create(BattleRepository::class, $instanceId),
                     $this->repositoryFactory->create(FriendshipEventLogRepository::class, $instanceId),
@@ -643,6 +659,7 @@ final class ControllerFactory
                 $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
                 $this->repositoryFactory->create(ObtainedGiftPokemonRepository::class, $instanceId),
                 $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 new FoodDiaryHabitStreakQuery(
                     $this->repositoryFactory->create(DailyHabitLogRepository::class, $instanceId)
                 ),
@@ -712,8 +729,10 @@ final class ControllerFactory
             ),
             GetTrackPokemon::class => new GetTrackPokemon(
                 $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
+                $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->createViewModelFactory(),
+                $this->createNotifyPlayerCommand($instanceId),
                 $this->createTemplateEngine($instanceId),
             ),
             GetSurveyPokemon::class => new GetSurveyPokemon(

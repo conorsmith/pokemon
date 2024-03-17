@@ -6,26 +6,37 @@ namespace ConorSmith\Pokemon\Gameplay\Infra\ConsoleCommands;
 
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\Pokemon;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\Trainer;
+use ConorSmith\Pokemon\Gameplay\Domain\Battle\TrainerRepository;
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\ViewModels\EventFactory;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\RandomTrainerGenerator;
-use ConorSmith\Pokemon\Gameplay\Infra\Repositories\EliteFourChallengeRepositoryDb;
-use ConorSmith\Pokemon\Gameplay\Infra\Repositories\LeagueChampionRepositoryDb;
-use ConorSmith\Pokemon\Gameplay\Infra\Repositories\TrainerRepositoryDb;
 use ConorSmith\Pokemon\Gameplay\App\UseCases\SimulateABattle;
-use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\LocationId;
 use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\InstanceId;
 use ConorSmith\Pokemon\SharedKernel\TrainerClass;
+use ConorSmith\Pokemon\System\RepositoryFactory;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
 use Doctrine\DBAL\DriverManager;
+use Ramsey\Uuid\Uuid;
 
 final class Simulate
 {
     public function __invoke(array $args): void
     {
+        if (!isset($args[0])) {
+            echo "Instance ID required as first argument." . PHP_EOL;
+            return;
+        }
+
+        if (!Uuid::isValid($args[0])) {
+            echo "Given instance ID has invalid format." . PHP_EOL;
+            return;
+        }
+
+        $instanceId = new InstanceId($args[0]);
+
         $db = DriverManager::getConnection([
             'dbname'   => $_ENV['DB_NAME'],
             'user'     => $_ENV['DB_USER'],
@@ -34,27 +45,11 @@ final class Simulate
             'driver'   => "pdo_mysql",
         ]);
 
+        $repositoryFactory = new RepositoryFactory($db, new DummySession());
+
         $pokemonConfigRepository = new PokedexConfigRepository();
 
-        $trainerRepository = new TrainerRepositoryDb(
-            $db,
-            new EliteFourChallengeRepositoryDb(
-                $db,
-                new LeagueChampionRepositoryDb(
-                    $db,
-                    new InstanceId("8a04a1fc-f9e9-4feb-98fc-470f90c8fdb1"),
-                ),
-                new InstanceId("8a04a1fc-f9e9-4feb-98fc-470f90c8fdb1"),
-            ),
-            new LeagueChampionRepositoryDb(
-                $db,
-                new InstanceId("8a04a1fc-f9e9-4feb-98fc-470f90c8fdb1"),
-            ),
-            new TrainerConfigRepository(),
-            new LocationConfigRepository(),
-            $pokemonConfigRepository,
-            new InstanceId("8a04a1fc-f9e9-4feb-98fc-470f90c8fdb1"),
-        );
+        $trainerRepository = $repositoryFactory->create(TrainerRepository::class, $instanceId);
 
         $randomTrainerGenerator = new RandomTrainerGenerator(
             $pokemonConfigRepository,
@@ -70,8 +65,8 @@ final class Simulate
             ),
         );
 
-        if (isset($args[0])) {
-            $trainerA = $trainerRepository->findTrainerByTrainerId($args[0]);
+        if (isset($args[1])) {
+            $trainerA = $trainerRepository->findTrainerByTrainerId($args[1]);
         } else {
             $trainerA = $randomTrainerGenerator->generate(
                 RandomNumberGenerator::generateInRange(10, 100),
@@ -79,8 +74,8 @@ final class Simulate
             );
         }
 
-        if (isset($args[1])) {
-            $trainerB = $trainerRepository->findTrainerByTrainerId($args[1]);
+        if (isset($args[2])) {
+            $trainerB = $trainerRepository->findTrainerByTrainerId($args[2]);
         } else {
             $trainerB = $randomTrainerGenerator->generate(
                 self::findHighestLevelOfPartyMembers($trainerA),

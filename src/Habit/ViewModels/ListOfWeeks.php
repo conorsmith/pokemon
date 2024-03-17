@@ -14,7 +14,7 @@ final class ListOfWeeks
 {
     public static function generateForWeeklyHabitLog(WeeklyHabitLog $habitLog): self
     {
-        $startDate = new CarbonImmutable("2023-01-01 00:00:00", new CarbonTimeZone("Europe/Dublin"));
+        $logStartedAt = (new CarbonImmutable($habitLog->startedAt))->midDay();
 
         $today = CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
 
@@ -24,7 +24,8 @@ final class ListOfWeeks
 
         $weeks = [];
 
-        while ($runningMonday->isAfter($startDate)) {
+
+        while ($runningMonday->addDays(6)->gte($logStartedAt)) {
 
             $entry = $habitLog->getEntryForWeek(
                 new CarbonPeriod($runningMonday, $runningMonday->addDays(6))

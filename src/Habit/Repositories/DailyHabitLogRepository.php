@@ -21,7 +21,15 @@ final class DailyHabitLogRepository
 
     public function find(Habit $habit): DailyHabitLog
     {
-        $rows = $this->db->createQueryBuilder()
+        $instanceRow = $this->db->fetchAssociative("
+            SELECT *
+            FROM instances
+            WHERE id = :instanceId
+        ", [
+            'instanceId' => $this->instanceId->value,
+        ]);
+
+        $logRows = $this->db->createQueryBuilder()
             ->select("*")
             ->from(match ($habit) {
                 Habit::FOOD_DIARY_COMPLETED  => "log_food_diary",
@@ -38,9 +46,14 @@ final class DailyHabitLogRepository
         return new DailyHabitLog(
             $habit,
             array_map(
-                fn(array $row) => CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], "Europe/Dublin"),
-                $rows
-            )
+                fn(array $logRow) => CarbonImmutable::createFromFormat("Y-m-d H:i:s", $logRow['date_logged'], "Europe/Dublin"),
+                $logRows
+            ),
+            CarbonImmutable::createFromFormat(
+                "Y-m-d H:i:s",
+                $instanceRow['started_at'],
+                "Europe/Dublin",
+            ),
         );
     }
 

@@ -52,30 +52,35 @@
 </div>
 
 <ul class="list-group mt-1">
-    <?php foreach ($party as $pokemon) : ?>
-        <li class="list-group-item d-flex">
-            <div class="pokemon-image <?=$pokemon->isShiny ? "pokemon-image--shiny" : ""?>" style="width: 3rem; height: 3rem;">
-                <img src="<?=$pokemon->imageUrl?>">
-            </div>
-            <div class="flex-grow-1">
-                <h5 class="d-flex justify-content-between align-items-center mb-0">
-                    <div>
-                        <?=$pokemon->name?>
-                        <span class="pokemon-sex">
-                            <i class="fas <?=$pokemon->sexIcon?>"></i>
+    <?php foreach ($party as $slot) : ?>
+        <?php if ($slot->hasMember) : ?>
+            <li class="list-group-item d-flex">
+                <div class="pokemon-image <?=$slot->member->isShiny ? "pokemon-image--shiny" : ""?>" style="width: 3rem; height: 3rem;">
+                    <img src="<?=$slot->member->imageUrl?>">
+                </div>
+                <div class="flex-grow-1">
+                    <h5 class="d-flex justify-content-between align-items-center mb-0">
+                        <div>
+                            <?=$slot->member->name?>
+                            <span class="pokemon-sex">
+                                <i class="fas <?=$slot->member->sexIcon?>"></i>
+                            </span>
+                            <?php if ($slot->member->form) : ?>
+                                <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$slot->member->form?> Form</span>
+                            <?php endif ?>
+                        </div>
+                    </h5>
+                    <p class="mb-0">
+                        <span class="pokemon-level mx-0">
+                            Lv <?=$slot->member->level?>
                         </span>
-                        <?php if ($pokemon->form) : ?>
-                            <span class="badge bg-secondary" style="font-size: 0.8rem;"><?=$pokemon->form?> Form</span>
-                        <?php endif ?>
-                    </div>
-                </h5>
-                <p class="mb-0">
-                    <span class="pokemon-level mx-0">
-                        Lv <?=$pokemon->level?>
-                    </span>
-                </p>
-            </div>
-            <a href="/<?=$instanceId?>/party/member/<?=$pokemon->id?>" data-id="<?=$pokemon->id?>" class="stretched-link stretched-link--hidden">Go to Stats</a>
-        </li>
+                    </p>
+                </div>
+                <a href="/<?=$instanceId?>/party/member/<?=$slot->member->id?>" data-id="<?=$slot->member->id?>" class="stretched-link stretched-link--hidden">Go to Stats</a>
+            </li>
+        <?php else : ?>
+            <li class="list-group-item d-flex" style="height: 64.8px;">
+            </li>
+        <?php endif ?>
     <?php endforeach ?>
 </ul>

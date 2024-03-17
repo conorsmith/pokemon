@@ -33,7 +33,15 @@ final class PostPartySendToDayCare
             return new RedirectResponse("/{$args['instanceId']}/party");
         }
 
+        $party = $this->pokemonRepository->getParty();
         $dayCare = $this->pokemonRepository->getDayCare();
+
+        if ($party->count() === 1) {
+            $this->notifyPlayerCommand->run(
+                Notification::transient("You can't send your only party member to Day Care.")
+            );
+            return new RedirectResponse("/{$args['instanceId']}/party");
+        }
 
         if ($dayCare->isFull()) {
             $this->notifyPlayerCommand->run(

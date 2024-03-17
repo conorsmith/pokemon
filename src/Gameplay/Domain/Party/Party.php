@@ -31,6 +31,11 @@ final class Party
         return count($this->members) === 6;
     }
 
+    public function isEmpty(): bool
+    {
+        return count($this->members) === 0;
+    }
+
     public function contains(string $id): bool
     {
         /** @var Pokemon $member */

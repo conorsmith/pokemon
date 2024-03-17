@@ -97,6 +97,8 @@ final class LevelUpPokemon
                     default         => throw new LogicException(),
                 };
 
+                $party = $this->pokemonRepository->getParty();
+
                 $this->addNewPokemon->run(
                     PokedexNo::SHEDINJA,
                     null,
@@ -110,7 +112,7 @@ final class LevelUpPokemon
                     RandomNumberGenerator::generateInRange(0, 31),
                     RandomNumberGenerator::generateInRange(0, 31),
                     $this->locationRepository->findCurrentLocation()->id,
-                    null,
+                    $party->isFull() ? null : $party->getNextOpenPosition(),
                 );
 
                 return LevelUpPokemonResult::nincadaEvolvedIntoNinjask($pokemon->level, $newPokedexEntry);

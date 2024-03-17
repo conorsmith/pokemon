@@ -47,13 +47,15 @@ final class GetPokemon
 
     private function createLocationVm(Pokemon $pokemon, Party $party, DayCare $dayCare): stdClass
     {
+        $pokemonCanBeMoved = !$party->contains($pokemon->id) || $party->count() > 1;
+
         return (object) [
             'isInParty'        => $party->contains($pokemon->id),
             'isInDayCare'      => $dayCare->hasAttendee($pokemon->id),
             'isInBox'          => !$party->contains($pokemon->id) && !$dayCare->hasAttendee($pokemon->id),
             'canSendToParty'   => !$party->isFull(),
-            'canSendToDayCare' => !$dayCare->isFull(),
-            'canSendToBox'     => true,
+            'canSendToDayCare' => $pokemonCanBeMoved && !$dayCare->isFull(),
+            'canSendToBox'     => $pokemonCanBeMoved,
         ];
     }
 

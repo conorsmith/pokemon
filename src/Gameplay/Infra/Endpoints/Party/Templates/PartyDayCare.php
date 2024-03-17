@@ -8,6 +8,11 @@
             <div><?=$dayCare->filled?> / <?=$dayCare->maximum?></div>
         </div>
         <ul class="list-group list-group-flush">
+            <?php if ($dayCare->maximum === 0) : ?>
+                <li class="list-group-item d-flex align-items-center justify-content-center" style="height: 5rem;">
+                    <h5><span style="color: #aaa;">No Day Care Slots</span></h5>
+                </li>
+            <?php endif ?>
             <?php foreach ($dayCare->slots as $slot) : ?>
                 <?php $pokemon = $slot->pokemon ?>
                 <?php require __DIR__ . "/ListPokemon.php" ?>

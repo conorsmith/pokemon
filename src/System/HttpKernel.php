@@ -26,11 +26,16 @@ final class HttpKernel
         });
 
         if ($request->getPathInfo() === "/") {
-            return new RedirectResponse("/8a04a1fc-f9e9-4feb-98fc-470f90c8fdb1/");
+            return new RedirectResponse("/new-game");
         }
 
-        $instanceId = substr($request->getPathInfo(), 1, 36);
-        $effectivePath = substr($request->getPathInfo(), 37);
+        if ($request->getPathInfo() === "/new-game") {
+            $instanceId = "00000000-0000-0000-0000-000000000000";
+            $effectivePath = $request->getPathInfo();
+        } else {
+            $instanceId = substr($request->getPathInfo(), 1, 36);
+            $effectivePath = substr($request->getPathInfo(), 37);
+        }
 
         $routeInfo = $dispatcher->dispatch(
             $request->getMethod(),

@@ -46,6 +46,14 @@ final class PostLogCalorieGoal
         $habitLog = $this->habitLogRepository->find(Habit::CALORIE_GOAL_ATTAINED);
         $bag = $this->bagRepository->find();
 
+        if ($habitLog->doesDatePredateLog($submittedDate)) {
+            $formattedDate = $submittedDate->format("Y-m-d");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Date '{$formattedDate}' is before you began logging")
+            );
+            return new RedirectResponse("/{$args['instanceId']}/log/calorie-goal");
+        }
+
         if ($habitLog->isDateLogged($submittedDate)) {
             $formattedDate = $submittedDate->format("Y-m-d");
             $this->notifyPlayerCommand->run(

@@ -15,14 +15,14 @@ final class Calendar
 {
     public static function generateForDailyHabitLog(DailyHabitLog $habitLog): self
     {
-        $startDate = new CarbonImmutable("2023-01-01 00:00:00", new CarbonTimeZone("Europe/Dublin"));
+        $logStartedAt = (new CarbonImmutable($habitLog->startedAt))->midDay();
 
-        $runningMonth = CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
+        $runningMonth = CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"))->midDay();
         $runningDay = $runningMonth->setDay(1);
 
         $months = [];
 
-        while ($runningMonth->isAfter($startDate)) {
+        while ($runningMonth->gte($logStartedAt)) {
 
             $weeks = [];
 
@@ -41,7 +41,7 @@ final class Calendar
                     ),
                     false,
                     $habitLog->isDateLogged($runningDay),
-                    $runningDay->isFuture(),
+                    $runningDay->isFuture() || $runningDay->isBefore($logStartedAt),
                 );
 
                 $squares[] = $calendarSquare;
@@ -75,14 +75,14 @@ final class Calendar
 
     public static function generateForUnlimitedHabitLog(UnlimitedHabitLog $habitLog): self
     {
-        $startDate = new CarbonImmutable("2023-01-01 00:00:00", new CarbonTimeZone("Europe/Dublin"));
+        $logStartedAt = (new CarbonImmutable($habitLog->startedAt))->midDay();
 
-        $runningMonth = CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
+        $runningMonth = CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"))->midDay();
         $runningDay = $runningMonth->setDay(1);
 
         $months = [];
 
-        while ($runningMonth->isAfter($startDate)) {
+        while ($runningMonth->gte($logStartedAt)) {
 
             $weeks = [];
 
@@ -109,7 +109,7 @@ final class Calendar
                     ),
                     false,
                     $logCount > 0,
-                    $runningDay->isFuture(),
+                    $runningDay->isFuture() || $runningDay->isBefore($logStartedAt),
                 );
 
                 $squares[] = $calendarSquare;

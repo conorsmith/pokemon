@@ -14,6 +14,7 @@ final class Instance
 
         $db->insert("instances", [
             'id'                => self::DEFAULT_ID,
+            'started_at'        => "2023-01-01 00:00:00",
             'current_location'  => "dontcare",
             'money'             => 0,
             'unused_level_ups'  => 0,

@@ -57,6 +57,14 @@ final class PostLogExercise
         $habitLog = $this->habitLogRepository->find(Habit::EXERCISE);
         $bag = $this->bagRepository->find();
 
+        if ($habitLog->doesDatePredateLog($submittedDate)) {
+            $formattedDate = $submittedDate->format("Y-m-d");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Date '{$formattedDate}' is before you began logging")
+            );
+            return new RedirectResponse("/{$args['instanceId']}/log/exercise");
+        }
+
         $earnedItemId = match($entryType) {
             EntryType::SHORT_WALK => ItemId::POKE_BALL,
             EntryType::LONG_WALK  => ItemId::GREAT_BALL,

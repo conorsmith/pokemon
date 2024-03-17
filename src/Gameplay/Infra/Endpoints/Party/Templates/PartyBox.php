@@ -8,6 +8,11 @@
             <div><?=$box->filled?></div>
         </div>
         <ul class="list-group list-group-flush">
+            <?php if ($box->filled === 0) : ?>
+                <li class="list-group-item d-flex align-items-center justify-content-center" style="height: 5rem;">
+                    <h5><span style="color: #aaa;">No Pokémon</span></h5>
+                </li>
+            <?php endif ?>
             <?php foreach ($box->slots as $slot) : ?>
                 <?php $pokemon = $slot->pokemon ?>
                 <?php require __DIR__ . "/ListPokemon.php" ?>

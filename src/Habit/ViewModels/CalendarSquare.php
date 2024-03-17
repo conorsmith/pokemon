@@ -20,6 +20,6 @@ final class CalendarSquare
         public readonly ?CalendarSquareContents $contents,
         public readonly bool $isEmpty,
         public readonly bool $isHighlighted,
-        public readonly bool $isFuture,
+        public readonly bool $isDisabled,
     ) {}
 }

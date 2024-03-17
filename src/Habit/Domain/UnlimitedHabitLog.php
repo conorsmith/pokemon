@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace ConorSmith\Pokemon\Habit\Domain;
 
 use Carbon\CarbonImmutable;
+use DateTimeImmutable;
 
 final class UnlimitedHabitLog
 {
     public function __construct(
         public readonly Habit $habit,
         private readonly array $entries,
+        public readonly DateTimeImmutable $startedAt,
     ) {}
 
     public function record(UnlimitedHabitLogEntry $entry): self
@@ -21,7 +23,8 @@ final class UnlimitedHabitLog
 
         return new self(
             $this->habit,
-            $entries
+            $entries,
+            $this->startedAt,
         );
     }
 
@@ -92,6 +95,14 @@ final class UnlimitedHabitLog
         }
 
         return $count;
+    }
+
+    public function doesDatePredateLog(CarbonImmutable $givenDate): bool
+    {
+        return $givenDate->midDay()
+            ->isBefore(
+                (new CarbonImmutable($this->startedAt))->midDay()
+            );
     }
 
 

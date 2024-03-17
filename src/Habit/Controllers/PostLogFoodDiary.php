@@ -46,6 +46,14 @@ final class PostLogFoodDiary
         $habitLog = $this->habitLogRepository->find(Habit::FOOD_DIARY_COMPLETED);
         $bag = $this->bagRepository->find();
 
+        if ($habitLog->doesDatePredateLog($submittedDate)) {
+            $formattedDate = $submittedDate->format("Y-m-d");
+            $this->notifyPlayerCommand->run(
+                Notification::transient("Date '{$formattedDate}' is before you began logging")
+            );
+            return new RedirectResponse("/{$args['instanceId']}/log/food-diary");
+        }
+
         if ($habitLog->isDateLogged($submittedDate)) {
             $formattedDate = $submittedDate->format("Y-m-d");
             $this->notifyPlayerCommand->run(

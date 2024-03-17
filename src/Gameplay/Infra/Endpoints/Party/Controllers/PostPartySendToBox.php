@@ -30,6 +30,13 @@ final class PostPartySendToBox
         $dayCare = $this->pokemonRepository->getDayCare();
 
         if ($party->contains($pokemonId)) {
+            if ($party->count() === 1) {
+                $this->notifyPlayerCommand->run(
+                    Notification::transient("You can't send your only party member to Box.")
+                );
+                return new RedirectResponse("/{$args['instanceId']}/party");
+            }
+
             $this->moveFromPartyToBox($pokemonId, $party);
         } elseif ($dayCare->hasAttendee($pokemonId)) {
             $this->moveFromDayCareToBox($pokemonId, $dayCare);

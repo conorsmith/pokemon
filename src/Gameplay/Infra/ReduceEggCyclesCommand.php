@@ -11,6 +11,7 @@ use ConorSmith\Pokemon\Gameplay\Domain\Breeding\GenealogyRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Breeding\ParentalRelationship;
 use ConorSmith\Pokemon\Gameplay\App\UseCases\AddNewPokemon;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\FriendshipEventLogRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\PokemonRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Pokedex\PokedexEntryRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Pokedex\PokemonEntry;
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\ViewModels\BreedingPokemon;
@@ -29,6 +30,7 @@ final class ReduceEggCyclesCommand implements CommandInterface
         private readonly GenealogyRepository $genealogyRepository,
         private readonly LocationRepository $locationRepository,
         private readonly PokedexEntryRepository $pokedexEntryRepository,
+        private readonly PokemonRepository $pokemonRepository,
         private readonly AddNewPokemon $addNewPokemon,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly HabitStreakQuery $habitStreakQuery,
@@ -60,6 +62,8 @@ final class ReduceEggCyclesCommand implements CommandInterface
             fn (PokemonEntry $entry) => $entry->isRegistered,
         ));
 
+        $party = $this->pokemonRepository->getParty();
+
         $pokemon = $this->addNewPokemon->run(
             $egg->pokedexNumber,
             $egg->form,
@@ -73,7 +77,7 @@ final class ReduceEggCyclesCommand implements CommandInterface
             $egg->ivSpecialDefence,
             $egg->ivSpeed,
             $this->locationRepository->findCurrentLocation()->id,
-            null,
+            $party->isFull() ? null : $party->getNextOpenPosition(),
         );
 
         $this->genealogyRepository->add(new ParentalRelationship(

@@ -14,7 +14,7 @@
         color: #fff;
     }
 
-    .date-cell.date-cell--is-future {
+    .date-cell.date-cell--is-disabled {
         background-color: #fafafa;
         color: #aaa;
     }
@@ -40,7 +40,7 @@
                     <?php else : ?>
                         <td class="date-cell
                                    <?=$square->isHighlighted ? "date-cell--is-highlighted" : ""?>
-                                   <?=$square->isFuture ? "date-cell--is-future" : ""?>
+                                   <?=$square->isDisabled ? "date-cell--is-disabled" : ""?>
                                   ">
                             <div class="corner-date">
                                 <?=$square->contents->date?>

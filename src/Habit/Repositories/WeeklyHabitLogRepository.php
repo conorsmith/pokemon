@@ -28,23 +28,36 @@ final class WeeklyHabitLogRepository
             throw new Exception;
         }
 
-        $rows = $this->db->fetchAllAssociative("SELECT * FROM log_weekly_review WHERE instance_id = :instanceId ORDER BY date_logged DESC", [
+        $instanceRow = $this->db->fetchAssociative("
+            SELECT *
+            FROM instances
+            WHERE id = :instanceId
+        ", [
+            'instanceId' => $this->instanceId->value,
+        ]);
+
+        $logRows = $this->db->fetchAllAssociative("SELECT * FROM log_weekly_review WHERE instance_id = :instanceId ORDER BY date_logged DESC", [
             'instanceId' => $this->instanceId->value,
         ]);
 
         return new WeeklyHabitLog(
             $habit,
             array_map(
-                fn(array $row) => new WeeklyHabitLogEntry(
-                    Uuid::fromString($row['id']),
+                fn(array $logRow) => new WeeklyHabitLogEntry(
+                    Uuid::fromString($logRow['id']),
                     CarbonPeriod::between(
-                        CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], new CarbonTimeZone("Europe/Dublin")),
-                        CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], new CarbonTimeZone("Europe/Dublin"))->addDays(6),
+                        CarbonImmutable::createFromFormat("Y-m-d H:i:s", $logRow['date_logged'], new CarbonTimeZone("Europe/Dublin")),
+                        CarbonImmutable::createFromFormat("Y-m-d H:i:s", $logRow['date_logged'], new CarbonTimeZone("Europe/Dublin"))->addDays(6),
                     ),
-                    intval($row['total']),
+                    intval($logRow['total']),
                 ),
-                $rows
-            )
+                $logRows
+            ),
+            CarbonImmutable::createFromFormat(
+                "Y-m-d H:i:s",
+                $instanceRow['started_at'],
+                "Europe/Dublin",
+            ),
         );
     }
 

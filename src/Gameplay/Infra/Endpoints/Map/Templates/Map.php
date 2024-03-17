@@ -249,6 +249,34 @@
 
     </div>
 
+    <?php if ($navigationBar->showPokemon || $navigationBar->showTrainers || $navigationBar->showEliteFour) : ?>
+        <div class="card">
+            <div class="card-header">
+                Location Features
+            </div>
+            <ul class="list-group list-group-flush">
+                <?php if ($navigationBar->showPokemon) : ?>
+                    <a href="/<?=$instanceId?>/map/pokemon" class="list-group-item list-group-item-action">
+                        <img src="/assets/items/Bag_Pok%C3%A9_Ball_Sprite.png" style="filter: grayscale(1);">
+                        <span>Pokémon</span>
+                    </a>
+                <?php endif ?>
+                <?php if ($navigationBar->showTrainers) : ?>
+                    <a href="/<?=$instanceId?>/map/trainers" class="list-group-item list-group-item-action">
+                        <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
+                        <span>Trainers</span>
+                    </a>
+                <?php endif ?>
+                <?php if ($navigationBar->showEliteFour) : ?>
+                    <a href="/<?=$instanceId?>/map/elite-four" class="list-group-item list-group-item-action">
+                        <img src="/assets/items/Bag_Contest_Pass_Sprite.png">
+                        <span>Elite Four</span>
+                    </a>
+                <?php endif ?>
+            </ul>
+        </div>
+    <?php endif ?>
+
     <?php if ($hallOfFame) : ?>
         <div class="card" style="text-align: center;">
             <div class="card-body d-grid gap-2 p-2">

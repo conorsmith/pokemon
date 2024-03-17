@@ -27,20 +27,33 @@ final class UnlimitedHabitLogRepository
             throw new Exception;
         }
 
-        $rows = $this->db->fetchAllAssociative("SELECT * FROM log_exercise WHERE instance_id = :instanceId ORDER BY date_logged DESC", [
+        $instanceRow = $this->db->fetchAssociative("
+            SELECT *
+            FROM instances
+            WHERE id = :instanceId
+        ", [
+            'instanceId' => $this->instanceId->value,
+        ]);
+
+        $logRows = $this->db->fetchAllAssociative("SELECT * FROM log_exercise WHERE instance_id = :instanceId ORDER BY date_logged DESC", [
             'instanceId' => $this->instanceId->value,
         ]);
 
         return new UnlimitedHabitLog(
             $habit,
             array_map(
-                fn(array $row) => new UnlimitedHabitLogEntry(
-                    Uuid::fromString($row['id']),
-                    CarbonImmutable::createFromFormat("Y-m-d H:i:s", $row['date_logged'], "Europe/Dublin"),
-                    EntryType::from($row['type']),
+                fn(array $logRow) => new UnlimitedHabitLogEntry(
+                    Uuid::fromString($logRow['id']),
+                    CarbonImmutable::createFromFormat("Y-m-d H:i:s", $logRow['date_logged'], "Europe/Dublin"),
+                    EntryType::from($logRow['type']),
                 ),
-                $rows
-            )
+                $logRows
+            ),
+            CarbonImmutable::createFromFormat(
+                "Y-m-d H:i:s",
+                $instanceRow['started_at'],
+                "Europe/Dublin",
+            ),
         );
     }
 

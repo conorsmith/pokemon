@@ -17,6 +17,8 @@ use ConorSmith\Pokemon\Gameplay\App\UseCases\SimulateABattle;
 use ConorSmith\Pokemon\Gameplay\App\UseCases\StartABattle;
 use ConorSmith\Pokemon\Gameplay\Infra\NotifyPlayerCommand;
 use ConorSmith\Pokemon\Gameplay\Infra\Repositories\NotificationRepositoryDbAndSession;
+use ConorSmith\Pokemon\MainMenu\Infra\InstanceRepositoryInstanceIdsQuery;
+use ConorSmith\Pokemon\MainMenu\Infra\Repositories\InstanceRepositoryDb;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Domain\Notification;
 use ConorSmith\Pokemon\SharedKernel\Domain\RegionId;
@@ -25,12 +27,9 @@ use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use ConorSmith\Pokemon\System\RepositoryFactory;
 use ConorSmith\Pokemon\TrainerConfigRepository;
 use ConorSmith\Pokemon\ViewModelFactory;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use LogicException;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
-use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
-use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 
 final class Challenge
 {
@@ -55,10 +54,10 @@ final class Challenge
             'driver'   => "pdo_mysql",
         ]);
 
-        $repositoryFactory = new RepositoryFactory($db, self::createDummySession());
+        $repositoryFactory = new RepositoryFactory($db, new DummySession());
         $pokemonConfigRepository = new PokedexConfigRepository();
 
-        $instanceIds = self::allInstanceIds();
+        $instanceIds = self::allInstanceIds($db);
 
         /** @var InstanceId $instanceId */
         foreach ($instanceIds as $instanceId) {
@@ -108,7 +107,7 @@ final class Challenge
             $notifyPlayerCommand = new NotifyPlayerCommand(
                 new NotificationRepositoryDbAndSession(
                     $db,
-                    self::createDummySession(),
+                    new DummySession(),
                     $instanceId
                 )
             );
@@ -178,180 +177,12 @@ final class Challenge
         }
     }
 
-    private static function allInstanceIds(): array
+    private static function allInstanceIds(Connection $db): array
     {
-        return [new InstanceId("8a04a1fc-f9e9-4feb-98fc-470f90c8fdb1")];
-    }
+        $instanceIdsQuery = new InstanceRepositoryInstanceIdsQuery(
+            new InstanceRepositoryDb($db),
+        );
 
-    private static function createDummySession(): FlashBagAwareSessionInterface
-    {
-        return new class implements FlashBagAwareSessionInterface
-        {
-            public function getFlashBag(): FlashBagInterface
-            {
-                return new class implements FlashBagInterface
-                {
-
-                    public function add(string $type, mixed $message)
-                    {
-                        //
-                    }
-
-                    public function get(string $type, array $default = []): array
-                    {
-                        return $default;
-                    }
-
-                    public function set(string $type, string|array $messages)
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function peek(string $type, array $default = []): array
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function peekAll(): array
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function all(): array
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function setAll(array $messages)
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function has(string $type): bool
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function keys(): array
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function getName(): string
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function initialize(array &$array)
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function getStorageKey(): string
-                    {
-                        throw new LogicException();
-                    }
-
-                    public function clear(): mixed
-                    {
-                        throw new LogicException();
-                    }
-                };
-            }
-            public function start(): bool
-            {
-                throw new LogicException();
-            }
-
-            public function getId(): string
-            {
-                throw new LogicException();
-            }
-
-            public function setId(string $id)
-            {
-                throw new LogicException();
-            }
-
-            public function getName(): string
-            {
-                throw new LogicException();
-            }
-
-            public function setName(string $name)
-            {
-                throw new LogicException();
-            }
-
-            public function invalidate(int $lifetime = null): bool
-            {
-                throw new LogicException();
-            }
-
-            public function migrate(bool $destroy = false, int $lifetime = null): bool
-            {
-                throw new LogicException();
-            }
-
-            public function save()
-            {
-                throw new LogicException();
-            }
-
-            public function has(string $name): bool
-            {
-                throw new LogicException();
-            }
-
-            public function get(string $name, mixed $default = null): mixed
-            {
-                throw new LogicException();
-            }
-
-            public function set(string $name, mixed $value)
-            {
-                throw new LogicException();
-            }
-
-            public function all(): array
-            {
-                throw new LogicException();
-            }
-
-            public function replace(array $attributes)
-            {
-                throw new LogicException();
-            }
-
-            public function remove(string $name): mixed
-            {
-                throw new LogicException();
-            }
-
-            public function clear()
-            {
-                throw new LogicException();
-            }
-
-            public function isStarted(): bool
-            {
-                throw new LogicException();
-            }
-
-            public function registerBag(SessionBagInterface $bag)
-            {
-                throw new LogicException();
-            }
-
-            public function getBag(string $name): SessionBagInterface
-            {
-                throw new LogicException();
-            }
-
-            public function getMetadataBag(): MetadataBag
-            {
-                throw new LogicException();
-            }
-        };
+        return $instanceIdsQuery->run();
     }
 }

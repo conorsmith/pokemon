@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Index\Controllers;
 
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Index\ViewModels\PartySlotVm;
 use ConorSmith\Pokemon\LocationConfigRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\Pokemon;
@@ -52,9 +53,16 @@ final class GetIndex
 
         return new Response($this->templateEngine->render(__DIR__ . "/../Templates/Index.php", [
             'bagSummary' => self::createBagSummary($bag),
-            'party'      => array_map(
-                fn(PartyMember $partyMember) => PartyMemberVm::create($partyMember),
-                $party
+            'party'      => array_pad(
+                    array_map(
+                    fn(PartyMember $partyMember) => new PartySlotVm(
+                        true,
+                        PartyMemberVm::create($partyMember),
+                    ),
+                    $party
+                ),
+                6,
+                new PartySlotVm(false, null),
             ),
             'location'   => (object) [
                 'name'    => $currentLocationConfig['name'],

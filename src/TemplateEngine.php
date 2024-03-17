@@ -38,6 +38,11 @@ final class TemplateEngine
         return ob_get_clean();
     }
 
+    public function renderWithoutLayout(string $templatePath, array $variables): string
+    {
+        return self::renderContent($templatePath, $variables);
+    }
+
     private static function renderContent(string $templatePath, array $variables): string
     {
         extract($variables);

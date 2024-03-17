@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Habit\Domain;
 
+use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
+use DateTimeImmutable;
 
 final class WeeklyHabitLog
 {
     public function __construct(
         public readonly Habit $habit,
         private readonly array $entries,
+        public readonly DateTimeImmutable $startedAt,
     ) {}
 
     public function record(WeeklyHabitLogEntry $entry): self
@@ -21,7 +24,8 @@ final class WeeklyHabitLog
 
         return new self(
             $this->habit,
-            $entries
+            $entries,
+            $this->startedAt,
         );
     }
 
@@ -35,6 +39,14 @@ final class WeeklyHabitLog
         }
 
         return false;
+    }
+
+    public function doesWeekPredateLog(CarbonPeriod $week): bool
+    {
+        return $week->end->midDay()
+            ->isBefore(
+                (new CarbonImmutable($this->startedAt))->midDay()
+            );
     }
 
     public function diff(self $other): array
