@@ -143,8 +143,7 @@ final class GetObtainablePokemon
             }
 
             $obtainedGiftPokemon = $this->obtainedGiftPokemonRepository->findMostRecent(
-                $giftPokemonConfigEntry['pokemon'],
-                $currentLocation['id'],
+                $giftPokemonConfigEntry['id'],
             );
 
             if (!is_null($obtainedGiftPokemon)

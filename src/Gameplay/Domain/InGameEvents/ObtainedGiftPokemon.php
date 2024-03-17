@@ -12,6 +12,7 @@ final class ObtainedGiftPokemon
 {
     public function __construct(
         public readonly string $id,
+        public readonly string $giftPokemonId,
         public readonly string $pokedexNumber,
         public readonly string $locationId,
         public readonly DateTimeImmutable $obtainedAt,

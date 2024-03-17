@@ -6,7 +6,7 @@ namespace ConorSmith\Pokemon\Gameplay\Domain\InGameEvents;
 
 interface ObtainedGiftPokemonRepository
 {
-    public function findMostRecent(string $pokedexNumber, string $locationId): ?ObtainedGiftPokemon;
+    public function findMostRecent(string $giftPokemonId): ?ObtainedGiftPokemon;
 
     public function save(ObtainedGiftPokemon $obtainedGiftPokemon): void;
 }

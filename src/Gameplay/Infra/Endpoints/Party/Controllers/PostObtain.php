@@ -84,8 +84,7 @@ final class PostObtain
         }
 
         $obtainedGiftPokemon = $this->obtainedGiftPokemonRepository->findMostRecent(
-            $pokedexNumber,
-            $currentLocation->id,
+            $giftPokemonConfig['id'],
         );
 
         if (!is_null($obtainedGiftPokemon)
@@ -154,6 +153,7 @@ final class PostObtain
 
         $this->obtainedGiftPokemonRepository->save(new ObtainedGiftPokemon(
             Uuid::uuid4()->toString(),
+            $giftPokemonConfig['id'],
             $pokedexNumber,
             $currentLocation->id,
             CarbonImmutable::now(new CarbonTimeZone("Europe/Dublin")),
