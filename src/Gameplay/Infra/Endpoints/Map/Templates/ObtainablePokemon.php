@@ -61,7 +61,12 @@
                                 </strong>
                             </div>
                             <div>
-                                <small><i class="fas fa-gift"></i> Lv <?=$giftPokemonEntry->level?></small>
+                                <small>
+                                    <i class="fas fa-gift"></i>
+                                    <?php if ($giftPokemonEntry->hasLevel) : ?>
+                                        Lv <?=$giftPokemonEntry->level?>
+                                    <?php endif ?>
+                                </small>
                             </div>
                             <div class="d-flex align-items-center" style="margin-top: 0.4rem;">
                                 <form method="POST" action="/<?=$instanceId?>/obtain" style="margin-right: 0.6rem;">

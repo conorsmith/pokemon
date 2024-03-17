@@ -126,8 +126,7 @@ return [
     [
         'pokemon'  => PokedexNo::TOGEPI,
         'location' => LocationId::VIOLET_CITY,
-        'level'    => 5,
-        // Should be an egg
+        'isEgg'    => true,
     ],
     [
         'pokemon'  => PokedexNo::TYROGUE,
@@ -189,8 +188,7 @@ return [
     [
         'pokemon'  => PokedexNo::WYNAUT,
         'location' => LocationId::HOT_SPRINGS,
-        'level'    => 5,
-        // Should be an egg
+        'isEgg'    => true,
     ],
     [
         'pokemon'  => PokedexNo::CASTFORM,

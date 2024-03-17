@@ -7,7 +7,7 @@ namespace ConorSmith\PokemonTest\Gameplay\App\UseCases;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\EggRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\PokemonRepository;
 use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowEggs;
-use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\ViewModels\Egg as EggVm;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\ViewModels\EggVm as EggVm;
 use ConorSmith\PokemonTest\Gameplay\Domain\Party\EggFactory;
 use ConorSmith\PokemonTest\Gameplay\Domain\Party\PokemonFactory;
 use ConorSmith\PokemonTest\TestDouble;

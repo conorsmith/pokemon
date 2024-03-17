@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers;
 
-use ConorSmith\Pokemon\Gameplay\Domain\Party\Egg;
-use ConorSmith\Pokemon\Gameplay\Domain\Party\EggRepository;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\AddNewEgg;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\EggParents;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\Pokemon;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\PokemonRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\Stats;
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\ViewModels\BreedingPokemon;
 use ConorSmith\Pokemon\PokedexConfigRepository;
 use ConorSmith\Pokemon\SharedKernel\Commands\NotifyPlayerCommand;
@@ -18,7 +19,6 @@ use ConorSmith\Pokemon\SharedKernel\Domain\RandomNumberGenerator;
 use ConorSmith\Pokemon\SharedKernel\Domain\Sex;
 use ConorSmith\Pokemon\SharedKernel\Repositories\BagRepository;
 use LogicException;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,8 +26,8 @@ use Symfony\Component\HttpFoundation\Response;
 final class PostPokemonBreed
 {
     public function __construct(
+        private readonly AddNewEgg $addNewEgg,
         private readonly BagRepository $bagRepository,
-        private readonly EggRepository $eggRepository,
         private readonly PokemonRepository $pokemonRepository,
         private readonly PokedexConfigRepository $pokedexConfigRepository,
         private readonly NotifyPlayerCommand $notifyPlayerCommand,
@@ -113,23 +113,17 @@ final class PostPokemonBreed
 
         $ivs = self::generateIvs($pokemonA, $pokemonB);
 
-        $egg = new Egg(
-            Uuid::uuid4()->toString(),
+        $this->addNewEgg->run(
             $eggPokedexNumber,
             $speciesParent->form,
-            $ivs['hp'],
-            $ivs['physicalAttack'],
-            $ivs['physicalDefence'],
-            $ivs['specialAttack'],
-            $ivs['specialDefence'],
-            $ivs['speed'],
-            $pokemonA->id,
-            $pokemonB->id,
-            $this->findEggCycles($eggPokedexNumber),
+            $ivs,
+            new EggParents(
+                $pokemonA->id,
+                $pokemonB->id,
+            ),
         );
 
         $this->bagRepository->save($bag);
-        $this->eggRepository->save($egg);
 
         $pokemonAVm = BreedingPokemon::create($pokemonA);
         $pokemonBVm = BreedingPokemon::create($pokemonB);
@@ -184,7 +178,7 @@ final class PostPokemonBreed
         return null;
     }
 
-    private static function generateIvs(Pokemon $pokemonA, Pokemon $pokemonB): array
+    private static function generateIvs(Pokemon $pokemonA, Pokemon $pokemonB): Stats
     {
         $statKeys = ['hp', 'physicalAttack', 'physicalDefence', 'specialAttack', 'specialDefence', 'speed'];
 
@@ -205,21 +199,13 @@ final class PostPokemonBreed
             }
         }
 
-        return $stats;
-    }
-
-    private function findEggCycles(string $pokedexNumber): int
-    {
-        return match ($this->pokedexConfigRepository->find($pokedexNumber)['eggCycles']) {
-            5       => 1,
-            10      => 3,
-            15      => 6,
-            20      => 9,
-            25      => 12,
-            30      => 15,
-            35      => 18,
-            40      => 21,
-            default => throw new LogicException(),
-        };
+        return new Stats(
+            $stats['hp'],
+            $stats['physicalAttack'],
+            $stats['physicalDefence'],
+            $stats['specialAttack'],
+            $stats['specialDefence'],
+            $stats['speed'],
+        );
     }
 }

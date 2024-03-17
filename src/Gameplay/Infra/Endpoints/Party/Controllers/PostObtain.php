@@ -6,7 +6,9 @@ namespace ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers;
 
 use Carbon\CarbonImmutable;
 use Carbon\CarbonTimeZone;
+use ConorSmith\Pokemon\Gameplay\App\UseCases\AddNewEgg;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\PokemonRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\Stats;
 use ConorSmith\Pokemon\GiftPokemonConfigRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\InGameEvents\ObtainedGiftPokemonRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository;
@@ -34,6 +36,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class PostObtain
 {
     public function __construct(
+        private readonly AddNewEgg $addNewEgg,
         private readonly AddNewPokemon $addNewPokemon,
         private readonly BagRepository $bagRepository,
         private readonly LocationRepository $locationRepository,
@@ -106,25 +109,45 @@ final class PostObtain
             default         => throw new LogicException(),
         };
 
-        $party = $this->pokemonRepository->getParty();
+        if (isset($giftPokemonConfig['isEgg'])) {
 
-        $pokemon = $this->addNewPokemon->run(
-            $pokedexNumber,
-            null,
-            $giftPokemonConfig['level'] + $regionalLevelOffset,
-            $this->generateSex($pokedexNumber),
-            $this->generateShininess(),
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            RandomNumberGenerator::generateInRange(0, 31),
-            $currentLocation->id,
-            $party->isFull() ? null : $party->getNextOpenPosition(),
-        );
+            $this->addNewEgg->run(
+                $pokedexNumber,
+                null,
+                new Stats(
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                    RandomNumberGenerator::generateInRange(0, 31),
+                ),
+                null,
+            );
 
-        $this->friendshipLog->sentToBox($pokemon);
+        } else {
+
+            $party = $this->pokemonRepository->getParty();
+
+            $pokemon = $this->addNewPokemon->run(
+                $pokedexNumber,
+                null,
+                $giftPokemonConfig['level'] + $regionalLevelOffset,
+                $this->generateSex($pokedexNumber),
+                $this->generateShininess(),
+                RandomNumberGenerator::generateInRange(0, 31),
+                RandomNumberGenerator::generateInRange(0, 31),
+                RandomNumberGenerator::generateInRange(0, 31),
+                RandomNumberGenerator::generateInRange(0, 31),
+                RandomNumberGenerator::generateInRange(0, 31),
+                RandomNumberGenerator::generateInRange(0, 31),
+                $currentLocation->id,
+                $party->isFull() ? null : $party->getNextOpenPosition(),
+            );
+
+            $this->friendshipLog->sentToBox($pokemon);
+
+        }
 
         $bag = $bag->use(ItemId::OVAL_CHARM);
         $this->bagRepository->save($bag);
@@ -143,8 +166,14 @@ final class PostObtain
 
         $pokedexConfig = $this->pokedexConfigRepository->find($pokedexNumber);
 
+        if (isset($giftPokemonConfig['isEgg'])) {
+            $name = "{$pokedexConfig['name']} Egg";
+        } else {
+            $name = $pokedexConfig['name'];
+        }
+
         $this->notifyPlayerCommand->run(
-            Notification::persistent("You obtained {$pokedexConfig['name']}!")
+            Notification::persistent("You obtained {$name}!")
         );
 
         if ($totalRegisteredPokemonBeforeObtaining > $totalRegisteredPokemonAfterObtaining) {

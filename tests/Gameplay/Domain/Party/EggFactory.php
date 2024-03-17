@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace ConorSmith\PokemonTest\Gameplay\Domain\Party;
 
 use ConorSmith\Pokemon\Gameplay\Domain\Party\Egg;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\EggParents;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\Stats;
 
 final class EggFactory
 {
@@ -26,14 +28,18 @@ final class EggFactory
             $id,
             $pokedexNumber,
             $form,
-            $ivHp,
-            $ivPhysicalAttack,
-            $ivPhysicalDefence,
-            $ivSpecialAttack,
-            $ivSpecialDefence,
-            $ivSpeed,
-            $firstParentId,
-            $secondParentId,
+            new Stats(
+                $ivHp,
+                $ivPhysicalAttack,
+                $ivPhysicalDefence,
+                $ivSpecialAttack,
+                $ivSpecialDefence,
+                $ivSpeed,
+            ),
+            new EggParents(
+                $firstParentId,
+                $secondParentId,
+            ),
             $remainingCycles,
         );
     }

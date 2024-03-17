@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace ConorSmith\Pokemon\System;
 
+use ConorSmith\Pokemon\Gameplay\App\UseCases\AddNewEgg;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\AreaRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\EliteFourChallengeRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\EncounterRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\LeagueChampionRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\LocationRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\TrainerRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\EggRepository;
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\GetBattle;
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\GetEncounter;
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Battle\Controllers\GetHallOfFame;
@@ -110,7 +112,6 @@ use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\Controllers\PostPokemonIte
 use ConorSmith\Pokemon\Gameplay\Domain\Breeding\GenealogyRepository;
 use ConorSmith\Pokemon\Gameplay\App\UseCases\LevelUpPokemon;
 use ConorSmith\Pokemon\Gameplay\Infra\ReduceEggCyclesCommand;
-use ConorSmith\Pokemon\Gameplay\Infra\Repositories\EggRepositoryDb;
 use ConorSmith\Pokemon\Gameplay\App\UseCases\AddNewPokemon;
 use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowBox;
 use ConorSmith\Pokemon\Gameplay\App\UseCases\ShowDayCare;
@@ -328,7 +329,7 @@ final class ControllerFactory
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
                 $this->repositoryFactory->create(UnlimitedHabitLogRepository::class, $instanceId),
                 new ReduceEggCyclesCommand(
-                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(EggRepository::class, $instanceId),
                     $this->repositoryFactory->create(GenealogyRepository::class, $instanceId),
                     $this->repositoryFactory->create(\ConorSmith\Pokemon\Gameplay\Domain\Navigation\LocationRepository::class, $instanceId),
                     $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),
@@ -384,7 +385,7 @@ final class ControllerFactory
             ),
             GetPartyEggs::class                  => new GetPartyEggs(
                 new ShowEggs(
-                    $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
+                    $this->repositoryFactory->create(EggRepository::class, $instanceId),
                     $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 ),
                 $this->createTemplateEngine($instanceId),
@@ -433,8 +434,11 @@ final class ControllerFactory
                 $this->createNotifyPlayerCommand($instanceId),
             ),
             PostPokemonBreed::class              => new PostPokemonBreed(
+                new AddNewEgg(
+                    $this->repositoryFactory->create(EggRepository::class, $instanceId),
+                    new PokedexConfigRepository(),
+                ),
                 $this->repositoryFactory->create(BagRepository::class, $instanceId),
-                $this->repositoryFactory->create(EggRepositoryDb::class, $instanceId),
                 $this->repositoryFactory->create(PokemonRepository::class, $instanceId),
                 new PokedexConfigRepository(),
                 $this->createNotifyPlayerCommand($instanceId),
@@ -648,6 +652,10 @@ final class ControllerFactory
                 $this->createTemplateEngine($instanceId),
             ),
             PostObtain::class                    => new PostObtain(
+                new AddNewEgg(
+                    $this->repositoryFactory->create(EggRepository::class, $instanceId),
+                    new PokedexConfigRepository(),
+                ),
                 new AddNewPokemon(
                     $this->db,
                     $this->repositoryFactory->create(PokedexEntryRepository::class, $instanceId),

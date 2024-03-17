@@ -70,21 +70,23 @@ final class ReduceEggCyclesCommand implements CommandInterface
             5,
             $this->generateSex($egg->pokedexNumber),
             $this->generateShininess(),
-            $egg->ivHp,
-            $egg->ivPhysicalAttack,
-            $egg->ivPhysicalDefence,
-            $egg->ivSpecialAttack,
-            $egg->ivSpecialDefence,
-            $egg->ivSpeed,
+            $egg->ivs->hp,
+            $egg->ivs->physicalAttack,
+            $egg->ivs->physicalDefence,
+            $egg->ivs->specialAttack,
+            $egg->ivs->specialDefence,
+            $egg->ivs->speed,
             $this->locationRepository->findCurrentLocation()->id,
             $party->isFull() ? null : $party->getNextOpenPosition(),
         );
 
-        $this->genealogyRepository->add(new ParentalRelationship(
-            $pokemon->id,
-            $egg->firstParentId,
-            $egg->secondParentId,
-        ));
+        if ($egg->hasKnownParents()) {
+            $this->genealogyRepository->add(new ParentalRelationship(
+                $pokemon->id,
+                $egg->parents->firstParentId,
+                $egg->parents->secondParentId,
+            ));
+        }
 
         $this->eggRepository->remove($egg);
 

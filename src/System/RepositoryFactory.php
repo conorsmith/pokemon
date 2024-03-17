@@ -12,6 +12,7 @@ use ConorSmith\Pokemon\Gameplay\Domain\Battle\LeagueChampionRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\LocationRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\PlayerRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Battle\TrainerRepository;
+use ConorSmith\Pokemon\Gameplay\Domain\Party\EggRepository;
 use ConorSmith\Pokemon\Gameplay\Infra\Repositories\AreaRepositoryDb;
 use ConorSmith\Pokemon\Gameplay\Infra\Repositories\BattleRepositoryDb;
 use ConorSmith\Pokemon\Gameplay\Infra\Repositories\EliteFourChallengeRepositoryDb;
@@ -152,7 +153,7 @@ final class RepositoryFactory
                 $this->create(TrainerRepository::class, $instanceId),
                 new LocationConfigRepository(),
             ),
-            EggRepositoryDb::class                   => new EggRepositoryDb($this->db, $instanceId),
+            EggRepository::class                   => new EggRepositoryDb($this->db, $instanceId),
             GenealogyRepository::class               => new GenealogyRepositoryDb($this->db, $instanceId),
             BattleRepository::class             => new BattleRepositoryDb(
                 $this->db,

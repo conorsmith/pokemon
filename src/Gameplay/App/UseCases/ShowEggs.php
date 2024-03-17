@@ -7,7 +7,7 @@ namespace ConorSmith\Pokemon\Gameplay\App\UseCases;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\Egg;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\EggRepository;
 use ConorSmith\Pokemon\Gameplay\Domain\Party\PokemonRepository;
-use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\ViewModels\Egg as EggVm;
+use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\ViewModels\EggVm as EggVm;
 use ConorSmith\Pokemon\Gameplay\Infra\Endpoints\Party\ViewModels\EggsList;
 
 final class ShowEggs
@@ -27,8 +27,12 @@ final class ShowEggs
             array_map(
                 fn (Egg $egg) => EggVm::create(
                     $egg,
-                    $this->pokemonRepository->find($egg->firstParentId),
-                    $this->pokemonRepository->find($egg->secondParentId),
+                    $egg->hasKnownParents()
+                        ? $this->pokemonRepository->find($egg->parents->firstParentId)
+                        : null,
+                    $egg->hasKnownParents()
+                        ? $this->pokemonRepository->find($egg->parents->secondParentId)
+                        : null,
                 ),
                 $eggs,
             )

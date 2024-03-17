@@ -138,7 +138,7 @@ final class GetObtainablePokemon
 
             $levelLimit = $this->findLevelLimit();
 
-            if ($giftPokemonConfigEntry['level'] > $levelLimit) {
+            if (isset($giftPokemonConfigEntry['level']) && $giftPokemonConfigEntry['level'] > $levelLimit) {
                 $canObtain = false;
             }
 
@@ -185,14 +185,26 @@ final class GetObtainablePokemon
                 default         => throw new LogicException(),
             };
 
-            $giftPokemon[] = (object) [
-                'number'          => $giftPokemonConfigEntry['pokemon'],
-                'name'            => $this->pokedexConfigRepository->find($giftPokemonConfigEntry['pokemon'])['name'],
-                'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($giftPokemonConfigEntry['pokemon']),
-                'level'           => $giftPokemonConfigEntry['level'] + $regionalLevelOffset,
-                'canObtain'       => $canObtain,
-                'lastObtained'    => $lastObtained,
-            ];
+            if (isset($giftPokemonConfigEntry['isEgg'])) {
+                $giftPokemon[] = (object) [
+                    'number'          => $giftPokemonConfigEntry['pokemon'],
+                    'name'            => $this->pokedexConfigRepository->find($giftPokemonConfigEntry['pokemon'])['name'] . " Egg",
+                    'imageUrl'        => "/assets/Spr_3r_Egg.png",
+                    'hasLevel'        => false,
+                    'canObtain'       => $canObtain,
+                    'lastObtained'    => $lastObtained,
+                ];
+            } else {
+                $giftPokemon[] = (object) [
+                    'number'          => $giftPokemonConfigEntry['pokemon'],
+                    'name'            => $this->pokedexConfigRepository->find($giftPokemonConfigEntry['pokemon'])['name'],
+                    'imageUrl'        => SharedViewModelFactory::createPokemonImageUrl($giftPokemonConfigEntry['pokemon']),
+                    'hasLevel'        => true,
+                    'level'           => $giftPokemonConfigEntry['level'] + $regionalLevelOffset,
+                    'canObtain'       => $canObtain,
+                    'lastObtained'    => $lastObtained,
+                ];
+            }
         }
 
         return $giftPokemon;

@@ -10,16 +10,15 @@ final class Egg
         public readonly string $id,
         public readonly string $pokedexNumber,
         public readonly ?string $form,
-        public readonly int $ivHp,
-        public readonly int $ivPhysicalAttack,
-        public readonly int $ivPhysicalDefence,
-        public readonly int $ivSpecialAttack,
-        public readonly int $ivSpecialDefence,
-        public readonly int $ivSpeed,
-        public readonly string $firstParentId,
-        public readonly string $secondParentId,
+        public readonly Stats $ivs,
+        public readonly ?EggParents $parents,
         public readonly int $remainingCycles,
     ) {}
+
+    public function hasKnownParents(): bool
+    {
+        return !is_null($this->parents);
+    }
 
     public function canHatch(): bool
     {
@@ -32,14 +31,8 @@ final class Egg
             $this->id,
             $this->pokedexNumber,
             $this->form,
-            $this->ivHp,
-            $this->ivPhysicalAttack,
-            $this->ivPhysicalDefence,
-            $this->ivSpecialAttack,
-            $this->ivSpecialDefence,
-            $this->ivSpeed,
-            $this->firstParentId,
-            $this->secondParentId,
+            $this->ivs,
+            $this->parents,
             max(0, $this->remainingCycles - $amount),
         );
     }
