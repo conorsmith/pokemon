@@ -39,7 +39,7 @@ final class FindTrainers
 
                 $battle = $this->battleRepository->findForTrainer($config['id']);
 
-                if (!is_null($battle)) {
+                if (!is_null($battle) && !is_null($battle->dateLastBeaten)) {
                     $lastBeaten = (new CarbonImmutable($battle->dateLastBeaten));
                     $isInCooldownWindow = $lastBeaten->addWeek() > CarbonImmutable::today(new CarbonTimeZone("Europe/Dublin"));
                 } else {
