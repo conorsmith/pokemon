@@ -222,6 +222,11 @@ final class Survey
         return $now->diffInRealSeconds($startedAt);
     }
 
+    public function hasReachedTimeLimit(): bool
+    {
+        return ($this->cumulativeTime + $this->currentDuration()) > (60 * 60 * 24 * 7);
+    }
+
     public function countEncountersInCurrentSession(): int
     {
         if (!$this->inProgress) {

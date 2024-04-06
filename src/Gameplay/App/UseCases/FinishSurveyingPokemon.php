@@ -29,6 +29,15 @@ final class FinishSurveyingPokemon
             return FinishSurveyingPokemonResult::noActiveSurvey();
         }
 
+        if ($survey->hasReachedTimeLimit()) {
+            $survey = $survey->complete();
+            $survey = $survey->finish();
+
+            $this->surveyRepository->save($survey);
+
+            return FinishSurveyingPokemonResult::finished($survey->isComplete);
+        }
+
         $config = $this->wildEncounterConfigRepository->findWildEncounters($survey->locationId);
 
         $encounters = $survey->countEncountersInCurrentSession();
